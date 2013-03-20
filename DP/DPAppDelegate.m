@@ -7,6 +7,7 @@
 //
 
 #import "DPAppDelegate.h"
+#import "Controllers/DPMainViewController.h"
 
 @implementation DPAppDelegate
 
@@ -14,6 +15,10 @@
 {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
+    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone)
+        self.controller = [[DPMainViewController alloc] init];
+    
+    self.window.rootViewController = self.controller;
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
     return YES;
