@@ -77,7 +77,8 @@
     if (ofvc) {
         if (ofvc.subviews.count == 0) {            
             if (openFlow == nil) {
-                openFlow = [[AFOpenFlowView alloc] initWithFrame:ofvc.bounds];
+                openFlow = [[AFOpenFlowView alloc] initWithFrame:ofvc.bounds
+                                                    defaultImage:self.defaultImage];
                 openFlow.viewDelegate = self;
                 openFlow.dataSource = self;
                 
@@ -85,10 +86,10 @@
                 
                 NSString *imageName;
                 int imgCount = 30;
-                
-                for (int i=0; i < imgCount; i++) {
+                int imgBase = 1;
+                for (int i=imgBase; i < imgCount; i++) {
                     imageName = [[NSString alloc] initWithFormat:@"%d.jpg", i];
-                    [openFlow setImage: [UIImage imageNamed:imageName] forIndex:i];
+                    [openFlow setImage: [UIImage imageNamed:imageName] forIndex:i-imgBase];
                     imageName = nil;
                 }
                 
@@ -97,6 +98,7 @@
             else {
                 [ofvc addSubview:openFlow];
                 openFlow.frame = ofvc.bounds;
+                openFlow.bounds = ofvc.bounds;
             }
         }
         
@@ -125,7 +127,7 @@
 }
 
 - (UIImage *) defaultImage {
-    return [UIImage imageNamed:@"3.jpg"];
+    return [UIImage imageNamed:@"1.jpg"];
 }
 
 
