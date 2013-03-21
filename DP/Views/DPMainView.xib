@@ -40,24 +40,7 @@
 				<int key="NSvFlags">274</int>
 				<string key="NSFrameSize">{320, 480}</string>
 				<reference key="NSSuperview"/>
-				<reference key="NSNextKeyView"/>
-				<object class="IBUIScreenMetrics" key="IBUISimulatedDestinationMetrics" id="1035055248">
-					<string key="IBUISimulatedSizeMetricsClass">IBUIScreenMetrics</string>
-					<object class="NSMutableDictionary" key="IBUINormalizedOrientationToSizeMap">
-						<bool key="EncodedWithXMLCoder">YES</bool>
-						<array key="dict.sortedKeys">
-							<integer value="1"/>
-							<integer value="3"/>
-						</array>
-						<array key="dict.values">
-							<string>{320, 480}</string>
-							<string>{480, 320}</string>
-						</array>
-					</object>
-					<string key="IBUITargetRuntime">IBCocoaTouchFramework</string>
-					<string key="IBUIDisplayName">Retina 3.5 Full Screen</string>
-					<int key="IBUIType">0</int>
-				</object>
+				<reference key="NSWindow"/>
 				<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 			</object>
 			<object class="IBUINavigationController" id="128549407">
@@ -66,7 +49,6 @@
 					<int key="IBUIInterfaceOrientation">1</int>
 					<int key="interfaceOrientation">1</int>
 				</object>
-				<reference key="IBUISimulatedDestinationMetrics" ref="1035055248"/>
 				<bool key="IBUIDefinesPresentationContext">YES</bool>
 				<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 				<bool key="IBUIHorizontal">NO</bool>
@@ -81,8 +63,9 @@
 					<object class="IBUIViewController" id="926281384">
 						<string key="IBUITitle">logo</string>
 						<object class="IBUINavigationItem" key="IBUINavigationItem" id="561024838">
+							<reference key="IBUINavigationBar"/>
 							<string key="IBUITitle">logo</string>
-							<object class="IBUIBarButtonItem" key="IBUIBackBarButtonItem" id="219372159">
+							<object class="IBUIBarButtonItem" key="IBUIBackBarButtonItem" id="204450479">
 								<string key="IBUITitle">back</string>
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 								<int key="IBUIStyle">1</int>
@@ -169,13 +152,13 @@
 						<int key="objectID">6</int>
 						<reference key="object" ref="561024838"/>
 						<array class="NSMutableArray" key="children">
-							<reference ref="219372159"/>
+							<reference ref="204450479"/>
 						</array>
 						<reference key="parent" ref="926281384"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">9</int>
-						<reference key="object" ref="219372159"/>
+						<reference key="object" ref="204450479"/>
 						<reference key="parent" ref="561024838"/>
 					</object>
 				</array>
@@ -199,7 +182,84 @@
 			<nil key="sourceID"/>
 			<int key="maxID">9</int>
 		</object>
-		<object class="IBClassDescriber" key="IBDocument.Classes"/>
+		<object class="IBClassDescriber" key="IBDocument.Classes">
+			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
+				<object class="IBPartialClassDescription">
+					<string key="className">DPMainViewController</string>
+					<string key="superclassName">UINavContentViewController</string>
+					<object class="NSMutableDictionary" key="outlets">
+						<string key="NS.key.0">navController</string>
+						<string key="NS.object.0">UINavigationController</string>
+					</object>
+					<object class="NSMutableDictionary" key="toOneOutletInfosByName">
+						<string key="NS.key.0">navController</string>
+						<object class="IBToOneOutletInfo" key="NS.object.0">
+							<string key="name">navController</string>
+							<string key="candidateClassName">UINavigationController</string>
+						</object>
+					</object>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">./Classes/DPMainViewController.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">DPRootViewController</string>
+					<string key="superclassName">UINavContentViewController</string>
+					<dictionary class="NSMutableDictionary" key="outlets">
+						<string key="landscapeBottomView">UIView</string>
+						<string key="landscapeContainerView">UIView</string>
+						<string key="landscapeView">UIView</string>
+						<string key="portraitBottomView">UIView</string>
+						<string key="portraitContainerView">UIView</string>
+						<string key="portraitView">UIView</string>
+						<string key="toolbar">UIToolbar</string>
+					</dictionary>
+					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
+						<object class="IBToOneOutletInfo" key="landscapeBottomView">
+							<string key="name">landscapeBottomView</string>
+							<string key="candidateClassName">UIView</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="landscapeContainerView">
+							<string key="name">landscapeContainerView</string>
+							<string key="candidateClassName">UIView</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="landscapeView">
+							<string key="name">landscapeView</string>
+							<string key="candidateClassName">UIView</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="portraitBottomView">
+							<string key="name">portraitBottomView</string>
+							<string key="candidateClassName">UIView</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="portraitContainerView">
+							<string key="name">portraitContainerView</string>
+							<string key="candidateClassName">UIView</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="portraitView">
+							<string key="name">portraitView</string>
+							<string key="candidateClassName">UIView</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="toolbar">
+							<string key="name">toolbar</string>
+							<string key="candidateClassName">UIToolbar</string>
+						</object>
+					</dictionary>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">./Classes/DPRootViewController.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">UINavContentViewController</string>
+					<string key="superclassName">UIViewController</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">./Classes/UINavContentViewController.h</string>
+					</object>
+				</object>
+			</array>
+		</object>
 		<int key="IBDocument.localizationMode">0</int>
 		<string key="IBDocument.TargetRuntimeIdentifier">IBCocoaTouchFramework</string>
 		<bool key="IBDocument.PluginDeclaredDependenciesTrackSystemTargetVersion">YES</bool>

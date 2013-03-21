@@ -20,4 +20,8 @@
 @property (nonatomic) int rowCount;
 @property (nonatomic) int colCount;
 
+
+- (id) initWithContent:(NSMutableArray *)content rows:(int)rows columns:(int)columns;
+- (void) reInitWithRows:(int)rows columns:(int)columns;
+
 @end

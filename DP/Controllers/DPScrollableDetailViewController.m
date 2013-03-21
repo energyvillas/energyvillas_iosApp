@@ -11,7 +11,6 @@
 
 @interface DPScrollableDetailViewController () {
     bool pageControlUsed;
-    int pageCount;
     NSMutableArray *contentRendered;
 }
 
@@ -23,14 +22,30 @@
 @synthesize contentList, currentPage;
 @synthesize colCount, rowCount;
 
-
+bool initializing = NO;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
+        
+        if (self.view)
+            NSLog(@"has view");
+        else
+            NSLog(@"view nil");
     }
+    return self;
+}
+
+- (id) initWithContent:(NSMutableArray *)content rows:(int)rows columns:(int)columns {
+    self = [super init];
+    if (self) {
+        self.contentList = content;
+        self.rowCount = rows;
+        self.colCount = columns;
+    }
+    
     return self;
 }
 
@@ -40,21 +55,26 @@
 	// Do any additional setup after loading the view.
 }
 
-- (void) viewWillAppear:(BOOL)animated {
-    int h = self.view.superview.bounds.size.height;
-    int w = self.view.superview.bounds.size.width;
-    
-    self.view.frame = CGRectMake(0,0, w, h);
-
-    self.scrollView.frame = CGRectMake(0, 0, w, h);
-    
-    self.pageControl.frame = CGRectMake(0, h - pageControl.frame.size.height,
-                                   w, pageControl.frame.size.height);
-
+- (void) viewDidAppear:(BOOL)animated {
+    [self calcFrames];
     [self doInit];
 }
 
-- (void)didReceiveMemoryWarning
+- (void) calcFrames {
+    UIView *v = self.view;
+    UIView *sv = v.superview;
+    int h = sv.bounds.size.height;
+    int w = sv.bounds.size.width;
+    
+    self.view.frame = CGRectMake(0,0, w, h);
+    
+    self.scrollView.frame = CGRectMake(0, 0, w, h);
+    
+    self.pageControl.frame = CGRectMake(0, h - pageControl.frame.size.height,
+                                        w, pageControl.frame.size.height);
+}
+
+- (void) didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -66,6 +86,31 @@
     [super viewDidUnload];
 }
 
+- (void) reInitWithRows:(int)rows columns:(int)columns {
+    int oldpage = self.currentPage;
+    int oldrows = self.rowCount;
+    int oldcols = self.colCount;
+    
+    self.colCount = columns;
+    self.rowCount = rows;
+    self.currentPage = oldpage * oldcols * oldrows / (rows * columns);
+    while (self.scrollView.subviews.count>0) {
+        UIView *v = self.scrollView.subviews[0];
+        [v removeFromSuperview];
+        v = nil;
+    }
+    initializing = YES;
+    [self calcFrames];
+    initializing = false;
+    [self doInit];
+}
+
+- (int) calcPageCount {
+    int rc = self.rowCount * self.colCount;
+	int pageCount = self.contentList.count / rc + (self.contentList.count % rc > 0 ? 1 : 0);
+    return pageCount;
+}
+
 - (void) doInit {
     contentRendered = [[NSMutableArray alloc] init];
     for (unsigned i = 0; i < contentList.count; i++)
@@ -73,30 +118,28 @@
 		[contentRendered addObject: [NSNumber numberWithInt:0]];
     }
 
-    int rc = rowCount * colCount;
-	pageCount = contentList.count / rc + (contentList.count % rc > 0 ? 1 : 0);
+	int pageCount = [self calcPageCount];
     
     // a page is the width of the scroll view
-    scrollView.pagingEnabled = YES;
+    self.scrollView.pagingEnabled = YES;
     int fw = scrollView.frame.size.width;
     int fh = scrollView.frame.size.height;
-    scrollView.contentSize = CGSizeMake(fw * pageCount, fh);
-    scrollView.showsHorizontalScrollIndicator = NO;
-    scrollView.showsVerticalScrollIndicator = NO;
-    scrollView.scrollsToTop = NO;
+    self.scrollView.contentSize = CGSizeMake(fw * pageCount, fh);
+    self.scrollView.showsHorizontalScrollIndicator = NO;
+    self.scrollView.showsVerticalScrollIndicator = NO;
+    self.scrollView.scrollsToTop = NO;
     
-    scrollView.delegate = self;
+    self.scrollView.delegate = self;
 
-    pageControl.numberOfPages = pageCount;
-    pageControl.currentPage = currentPage;
+    self.pageControl.numberOfPages = pageCount;
+    self.pageControl.currentPage = self.currentPage;
 	[self pageChanged:nil];
 }
 
 - (void)loadScrollViewWithPage:(int)page{
-    if (page < 0)
-        return;
-    if (page >= pageCount)
-        return;
+    if (initializing) return;
+    if (page < 0) return;
+    if (page >= self.pageControl.numberOfPages) return;
 
     int w = scrollView.frame.size.width / colCount;
     int h = scrollView.frame.size.height / rowCount;
@@ -120,16 +163,17 @@
 }
 
 - (IBAction)pageChanged:(id)sender {
-    int page = pageControl.currentPage;
+    if (initializing) return;
+    self.currentPage = pageControl.currentPage;
 	
     // load the visible page and the page on either side of it (to avoid flashes when the user starts scrolling)
-    [self loadScrollViewWithPage:page - 1];
-    [self loadScrollViewWithPage:page];
-    [self loadScrollViewWithPage:page + 1];
+    [self loadScrollViewWithPage:self.currentPage - 1];
+    [self loadScrollViewWithPage:self.currentPage];
+    [self loadScrollViewWithPage:self.currentPage + 1];
     
 	// update the scroll view to the appropriate page
     CGRect frame = scrollView.frame;
-    frame.origin.x = frame.size.width * page;
+    frame.origin.x = frame.size.width * self.currentPage;
     frame.origin.y = 0;
     [scrollView scrollRectToVisible:frame animated:YES];
     
@@ -138,6 +182,7 @@
 }
          
 - (void)scrollViewDidScroll:(UIScrollView *)sender{
+    if (initializing) return;
     // We don't want a "feedback loop" between the UIPageControl and the scroll delegate in
     // which a scroll event generated from the user hitting the page control triggers updates from
     // the delegate method. We use a boolean to disable the delegate logic when the page control is used.
@@ -149,13 +194,13 @@
              
     // Switch the indicator when more than 50% of the previous/next page is visible
     CGFloat pageWidth = scrollView.frame.size.width;
-    int page = floor((scrollView.contentOffset.x - pageWidth / 2) / pageWidth) + 1;
-    pageControl.currentPage = page;
+    self.currentPage = floor((scrollView.contentOffset.x - pageWidth / 2) / pageWidth) + 1;
+    pageControl.currentPage = self.currentPage;
              
     // load the visible page and the page on either side of it (to avoid flashes when the user starts scrolling)
-    [self loadScrollViewWithPage:page - 1];
-    [self loadScrollViewWithPage:page];
-    [self loadScrollViewWithPage:page + 1];
+    [self loadScrollViewWithPage:self.currentPage - 1];
+    [self loadScrollViewWithPage:self.currentPage];
+    [self loadScrollViewWithPage:self.currentPage + 1];
             
     // A possible optimization would be to unload the views+controllers which are no longer visible
 }

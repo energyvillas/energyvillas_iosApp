@@ -21,4 +21,6 @@
 @property (weak, nonatomic) IBOutlet UIView *portraitBottomView;
 @property (weak, nonatomic) IBOutlet UIView *landscapeBottomView;
 
+@property (weak, nonatomic) IBOutlet UIToolbar *toolbar;
+
 @end
