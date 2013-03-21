@@ -76,16 +76,24 @@
             self.isPortrait = YES;
             break;
     }
+        
+    UIView *sv;
+    if (self.view == self.navigationController.view)
+        sv = self.view;
+    else
+        sv = self.navigationController.view;//self.view.superview;
+    sv = self.view.superview;
     
-    UIView *sv=self.view.superview;
-    int h = sv.frame.size.height;
-    int w = sv.frame.size.width;
+    int h = sv.bounds.size.height;
+    int w = sv.bounds.size.width;
 
-    int BOTTOM_HEIGHT = 214;
-    if (!self.isPortrait)
-        BOTTOM_HEIGHT = 107;
+    int BOTTOM_HEIGHT;
+    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone)
+        BOTTOM_HEIGHT = (self.isPortrait) ? 214 : 107;
+    else
+        BOTTOM_HEIGHT = (self.isPortrait) ? 400 : 200;
 
-    self.view.frame = CGRectMake(0, 0, w, h);
+    //self.view.frame = CGRectMake(0, 0, w, h);
     int toolbarHeight = self.toolbar.frame.size.height;
     int topHeight = h - toolbarHeight - BOTTOM_HEIGHT;
     self.portraitContainerView.frame = CGRectMake(0, 0, w, topHeight);
@@ -139,6 +147,8 @@
     UIView *bcv = self.portraitBottomView;
     if (bcv == nil) return;
     
+    NSLog(@"bvc frame : (x, y, w, h) = (%f, %f, %f, %f)", bcv.frame.origin.x, bcv.frame.origin.y, bcv.frame.size.width, bcv.frame.size.height);
+
     DPScrollableDetailViewController *detvc;
     if (bcv.subviews.count == 0) {
         NSMutableArray *content = [[NSMutableArray alloc] init];
@@ -156,6 +166,7 @@
         
         [self addChildViewController: detvc];
         [bcv addSubview: detvc.view];
+        
         detvc = nil;
     } else {
         detvc = (DPScrollableDetailViewController *)self.childViewControllers[0];
@@ -211,13 +222,16 @@
     UIView *ofvc = self.portraitContainerView;
     AFOpenFlowView *ofv = nil;
     if (ofvc) {
+        
+        NSLog(@"ofvc frame : (x, y, w, h) = (%f, %f, %f, %f)", ofvc.frame.origin.x, ofvc.frame.origin.y, ofvc.frame.size.width, ofvc.frame.size.height);
+
         ofv = ofvc.subviews.count == 0 ? nil : ofvc.subviews[0];
         if (ofv)
             [ofv removeFromSuperview];
         ofv = nil;
 
         if (ofvc.subviews.count == 0) {
-            ofv = [[AFOpenFlowView alloc] initWithFrame:ofvc.bounds];
+            ofv = [[AFOpenFlowView alloc] initWithFrame:ofvc.frame];
             ofv.viewDelegate = self;
             ofv.dataSource = self;
             
@@ -257,11 +271,24 @@
 
 - (UIImage *) imageForIndex:(int) indx {
     UIImage *img = [UIImage imageNamed:[NSString stringWithFormat:@"%d.jpg", indx]];
-    float h = self.isPortrait
-        ? portraitContainerView.bounds.size.height
-        : landscapeContainerView.bounds.size.height;
-    float w = img.size.width * h / img.size.height;
-    return [img scaleToSize:CGSizeMake(w, h)];
+//    float h = self.isPortrait
+//    ? portraitContainerView.bounds.size.height
+//    : landscapeContainerView.bounds.size.height;
+    //float w = img.size.width * h / img.size.height;
+
+    float vh = portraitContainerView.frame.size.height;
+    float vw = portraitContainerView.frame.size.width;
+    float ih = img.size.height;
+    float iw = img.size.width;
+    if (iw/vw > ih/vh) {
+        ih = ih * (vw / iw);
+        iw = vw; // iw * (vw / iw);
+    } else {
+        iw = iw * (vh / ih);
+        ih = vh; // ih * (vh / ih);
+    }
+    
+    return [img scaleToSize:CGSizeMake(0.8 * iw, 0.8 * ih)];
 }
 
 // protocol AFOpenFlowViewDelegate

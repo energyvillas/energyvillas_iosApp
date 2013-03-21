@@ -15,8 +15,8 @@
 {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
-    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone)
-        self.controller = [[DPMainViewController alloc] init];
+    //if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone)
+        self.controller = [[DPMainViewController alloc] initWithNibName:@"DPMainView" bundle:nil];
     
     self.window.rootViewController = self.controller;
     self.window.backgroundColor = [UIColor whiteColor];

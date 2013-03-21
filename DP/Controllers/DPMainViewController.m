@@ -15,6 +15,7 @@
 @implementation DPMainViewController
 
 @synthesize navController;
+bool framesDone = NO;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -29,7 +30,18 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
-    [self.view addSubview: navController.view];
+    [self.view addSubview: self.navController.view];
+}
+
+- (void) viewWillAppear:(BOOL)animated {
+    if (!framesDone) {
+        CGRect sf = [UIScreen mainScreen].applicationFrame;
+        NSLog(@"appframe : (x, y, w, h) = (%f, %f, %f, %f)", sf.origin.x, sf.origin.y, sf .size.width, sf.size.height);
+        self.view.frame = sf;
+        self.navController.view.frame = CGRectMake(0, 0, sf.size.width, sf.size.height);
+        framesDone = YES;
+    }
+    [super viewWillAppear:animated];
 }
 
 - (void) willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {

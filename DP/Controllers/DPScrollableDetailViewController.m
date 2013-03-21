@@ -63,8 +63,8 @@ bool initializing = NO;
 - (void) calcFrames {
     UIView *v = self.view;
     UIView *sv = v.superview;
-    int h = sv.bounds.size.height;
-    int w = sv.bounds.size.width;
+    int h = sv.frame.size.height;
+    int w = sv.frame.size.width;
     
     self.view.frame = CGRectMake(0,0, w, h);
     
