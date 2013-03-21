@@ -16,6 +16,9 @@
 @property (strong, nonatomic) IBOutlet UIView *landscapeView;
 
 @property (weak, nonatomic) IBOutlet UIView *portraitContainerView;
-@property (weak, nonatomic) IBOutlet UIView *landscapecontainerView;
+@property (weak, nonatomic) IBOutlet UIView *landscapeContainerView;
+
+@property (weak, nonatomic) IBOutlet UIView *portraitBottomView;
+@property (weak, nonatomic) IBOutlet UIView *landscapeBottomView;
 
 @end
