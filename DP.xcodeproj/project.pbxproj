@@ -63,6 +63,7 @@
 		5E9ABBE016F9F3E2000EAB46 /* DPTestView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5E9ABBDF16F9F3E2000EAB46 /* DPTestView.xib */; };
 		5E9ABBE316FB1BB8000EAB46 /* DPScrollableDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E9ABBE216FB1BB8000EAB46 /* DPScrollableDetailViewController.m */; };
 		5E9ABBE516FB1BFC000EAB46 /* DPScrollableDetailView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5E9ABBE416FB1BFC000EAB46 /* DPScrollableDetailView.xib */; };
+		5EC2557D16FC64400045AB99 /* DPImageInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EC2557C16FC64400045AB99 /* DPImageInfo.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -138,6 +139,8 @@
 		5E9ABBE116FB1BB8000EAB46 /* DPScrollableDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPScrollableDetailViewController.h; sourceTree = "<group>"; };
 		5E9ABBE216FB1BB8000EAB46 /* DPScrollableDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPScrollableDetailViewController.m; sourceTree = "<group>"; };
 		5E9ABBE416FB1BFC000EAB46 /* DPScrollableDetailView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DPScrollableDetailView.xib; sourceTree = "<group>"; };
+		5EC2557B16FC64400045AB99 /* DPImageInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPImageInfo.h; sourceTree = "<group>"; };
+		5EC2557C16FC64400045AB99 /* DPImageInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPImageInfo.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -217,6 +220,8 @@
 			children = (
 				5E71A3D516F998D500E7AFF9 /* UINavContentViewController.h */,
 				5E71A3D616F998D500E7AFF9 /* UINavContentViewController.m */,
+				5EC2557B16FC64400045AB99 /* DPImageInfo.h */,
+				5EC2557C16FC64400045AB99 /* DPImageInfo.m */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -451,6 +456,7 @@
 				5E71A3FC16F99DC400E7AFF9 /* DPRootViewController.m in Sources */,
 				5E9ABBDE16F9F3CA000EAB46 /* DPTestViewController.m in Sources */,
 				5E9ABBE316FB1BB8000EAB46 /* DPScrollableDetailViewController.m in Sources */,
+				5EC2557D16FC64400045AB99 /* DPImageInfo.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

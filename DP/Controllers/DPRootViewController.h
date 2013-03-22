@@ -12,15 +12,14 @@
 @interface DPRootViewController : UINavContentViewController
     </*ViewRotationDelegate, */AFOpenFlowViewDataSource, AFOpenFlowViewDelegate>
 
-@property (strong, nonatomic) IBOutlet UIView *portraitView;
-@property (strong, nonatomic) IBOutlet UIView *landscapeView;
-
-@property (weak, nonatomic) IBOutlet UIView *portraitContainerView;
-@property (weak, nonatomic) IBOutlet UIView *landscapeContainerView;
-
-@property (weak, nonatomic) IBOutlet UIView *portraitBottomView;
-@property (weak, nonatomic) IBOutlet UIView *landscapeBottomView;
+@property (strong, nonatomic) IBOutlet UIView *topView;
 
 @property (weak, nonatomic) IBOutlet UIToolbar *toolbar;
+
+@property (strong, nonatomic) IBOutlet UIBarButtonItem *bbiMore;
+
+@property (strong, nonatomic) IBOutlet UIBarButtonItem *bbiBuy;
+
+@property (strong, nonatomic) IBOutlet UIView *bottomView;
 
 @end

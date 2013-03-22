@@ -8,6 +8,8 @@
 
 #import "DPScrollableDetailViewController.h"
 #import "../External/ImageHelper/ImageResizing.h"
+#import "../Classes/DPImageInfo.h"
+#import "DPTestViewController.h"
 
 @interface DPScrollableDetailViewController () {
     bool pageControlUsed;
@@ -155,13 +157,32 @@ bool initializing = NO;
                     int iY = h * r;
                     UIImageView *iv = [[UIImageView alloc]
                                        initWithFrame:CGRectMake(iX, iY, w, h)];
-                    iv.image = [(UIImage *)contentList[indx] scaleToSize:CGSizeMake(w, h)];
+                    iv.image = [((DPImageInfo *)contentList[indx]).image scaleToSize:CGSizeMake(w, h)];
+                    iv.tag = indx;
+                    UITapGestureRecognizer *tapper = [[UITapGestureRecognizer alloc]
+                                                      initWithTarget:self action:@selector(handleTap:)];
+                    [iv addGestureRecognizer:tapper];
+                    iv.userInteractionEnabled = YES;
+                    
                     [scrollView addSubview:iv];
                     contentRendered[indx] = [NSNumber numberWithInt:1];
                 }
         }
 }
 
+- (void)handleTap:(UITapGestureRecognizer *)sender {
+    if (sender.state == UIGestureRecognizerStateEnded) {
+        // handling code
+        int indx = sender.view.tag;
+        DPImageInfo * ii = contentList[indx];
+        NSLog(@"Clicked image at index %i named %@", indx, ii.name);
+        
+        // navigation logic goes here. create and push a new view controller;
+        DPTestViewController *vc = [[DPTestViewController alloc] init];
+        [self.navigationController pushViewController: vc animated: YES];
+    }
+}
+    
 - (IBAction)pageChanged:(id)sender {
     if (initializing) return;
     self.currentPage = pageControl.currentPage;
