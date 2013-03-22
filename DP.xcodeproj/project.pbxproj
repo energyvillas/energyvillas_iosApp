@@ -64,6 +64,7 @@
 		5E9ABBE316FB1BB8000EAB46 /* DPScrollableDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E9ABBE216FB1BB8000EAB46 /* DPScrollableDetailViewController.m */; };
 		5E9ABBE516FB1BFC000EAB46 /* DPScrollableDetailView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5E9ABBE416FB1BFC000EAB46 /* DPScrollableDetailView.xib */; };
 		5EC2557D16FC64400045AB99 /* DPImageInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EC2557C16FC64400045AB99 /* DPImageInfo.m */; };
+		5EC2557F16FC6E480045AB99 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5EC2557E16FC6E480045AB99 /* StoreKit.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -141,6 +142,7 @@
 		5E9ABBE416FB1BFC000EAB46 /* DPScrollableDetailView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DPScrollableDetailView.xib; sourceTree = "<group>"; };
 		5EC2557B16FC64400045AB99 /* DPImageInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPImageInfo.h; sourceTree = "<group>"; };
 		5EC2557C16FC64400045AB99 /* DPImageInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPImageInfo.m; sourceTree = "<group>"; };
+		5EC2557E16FC6E480045AB99 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -148,6 +150,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5EC2557F16FC6E480045AB99 /* StoreKit.framework in Frameworks */,
 				5E71A3F016F99A0500E7AFF9 /* QuartzCore.framework in Frameworks */,
 				5E71A3B816F9973500E7AFF9 /* UIKit.framework in Frameworks */,
 				5E71A3BA16F9973500E7AFF9 /* Foundation.framework in Frameworks */,
@@ -178,6 +181,7 @@
 		5E71A3B616F9973500E7AFF9 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				5EC2557E16FC6E480045AB99 /* StoreKit.framework */,
 				5E71A3B716F9973500E7AFF9 /* UIKit.framework */,
 				5E71A3B916F9973500E7AFF9 /* Foundation.framework */,
 				5E71A3BB16F9973500E7AFF9 /* CoreGraphics.framework */,
