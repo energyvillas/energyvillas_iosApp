@@ -7,21 +7,37 @@
 //
 
 #import "DPAppDelegate.h"
+#import "Classes/DPIAPHelper.h"
 #import "Controllers/DPMainViewController.h"
+#import "ControllersPaid/DPPaidMainViewController.h"
 
 @implementation DPAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    [DPIAPHelper sharedInstance];
+    
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
-    //if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone)
-        self.controller = [[DPMainViewController alloc] initWithNibName:@"DPMainView" bundle:nil];
+    
+    if ([self isPurchased])
+        self.controller = [[DPPaidMainViewController alloc]
+                           initWithNibName:@"DPPaidMainView" bundle:nil];
+    else
+        self.controller = [[DPMainViewController alloc] init];
+                           //initWithNibName:@"DPMainView" bundle:nil];
     
     self.window.rootViewController = self.controller;
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
     return YES;
+}
+
+- (bool) isPurchased {
+    return  YES;
+    BOOL productPurchased = [[NSUserDefaults standardUserDefaults]
+                             boolForKey:PRODUCT_IDENTIFIER];
+    return productPurchased;
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application

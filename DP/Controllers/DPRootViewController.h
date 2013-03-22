@@ -10,11 +10,11 @@
 #import "../External/OpenFlow/AFOpenFlowView.h"
 
 @interface DPRootViewController : UINavContentViewController
-    </*ViewRotationDelegate, */AFOpenFlowViewDataSource, AFOpenFlowViewDelegate>
+    <AFOpenFlowViewDataSource, AFOpenFlowViewDelegate>
 
 @property (strong, nonatomic) IBOutlet UIView *topView;
 
-@property (weak, nonatomic) IBOutlet UIToolbar *toolbar;
+@property (strong, nonatomic) IBOutlet UIToolbar *toolbar;
 
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *bbiMore;
 

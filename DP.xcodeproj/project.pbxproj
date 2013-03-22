@@ -65,6 +65,12 @@
 		5E9ABBE516FB1BFC000EAB46 /* DPScrollableDetailView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5E9ABBE416FB1BFC000EAB46 /* DPScrollableDetailView.xib */; };
 		5EC2557D16FC64400045AB99 /* DPImageInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EC2557C16FC64400045AB99 /* DPImageInfo.m */; };
 		5EC2557F16FC6E480045AB99 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5EC2557E16FC6E480045AB99 /* StoreKit.framework */; };
+		5EC2558416FC71BD0045AB99 /* IAPHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EC2558316FC71BD0045AB99 /* IAPHelper.m */; };
+		5EC2558716FC73430045AB99 /* DPIAPHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EC2558616FC73430045AB99 /* DPIAPHelper.m */; };
+		5EC2559116FC79E10045AB99 /* DPPaidRootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EC2559016FC79E10045AB99 /* DPPaidRootViewController.m */; };
+		5EC2559416FC7A070045AB99 /* DPPaidMainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EC2559316FC7A070045AB99 /* DPPaidMainViewController.m */; };
+		5EC2559616FC7A2B0045AB99 /* DPPaidMainView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5EC2559516FC7A2B0045AB99 /* DPPaidMainView.xib */; };
+		5EC2559816FC7B1E0045AB99 /* DPPaidRootView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5EC2559716FC7B1E0045AB99 /* DPPaidRootView.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -143,6 +149,16 @@
 		5EC2557B16FC64400045AB99 /* DPImageInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPImageInfo.h; sourceTree = "<group>"; };
 		5EC2557C16FC64400045AB99 /* DPImageInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPImageInfo.m; sourceTree = "<group>"; };
 		5EC2557E16FC6E480045AB99 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
+		5EC2558216FC71BD0045AB99 /* IAPHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAPHelper.h; sourceTree = "<group>"; };
+		5EC2558316FC71BD0045AB99 /* IAPHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAPHelper.m; sourceTree = "<group>"; };
+		5EC2558516FC73430045AB99 /* DPIAPHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPIAPHelper.h; sourceTree = "<group>"; };
+		5EC2558616FC73430045AB99 /* DPIAPHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPIAPHelper.m; sourceTree = "<group>"; };
+		5EC2558F16FC79E10045AB99 /* DPPaidRootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPPaidRootViewController.h; sourceTree = "<group>"; };
+		5EC2559016FC79E10045AB99 /* DPPaidRootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPPaidRootViewController.m; sourceTree = "<group>"; };
+		5EC2559216FC7A070045AB99 /* DPPaidMainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPPaidMainViewController.h; sourceTree = "<group>"; };
+		5EC2559316FC7A070045AB99 /* DPPaidMainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPPaidMainViewController.m; sourceTree = "<group>"; };
+		5EC2559516FC7A2B0045AB99 /* DPPaidMainView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = DPPaidMainView.xib; path = DP/ControllersPaid/DPPaidMainView.xib; sourceTree = SOURCE_ROOT; };
+		5EC2559716FC7B1E0045AB99 /* DPPaidRootView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = DPPaidRootView.xib; path = DP/ControllersPaid/DPPaidRootView.xib; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -195,6 +211,8 @@
 			children = (
 				5E71A3C616F9973500E7AFF9 /* DPAppDelegate.h */,
 				5E71A3C716F9973500E7AFF9 /* DPAppDelegate.m */,
+				5EC2558816FC76FC0045AB99 /* ControllersPaid */,
+				5EC2558C16FC77830045AB99 /* ViewsPaid */,
 				5E71A3F116F99AB500E7AFF9 /* Controllers */,
 				5E71A3F516F99BAD00E7AFF9 /* Views */,
 				5E71A3D416F998D500E7AFF9 /* Classes */,
@@ -226,6 +244,8 @@
 				5E71A3D616F998D500E7AFF9 /* UINavContentViewController.m */,
 				5EC2557B16FC64400045AB99 /* DPImageInfo.h */,
 				5EC2557C16FC64400045AB99 /* DPImageInfo.m */,
+				5EC2558516FC73430045AB99 /* DPIAPHelper.h */,
+				5EC2558616FC73430045AB99 /* DPIAPHelper.m */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -233,6 +253,7 @@
 		5E71A3D816F9991000E7AFF9 /* External */ = {
 			isa = PBXGroup;
 			children = (
+				5EC2558116FC71BD0045AB99 /* IAPHelper */,
 				5E71A3D916F9991000E7AFF9 /* Components */,
 				5E71A3DC16F9991000E7AFF9 /* ImageHelper */,
 				5E71A3DF16F9991000E7AFF9 /* OpenFlow */,
@@ -346,6 +367,35 @@
 			path = CoverImages;
 			sourceTree = "<group>";
 		};
+		5EC2558116FC71BD0045AB99 /* IAPHelper */ = {
+			isa = PBXGroup;
+			children = (
+				5EC2558216FC71BD0045AB99 /* IAPHelper.h */,
+				5EC2558316FC71BD0045AB99 /* IAPHelper.m */,
+			);
+			path = IAPHelper;
+			sourceTree = "<group>";
+		};
+		5EC2558816FC76FC0045AB99 /* ControllersPaid */ = {
+			isa = PBXGroup;
+			children = (
+				5EC2559216FC7A070045AB99 /* DPPaidMainViewController.h */,
+				5EC2559316FC7A070045AB99 /* DPPaidMainViewController.m */,
+				5EC2558F16FC79E10045AB99 /* DPPaidRootViewController.h */,
+				5EC2559016FC79E10045AB99 /* DPPaidRootViewController.m */,
+			);
+			path = ControllersPaid;
+			sourceTree = "<group>";
+		};
+		5EC2558C16FC77830045AB99 /* ViewsPaid */ = {
+			isa = PBXGroup;
+			children = (
+				5EC2559516FC7A2B0045AB99 /* DPPaidMainView.xib */,
+				5EC2559716FC7B1E0045AB99 /* DPPaidRootView.xib */,
+			);
+			path = ViewsPaid;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -437,6 +487,8 @@
 				5E71A43E16F9B5F900E7AFF9 /* Read me.txt in Resources */,
 				5E9ABBE016F9F3E2000EAB46 /* DPTestView.xib in Resources */,
 				5E9ABBE516FB1BFC000EAB46 /* DPScrollableDetailView.xib in Resources */,
+				5EC2559616FC7A2B0045AB99 /* DPPaidMainView.xib in Resources */,
+				5EC2559816FC7B1E0045AB99 /* DPPaidRootView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -461,6 +513,10 @@
 				5E9ABBDE16F9F3CA000EAB46 /* DPTestViewController.m in Sources */,
 				5E9ABBE316FB1BB8000EAB46 /* DPScrollableDetailViewController.m in Sources */,
 				5EC2557D16FC64400045AB99 /* DPImageInfo.m in Sources */,
+				5EC2558416FC71BD0045AB99 /* IAPHelper.m in Sources */,
+				5EC2558716FC73430045AB99 /* DPIAPHelper.m in Sources */,
+				5EC2559116FC79E10045AB99 /* DPPaidRootViewController.m in Sources */,
+				5EC2559416FC7A070045AB99 /* DPPaidMainViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

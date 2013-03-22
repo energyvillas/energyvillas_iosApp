@@ -8,11 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
-@class DPMainViewController;
 
 @interface DPAppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
-@property (strong, nonatomic) DPMainViewController *controller;
+@property (strong, nonatomic) UIViewController *controller;
 
 @end

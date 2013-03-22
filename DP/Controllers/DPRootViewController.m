@@ -8,19 +8,18 @@
 
 #import "DPRootViewController.h"
 #import "DPTestViewController.h"
-//#import "../External/ImageHelper/ImageResizing.h"
 #import "../External/OpenFlow/UIImageExtras.h"
 #import "DPScrollableDetailViewController.h"
 #import "../Classes/DPImageInfo.h"
 
 @interface DPRootViewController ()
 
-@property int currentIndex;
-@property bool isPortrait;
-
 @end
 
-@implementation DPRootViewController
+@implementation DPRootViewController {
+    int currentIndex;
+    bool isPortrait;
+}
 
 @synthesize topView, toolbar, bbiBuy, bbiMore, bottomView;
 
@@ -30,8 +29,7 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
-        //self.rotationDelegate = self;
-        self.currentIndex = -1;
+        currentIndex = -1;
     }
     return self;
 }
@@ -51,19 +49,19 @@
 - (void) layoutForOrientation:(UIInterfaceOrientation)toOrientation {
     switch (toOrientation) {
         case UIInterfaceOrientationLandscapeLeft:
-            self.isPortrait = NO;
+            isPortrait = NO;
             break;
             
         case UIInterfaceOrientationLandscapeRight:
-            self.isPortrait = NO;
+            isPortrait = NO;
             break;
             
         case UIInterfaceOrientationPortraitUpsideDown:
-            self.isPortrait = YES;
+            isPortrait = YES;
             break;
             
         case UIInterfaceOrientationPortrait:
-            self.isPortrait = YES;
+            isPortrait = YES;
             break;
     }
         
@@ -75,9 +73,9 @@
 
     int BOTTOM_HEIGHT;
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone)
-        BOTTOM_HEIGHT = (self.isPortrait) ? 214 : 107;
+        BOTTOM_HEIGHT = (isPortrait) ? 214 : 107;
     else
-        BOTTOM_HEIGHT = (self.isPortrait) ? 400 : 200;
+        BOTTOM_HEIGHT = (isPortrait) ? 400 : 200;
 
     //self.view.frame = CGRectMake(0, 0, w, h);
     int toolbarHeight = self.toolbar.frame.size.height;
@@ -104,7 +102,7 @@
                                 initWithName:[NSString stringWithFormat:@"%d.jpg", i+5]
                                 image:[self imageForIndex:i+5 withFrame:nil]]];
         
-        if (self.isPortrait)
+        if (isPortrait)
             detvc = [[DPScrollableDetailViewController alloc]
                      initWithContent:content rows:2 columns:2];
         else
@@ -119,7 +117,7 @@
         detvc = nil;
     } else {
         detvc = (DPScrollableDetailViewController *)self.childViewControllers[0];
-        if (self.isPortrait) {
+        if (isPortrait) {
             [detvc reInitWithRows:2 columns:2];
         } else {
             [detvc reInitWithRows:1 columns:3];
@@ -153,13 +151,13 @@
             [ofv setImage:[self imageForIndex:i-imgBase withFrame:&topFrame] forIndex:i-imgBase];
             
         [ofv setNumberOfImages:imgCount-imgBase];
-        if (self.currentIndex != -1)
-            [ofv setSelectedCover: self.currentIndex];
+        if (currentIndex != -1)
+            [ofv setSelectedCover: currentIndex];
     }
     else {
         ofv = ofvc.subviews[0];
-        if (self.currentIndex != -1)
-            [ofv setSelectedCover: self.currentIndex];
+        if (currentIndex != -1)
+            [ofv setSelectedCover: currentIndex];
     }
 }
 
@@ -169,8 +167,8 @@
 
     if (ofvc.subviews.count != 0) {
         ofv = ofvc.subviews[0];
-        if (self.currentIndex != -1)
-            [ofv setSelectedCover: self.currentIndex];
+        if (currentIndex != -1)
+            [ofv setSelectedCover: currentIndex];
         [ofv centerOnSelectedCover:YES];
     }
 }
@@ -210,7 +208,7 @@
 }
 
 - (void) openFlowView:(AFOpenFlowView *)openFlowView selectionDidChange:(int)index {
-    self.currentIndex = index;
+    currentIndex = index;
 }
 
 

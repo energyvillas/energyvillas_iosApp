@@ -13,8 +13,6 @@
 
 @implementation UINavContentViewController
 
-//@synthesize rotationDelegate;
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -23,7 +21,6 @@
 }
 
 - (void) viewWillAppear:(BOOL)animated {
-    //[self doLayoutForOrientation:[UINavContentViewController interfaceFromDeviceOrientation:[[UIDevice currentDevice] orientation]]];
     [self layoutForOrientation:[UINavContentViewController interfaceFromDeviceOrientation:[[UIDevice currentDevice] orientation]]];
 }
 
@@ -42,28 +39,10 @@
             return UIInterfaceOrientationPortrait;
     }
 }
-/*
-- (void) doLayoutForOrientation:(UIInterfaceOrientation) toOrientation {
-    if ([self.rotationDelegate respondsToSelector:@selector(layoutForOrientation:)])
-        [self.rotationDelegate layoutForOrientation:toOrientation];
-}
-*/
 
 - (void) layoutForOrientation:(UIInterfaceOrientation) toOrientation {
 }
-/*
-- (void) willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
-    //[super willAnimateRotationToInterfaceOrientation:toInterfaceOrientation duration:duration];
-    
-    //[self doLayoutForOrientation:toInterfaceOrientation];
-}
-- (void) willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
-	[super willRotateToInterfaceOrientation:toInterfaceOrientation
-								   duration:duration];
-    
-    //[self doLayoutForOrientation:toInterfaceOrientation];
-}
-*/
+
 - (BOOL) shouldAutorotate {
     return YES;
 }

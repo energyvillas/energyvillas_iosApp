@@ -1,23 +1,22 @@
 //
-//  DPMainViewController.m
+//  DPPaidMainViewController.m
 //  DP
 //
-//  Created by Γεώργιος Γράβος on 3/20/13.
+//  Created by Γεώργιος Γράβος on 3/22/13.
 //  Copyright (c) 2013 Γεώργιος Γράβος. All rights reserved.
 //
 
-#import "DPMainViewController.h"
+#import "DPPaidMainViewController.h"
 
-@interface DPMainViewController ()
+@interface DPPaidMainViewController ()
 
 @end
 
-@implementation DPMainViewController {
+@implementation DPPaidMainViewController {
     bool framesDone;
 }
 
 @synthesize navController;
-
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
