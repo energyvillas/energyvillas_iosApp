@@ -11,9 +11,14 @@
 #import "../Classes/DPImageInfo.h"
 #import "DPTestViewController.h"
 
+#define AUTO_SCROLL_INTERVAL ((float) 3.0)
+
 @interface DPScrollableDetailViewController () {
-    bool pageControlUsed;
+    bool pageControlUsed, timerUsed;
+    int userTimerActive;
     NSMutableArray *contentRendered;
+    NSTimer *timer;
+    int TIMED_SCROLL_WIDTH;
 }
 
 @end
@@ -135,7 +140,33 @@ bool initializing = NO;
 
     self.pageControl.numberOfPages = pageCount;
     self.pageControl.currentPage = self.currentPage;
+    
+    TIMED_SCROLL_WIDTH = fw;
+    [self engageAutoTimer];
 	[self pageChanged:nil];
+}
+
+- (void) engageAutoTimer {
+    if (timer == nil) {
+        timer = [NSTimer scheduledTimerWithTimeInterval:AUTO_SCROLL_INTERVAL target:self selector:@selector(onTimer) userInfo:nil repeats:YES];
+    }
+}
+
+- (void) onTimer {
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setTimeStyle:NSDateFormatterLongStyle];
+    [dateFormatter setDateStyle:NSDateFormatterNoStyle];
+    
+    NSLog(@"onTimer - time: %@", [dateFormatter stringFromDate:[NSDate date]]);
+    //This makes the scrollView scroll to the desired position
+    //[scrollView setContentOffset:CGPointMake(TIMED_SCROLL_WIDTH, 0) animated:YES];
+    int cp = self.pageControl.currentPage + 1;
+    int pc = self.pageControl.numberOfPages;
+    if (cp == pc)
+        cp = 0;
+    self.pageControl.currentPage = cp;
+    timerUsed = YES;
+    [self pageChanged:nil];
 }
 
 - (void)loadScrollViewWithPage:(int)page{
@@ -200,9 +231,13 @@ bool initializing = NO;
     
 	// Set the boolean used when scrolls originate from the UIPageControl. See scrollViewDidScroll: above.
     pageControlUsed = YES;
+    timerUsed = NO;
+    if (sender != nil)
+        [self engageUserTimer];
 }
          
 - (void)scrollViewDidScroll:(UIScrollView *)sender{
+    if (timerUsed) return;
     if (initializing) return;
     // We don't want a "feedback loop" between the UIPageControl and the scroll delegate in
     // which a scroll event generated from the user hitting the page control triggers updates from
@@ -231,13 +266,33 @@ bool initializing = NO;
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
 {
     pageControlUsed = NO;
+    [self engageUserTimer];
 }
          
 // At the end of scroll animation, reset the boolean used when scrolls originate from the UIPageControl
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
 {
     pageControlUsed = NO;
+    [self engageUserTimer];
 }
-         
+
+- (void) engageUserTimer {
+    if (!timerUsed) {
+        userTimerActive++;
+        [NSTimer scheduledTimerWithTimeInterval:5 * AUTO_SCROLL_INTERVAL
+                                target:self
+                                selector:@selector(onUserTimer)
+                                userInfo:nil repeats:NO];
+        
+        [timer invalidate];
+        timer = nil;
+    }
+}
+
+- (void) onUserTimer {
+    userTimerActive--;
+    if (userTimerActive == 0)
+        [self engageAutoTimer];
+}
 
 @end
