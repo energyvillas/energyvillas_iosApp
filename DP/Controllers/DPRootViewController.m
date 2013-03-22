@@ -8,7 +8,8 @@
 
 #import "DPRootViewController.h"
 #import "DPTestViewController.h"
-#import "../External/ImageHelper/ImageResizing.h"
+//#import "../External/ImageHelper/ImageResizing.h"
+#import "../External/OpenFlow/UIImageExtras.h"
 #import "DPScrollableDetailViewController.h"
 
 @interface DPRootViewController ()
@@ -276,19 +277,25 @@
 //    : landscapeContainerView.bounds.size.height;
     //float w = img.size.width * h / img.size.height;
 
+    float coeff = 1.0;
     float vh = portraitContainerView.frame.size.height;
     float vw = portraitContainerView.frame.size.width;
     float ih = img.size.height;
     float iw = img.size.width;
-    if (iw/vw > ih/vh) {
-        ih = ih * (vw / iw);
-        iw = vw; // iw * (vw / iw);
-    } else {
-        iw = iw * (vh / ih);
-        ih = vh; // ih * (vh / ih);
-    }
+    if (iw/vw > ih/vh)
+        coeff = (vw / iw);
+    else
+        coeff = (vh / ih);
     
-    return [img scaleToSize:CGSizeMake(0.8 * iw, 0.8 * ih)];
+    if (coeff > 1.5) coeff = 1.5;
+    
+    ih = ih * coeff;
+    iw = iw * coeff;
+    
+    NSLog(@"scaling image %d.jpg from (%f, %f) => (%f, %f)", indx, img.size.width, img.size.height, 0.8*iw, 0.8*ih);
+//    return [img scaleToSize:CGSizeMake(0.8 * iw, 0.8 * ih)];
+    return [img rescaleImageToSize:CGSizeMake(iw, ih)];
+
 }
 
 // protocol AFOpenFlowViewDelegate
