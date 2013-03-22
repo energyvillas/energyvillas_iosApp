@@ -9,8 +9,9 @@
 #import "DPRootViewController.h"
 #import "DPTestViewController.h"
 #import "../External/OpenFlow/UIImageExtras.h"
-#import "DPScrollableDetailViewController.h"
+//#import "DPScrollableDetailViewController.h"
 #import "../Classes/DPImageInfo.h"
+#import "DPCtgScrollViewController.h"
 
 @interface DPRootViewController ()
 
@@ -94,7 +95,8 @@
     
     NSLog(@"bvc frame : (x, y, w, h) = (%f, %f, %f, %f)", bcv.frame.origin.x, bcv.frame.origin.y, bcv.frame.size.width, bcv.frame.size.height);
 
-    DPScrollableDetailViewController *detvc;
+    //DPScrollableDetailViewController *detvc;
+    DPCtgScrollViewController *detvc;
     if (bcv.subviews.count == 0) {
         NSMutableArray *content = [[NSMutableArray alloc] init];
         for (int i = 0; i<8; i++)
@@ -103,10 +105,10 @@
                                 image:[self imageForIndex:i+5 withFrame:nil]]];
         
         if (isPortrait)
-            detvc = [[DPScrollableDetailViewController alloc]
+            detvc = [[DPCtgScrollViewController alloc]
                      initWithContent:content rows:2 columns:2];
         else
-            detvc = [[DPScrollableDetailViewController alloc]
+            detvc = [[DPCtgScrollViewController alloc]
                      initWithContent:content rows:1 columns:3];
         
         content = nil;
@@ -116,11 +118,11 @@
         
         detvc = nil;
     } else {
-        detvc = (DPScrollableDetailViewController *)self.childViewControllers[0];
+        detvc = (DPCtgScrollViewController *)self.childViewControllers[0];
         if (isPortrait) {
-            [detvc reInitWithRows:2 columns:2];
+            [detvc changeRows:2 columns:2];
         } else {
-            [detvc reInitWithRows:1 columns:3];
+            [detvc changeRows:1 columns:3];
         }
         
     }
@@ -202,9 +204,21 @@
     NSLog(@"Clicked image at index %i", index);
     
     // navigation logic goes here. create and push a new view controller;
-    DPTestViewController *vc = [[DPTestViewController alloc] init];
-    [self.navigationController pushViewController: vc animated: YES];
-    vc = nil;
+    //DPTestViewController *vc = [[DPTestViewController alloc] init];
+    //[self.navigationController pushViewController: vc animated: YES];
+    //
+    DPCtgScrollViewController *detvc;
+
+    NSMutableArray *content = [[NSMutableArray alloc] init];
+    for (int i = 0; i<8; i++)
+        [content addObject:[[DPImageInfo alloc]
+                            initWithName:[NSString stringWithFormat:@"%d.jpg", i+5]
+                            image:[self imageForIndex:i+5 withFrame:nil]]];
+
+    detvc = [[DPCtgScrollViewController alloc]
+                    initWithContent:content rows:1 columns:1];
+    
+    [self.navigationController pushViewController:detvc animated:YES];
 }
 
 - (void) openFlowView:(AFOpenFlowView *)openFlowView selectionDidChange:(int)index {

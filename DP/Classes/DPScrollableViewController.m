@@ -6,21 +6,21 @@
 //  Copyright (c) 2013 Γεώργιος Γράβος. All rights reserved.
 //
 
-#import "DPScrollableDetailViewController.h"
+#import "DPScrollableViewController.h"
 #import "../External/ImageHelper/ImageResizing.h"
 #import "../Classes/DPImageInfo.h"
 #import "DPTestViewController.h"
 
 #define AUTO_SCROLL_INTERVAL ((float) 3.0)
 
-@interface DPScrollableDetailViewController () {
-}
+@interface DPScrollableViewController ()
+
+@property (nonatomic) int currentPage;
 
 @end
 
-@implementation DPScrollableDetailViewController {
-    bool initializing;
-    bool pageControlUsed, timerUsed;
+@implementation DPScrollableViewController {
+    bool initializing, pageControlUsed, timerUsed;
     int userTimerActive;
     NSMutableArray *contentRendered;
     NSTimer *timer;
@@ -45,12 +45,15 @@
     return self;
 }
 
-- (id) initWithContent:(NSMutableArray *)content rows:(int)rows columns:(int)columns {
+- (id) initWithContent:(NSArray *)content {
     self = [super init];
     if (self) {
         self.contentList = content;
-        self.rowCount = rows;
-        self.colCount = columns;
+        self.view = [[UIView alloc] init];
+        self.scrollView = [[UIScrollView alloc] init];
+        self.pageControl = [[UIPageControl alloc] init];
+        [self.view addSubview:self.scrollView];
+        [self.view addSubview:self.pageControl];
     }
     
     return self;
@@ -93,7 +96,7 @@
     [super viewDidUnload];
 }
 
-- (void) reInitWithRows:(int)rows columns:(int)columns {
+- (void) changeRows:(int)rows columns:(int)columns {
     int oldpage = self.currentPage;
     int oldrows = self.rowCount;
     int oldcols = self.colCount;
