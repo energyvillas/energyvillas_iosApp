@@ -33,6 +33,7 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
+   // self.tbiBuy.title = NSLocalizedStringWithDefaultValue(<#key#>, <#tbl#>, <#bundle#>, <#val#>, <#comment#>)
     self.tabBar.delegate = self;
 }
 
@@ -60,12 +61,18 @@
     int h = sv.bounds.size.height;
     int w = sv.bounds.size.width;
     
+    // iphone sizes
     int H_ADS = 44;
     int H_NEW_NEXT = 100;
-    
     int HL_ADS = 44;
-    
     int WL_NEW_NEXT = 160;
+    
+    // ipad sizes
+    int PAD_H_ADS = 44;
+    int PAD_H_NEW_NEXT = 100;
+    int PAD_HL_ADS = 44;
+    int PAD_WL_NEW_NEXT = 160;
+    
     
     int tabBarHeight = self.tabBar.frame.size.height;
     // ph : 44, 100, 267
@@ -88,9 +95,19 @@
         }
     } else {
         if (isPortrait) {
-            
+            self.adsView.frame = CGRectMake(0, 0, w, PAD_H_ADS);
+            self.nnView.frame = CGRectMake(0, PAD_H_ADS,
+                                           w, PAD_H_NEW_NEXT);
+            self.mmView.frame = CGRectMake(0, PAD_H_ADS + PAD_H_NEW_NEXT,
+                                           w, h - PAD_H_ADS - PAD_H_NEW_NEXT - tabBarHeight);
+            self.tabBar.frame = CGRectMake(0, h - tabBarHeight, w, tabBarHeight);
         } else {
-            
+            self.adsView.frame = CGRectMake(0, 0, w, PAD_HL_ADS);
+            self.nnView.frame = CGRectMake(0, PAD_H_ADS,
+                                           PAD_WL_NEW_NEXT, h - PAD_HL_ADS - tabBarHeight);
+            self.mmView.frame = CGRectMake(PAD_WL_NEW_NEXT, PAD_H_ADS,
+                                           w - PAD_WL_NEW_NEXT, h - PAD_HL_ADS - tabBarHeight);
+            self.tabBar.frame = CGRectMake(0, h - tabBarHeight, w, tabBarHeight);
         }
     }
         

@@ -27,8 +27,10 @@
 
 - (id) initWithContent:(NSMutableArray *)content rows:(int)rows columns:(int)columns {
     self = [super initWithContent:content];
-    if (self)
-        [self changeRows:rows columns:columns];
+    if (self) {
+        self.rowCount = rows;
+        self.colCount = columns;
+    }
     
     return self;
 }

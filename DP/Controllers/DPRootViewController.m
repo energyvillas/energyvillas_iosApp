@@ -12,6 +12,7 @@
 //#import "DPScrollableDetailViewController.h"
 #import "../Classes/DPImageInfo.h"
 #import "DPCtgScrollViewController.h"
+#import "../Classes/DPImageContentViewController.h"
 
 @interface DPRootViewController ()
 
@@ -195,7 +196,7 @@
     ih = ih * coeff;
     iw = iw * coeff;
     
-    NSLog(@"scaling image %d.jpg from (%f, %f) => (%f, %f)", indx, img.size.width, img.size.height, 0.8*iw, 0.8*ih);
+    NSLog(@"scaling image %d.jpg from (%f, %f) => (%f, %f)", indx, img.size.width, img.size.height, iw, ih);
     return [img rescaleImageToSize:CGSizeMake(iw, ih)];
 }
 
@@ -207,6 +208,7 @@
     //DPTestViewController *vc = [[DPTestViewController alloc] init];
     //[self.navigationController pushViewController: vc animated: YES];
     //
+    /*
     DPCtgScrollViewController *detvc;
 
     NSMutableArray *content = [[NSMutableArray alloc] init];
@@ -217,8 +219,22 @@
 
     detvc = [[DPCtgScrollViewController alloc]
                     initWithContent:content rows:1 columns:1];
-    
-    [self.navigationController pushViewController:detvc animated:YES];
+    */
+/*
+ CGRect aframe = CGRectMake(0, 0,
+                               self.view.superview.bounds.size.width,
+                               self.view.superview.bounds.size.height) ;
+*/
+    DPImageContentViewController *vc = [[DPImageContentViewController alloc] initWithImageName:[NSString stringWithFormat:@"%d.jpg", index]];
+/*
+    vc.view = [[UIView alloc] initWithFrame:aframe];
+    UIImageView *imgView = [[UIImageView alloc] initWithFrame:aframe];
+    imgView.contentMode = UIViewContentModeScaleAspectFill;
+    imgView.userInteractionEnabled = YES;
+    imgView.image = [UIImage imageNamed:[NSString stringWithFormat:@"%d.jpg", index]];
+    [vc.view addSubview: imgView];
+*/    
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 - (void) openFlowView:(AFOpenFlowView *)openFlowView selectionDidChange:(int)index {

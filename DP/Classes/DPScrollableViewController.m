@@ -177,31 +177,51 @@
     if (page < 0) return;
     if (page >= self.pageControl.numberOfPages) return;
 
-    int w = scrollView.frame.size.width / colCount;
-    int h = scrollView.frame.size.height / rowCount;
+    int pageWidth = scrollView.frame.size.width;
+    int colWidth = pageWidth / colCount;
+    int rowHeight = scrollView.frame.size.height / rowCount;
+    int rowHeightResidue = (int)scrollView.frame.size.height % rowCount;
     
+    int posY = 0;
     for (int r = 0; r<rowCount; r++)
+    {
+        int fixHeight = (rowHeightResidue > 0 ? 1 : 0);
+        rowHeightResidue = rowHeightResidue > 0 ? rowHeightResidue - 1 : 0;
+        posY = posY + (rowHeight + fixHeight) * (r == 0 ? 0 : 1);
+        int colWidthResidue = pageWidth % colCount;
+        
+        int posX = page * pageWidth;
         for (int c = 0; c<colCount; c++)
         {
+            int fixWidth = (colWidthResidue > 0 ? 1 : 0);
+            colWidthResidue = colWidthResidue > 0 ? colWidthResidue - 1 : 0;
+            posX = posX + (colWidth + fixWidth) * (c == 0 ? 0 : 1);
             int indx = page * (rowCount * colCount) + r * colCount + c;
             
             if (indx < contentList.count)
                 if (((NSNumber *)contentRendered[indx]).intValue == 0) {
-                    int iX = page * w  * colCount + w * c;
-                    int iY = h * r;
-                    UIImageView *iv = [[UIImageView alloc]
-                                       initWithFrame:CGRectMake(iX, iY, w, h)];
-                    iv.image = [((DPImageInfo *)contentList[indx]).image scaleToSize:CGSizeMake(w, h)];
-                    iv.tag = indx;
-                    UITapGestureRecognizer *tapper = [[UITapGestureRecognizer alloc]
-                                                      initWithTarget:self action:@selector(handleTap:)];
-                    [iv addGestureRecognizer:tapper];
-                    iv.userInteractionEnabled = YES;
-                    
-                    [scrollView addSubview:iv];
+                    /*
+                    if (indx == 3) {
+                        UIWebView *wv = [[UIWebView alloc] initWithFrame:CGRectMake(iX, iY, w, h)];
+                        wv.scalesPageToFit = YES;
+                        [wv loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@"http://www.bitzarohotels.gr"]]];
+                        [scrollView addSubview:wv];
+                    } else */ {
+                        UIImageView *iv = [[UIImageView alloc]
+                                           initWithFrame:CGRectMake(posX, posY, colWidth + fixWidth, rowHeight + fixHeight)];
+                        iv.image = ((DPImageInfo *)contentList[indx]).image;
+                        iv.contentMode = UIViewContentModeScaleToFill; //UIViewContentModeScaleAspectFit;
+                        iv.tag = indx;
+                        UITapGestureRecognizer *tapper = [[UITapGestureRecognizer alloc]
+                                                          initWithTarget:self action:@selector(handleTap:)];
+                        [iv addGestureRecognizer:tapper];
+                        iv.userInteractionEnabled = YES;
+                        [scrollView addSubview:iv];
+                    }
                     contentRendered[indx] = [NSNumber numberWithInt:1];
                 }
         }
+    }
 }
 
 - (void)handleTap:(UITapGestureRecognizer *)sender {
