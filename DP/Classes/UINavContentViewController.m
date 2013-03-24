@@ -61,25 +61,38 @@
 }
 
 - (void) setupNavBar {
+    self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc]
+                                             initWithImage: [UIImage imageNamed: @"back.png"]
+                                             style: UIBarButtonItemStylePlain
+                                             target: self
+                                             action: @selector(closeView:)];
+
+    
+/*
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]
+                                             initWithImage: [UIImage imageNamed: @"logosmall.png"]
+                                             style: UIBarButtonItemStylePlain
+                                             target: self
+                                             action: @selector(closeView:)];
+
+    self.navigationItem.leftItemsSupplementBackButton = YES;
+    self.navigationItem.hidesBackButton = NO;
+*/
+
+
 	self.navigationItem.titleView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"logosmall.png"]];
-    /*
-     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]
-     initWithImage: [UIImage imageNamed: @"menu.png"]
-     style: UIBarButtonItemStylePlain
-     target: self
-     action: @selector(closeView:)];
-     */
+
     self.navigationItem.rightBarButtonItems = @[
                                                 [[UIBarButtonItem alloc]
                                                  initWithBarButtonSystemItem: UIBarButtonSystemItemAction
                                                  target: self action: @selector(showView:)],
-                                                /*
+                                                
                                                 [[UIBarButtonItem alloc]
-                                                 initWithTitle: @"xx"
+                                                 initWithImage:[UIImage imageNamed:@"back.png"]
                                                  style:UIBarButtonItemStylePlain
                                                  target: self
                                                  action: @selector(showView:)],
-                                                */
+                                                
                                                 [[UIBarButtonItem alloc]
                                                  initWithBarButtonSystemItem: UIBarButtonSystemItemRefresh
                                                  target: self action: @selector(showView:)]];
@@ -91,6 +104,9 @@
     }
 }
 
+- (void) closeView: (id) sender {
+    [self.navigationController popViewControllerAnimated:YES];
+}
 
 - (void) showView: (id) sender {
     UIBarButtonItem *bbi = (UIBarButtonItem *)sender;

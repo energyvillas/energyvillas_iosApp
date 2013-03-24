@@ -9,7 +9,6 @@
 #import "DPRootViewController.h"
 #import "DPTestViewController.h"
 #import "../External/OpenFlow/UIImageExtras.h"
-//#import "DPScrollableDetailViewController.h"
 #import "../Classes/DPImageInfo.h"
 #import "DPCtgScrollViewController.h"
 #import "../Classes/DPImageContentViewController.h"
@@ -40,6 +39,8 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
+    bbiMore.title = NSLocalizedString(@"BBIMORETITLE", @"");
+    bbiBuy.title = NSLocalizedString(@"bbiBuy_Title", @"");
 }
 
 - (void)didReceiveMemoryWarning
@@ -96,7 +97,6 @@
     
     NSLog(@"bvc frame : (x, y, w, h) = (%f, %f, %f, %f)", bcv.frame.origin.x, bcv.frame.origin.y, bcv.frame.size.width, bcv.frame.size.height);
 
-    //DPScrollableDetailViewController *detvc;
     DPCtgScrollViewController *detvc;
     if (bcv.subviews.count == 0) {
         NSMutableArray *content = [[NSMutableArray alloc] init];
@@ -205,9 +205,6 @@
     NSLog(@"Clicked image at index %i", index);
     
     // navigation logic goes here. create and push a new view controller;
-    //DPTestViewController *vc = [[DPTestViewController alloc] init];
-    //[self.navigationController pushViewController: vc animated: YES];
-    //
     /*
     DPCtgScrollViewController *detvc;
 
@@ -220,20 +217,9 @@
     detvc = [[DPCtgScrollViewController alloc]
                     initWithContent:content rows:1 columns:1];
     */
-/*
- CGRect aframe = CGRectMake(0, 0,
-                               self.view.superview.bounds.size.width,
-                               self.view.superview.bounds.size.height) ;
-*/
-    DPImageContentViewController *vc = [[DPImageContentViewController alloc] initWithImageName:[NSString stringWithFormat:@"%d.jpg", index]];
-/*
-    vc.view = [[UIView alloc] initWithFrame:aframe];
-    UIImageView *imgView = [[UIImageView alloc] initWithFrame:aframe];
-    imgView.contentMode = UIViewContentModeScaleAspectFill;
-    imgView.userInteractionEnabled = YES;
-    imgView.image = [UIImage imageNamed:[NSString stringWithFormat:@"%d.jpg", index]];
-    [vc.view addSubview: imgView];
-*/    
+
+    DPImageContentViewController *vc = [[DPImageContentViewController alloc]
+                                        initWithImageName:[NSString stringWithFormat:@"%d.jpg", index]];
     [self.navigationController pushViewController:vc animated:YES];
 }
 

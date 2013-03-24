@@ -87,6 +87,9 @@
 		5EC255C716FF4CB30045AB99 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5EC255C616FF4CB20045AB99 /* MobileCoreServices.framework */; };
 		5EC255C916FF4CBD0045AB99 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5EC255C816FF4CBC0045AB99 /* SystemConfiguration.framework */; };
 		5EC255CB16FF4D150045AB99 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 5EC255CA16FF4D150045AB99 /* libz.dylib */; };
+		5EC255D216FF95040045AB99 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5EC255D416FF95040045AB99 /* Localizable.strings */; };
+		5EC255D816FFA4170045AB99 /* logosmall.png in Resources */ = {isa = PBXBuildFile; fileRef = 5EC255D716FFA4170045AB99 /* logosmall.png */; };
+		5EC255DC16FFAAB00045AB99 /* back.png in Resources */ = {isa = PBXBuildFile; fileRef = 5EC255DB16FFAAB00045AB99 /* back.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -207,6 +210,11 @@
 		5EC255C616FF4CB20045AB99 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		5EC255C816FF4CBC0045AB99 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		5EC255CA16FF4D150045AB99 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
+		5EC255D316FF95040045AB99 /* en */ = {isa = PBXFileReference; lastKnownFileType = file; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		5EC255D516FF95CA0045AB99 /* el */ = {isa = PBXFileReference; lastKnownFileType = file; name = el; path = el.lproj/Localizable.strings; sourceTree = "<group>"; };
+		5EC255D616FF95CA0045AB99 /* el */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = el; path = el.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		5EC255D716FFA4170045AB99 /* logosmall.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logosmall.png; sourceTree = "<group>"; };
+		5EC255DB16FFAAB00045AB99 /* back.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = back.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -275,6 +283,7 @@
 				5E71A3D816F9991000E7AFF9 /* External */,
 				5E71A3FF16F9B5F900E7AFF9 /* Resources */,
 				5E71A3BE16F9973500E7AFF9 /* Supporting Files */,
+				5EC255D416FF95040045AB99 /* Localizable.strings */,
 			);
 			path = DP;
 			sourceTree = "<group>";
@@ -388,6 +397,8 @@
 		5E71A3FF16F9B5F900E7AFF9 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				5EC255DB16FFAAB00045AB99 /* back.png */,
+				5EC255D716FFA4170045AB99 /* logosmall.png */,
 				5E71A40016F9B5F900E7AFF9 /* CoverImages */,
 			);
 			path = Resources;
@@ -532,6 +543,7 @@
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
+				el,
 			);
 			mainGroup = 5E71A3AB16F9973500E7AFF9;
 			productRefGroup = 5E71A3B516F9973500E7AFF9 /* Products */;
@@ -589,6 +601,9 @@
 				5E9ABBE516FB1BFC000EAB46 /* DPScrollableDetailView.xib in Resources */,
 				5EC2559616FC7A2B0045AB99 /* DPPaidMainView.xib in Resources */,
 				5EC2559816FC7B1E0045AB99 /* DPPaidRootView.xib in Resources */,
+				5EC255D216FF95040045AB99 /* Localizable.strings in Resources */,
+				5EC255D816FFA4170045AB99 /* logosmall.png in Resources */,
+				5EC255DC16FFAAB00045AB99 /* back.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -639,8 +654,18 @@
 			isa = PBXVariantGroup;
 			children = (
 				5E71A3C116F9973500E7AFF9 /* en */,
+				5EC255D616FF95CA0045AB99 /* el */,
 			);
 			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		5EC255D416FF95040045AB99 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				5EC255D316FF95040045AB99 /* en */,
+				5EC255D516FF95CA0045AB99 /* el */,
+			);
+			name = Localizable.strings;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
