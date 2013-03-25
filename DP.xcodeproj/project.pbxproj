@@ -68,8 +68,6 @@
 		5EC2558716FC73430045AB99 /* DPIAPHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EC2558616FC73430045AB99 /* DPIAPHelper.m */; };
 		5EC2559116FC79E10045AB99 /* DPPaidRootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EC2559016FC79E10045AB99 /* DPPaidRootViewController.m */; };
 		5EC2559416FC7A070045AB99 /* DPPaidMainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EC2559316FC7A070045AB99 /* DPPaidMainViewController.m */; };
-		5EC2559616FC7A2B0045AB99 /* DPPaidMainView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5EC2559516FC7A2B0045AB99 /* DPPaidMainView.xib */; };
-		5EC2559816FC7B1E0045AB99 /* DPPaidRootView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5EC2559716FC7B1E0045AB99 /* DPPaidRootView.xib */; };
 		5EC2559B16FCC7310045AB99 /* DPScrollableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EC2559A16FCC7310045AB99 /* DPScrollableViewController.m */; };
 		5EC2559E16FCD18C0045AB99 /* DPCtgScrollViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EC2559D16FCD18C0045AB99 /* DPCtgScrollViewController.m */; };
 		5EC255A116FF1DD70045AB99 /* DPImageContentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EC255A016FF1DD70045AB99 /* DPImageContentViewController.m */; };
@@ -93,6 +91,9 @@
 		5EC255E5170090A10045AB99 /* Article.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EC255E2170090A10045AB99 /* Article.m */; };
 		5EC255E6170090A10045AB99 /* ArticleParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EC255E4170090A10045AB99 /* ArticleParser.m */; };
 		5EC255EC1700AECF0045AB99 /* DPDataLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EC255EB1700AECF0045AB99 /* DPDataLoader.m */; };
+		5EC255EF1700FEF70045AB99 /* DPCategoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EC255EE1700FEF60045AB99 /* DPCategoryViewController.m */; };
+		5EC255F5170101540045AB99 /* DPPaidMainView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5EC255F3170101540045AB99 /* DPPaidMainView.xib */; };
+		5EC255F6170101540045AB99 /* DPPaidRootView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5EC255F4170101540045AB99 /* DPPaidRootView.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -177,8 +178,6 @@
 		5EC2559016FC79E10045AB99 /* DPPaidRootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPPaidRootViewController.m; sourceTree = "<group>"; };
 		5EC2559216FC7A070045AB99 /* DPPaidMainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPPaidMainViewController.h; sourceTree = "<group>"; };
 		5EC2559316FC7A070045AB99 /* DPPaidMainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPPaidMainViewController.m; sourceTree = "<group>"; };
-		5EC2559516FC7A2B0045AB99 /* DPPaidMainView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = DPPaidMainView.xib; path = DP/ControllersPaid/DPPaidMainView.xib; sourceTree = SOURCE_ROOT; };
-		5EC2559716FC7B1E0045AB99 /* DPPaidRootView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = DPPaidRootView.xib; path = DP/ControllersPaid/DPPaidRootView.xib; sourceTree = SOURCE_ROOT; };
 		5EC2559916FCC7310045AB99 /* DPScrollableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPScrollableViewController.h; sourceTree = "<group>"; };
 		5EC2559A16FCC7310045AB99 /* DPScrollableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPScrollableViewController.m; sourceTree = "<group>"; };
 		5EC2559C16FCD18C0045AB99 /* DPCtgScrollViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPCtgScrollViewController.h; sourceTree = "<group>"; };
@@ -224,6 +223,10 @@
 		5EC255E4170090A10045AB99 /* ArticleParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ArticleParser.m; sourceTree = "<group>"; };
 		5EC255EA1700AECF0045AB99 /* DPDataLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPDataLoader.h; sourceTree = "<group>"; };
 		5EC255EB1700AECF0045AB99 /* DPDataLoader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPDataLoader.m; sourceTree = "<group>"; };
+		5EC255ED1700FEF60045AB99 /* DPCategoryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPCategoryViewController.h; sourceTree = "<group>"; };
+		5EC255EE1700FEF60045AB99 /* DPCategoryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPCategoryViewController.m; sourceTree = "<group>"; };
+		5EC255F3170101540045AB99 /* DPPaidMainView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DPPaidMainView.xib; sourceTree = "<group>"; };
+		5EC255F4170101540045AB99 /* DPPaidRootView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DPPaidRootView.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -285,7 +288,7 @@
 				5E71A3C616F9973500E7AFF9 /* DPAppDelegate.h */,
 				5E71A3C716F9973500E7AFF9 /* DPAppDelegate.m */,
 				5EC2558816FC76FC0045AB99 /* ControllersPaid */,
-				5EC2558C16FC77830045AB99 /* ViewsPaid */,
+				5EC255F2170101510045AB99 /* ViewsPaid */,
 				5E71A3F116F99AB500E7AFF9 /* Controllers */,
 				5E71A3F516F99BAD00E7AFF9 /* Views */,
 				5EC255E01700909E0045AB99 /* Models */,
@@ -468,17 +471,10 @@
 				5EC2559316FC7A070045AB99 /* DPPaidMainViewController.m */,
 				5EC2558F16FC79E10045AB99 /* DPPaidRootViewController.h */,
 				5EC2559016FC79E10045AB99 /* DPPaidRootViewController.m */,
+				5EC255ED1700FEF60045AB99 /* DPCategoryViewController.h */,
+				5EC255EE1700FEF60045AB99 /* DPCategoryViewController.m */,
 			);
 			path = ControllersPaid;
-			sourceTree = "<group>";
-		};
-		5EC2558C16FC77830045AB99 /* ViewsPaid */ = {
-			isa = PBXGroup;
-			children = (
-				5EC2559516FC7A2B0045AB99 /* DPPaidMainView.xib */,
-				5EC2559716FC7B1E0045AB99 /* DPPaidRootView.xib */,
-			);
-			path = ViewsPaid;
 			sourceTree = "<group>";
 		};
 		5EC255A216FF29190045AB99 /* ASIHttpRequest */ = {
@@ -528,6 +524,15 @@
 				5EC255EB1700AECF0045AB99 /* DPDataLoader.m */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		5EC255F2170101510045AB99 /* ViewsPaid */ = {
+			isa = PBXGroup;
+			children = (
+				5EC255F3170101540045AB99 /* DPPaidMainView.xib */,
+				5EC255F4170101540045AB99 /* DPPaidRootView.xib */,
+			);
+			path = ViewsPaid;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -622,11 +627,11 @@
 				5E71A43E16F9B5F900E7AFF9 /* Read me.txt in Resources */,
 				5E9ABBE016F9F3E2000EAB46 /* DPTestView.xib in Resources */,
 				5E9ABBE516FB1BFC000EAB46 /* DPScrollableDetailView.xib in Resources */,
-				5EC2559616FC7A2B0045AB99 /* DPPaidMainView.xib in Resources */,
-				5EC2559816FC7B1E0045AB99 /* DPPaidRootView.xib in Resources */,
 				5EC255D216FF95040045AB99 /* Localizable.strings in Resources */,
 				5EC255D816FFA4170045AB99 /* logosmall.png in Resources */,
 				5EC255DC16FFAAB00045AB99 /* back.png in Resources */,
+				5EC255F5170101540045AB99 /* DPPaidMainView.xib in Resources */,
+				5EC255F6170101540045AB99 /* DPPaidRootView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -670,6 +675,7 @@
 				5EC255E5170090A10045AB99 /* Article.m in Sources */,
 				5EC255E6170090A10045AB99 /* ArticleParser.m in Sources */,
 				5EC255EC1700AECF0045AB99 /* DPDataLoader.m in Sources */,
+				5EC255EF1700FEF70045AB99 /* DPCategoryViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -95,7 +95,6 @@
     if (!self.queue)
         self.queue = [[NSOperationQueue alloc] init];
     
-//    NSURL *url = [NSURL URLWithString:@"http://www.designprojectsapss.com/iphonenews.php"];
     ASIFormDataRequest *webRequest = [[ASIFormDataRequest alloc] initWithURL:aUrl];
 	webRequest.defaultResponseEncoding = NSUTF8StringEncoding;
 	[webRequest setPostValue:USER_NAME forKey:@"user"];
