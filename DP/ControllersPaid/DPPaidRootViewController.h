@@ -8,16 +8,11 @@
 
 #import "UINavContentViewController.h"
 
-@interface DPPaidRootViewController : UINavContentViewController <UITabBarDelegate>
+@interface DPPaidRootViewController : UINavContentViewController
 
 @property (strong, nonatomic) IBOutlet UIView *adsView;
 @property (strong, nonatomic) IBOutlet UIView *nnView;
 @property (strong, nonatomic) IBOutlet UIView *mmView;
-@property (strong, nonatomic) IBOutlet UITabBar *tabBar;
-@property (strong, nonatomic) IBOutlet UITabBarItem *tbiMain;
-@property (strong, nonatomic) IBOutlet UITabBarItem *tbiWho;
-@property (strong, nonatomic) IBOutlet UITabBarItem *tbiBuy;
-@property (strong, nonatomic) IBOutlet UITabBarItem *tbiCall;
-@property (strong, nonatomic) IBOutlet UITabBarItem *tbiMore;
+
 
 @end

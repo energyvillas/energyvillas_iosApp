@@ -90,6 +90,7 @@
 		5EC255D216FF95040045AB99 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5EC255D416FF95040045AB99 /* Localizable.strings */; };
 		5EC255D816FFA4170045AB99 /* logosmall.png in Resources */ = {isa = PBXBuildFile; fileRef = 5EC255D716FFA4170045AB99 /* logosmall.png */; };
 		5EC255DC16FFAAB00045AB99 /* back.png in Resources */ = {isa = PBXBuildFile; fileRef = 5EC255DB16FFAAB00045AB99 /* back.png */; };
+		5EC255DF16FFB1BF0045AB99 /* DPHtmlContentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EC255DE16FFB1BF0045AB99 /* DPHtmlContentViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -215,6 +216,8 @@
 		5EC255D616FF95CA0045AB99 /* el */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = el; path = el.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		5EC255D716FFA4170045AB99 /* logosmall.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logosmall.png; sourceTree = "<group>"; };
 		5EC255DB16FFAAB00045AB99 /* back.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = back.png; sourceTree = "<group>"; };
+		5EC255DD16FFB1BF0045AB99 /* DPHtmlContentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPHtmlContentViewController.h; sourceTree = "<group>"; };
+		5EC255DE16FFB1BF0045AB99 /* DPHtmlContentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPHtmlContentViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -283,7 +286,6 @@
 				5E71A3D816F9991000E7AFF9 /* External */,
 				5E71A3FF16F9B5F900E7AFF9 /* Resources */,
 				5E71A3BE16F9973500E7AFF9 /* Supporting Files */,
-				5EC255D416FF95040045AB99 /* Localizable.strings */,
 			);
 			path = DP;
 			sourceTree = "<group>";
@@ -293,6 +295,7 @@
 			children = (
 				5E71A3BF16F9973500E7AFF9 /* DP-Info.plist */,
 				5E71A3C016F9973500E7AFF9 /* InfoPlist.strings */,
+				5EC255D416FF95040045AB99 /* Localizable.strings */,
 				5E71A3C316F9973500E7AFF9 /* main.m */,
 				5E71A3C516F9973500E7AFF9 /* DP-Prefix.pch */,
 				5E71A3C916F9973500E7AFF9 /* Default.png */,
@@ -309,6 +312,8 @@
 				5E71A3D616F998D500E7AFF9 /* UINavContentViewController.m */,
 				5EC2559F16FF1DD60045AB99 /* DPImageContentViewController.h */,
 				5EC255A016FF1DD70045AB99 /* DPImageContentViewController.m */,
+				5EC255DD16FFB1BF0045AB99 /* DPHtmlContentViewController.h */,
+				5EC255DE16FFB1BF0045AB99 /* DPHtmlContentViewController.m */,
 				5EC2559916FCC7310045AB99 /* DPScrollableViewController.h */,
 				5EC2559A16FCC7310045AB99 /* DPScrollableViewController.m */,
 				5EC2557B16FC64400045AB99 /* DPImageInfo.h */,
@@ -644,6 +649,7 @@
 				5EC255BD16FF291A0045AB99 /* ASIInputStream.m in Sources */,
 				5EC255BE16FF291A0045AB99 /* ASINetworkQueue.m in Sources */,
 				5EC255C316FF49F20045AB99 /* Reachability.m in Sources */,
+				5EC255DF16FFB1BF0045AB99 /* DPHtmlContentViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

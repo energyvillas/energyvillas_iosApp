@@ -15,6 +15,7 @@
 @property (strong, nonatomic) UIImage *image;
 @property (strong, nonatomic) UIActivityIndicatorView *busyIndicator;
 @property (strong, nonatomic) NSOperationQueue *queue;
+
 @end
 
 @implementation DPImageContentViewController {

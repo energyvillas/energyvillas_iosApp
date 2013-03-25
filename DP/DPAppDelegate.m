@@ -34,7 +34,7 @@
 }
 
 - (bool) isPurchased {
-    //return  YES;
+    return  YES;
     BOOL productPurchased = [[NSUserDefaults standardUserDefaults]
                              boolForKey:PRODUCT_IDENTIFIER];
     return productPurchased;

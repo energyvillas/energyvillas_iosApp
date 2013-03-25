@@ -5,5 +5,11 @@
   Created by Γεώργιος Γράβος on 3/24/13.
   Copyright (c) 2013 Γεώργιος Γράβος. All rights reserved.
 */
-"BBIMORETITLE"="more";
+"bbiMore_Title"="more";
 "bbiBuy_Title"="buy";
+
+"tbiMain_Title"="Home";
+"tbiWho_Title"="Who we are";
+"tbiBuy_Title"="Buy";
+"tbiCall_Title"="Contact us";
+"tbiMore_Title"="More";
