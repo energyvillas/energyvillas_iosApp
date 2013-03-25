@@ -58,26 +58,48 @@
 
 - (void) viewWillAppear:(BOOL)animated {
     if (!framesDone) {
-        CGRect sf = [UIScreen mainScreen].applicationFrame;
-        NSLog(@"appframe : (x, y, w, h) = (%f, %f, %f, %f)", sf.origin.x, sf.origin.y, sf .size.width, sf.size.height);
-        self.view.frame = sf;
-        int tabbarHeight = self.tabBar.frame.size.height;
-        self.navController.view.frame = CGRectMake(0, 0, sf.size.width, sf.size.height - tabbarHeight);
-        self.tabBar.frame = CGRectMake(0, sf.size.height - tabbarHeight,
-                                       sf.size.width, tabbarHeight);
+        [self fixFrames:YES];
         framesDone = YES;
     }
     [super viewWillAppear:animated];
 }
 
-- (CGRect) calcViewFrame {
-    CGRect sf = [UIScreen mainScreen].applicationFrame;
-    self.view.frame = sf;
-    int tabbarHeight = self.tabBar.frame.size.height;
-    return CGRectMake(0, 0, sf.size.width, sf.size.height - tabbarHeight);
+- (void) fixFrames:(BOOL)fixNavView {
+    if (fixNavView) {
+        CGRect sf = [UIScreen mainScreen].applicationFrame;
+        self.view.frame = sf;
+        int tabbarHeight = self.tabBar.frame.size.height;
+
+        self.navController.view.frame = CGRectMake(0, 0,
+                                                   sf.size.width,
+                                                   sf.size.height - tabbarHeight);
+    
+        self.tabBar.frame = CGRectMake(0, sf.size.height - tabbarHeight,
+                                       sf.size.width, tabbarHeight);
+    } else {
+        UIViewController *tvc = navController.topViewController;
+        UIViewController *rvc = navController.viewControllers[0];
+
+        if (rvc == tvc) {
+            CGRect sf = self.navController.view.frame;
+            rvc.view.frame = sf;
+        }
+//        CGRect sf = self.navController.view.frame;
+//        int tabbarHeight = self.tabBar.frame.size.height;
+
+//        self.view.frame = CGRectMake(0, 20, sf.size.width, sf.size.height + tabbarHeight);
+//        self.navController.view.frame = CGRectMake(0, 0,
+//                                                   sf.size.width,
+//                                                   sf.size.height - tabbarHeight);
+        
+//        self.tabBar.frame = CGRectMake(0, sf.size.height + 20,
+//                                       sf.size.width, tabbarHeight);
+    }
 }
 
 - (void) willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
+    //[self fixFrames:NO];
+
     id tvc = navController.topViewController;
     if (tvc && [tvc isKindOfClass:[UINavContentViewController class]])
         [(UINavContentViewController *)tvc layoutForOrientation:toInterfaceOrientation];
