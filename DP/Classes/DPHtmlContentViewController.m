@@ -8,7 +8,11 @@
 
 #import "DPHtmlContentViewController.h"
 #import <QuartzCore/QuartzCore.h>
-#import "../External/ASIHttpRequest/ASIHTTPRequest.h"
+#import "../External/ASIHttpRequest/ASIFormDataRequest.h"
+#import "../Models/Article.h"
+#import "../Models/ArticleParser.h"
+#import "../Models/DPDataLoader.h"
+
 
 @interface DPHtmlContentViewController ()
 
@@ -49,6 +53,8 @@
 }
 
 - (void) doInitWebView {
+    NSLog(self.htmlData);
+    
     CGRect aframe = CGRectMake(0, 0, self.view.superview.frame.size.width, self.view.superview.frame.size.height);
     UIWebView *webView = [[UIWebView alloc] initWithFrame:aframe];
     webView.contentMode = UIViewContentModeScaleAspectFit;
@@ -89,19 +95,46 @@
     if (!self.queue)
         self.queue = [[NSOperationQueue alloc] init];
     
-    ASIHTTPRequest *webRequest = [ASIHTTPRequest requestWithURL:[NSURL URLWithString:aUrl]];
+//    NSURL *url = [NSURL URLWithString:@"http://www.designprojectsapss.com/iphonenews.php"];
+    ASIFormDataRequest *webRequest = [[ASIFormDataRequest alloc] initWithURL:aUrl];
+	webRequest.defaultResponseEncoding = NSUTF8StringEncoding;
+	[webRequest setPostValue:USER_NAME forKey:@"user"];
+	[webRequest setPostValue:[DPDataLoader digestSHA1:PASSWORD] forKey:@"pass"];
+	[webRequest setPostValue:@"en" forKey:@"lang"];
+	[webRequest setPostValue:[NSString stringWithFormat:@"%i", CTGID_WHO_WE_ARE] forKey:@"cid"];
+    //[webRequest setPostValue:@"phone" forKey:@"count"]; // optional
+	//[webRequest setPostValue:@"phone" forKey:@"from"]; // optional, requires "count
+
     [webRequest setDelegate:self];
-    [webRequest setDidFinishSelector:@selector(webRequestDone:)];
-    //webRequest.userInfo = [NSDictionary dictionaryWithObjectsAndKeys: [NSNumber numberWithInt:aIndex], @"imageIndex", nil];
     [self.queue addOperation:webRequest];
     [self startIndicator];
 }
 
-- (void) webRequestDone:(ASIHTTPRequest *)request{
+- (void) requestFinished:(ASIHTTPRequest *)request{
     [self stopIndicator];
     
-//	self.htmlData = [NSString :[request responseData]];
-    [self doInitWebView];
+    NSString *resp = [request responseString];
+	NSLog(@"Response: \n%@", resp);
+    //resp = [resp stringByReplacingOccurrencesOfString:@"&gt;" withString:<#(NSString *)#>]
+    
+//    NSString *aResponse = [[NSString alloc] initWithString:
+//						   [[request responseString] stringByReplacingOccurrencesOfString:@"&" withString:@"&amp;"]];
+
+    
+    ArticleParser *parser = [[ArticleParser alloc] init];
+	[parser parseXMLFile:resp];
+    NSArray *articles = [NSArray arrayWithArray:parser.articles];
+
+    if (articles.count == 0)
+        [self showAlertMessage:NSLocalizedString(@"URL_LOAD_FAILED_MESSAGE", nil)
+                         title:NSLocalizedString(@"URL_LOAD_FAILED_TITLE", nil)];
+    else {
+        NSString *body = ((Article *)articles[0]).body;
+        body = [[body stringByReplacingOccurrencesOfString:@"&gt;" withString:@">"]
+                stringByReplacingOccurrencesOfString:@"&lt;" withString:@"<"];
+        self.htmlData = body;
+        [self doInitWebView];
+    }
 }
 
 - (void) requestFailed:(ASIHTTPRequest *)request {
@@ -109,12 +142,17 @@
     
 	[self stopIndicator];
     
+    [self showAlertMessage:NSLocalizedString(@"URL_LOAD_FAILED_MESSAGE", nil)
+                     title:NSLocalizedString(@"URL_LOAD_FAILED_TITLE", nil)];
+}
+
+-(void) showAlertMessage:(NSString *)aMessage title:(NSString *)aTitle {
 	UIAlertView *alertDialog;
 	alertDialog = [[UIAlertView alloc]
-                   initWithTitle:@"Αποτυχία Σύνδεσης"
-                   message:@"Η διαδικασία ανάκτησης νέων απέτυχε! Παρακαλούμε δοκιμάστε αργότερα..."
+                   initWithTitle:aTitle
+                   message:aMessage
                    delegate:nil
-                   cancelButtonTitle:@"OK"
+                   cancelButtonTitle: NSLocalizedString(@"btnOK_Title", nil)
                    otherButtonTitles:nil];
     
 	[alertDialog show];

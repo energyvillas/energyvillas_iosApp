@@ -14,5 +14,4 @@
 @property (strong, nonatomic) IBOutlet UIView *nnView;
 @property (strong, nonatomic) IBOutlet UIView *mmView;
 
-
 @end

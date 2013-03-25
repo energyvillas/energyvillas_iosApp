@@ -5,7 +5,9 @@
   Created by Γεώργιος Γράβος on 3/24/13.
   Copyright (c) 2013 Γεώργιος Γράβος. All rights reserved.
 */
-"BBIMORETITLE"="περισσότερα";
+"btnOK_Title"="ΟΚ";
+
+"bbiMore_Title"="περισσότερα";
 "bbiBuy_Title"="αγορά";
 
 "tbiMain_Title"="Αρχή";
@@ -13,3 +15,6 @@
 "tbiBuy_Title"="Αγορά";
 "tbiCall_Title"="Επικοινωνία";
 "tbiMore_Title"="Περισσότερα";
+
+"URL_LOAD_FAILED_TITLE"="Αποτυχία Σύνδεσης";
+"URL_LOAD_FAILED_MESSAGE"="Η διαδικασία ανάκτησης νέων απέτυχε! Παρακαλούμε δοκιμάστε αργότερα...";

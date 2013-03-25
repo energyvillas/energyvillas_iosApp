@@ -261,7 +261,7 @@
     if (!self.queue)
         self.queue = [[NSOperationQueue alloc] init];
 
-    ASIHTTPRequest *imageRequest = [ASIHTTPRequest requestWithURL:[NSURL URLWithString:imageUrl]];
+    ASIHTTPRequest *imageRequest = [ASIHTTPRequest requestWithURL:imageUrl];
     [imageRequest setDelegate:self];
     [imageRequest setDidFinishSelector:@selector(imageRequestDone:)];
     //imageRequest.userInfo = [NSDictionary dictionaryWithObjectsAndKeys: [NSNumber numberWithInt:aIndex], @"imageIndex", nil];

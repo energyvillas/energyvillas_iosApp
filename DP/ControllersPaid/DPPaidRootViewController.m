@@ -11,7 +11,19 @@
 #import "../Classes/DPImageContentViewController.h"
 
 
+#define TAG_TBI_MAIN ((int)1001)
+#define TAG_TBI_WHO ((int)1002)
+#define TAG_TBI_BUY ((int)1003)
+#define TAG_TBI_CALL ((int)1004)
+#define TAG_TBI_MORE ((int)1005)
+
+
 @interface DPPaidRootViewController ()
+
+@property (strong, nonatomic) UIViewController *whoViewController;
+@property (strong, nonatomic) UIViewController *buyViewController;
+@property (strong, nonatomic) UIViewController *callViewController;
+@property (strong, nonatomic) UIViewController *moreViewController;
 
 @end
 
@@ -19,6 +31,9 @@
     //int currentIndex;
     bool isPortrait;
 }
+
+@synthesize whoViewController, buyViewController, callViewController, moreViewController;
+
 
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -98,18 +113,74 @@
             self.mmView.frame = CGRectMake(PAD_WL_NEW_NEXT, PAD_H_ADS,
                                            w - PAD_WL_NEW_NEXT, h - PAD_HL_ADS);
         }
-    }
-        
-            
+    }        
+}
+
+// called when a new view is selected by the user (but not programatically)
+- (void)tabBar:(UITabBar *)tabBar didSelectItem:(UITabBarItem *)item {
+    NSLog(@"tapped on tbi => %d", item.tag);
     
-    //self.view.frame = CGRectMake(0, 0, w, h);
-/*
-    int toolbarHeight = self.toolbar.frame.size.height;
-    int topHeight = h - toolbarHeight - BOTTOM_HEIGHT;
-    self.topView.frame = CGRectMake(0, 0, w, topHeight);
-    self.toolbar.frame = CGRectMake(0, topHeight, w, toolbarHeight);
-    self.bottomView.frame = CGRectMake(0, topHeight + toolbarHeight, w, BOTTOM_HEIGHT);
-*/
+    UIViewController *vc;
+    switch (item.tag) {
+        case TAG_TBI_MAIN:
+            [self.navigationController popToRootViewControllerAnimated:YES];
+/*            self.navController.view.hidden = NO;
+            if (self.whoViewController) self.whoViewController.view.hidden = YES;
+            if (self.buyViewController) self.buyViewController.view.hidden = YES;
+            if (self.callViewController) self.callViewController.view.hidden = YES;
+            if (self.moreViewController) self.moreViewController.view.hidden = YES;
+*/            break;
+            
+        case TAG_TBI_WHO:
+            vc = [[DPHtmlContentViewController alloc] initWithHTML:@"hello world"];
+            [self.navigationController pushViewController:vc animated:YES];
+/*            if (!self.whoViewController) {
+                self.whoViewController = [[DPHtmlContentViewController alloc] initWithHTML:@"hello world"];
+                
+                //CGRect r = CGRectMake(0, 0, 200, 200);
+                //UIView *v = self.whoViewController.view;
+                //self.whoViewController.view.frame = CGRectMake(0, 0, 200, 200);
+                [self addChildViewController:self.whoViewController];
+                [self.view addSubview:self.whoViewController.view];
+            }
+            
+            self.navController.view.hidden = YES;
+            if (self.whoViewController) self.whoViewController.view.hidden = NO;
+            if (self.buyViewController) self.buyViewController.view.hidden = YES;
+            if (self.callViewController) self.callViewController.view.hidden = YES;
+            if (self.moreViewController) self.moreViewController.view.hidden = YES;
+*/            break;
+            
+        case TAG_TBI_BUY:
+            //vc = [[DPImageContentViewController alloc]
+            //      initWithImageName:[NSString stringWithFormat:@"%d.jpg", 22]];
+            //[self.navController pushViewController:vc animated:YES];
+/*            if (!self.buyViewController) {
+                self.buyViewController = [[DPImageContentViewController alloc]
+                                          initWithImageName:[NSString stringWithFormat:@"%d.jpg", 22]];
+                [self addChildViewController:self.buyViewController];
+                [self.view addSubview:self.buyViewController.view];
+            }
+            
+            self.navController.view.hidden = YES;
+            if (self.whoViewController) self.whoViewController.view.hidden = YES;
+            if (self.buyViewController) self.buyViewController.view.hidden = NO;
+            if (self.callViewController) self.callViewController.view.hidden = YES;
+            if (self.moreViewController) self.moreViewController.view.hidden = YES;
+*/            
+            break;
+            
+        case TAG_TBI_CALL:
+            
+            break;
+            
+        case TAG_TBI_MORE:
+            
+            break;
+            
+        default:
+            break;
+    }
 }
 
 - (void)didReceiveMemoryWarning

@@ -91,6 +91,9 @@
 		5EC255D816FFA4170045AB99 /* logosmall.png in Resources */ = {isa = PBXBuildFile; fileRef = 5EC255D716FFA4170045AB99 /* logosmall.png */; };
 		5EC255DC16FFAAB00045AB99 /* back.png in Resources */ = {isa = PBXBuildFile; fileRef = 5EC255DB16FFAAB00045AB99 /* back.png */; };
 		5EC255DF16FFB1BF0045AB99 /* DPHtmlContentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EC255DE16FFB1BF0045AB99 /* DPHtmlContentViewController.m */; };
+		5EC255E5170090A10045AB99 /* Article.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EC255E2170090A10045AB99 /* Article.m */; };
+		5EC255E6170090A10045AB99 /* ArticleParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EC255E4170090A10045AB99 /* ArticleParser.m */; };
+		5EC255EC1700AECF0045AB99 /* DPDataLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EC255EB1700AECF0045AB99 /* DPDataLoader.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -218,6 +221,12 @@
 		5EC255DB16FFAAB00045AB99 /* back.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = back.png; sourceTree = "<group>"; };
 		5EC255DD16FFB1BF0045AB99 /* DPHtmlContentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPHtmlContentViewController.h; sourceTree = "<group>"; };
 		5EC255DE16FFB1BF0045AB99 /* DPHtmlContentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPHtmlContentViewController.m; sourceTree = "<group>"; };
+		5EC255E1170090A10045AB99 /* Article.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Article.h; sourceTree = "<group>"; };
+		5EC255E2170090A10045AB99 /* Article.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Article.m; sourceTree = "<group>"; };
+		5EC255E3170090A10045AB99 /* ArticleParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ArticleParser.h; sourceTree = "<group>"; };
+		5EC255E4170090A10045AB99 /* ArticleParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ArticleParser.m; sourceTree = "<group>"; };
+		5EC255EA1700AECF0045AB99 /* DPDataLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPDataLoader.h; sourceTree = "<group>"; };
+		5EC255EB1700AECF0045AB99 /* DPDataLoader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPDataLoader.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -282,6 +291,7 @@
 				5EC2558C16FC77830045AB99 /* ViewsPaid */,
 				5E71A3F116F99AB500E7AFF9 /* Controllers */,
 				5E71A3F516F99BAD00E7AFF9 /* Views */,
+				5EC255E01700909E0045AB99 /* Models */,
 				5E71A3D416F998D500E7AFF9 /* Classes */,
 				5E71A3D816F9991000E7AFF9 /* External */,
 				5E71A3FF16F9B5F900E7AFF9 /* Resources */,
@@ -512,6 +522,19 @@
 			path = Reachability;
 			sourceTree = "<group>";
 		};
+		5EC255E01700909E0045AB99 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				5EC255E1170090A10045AB99 /* Article.h */,
+				5EC255E2170090A10045AB99 /* Article.m */,
+				5EC255E3170090A10045AB99 /* ArticleParser.h */,
+				5EC255E4170090A10045AB99 /* ArticleParser.m */,
+				5EC255EA1700AECF0045AB99 /* DPDataLoader.h */,
+				5EC255EB1700AECF0045AB99 /* DPDataLoader.m */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -650,6 +673,9 @@
 				5EC255BE16FF291A0045AB99 /* ASINetworkQueue.m in Sources */,
 				5EC255C316FF49F20045AB99 /* Reachability.m in Sources */,
 				5EC255DF16FFB1BF0045AB99 /* DPHtmlContentViewController.m in Sources */,
+				5EC255E5170090A10045AB99 /* Article.m in Sources */,
+				5EC255E6170090A10045AB99 /* ArticleParser.m in Sources */,
+				5EC255EC1700AECF0045AB99 /* DPDataLoader.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -5,6 +5,8 @@
   Created by Γεώργιος Γράβος on 3/24/13.
   Copyright (c) 2013 Γεώργιος Γράβος. All rights reserved.
 */
+"btnOK_Title"="OK";
+
 "bbiMore_Title"="more";
 "bbiBuy_Title"="buy";
 
@@ -13,3 +15,6 @@
 "tbiBuy_Title"="Buy";
 "tbiCall_Title"="Contact us";
 "tbiMore_Title"="More";
+
+"URL_LOAD_FAILED_TITLE"="Connection Failed";
+"URL_LOAD_FAILED_MESSAGE"="Data retrieval failed! Please try again later...";

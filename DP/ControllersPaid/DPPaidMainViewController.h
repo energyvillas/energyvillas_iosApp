@@ -11,6 +11,7 @@
 @interface DPPaidMainViewController : UINavContentViewController <UITabBarDelegate>
 
 @property (strong, nonatomic) IBOutlet UINavigationController *navController;
+
 @property (strong, nonatomic) IBOutlet UITabBar *tabBar;
 @property (strong, nonatomic) IBOutlet UITabBarItem *tbiMain;
 @property (strong, nonatomic) IBOutlet UITabBarItem *tbiWho;
