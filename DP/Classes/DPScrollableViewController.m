@@ -141,6 +141,7 @@
     
     self.scrollView.delegate = self;
 
+    self.pageControl.hidesForSinglePage = YES;
     self.pageControl.numberOfPages = pageCount;
     self.pageControl.currentPage = self.currentPage;
     
@@ -150,6 +151,8 @@
 }
 
 - (void) engageAutoTimer {
+    if (self.pageControl.numberOfPages <= 1) return;
+    
     if (timer == nil) {
         timer = [NSTimer scheduledTimerWithTimeInterval:AUTO_SCROLL_INTERVAL target:self selector:@selector(onTimer) userInfo:nil repeats:YES];
     }
@@ -181,23 +184,24 @@
     int colWidth = pageWidth / colCount;
     int rowHeight = scrollView.frame.size.height / rowCount;
     int rowHeightResidue = (int)scrollView.frame.size.height % rowCount;
+    int fixHeight = (rowHeightResidue > 0 ? 1 : 0);
     
     int posY = 0;
     for (int r = 0; r<rowCount; r++)
     {
-        int fixHeight = (rowHeightResidue > 0 ? 1 : 0);
-        rowHeightResidue = rowHeightResidue > 0 ? rowHeightResidue - 1 : 0;
         posY = posY + (rowHeight + fixHeight) * (r == 0 ? 0 : 1);
         int colWidthResidue = pageWidth % colCount;
-        
+        fixHeight = (rowHeightResidue > 0 ? 1 : 0);
+
         int posX = page * pageWidth;
+
+        int fixWidth = (colWidthResidue > 0 ? 1 : 0);
         for (int c = 0; c<colCount; c++)
         {
-            int fixWidth = (colWidthResidue > 0 ? 1 : 0);
-            colWidthResidue = colWidthResidue > 0 ? colWidthResidue - 1 : 0;
             posX = posX + (colWidth + fixWidth) * (c == 0 ? 0 : 1);
             int indx = page * (rowCount * colCount) + r * colCount + c;
-            
+            fixWidth = (colWidthResidue > 0 ? 1 : 0);
+
             if (indx < contentList.count)
                 if (((NSNumber *)contentRendered[indx]).intValue == 0) {
                     /*
@@ -220,7 +224,11 @@
                     }
                     contentRendered[indx] = [NSNumber numberWithInt:1];
                 }
+        
+            colWidthResidue = colWidthResidue > 0 ? colWidthResidue - 1 : 0;
         }
+        
+        rowHeightResidue = rowHeightResidue > 0 ? rowHeightResidue - 1 : 0;
     }
 }
 
@@ -300,6 +308,8 @@
 }
 
 - (void) engageUserTimer {
+    if (self.pageControl.numberOfPages <= 1) return;
+    
     if (!timerUsed) {
         userTimerActive++;
         [NSTimer scheduledTimerWithTimeInterval:5 * AUTO_SCROLL_INTERVAL

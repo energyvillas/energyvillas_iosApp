@@ -9,6 +9,9 @@
 #import "DPPaidRootViewController.h"
 #import "../Classes/DPHtmlContentViewController.h"
 #import "../Classes/DPImageContentViewController.h"
+#import "../Controllers/DPCtgScrollViewController.h"
+#import "../Classes/DPImageInfo.h"
+#import "../External/OpenFlow/UIImageExtras.h"
 
 
 #define TAG_TBI_MAIN ((int)1001)
@@ -113,74 +116,71 @@
             self.mmView.frame = CGRectMake(PAD_WL_NEW_NEXT, PAD_H_ADS,
                                            w - PAD_WL_NEW_NEXT, h - PAD_HL_ADS);
         }
-    }        
+    }
+    
+    [self loadDetailView];
 }
 
-// called when a new view is selected by the user (but not programatically)
-- (void)tabBar:(UITabBar *)tabBar didSelectItem:(UITabBarItem *)item {
-    NSLog(@"tapped on tbi => %d", item.tag);
+- (void) loadDetailView {
+    UIView *bcv = self.mmView;
     
-    UIViewController *vc;
-    switch (item.tag) {
-        case TAG_TBI_MAIN:
-            [self.navigationController popToRootViewControllerAnimated:YES];
-/*            self.navController.view.hidden = NO;
-            if (self.whoViewController) self.whoViewController.view.hidden = YES;
-            if (self.buyViewController) self.buyViewController.view.hidden = YES;
-            if (self.callViewController) self.callViewController.view.hidden = YES;
-            if (self.moreViewController) self.moreViewController.view.hidden = YES;
-*/            break;
-            
-        case TAG_TBI_WHO:
-            vc = [[DPHtmlContentViewController alloc] initWithHTML:@"hello world"];
-            [self.navigationController pushViewController:vc animated:YES];
-/*            if (!self.whoViewController) {
-                self.whoViewController = [[DPHtmlContentViewController alloc] initWithHTML:@"hello world"];
-                
-                //CGRect r = CGRectMake(0, 0, 200, 200);
-                //UIView *v = self.whoViewController.view;
-                //self.whoViewController.view.frame = CGRectMake(0, 0, 200, 200);
-                [self addChildViewController:self.whoViewController];
-                [self.view addSubview:self.whoViewController.view];
-            }
-            
-            self.navController.view.hidden = YES;
-            if (self.whoViewController) self.whoViewController.view.hidden = NO;
-            if (self.buyViewController) self.buyViewController.view.hidden = YES;
-            if (self.callViewController) self.callViewController.view.hidden = YES;
-            if (self.moreViewController) self.moreViewController.view.hidden = YES;
-*/            break;
-            
-        case TAG_TBI_BUY:
-            //vc = [[DPImageContentViewController alloc]
-            //      initWithImageName:[NSString stringWithFormat:@"%d.jpg", 22]];
-            //[self.navController pushViewController:vc animated:YES];
-/*            if (!self.buyViewController) {
-                self.buyViewController = [[DPImageContentViewController alloc]
-                                          initWithImageName:[NSString stringWithFormat:@"%d.jpg", 22]];
-                [self addChildViewController:self.buyViewController];
-                [self.view addSubview:self.buyViewController.view];
-            }
-            
-            self.navController.view.hidden = YES;
-            if (self.whoViewController) self.whoViewController.view.hidden = YES;
-            if (self.buyViewController) self.buyViewController.view.hidden = NO;
-            if (self.callViewController) self.callViewController.view.hidden = YES;
-            if (self.moreViewController) self.moreViewController.view.hidden = YES;
-*/            
-            break;
-            
-        case TAG_TBI_CALL:
-            
-            break;
-            
-        case TAG_TBI_MORE:
-            
-            break;
-            
-        default:
-            break;
+    NSLog(@"bvc frame : (x, y, w, h) = (%f, %f, %f, %f)",
+          bcv.frame.origin.x, bcv.frame.origin.y, bcv.frame.size.width, bcv.frame.size.height);
+    
+    DPCtgScrollViewController *detvc;
+    if (bcv.subviews.count == 0) {
+        NSMutableArray *content = [[NSMutableArray alloc] init];
+        for (int i = 0; i < 9; i++)
+            [content addObject:[[DPImageInfo alloc]
+                                initWithName:[NSString stringWithFormat:@"%d.jpg", i+11]
+                                image:[self imageForIndex:i+11 withFrame:nil]]];
+        
+//        if (isPortrait)
+            detvc = [[DPCtgScrollViewController alloc]
+                     initWithContent:content rows:3 columns:3];
+//        else
+//            detvc = [[DPCtgScrollViewController alloc]
+//                     initWithContent:content rows:3 columns:3];
+        
+        content = nil;
+        
+        [self addChildViewController: detvc];
+        [bcv addSubview: detvc.view];
+        
+        detvc = nil;
+    } else {
+        detvc = (DPCtgScrollViewController *)self.childViewControllers[0];
+//        if (isPortrait) {
+            [detvc changeRows:3 columns:3];
+//        } else {
+//            [detvc changeRows:1 columns:3];
+//        }
+        
     }
+}
+
+- (UIImage *) imageForIndex:(int) indx withFrame:(CGRect *) targetFrame {
+    UIImage *img = [UIImage imageNamed:[NSString stringWithFormat:@"%d.jpg", indx]];
+    
+    if (targetFrame == nil) return img;
+    
+    float coeff = 1.0;
+    float vh = (*targetFrame).size.height;
+    float vw = (*targetFrame).size.width;
+    float ih = img.size.height;
+    float iw = img.size.width;
+    if (iw/vw > ih/vh)
+        coeff = (vw / iw);
+    else
+        coeff = (vh / ih);
+    
+    if (coeff > 1.5) coeff = 1.5;
+    
+    ih = ih * coeff;
+    iw = iw * coeff;
+    
+    NSLog(@"scaling image %d.jpg from (%f, %f) => (%f, %f)", indx, img.size.width, img.size.height, iw, ih);
+    return [img rescaleImageToSize:CGSizeMake(iw, ih)];
 }
 
 - (void)didReceiveMemoryWarning

@@ -138,8 +138,10 @@
     
     self.scrollView.delegate = self;
 
+    self.pageControl.hidesForSinglePage = YES;
     self.pageControl.numberOfPages = pageCount;
     self.pageControl.currentPage = self.currentPage;
+    
     
     TIMED_SCROLL_WIDTH = fw;
     [self engageAutoTimer];
