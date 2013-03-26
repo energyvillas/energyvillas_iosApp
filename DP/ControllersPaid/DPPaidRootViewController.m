@@ -13,6 +13,7 @@
 #import "../Classes/DPImageInfo.h"
 #import "../External/OpenFlow/UIImageExtras.h"
 #import "DPCategoryViewController.h"
+#import "DPConstants.h"
 
 
 @interface DPPaidRootViewController ()
@@ -73,23 +74,23 @@
     // iphone sizes
     int H_ADS = 60; // 44;
     int H_NEW_NEXT = 92;// 100;
+
     int HL_ADS = 60; // 44;
-    int WL_NEW_NEXT = 197;//129; // 160;
-    
+    int WL_NEW_NEXT = 203;//129; // 160;
+
     // ipad sizes
     int PAD_H_ADS = 120;
-    int PAD_H_NEW_NEXT = 221;
+    int PAD_H_NEW_NEXT = 198;//221;
+    
     int PAD_HL_ADS = 120;
-    int PAD_WL_NEW_NEXT = 463;
+    int PAD_WL_NEW_NEXT = 520;//463;
     
     
     // ph : 44, 100, 267
     // lh : 44, 207 (x2),
     // lw : , 160, 320,
     
-    bool isPhone = [[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone;
-
-    if (isPhone) {
+    if (IS_PHONE || IS_IPHONE_5) {
         if (isPortrait) {
             self.adsView.frame = CGRectMake(0, 0, w, H_ADS);
             
@@ -120,7 +121,8 @@
             self.mmView.frame = CGRectMake(WL_NEW_NEXT, HL_ADS,
                                            w - WL_NEW_NEXT, h - HL_ADS);
         }*/
-    } else {
+    }
+    else /* if (IS_IPAD) */ {
         if (isPortrait) {
             self.adsView.frame = CGRectMake(0, 0, w, PAD_H_ADS);
             self.nnView.frame = CGRectMake(0, PAD_H_ADS,

@@ -53,17 +53,11 @@
 - (void) layoutForOrientation:(UIInterfaceOrientation)toOrientation {
     switch (toOrientation) {
         case UIInterfaceOrientationLandscapeLeft:
-            isPortrait = NO;
-            break;
-            
         case UIInterfaceOrientationLandscapeRight:
             isPortrait = NO;
             break;
             
         case UIInterfaceOrientationPortraitUpsideDown:
-            isPortrait = YES;
-            break;
-            
         case UIInterfaceOrientationPortrait:
             isPortrait = YES;
             break;
@@ -76,10 +70,12 @@
     int w = sv.bounds.size.width;
 
     int BOTTOM_HEIGHT;
-    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone)
-        BOTTOM_HEIGHT = (isPortrait) ? 140 : 63; // 960x640: 140 : 53 || 1136x640: 140 : 63
-    else
-        BOTTOM_HEIGHT = (isPortrait) ? 336 : 112; // pad : 1024x768 : 336 : 224
+    if (IS_PHONE) //([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone)
+        BOTTOM_HEIGHT = (isPortrait) ? 142 : 53; 
+    else if (IS_IPHONE_5)
+        BOTTOM_HEIGHT = (isPortrait) ? 142 : 63; 
+    else // if (IS_IPAD)
+        BOTTOM_HEIGHT = (isPortrait) ? 340 : 114; 
 
     //self.view.frame = CGRectMake(0, 0, w, h);
     int toolbarHeight = self.toolbar.frame.size.height;
