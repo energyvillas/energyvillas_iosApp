@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5E486C57170214D90040F165 /* DPConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E486C56170214D90040F165 /* DPConstants.m */; };
 		5E71A3B816F9973500E7AFF9 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E71A3B716F9973500E7AFF9 /* UIKit.framework */; };
 		5E71A3BA16F9973500E7AFF9 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E71A3B916F9973500E7AFF9 /* Foundation.framework */; };
 		5E71A3BC16F9973500E7AFF9 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E71A3BB16F9973500E7AFF9 /* CoreGraphics.framework */; };
@@ -98,6 +99,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		5E486C55170214D90040F165 /* DPConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPConstants.h; sourceTree = "<group>"; };
+		5E486C56170214D90040F165 /* DPConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPConstants.m; sourceTree = "<group>"; };
 		5E71A3B416F9973500E7AFF9 /* DP.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DP.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5E71A3B716F9973500E7AFF9 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		5E71A3B916F9973500E7AFF9 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -334,6 +337,8 @@
 				5EC2558516FC73430045AB99 /* DPIAPHelper.h */,
 				5EC2558616FC73430045AB99 /* DPIAPHelper.m */,
 				5EC255F917010D610045AB99 /* DPScrollableViewDelegate.h */,
+				5E486C55170214D90040F165 /* DPConstants.h */,
+				5E486C56170214D90040F165 /* DPConstants.m */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -682,6 +687,7 @@
 				5EC255E6170090A10045AB99 /* ArticleParser.m in Sources */,
 				5EC255EC1700AECF0045AB99 /* DPDataLoader.m in Sources */,
 				5EC255EF1700FEF70045AB99 /* DPCategoryViewController.m in Sources */,
+				5E486C57170214D90040F165 /* DPConstants.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

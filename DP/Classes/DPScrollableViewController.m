@@ -10,8 +10,8 @@
 #import "../External/ImageHelper/ImageResizing.h"
 #import "../Classes/DPImageInfo.h"
 #import "DPTestViewController.h"
+#import "DPConstants.h"
 
-#define AUTO_SCROLL_INTERVAL ((float) 3.0)
 
 @interface DPScrollableViewController ()
 

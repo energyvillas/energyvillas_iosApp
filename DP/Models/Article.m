@@ -22,7 +22,7 @@
 
 -(NSString *)archivePath {
 	NSString *docDir = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
-	return [docDir stringByAppendingPathComponent:@"articles.dat"];
+	return [docDir stringByAppendingPathComponent:@"articles.dat"]; // PENDING
 }
 
 -(void)archiveArticles{

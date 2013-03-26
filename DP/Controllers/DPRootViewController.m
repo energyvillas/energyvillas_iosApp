@@ -12,6 +12,7 @@
 #import "../Classes/DPImageInfo.h"
 #import "DPCtgScrollViewController.h"
 #import "../Classes/DPImageContentViewController.h"
+#import "DPConstants.h"
 
 @interface DPRootViewController ()
 
@@ -39,8 +40,8 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
-    bbiMore.title = NSLocalizedString(@"BBIMORETITLE", @"");
-    bbiBuy.title = NSLocalizedString(@"bbiBuy_Title", @"");
+    bbiMore.title = NSLocalizedString(kbbiMore_Title, nil);
+    bbiBuy.title = NSLocalizedString(kbbiBuy_Title, nil);
 }
 
 - (void)didReceiveMemoryWarning
@@ -76,9 +77,9 @@
 
     int BOTTOM_HEIGHT;
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone)
-        BOTTOM_HEIGHT = (isPortrait) ? 214 : 107;
+        BOTTOM_HEIGHT = (isPortrait) ? 140 : 63; // 960x640: 140 : 53 || 1136x640: 140 : 63
     else
-        BOTTOM_HEIGHT = (isPortrait) ? 400 : 200;
+        BOTTOM_HEIGHT = (isPortrait) ? 336 : 112; // pad : 1024x768 : 336 : 224
 
     //self.view.frame = CGRectMake(0, 0, w, h);
     int toolbarHeight = self.toolbar.frame.size.height;
@@ -110,7 +111,7 @@
                      initWithContent:content rows:2 columns:2];
         else
             detvc = [[DPCtgScrollViewController alloc]
-                     initWithContent:content rows:1 columns:3];
+                     initWithContent:content rows:1 columns:4];
         
         content = nil;
         
@@ -123,7 +124,7 @@
         if (isPortrait) {
             [detvc changeRows:2 columns:2];
         } else {
-            [detvc changeRows:1 columns:3];
+            [detvc changeRows:1 columns:4];
         }
         
     }
@@ -193,8 +194,8 @@
     
     if (coeff > 1.5) coeff = 1.5;
     
-    ih = ih * coeff;
-    iw = iw * coeff;
+    ih = ih * coeff * 0.8;
+    iw = iw * coeff * 0.8;
     
     NSLog(@"scaling image %d.jpg from (%f, %f) => (%f, %f)", indx, img.size.width, img.size.height, iw, ih);
     return [img rescaleImageToSize:CGSizeMake(iw, ih)];

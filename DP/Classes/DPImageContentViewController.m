@@ -9,6 +9,7 @@
 #import <QuartzCore/QuartzCore.h>
 #import "DPImageContentViewController.h"
 #import "../External/ASIHttpRequest/ASIHTTPRequest.h"
+#import "DPConstants.h"
 
 @interface DPImageContentViewController ()
 
@@ -114,7 +115,9 @@
 {
     if ([gestureRecognizer state] == UIGestureRecognizerStateBegan) {
         UIMenuController *menuController = [UIMenuController sharedMenuController];
-        UIMenuItem *resetMenuItem = [[UIMenuItem alloc] initWithTitle:@"Reset" action:@selector(resetPiece:)];
+        UIMenuItem *resetMenuItem = [[UIMenuItem alloc]
+                                     initWithTitle:NSLocalizedString(kIMAGE_RESET_MENU, nil)
+                                     action:@selector(resetPiece:)];
         CGPoint location = [gestureRecognizer locationInView:[gestureRecognizer view]];
         
         [self becomeFirstResponder];

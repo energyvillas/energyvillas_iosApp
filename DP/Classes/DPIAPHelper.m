@@ -7,8 +7,8 @@
 //
 
 #import "DPIAPHelper.h"
+#import "DPConstants.h"
 
-NSString *const PRODUCT_IDENTIFIER = @"gr.DesignProjects.DP";
 
 @implementation DPIAPHelper
 

@@ -12,6 +12,7 @@
 #import "../Models/Article.h"
 #import "../Models/ArticleParser.h"
 #import "../Models/DPDataLoader.h"
+#import "DPConstants.h"
 
 
 @interface DPHtmlContentViewController ()
@@ -53,7 +54,7 @@
 }
 
 - (void) doInitWebView {
-    NSLog(self.htmlData);
+    NSLog(@"%@", self.htmlData);
     
     CGRect aframe = CGRectMake(0, 0, self.view.superview.frame.size.width, self.view.superview.frame.size.height);
     UIWebView *webView = [[UIWebView alloc] initWithFrame:aframe];

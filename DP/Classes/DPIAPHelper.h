@@ -8,8 +8,6 @@
 
 #import "IAPHelper.h"
 
-UIKIT_EXTERN NSString *const PRODUCT_IDENTIFIER;
-
 @interface DPIAPHelper : IAPHelper
 
 + (DPIAPHelper *)sharedInstance;

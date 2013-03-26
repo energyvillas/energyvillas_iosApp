@@ -14,27 +14,6 @@
 #import "../External/OpenFlow/UIImageExtras.h"
 #import "DPCategoryViewController.h"
 
-#define TAG_MM_SMART ((int)100)
-#define TAG_MM_LOFT ((int)101)
-#define TAG_MM_FINLAND ((int)102)
-#define TAG_MM_ISLAND ((int)103)
-#define TAG_MM_COUNTRY ((int)104)
-#define TAG_MM_CONTAINER ((int)105)
-#define TAG_MM_VILLAS ((int)106)
-#define TAG_MM_EXCLUSIVE ((int)107)
-#define TAG_MM_VIDEOS ((int)108)
-
-#define TAG_MM_ISLAND_AEGEAN ((int)200)
-#define TAG_MM_ISLAND_CYCLADIC ((int)201)
-#define TAG_MM_ISLAND_IONIAN ((int)202)
-
-
-#define TAG_TBI_MAIN ((int)1001)
-#define TAG_TBI_WHO ((int)1002)
-#define TAG_TBI_BUY ((int)1003)
-#define TAG_TBI_CALL ((int)1004)
-#define TAG_TBI_MORE ((int)1005)
-
 
 @interface DPPaidRootViewController ()
 
@@ -92,16 +71,16 @@
     int w = sv.bounds.size.width;
     
     // iphone sizes
-    int H_ADS = 44;
-    int H_NEW_NEXT = 100;
-    int HL_ADS = 44;
-    int WL_NEW_NEXT = 160;
+    int H_ADS = 60; // 44;
+    int H_NEW_NEXT = 92;// 100;
+    int HL_ADS = 60; // 44;
+    int WL_NEW_NEXT = 197;//129; // 160;
     
     // ipad sizes
-    int PAD_H_ADS = 44;
-    int PAD_H_NEW_NEXT = 100;
-    int PAD_HL_ADS = 44;
-    int PAD_WL_NEW_NEXT = 160;
+    int PAD_H_ADS = 120;
+    int PAD_H_NEW_NEXT = 221;
+    int PAD_HL_ADS = 120;
+    int PAD_WL_NEW_NEXT = 463;
     
     
     // ph : 44, 100, 267
@@ -119,13 +98,28 @@
             self.mmView.frame = CGRectMake(0, H_ADS + H_NEW_NEXT,
                                            w, h - H_ADS - H_NEW_NEXT);
         } else {
+            self.adsView.frame = CGRectMake(WL_NEW_NEXT, 0, w - WL_NEW_NEXT, HL_ADS);
+            
+            self.nnView.frame = CGRectMake(0, 0, WL_NEW_NEXT, h);
+            
+            self.mmView.frame = CGRectMake(WL_NEW_NEXT, HL_ADS,
+                                           w - WL_NEW_NEXT, h - HL_ADS);
+        }
+      /*  if (isPortrait) {
+            self.adsView.frame = CGRectMake(0, 0, w, H_ADS);
+            
+            self.nnView.frame = CGRectMake(0, H_ADS, w, H_NEW_NEXT);
+            
+            self.mmView.frame = CGRectMake(0, H_ADS + H_NEW_NEXT,
+                                           w, h - H_ADS - H_NEW_NEXT);
+        } else {
             self.adsView.frame = CGRectMake(0, 0, w, HL_ADS);
             
             self.nnView.frame = CGRectMake(0, HL_ADS, WL_NEW_NEXT, h - HL_ADS);
             
             self.mmView.frame = CGRectMake(WL_NEW_NEXT, HL_ADS,
                                            w - WL_NEW_NEXT, h - HL_ADS);
-        }
+        }*/
     } else {
         if (isPortrait) {
             self.adsView.frame = CGRectMake(0, 0, w, PAD_H_ADS);

@@ -65,8 +65,7 @@
                                              initWithImage: [UIImage imageNamed: @"back.png"]
                                              style: UIBarButtonItemStylePlain
                                              target: self
-                                             action: @selector(closeView:)];
-
+                                             action: @selector(closeView:)];    
     
 /*
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]
@@ -108,6 +107,7 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 
+// PENDING use a delegate protocol form handling clicks
 - (void) showView: (id) sender {
     UIBarButtonItem *bbi = (UIBarButtonItem *)sender;
     if (bbi == nil) return;

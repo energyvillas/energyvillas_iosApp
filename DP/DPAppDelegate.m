@@ -10,6 +10,7 @@
 #import "Classes/DPIAPHelper.h"
 #import "Controllers/DPMainViewController.h"
 #import "ControllersPaid/DPPaidMainViewController.h"
+#import "DPConstants.h"
 
 @implementation DPAppDelegate
 
@@ -21,11 +22,9 @@
     // Override point for customization after application launch.
     
     if ([self isPurchased])
-        self.controller = [[DPPaidMainViewController alloc]
-                           initWithNibName:@"DPPaidMainView" bundle:nil];
+        self.controller = [[DPPaidMainViewController alloc] init];
     else
         self.controller = [[DPMainViewController alloc] init];
-                           //initWithNibName:@"DPMainView" bundle:nil];
     
     self.window.rootViewController = self.controller;
     self.window.backgroundColor = [UIColor whiteColor];
@@ -34,7 +33,7 @@
 }
 
 - (bool) isPurchased {
-    return  YES;
+    //return  YES;
     BOOL productPurchased = [[NSUserDefaults standardUserDefaults]
                              boolForKey:PRODUCT_IDENTIFIER];
     return productPurchased;

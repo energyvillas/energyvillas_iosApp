@@ -9,9 +9,6 @@
 #import "DPDataLoader.h"
 #import <CommonCrypto/CommonDigest.h>
 
-NSString *const ARTICLES_URL = @"http://designprojectsapps.com/iphonenews.php";
-NSString *const USER_NAME = @"phone";
-NSString *const PASSWORD = @"phone";
 
 @implementation DPDataLoader
 

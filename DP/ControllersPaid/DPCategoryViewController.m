@@ -10,6 +10,7 @@
 #import "../Controllers/DPCtgScrollViewController.h"
 #import "../Classes/DPImageInfo.h"
 #import "../External/OpenFlow/UIImageExtras.h"
+#import "DPConstants.h"
 
 @interface DPCategoryViewController ()
 
@@ -49,7 +50,7 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
-    NSString *ctgTitleKey = [NSString stringWithFormat:@"MENU_TITLE_%i", category];
+    NSString *ctgTitleKey = [NSString stringWithFormat:MENU_TITLE_Fmt, category];
     lblTitle.text = NSLocalizedString(ctgTitleKey, nil);
 }
 
@@ -87,16 +88,16 @@
     int w = sv.bounds.size.width;
     
     // iphone sizes
-    int H_ADS = 44;
+    int H_ADS = 60;
     int H_MENU = 80;
-    int HL_ADS = 44;
+    int HL_ADS = 60;
     int WL_MENU= 120;
     
     // ipad sizes
-    int PAD_H_ADS = 44;
-    int PAD_H_MENU = 80;
-    int PAD_HL_ADS = 44;
-    int PAD_WL_MENU= 120;
+    int PAD_H_ADS = 120;
+    int PAD_H_MENU = 223;
+    int PAD_HL_ADS = 120;
+    int PAD_WL_MENU= 250;
     
     
     // ph : 44, 100, 267

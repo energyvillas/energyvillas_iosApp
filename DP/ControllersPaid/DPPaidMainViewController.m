@@ -10,12 +10,9 @@
 #import "../Classes/DPHtmlContentViewController.h"
 #import "../Classes/DPImageContentViewController.h"
 #import "../Models/DPDataLoader.h"
+#import "DPConstants.h"
 
-#define TAG_TBI_MAIN ((int)1001)
-#define TAG_TBI_WHO ((int)1002)
-#define TAG_TBI_BUY ((int)1003)
-#define TAG_TBI_CALL ((int)1004)
-#define TAG_TBI_MORE ((int)1005)
+
 
 @interface DPPaidMainViewController ()
 @property (strong, nonatomic) UIViewController *whoViewController;
@@ -47,11 +44,11 @@
 	// Do any additional setup after loading the view.
     [self.view addSubview: self.navController.view];
 
-    self.tbiMain.title = NSLocalizedString(@"tbiMain_Title", nil);
-    self.tbiWho.title = NSLocalizedString(@"tbiWho_Title", nil);
-    self.tbiBuy.title = NSLocalizedString(@"tbiBuy_Title", nil);
-    self.tbiCall.title = NSLocalizedString(@"tbiCall_Title", nil);
-    self.tbiMore.title = NSLocalizedString(@"tbiMore_Title", nil);
+    self.tbiMain.title = NSLocalizedString(ktbiMain_Title, nil);
+    self.tbiWho.title = NSLocalizedString(ktbiWho_Title, nil);
+    self.tbiBuy.title = NSLocalizedString(ktbiBuy_Title, nil);
+    self.tbiCall.title = NSLocalizedString(ktbiCall_Title, nil);
+    self.tbiMore.title = NSLocalizedString(ktbiMore_Title, nil);
     
     self.tabBar.delegate = self;
 }
@@ -197,6 +194,7 @@
     // Dispose of any resources that can be recreated.
 }
 
+// PENDING
 - (void)viewDidUnload {
     [self setNavController:nil];
     [self setTabBar:nil];
