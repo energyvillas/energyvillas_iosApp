@@ -12,6 +12,21 @@
 #import "../Controllers/DPCtgScrollViewController.h"
 #import "../Classes/DPImageInfo.h"
 #import "../External/OpenFlow/UIImageExtras.h"
+#import "DPCategoryViewController.h"
+
+#define TAG_MM_SMART ((int)100)
+#define TAG_MM_LOFT ((int)101)
+#define TAG_MM_FINLAND ((int)102)
+#define TAG_MM_ISLAND ((int)103)
+#define TAG_MM_COUNTRY ((int)104)
+#define TAG_MM_CONTAINER ((int)105)
+#define TAG_MM_VILLAS ((int)106)
+#define TAG_MM_EXCLUSIVE ((int)107)
+#define TAG_MM_VIDEOS ((int)108)
+
+#define TAG_MM_ISLAND_AEGEAN ((int)200)
+#define TAG_MM_ISLAND_CYCLADIC ((int)201)
+#define TAG_MM_ISLAND_IONIAN ((int)202)
 
 
 #define TAG_TBI_MAIN ((int)1001)
@@ -139,10 +154,12 @@
     
     if (bcv.subviews.count == 0) {
         NSMutableArray *content = [[NSMutableArray alloc] init];
-        for (int i = 0; i < 2; i++)
-            [content addObject:[[DPImageInfo alloc]
-                                initWithName:[NSString stringWithFormat:@"%d.jpg", i+20]
-                                image:[self imageForIndex:i+20 withFrame:nil]]];
+        for (int i = 0; i < 2; i++) {
+            DPImageInfo *ii = [[DPImageInfo alloc]
+                               initWithName:[NSString stringWithFormat:@"%d.jpg", i+20]
+                               image:[self imageForIndex:i+20 withFrame:nil]];
+            [content addObject: ii];
+        }
         
         if (isPortrait)
             nnViewController = [[DPCtgScrollViewController alloc]
@@ -165,6 +182,69 @@
     }
 }
 
+- (void) elementTapped:(id)element {
+    DPImageInfo *ii = element;
+    if (ii == nil) return;
+    
+    DPCategoryViewController *ctgVC = [[DPCategoryViewController alloc] initWithCategory:ii.tag];
+    [self.navigationController pushViewController:ctgVC animated:YES];
+    
+/*
+    switch (ii.tag) {
+        case TAG_MM_SMART:
+            
+            break;
+            
+        case TAG_MM_LOFT:
+            
+            break;
+            
+        case TAG_MM_FINLAND:
+            
+            break;
+            
+        case TAG_MM_ISLAND:
+            
+            break;
+            
+        case TAG_MM_COUNTRY:
+            
+            break;
+            
+        case TAG_MM_CONTAINER:
+            
+            break;
+            
+        case TAG_MM_VILLAS:
+            
+            break;
+            
+        case TAG_MM_EXCLUSIVE:
+            
+            break;
+            
+        case TAG_MM_VIDEOS:
+            
+            break;
+            
+        case TAG_MM_ISLAND_AEGEAN:
+            
+            break;
+            
+        case TAG_MM_ISLAND_CYCLADIC:
+            
+            break;
+            
+        case TAG_MM_ISLAND_IONIAN:
+            
+            break;
+            
+        default:
+            break;
+    }
+*/
+}
+
 - (void) loadMenuView {
     UIView *bcv = self.mmView;
     
@@ -173,11 +253,15 @@
 
     if (bcv.subviews.count == 0) {
         NSMutableArray *content = [[NSMutableArray alloc] init];
-        for (int i = 0; i < 9; i++)
-            [content addObject:[[DPImageInfo alloc]
-                                initWithName:[NSString stringWithFormat:@"%d.jpg", i+11]
-                                image:[self imageForIndex:i+11 withFrame:nil]]];
-        
+        for (int i = 0; i < 9; i++) {
+            DPImageInfo *ii = [[DPImageInfo alloc]
+                               initWithName:[NSString stringWithFormat:@"%d.jpg", i+11]
+                               image:[self imageForIndex:i+11 withFrame:nil]];
+            ii.tag = i + 100;
+            [content addObject: ii];
+
+        }
+       
         //        if (isPortrait)
         mmViewController = [[DPCtgScrollViewController alloc]
                  initWithContent:content rows:3 columns:3];
@@ -186,7 +270,7 @@
         //                     initWithContent:content rows:3 columns:3];
         
         content = nil;
-        
+        mmViewController.viewDelegate = self;
         [self addChildViewController: mmViewController];
         [bcv addSubview: mmViewController.view];
     } else {

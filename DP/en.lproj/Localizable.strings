@@ -18,3 +18,18 @@
 
 "URL_LOAD_FAILED_TITLE"="Connection Failed";
 "URL_LOAD_FAILED_MESSAGE"="Data retrieval failed! Please try again later...";
+
+
+"MENU_TITLE_100"="Smart";
+"MENU_TITLE_101"="Loft";
+"MENU_TITLE_102"="Finland";
+"MENU_TITLE_103"="Island";
+"MENU_TITLE_104"="Country";
+"MENU_TITLE_105"="Container";
+"MENU_TITLE_106"="Villas";
+"MENU_TITLE_107"="Exclusive";
+"MENU_TITLE_108"="Videos";
+
+"MENU_TITLE_200"="Aegean";
+"MENU_TITLE_201"="Cycladic";
+"MENU_TITLE_202"="Ionian";

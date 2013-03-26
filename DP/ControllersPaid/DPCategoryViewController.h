@@ -10,4 +10,12 @@
 
 @interface DPCategoryViewController : UINavContentViewController
 
+@property (strong, nonatomic) IBOutlet UIView *ctgView;
+@property (strong, nonatomic) IBOutlet UIView *adsView;
+@property (strong, nonatomic) IBOutlet UIView *mmView;
+
+@property (strong, nonatomic) IBOutlet UILabel *lblTitle;
+
+- (id) initWithCategory:(int)ctgID;
+
 @end

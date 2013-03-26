@@ -94,6 +94,7 @@
 		5EC255EF1700FEF70045AB99 /* DPCategoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EC255EE1700FEF60045AB99 /* DPCategoryViewController.m */; };
 		5EC255F5170101540045AB99 /* DPPaidMainView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5EC255F3170101540045AB99 /* DPPaidMainView.xib */; };
 		5EC255F6170101540045AB99 /* DPPaidRootView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5EC255F4170101540045AB99 /* DPPaidRootView.xib */; };
+		5EC255F81701054A0045AB99 /* DPCategoryView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5EC255F71701054A0045AB99 /* DPCategoryView.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -210,8 +211,8 @@
 		5EC255C616FF4CB20045AB99 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		5EC255C816FF4CBC0045AB99 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		5EC255CA16FF4D150045AB99 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
-		5EC255D316FF95040045AB99 /* en */ = {isa = PBXFileReference; lastKnownFileType = file; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
-		5EC255D516FF95CA0045AB99 /* el */ = {isa = PBXFileReference; lastKnownFileType = file; name = el; path = el.lproj/Localizable.strings; sourceTree = "<group>"; };
+		5EC255D316FF95040045AB99 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		5EC255D516FF95CA0045AB99 /* el */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = el; path = el.lproj/Localizable.strings; sourceTree = "<group>"; };
 		5EC255D616FF95CA0045AB99 /* el */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = el; path = el.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		5EC255D716FFA4170045AB99 /* logosmall.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logosmall.png; sourceTree = "<group>"; };
 		5EC255DB16FFAAB00045AB99 /* back.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = back.png; sourceTree = "<group>"; };
@@ -227,6 +228,8 @@
 		5EC255EE1700FEF60045AB99 /* DPCategoryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPCategoryViewController.m; sourceTree = "<group>"; };
 		5EC255F3170101540045AB99 /* DPPaidMainView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DPPaidMainView.xib; sourceTree = "<group>"; };
 		5EC255F4170101540045AB99 /* DPPaidRootView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DPPaidRootView.xib; sourceTree = "<group>"; };
+		5EC255F71701054A0045AB99 /* DPCategoryView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DPCategoryView.xib; sourceTree = "<group>"; };
+		5EC255F917010D610045AB99 /* DPScrollableViewDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DPScrollableViewDelegate.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -330,6 +333,7 @@
 				5EC2557C16FC64400045AB99 /* DPImageInfo.m */,
 				5EC2558516FC73430045AB99 /* DPIAPHelper.h */,
 				5EC2558616FC73430045AB99 /* DPIAPHelper.m */,
+				5EC255F917010D610045AB99 /* DPScrollableViewDelegate.h */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -531,6 +535,7 @@
 			children = (
 				5EC255F3170101540045AB99 /* DPPaidMainView.xib */,
 				5EC255F4170101540045AB99 /* DPPaidRootView.xib */,
+				5EC255F71701054A0045AB99 /* DPCategoryView.xib */,
 			);
 			path = ViewsPaid;
 			sourceTree = "<group>";
@@ -632,6 +637,7 @@
 				5EC255DC16FFAAB00045AB99 /* back.png in Resources */,
 				5EC255F5170101540045AB99 /* DPPaidMainView.xib in Resources */,
 				5EC255F6170101540045AB99 /* DPPaidRootView.xib in Resources */,
+				5EC255F81701054A0045AB99 /* DPCategoryView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

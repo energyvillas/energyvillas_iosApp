@@ -31,6 +31,8 @@
 @synthesize contentList, currentPage;
 @synthesize colCount, rowCount;
 
+@synthesize viewDelegate;
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -232,6 +234,11 @@
     }
 }
 
+- (void) invokeViewDelegate:(id) element {
+    if ([self.viewDelegate respondsToSelector:@selector(elementTapped:)])
+        [self.viewDelegate elementTapped:element];
+
+}
 - (void)handleTap:(UITapGestureRecognizer *)sender {
     if (sender.state == UIGestureRecognizerStateEnded) {
         // handling code
@@ -239,9 +246,11 @@
         DPImageInfo * ii = contentList[indx];
         NSLog(@"Clicked image at index %i named %@", indx, ii.name);
         
+        [self invokeViewDelegate:ii];
+        
         // navigation logic goes here. create and push a new view controller;
-        DPTestViewController *vc = [[DPTestViewController alloc] init];
-        [self.navigationController pushViewController: vc animated: YES];
+//        DPTestViewController *vc = [[DPTestViewController alloc] init];
+//        [self.navigationController pushViewController: vc animated: YES];
     }
 }
     

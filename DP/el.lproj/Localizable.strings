@@ -18,3 +18,18 @@
 
 "URL_LOAD_FAILED_TITLE"="Αποτυχία Σύνδεσης";
 "URL_LOAD_FAILED_MESSAGE"="Η διαδικασία ανάκτησης νέων απέτυχε! Παρακαλούμε δοκιμάστε αργότερα...";
+
+
+"MENU_TITLE_100"="Έξυπνες";
+"MENU_TITLE_101"="Loft";
+"MENU_TITLE_102"="Φιλανδικές";
+"MENU_TITLE_103"="Νησιώτικες";
+"MENU_TITLE_104"="Εξοχικές";
+"MENU_TITLE_105"="Container";
+"MENU_TITLE_106"="Βίλλες";
+"MENU_TITLE_107"="Αποκλειστικές";
+"MENU_TITLE_108"="Video";
+
+"MENU_TITLE_200"="Αιγαιοπελαγίτικες";
+"MENU_TITLE_201"="Κυκλαδίτικες";
+"MENU_TITLE_202"="Ιονίων Νήσων";

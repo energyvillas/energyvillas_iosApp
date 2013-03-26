@@ -7,6 +7,7 @@
 //
 
 #import "UINavContentViewController.h"
+#import "DPScrollableViewDelegate.h"
 
 @interface DPScrollableViewController : UINavContentViewController <UIScrollViewDelegate>
 
@@ -17,6 +18,8 @@
 
 @property (nonatomic) int rowCount;
 @property (nonatomic) int colCount;
+
+@property (nonatomic, weak) id <DPScrollableViewDelegate> viewDelegate;
 
 
 - (id) initWithContent:(NSArray *)content;

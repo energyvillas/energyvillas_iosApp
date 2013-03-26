@@ -7,8 +7,9 @@
 //
 
 #import "UINavContentViewController.h"
+#import "../Classes/DPScrollableViewDelegate.h"
 
-@interface DPPaidRootViewController : UINavContentViewController
+@interface DPPaidRootViewController : UINavContentViewController <DPScrollableViewDelegate>
 
 @property (strong, nonatomic) IBOutlet UIView *adsView;
 @property (strong, nonatomic) IBOutlet UIView *nnView;

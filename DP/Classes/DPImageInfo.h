@@ -12,6 +12,7 @@
 
 @property (strong, nonatomic) NSString *name;
 @property (strong, nonatomic) UIImage *image;
+@property int tag;
 
 - (id) initWithName:(NSString *)aName image:(UIImage *)aImage;
 

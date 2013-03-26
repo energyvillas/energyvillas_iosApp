@@ -10,7 +10,7 @@
 
 @implementation DPImageInfo
 
-@synthesize name, image;
+@synthesize name, image, tag;
 
 - (id) initWithName:(NSString *)aName image:(UIImage *)aImage {
     if(self = [super init]){
