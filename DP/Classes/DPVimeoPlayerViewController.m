@@ -49,7 +49,7 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
-    self.view.backgroundColor = nil;
+    self.view.backgroundColor = [UIColor blackColor];
     self.quality = YTVimeoVideoQualityHigh;
     [self playVideo];
 }
@@ -61,8 +61,12 @@
         [self.navigationController popToRootViewControllerAnimated:YES];    
 }
 
-- (void) viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
+-(void)viewWillAppear:(BOOL)animated{
+    [self.navigationController setNavigationBarHidden:YES];   //it hides
+}
+
+-(void)viewWillDisappear:(BOOL)animated{
+    [self.navigationController setNavigationBarHidden:NO];    // it shows
 }
 
 - (void)didReceiveMemoryWarning
@@ -70,7 +74,7 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
+/*
 - (BOOL) shouldAutorotate {
     return NO;
 }
@@ -81,9 +85,19 @@
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
     // Return YES for supported orientations
+    //return YES;
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
-
+*/
+- (void) layoutForOrientation:(UIInterfaceOrientation) toOrientation {
+    UIView *innerview = self.view.subviews.count == 1 ? self.view.subviews[0] : nil;
+    if (innerview) {
+        CGRect frm = CGRectMake(0, 0,
+                                self.view.superview.frame.size.width,
+                                self.view.superview.frame.size.height);
+        innerview.frame = frm;
+    }
+}
 
 #pragma mark -
 #pragma mark video playing
@@ -130,17 +144,22 @@
                                                  name:MPMoviePlayerPlaybackDidFinishNotification
                                                object:self.playerView.moviePlayer];
     
+    self.playerView.moviePlayer.fullscreen = YES;
     [self.playerView.moviePlayer prepareToPlay];
-    [self.playerView.view setFrame:self.view.frame];
-    
-    [self presentMoviePlayerViewControllerAnimated:self.playerView];
+    [self.playerView.moviePlayer play];
+    CGRect frm = CGRectMake(0, 0,
+                            self.view.superview.frame.size.width,
+                            self.view.superview.frame.size.height);
+    UIView *pv = self.playerView.view;
+    pv.frame = frm;
+
+    [self.view addSubview:self.playerView.view];
 }
 
 - (void)playerViewDidExitFullScreen
 {
     _fullScreen = NO;
-    [self.playerView dismissMoviePlayerViewControllerAnimated];
-
+    [self.playerView.view removeFromSuperview];    
     [self doClose];
 }
 
