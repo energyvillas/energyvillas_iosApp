@@ -63,6 +63,10 @@
 		5E71A43C16F9B5F900E7AFF9 /* 8.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 5E71A41D16F9B5F900E7AFF9 /* 8.jpg */; };
 		5E71A43D16F9B5F900E7AFF9 /* 9.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 5E71A41E16F9B5F900E7AFF9 /* 9.jpg */; };
 		5E71A43E16F9B5F900E7AFF9 /* Read me.txt in Resources */ = {isa = PBXBuildFile; fileRef = 5E71A41F16F9B5F900E7AFF9 /* Read me.txt */; };
+		5E951D0E1702F0B900DFDE43 /* bookmark-new-2.png in Resources */ = {isa = PBXBuildFile; fileRef = 5E951D0D1702F0B900DFDE43 /* bookmark-new-2.png */; };
+		5E951D101702F22E00DFDE43 /* go-previous-view.png in Resources */ = {isa = PBXBuildFile; fileRef = 5E951D0F1702F22E00DFDE43 /* go-previous-view.png */; };
+		5E951D131702F50200DFDE43 /* flag-gr.png in Resources */ = {isa = PBXBuildFile; fileRef = 5E951D111702F50200DFDE43 /* flag-gr.png */; };
+		5E951D141702F50200DFDE43 /* flag-us.png in Resources */ = {isa = PBXBuildFile; fileRef = 5E951D121702F50200DFDE43 /* flag-us.png */; };
 		5E9ABBDE16F9F3CA000EAB46 /* DPTestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E9ABBDD16F9F3CA000EAB46 /* DPTestViewController.m */; };
 		5E9ABBE016F9F3E2000EAB46 /* DPTestView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5E9ABBDF16F9F3E2000EAB46 /* DPTestView.xib */; };
 		5E9ABBE516FB1BFC000EAB46 /* DPScrollableDetailView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5E9ABBE416FB1BFC000EAB46 /* DPScrollableDetailView.xib */; };
@@ -90,7 +94,6 @@
 		5EC255CB16FF4D150045AB99 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 5EC255CA16FF4D150045AB99 /* libz.dylib */; };
 		5EC255D216FF95040045AB99 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5EC255D416FF95040045AB99 /* Localizable.strings */; };
 		5EC255D816FFA4170045AB99 /* logosmall.png in Resources */ = {isa = PBXBuildFile; fileRef = 5EC255D716FFA4170045AB99 /* logosmall.png */; };
-		5EC255DC16FFAAB00045AB99 /* back.png in Resources */ = {isa = PBXBuildFile; fileRef = 5EC255DB16FFAAB00045AB99 /* back.png */; };
 		5EC255DF16FFB1BF0045AB99 /* DPHtmlContentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EC255DE16FFB1BF0045AB99 /* DPHtmlContentViewController.m */; };
 		5EC255E5170090A10045AB99 /* Article.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EC255E2170090A10045AB99 /* Article.m */; };
 		5EC255E6170090A10045AB99 /* ArticleParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EC255E4170090A10045AB99 /* ArticleParser.m */; };
@@ -175,6 +178,10 @@
 		5E71A41D16F9B5F900E7AFF9 /* 8.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 8.jpg; sourceTree = "<group>"; };
 		5E71A41E16F9B5F900E7AFF9 /* 9.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 9.jpg; sourceTree = "<group>"; };
 		5E71A41F16F9B5F900E7AFF9 /* Read me.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "Read me.txt"; sourceTree = "<group>"; };
+		5E951D0D1702F0B900DFDE43 /* bookmark-new-2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bookmark-new-2.png"; sourceTree = "<group>"; };
+		5E951D0F1702F22E00DFDE43 /* go-previous-view.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "go-previous-view.png"; sourceTree = "<group>"; };
+		5E951D111702F50200DFDE43 /* flag-gr.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "flag-gr.png"; sourceTree = "<group>"; };
+		5E951D121702F50200DFDE43 /* flag-us.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "flag-us.png"; sourceTree = "<group>"; };
 		5E9ABBDC16F9F3CA000EAB46 /* DPTestViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPTestViewController.h; sourceTree = "<group>"; };
 		5E9ABBDD16F9F3CA000EAB46 /* DPTestViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPTestViewController.m; sourceTree = "<group>"; };
 		5E9ABBDF16F9F3E2000EAB46 /* DPTestView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DPTestView.xib; sourceTree = "<group>"; };
@@ -226,7 +233,6 @@
 		5EC255D516FF95CA0045AB99 /* el */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = el; path = el.lproj/Localizable.strings; sourceTree = "<group>"; };
 		5EC255D616FF95CA0045AB99 /* el */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = el; path = el.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		5EC255D716FFA4170045AB99 /* logosmall.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logosmall.png; sourceTree = "<group>"; };
-		5EC255DB16FFAAB00045AB99 /* back.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = back.png; sourceTree = "<group>"; };
 		5EC255DD16FFB1BF0045AB99 /* DPHtmlContentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPHtmlContentViewController.h; sourceTree = "<group>"; };
 		5EC255DE16FFB1BF0045AB99 /* DPHtmlContentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPHtmlContentViewController.m; sourceTree = "<group>"; };
 		5EC255E1170090A10045AB99 /* Article.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Article.h; sourceTree = "<group>"; };
@@ -441,7 +447,10 @@
 		5E71A3FF16F9B5F900E7AFF9 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				5EC255DB16FFAAB00045AB99 /* back.png */,
+				5E951D0D1702F0B900DFDE43 /* bookmark-new-2.png */,
+				5E951D111702F50200DFDE43 /* flag-gr.png */,
+				5E951D121702F50200DFDE43 /* flag-us.png */,
+				5E951D0F1702F22E00DFDE43 /* go-previous-view.png */,
 				5EC255D716FFA4170045AB99 /* logosmall.png */,
 				5E71A40016F9B5F900E7AFF9 /* CoverImages */,
 			);
@@ -661,10 +670,13 @@
 				5E9ABBE516FB1BFC000EAB46 /* DPScrollableDetailView.xib in Resources */,
 				5EC255D216FF95040045AB99 /* Localizable.strings in Resources */,
 				5EC255D816FFA4170045AB99 /* logosmall.png in Resources */,
-				5EC255DC16FFAAB00045AB99 /* back.png in Resources */,
 				5EC255F5170101540045AB99 /* DPPaidMainView.xib in Resources */,
 				5EC255F6170101540045AB99 /* DPPaidRootView.xib in Resources */,
 				5EC255F81701054A0045AB99 /* DPCategoryView.xib in Resources */,
+				5E951D0E1702F0B900DFDE43 /* bookmark-new-2.png in Resources */,
+				5E951D101702F22E00DFDE43 /* go-previous-view.png in Resources */,
+				5E951D131702F50200DFDE43 /* flag-gr.png in Resources */,
+				5E951D141702F50200DFDE43 /* flag-us.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

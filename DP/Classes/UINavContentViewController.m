@@ -61,46 +61,88 @@
 }
 
 - (void) setupNavBar {
-    self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc]
-                                             initWithImage: [UIImage imageNamed: @"back.png"]
-                                             style: UIBarButtonItemStylePlain
-                                             target: self
-                                             action: @selector(closeView:)];    
+    if (!self.navigationController) return;
     
-/*
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]
-                                             initWithImage: [UIImage imageNamed: @"logosmall.png"]
-                                             style: UIBarButtonItemStylePlain
-                                             target: self
-                                             action: @selector(closeView:)];
-
+    self.navigationItem.title = nil;
     self.navigationItem.leftItemsSupplementBackButton = YES;
-    self.navigationItem.hidesBackButton = NO;
-*/
+    self.navigationItem.hidesBackButton = YES;
 
+    bool ischild = self.navigationController.viewControllers[0] != self &&
+                    self.navigationController.topViewController == self;
+    
+    UIBarButtonItem *titleitem = [[UIBarButtonItem alloc]
+                                  initWithCustomView: [self
+                                                       createButtonWithImage:@"logosmall.png"
+                                                       highlightedImage:@"logosmall.png"
+                                                       tag:103
+                                                       action:nil]];
 
-	self.navigationItem.titleView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"logosmall.png"]];
-
+    if (ischild) {
+        self.navigationItem.leftBarButtonItems = @[
+                                                   [[UIBarButtonItem alloc]
+                                                    initWithCustomView: [self
+                                                                         createButtonWithImage:@"go-previous-view.png"
+                                                                         tag:103
+                                                                         action:@selector(closeView:)]],
+                                                   
+                                                   titleitem
+                                                   ];
+    }
+    else
+        self.navigationItem.leftBarButtonItems = @[titleitem];
+    
+    
     self.navigationItem.rightBarButtonItems = @[
                                                 [[UIBarButtonItem alloc]
-                                                 initWithBarButtonSystemItem: UIBarButtonSystemItemAction
-                                                 target: self action: @selector(showView:)],
-                                                
+                                                 initWithCustomView: [self
+                                                                      createButtonWithImage:@"bookmark-new-2.png"
+                                                                      tag:103
+                                                                      action:@selector(showView:)]],
+
                                                 [[UIBarButtonItem alloc]
-                                                 initWithImage:[UIImage imageNamed:@"back.png"]
-                                                 style:UIBarButtonItemStylePlain
-                                                 target: self
-                                                 action: @selector(showView:)],
-                                                
+                                                 initWithCustomView: [self
+                                                                      createButtonWithImage:@"bookmark-new-2.png"
+                                                                      tag:104
+                                                                      action:@selector(showView:)]],
+
                                                 [[UIBarButtonItem alloc]
-                                                 initWithBarButtonSystemItem: UIBarButtonSystemItemRefresh
-                                                 target: self action: @selector(showView:)]];
+                                                 initWithCustomView: [self
+                                                                      createButtonWithImage:@"flag-gr.png"
+                                                                      tag:102
+                                                                      action:@selector(showView:)]],
+                                                
+
+                                                [[UIBarButtonItem alloc]
+                                                 initWithCustomView: [self
+                                                                      createButtonWithImage:@"flag-us.png"
+                                                                      tag:101
+                                                                      action:@selector(showView:)]]
+                                                ];
+}
+
+- (UIButton *) createButtonWithImage:(NSString *)imgName
+                                 tag:(int)index
+                              action:(SEL)sel {
+    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+    if (sel)
+        [button addTarget:self action:sel forControlEvents:UIControlEventTouchUpInside];
+    UIImage *img = [UIImage imageNamed: imgName];
+    button.frame = CGRectMake(0, 0, img.size.width + 4, 20);
+    [button setImage: img forState:UIControlStateNormal];
+    [button setTag: index];
     
-    for (int i=0; i < self.navigationItem.rightBarButtonItems.count; i++) {
-        id bbi = [self.navigationItem.rightBarButtonItems objectAtIndex:i];
-        if (bbi)
-            [bbi setTag:101 + i];
-    }
+    return button;
+}
+
+- (UIButton *) createButtonWithImage:(NSString *)imgName
+                    highlightedImage:(NSString *)imgNameHigh
+                                 tag:(int)index
+                              action:(SEL)sel {
+    UIButton *button = [self createButtonWithImage:imgName tag:index action:sel];
+    [button setImage:[UIImage imageNamed: imgNameHigh] forState:UIControlStateHighlighted];
+    [button setImage:[UIImage imageNamed: imgNameHigh] forState:UIControlStateSelected];
+    
+    return button;
 }
 
 - (void) closeView: (id) sender {
