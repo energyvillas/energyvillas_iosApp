@@ -7,7 +7,7 @@
 //
 
 #import "UINavContentViewController.h"
-#import "../External/OpenFlow/AFOpenFlowView.h"
+#import "AFOpenFlowView.h"
 
 @interface DPRootViewController : UINavContentViewController
     <AFOpenFlowViewDataSource, AFOpenFlowViewDelegate>

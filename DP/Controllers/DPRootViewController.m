@@ -13,6 +13,8 @@
 #import "DPCtgScrollViewController.h"
 #import "../Classes/DPImageContentViewController.h"
 #import "DPConstants.h"
+#import "DPVimeoPlayerViewController.h"
+
 
 @interface DPRootViewController ()
 
@@ -200,24 +202,16 @@
 // protocol AFOpenFlowViewDelegate
 - (void) openFlowView:(AFOpenFlowView *)openFlowView click:(int)index {
     NSLog(@"Clicked image at index %i", index);
-    
+/*
     // navigation logic goes here. create and push a new view controller;
-    /*
-    DPCtgScrollViewController *detvc;
-
-    NSMutableArray *content = [[NSMutableArray alloc] init];
-    for (int i = 0; i<8; i++)
-        [content addObject:[[DPImageInfo alloc]
-                            initWithName:[NSString stringWithFormat:@"%d.jpg", i+5]
-                            image:[self imageForIndex:i+5 withFrame:nil]]];
-
-    detvc = [[DPCtgScrollViewController alloc]
-                    initWithContent:content rows:1 columns:1];
-    */
-
     DPImageContentViewController *vc = [[DPImageContentViewController alloc]
                                         initWithImageName:[NSString stringWithFormat:@"%d.jpg", index]];
     [self.navigationController pushViewController:vc animated:YES];
+*/
+
+    DPVimeoPlayerViewController *vimeo = [[DPVimeoPlayerViewController alloc] 
+                                          initWithUrl:@"http://vimeo.com/58323794"];
+    [self.navigationController pushViewController:vimeo animated:YES];
 }
 
 - (void) openFlowView:(AFOpenFlowView *)openFlowView selectionDidChange:(int)index {
@@ -242,4 +236,5 @@
     [self setBottomView:nil];
     [super viewDidUnload];
 }
+
 @end

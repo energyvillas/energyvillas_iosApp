@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		5E486C57170214D90040F165 /* DPConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E486C56170214D90040F165 /* DPConstants.m */; };
+		5E486C5B17025FBC0040F165 /* YTVimeoExtractor.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E486C5A17025FBC0040F165 /* YTVimeoExtractor.m */; };
+		5E486C5D170260980040F165 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E486C5C170260980040F165 /* MediaPlayer.framework */; };
+		5E486C60170264D60040F165 /* DPVimeoPlayerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E486C5F170264D50040F165 /* DPVimeoPlayerViewController.m */; };
 		5E71A3B816F9973500E7AFF9 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E71A3B716F9973500E7AFF9 /* UIKit.framework */; };
 		5E71A3BA16F9973500E7AFF9 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E71A3B916F9973500E7AFF9 /* Foundation.framework */; };
 		5E71A3BC16F9973500E7AFF9 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E71A3BB16F9973500E7AFF9 /* CoreGraphics.framework */; };
@@ -101,6 +104,11 @@
 /* Begin PBXFileReference section */
 		5E486C55170214D90040F165 /* DPConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPConstants.h; sourceTree = "<group>"; };
 		5E486C56170214D90040F165 /* DPConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPConstants.m; sourceTree = "<group>"; };
+		5E486C5917025FBC0040F165 /* YTVimeoExtractor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YTVimeoExtractor.h; sourceTree = "<group>"; };
+		5E486C5A17025FBC0040F165 /* YTVimeoExtractor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YTVimeoExtractor.m; sourceTree = "<group>"; };
+		5E486C5C170260980040F165 /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
+		5E486C5E170264D50040F165 /* DPVimeoPlayerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPVimeoPlayerViewController.h; sourceTree = "<group>"; };
+		5E486C5F170264D50040F165 /* DPVimeoPlayerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPVimeoPlayerViewController.m; sourceTree = "<group>"; };
 		5E71A3B416F9973500E7AFF9 /* DP.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DP.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5E71A3B716F9973500E7AFF9 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		5E71A3B916F9973500E7AFF9 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -240,6 +248,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5E486C5D170260980040F165 /* MediaPlayer.framework in Frameworks */,
 				5EC255CB16FF4D150045AB99 /* libz.dylib in Frameworks */,
 				5EC255C916FF4CBD0045AB99 /* SystemConfiguration.framework in Frameworks */,
 				5EC255C716FF4CB30045AB99 /* MobileCoreServices.framework in Frameworks */,
@@ -255,6 +264,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		5E486C5817025FBC0040F165 /* YTVimeoExtractor */ = {
+			isa = PBXGroup;
+			children = (
+				5E486C5917025FBC0040F165 /* YTVimeoExtractor.h */,
+				5E486C5A17025FBC0040F165 /* YTVimeoExtractor.m */,
+			);
+			path = YTVimeoExtractor;
+			sourceTree = "<group>";
+		};
 		5E71A3AB16F9973500E7AFF9 = {
 			isa = PBXGroup;
 			children = (
@@ -276,6 +294,7 @@
 			isa = PBXGroup;
 			children = (
 				5EC255CA16FF4D150045AB99 /* libz.dylib */,
+				5E486C5C170260980040F165 /* MediaPlayer.framework */,
 				5EC255C816FF4CBC0045AB99 /* SystemConfiguration.framework */,
 				5EC255C616FF4CB20045AB99 /* MobileCoreServices.framework */,
 				5EC255C416FF4C970045AB99 /* CFNetwork.framework */,
@@ -339,6 +358,8 @@
 				5EC255F917010D610045AB99 /* DPScrollableViewDelegate.h */,
 				5E486C55170214D90040F165 /* DPConstants.h */,
 				5E486C56170214D90040F165 /* DPConstants.m */,
+				5E486C5E170264D50040F165 /* DPVimeoPlayerViewController.h */,
+				5E486C5F170264D50040F165 /* DPVimeoPlayerViewController.m */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -352,6 +373,7 @@
 				5E71A3DC16F9991000E7AFF9 /* ImageHelper */,
 				5E71A3DF16F9991000E7AFF9 /* OpenFlow */,
 				5EC255C016FF49F20045AB99 /* Reachability */,
+				5E486C5817025FBC0040F165 /* YTVimeoExtractor */,
 			);
 			path = External;
 			sourceTree = "<group>";
@@ -688,6 +710,8 @@
 				5EC255EC1700AECF0045AB99 /* DPDataLoader.m in Sources */,
 				5EC255EF1700FEF70045AB99 /* DPCategoryViewController.m in Sources */,
 				5E486C57170214D90040F165 /* DPConstants.m in Sources */,
+				5E486C5B17025FBC0040F165 /* YTVimeoExtractor.m in Sources */,
+				5E486C60170264D60040F165 /* DPVimeoPlayerViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
