@@ -42,9 +42,10 @@ FOUNDATION_EXPORT NSString *const MySecondConstant;
 #define TAG_MM_VIDEOS ((int)108)
 
 // main sub menu buttons
-#define TAG_MM_ISLAND_AEGEAN ((int)200)
-#define TAG_MM_ISLAND_CYCLADIC ((int)201)
-#define TAG_MM_ISLAND_IONIAN ((int)202)
+#define TAG_MM_ISLAND_SHIFT ((int)100)
+#define TAG_MM_ISLAND_AEGEAN ((int)(TAG_MM_ISLAND * TAG_MM_ISLAND_SHIFT) + 00)
+#define TAG_MM_ISLAND_CYCLADIC ((int)(TAG_MM_ISLAND * TAG_MM_ISLAND_SHIFT) + 01)
+#define TAG_MM_ISLAND_IONIAN ((int)(TAG_MM_ISLAND * TAG_MM_ISLAND_SHIFT) + 02)
 
 // predefined categories IDs
 #define CTGID_WHO_WE_ARE ((int)60)

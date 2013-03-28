@@ -8,8 +8,9 @@
 
 #import "UINavContentViewController.h"
 #import "../Classes/DPScrollableViewDelegate.h"
+#import "FPPopoverController.h"
 
-@interface DPPaidRootViewController : UINavContentViewController <DPScrollableViewDelegate>
+@interface DPPaidRootViewController : UINavContentViewController <DPScrollableViewDelegate, FPPopoverControllerDelegate>
 
 @property (strong, nonatomic) IBOutlet UIView *adsView;
 @property (strong, nonatomic) IBOutlet UIView *nnView;

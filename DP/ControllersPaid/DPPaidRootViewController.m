@@ -26,18 +26,24 @@
 @property (strong, nonatomic) DPCtgScrollViewController *nnViewController;
 @property (strong, nonatomic) DPCtgScrollViewController *mmViewController;
 
+@property (strong, nonatomic) FPPopoverController *popoverController;
 @property (strong, nonatomic) UIViewController *islandPopupViewController;
+@property (strong, nonatomic) NSMutableArray *islandsContent;
 
 @end
 
 @implementation DPPaidRootViewController {
     //int currentIndex;
     bool isPortrait;
+    
+    int islands_count;
+    int island_width;
+    int island_height;
 }
 
 @synthesize whoViewController, buyViewController, callViewController, moreViewController;
 @synthesize nnViewController, mmViewController;
-@synthesize islandPopupViewController;
+@synthesize popoverController, islandPopupViewController, islandsContent;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -55,6 +61,15 @@
 }
 
 - (void) layoutForOrientation:(UIInterfaceOrientation)toOrientation {
+    if (self.popoverController) {
+        [self.popoverController dismissPopoverAnimated:YES];
+        self.popoverController = nil;
+    }
+    
+//    if (self.islandPopupViewController)
+    self.islandPopupViewController = nil;
+    self.islandsContent = nil;
+    
     switch (toOrientation) {
         case UIInterfaceOrientationLandscapeLeft:
         case UIInterfaceOrientationLandscapeRight:
@@ -197,42 +212,27 @@
     DPImageInfo *ii = element;
     if (ii == nil) return;
     
-    DPCategoryViewController *ctgVC = [[DPCategoryViewController alloc] initWithCategory:ii.tag];
-    [self.navigationController pushViewController:ctgVC animated:YES];
-    
-/*
     switch (ii.tag) {
-        case TAG_MM_SMART:
-            
+        case TAG_MM_ISLAND: {
+            [self showIslandMenu];
             break;
-            
-        case TAG_MM_LOFT:
-            
-            break;
-            
-        case TAG_MM_FINLAND:
-            
-            break;
-            
-        case TAG_MM_ISLAND:
-            
-            break;
-            
-        case TAG_MM_COUNTRY:
-            
-            break;
-            
-        case TAG_MM_CONTAINER:
-            
-            break;
-            
-        case TAG_MM_VILLAS:
-            
-            break;
+        }
             
         case TAG_MM_EXCLUSIVE:
             
             break;
+            
+        case TAG_MM_SMART:
+        case TAG_MM_LOFT:
+        case TAG_MM_FINLAND:
+        case TAG_MM_COUNTRY:
+        case TAG_MM_CONTAINER:
+        case TAG_MM_VILLAS: {
+            DPCategoryViewController *ctgVC = [[DPCategoryViewController alloc] initWithCategory:ii.tag];
+            [self.navigationController pushViewController:ctgVC animated:YES];
+            
+            break;
+        }
             
         case TAG_MM_VIDEOS:
             
@@ -253,7 +253,6 @@
         default:
             break;
     }
-*/
 }
 
 - (void) loadMenuView {
@@ -273,46 +272,121 @@
 
         }
        
-        //        if (isPortrait)
         mmViewController = [[DPCtgScrollViewController alloc]
                  initWithContent:content rows:3 columns:3];
-        //        else
-        //            detvc = [[DPCtgScrollViewController alloc]
-        //                     initWithContent:content rows:3 columns:3];
-        
+
         content = nil;
         mmViewController.viewDelegate = self;
         [self addChildViewController: mmViewController];
         [bcv addSubview: mmViewController.view];
     } else {
-        //        if (isPortrait) {
         [mmViewController changeRows:3 columns:3];
-        //        } else {
-        //            [detvc changeRows:1 columns:3];
-        //        }
-        
     }
 }
 
+- (UIView *) doCreateItem:(DPImageInfo *) ii tag:(int)indx{
+    CGRect frm = CGRectMake(island_width * indx, 0, island_width, island_height);
+
+    UIView *v = [[UIView alloc] initWithFrame: frm];
+    v.clipsToBounds = YES;
+    
+    frm = CGRectMake(0, 0, island_width, island_height);
+    UIImageView *iv = [[UIImageView alloc] initWithFrame: frm];
+    iv.image = ii.image;
+    iv.contentMode = UIViewContentModeScaleAspectFill; //UIViewContentModeScaleAspectFit;
+    iv.tag = indx;
+    UITapGestureRecognizer *tapper = [[UITapGestureRecognizer alloc]
+                                      initWithTarget:self action:@selector(handleIslandTap:)];
+    [iv addGestureRecognizer:tapper];
+    iv.userInteractionEnabled = YES;
+    
+    UILabel *lv = [[UILabel alloc] initWithFrame: frm];
+    lv.textAlignment = NSTextAlignmentCenter;
+    lv.adjustsFontSizeToFitWidth = YES;
+    NSString *dl = ii.displayNname;
+    lv.text = dl ? dl : ii.name;
+    lv.backgroundColor = [UIColor clearColor];
+    lv.textColor = [UIColor whiteColor];
+    [lv sizeToFit];
+    CGRect b = lv.bounds;
+    frm = CGRectMake(frm.origin.x, frm.origin.y + frm.size.height - b.size.height,
+                     frm.size.width, b.size.height);
+    lv.frame = frm;
+    
+    [v addSubview:iv];
+    [v addSubview:lv];
+    
+    return v;
+}
+
+- (void)handleIslandTap:(UITapGestureRecognizer *)sender {
+    [self.popoverController dismissPopoverAnimated:YES];
+    self.popoverController = nil;
+    
+    if (sender.state == UIGestureRecognizerStateEnded) {
+        // handling code
+        int indx = sender.view.tag;
+        DPImageInfo * ii = self.islandsContent[indx];
+        NSLog(@"Clicked island image at index %i named %@ with tag %i", indx, ii.name, ii.tag);
+        
+        [self elementTapped:ii];
+    }
+}
+
+-(id) doCreateIslandViewController {
+    UIViewController *vc = [[UIViewController alloc] init];
+    vc.view.frame = CGRectMake(island_width * islands_count, 0, island_width, island_height);
+    
+    self.islandsContent = [[NSMutableArray alloc] init];
+    
+    CGRect imgfrm = CGRectMake(0, 0, island_width, island_height);
+    for (int i = 0; i < islands_count; i++) {
+        DPImageInfo *ii = [[DPImageInfo alloc]
+                           initWithName:[NSString stringWithFormat:@"%d.jpg", i+11]
+                           image:[self imageForIndex:i+11
+                                                       withFrame:&imgfrm]];
+        ii.tag = i + TAG_MM_ISLAND * TAG_MM_ISLAND_SHIFT;
+        
+        [self.islandsContent addObject: ii];
+        [vc.view addSubview:[self doCreateItem:ii tag:i]];
+    }
+         
+    return vc;
+}
+
+- (void)presentedNewPopoverController:(FPPopoverController *)newPopoverController
+          shouldDismissVisiblePopover:(FPPopoverController*)visiblePopoverController
+{
+    [visiblePopoverController dismissPopoverAnimated:YES];
+}
+
+- (void)popoverControllerDidDismissPopover:(FPPopoverController *)popoverController {
+    
+}
+
 -(void) showIslandMenu {
-/*
-    UIMenuController *menuController = [UIMenuController sharedMenuController];
+    CGRect mmfrm = self.mmView.frame;
+    islands_count = 3;
+    island_width = mmfrm.size.width * 0.98 / 3;
+    island_height = mmfrm.size.height * 0.98 / 3;
     
-    UIMenuItem *mi = [[UIMenuItem alloc] init];
-    mi.
+    //the view controller you want to present as popover
+    if (!self.islandPopupViewController)
+        self.islandPopupViewController = [self doCreateIslandViewController];
     
-    UIMenuItem *resetMenuItem = [[UIMenuItem alloc]
-                                 initWithTitle:NSLocalizedString(kIMAGE_RESET_MENU, nil)
-                                 action:@selector(resetPiece:)];
-    CGPoint location = CGPointMake(0, 0); // [gestureRecognizer locationInView:[gestureRecognizer view]];
+    self.islandPopupViewController.title = nil;
+
+    //our popover
+    self.popoverController = [[FPPopoverController alloc]
+                                    initWithViewController:self.islandPopupViewController];
+    self.popoverController.delegate = self;
+    self.popoverController.border = NO;
+    self.popoverController.contentSize = CGSizeMake(island_width * 3 + 20, island_height + 40);
+    self.popoverController.arrowDirection = FPPopoverArrowDirectionVertical;
     
-    [self becomeFirstResponder];
-    [menuController setMenuItems:[NSArray arrayWithObject:resetMenuItem]];
-    [menuController setTargetRect:CGRectMake(location.x, location.y, 0, 0)
-                           inView:self.view]; //[gestureRecognizer view]];
-    
-    [menuController setMenuVisible:YES animated:YES];
-*/
+    //the popover will be presented to a point relative to mmview
+    [self.popoverController presentPopoverFromPoint:CGPointMake(mmfrm.origin.x + mmfrm.size.width / 2 + 10,
+                                                                mmfrm.origin.y + mmfrm.size.height * 0.5 / 3)];
 }
 
 - (UIImage *) imageForIndex:(int) indx withFrame:(CGRect *) targetFrame {
