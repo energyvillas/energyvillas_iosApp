@@ -22,7 +22,7 @@
 
 "MENU_TITLE_100"="Smart";
 "MENU_TITLE_101"="Loft";
-"MENU_TITLE_102"="Finland";
+"MENU_TITLE_102"="Finland ";
 "MENU_TITLE_103"="Island";
 "MENU_TITLE_104"="Country";
 "MENU_TITLE_105"="Container";
@@ -30,9 +30,13 @@
 "MENU_TITLE_107"="Exclusive";
 "MENU_TITLE_108"="Videos";
 
-"MENU_TITLE_200"="Aegean";
-"MENU_TITLE_201"="Cycladic";
-"MENU_TITLE_202"="Ionian";
+"MENU_TITLE_103_00"="Aegean";
+"MENU_TITLE_103_01"="Cycladic";
+"MENU_TITLE_103_02"="Ionian";
+
+"MENU_TITLE_107_00"="Exclusive";
+"MENU_TITLE_107_01"="Art";
+
 
 
 "IMAGE_RESET_MENU"="Reset";

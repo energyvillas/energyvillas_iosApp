@@ -67,6 +67,9 @@
 	// Do any additional setup after loading the view.
 }
 
+- (void) viewDidDisappear:(BOOL)animated{
+
+}
 - (void) viewDidAppear:(BOOL)animated {
     [self calcFrames];
     [self doInit];
@@ -213,16 +216,34 @@
                         [wv loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@"http://www.bitzarohotels.gr"]]];
                         [scrollView addSubview:wv];
                     } else */ {
-                        UIImageView *iv = [[UIImageView alloc]
-                                           initWithFrame:CGRectMake(posX, posY, colWidth + fixWidth, rowHeight + fixHeight)];
+                        CGRect r = CGRectMake(posX, posY, colWidth + fixWidth, rowHeight + fixHeight);
+                        UIView *v = [[UIView alloc] initWithFrame:r];
+                        v.clipsToBounds = YES;
+                        
+                        r = CGRectMake(0, 0, colWidth + fixWidth, rowHeight + fixHeight);
+                        UIImageView *iv = [[UIImageView alloc] initWithFrame: r];
                         iv.image = ((DPImageInfo *)contentList[indx]).image;
-                        iv.contentMode = UIViewContentModeScaleToFill; //UIViewContentModeScaleAspectFit;
+                        iv.contentMode = UIViewContentModeScaleAspectFill; //UIViewContentModeScaleAspectFit;
                         iv.tag = indx;
                         UITapGestureRecognizer *tapper = [[UITapGestureRecognizer alloc]
                                                           initWithTarget:self action:@selector(handleTap:)];
                         [iv addGestureRecognizer:tapper];
                         iv.userInteractionEnabled = YES;
-                        [scrollView addSubview:iv];
+                        
+                        UILabel *lv = [[UILabel alloc] initWithFrame: r];
+                        lv.textAlignment = NSTextAlignmentCenter;
+                        lv.adjustsFontSizeToFitWidth = YES;
+                        NSString *dl = ((DPImageInfo *)contentList[indx]).displayNname;
+                        lv.text = dl ? dl : ((DPImageInfo *)contentList[indx]).name;
+                        lv.backgroundColor = [UIColor clearColor];
+                        lv.textColor = [UIColor whiteColor];
+                        [lv sizeToFit];
+                        CGRect b = lv.bounds;
+                        lv.frame = CGRectMake(r.origin.x, r.origin.y + r.size.height - b.size.height, r.size.width, b.size.height);
+                        
+                        [v addSubview:iv];
+                        [v addSubview:lv];
+                        [scrollView addSubview:v];
                     }
                     contentRendered[indx] = [NSNumber numberWithInt:1];
                 }

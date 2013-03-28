@@ -14,6 +14,7 @@
 #import "../Classes/DPImageContentViewController.h"
 #import "DPConstants.h"
 #import "DPVimeoPlayerViewController.h"
+#import "DPIAPHelper.h"
 
 
 @interface DPRootViewController ()
@@ -44,6 +45,17 @@
 	// Do any additional setup after loading the view.
     bbiMore.title = NSLocalizedString(kbbiMore_Title, nil);
     bbiBuy.title = NSLocalizedString(kbbiBuy_Title, nil);
+    
+    [bbiMore setAction:@selector(doMore:)];
+    [bbiBuy setAction:@selector(doBuy:)];
+}
+
+- (void) doBuy:(id) sender {
+//    SKProduct *product = [SKProduct alloc] init
+//    [[DPIAPHelper sharedInstance] buyProduct:<#(SKProduct *)#>
+}
+- (void) doMore:(id) sender {
+    
 }
 
 - (void)didReceiveMemoryWarning
@@ -72,12 +84,12 @@
     int w = sv.bounds.size.width;
 
     int BOTTOM_HEIGHT;
-    if (IS_PHONE) //([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone)
-        BOTTOM_HEIGHT = (isPortrait) ? 142 : 53; 
+    if (IS_IPHONE) 
+        BOTTOM_HEIGHT = (isPortrait) ? 170 : 64;
     else if (IS_IPHONE_5)
-        BOTTOM_HEIGHT = (isPortrait) ? 142 : 63; 
+        BOTTOM_HEIGHT = (isPortrait) ? 170 : 72;
     else // if (IS_IPAD)
-        BOTTOM_HEIGHT = (isPortrait) ? 340 : 114; 
+        BOTTOM_HEIGHT = (isPortrait) ? 408 : 136;//340 : 114;
 
     //self.view.frame = CGRectMake(0, 0, w, h);
     int toolbarHeight = self.toolbar.frame.size.height;
@@ -99,10 +111,20 @@
     DPCtgScrollViewController *detvc;
     if (bcv.subviews.count == 0) {
         NSMutableArray *content = [[NSMutableArray alloc] init];
+
+        NSString *lang = [[NSLocale preferredLanguages] objectAtIndex:0];
+
         for (int i = 0; i<8; i++)
-            [content addObject:[[DPImageInfo alloc]
-                                initWithName:[NSString stringWithFormat:@"%d.jpg", i+5]
-                                image:[self imageForIndex:i+5 withFrame:nil]]];
+            if (i == 0 || i == 1) {
+                NSString *dispName = [NSString stringWithFormat: @"MENU_TITLE_10%i", i];
+                [content addObject:[[DPImageInfo alloc]
+                                    initWithName: [NSString stringWithFormat:@"00%d-%@.jpg", i+1, lang]
+                                    image: [UIImage imageNamed:[NSString stringWithFormat:@"00%d-%@.jpg", i+1, lang]]
+                                    displayName: NSLocalizedString(dispName, nil)]];
+            } else
+                [content addObject:[[DPImageInfo alloc]
+                                    initWithName:[NSString stringWithFormat:@"%d.jpg", i+5]
+                                    image:[self imageForIndex:i+5 withFrame:nil]]];
         
         if (isPortrait)
             detvc = [[DPCtgScrollViewController alloc]
@@ -225,7 +247,7 @@
 }
 
 - (UIImage *) defaultImage {
-    return [UIImage imageNamed:@"0.jpg"]; // thi should return the missing image replacement
+    return nil; // thi should return the missing image replacement
 }
 
 - (void)viewDidUnload {

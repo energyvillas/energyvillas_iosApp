@@ -26,6 +26,8 @@
 @property (strong, nonatomic) DPCtgScrollViewController *nnViewController;
 @property (strong, nonatomic) DPCtgScrollViewController *mmViewController;
 
+@property (strong, nonatomic) UIViewController *islandPopupViewController;
+
 @end
 
 @implementation DPPaidRootViewController {
@@ -35,7 +37,7 @@
 
 @synthesize whoViewController, buyViewController, callViewController, moreViewController;
 @synthesize nnViewController, mmViewController;
-
+@synthesize islandPopupViewController;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -72,67 +74,80 @@
     int w = sv.bounds.size.width;
     
     // iphone sizes
-    int H_ADS = 60; // 44;
-    int H_NEW_NEXT = 92;// 100;
-
-    int HL_ADS = 60; // 44;
-    int WL_NEW_NEXT = 203;//129; // 160;
-
+    int PHONE_H_ADS = 60; // 44;
+    int PHONE_H_NEW_NEXT = 92;// 100;
+    
+    int PHONE_HL_ADS = 60; // 44;
+    int PHONE_WL_NEW_NEXT = 182;//203;//129; // 160;
+    
+    // iphone5 sizes
+    int PHONE5_H_ADS = 60; // 44;
+    int PHONE5_H_NEW_NEXT = 92;// 100;
+    
+    int PHONE5_HL_ADS = 60; // 44;
+    int PHONE5_WL_NEW_NEXT = 210;//182;//203;//129; // 160;
+    
     // ipad sizes
     int PAD_H_ADS = 120;
-    int PAD_H_NEW_NEXT = 198;//221;
+    int PAD_H_NEW_NEXT = 220;//198;//221;
     
     int PAD_HL_ADS = 120;
-    int PAD_WL_NEW_NEXT = 520;//463;
+    int PAD_WL_NEW_NEXT = 468;//520;//463;
     
     
     // ph : 44, 100, 267
     // lh : 44, 207 (x2),
     // lw : , 160, 320,
     
-    if (IS_PHONE || IS_IPHONE_5) {
+    if (IS_IPHONE) {
         if (isPortrait) {
-            self.adsView.frame = CGRectMake(0, 0, w, H_ADS);
+            self.adsView.frame = CGRectMake(0, 0, w, PHONE_H_ADS);
             
-            self.nnView.frame = CGRectMake(0, H_ADS, w, H_NEW_NEXT);
+            self.nnView.frame = CGRectMake(0, PHONE_H_ADS, w, PHONE_H_NEW_NEXT);
             
-            self.mmView.frame = CGRectMake(0, H_ADS + H_NEW_NEXT,
-                                           w, h - H_ADS - H_NEW_NEXT);
+            self.mmView.frame = CGRectMake(0, PHONE_H_ADS + PHONE_H_NEW_NEXT,
+                                           w, h - PHONE_H_ADS - PHONE_H_NEW_NEXT);
         } else {
-            self.adsView.frame = CGRectMake(WL_NEW_NEXT, 0, w - WL_NEW_NEXT, HL_ADS);
+            self.adsView.frame = CGRectMake(PHONE_WL_NEW_NEXT, 0,
+                                            w - PHONE_WL_NEW_NEXT, PHONE_HL_ADS);
             
-            self.nnView.frame = CGRectMake(0, 0, WL_NEW_NEXT, h);
+            self.nnView.frame = CGRectMake(0, 0, PHONE_WL_NEW_NEXT, h);
             
-            self.mmView.frame = CGRectMake(WL_NEW_NEXT, HL_ADS,
-                                           w - WL_NEW_NEXT, h - HL_ADS);
+            self.mmView.frame = CGRectMake(PHONE_WL_NEW_NEXT, PHONE_HL_ADS,
+                                           w - PHONE_WL_NEW_NEXT, h - PHONE_HL_ADS);
         }
-      /*  if (isPortrait) {
-            self.adsView.frame = CGRectMake(0, 0, w, H_ADS);
+    } else if (IS_IPHONE_5) {
+        if (isPortrait) {
+            self.adsView.frame = CGRectMake(0, 0, w, PHONE5_H_ADS);
             
-            self.nnView.frame = CGRectMake(0, H_ADS, w, H_NEW_NEXT);
+            self.nnView.frame = CGRectMake(0, PHONE5_H_ADS, w, PHONE5_H_NEW_NEXT);
             
-            self.mmView.frame = CGRectMake(0, H_ADS + H_NEW_NEXT,
-                                           w, h - H_ADS - H_NEW_NEXT);
+            self.mmView.frame = CGRectMake(0, PHONE5_H_ADS + PHONE5_H_NEW_NEXT,
+                                           w, h - PHONE5_H_ADS - PHONE5_H_NEW_NEXT);
         } else {
-            self.adsView.frame = CGRectMake(0, 0, w, HL_ADS);
+            self.adsView.frame = CGRectMake(0, 0, w, PHONE5_HL_ADS);
             
-            self.nnView.frame = CGRectMake(0, HL_ADS, WL_NEW_NEXT, h - HL_ADS);
+            self.nnView.frame = CGRectMake(0, PHONE5_HL_ADS,
+                                           PHONE5_WL_NEW_NEXT, h - PHONE5_HL_ADS);
             
-            self.mmView.frame = CGRectMake(WL_NEW_NEXT, HL_ADS,
-                                           w - WL_NEW_NEXT, h - HL_ADS);
-        }*/
-    }
-    else /* if (IS_IPAD) */ {
+            self.mmView.frame = CGRectMake(PHONE5_WL_NEW_NEXT, PHONE5_HL_ADS,
+                                           w - PHONE5_WL_NEW_NEXT, h - PHONE5_HL_ADS);
+        }
+    } else /* if (IS_IPAD) */ {
         if (isPortrait) {
             self.adsView.frame = CGRectMake(0, 0, w, PAD_H_ADS);
+            
             self.nnView.frame = CGRectMake(0, PAD_H_ADS,
                                            w, PAD_H_NEW_NEXT);
+            
             self.mmView.frame = CGRectMake(0, PAD_H_ADS + PAD_H_NEW_NEXT,
                                            w, h - PAD_H_ADS - PAD_H_NEW_NEXT);
         } else {
             self.adsView.frame = CGRectMake(0, 0, w, PAD_HL_ADS);
-            self.nnView.frame = CGRectMake(0, PAD_H_ADS,
+            
+            self.nnView.frame = CGRectMake(0, PAD_HL_ADS,
                                            PAD_WL_NEW_NEXT, h - PAD_HL_ADS);
+            
             self.mmView.frame = CGRectMake(PAD_WL_NEW_NEXT, PAD_H_ADS,
                                            w - PAD_WL_NEW_NEXT, h - PAD_HL_ADS);
         }
@@ -277,6 +292,27 @@
         //        }
         
     }
+}
+
+-(void) showIslandMenu {
+/*
+    UIMenuController *menuController = [UIMenuController sharedMenuController];
+    
+    UIMenuItem *mi = [[UIMenuItem alloc] init];
+    mi.
+    
+    UIMenuItem *resetMenuItem = [[UIMenuItem alloc]
+                                 initWithTitle:NSLocalizedString(kIMAGE_RESET_MENU, nil)
+                                 action:@selector(resetPiece:)];
+    CGPoint location = CGPointMake(0, 0); // [gestureRecognizer locationInView:[gestureRecognizer view]];
+    
+    [self becomeFirstResponder];
+    [menuController setMenuItems:[NSArray arrayWithObject:resetMenuItem]];
+    [menuController setTargetRect:CGRectMake(location.x, location.y, 0, 0)
+                           inView:self.view]; //[gestureRecognizer view]];
+    
+    [menuController setMenuVisible:YES animated:YES];
+*/
 }
 
 - (UIImage *) imageForIndex:(int) indx withFrame:(CGRect *) targetFrame {

@@ -56,6 +56,7 @@
 - (void) viewWillAppear:(BOOL)animated {
     if (!framesDone) {
         [self fixFrames:YES];
+        self.tabBar.selectedItem = self.tbiMain;
         framesDone = YES;
     }
     [super viewWillAppear:animated];

@@ -59,6 +59,21 @@
 			interfaceOrientation == UIInterfaceOrientationLandscapeRight ||
 			interfaceOrientation == UIInterfaceOrientationLandscapeLeft);
 }
+/*
+- (UIButton *) createButtonWithImageUrl:(NSURL *)imgUrl
+                                 tag:(int)index
+                              action:(SEL)sel {
+    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+    if (sel)
+        [button addTarget:self action:sel forControlEvents:UIControlEventTouchUpInside];
+    UIImage *img = [UIImage imageNamed: imgName];
+    button.frame = CGRectMake(0, 0, img.size.width, 30);
+    [button setImage: img forState:UIControlStateNormal];
+    [button setTag: index];
+    
+    return button;
+}
+*/
 
 - (void) setupNavBar {
     if (!self.navigationController) return;
@@ -70,10 +85,13 @@
     bool ischild = self.navigationController.viewControllers[0] != self &&
                     self.navigationController.topViewController == self;
     
+    NSString *lang = [[NSLocale preferredLanguages] objectAtIndex:0];
+    NSString *imgName = [NSString stringWithFormat: @"3D_logo_horizontal_%@.png", lang];
+    
     UIBarButtonItem *titleitem = [[UIBarButtonItem alloc]
                                   initWithCustomView: [self
-                                                       createButtonWithImage:@"logosmall.png"
-                                                       highlightedImage:@"logosmall.png"
+                                                       createButtonWithImage: imgName
+                                                       highlightedImage: imgName
                                                        tag:103
                                                        action:nil]];
 
@@ -127,7 +145,7 @@
     if (sel)
         [button addTarget:self action:sel forControlEvents:UIControlEventTouchUpInside];
     UIImage *img = [UIImage imageNamed: imgName];
-    button.frame = CGRectMake(0, 0, img.size.width + 4, 20);
+    button.frame = CGRectMake(0, 0, img.size.width, 30);
     [button setImage: img forState:UIControlStateNormal];
     [button setTag: index];
     

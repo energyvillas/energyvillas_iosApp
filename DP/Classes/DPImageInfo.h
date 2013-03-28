@@ -10,10 +10,12 @@
 
 @interface DPImageInfo : NSObject
 
+@property (strong, nonatomic) NSString *displayNname;
 @property (strong, nonatomic) NSString *name;
 @property (strong, nonatomic) UIImage *image;
 @property int tag;
 
 - (id) initWithName:(NSString *)aName image:(UIImage *)aImage;
+- (id) initWithName:(NSString *)aName image:(UIImage *)aImage displayName:(NSString *)aDisplayName;
 
 @end

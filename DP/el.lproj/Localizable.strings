@@ -30,9 +30,12 @@
 "MENU_TITLE_107"="Αποκλειστικές";
 "MENU_TITLE_108"="Video";
 
-"MENU_TITLE_200"="Αιγαιοπελαγίτικες";
-"MENU_TITLE_201"="Κυκλαδίτικες";
-"MENU_TITLE_202"="Ιονίων Νήσων";
+"MENU_TITLE_103_00"="Αιγαιοπελαγίτικες";
+"MENU_TITLE_103_01"="Κυκλαδίτικες";
+"MENU_TITLE_103_02"="Ιονίων Νήσων";
+
+"MENU_TITLE_107_00"="Exclusive";
+"MENU_TITLE_107_01"="Τέχνης";
 
 
 "IMAGE_RESET_MENU"="Επαναφορά";
