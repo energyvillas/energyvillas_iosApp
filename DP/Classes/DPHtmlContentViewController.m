@@ -142,8 +142,11 @@
     
 	[self stopIndicator];
     
-    [self showAlertMessage:NSLocalizedString(@"URL_LOAD_FAILED_MESSAGE", nil)
-                     title:NSLocalizedString(@"URL_LOAD_FAILED_TITLE", nil)];
+    showAlertMessage(nil,
+                     NSLocalizedString(@"URL_LOAD_FAILED_TITLE", nil),
+                     NSLocalizedString(@"URL_LOAD_FAILED_MESSAGE", nil));
+//    [self showAlertMessage:NSLocalizedString(@"URL_LOAD_FAILED_MESSAGE", nil)
+//                     title:NSLocalizedString(@"URL_LOAD_FAILED_TITLE", nil)];
 }
 
 -(void) showAlertMessage:(NSString *)aMessage title:(NSString *)aTitle {
@@ -174,7 +177,7 @@
 #pragma mark -
 #pragma mark === device orientation change handling  ===
 
-- (void) layoutForOrientation:(UIInterfaceOrientation) toOrientation {
+- (void) layoutForOrientation:(UIInterfaceOrientation) toOrientation fixtop:(BOOL)fixtop{
     UIView *innerview = self.view.subviews.count == 1 ? self.view.subviews[0] : nil;
     if (innerview) {
         innerview.frame = CGRectMake(0, 0,

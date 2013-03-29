@@ -10,7 +10,7 @@
 #import "UINavContentViewController.h"
 #import "YTVimeoExtractor.h"
 
-@interface DPVimeoPlayerViewController : UINavContentViewController <YTVimeoExtractorDelegate>
+@interface DPVimeoPlayerViewController : UINavContentViewController <YTVimeoExtractorDelegate, UIAlertViewDelegate>
 
 - (id) initWithUrl:(NSString *)videoUrl;
 

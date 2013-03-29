@@ -17,7 +17,10 @@ FOUNDATION_EXPORT NSString *const MySecondConstant;
 
 #define IS_IPHONE ( ((BOOL)([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone)) && (!IS_IPHONE_5))
 
+#define INTERFACE_ORIENTATION ( (UIInterfaceOrientation) [UIApplication sharedApplication].statusBarOrientation)
 
+#define STATUS_BAR_VISIBLE ((BOOL) ![UIApplication sharedApplication].statusBarHidden)
+#define STATUS_BAR_HEIGHT ((CGFloat) ![UIApplication sharedApplication].statusBarFrame.size.height)
 
 // timer intervals
 #define AUTO_SCROLL_INTERVAL ((float) 3.0)
@@ -74,3 +77,7 @@ UIKIT_EXTERN NSString *const kbbiBuy_Title;
 UIKIT_EXTERN NSString *const MENU_TITLE_Fmt;
 
 UIKIT_EXTERN NSString *const kIMAGE_RESET_MENU;
+
+
+void showAlertMessage(id delegate, NSString *aTitle, NSString *aMessage);
+

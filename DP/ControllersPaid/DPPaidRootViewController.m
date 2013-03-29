@@ -60,7 +60,7 @@
 	// Do any additional setup after loading the view.
 }
 
-- (void) layoutForOrientation:(UIInterfaceOrientation)toOrientation {
+- (void) layoutForOrientation:(UIInterfaceOrientation)toOrientation fixtop:(BOOL)fixtop {
     if (self.popoverController) {
         [self.popoverController dismissPopoverAnimated:YES];
         self.popoverController = nil;
@@ -82,88 +82,87 @@
             break;
     }
     
-    UIView *sv;
-    sv = self.view.superview;
+    CGRect vf = self.view.frame;
+    CGRect svf = self.view.superview.frame;
     
-    int h = sv.bounds.size.height;
-    int w = sv.bounds.size.width;
+    int h = isPortrait ? vf.size.height : vf.size.height - vf.origin.y ;
+    int w = vf.size.width;
+    
+    int top = fixtop ? vf.origin.y : 0;
     
     // iphone sizes
-    int PHONE_H_ADS = 60; // 44;
-    int PHONE_H_NEW_NEXT = 92;// 100;
+    int PHONE_H_ADS = 60; 
+    int PHONE_H_NEW_NEXT = 92;
     
-    int PHONE_HL_ADS = 60; // 44;
-    int PHONE_WL_NEW_NEXT = 182;//203;//129; // 160;
+    int PHONE_HL_ADS = 60; 
+    int PHONE_WL_NEW_NEXT = 181;
     
     // iphone5 sizes
-    int PHONE5_H_ADS = 60; // 44;
-    int PHONE5_H_NEW_NEXT = 92;// 100;
+    int PHONE5_H_ADS = 60; 
+    int PHONE5_H_NEW_NEXT = 92;
     
-    int PHONE5_HL_ADS = 60; // 44;
-    int PHONE5_WL_NEW_NEXT = 210;//182;//203;//129; // 160;
+    int PHONE5_HL_ADS = 60; 
+    int PHONE5_WL_NEW_NEXT = 210; //181
     
     // ipad sizes
     int PAD_H_ADS = 120;
-    int PAD_H_NEW_NEXT = 220;//198;//221;
+    int PAD_H_NEW_NEXT = 221;
     
     int PAD_HL_ADS = 120;
-    int PAD_WL_NEW_NEXT = 468;//520;//463;
+    int PAD_WL_NEW_NEXT = 465;
     
-    
-    // ph : 44, 100, 267
-    // lh : 44, 207 (x2),
-    // lw : , 160, 320,
     
     if (IS_IPHONE) {
         if (isPortrait) {
-            self.adsView.frame = CGRectMake(0, 0, w, PHONE_H_ADS);
+            self.adsView.frame = CGRectMake(0, top, w, PHONE_H_ADS);
             
-            self.nnView.frame = CGRectMake(0, PHONE_H_ADS, w, PHONE_H_NEW_NEXT);
+            self.nnView.frame = CGRectMake(0, top + PHONE_H_ADS, w, PHONE_H_NEW_NEXT);
             
-            self.mmView.frame = CGRectMake(0, PHONE_H_ADS + PHONE_H_NEW_NEXT,
+            self.mmView.frame = CGRectMake(0, top + PHONE_H_ADS + PHONE_H_NEW_NEXT,
                                            w, h - PHONE_H_ADS - PHONE_H_NEW_NEXT);
         } else {
-            self.adsView.frame = CGRectMake(PHONE_WL_NEW_NEXT, 0,
+            self.adsView.frame = CGRectMake(PHONE_WL_NEW_NEXT, top,
                                             w - PHONE_WL_NEW_NEXT, PHONE_HL_ADS);
             
-            self.nnView.frame = CGRectMake(0, 0, PHONE_WL_NEW_NEXT, h);
+            self.nnView.frame = CGRectMake(0, top, PHONE_WL_NEW_NEXT, h);
             
-            self.mmView.frame = CGRectMake(PHONE_WL_NEW_NEXT, PHONE_HL_ADS,
+            self.mmView.frame = CGRectMake(PHONE_WL_NEW_NEXT, top + PHONE_HL_ADS,
                                            w - PHONE_WL_NEW_NEXT, h - PHONE_HL_ADS);
         }
     } else if (IS_IPHONE_5) {
         if (isPortrait) {
-            self.adsView.frame = CGRectMake(0, 0, w, PHONE5_H_ADS);
+            self.adsView.frame = CGRectMake(0, top, w, PHONE5_H_ADS);
             
-            self.nnView.frame = CGRectMake(0, PHONE5_H_ADS, w, PHONE5_H_NEW_NEXT);
+            self.nnView.frame = CGRectMake(0, top + PHONE5_H_ADS, w, PHONE5_H_NEW_NEXT);
             
-            self.mmView.frame = CGRectMake(0, PHONE5_H_ADS + PHONE5_H_NEW_NEXT,
+            self.mmView.frame = CGRectMake(0, top + PHONE5_H_ADS + PHONE5_H_NEW_NEXT,
                                            w, h - PHONE5_H_ADS - PHONE5_H_NEW_NEXT);
         } else {
-            self.adsView.frame = CGRectMake(0, 0, w, PHONE5_HL_ADS);
+            self.adsView.frame = CGRectMake(PHONE5_WL_NEW_NEXT, top,
+                                            w - PHONE5_WL_NEW_NEXT, PHONE5_HL_ADS);
             
-            self.nnView.frame = CGRectMake(0, PHONE5_HL_ADS,
-                                           PHONE5_WL_NEW_NEXT, h - PHONE5_HL_ADS);
+            self.nnView.frame = CGRectMake(0, top,
+                                           PHONE5_WL_NEW_NEXT, h);
             
-            self.mmView.frame = CGRectMake(PHONE5_WL_NEW_NEXT, PHONE5_HL_ADS,
+            self.mmView.frame = CGRectMake(PHONE5_WL_NEW_NEXT, top + PHONE5_HL_ADS,
                                            w - PHONE5_WL_NEW_NEXT, h - PHONE5_HL_ADS);
         }
     } else /* if (IS_IPAD) */ {
         if (isPortrait) {
-            self.adsView.frame = CGRectMake(0, 0, w, PAD_H_ADS);
+            self.adsView.frame = CGRectMake(0, top, w, PAD_H_ADS);
             
-            self.nnView.frame = CGRectMake(0, PAD_H_ADS,
+            self.nnView.frame = CGRectMake(0, top + PAD_H_ADS,
                                            w, PAD_H_NEW_NEXT);
             
-            self.mmView.frame = CGRectMake(0, PAD_H_ADS + PAD_H_NEW_NEXT,
+            self.mmView.frame = CGRectMake(0, top + PAD_H_ADS + PAD_H_NEW_NEXT,
                                            w, h - PAD_H_ADS - PAD_H_NEW_NEXT);
         } else {
-            self.adsView.frame = CGRectMake(0, 0, w, PAD_HL_ADS);
+            self.adsView.frame = CGRectMake(0, top, w, PAD_HL_ADS);
             
-            self.nnView.frame = CGRectMake(0, PAD_HL_ADS,
+            self.nnView.frame = CGRectMake(0, top + PAD_HL_ADS,
                                            PAD_WL_NEW_NEXT, h - PAD_HL_ADS);
             
-            self.mmView.frame = CGRectMake(PAD_WL_NEW_NEXT, PAD_H_ADS,
+            self.mmView.frame = CGRectMake(PAD_WL_NEW_NEXT, top + PAD_H_ADS,
                                            w - PAD_WL_NEW_NEXT, h - PAD_HL_ADS);
         }
     }
@@ -380,9 +379,9 @@
     self.popoverController = [[FPPopoverController alloc]
                                     initWithViewController:self.islandPopupViewController];
     self.popoverController.delegate = self;
-    self.popoverController.border = NO;
+    self.popoverController.border = YES;
     self.popoverController.contentSize = CGSizeMake(island_width * 3 + 20, island_height + 40);
-    self.popoverController.arrowDirection = FPPopoverArrowDirectionVertical;
+    self.popoverController.arrowDirection = FPPopoverArrowDirectionDown;
     
     //the popover will be presented to a point relative to mmview
     [self.popoverController presentPopoverFromPoint:CGPointMake(mmfrm.origin.x + mmfrm.size.width / 2 + 10,

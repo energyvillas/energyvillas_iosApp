@@ -7,6 +7,7 @@
 //
 
 #import "UINavContentViewController.h"
+#import "DPConstants.h"
 
 @interface UINavContentViewController ()
 @end
@@ -22,26 +23,10 @@
 }
 
 - (void) viewWillAppear:(BOOL)animated {
-    [self layoutForOrientation:[UINavContentViewController interfaceFromDeviceOrientation:[[UIDevice currentDevice] orientation]]];
+    [self layoutForOrientation:INTERFACE_ORIENTATION fixtop:NO];
 }
 
-+ (UIInterfaceOrientation) interfaceFromDeviceOrientation: (UIDeviceOrientation) deviceOrientation {
-    switch (deviceOrientation) {
-        case UIDeviceOrientationPortraitUpsideDown:  // Device oriented vertically, home button on the top
-            return UIInterfaceOrientationPortraitUpsideDown;
-            
-        case UIDeviceOrientationLandscapeLeft:       // Device oriented horizontally, home button on the right
-            return UIInterfaceOrientationLandscapeRight;
-            
-        case UIDeviceOrientationLandscapeRight:      // Device oriented horizontally, home button on the left
-            return UIInterfaceOrientationLandscapeLeft;
-            
-        default:
-            return UIInterfaceOrientationPortrait;
-    }
-}
-
-- (void) layoutForOrientation:(UIInterfaceOrientation) toOrientation {
+- (void) layoutForOrientation:(UIInterfaceOrientation) toOrientation fixtop:(BOOL)fixtop {
 }
 
 - (BOOL) shouldAutorotate {

@@ -8,6 +8,7 @@
 
 #import "DPVimeoPlayerViewController.h"
 #import <MediaPlayer/MediaPlayer.h>
+#import "DPConstants.h"
 
 @interface DPVimeoPlayerViewController ()
 
@@ -27,11 +28,13 @@
 
 @implementation DPVimeoPlayerViewController
 
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
+        self.wantsFullScreenLayout = YES;
     }
     return self;
 }
@@ -63,10 +66,12 @@
 
 -(void)viewWillAppear:(BOOL)animated{
     [self.navigationController setNavigationBarHidden:YES];   //it hides
+    [super viewWillAppear:animated];
 }
 
 -(void)viewWillDisappear:(BOOL)animated{
     [self.navigationController setNavigationBarHidden:NO];    // it shows
+    [super viewWillDisappear:animated];
 }
 
 - (void)didReceiveMemoryWarning
@@ -89,13 +94,23 @@
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 */
-- (void) layoutForOrientation:(UIInterfaceOrientation) toOrientation {
+- (void) layoutForOrientation:(UIInterfaceOrientation) toOrientation fixtop:(BOOL)fixtop{
+    CGRect svf = self.view.superview.frame;
+    CGRect vf = self.view.frame;
+    
+    int sbh = [UIApplication sharedApplication].statusBarFrame.size.height;
+    vf = CGRectMake(0, 0, svf.size.width, svf.origin.y + svf.size.height + sbh);
+    NSLog(@"======> vimeo vf : (x, y, w, h) = ****** (%f, %f, %f, %f) ********",
+          vf.origin.x, vf.origin.y, vf.size.width, vf.size.height);
+ //   self.view.frame = vf;
+
+    //self.view.frame = []
     UIView *innerview = self.view.subviews.count == 1 ? self.view.subviews[0] : nil;
     if (innerview) {
         CGRect frm = CGRectMake(0, 0,
-                                self.view.superview.frame.size.width,
-                                self.view.superview.frame.size.height);
-        innerview.frame = frm;
+                                vf.size.width,
+                                vf.size.height);
+//        innerview.frame = frm;
     }
 }
 
@@ -122,8 +137,14 @@
 - (void)vimeoExtractor:(YTVimeoExtractor *)extractor failedExtractingVimeoURLWithError:(NSError *)error;
 {
     NSLog(@"ERROR: %@", [error localizedDescription]);
+    showAlertMessage(self,
+                     @"Αποτυχία Σύνδεσης",
+                     @"Παρακαλούμε δοκιμάστε αργότερα...");
 }
 
+- (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex {
+    [self doClose];    
+}
 #pragma mark - video playing private
 
 - (void)runPlayer:(NSURL *)url

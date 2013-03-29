@@ -284,6 +284,10 @@
 
 	[self stopIndicator];
 
+    showAlertMessage(nil,
+                     @"Αποτυχία Σύνδεσης",
+                     @"Η διαδικασία ανάκτησης νέων απέτυχε! Παρακαλούμε δοκιμάστε αργότερα...");
+/*
 	UIAlertView *alertDialog;
 	alertDialog = [[UIAlertView alloc]
                    initWithTitle:@"Αποτυχία Σύνδεσης"
@@ -293,12 +297,13 @@
                    otherButtonTitles:nil];
     
 	[alertDialog show];
+*/
 }
 
 #pragma mark -
 #pragma mark === device orientation change handling  ===
 
-- (void) layoutForOrientation:(UIInterfaceOrientation) toOrientation {
+- (void) layoutForOrientation:(UIInterfaceOrientation) toOrientation fixtop:(BOOL)fixtop{
     UIView *innerview = self.view.subviews.count == 1 ? self.view.subviews[0] : nil;
     if (innerview) {
         innerview.frame = CGRectMake(0, 0,

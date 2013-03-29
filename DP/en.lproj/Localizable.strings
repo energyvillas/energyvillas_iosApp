@@ -20,19 +20,20 @@
 "URL_LOAD_FAILED_MESSAGE"="Data retrieval failed! Please try again later...";
 
 
-"MENU_TITLE_100"="Smart";
-"MENU_TITLE_101"="Loft";
-"MENU_TITLE_102"="Finland ";
-"MENU_TITLE_103"="Island";
-"MENU_TITLE_104"="Country";
-"MENU_TITLE_105"="Container";
+"MENU_TITLE_100"="Greek Island Houses";
+//"MENU_TITLE_100"="Smart Ηouses";
+"MENU_TITLE_101"="Loft Ηouses";
+"MENU_TITLE_102"="Finnish Ηouses";
+"MENU_TITLE_103"="Greek Island Houses";
+"MENU_TITLE_104"="Country Ηouses";
+"MENU_TITLE_105"="Container Ηouses";
 "MENU_TITLE_106"="Villas";
-"MENU_TITLE_107"="Exclusive";
+"MENU_TITLE_107"="Exclusive Ηouses";
 "MENU_TITLE_108"="Videos";
 
-"MENU_TITLE_103_00"="Aegean";
-"MENU_TITLE_103_01"="Cycladic";
-"MENU_TITLE_103_02"="Ionian";
+"MENU_TITLE_103_00"="Cycladic Ηouses";
+"MENU_TITLE_103_01"="Aegean Ηouses";
+"MENU_TITLE_103_02"="Ionian Ηouses";
 
 "MENU_TITLE_107_00"="Exclusive";
 "MENU_TITLE_107_01"="Art";

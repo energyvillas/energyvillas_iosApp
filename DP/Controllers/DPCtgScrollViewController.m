@@ -35,7 +35,7 @@
     return self;
 }
 
-- (void) layoutForOrientation:(UIInterfaceOrientation)toOrientation {
+- (void) layoutForOrientation:(UIInterfaceOrientation)toOrientation fixtop:(BOOL)fixtop {
     switch (toOrientation) {
         case UIInterfaceOrientationLandscapeLeft:
         case UIInterfaceOrientationLandscapeRight:

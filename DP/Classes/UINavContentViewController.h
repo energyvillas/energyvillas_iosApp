@@ -10,6 +10,6 @@
 
 @interface UINavContentViewController : UIViewController
 
-- (void) layoutForOrientation:(UIInterfaceOrientation) toOrientation;
+- (void) layoutForOrientation:(UIInterfaceOrientation) toOrientation fixtop:(BOOL)fixtop;
 
 @end

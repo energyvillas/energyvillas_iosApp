@@ -64,7 +64,7 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (void) layoutForOrientation:(UIInterfaceOrientation)toOrientation {
+- (void) layoutForOrientation:(UIInterfaceOrientation)toOrientation fixtop:(BOOL)fixtop{
     switch (toOrientation) {
         case UIInterfaceOrientationLandscapeLeft:
         case UIInterfaceOrientationLandscapeRight:

@@ -34,23 +34,70 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     [self.view addSubview: self.navController.view];
+    self.navController.delegate = self;
 }
 
 - (void) viewWillAppear:(BOOL)animated {
     if (!framesDone) {
-        CGRect sf = [UIScreen mainScreen].applicationFrame;
-        NSLog(@"appframe : (x, y, w, h) = (%f, %f, %f, %f)", sf.origin.x, sf.origin.y, sf .size.width, sf.size.height);
-        self.view.frame = sf;
-        self.navController.view.frame = CGRectMake(0, 0, sf.size.width, sf.size.height);
+        [self fixFrames:YES];
         framesDone = YES;
     }
     [super viewWillAppear:animated];
 }
 
+- (void)navigationController:(UINavigationController *)navigationController
+      willShowViewController:(UIViewController *)viewController
+                    animated:(BOOL)animated {
+    [self fixFrames:NO];
+    UIInterfaceOrientation orientation = [UIApplication sharedApplication].statusBarOrientation;
+    if (viewController && [viewController isKindOfClass:[UINavContentViewController class]])
+        [(UINavContentViewController *)viewController layoutForOrientation:orientation fixtop:YES];
+}
+/*
+ -(void) navigationController:(UINavigationController *)navigationController
+ didShowViewController:(UIViewController *)viewController
+ animated:(BOOL)animated {
+ }
+ */
+
+- (void) fixFrames:(BOOL)fixNavView {
+    if (fixNavView) {
+        CGRect sf = [UIScreen mainScreen].applicationFrame;
+        self.view.frame = sf;
+        
+        self.navController.view.frame = CGRectMake(0, 0,
+                                                   sf.size.width, sf.size.height);
+        
+    } else {
+        UIViewController *tvc = navController.topViewController;
+        BOOL wantsfullscreen = tvc.wantsFullScreenLayout;
+        CGRect nc_nbf = self.navController.navigationBar.frame;
+        CGRect tvc_svf = tvc.view.superview.frame;
+        CGRect tvc_vf = tvc.view.frame;
+        
+        UIInterfaceOrientation orientation = [UIApplication sharedApplication].statusBarOrientation;
+        if (UIInterfaceOrientationIsPortrait(orientation)) {
+            if (wantsfullscreen) {
+                CGRect sf = [UIScreen mainScreen].applicationFrame;
+                tvc_vf = sf;
+                tvc.view.frame = tvc_vf;
+            }
+        } else {
+            if (!wantsfullscreen)
+                tvc_vf = CGRectMake(0, nc_nbf.size.height - tvc_svf.origin.y,
+                                    tvc_svf.size.width,
+                                    tvc_svf.size.height);
+            tvc.view.frame = tvc_vf;
+        }
+    }
+}
+
 - (void) willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
+    [self fixFrames:NO];
+
     id tvc = navController.topViewController;
     if (tvc && [tvc isKindOfClass:[UINavContentViewController class]])
-        [(UINavContentViewController *)tvc layoutForOrientation:toInterfaceOrientation];
+        [(UINavContentViewController *)tvc layoutForOrientation:toInterfaceOrientation fixtop:NO];
 }
 
 - (void)didReceiveMemoryWarning

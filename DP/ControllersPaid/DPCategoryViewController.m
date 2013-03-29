@@ -68,7 +68,7 @@
     [super viewDidUnload];
 }
 
-- (void) layoutForOrientation:(UIInterfaceOrientation)toOrientation {
+- (void) layoutForOrientation:(UIInterfaceOrientation)toOrientation fixtop:(BOOL)fixtop {
     switch (toOrientation) {
         case UIInterfaceOrientationLandscapeLeft:
         case UIInterfaceOrientationLandscapeRight:
@@ -81,11 +81,12 @@
             break;
     }
     
-    UIView *sv;
-    sv = self.view.superview;
+    CGRect vf = self.view.frame;
+    CGRect svf = self.view.superview.frame;
     
-    int h = sv.bounds.size.height;
-    int w = sv.bounds.size.width;
+    int h = isPortrait ? vf.size.height : vf.size.height - vf.origin.y;
+    int w = vf.size.width;
+    int top = fixtop ? vf.origin.y : 0;
     
     // iphone sizes
     int H_ADS = 60;
@@ -99,40 +100,33 @@
     int PAD_HL_ADS = 120;
     int PAD_WL_MENU= 250;
     
-    
-    // ph : 44, 100, 267
-    // lh : 44, 207 (x2),
-    // lw : , 160, 320,
-    
-    bool isPhone = [[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone;
-    
-    if (isPhone) {
+    if (IS_IPHONE || IS_IPHONE_5) {
         if (isPortrait) {
-            self.ctgView.frame = CGRectMake(0, 0, w, h - H_ADS - H_MENU);
+            self.adsView.frame = CGRectMake(0, top, w, H_ADS);
             
-            self.adsView.frame = CGRectMake(0, h - H_ADS - H_MENU, w, H_ADS);
+            self.ctgView.frame = CGRectMake(0, top + H_ADS, w, h - H_ADS - H_MENU);
             
-            self.mmView.frame = CGRectMake(0, h - H_MENU, w, H_MENU);
+            self.mmView.frame = CGRectMake(0, top + h - H_MENU, w, H_MENU);
         } else {
-            self.ctgView.frame = CGRectMake(0, 0, w - WL_MENU, h - HL_ADS);
+            self.adsView.frame = CGRectMake(0, top, w - WL_MENU, HL_ADS);
             
-            self.adsView.frame = CGRectMake(0, h - HL_ADS, w - WL_MENU, HL_ADS);
+            self.ctgView.frame = CGRectMake(0, top + HL_ADS, w - WL_MENU, h - HL_ADS);
             
-            self.mmView.frame = CGRectMake(w - WL_MENU, 0, WL_MENU, h);
+            self.mmView.frame = CGRectMake(w - WL_MENU, top, WL_MENU, h);
         }
-    } else {
+    } else /* IF (IS_IPAD) */{
         if (isPortrait) {
-            self.ctgView.frame = CGRectMake(0, 0, w, h - PAD_H_ADS - PAD_H_MENU);
+            self.adsView.frame = CGRectMake(0, top, w, PAD_H_ADS);
             
-            self.adsView.frame = CGRectMake(0, h - PAD_H_ADS - PAD_H_MENU, w, PAD_H_ADS);
+            self.ctgView.frame = CGRectMake(0, top + PAD_H_ADS, w, h - PAD_H_ADS - PAD_H_MENU);
             
-            self.mmView.frame = CGRectMake(0, h - PAD_H_MENU, w, PAD_H_MENU);
+            self.mmView.frame = CGRectMake(0, top + h - PAD_H_MENU, w, PAD_H_MENU);
         } else {
-            self.ctgView.frame = CGRectMake(0, 0, w - PAD_WL_MENU, h - PAD_HL_ADS);
+            self.adsView.frame = CGRectMake(0, top, w - PAD_WL_MENU, PAD_HL_ADS);
             
-            self.adsView.frame = CGRectMake(0, h - PAD_HL_ADS, w - PAD_WL_MENU, PAD_HL_ADS);
+            self.ctgView.frame = CGRectMake(0, top + PAD_HL_ADS, w - PAD_WL_MENU, h - PAD_HL_ADS);
             
-            self.mmView.frame = CGRectMake(w - PAD_WL_MENU, 0, PAD_WL_MENU, h);
+            self.mmView.frame = CGRectMake(w - PAD_WL_MENU, top, PAD_WL_MENU, h);
         }
     }
     

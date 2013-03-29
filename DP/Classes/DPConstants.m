@@ -37,3 +37,16 @@ NSString *const kbbiBuy_Title = @"bbiBuy_Title";
 NSString *const MENU_TITLE_Fmt = @"MENU_TITLE_%i";
 
 NSString *const kIMAGE_RESET_MENU = @"IMAGE_RESET_MENU";
+
+
+void showAlertMessage(id aDelegate, NSString *aTitle, NSString *aMessage) {
+	UIAlertView *alertDialog;
+	alertDialog = [[UIAlertView alloc]
+                   initWithTitle:aTitle
+                   message:aMessage
+                   delegate:aDelegate
+                   cancelButtonTitle: NSLocalizedString(@"btnOK_Title", nil)
+                   otherButtonTitles:nil];
+    
+	[alertDialog show];
+}

@@ -223,7 +223,7 @@
                         r = CGRectMake(0, 0, colWidth + fixWidth, rowHeight + fixHeight);
                         UIImageView *iv = [[UIImageView alloc] initWithFrame: r];
                         iv.image = ((DPImageInfo *)contentList[indx]).image;
-                        iv.contentMode = UIViewContentModeScaleAspectFill; //UIViewContentModeScaleAspectFit;
+                        iv.contentMode = UIViewContentModeScaleToFill; //UIViewContentModeScaleAspectFill; //UIViewContentModeScaleAspectFit;
                         iv.tag = indx;
                         UITapGestureRecognizer *tapper = [[UITapGestureRecognizer alloc]
                                                           initWithTarget:self action:@selector(handleTap:)];
@@ -232,6 +232,10 @@
                         
                         UILabel *lv = [[UILabel alloc] initWithFrame: r];
                         lv.textAlignment = NSTextAlignmentCenter;
+                        if (IS_IPAD)
+                            lv.font = [UIFont fontWithName:@"Helvetica Neue" size:16];
+                        else
+                            lv.font = [UIFont fontWithName:@"Helvetica Neue" size:12];
                         lv.adjustsFontSizeToFitWidth = YES;
                         NSString *dl = ((DPImageInfo *)contentList[indx]).displayNname;
                         lv.text = dl ? dl : ((DPImageInfo *)contentList[indx]).name;
@@ -239,7 +243,8 @@
                         lv.textColor = [UIColor whiteColor];
                         [lv sizeToFit];
                         CGRect b = lv.bounds;
-                        lv.frame = CGRectMake(r.origin.x, r.origin.y + r.size.height - b.size.height, r.size.width, b.size.height);
+                        int offsetfix = IS_IPAD ? 4 : 2;
+                        lv.frame = CGRectMake(r.origin.x, r.origin.y + r.size.height - b.size.height - offsetfix, r.size.width, b.size.height);
                         
                         [v addSubview:iv];
                         [v addSubview:lv];

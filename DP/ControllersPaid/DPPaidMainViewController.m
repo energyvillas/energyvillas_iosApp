@@ -23,6 +23,7 @@
 
 @implementation DPPaidMainViewController {
     bool framesDone;
+    bool isPortrait;
 }
 
 @synthesize navController, tabBar;
@@ -43,6 +44,7 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     [self.view addSubview: self.navController.view];
+    self.navController.delegate = self;
 
     self.tbiMain.title = NSLocalizedString(ktbiMain_Title, nil);
     self.tbiWho.title = NSLocalizedString(ktbiWho_Title, nil);
@@ -52,6 +54,21 @@
     
     self.tabBar.delegate = self;
 }
+
+- (void)navigationController:(UINavigationController *)navigationController
+      willShowViewController:(UIViewController *)viewController
+                    animated:(BOOL)animated {
+    [self fixFrames:NO];
+    UIInterfaceOrientation orientation = [UIApplication sharedApplication].statusBarOrientation;
+    if (viewController && [viewController isKindOfClass:[UINavContentViewController class]])
+        [(UINavContentViewController *)viewController layoutForOrientation:orientation fixtop:YES];
+}
+/*
+-(void) navigationController:(UINavigationController *)navigationController
+       didShowViewController:(UIViewController *)viewController
+                    animated:(BOOL)animated {
+}
+*/
 
 - (void) viewWillAppear:(BOOL)animated {
     if (!framesDone) {
@@ -66,41 +83,37 @@
     if (fixNavView) {
         CGRect sf = [UIScreen mainScreen].applicationFrame;
         self.view.frame = sf;
-        int tabbarHeight = self.tabBar.frame.size.height;
+        CGRect tbf = self.tabBar.frame;
 
         self.navController.view.frame = CGRectMake(0, 0,
                                                    sf.size.width,
-                                                   sf.size.height - tabbarHeight);
+                                                   sf.size.height - tbf.size.height);
     
-        self.tabBar.frame = CGRectMake(0, sf.size.height - tabbarHeight,
-                                       sf.size.width, tabbarHeight);
     } else {
         UIViewController *tvc = navController.topViewController;
-        UIViewController *rvc = navController.viewControllers[0];
-
-        if (rvc == tvc) {
-            CGRect sf = self.navController.view.frame;
-            rvc.view.frame = sf;
-        }
-//        CGRect sf = self.navController.view.frame;
-//        int tabbarHeight = self.tabBar.frame.size.height;
-
-//        self.view.frame = CGRectMake(0, 20, sf.size.width, sf.size.height + tabbarHeight);
-//        self.navController.view.frame = CGRectMake(0, 0,
-//                                                   sf.size.width,
-//                                                   sf.size.height - tabbarHeight);
         
-//        self.tabBar.frame = CGRectMake(0, sf.size.height + 20,
-//                                       sf.size.width, tabbarHeight);
+        CGRect nc_nbf = self.navController.navigationBar.frame;
+        CGRect tvc_svf = tvc.view.superview.frame;
+        CGRect tvc_vf = tvc.view.frame;
+
+        UIInterfaceOrientation orientation = [UIApplication sharedApplication].statusBarOrientation;
+        if (UIInterfaceOrientationIsPortrait(orientation))
+            ;
+        else {
+            tvc_vf = CGRectMake(0, nc_nbf.size.height - tvc_svf.origin.y,
+                                tvc_svf.size.width,
+                                tvc_svf.size.height);
+            tvc.view.frame = tvc_vf;
+        }
     }
 }
 
-- (void) willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
-    //[self fixFrames:NO];
+- (void) willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {    
+    [self fixFrames:NO];
 
     id tvc = navController.topViewController;
     if (tvc && [tvc isKindOfClass:[UINavContentViewController class]])
-        [(UINavContentViewController *)tvc layoutForOrientation:toInterfaceOrientation];
+        [(UINavContentViewController *)tvc layoutForOrientation:toInterfaceOrientation fixtop:NO];
 }
 
 - (void) cleanControllers:(UIViewController *)tvc {

@@ -8,7 +8,7 @@
 
 #import "UINavContentViewController.h"
 
-@interface DPPaidMainViewController : UINavContentViewController <UITabBarDelegate>
+@interface DPPaidMainViewController : UINavContentViewController <UITabBarDelegate, UINavigationControllerDelegate>
 
 @property (strong, nonatomic) IBOutlet UINavigationController *navController;
 
