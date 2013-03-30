@@ -17,14 +17,18 @@
 
 @property (nonatomic) int currentPage;
 
+@property (strong, nonatomic) NSMutableArray *portraitRendered;
+@property (strong, nonatomic) NSMutableArray *landscapeRendered;
+
 @end
 
 @implementation DPScrollableViewController {
     bool initializing, pageControlUsed, timerUsed;
     int userTimerActive;
-    NSMutableArray *contentRendered;
-    NSTimer *timer;
+    NSTimer *timer, *usertimer;
     int TIMED_SCROLL_WIDTH;
+    
+    UIView *NILVIEW;
 }
 
 @synthesize scrollView, pageControl;
@@ -50,6 +54,7 @@
 - (id) initWithContent:(NSArray *)content {
     self = [super init];
     if (self) {
+        NILVIEW = [UIView alloc];
         self.contentList = content;
         self.view = [[UIView alloc] init];
         self.scrollView = [[UIScrollView alloc] init];
@@ -68,11 +73,14 @@
 }
 
 - (void) viewDidDisappear:(BOOL)animated{
-
+    [super viewDidDisappear:animated];
+    [self killUserTimer];
+    [self killTimer];
 }
 - (void) viewDidAppear:(BOOL)animated {
     [self calcFrames];
     [self doInit];
+    [super viewDidAppear:animated];
 }
 
 - (void) calcFrames {
@@ -127,18 +135,35 @@
 }
 
 - (void) doInit {
-    contentRendered = [[NSMutableArray alloc] init];
-    for (unsigned i = 0; i < contentList.count; i++)
-    {
-		[contentRendered addObject: [NSNumber numberWithInt:0]];
+    BOOL isRendered = NO;
+    if (UIInterfaceOrientationIsPortrait(INTERFACE_ORIENTATION)) {
+        isRendered = self.portraitRendered != nil;
+        if (!isRendered) {
+            // content rendered for portrait...
+            self.portraitRendered = [[NSMutableArray alloc] init];
+            for (unsigned i = 0; i < contentList.count; i++)
+            {
+                [self.portraitRendered addObject: NILVIEW];
+            }
+        }
+    } else {
+        isRendered = self.landscapeRendered != nil;
+        if (!isRendered) {
+            // content rendered for portrait...
+            self.landscapeRendered = [[NSMutableArray alloc] init];
+            for (unsigned i = 0; i < contentList.count; i++)
+            {
+                [self.landscapeRendered addObject: NILVIEW];
+            }
+        }
     }
-
+    
 	int pageCount = [self calcPageCount];
     
     // a page is the width of the scroll view
     self.scrollView.pagingEnabled = YES;
-    int fw = scrollView.frame.size.width;
-    int fh = scrollView.frame.size.height;
+    int fw = self.scrollView.frame.size.width;
+    int fh = self.scrollView.frame.size.height;
     self.scrollView.contentSize = CGSizeMake(fw * pageCount, fh);
     self.scrollView.showsHorizontalScrollIndicator = NO;
     self.scrollView.showsVerticalScrollIndicator = NO;
@@ -155,41 +180,18 @@
 	[self pageChanged:nil];
 }
 
-- (void) engageAutoTimer {
-    if (self.pageControl.numberOfPages <= 1) return;
-    
-    if (timer == nil) {
-        timer = [NSTimer scheduledTimerWithTimeInterval:AUTO_SCROLL_INTERVAL target:self selector:@selector(onTimer) userInfo:nil repeats:YES];
-    }
-}
-
-- (void) onTimer {
-    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    [dateFormatter setTimeStyle:NSDateFormatterLongStyle];
-    [dateFormatter setDateStyle:NSDateFormatterNoStyle];
-    
-    NSLog(@"onTimer - time: %@", [dateFormatter stringFromDate:[NSDate date]]);
-    //This makes the scrollView scroll to the desired position
-    //[scrollView setContentOffset:CGPointMake(TIMED_SCROLL_WIDTH, 0) animated:YES];
-    int cp = self.pageControl.currentPage + 1;
-    int pc = self.pageControl.numberOfPages;
-    if (cp == pc)
-        cp = 0;
-    self.pageControl.currentPage = cp;
-    timerUsed = YES;
-    [self pageChanged:nil];
-}
-
 - (void)loadScrollViewWithPage:(int)page{
     if (initializing) return;
     if (page < 0) return;
     if (page >= self.pageControl.numberOfPages) return;
 
-    int pageWidth = scrollView.frame.size.width;
+    int pageWidth = self.scrollView.frame.size.width;
     int colWidth = pageWidth / colCount;
-    int rowHeight = scrollView.frame.size.height / rowCount;
-    int rowHeightResidue = (int)scrollView.frame.size.height % rowCount;
+    int rowHeight = self.scrollView.frame.size.height / rowCount;
+    int rowHeightResidue = (int)self.scrollView.frame.size.height % rowCount;
     int fixHeight = (rowHeightResidue > 0 ? 1 : 0);
+    
+    NSMutableArray *contentRendered = UIInterfaceOrientationIsPortrait(INTERFACE_ORIENTATION) ? self.portraitRendered : self.landscapeRendered;
     
     int posY = 0;
     for (int r = 0; r<rowCount; r++)
@@ -207,52 +209,48 @@
             int indx = page * (rowCount * colCount) + r * colCount + c;
             fixWidth = (colWidthResidue > 0 ? 1 : 0);
 
-            if (indx < contentList.count)
-                if (((NSNumber *)contentRendered[indx]).intValue == 0) {
-                    /*
-                    if (indx == 3) {
-                        UIWebView *wv = [[UIWebView alloc] initWithFrame:CGRectMake(iX, iY, w, h)];
-                        wv.scalesPageToFit = YES;
-                        [wv loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@"http://www.bitzarohotels.gr"]]];
-                        [scrollView addSubview:wv];
-                    } else */ {
-                        CGRect r = CGRectMake(posX, posY, colWidth + fixWidth, rowHeight + fixHeight);
-                        UIView *v = [[UIView alloc] initWithFrame:r];
-                        v.clipsToBounds = YES;
-                        
-                        r = CGRectMake(0, 0, colWidth + fixWidth, rowHeight + fixHeight);
-                        UIImageView *iv = [[UIImageView alloc] initWithFrame: r];
-                        iv.image = ((DPImageInfo *)contentList[indx]).image;
-                        iv.contentMode = UIViewContentModeScaleToFill; //UIViewContentModeScaleAspectFill; //UIViewContentModeScaleAspectFit;
-                        iv.tag = indx;
-                        UITapGestureRecognizer *tapper = [[UITapGestureRecognizer alloc]
-                                                          initWithTarget:self action:@selector(handleTap:)];
-                        [iv addGestureRecognizer:tapper];
-                        iv.userInteractionEnabled = YES;
-                        
-                        UILabel *lv = [[UILabel alloc] initWithFrame: r];
-                        lv.textAlignment = NSTextAlignmentCenter;
-                        if (IS_IPAD)
-                            lv.font = [UIFont fontWithName:@"Helvetica Neue" size:16];
-                        else
-                            lv.font = [UIFont fontWithName:@"Helvetica Neue" size:12];
-                        lv.adjustsFontSizeToFitWidth = YES;
-                        NSString *dl = ((DPImageInfo *)contentList[indx]).displayNname;
-                        lv.text = dl ? dl : ((DPImageInfo *)contentList[indx]).name;
-                        lv.backgroundColor = [UIColor clearColor];
-                        lv.textColor = [UIColor whiteColor];
-                        [lv sizeToFit];
-                        CGRect b = lv.bounds;
-                        int offsetfix = IS_IPAD ? 4 : 2;
-                        lv.frame = CGRectMake(r.origin.x, r.origin.y + r.size.height - b.size.height - offsetfix, r.size.width, b.size.height);
-                        
-                        [v addSubview:iv];
-                        [v addSubview:lv];
-                        [scrollView addSubview:v];
-                    }
-                    contentRendered[indx] = [NSNumber numberWithInt:1];
+            if (indx < contentList.count) {
+                if (contentRendered[indx] == NILVIEW) {
+                    CGRect r = CGRectMake(posX, posY, colWidth + fixWidth, rowHeight + fixHeight);
+                    UIView *v = [[UIView alloc] initWithFrame:r];
+                    v.clipsToBounds = YES;
+                    
+                    r = CGRectMake(0, 0, colWidth + fixWidth, rowHeight + fixHeight);
+                    UIImageView *iv = [[UIImageView alloc] initWithFrame: r];
+                    iv.contentMode = UIViewContentModeScaleAspectFill; //UIViewContentModeScaleToFill; //UIViewContentModeScaleAspectFill; //UIViewContentModeScaleAspectFit;
+                    iv.image = ((DPImageInfo *)contentList[indx]).image;
+                    iv.tag = indx;
+                    UITapGestureRecognizer *tapper = [[UITapGestureRecognizer alloc]
+                                                      initWithTarget:self action:@selector(handleTap:)];
+                    [iv addGestureRecognizer:tapper];
+                    iv.userInteractionEnabled = YES;
+                    
+                    UILabel *lv = [[UILabel alloc] initWithFrame: r];
+                    lv.textAlignment = NSTextAlignmentCenter;
+                    if (IS_IPAD)
+                        lv.font = [UIFont fontWithName:@"Helvetica Neue" size:16];
+                    else
+                        lv.font = [UIFont fontWithName:@"Helvetica Neue" size:12];
+                    lv.adjustsFontSizeToFitWidth = YES;
+                    NSString *dl = ((DPImageInfo *)contentList[indx]).displayNname;
+                    lv.text = dl ? dl : ((DPImageInfo *)contentList[indx]).name;
+                    lv.backgroundColor = [UIColor clearColor];
+                    lv.textColor = [UIColor whiteColor];
+                    [lv sizeToFit];
+                    CGRect b = lv.bounds;
+                    int offsetfix = IS_IPAD ? 4 : 2;
+                    lv.frame = CGRectMake(r.origin.x, r.origin.y + r.size.height - b.size.height - offsetfix, r.size.width, b.size.height);
+                    
+                    [v addSubview:iv];
+                    [v addSubview:lv];
+                    
+                    contentRendered[indx] = v;
                 }
-        
+                int scrlvc = self.scrollView.subviews.count;
+                [self.scrollView addSubview: contentRendered[indx]];
+                scrlvc = self.scrollView.subviews.count;
+
+            }
             colWidthResidue = colWidthResidue > 0 ? colWidthResidue - 1 : 0;
         }
         
@@ -290,10 +288,10 @@
     [self loadScrollViewWithPage:self.currentPage + 1];
     
 	// update the scroll view to the appropriate page
-    CGRect frame = scrollView.frame;
+    CGRect frame = self.scrollView.frame;
     frame.origin.x = frame.size.width * self.currentPage;
     frame.origin.y = 0;
-    [scrollView scrollRectToVisible:frame animated:YES];
+    [self.scrollView scrollRectToVisible:frame animated:YES];
     
 	// Set the boolean used when scrolls originate from the UIPageControl. See scrollViewDidScroll: above.
     pageControlUsed = YES;
@@ -315,8 +313,8 @@
     }
              
     // Switch the indicator when more than 50% of the previous/next page is visible
-    CGFloat pageWidth = scrollView.frame.size.width;
-    self.currentPage = floor((scrollView.contentOffset.x - pageWidth / 2) / pageWidth) + 1;
+    CGFloat pageWidth = self.scrollView.frame.size.width;
+    self.currentPage = floor((self.scrollView.contentOffset.x - pageWidth / 2) / pageWidth) + 1;
     pageControl.currentPage = self.currentPage;
              
     // load the visible page and the page on either side of it (to avoid flashes when the user starts scrolling)
@@ -342,25 +340,64 @@
     [self engageUserTimer];
 }
 
+- (void) engageAutoTimer {
+    if (self.pageControl.numberOfPages <= 1) return;
+    
+    if (timer == nil) {
+        timer = [NSTimer scheduledTimerWithTimeInterval:AUTO_SCROLL_INTERVAL target:self selector:@selector(onTimer) userInfo:nil repeats:YES];
+    }
+}
+
+- (void) onTimer {
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setTimeStyle:NSDateFormatterLongStyle];
+    [dateFormatter setDateStyle:NSDateFormatterNoStyle];
+    
+    NSLog(@"onTimer - time: %@", [dateFormatter stringFromDate:[NSDate date]]);
+    //This makes the scrollView scroll to the desired position
+    //[scrollView setContentOffset:CGPointMake(TIMED_SCROLL_WIDTH, 0) animated:YES];
+    int cp = self.pageControl.currentPage + 1;
+    int pc = self.pageControl.numberOfPages;
+    if (cp == pc)
+        cp = 0;
+    self.pageControl.currentPage = cp;
+    timerUsed = YES;
+    [self pageChanged:nil];
+}
+
+- (void) killTimer {
+    [timer invalidate];
+    timer = nil;
+    timerUsed = NO;
+}
+
 - (void) engageUserTimer {
     if (self.pageControl.numberOfPages <= 1) return;
     
     if (!timerUsed) {
         userTimerActive++;
-        [NSTimer scheduledTimerWithTimeInterval:5 * AUTO_SCROLL_INTERVAL
+
+        usertimer = [NSTimer scheduledTimerWithTimeInterval:USER_SCROLL_INTERVAL
                                 target:self
                                 selector:@selector(onUserTimer)
                                 userInfo:nil repeats:NO];
-        
-        [timer invalidate];
-        timer = nil;
+        [self killTimer];
     }
 }
 
 - (void) onUserTimer {
     userTimerActive--;
-    if (userTimerActive == 0)
+    if (userTimerActive == 0) {
+        [self killUserTimer];
         [self engageAutoTimer];
+    }
+}
+
+- (void) killUserTimer {
+    [usertimer invalidate];
+    usertimer = nil;
+    userTimerActive = 0;
+    timerUsed = NO;
 }
 
 @end

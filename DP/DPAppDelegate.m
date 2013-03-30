@@ -11,12 +11,14 @@
 #import "Controllers/DPMainViewController.h"
 #import "ControllersPaid/DPPaidMainViewController.h"
 #import "DPConstants.h"
+#import "DPAppHelper.h"
 
 @implementation DPAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     [DPIAPHelper sharedInstance];
+    [DPAppHelper sharedInstance];
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
@@ -33,7 +35,7 @@
 }
 
 - (bool) isPurchased {
-    return YES;
+    //return YES;
     
     NSUserDefaults *usrDefaults = [NSUserDefaults standardUserDefaults];
     BOOL productPurchased = [usrDefaults boolForKey:PRODUCT_IDENTIFIER];

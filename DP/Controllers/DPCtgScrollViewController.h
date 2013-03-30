@@ -10,6 +10,6 @@
 
 @interface DPCtgScrollViewController : DPScrollableViewController
 
-- (id) initWithContent:(NSMutableArray *)content rows:(int)rows columns:(int)columns;
+- (id) initWithContent:(NSArray *)content rows:(int)rows columns:(int)columns;
 
 @end

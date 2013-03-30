@@ -25,7 +25,7 @@
     return self;
 }
 
-- (id) initWithContent:(NSMutableArray *)content rows:(int)rows columns:(int)columns {
+- (id) initWithContent:(NSArray *)content rows:(int)rows columns:(int)columns {
     self = [super initWithContent:content];
     if (self) {
         self.rowCount = rows;

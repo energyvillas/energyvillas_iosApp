@@ -5,23 +5,39 @@
   Created by Γεώργιος Γράβος on 3/24/13.
   Copyright (c) 2013 Γεώργιος Γράβος. All rights reserved.
 */
+
+/* ======= common ====== */
 "btnOK_Title"="OK";
 
+"URL_LOAD_FAILED_TITLE"="Connection Failed";
+"URL_LOAD_FAILED_MESSAGE"="Data retrieval failed! Please try again later...";
+
+"IMAGE_RESET_MENU"="Reset";
+
+
+/* ======= FREE ====== */
 "bbiMore_Title"="more";
 "bbiBuy_Title"="buy";
 
+"FREE_DET_TITLE_100"="Smart Houses";
+"FREE_DET_TITLE_101"="Loft Houses";
+"FREE_DET_TITLE_102"="Finnish Houses";
+"FREE_DET_TITLE_103"="Greek Island Houses";
+"FREE_DET_TITLE_104"="Country Houses";
+"FREE_DET_TITLE_105"="Container Houses";
+"FREE_DET_TITLE_106"="Villas";
+"FREE_DET_TITLE_107"="Exclusive Ηouses";
+
+
+/* ======= PAID ====== */
 "tbiMain_Title"="Home";
 "tbiWho_Title"="Who we are";
 "tbiBuy_Title"="Buy";
 "tbiCall_Title"="Contact us";
 "tbiMore_Title"="More";
 
-"URL_LOAD_FAILED_TITLE"="Connection Failed";
-"URL_LOAD_FAILED_MESSAGE"="Data retrieval failed! Please try again later...";
 
-
-"MENU_TITLE_100"="Greek Island Houses";
-//"MENU_TITLE_100"="Smart Ηouses";
+"MENU_TITLE_100"="Smart Ηouses";
 "MENU_TITLE_101"="Loft Ηouses";
 "MENU_TITLE_102"="Finnish Ηouses";
 "MENU_TITLE_103"="Greek Island Houses";
@@ -40,4 +56,3 @@
 
 
 
-"IMAGE_RESET_MENU"="Reset";

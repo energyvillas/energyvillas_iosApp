@@ -14,7 +14,8 @@
 #import "../Classes/DPImageContentViewController.h"
 #import "DPConstants.h"
 #import "DPVimeoPlayerViewController.h"
-#import "DPIAPHelper.h"
+//#import "DPIAPHelper.h"
+#import "DPAppHelper.h"
 
 
 @interface DPRootViewController ()
@@ -76,12 +77,13 @@
             isPortrait = YES;
             break;
     }
-        
-    UIView *sv;
-    sv = self.view.superview;
+
+    CGRect vf = self.view.frame;
+    CGRect svf = self.view.superview.frame;
     
-    int h = sv.bounds.size.height;
-    int w = sv.bounds.size.width;
+    int h = isPortrait ? vf.size.height : vf.size.height - vf.origin.y ;
+    int w = vf.size.width;    
+    int top = fixtop ? vf.origin.y : 0;    
 
     int BOTTOM_HEIGHT;
     if (IS_IPHONE) 
@@ -94,9 +96,14 @@
     //self.view.frame = CGRectMake(0, 0, w, h);
     int toolbarHeight = self.toolbar.frame.size.height;
     int topHeight = h - toolbarHeight - BOTTOM_HEIGHT;
-    self.topView.frame = CGRectMake(0, 0, w, topHeight);
-    self.toolbar.frame = CGRectMake(0, topHeight, w, toolbarHeight);
-    self.bottomView.frame = CGRectMake(0, topHeight + toolbarHeight, w, BOTTOM_HEIGHT);
+    
+    self.topView.frame = CGRectMake(0, top, w, topHeight);
+    
+    self.toolbar.frame = CGRectMake(0, top + topHeight,
+                                    w, toolbarHeight);
+    
+    self.bottomView.frame = CGRectMake(0, top + topHeight + toolbarHeight,
+                                       w, BOTTOM_HEIGHT);
 
     [self loadOpenFlow];
     [self loadDetailView];
@@ -110,6 +117,8 @@
 
     DPCtgScrollViewController *detvc;
     if (bcv.subviews.count == 0) {
+        
+        /*
         NSMutableArray *content = [[NSMutableArray alloc] init];
 
         NSString *lang = [[NSLocale preferredLanguages] objectAtIndex:0];
@@ -125,7 +134,9 @@
                 [content addObject:[[DPImageInfo alloc]
                                     initWithName:[NSString stringWithFormat:@"%d.jpg", i+5]
                                     image:[self imageForIndex:i+5 withFrame:nil]]];
+        */
         
+        NSArray *content = [DPAppHelper sharedInstance].freeDetails;
         if (isPortrait)
             detvc = [[DPCtgScrollViewController alloc]
                      initWithContent:content rows:2 columns:2];
@@ -133,7 +144,6 @@
             detvc = [[DPCtgScrollViewController alloc]
                      initWithContent:content rows:1 columns:4];
         
-        content = nil;
         
         [self addChildViewController: detvc];
         [bcv addSubview: detvc.view];

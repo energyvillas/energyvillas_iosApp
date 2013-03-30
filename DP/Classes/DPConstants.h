@@ -23,7 +23,9 @@ FOUNDATION_EXPORT NSString *const MySecondConstant;
 #define STATUS_BAR_HEIGHT ((CGFloat) ![UIApplication sharedApplication].statusBarFrame.size.height)
 
 // timer intervals
-#define AUTO_SCROLL_INTERVAL ((float) 3.0)
+#define AUTO_SCROLL_INTERVAL ((float) 5.0)
+#define USER_SCROLL_INTERVAL ((float) 60.0)
+
 
 
 // tabBar buttons

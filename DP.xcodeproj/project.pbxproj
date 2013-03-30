@@ -7,6 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5E3605021707154E00DB7B20 /* DPAppHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E3605011707154E00DB7B20 /* DPAppHelper.m */; };
+		5E360508170730E100DB7B20 /* free_detimage_100_el.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 5E360504170730E100DB7B20 /* free_detimage_100_el.jpg */; };
+		5E360509170730E100DB7B20 /* free_detimage_100_en.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 5E360505170730E100DB7B20 /* free_detimage_100_en.jpg */; };
+		5E36050A170730E100DB7B20 /* free_detimage_101_el.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 5E360506170730E100DB7B20 /* free_detimage_101_el.jpg */; };
+		5E36050B170730E100DB7B20 /* free_detimage_101_en.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 5E360507170730E100DB7B20 /* free_detimage_101_en.jpg */; };
+		5E36050E1707825E00DB7B20 /* free_detimage_102_el.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 5E36050C1707825E00DB7B20 /* free_detimage_102_el.jpg */; };
+		5E36050F1707825E00DB7B20 /* free_detimage_102_en.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 5E36050D1707825E00DB7B20 /* free_detimage_102_en.jpg */; };
 		5E3D9B9C17044CB400208D7B /* FPPopoverController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E3D9B9717044CB400208D7B /* FPPopoverController.m */; };
 		5E3D9B9D17044CB400208D7B /* FPPopoverView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E3D9B9917044CB400208D7B /* FPPopoverView.m */; };
 		5E3D9B9E17044CB400208D7B /* FPTouchView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E3D9B9B17044CB400208D7B /* FPTouchView.m */; };
@@ -114,6 +121,14 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		5E3605001707154E00DB7B20 /* DPAppHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPAppHelper.h; sourceTree = "<group>"; };
+		5E3605011707154E00DB7B20 /* DPAppHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPAppHelper.m; sourceTree = "<group>"; };
+		5E360504170730E100DB7B20 /* free_detimage_100_el.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = free_detimage_100_el.jpg; sourceTree = "<group>"; };
+		5E360505170730E100DB7B20 /* free_detimage_100_en.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = free_detimage_100_en.jpg; sourceTree = "<group>"; };
+		5E360506170730E100DB7B20 /* free_detimage_101_el.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = free_detimage_101_el.jpg; sourceTree = "<group>"; };
+		5E360507170730E100DB7B20 /* free_detimage_101_en.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = free_detimage_101_en.jpg; sourceTree = "<group>"; };
+		5E36050C1707825E00DB7B20 /* free_detimage_102_el.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = free_detimage_102_el.jpg; sourceTree = "<group>"; };
+		5E36050D1707825E00DB7B20 /* free_detimage_102_en.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = free_detimage_102_en.jpg; sourceTree = "<group>"; };
 		5E3D9B9517044CB400208D7B /* ARCMacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARCMacros.h; sourceTree = "<group>"; };
 		5E3D9B9617044CB400208D7B /* FPPopoverController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FPPopoverController.h; sourceTree = "<group>"; };
 		5E3D9B9717044CB400208D7B /* FPPopoverController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FPPopoverController.m; sourceTree = "<group>"; };
@@ -292,6 +307,19 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		5E360503170730E100DB7B20 /* FreeDetails */ = {
+			isa = PBXGroup;
+			children = (
+				5E360504170730E100DB7B20 /* free_detimage_100_el.jpg */,
+				5E360505170730E100DB7B20 /* free_detimage_100_en.jpg */,
+				5E360506170730E100DB7B20 /* free_detimage_101_el.jpg */,
+				5E360507170730E100DB7B20 /* free_detimage_101_en.jpg */,
+				5E36050C1707825E00DB7B20 /* free_detimage_102_el.jpg */,
+				5E36050D1707825E00DB7B20 /* free_detimage_102_en.jpg */,
+			);
+			path = FreeDetails;
+			sourceTree = "<group>";
+		};
 		5E3D9B9417044CB400208D7B /* FPPopover */ = {
 			isa = PBXGroup;
 			children = (
@@ -402,6 +430,8 @@
 				5E486C56170214D90040F165 /* DPConstants.m */,
 				5E486C5E170264D50040F165 /* DPVimeoPlayerViewController.h */,
 				5E486C5F170264D50040F165 /* DPVimeoPlayerViewController.m */,
+				5E3605001707154E00DB7B20 /* DPAppHelper.h */,
+				5E3605011707154E00DB7B20 /* DPAppHelper.m */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -490,6 +520,7 @@
 				5E951D0F1702F22E00DFDE43 /* go-previous-view.png */,
 				5EC255D716FFA4170045AB99 /* logosmall.png */,
 				5EC6FE20170378FE009910CF /* logo */,
+				5E360503170730E100DB7B20 /* FreeDetails */,
 				5E71A40016F9B5F900E7AFF9 /* CoverImages */,
 			);
 			path = Resources;
@@ -734,6 +765,12 @@
 				5E4E40971703AFDD00364854 /* 001-en.jpg in Resources */,
 				5E4E40981703AFDD00364854 /* 002-el.jpg in Resources */,
 				5E4E40991703AFDD00364854 /* 002-en.jpg in Resources */,
+				5E360508170730E100DB7B20 /* free_detimage_100_el.jpg in Resources */,
+				5E360509170730E100DB7B20 /* free_detimage_100_en.jpg in Resources */,
+				5E36050A170730E100DB7B20 /* free_detimage_101_el.jpg in Resources */,
+				5E36050B170730E100DB7B20 /* free_detimage_101_en.jpg in Resources */,
+				5E36050E1707825E00DB7B20 /* free_detimage_102_el.jpg in Resources */,
+				5E36050F1707825E00DB7B20 /* free_detimage_102_en.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -784,6 +821,7 @@
 				5E3D9B9C17044CB400208D7B /* FPPopoverController.m in Sources */,
 				5E3D9B9D17044CB400208D7B /* FPPopoverView.m in Sources */,
 				5E3D9B9E17044CB400208D7B /* FPTouchView.m in Sources */,
+				5E3605021707154E00DB7B20 /* DPAppHelper.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

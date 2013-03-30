@@ -5,23 +5,39 @@
   Created by Γεώργιος Γράβος on 3/24/13.
   Copyright (c) 2013 Γεώργιος Γράβος. All rights reserved.
 */
+
+/* ======= common ====== */
 "btnOK_Title"="ΟΚ";
 
+"URL_LOAD_FAILED_TITLE"="Αποτυχία Σύνδεσης";
+"URL_LOAD_FAILED_MESSAGE"="Η διαδικασία ανάκτησης νέων απέτυχε! Παρακαλούμε δοκιμάστε αργότερα...";
+
+"IMAGE_RESET_MENU"="Επαναφορά";
+
+
+/* ======= FREE ====== */
 "bbiMore_Title"="περισσότερα";
 "bbiBuy_Title"="αγορά";
 
+"FREE_DET_TITLE_100"="Έξυπνες Κατοικίες";
+"FREE_DET_TITLE_101"="Κατοικίες Loft";
+"FREE_DET_TITLE_102"="Φιλανδικές Κατοικίες";
+"FREE_DET_TITLE_103"="Νησιώτικες Κατοικίες";
+"FREE_DET_TITLE_104"="Κατοικίες Country";
+"FREE_DET_TITLE_105"="Κατοικίες Container";
+"FREE_DET_TITLE_106"="Βίλλες";
+"FREE_DET_TITLE_107"="Exclusive Houses";
+
+
+/* ======= PAID ====== */
 "tbiMain_Title"="Αρχή";
 "tbiWho_Title"="Ποιοί είμαστε";
 "tbiBuy_Title"="Αγορά";
 "tbiCall_Title"="Επικοινωνία";
 "tbiMore_Title"="Περισσότερα";
 
-"URL_LOAD_FAILED_TITLE"="Αποτυχία Σύνδεσης";
-"URL_LOAD_FAILED_MESSAGE"="Η διαδικασία ανάκτησης νέων απέτυχε! Παρακαλούμε δοκιμάστε αργότερα...";
 
-
-"MENU_TITLE_100"="Φιλανδικές Κατοικίες";
-//"MENU_TITLE_100"="Έξυπνες Κατοικίες ";
+"MENU_TITLE_100"="Έξυπνες Κατοικίες";
 "MENU_TITLE_101"="Κατοικίες Loft";
 "MENU_TITLE_102"="Φιλανδικές Κατοικίες";
 "MENU_TITLE_103"="Νησιώτικες Κατοικίες";
@@ -39,4 +55,3 @@
 "MENU_TITLE_107_01"="Τέχνης";
 
 
-"IMAGE_RESET_MENU"="Επαναφορά";
