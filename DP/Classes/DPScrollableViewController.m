@@ -11,6 +11,7 @@
 #import "../Classes/DPImageInfo.h"
 #import "DPTestViewController.h"
 #import "DPConstants.h"
+#include <Quartzcore/Quartzcore.h>
 
 
 @interface DPScrollableViewController ()
@@ -225,6 +226,7 @@
                     [iv addGestureRecognizer:tapper];
                     iv.userInteractionEnabled = YES;
                     
+                    // add label
                     UILabel *lv = [[UILabel alloc] initWithFrame: r];
                     lv.textAlignment = NSTextAlignmentCenter;
                     if (IS_IPAD)
@@ -235,12 +237,20 @@
                     NSString *dl = ((DPImageInfo *)contentList[indx]).displayNname;
                     lv.text = dl ? dl : ((DPImageInfo *)contentList[indx]).name;
                     lv.backgroundColor = [UIColor clearColor];
-                    lv.textColor = [UIColor whiteColor];
                     [lv sizeToFit];
                     CGRect b = lv.bounds;
                     int offsetfix = IS_IPAD ? 4 : 2;
                     lv.frame = CGRectMake(r.origin.x, r.origin.y + r.size.height - b.size.height - offsetfix, r.size.width, b.size.height);
-                    
+                    // setup text shadow
+                    lv.textColor = [UIColor blackColor];
+                    lv.layer.shadowColor = [lv.textColor CGColor];
+                    lv.textColor = [UIColor whiteColor];
+                    lv.layer.shadowOffset = CGSizeMake(0.0, 0.0);
+                    lv.layer.masksToBounds = NO;                    
+                    lv.layer.shadowRadius = 1.5f;
+                    lv.layer.shadowOpacity = 0.95;
+
+                    // insert image and label in the view
                     [v addSubview:iv];
                     [v addSubview:lv];
                     
