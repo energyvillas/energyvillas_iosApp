@@ -61,15 +61,16 @@
 }
 
 - (void) layoutForOrientation:(UIInterfaceOrientation)toOrientation fixtop:(BOOL)fixtop {
+    // dismiss popover since the positioning will be wrong
     if (self.popoverController) {
         [self.popoverController dismissPopoverAnimated:YES];
         self.popoverController = nil;
     }
     
-//    if (self.islandPopupViewController)
     self.islandPopupViewController = nil;
     self.islandsContent = nil;
-    
+
+    // handle orientation change
     switch (toOrientation) {
         case UIInterfaceOrientationLandscapeLeft:
         case UIInterfaceOrientationLandscapeRight:
@@ -213,7 +214,8 @@
     
     switch (ii.tag) {
         case TAG_MM_ISLAND: {
-            [self showIslandMenu];
+            UIView *scrlv = mmViewController.view.subviews[0];
+            [self showIslandMenu:scrlv.subviews[3]];
             break;
         }
             
@@ -363,11 +365,27 @@
     
 }
 
--(void) showIslandMenu {
+-(void) showIslandMenu:(id)fromView {
     CGRect mmfrm = self.mmView.frame;
     islands_count = 3;
-    island_width = mmfrm.size.width * 0.98 / 3;
-    island_height = mmfrm.size.height * 0.98 / 3;
+
+    //the popover will be presented to a point relative to mmview
+    CGPoint pnt;
+
+    if (UIInterfaceOrientationIsPortrait(INTERFACE_ORIENTATION)) {
+        CGFloat ratio = mmfrm.size.width / mmfrm.size.height;
+        island_width = (mmfrm.size.width / 3) - 8;
+        island_height = (mmfrm.size.height / 3) / ratio;
+
+        pnt = CGPointMake(mmfrm.origin.x + 2,
+                          self.view.frame.origin.y + mmfrm.origin.y + (mmfrm.size.height / 3) * 2.1);
+    } else {
+        island_width = mmfrm.size.width / 3;
+        island_height = mmfrm.size.height / 3;
+
+        pnt = CGPointMake(mmfrm.origin.x + island_width * 2,
+                                  self.view.frame.origin.y + mmfrm.origin.y + (mmfrm.size.height / 3) * 2.1);
+    }
     
     //the view controller you want to present as popover
     if (!self.islandPopupViewController)
@@ -381,11 +399,10 @@
     self.popoverController.delegate = self;
     self.popoverController.border = YES;
     self.popoverController.contentSize = CGSizeMake(island_width * 3 + 20, island_height + 40);
-    self.popoverController.arrowDirection = FPPopoverArrowDirectionDown;
+    self.popoverController.arrowDirection = FPPopoverArrowDirectionDown;//FPPopoverArrowDirectionDown | FPPopoverArrowDirectionRight;
     
-    //the popover will be presented to a point relative to mmview
-    [self.popoverController presentPopoverFromPoint:CGPointMake(mmfrm.origin.x + mmfrm.size.width / 2 + 10,
-                                                                mmfrm.origin.y + mmfrm.size.height * 0.5 / 3)];
+    //[self.popoverController presentPopoverFromPoint:pnt];
+    [self.popoverController presentPopoverFromView:fromView];
 }
 
 - (UIImage *) imageForIndex:(int) indx withFrame:(CGRect *) targetFrame {
