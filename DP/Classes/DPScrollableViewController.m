@@ -79,9 +79,9 @@
     [self killTimer];
 }
 - (void) viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
     [self calcFrames];
     [self doInit];
-    [super viewDidAppear:animated];
 }
 
 - (void) calcFrames {

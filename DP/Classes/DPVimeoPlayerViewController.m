@@ -165,7 +165,7 @@
                                                  name:MPMoviePlayerPlaybackDidFinishNotification
                                                object:self.playerView.moviePlayer];
     
-    //self.playerView.moviePlayer.fullscreen = YES;
+    self.playerView.moviePlayer.fullscreen = YES;
     [self.playerView.moviePlayer prepareToPlay];
     [self.playerView.moviePlayer play];
     CGRect frm = CGRectMake(0, 0,

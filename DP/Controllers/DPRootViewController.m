@@ -196,6 +196,8 @@
 }
 
 -(void) viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    
     UIView *ofvc = self.topView;
     AFOpenFlowView *ofv = nil;
 
