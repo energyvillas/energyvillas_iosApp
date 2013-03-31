@@ -11,6 +11,7 @@
 #import "../Classes/DPImageInfo.h"
 #import "../External/OpenFlow/UIImageExtras.h"
 #import "DPConstants.h"
+#import "DPFloatingViewController.h"
 
 @interface DPCategoryViewController ()
 
@@ -135,6 +136,25 @@
 }
 
 - (void) loadCategoryView {
+    DPFloatingViewController *fvc;
+    if (self.ctgView.subviews.count == 0) {
+        fvc = [[DPFloatingViewController alloc] init];
+        fvc.view.frame = self.ctgView.bounds;
+        [self addChildViewController:fvc];
+        [self.ctgView addSubview: fvc.view];
+    } else {
+        id cvc;
+        for (cvc in self.childViewControllers) {
+            if ([cvc isKindOfClass:[DPFloatingViewController class]])
+                 fvc = cvc;
+            if (fvc) break;
+        }
+        
+        if (fvc) {
+            fvc.view.frame = self.ctgView.bounds;            
+            [fvc layoutForOrientation:INTERFACE_ORIENTATION fixtop:NO];
+        }
+    }
 /*
     UIView *bcv = self.nnView;
     
