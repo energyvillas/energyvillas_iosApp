@@ -18,11 +18,12 @@
 #import "DPAppHelper.h"
 #import "DPMainViewController.h"
 #import "DPBuyViewController.h"
+#import "Article.h"
 
 
 @interface DPRootViewController ()
 
-//@property (strong, nonatomic) PopupView *popup;
+@property (strong, nonatomic) NSArray *coverFlowData;
 
 @end
 
@@ -127,25 +128,6 @@
 
     DPCtgScrollViewController *detvc;
     if (bcv.subviews.count == 0) {
-        
-        /*
-        NSMutableArray *content = [[NSMutableArray alloc] init];
-
-        NSString *lang = [[NSLocale preferredLanguages] objectAtIndex:0];
-
-        for (int i = 0; i<8; i++)
-            if (i == 0 || i == 1) {
-                NSString *dispName = [NSString stringWithFormat: @"MENU_TITLE_10%i", i];
-                [content addObject:[[DPImageInfo alloc]
-                                    initWithName: [NSString stringWithFormat:@"00%d-%@.jpg", i+1, lang]
-                                    image: [UIImage imageNamed:[NSString stringWithFormat:@"00%d-%@.jpg", i+1, lang]]
-                                    displayName: NSLocalizedString(dispName, nil)]];
-            } else
-                [content addObject:[[DPImageInfo alloc]
-                                    initWithName:[NSString stringWithFormat:@"%d.jpg", i+5]
-                                    image:[self imageForIndex:i+5 withFrame:nil]]];
-        */
-        
         NSArray *content = [DPAppHelper sharedInstance].freeDetails;
         if (isPortrait)
             detvc = [[DPCtgScrollViewController alloc]
@@ -187,14 +169,34 @@
         ofv.dataSource = self;
 
         [ofvc addSubview:ofv];
-            
+        
         int imgCount = 30;
-        int imgBase = 1;
-        CGRect topFrame = topView.frame;
-        for (int i=imgBase; i < imgCount; i++)
-            [ofv setImage:[self imageForIndex:i-imgBase withFrame:&topFrame] forIndex:i-imgBase];
-            
-        [ofv setNumberOfImages:imgCount-imgBase];
+
+        if (!self.coverFlowData) {
+            NSMutableArray *data = [[NSMutableArray alloc] initWithCapacity:imgCount];
+
+            for (int i=0; i < imgCount; i++) {
+                Article *article = [[Article alloc]
+                                    initWithValues:[NSString stringWithFormat:@"%i", i]
+                                    title:[NSString stringWithFormat:@"image %i", i]
+                                    image:nil
+                                    body:nil
+                                    url:[NSString stringWithFormat:@"%d.jpg", i]
+                                    publishDate:nil
+                                    videofile:i % 3 == 0 ? @"http://vimeo.com/58323794" : nil
+                                    videolength:nil];
+                
+                [data addObject:article];
+//                [data addObject:[self imageForIndex:i withFrame:&topFrame]];
+            }
+            self.coverFlowData = [NSArray arrayWithArray:data];
+        }
+
+//        for (int i=0; i < imgCount; i++)
+//            [ofv setImage:[self imageForIndex:i-imgBase withFrame:&topFrame] forIndex:i];
+        
+//        [ofv setNumberOfImages:imgCount-imgBase];
+        [ofv setNumberOfImages:self.coverFlowData.count];
         if (currentIndex != -1)
             [ofv setSelectedCover: currentIndex];
     }
@@ -223,12 +225,22 @@
     UIImage *img = [UIImage imageNamed:[NSString stringWithFormat:@"%d.jpg", indx]];
 
     if (targetFrame == nil) return img;
+    else return [self rescaleImage:img toFrame:targetFrame];
+}
+
+- (UIImage *) imageNamed:(NSString *)imgName withFrame:(CGRect *) targetFrame {
+    UIImage *img = [UIImage imageNamed:imgName];
     
+    if (targetFrame == nil) return img;
+    else return [self rescaleImage:img toFrame:targetFrame];
+}
+
+-(UIImage *) rescaleImage:(UIImage *)image toFrame:(CGRect *) targetFrame {
     float coeff = 1.0;
     float vh = (*targetFrame).size.height;
     float vw = (*targetFrame).size.width;
-    float ih = img.size.height;
-    float iw = img.size.width;
+    float ih = image.size.height;
+    float iw = image.size.width;
     if (iw/vw > ih/vh)
         coeff = (vw / iw);
     else
@@ -239,13 +251,25 @@
     ih = ih * coeff * 0.8;
     iw = iw * coeff * 0.8;
     
-    NSLog(@"scaling image %d.jpg from (%f, %f) => (%f, %f)", indx, img.size.width, img.size.height, iw, ih);
-    return [img rescaleImageToSize:CGSizeMake(iw, ih)];
+    return [image rescaleImageToSize:CGSizeMake(iw, ih)];
 }
 
 // protocol AFOpenFlowViewDelegate
 - (void) openFlowView:(AFOpenFlowView *)openFlowView click:(int)index {
     NSLog(@"Clicked image at index %i", index);
+    
+    Article *article = self.coverFlowData[index];
+
+    if (article.videofile == nil) {
+        DPImageContentViewController *vc = [[DPImageContentViewController alloc]
+                                            initWithImageName:article.url];
+        [self.navigationController pushViewController:vc animated:YES];
+    } else {
+        DPVimeoPlayerViewController *vimeo = [[DPVimeoPlayerViewController alloc]
+                                              initWithUrl:article.videofile];
+        [self.navigationController pushViewController:vimeo animated:YES];
+    }
+    
 /*
     // navigation logic goes here. create and push a new view controller;
     DPImageContentViewController *vc = [[DPImageContentViewController alloc]
@@ -253,9 +277,9 @@
     [self.navigationController pushViewController:vc animated:YES];
 */
 
-    DPVimeoPlayerViewController *vimeo = [[DPVimeoPlayerViewController alloc] 
-                                          initWithUrl:@"http://vimeo.com/58323794"];
-    [self.navigationController pushViewController:vimeo animated:YES];
+//    DPVimeoPlayerViewController *vimeo = [[DPVimeoPlayerViewController alloc] 
+//                                          initWithUrl:@"http://vimeo.com/58323794"];
+//    [self.navigationController pushViewController:vimeo animated:YES];
 }
 
 - (void) openFlowView:(AFOpenFlowView *)openFlowView selectionDidChange:(int)index {
@@ -265,7 +289,10 @@
 
 // protocol AFOpenFlowViewDatasource
 - (void) openFlowView:(AFOpenFlowView *)openFlowView requestImageForIndex:(int)index {
-    
+    Article *article = self.coverFlowData[index];
+    CGRect frm = topView.frame;
+    UIImage *img = [self imageNamed:article.url withFrame:&frm];
+    [openFlowView setImage:img forIndex:index];
 }
 
 - (UIImage *) defaultImage {

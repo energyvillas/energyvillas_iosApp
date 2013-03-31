@@ -19,6 +19,11 @@
 "bbiMore_Title"="περισσότερα";
 "bbiBuy_Title"="αγορά";
 
+"BUY_DLG_bbiClose_Title"="κλείσιμο";
+"BUY_DLG_TITLE_Title"="Αγοράστε την εφαρμογή";
+"BUY_DLG_btnBuy_Title"="Αγορά";
+"BUY_DLG_btnRestore_Title"="Επαναφορά";
+
 "FREE_DET_TITLE_100"="Έξυπνες Κατοικίες";
 "FREE_DET_TITLE_101"="Κατοικίες Loft";
 "FREE_DET_TITLE_102"="Φιλανδικές Κατοικίες";

@@ -230,9 +230,9 @@
                     UILabel *lv = [[UILabel alloc] initWithFrame: r];
                     lv.textAlignment = NSTextAlignmentCenter;
                     if (IS_IPAD)
-                        lv.font = [UIFont fontWithName:@"Helvetica Neue" size:16];
+                        lv.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:16];
                     else
-                        lv.font = [UIFont fontWithName:@"Helvetica Neue" size:12];
+                        lv.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:12];
                     lv.adjustsFontSizeToFitWidth = YES;
                     NSString *dl = ((DPImageInfo *)contentList[indx]).displayNname;
                     lv.text = dl ? dl : ((DPImageInfo *)contentList[indx]).name;

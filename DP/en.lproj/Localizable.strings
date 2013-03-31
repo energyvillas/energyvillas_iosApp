@@ -19,6 +19,11 @@
 "bbiMore_Title"="more";
 "bbiBuy_Title"="buy";
 
+"BUY_DLG_bbiClose_Title"="close";
+"BUY_DLG_TITLE_Title"="Buy Application";
+"BUY_DLG_btnBuy_Title"="Buy";
+"BUY_DLG_btnRestore_Title"="Restore";
+
 "FREE_DET_TITLE_100"="Smart Houses";
 "FREE_DET_TITLE_101"="Loft Houses";
 "FREE_DET_TITLE_102"="Finnish Houses";

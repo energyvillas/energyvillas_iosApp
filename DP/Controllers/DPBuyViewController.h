@@ -16,6 +16,9 @@
 @property (strong, nonatomic) IBOutlet UIView *innerView;
 @property (strong, nonatomic) IBOutlet UIToolbar *toolbar;
 @property (strong, nonatomic) IBOutlet UIButton *btnBuy;
+@property (strong, nonatomic) IBOutlet UIButton *btnRestore;
+@property (strong, nonatomic) IBOutlet UIBarButtonItem *bbiTitle;
+@property (strong, nonatomic) IBOutlet UIBarButtonItem *bbiClose;
 
 - (IBAction)onTouchUpInside:(id)sender forEvent:(UIEvent *)event;
 - (IBAction)onClose:(id)sender;

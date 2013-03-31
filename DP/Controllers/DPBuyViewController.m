@@ -37,8 +37,16 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
+    
     [self.view bringSubviewToFront:self.contentView];
     
+    self.bbiClose.title = NSLocalizedString(@"BUY_DLG_bbiClose_Title", nil);
+    self.bbiTitle.title = NSLocalizedString(@"BUY_DLG_TITLE_Title", nil);
+    [self.btnBuy setTitle:NSLocalizedString(@"BUY_DLG_btnBuy_Title", nil)
+                 forState:UIControlStateNormal];
+    [self.btnRestore setTitle:NSLocalizedString(@"BUY_DLG_btnRestore_Title", nil)
+                     forState:UIControlStateNormal];
+
     [self loadDetailView];
 }
 
@@ -110,9 +118,24 @@
     self.toolbar.frame = CGRectMake(0, 0, cf.size.width, toolbarHeight);
     self.innerView.frame = CGRectMake(0, toolbarHeight,
                                       cf.size.width, cf.size.height - toolbarHeight - 40);
-    self.btnBuy.center = CGPointMake(cf.size.width / 2,
-                                     cf.size.height - (self.btnBuy.frame.size.height / 2) - 4);
     
+    [self.btnBuy sizeToFit];
+    [self.btnRestore sizeToFit];
+    CGRect br = self.btnBuy.frame;
+    CGRect rr = self.btnRestore.frame;
+    
+    br = CGRectInset(br, -8, -2);
+    rr = CGRectInset(rr, -8, -2);
+
+    br.origin = CGPointMake((cf.size.width - br.size.width - rr.size.width - 8) / 2,
+                            cf.size.height - br.size.height - 8);
+    
+    rr.origin = CGPointMake(br.origin.x + br.size.width + 8,
+                            cf.size.height - rr.size.height - 8);
+    
+    self.btnBuy.frame = br;
+    
+    self.btnRestore.frame = rr;
 }
 
 - (void)didReceiveMemoryWarning
@@ -122,9 +145,17 @@
 }
 
 - (IBAction)onTouchUpInside:(id)sender forEvent:(UIEvent *)event {
-    SKProduct *product = [[SKProduct alloc] init];
-    //product.
-    [[DPIAPHelper sharedInstance] buyProduct:product];
+    if (sender == self.btnBuy) {
+        NSLog(@"buy tapped");
+//        SKProduct *product = [[SKProduct alloc] init];
+//        //product.
+//        [[DPIAPHelper sharedInstance] buyProduct:product];
+    } else if (sender == self.btnRestore) {
+        NSLog(@"restore tapped");
+//        SKProduct *product = [[SKProduct alloc] init];
+//        //product.
+//        [[DPIAPHelper sharedInstance] buyProduct:product];
+    }
 }
 
 - (IBAction)onClose:(id)sender {
@@ -141,6 +172,9 @@
     [self setInnerView:nil];
     [self setToolbar:nil];
     [self setBtnBuy:nil];
+    [self setBbiTitle:nil];
+    [self setBbiClose:nil];
+    [self setBtnRestore:nil];
     [super viewDidUnload];
 }
 @end
