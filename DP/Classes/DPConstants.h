@@ -63,6 +63,8 @@ UIKIT_EXTERN NSString *const USER_NAME;
 UIKIT_EXTERN NSString *const PASSWORD;
 
 // web service URLs
+UIKIT_EXTERN NSString *const BANNERS_URL;
+UIKIT_EXTERN NSString *const CATEGORIES_URL;
 UIKIT_EXTERN NSString *const ARTICLES_URL;
 
 

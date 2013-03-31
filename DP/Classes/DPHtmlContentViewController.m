@@ -13,19 +13,22 @@
 #import "../Models/ArticleParser.h"
 #import "../Models/DPDataLoader.h"
 #import "DPConstants.h"
+#import "DPArticlesLoader.h"
 
 
 @interface DPHtmlContentViewController ()
 
 @property (strong, nonatomic) NSString *htmlData;
-@property (strong, nonatomic) UIActivityIndicatorView *busyIndicator;
-@property (strong, nonatomic) NSOperationQueue *queue;
-
+//@property (strong, nonatomic) UIActivityIndicatorView *busyIndicator;
+//@property (strong, nonatomic) NSOperationQueue *queue;
+@property (strong, nonatomic) DPArticlesLoader *articlesLoader;
+@property int categoryID;
+@property (strong, nonatomic) NSString *lang;
 @end
 
 @implementation DPHtmlContentViewController
 
-@synthesize htmlData, busyIndicator, queue;
+//@synthesize htmlData, busyIndicator, queue;
 
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -45,9 +48,14 @@
     return self;
 }
 
-- (id) initWithContentUrl:(NSURL *)aUrl {
+- (id) initWithCategory:(int)ctgid lang:(NSString *) aLang {
     if (self = [super init]) {
-        [self downloadUrl:aUrl];
+//        [self downloadUrl:aUrl];
+        self.categoryID = ctgid;
+        self.lang = aLang;
+        self.articlesLoader = [[DPArticlesLoader alloc] initWithController:self category:ctgid lang:aLang];
+        self.articlesLoader.delegate = self;
+        [self.articlesLoader loadData];
     }
     
     return self;
@@ -60,105 +68,31 @@
     UIWebView *webView = [[UIWebView alloc] initWithFrame:aframe];
     webView.contentMode = UIViewContentModeScaleAspectFit;
     webView.userInteractionEnabled = YES;
-    [webView loadHTMLString:htmlData baseURL:nil];
+    [webView loadHTMLString:self.htmlData baseURL:nil];
 //    [self addGestureRecognizersTo:webView];
     [self.view addSubview:webView];
 }
 
-#pragma mark -
-#pragma mark === busy indication handling  ===
-
-- (void) startIndicator {
-    if(!self.busyIndicator) {
-		self.busyIndicator = [[UIActivityIndicatorView alloc]
-                              initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
-		self.busyIndicator.frame = CGRectMake((self.view.frame.size.width-25)/2,
-                                              (self.view.frame.size.height-25)/2,
-                                              25, 25);
-		self.busyIndicator.hidesWhenStopped = TRUE;
-        [self.view addSubview:self.busyIndicator];
-	}
-    [self.busyIndicator startAnimating];
-}
-
-- (void) stopIndicator {
-    if(self.busyIndicator) {
-        [self.busyIndicator stopAnimating];
-        [self.busyIndicator removeFromSuperview];
-        self.busyIndicator = nil;
-    }
-}
-
-#pragma mark -
-#pragma mark === downloading handling  ===
-
-- (void) downloadUrl:(NSURL *)aUrl {
-    if (!self.queue)
-        self.queue = [[NSOperationQueue alloc] init];
-    
-    ASIFormDataRequest *webRequest = [[ASIFormDataRequest alloc] initWithURL:aUrl];
-	webRequest.defaultResponseEncoding = NSUTF8StringEncoding;
-	[webRequest setPostValue:USER_NAME forKey:@"user"];
-	[webRequest setPostValue:[DPDataLoader digestSHA1:PASSWORD] forKey:@"pass"];
-	[webRequest setPostValue:@"en" forKey:@"lang"];
-	[webRequest setPostValue:[NSString stringWithFormat:@"%i", CTGID_WHO_WE_ARE] forKey:@"cid"];
-    //[webRequest setPostValue:@"phone" forKey:@"count"]; // optional
-	//[webRequest setPostValue:@"phone" forKey:@"from"]; // optional, requires "count
-
-    [webRequest setDelegate:self];
-    [self.queue addOperation:webRequest];
-    [self startIndicator];
-}
-
-- (void) requestFinished:(ASIHTTPRequest *)request{
-    [self stopIndicator];
-    
-    NSString *resp = [request responseString];
-	NSLog(@"Response: \n%@", resp);
-    //resp = [resp stringByReplacingOccurrencesOfString:@"&gt;" withString:<#(NSString *)#>]
-    
-//    NSString *aResponse = [[NSString alloc] initWithString:
-//						   [[request responseString] stringByReplacingOccurrencesOfString:@"&" withString:@"&amp;"]];
-
-    
-    ArticleParser *parser = [[ArticleParser alloc] init];
-	[parser parseXMLFile:resp];
-    NSArray *articles = [NSArray arrayWithArray:parser.articles];
-
+- (void)loadFinished:(DPDataLoader *)loader {
+    NSArray *articles = loader.datalist;
+ 
     if (articles.count == 0)
-        [self showAlertMessage:NSLocalizedString(@"URL_LOAD_FAILED_MESSAGE", nil)
-                         title:NSLocalizedString(@"URL_LOAD_FAILED_TITLE", nil)];
+        showAlertMessage(nil,
+                         NSLocalizedString(@"URL_LOAD_FAILED_TITLE", nil),
+                         NSLocalizedString(@"URL_LOAD_FAILED_MESSAGE", nil));
     else {
         NSString *body = ((Article *)articles[0]).body;
         body = [[body stringByReplacingOccurrencesOfString:@"&gt;" withString:@">"]
                 stringByReplacingOccurrencesOfString:@"&lt;" withString:@"<"];
         self.htmlData = body;
         [self doInitWebView];
-    }
+    }    
 }
 
-- (void) requestFailed:(ASIHTTPRequest *)request {
-	NSLog(@"Request Failed: %@", [request error]);
-    
-	[self stopIndicator];
-    
+- (void)loadFailed:(DPDataLoader *)loader {
     showAlertMessage(nil,
                      NSLocalizedString(@"URL_LOAD_FAILED_TITLE", nil),
                      NSLocalizedString(@"URL_LOAD_FAILED_MESSAGE", nil));
-//    [self showAlertMessage:NSLocalizedString(@"URL_LOAD_FAILED_MESSAGE", nil)
-//                     title:NSLocalizedString(@"URL_LOAD_FAILED_TITLE", nil)];
-}
-
--(void) showAlertMessage:(NSString *)aMessage title:(NSString *)aTitle {
-	UIAlertView *alertDialog;
-	alertDialog = [[UIAlertView alloc]
-                   initWithTitle:aTitle
-                   message:aMessage
-                   delegate:nil
-                   cancelButtonTitle: NSLocalizedString(@"btnOK_Title", nil)
-                   otherButtonTitles:nil];
-    
-	[alertDialog show];
 }
 
 - (void)viewDidLoad
@@ -168,7 +102,7 @@
 }
 
 - (void) viewWillAppear:(BOOL)animated {
-    if (htmlData)
+    if (self.htmlData)
         [self doInitWebView];
     
     [super viewWillAppear:animated];

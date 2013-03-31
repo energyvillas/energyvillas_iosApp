@@ -21,7 +21,15 @@ NSString *const USER_NAME = @"phone";
 NSString *const PASSWORD = @"phone";
 
 // web service URLs
+NSString *const BANNERS_URL = @"http://designprojectsapps.com/iphonebanners.php";
+// http://www.mysite.com/iphonebanners.php?user=<UUU>&pass=<PPP>&group=<XXX>
+
+NSString *const CATEGORIES_URL = @"http://designprojectsapps.com/iphonecategory.php";
+// http://www.mysite.com/iphonecategory.php?user=<UUU>&pass=<PPP>&lang=<XXX>&parentid=<YYY>
+
 NSString *const ARTICLES_URL = @"http://designprojectsapps.com/iphonenews.php";
+// http://www.mysite.com/iphonenews.php?user=<UUU>&pass=<PPP>&lang=<XXX>&cid=<YYY>&count=<WWW>&from=<ZZZ>
+
 
 
 // localization keys

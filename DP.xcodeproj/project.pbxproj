@@ -21,6 +21,8 @@
 		5E3605221708438F00DB7B20 /* close@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5E3605201708438F00DB7B20 /* close@2x.png */; };
 		5E3605291708B5B600DB7B20 /* DPFloatingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E3605281708B5B600DB7B20 /* DPFloatingViewController.m */; };
 		5E36052B1708B5E300DB7B20 /* DPFloatingView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5E36052A1708B5E300DB7B20 /* DPFloatingView.xib */; };
+		5E36052E1708C83400DB7B20 /* DPAdsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E36052D1708C83400DB7B20 /* DPAdsViewController.m */; };
+		5E3605311708C91C00DB7B20 /* DPArticlesLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E3605301708C91C00DB7B20 /* DPArticlesLoader.m */; };
 		5E3D9B9C17044CB400208D7B /* FPPopoverController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E3D9B9717044CB400208D7B /* FPPopoverController.m */; };
 		5E3D9B9D17044CB400208D7B /* FPPopoverView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E3D9B9917044CB400208D7B /* FPPopoverView.m */; };
 		5E3D9B9E17044CB400208D7B /* FPTouchView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E3D9B9B17044CB400208D7B /* FPTouchView.m */; };
@@ -145,6 +147,10 @@
 		5E3605271708B5B600DB7B20 /* DPFloatingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPFloatingViewController.h; sourceTree = "<group>"; };
 		5E3605281708B5B600DB7B20 /* DPFloatingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPFloatingViewController.m; sourceTree = "<group>"; };
 		5E36052A1708B5E300DB7B20 /* DPFloatingView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DPFloatingView.xib; sourceTree = "<group>"; };
+		5E36052C1708C83300DB7B20 /* DPAdsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPAdsViewController.h; sourceTree = "<group>"; };
+		5E36052D1708C83400DB7B20 /* DPAdsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPAdsViewController.m; sourceTree = "<group>"; };
+		5E36052F1708C91C00DB7B20 /* DPArticlesLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPArticlesLoader.h; sourceTree = "<group>"; };
+		5E3605301708C91C00DB7B20 /* DPArticlesLoader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPArticlesLoader.m; sourceTree = "<group>"; };
 		5E3D9B9517044CB400208D7B /* ARCMacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARCMacros.h; sourceTree = "<group>"; };
 		5E3D9B9617044CB400208D7B /* FPPopoverController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FPPopoverController.h; sourceTree = "<group>"; };
 		5E3D9B9717044CB400208D7B /* FPPopoverController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FPPopoverController.m; sourceTree = "<group>"; };
@@ -609,6 +615,8 @@
 				5EC255EE1700FEF60045AB99 /* DPCategoryViewController.m */,
 				5E3605271708B5B600DB7B20 /* DPFloatingViewController.h */,
 				5E3605281708B5B600DB7B20 /* DPFloatingViewController.m */,
+				5E36052C1708C83300DB7B20 /* DPAdsViewController.h */,
+				5E36052D1708C83400DB7B20 /* DPAdsViewController.m */,
 			);
 			path = ControllersPaid;
 			sourceTree = "<group>";
@@ -658,6 +666,8 @@
 				5EC255E4170090A10045AB99 /* ArticleParser.m */,
 				5EC255EA1700AECF0045AB99 /* DPDataLoader.h */,
 				5EC255EB1700AECF0045AB99 /* DPDataLoader.m */,
+				5E36052F1708C91C00DB7B20 /* DPArticlesLoader.h */,
+				5E3605301708C91C00DB7B20 /* DPArticlesLoader.m */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -852,6 +862,8 @@
 				5E3605121707A72400DB7B20 /* DPBuyViewController.m in Sources */,
 				5E3605171707BDE600DB7B20 /* UIApplication+ScreenDimensions.m in Sources */,
 				5E3605291708B5B600DB7B20 /* DPFloatingViewController.m in Sources */,
+				5E36052E1708C83400DB7B20 /* DPAdsViewController.m in Sources */,
+				5E3605311708C91C00DB7B20 /* DPArticlesLoader.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

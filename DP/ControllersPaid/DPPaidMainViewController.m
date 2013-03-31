@@ -157,8 +157,7 @@
     if ([self checkTop:self.whoViewController]) return;
     
     self.whoViewController = [[DPHtmlContentViewController alloc]
-                              initWithContentUrl:[NSURL URLWithString:ARTICLES_URL]];
-                              //initWithHTML:@"hello world, hi george!!!"];
+                              initWithCategory:CTGID_WHO_WE_ARE lang:@"en"];
     
     [self showViewController:self.whoViewController];
 }

@@ -7,10 +7,11 @@
 //
 
 #import "UINavContentViewController.h"
+#import "DPDataLoader.h"
 
-@interface DPHtmlContentViewController : UINavContentViewController
+@interface DPHtmlContentViewController : UINavContentViewController <DPDataLoaderDelegate>
 
 - (id) initWithHTML:(NSString *)aHtml;
-- (id) initWithContentUrl:(NSURL *)aUrl;
+- (id) initWithCategory:(int)ctgid lang:(NSString *) aLang;
 
 @end

@@ -7,10 +7,40 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "ASIFormDataRequest.h"
 
+
+@class DPDataLoader;
+
+@protocol DPDataLoaderDelegate <NSObject>
+
+@optional
+
+- (void)loadFinished:(DPDataLoader *)loader;
+- (void)loadFailed:(DPDataLoader *)loader;
+
+@end
 
 @interface DPDataLoader : NSObject
 
+@property (weak, nonatomic) id <DPDataLoaderDelegate> delegate;
+@property (strong, nonatomic) NSArray *datalist;
+
 +(NSString*) digestSHA1:(NSString*)input;
 
+- (id) initWithController:(UIViewController *)controller;
+
+#pragma -
+#pragma public methods
+- (void) loadData;
+
+#pragma -
+#pragma "protected" helper methods
+- (ASIFormDataRequest *) createRequest:(NSURL *)aUrl keysAndValues:(NSDictionary *)kvlist;
+
+#pragma -
+#pragma "abstract" methods
+- (ASIFormDataRequest *) createAndPrepareRequest;
+
 @end
+

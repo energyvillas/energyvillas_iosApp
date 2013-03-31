@@ -9,12 +9,18 @@
 #import "Article.h"
 
 
+@interface ArticleCache ()
+
+@property (strong, nonatomic) NSString *datafile;
+@end
+
 @implementation ArticleCache
 
 @synthesize articleList;
 
--(id)initWithRetrieval{
+-(id)initFromFile:(NSString *)aDatafile{
 	if(self = [super init]){
+        self.datafile = aDatafile;
 		[self unarchiveArticles];
 	}
 	return self;
@@ -22,7 +28,7 @@
 
 -(NSString *)archivePath {
 	NSString *docDir = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
-	return [docDir stringByAppendingPathComponent:@"articles.dat"]; // PENDING
+	return [docDir stringByAppendingPathComponent:self.datafile];
 }
 
 -(void)archiveArticles{
