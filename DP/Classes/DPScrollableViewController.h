@@ -22,7 +22,7 @@
 @property (nonatomic, weak) id <DPScrollableViewDelegate> viewDelegate;
 
 
-- (id) initWithContent:(NSArray *)content;
+- (id) initWithContent:(NSArray *)content autoScroll:(BOOL)autoscroll;
 - (void) changeRows:(int)rows columns:(int)columns;
 
 @end

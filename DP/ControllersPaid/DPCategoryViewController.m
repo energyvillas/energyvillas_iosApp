@@ -185,10 +185,12 @@
         
         if (isPortrait)
             mmViewController = [[DPCtgScrollViewController alloc]
-                                initWithContent:content rows:1 columns:3];
+                                initWithContent:content rows:1 columns:3
+                                autoScroll:NO];
         else
             mmViewController = [[DPCtgScrollViewController alloc]
-                                initWithContent:content rows:3 columns:1];
+                                initWithContent:content rows:3 columns:1
+                                autoScroll:NO];
         
         content = nil;
         

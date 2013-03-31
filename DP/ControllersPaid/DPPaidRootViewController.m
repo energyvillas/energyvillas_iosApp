@@ -189,10 +189,10 @@
         
         if (isPortrait)
             nnViewController = [[DPCtgScrollViewController alloc]
-                     initWithContent:content rows:1 columns:2];
+                     initWithContent:content rows:1 columns:2 autoScroll:NO];
         else
             nnViewController = [[DPCtgScrollViewController alloc]
-                     initWithContent:content rows:2 columns:1];
+                     initWithContent:content rows:2 columns:1 autoScroll:NO];
         
         content = nil;
         
@@ -274,7 +274,7 @@
         }
        
         mmViewController = [[DPCtgScrollViewController alloc]
-                 initWithContent:content rows:3 columns:3];
+                 initWithContent:content rows:3 columns:3 autoScroll:NO];
 
         content = nil;
         mmViewController.viewDelegate = self;

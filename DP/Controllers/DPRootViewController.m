@@ -130,11 +130,11 @@
     if (bcv.subviews.count == 0) {
         NSArray *content = [DPAppHelper sharedInstance].freeDetails;
         if (isPortrait)
-            detvc = [[DPCtgScrollViewController alloc]
-                     initWithContent:content rows:2 columns:2];
+            detvc = [[DPCtgScrollViewController alloc] 
+                     initWithContent:content rows:2 columns:2 autoScroll:YES];
         else
             detvc = [[DPCtgScrollViewController alloc]
-                     initWithContent:content rows:1 columns:4];
+                     initWithContent:content rows:1 columns:4 autoScroll:YES];
         
         
         [self addChildViewController: detvc];

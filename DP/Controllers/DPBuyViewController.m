@@ -60,7 +60,7 @@
                 
         NSArray *content = [DPAppHelper sharedInstance].freeBuyContent;
         detvc = [[DPCtgScrollViewController alloc]
-                     initWithContent:content rows:1 columns:1];        
+                     initWithContent:content rows:1 columns:1 autoScroll:YES];
         
         [self addChildViewController: detvc];
         [bcv addSubview: detvc.view];

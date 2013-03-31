@@ -24,13 +24,11 @@
 @end
 
 @implementation DPScrollableViewController {
-    bool initializing, pageControlUsed, timerUsed;
+    bool initializing, pageControlUsed, timerUsed, autoScroll;
     int userTimerActive;
     NSTimer *timer, *usertimer;
     int TIMED_SCROLL_WIDTH;
-    
-    UIView *NILVIEW;
-}
+ }
 
 @synthesize scrollView, pageControl;
 @synthesize contentList, currentPage;
@@ -52,14 +50,18 @@
     return self;
 }
 
-- (id) initWithContent:(NSArray *)content {
+- (id) initWithContent:(NSArray *)content autoScroll:(BOOL)autoscroll {
     self = [super init];
     if (self) {
-        NILVIEW = [UIView alloc];
+        autoScroll = autoscroll;
         self.contentList = content;
         self.view = [[UIView alloc] init];
         self.scrollView = [[UIScrollView alloc] init];
         self.pageControl = [[UIPageControl alloc] init];
+        [self.pageControl addTarget:self
+                             action:@selector(pageChanged:)
+                   forControlEvents:UIControlEventValueChanged];
+                
         [self.view addSubview:self.scrollView];
         [self.view addSubview:self.pageControl];
     }
@@ -144,7 +146,7 @@
             self.portraitRendered = [[NSMutableArray alloc] init];
             for (unsigned i = 0; i < contentList.count; i++)
             {
-                [self.portraitRendered addObject: NILVIEW];
+                [self.portraitRendered addObject: [NSNull null]];
             }
         }
     } else {
@@ -154,7 +156,7 @@
             self.landscapeRendered = [[NSMutableArray alloc] init];
             for (unsigned i = 0; i < contentList.count; i++)
             {
-                [self.landscapeRendered addObject: NILVIEW];
+                [self.landscapeRendered addObject: [NSNull null]];
             }
         }
     }
@@ -211,7 +213,7 @@
             fixWidth = (colWidthResidue > 0 ? 1 : 0);
 
             if (indx < contentList.count) {
-                if (contentRendered[indx] == NILVIEW) {
+                if (contentRendered[indx] == [NSNull null]) {
                     CGRect r = CGRectMake(posX, posY, colWidth + fixWidth, rowHeight + fixHeight);
                     UIView *v = [[UIView alloc] initWithFrame:r];
                     v.clipsToBounds = YES;
@@ -351,6 +353,7 @@
 }
 
 - (void) engageAutoTimer {
+    if (!autoScroll) return;
     if (self.pageControl.numberOfPages <= 1) return;
     
     if (timer == nil) {
@@ -382,6 +385,7 @@
 }
 
 - (void) engageUserTimer {
+    if (!autoScroll) return;
     if (self.pageControl.numberOfPages <= 1) return;
     
     if (!timerUsed) {

@@ -25,8 +25,11 @@
     return self;
 }
 
-- (id) initWithContent:(NSArray *)content rows:(int)rows columns:(int)columns {
-    self = [super initWithContent:content];
+- (id) initWithContent:(NSArray *)content
+                  rows:(int)rows
+               columns:(int)columns
+            autoScroll:(BOOL)autoscroll {
+    self = [super initWithContent:content autoScroll:autoscroll];
     if (self) {
         self.rowCount = rows;
         self.colCount = columns;
