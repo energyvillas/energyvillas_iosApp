@@ -95,9 +95,22 @@
 - (void) willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
     [self fixFrames:NO];
 
-    id tvc = navController.topViewController;
-    if (tvc && [tvc isKindOfClass:[UINavContentViewController class]])
-        [(UINavContentViewController *)tvc layoutForOrientation:toInterfaceOrientation fixtop:NO];
+    id vc = self.presentedViewController;
+
+    if (!vc)
+        vc = navController.topViewController;
+    
+    if (vc && [vc isKindOfClass:[UINavContentViewController class]])
+        [(UINavContentViewController *)vc layoutForOrientation:toInterfaceOrientation fixtop:NO];
+    
+    int cc = self.childViewControllers.count;
+    if (cc > 0)
+    if (self.childViewControllers[cc - 1] != self.navController)
+    {
+        vc = self.childViewControllers[cc - 1];
+        if (vc && [vc isKindOfClass:[UINavContentViewController class]])
+            [(UINavContentViewController *)vc layoutForOrientation:toInterfaceOrientation fixtop:NO];
+    }
 }
 
 - (void)didReceiveMemoryWarning

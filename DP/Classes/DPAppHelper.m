@@ -34,13 +34,16 @@ NSString *const FREE_DET_IMGTITLE_FMT = @"FREE_DET_TITLE_10%i";
 
 - (id)init {
     self = [super init];
-    if (self)
+    if (self) {
         [self addFreeDetails];
+        [self addFreeBuyContent];
+    }
     
     return self;
 }
 
 #define FREE_DET_CNT ((int) 8)
+#define FREE_BUY_CNT ((int) 3)
 
 
 - (void) addFreeDetails {
@@ -59,6 +62,24 @@ NSString *const FREE_DET_IMGTITLE_FMT = @"FREE_DET_TITLE_10%i";
 
     
     self.freeDetails = [NSArray arrayWithArray:list];
+}
+
+- (void) addFreeBuyContent{
+    NSString *lang = [[NSLocale preferredLanguages] objectAtIndex:0];
+    NSMutableArray *list = [[NSMutableArray alloc] initWithCapacity:FREE_BUY_CNT];
+    
+    for (int i = 0; i < FREE_BUY_CNT; i++) {
+        NSString *imgName = [NSString stringWithFormat:FREE_DET_IMGNAME_FMT, i, lang];
+        NSString *dispName = [NSString stringWithFormat: FREE_DET_IMGTITLE_FMT, i];
+        
+        DPImageInfo *imginfo = [[DPImageInfo alloc] initWithName: imgName
+                                                           image: [UIImage imageNamed:imgName]
+                                                     displayName: NSLocalizedString(dispName, nil)];
+        [list addObject:imginfo];
+    }
+    
+    
+    self.freeBuyContent = [NSArray arrayWithArray:list];
 }
 
 @end

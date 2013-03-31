@@ -16,9 +16,13 @@
 #import "DPVimeoPlayerViewController.h"
 //#import "DPIAPHelper.h"
 #import "DPAppHelper.h"
+#import "DPMainViewController.h"
+#import "DPBuyViewController.h"
 
 
 @interface DPRootViewController ()
+
+//@property (strong, nonatomic) PopupView *popup;
 
 @end
 
@@ -52,9 +56,15 @@
 }
 
 - (void) doBuy:(id) sender {
-//    SKProduct *product = [SKProduct alloc] init
-//    [[DPIAPHelper sharedInstance] buyProduct:<#(SKProduct *)#>
+    DPBuyViewController *buyVC = [[DPBuyViewController alloc] init];
+
+    id del = self.navigationController.delegate;
+    DPMainViewController *main = del;
+
+    [main addChildViewController:buyVC];
+    [main.view addSubview:buyVC.view];
 }
+
 - (void) doMore:(id) sender {
     
 }

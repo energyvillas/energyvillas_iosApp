@@ -14,6 +14,11 @@
 		5E36050B170730E100DB7B20 /* free_detimage_101_en.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 5E360507170730E100DB7B20 /* free_detimage_101_en.jpg */; };
 		5E36050E1707825E00DB7B20 /* free_detimage_102_el.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 5E36050C1707825E00DB7B20 /* free_detimage_102_el.jpg */; };
 		5E36050F1707825E00DB7B20 /* free_detimage_102_en.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 5E36050D1707825E00DB7B20 /* free_detimage_102_en.jpg */; };
+		5E3605121707A72400DB7B20 /* DPBuyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E3605111707A72400DB7B20 /* DPBuyViewController.m */; };
+		5E3605141707A74300DB7B20 /* DPBuyView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5E3605131707A74300DB7B20 /* DPBuyView.xib */; };
+		5E3605171707BDE600DB7B20 /* UIApplication+ScreenDimensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E3605161707BDD900DB7B20 /* UIApplication+ScreenDimensions.m */; };
+		5E3605211708438F00DB7B20 /* close.png in Resources */ = {isa = PBXBuildFile; fileRef = 5E36051F1708438F00DB7B20 /* close.png */; };
+		5E3605221708438F00DB7B20 /* close@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5E3605201708438F00DB7B20 /* close@2x.png */; };
 		5E3D9B9C17044CB400208D7B /* FPPopoverController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E3D9B9717044CB400208D7B /* FPPopoverController.m */; };
 		5E3D9B9D17044CB400208D7B /* FPPopoverView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E3D9B9917044CB400208D7B /* FPPopoverView.m */; };
 		5E3D9B9E17044CB400208D7B /* FPTouchView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E3D9B9B17044CB400208D7B /* FPTouchView.m */; };
@@ -129,6 +134,13 @@
 		5E360507170730E100DB7B20 /* free_detimage_101_en.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = free_detimage_101_en.jpg; sourceTree = "<group>"; };
 		5E36050C1707825E00DB7B20 /* free_detimage_102_el.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = free_detimage_102_el.jpg; sourceTree = "<group>"; };
 		5E36050D1707825E00DB7B20 /* free_detimage_102_en.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = free_detimage_102_en.jpg; sourceTree = "<group>"; };
+		5E3605101707A72400DB7B20 /* DPBuyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPBuyViewController.h; sourceTree = "<group>"; };
+		5E3605111707A72400DB7B20 /* DPBuyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPBuyViewController.m; sourceTree = "<group>"; };
+		5E3605131707A74300DB7B20 /* DPBuyView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DPBuyView.xib; sourceTree = "<group>"; };
+		5E3605151707BDD800DB7B20 /* UIApplication+ScreenDimensions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIApplication+ScreenDimensions.h"; sourceTree = "<group>"; };
+		5E3605161707BDD900DB7B20 /* UIApplication+ScreenDimensions.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIApplication+ScreenDimensions.m"; sourceTree = "<group>"; };
+		5E36051F1708438F00DB7B20 /* close.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = close.png; sourceTree = "<group>"; };
+		5E3605201708438F00DB7B20 /* close@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "close@2x.png"; sourceTree = "<group>"; };
 		5E3D9B9517044CB400208D7B /* ARCMacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARCMacros.h; sourceTree = "<group>"; };
 		5E3D9B9617044CB400208D7B /* FPPopoverController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FPPopoverController.h; sourceTree = "<group>"; };
 		5E3D9B9717044CB400208D7B /* FPPopoverController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FPPopoverController.m; sourceTree = "<group>"; };
@@ -413,6 +425,8 @@
 		5E71A3D416F998D500E7AFF9 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				5E3605151707BDD800DB7B20 /* UIApplication+ScreenDimensions.h */,
+				5E3605161707BDD900DB7B20 /* UIApplication+ScreenDimensions.m */,
 				5E71A3D516F998D500E7AFF9 /* UINavContentViewController.h */,
 				5E71A3D616F998D500E7AFF9 /* UINavContentViewController.m */,
 				5EC2559F16FF1DD60045AB99 /* DPImageContentViewController.h */,
@@ -496,6 +510,8 @@
 				5E9ABBDD16F9F3CA000EAB46 /* DPTestViewController.m */,
 				5EC2559C16FCD18C0045AB99 /* DPCtgScrollViewController.h */,
 				5EC2559D16FCD18C0045AB99 /* DPCtgScrollViewController.m */,
+				5E3605101707A72400DB7B20 /* DPBuyViewController.h */,
+				5E3605111707A72400DB7B20 /* DPBuyViewController.m */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -507,6 +523,7 @@
 				5E71A3FD16F99DD900E7AFF9 /* DPRootView.xib */,
 				5E9ABBDF16F9F3E2000EAB46 /* DPTestView.xib */,
 				5E9ABBE416FB1BFC000EAB46 /* DPScrollableDetailView.xib */,
+				5E3605131707A74300DB7B20 /* DPBuyView.xib */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -519,6 +536,8 @@
 				5E951D121702F50200DFDE43 /* flag-us.png */,
 				5E951D0F1702F22E00DFDE43 /* go-previous-view.png */,
 				5EC255D716FFA4170045AB99 /* logosmall.png */,
+				5E36051F1708438F00DB7B20 /* close.png */,
+				5E3605201708438F00DB7B20 /* close@2x.png */,
 				5EC6FE20170378FE009910CF /* logo */,
 				5E360503170730E100DB7B20 /* FreeDetails */,
 				5E71A40016F9B5F900E7AFF9 /* CoverImages */,
@@ -771,6 +790,9 @@
 				5E36050B170730E100DB7B20 /* free_detimage_101_en.jpg in Resources */,
 				5E36050E1707825E00DB7B20 /* free_detimage_102_el.jpg in Resources */,
 				5E36050F1707825E00DB7B20 /* free_detimage_102_en.jpg in Resources */,
+				5E3605141707A74300DB7B20 /* DPBuyView.xib in Resources */,
+				5E3605211708438F00DB7B20 /* close.png in Resources */,
+				5E3605221708438F00DB7B20 /* close@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -822,6 +844,8 @@
 				5E3D9B9D17044CB400208D7B /* FPPopoverView.m in Sources */,
 				5E3D9B9E17044CB400208D7B /* FPTouchView.m in Sources */,
 				5E3605021707154E00DB7B20 /* DPAppHelper.m in Sources */,
+				5E3605121707A72400DB7B20 /* DPBuyViewController.m in Sources */,
+				5E3605171707BDE600DB7B20 /* UIApplication+ScreenDimensions.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

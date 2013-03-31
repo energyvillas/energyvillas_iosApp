@@ -45,6 +45,11 @@
 			interfaceOrientation == UIInterfaceOrientationLandscapeLeft);
 }
 /*
+-(void) willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
+    [self layoutForOrientation:toInterfaceOrientation fixtop:YES];
+}
+*/
+/*
 - (UIButton *) createButtonWithImageUrl:(NSURL *)imgUrl
                                  tag:(int)index
                               action:(SEL)sel {

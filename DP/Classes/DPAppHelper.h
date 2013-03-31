@@ -11,6 +11,7 @@
 @interface DPAppHelper : NSObject
 
 @property (strong, nonatomic) NSArray *freeDetails;
+@property (strong, nonatomic) NSArray *freeBuyContent;
 
 //===========
 

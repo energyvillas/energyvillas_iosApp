@@ -9,6 +9,8 @@
 #import "DPVimeoPlayerViewController.h"
 #import <MediaPlayer/MediaPlayer.h>
 #import "DPConstants.h"
+#import "UIApplication+ScreenDimensions.h"
+
 
 @interface DPVimeoPlayerViewController ()
 
@@ -61,7 +63,9 @@
     self.extractor = nil;
     self.playerView = nil;
     if (self.navigationController)
-        [self.navigationController popToRootViewControllerAnimated:YES];    
+        [self.navigationController popToRootViewControllerAnimated:YES];
+    else
+        [self dismissViewControllerAnimated:YES completion:^{ }];
 }
 
 -(void)viewWillAppear:(BOOL)animated{
@@ -95,6 +99,7 @@
 }
 */
 - (void) layoutForOrientation:(UIInterfaceOrientation) toOrientation fixtop:(BOOL)fixtop{
+/*
     CGRect svf = self.view.superview.frame;
     CGRect vf = self.view.frame;
     
@@ -111,6 +116,14 @@
                                 vf.size.width,
                                 vf.size.height);
 //        innerview.frame = frm;
+    }
+*/
+    
+    CGSize nextViewSize = [UIApplication sizeInOrientation:toOrientation];
+    self.view.frame = CGRectMake(0, 0, nextViewSize.width, nextViewSize.height);
+    UIView *innerview = self.view.subviews.count == 1 ? self.view.subviews[0] : nil;
+    if (innerview) {
+        innerview.frame = self.view.frame;
     }
 }
 
