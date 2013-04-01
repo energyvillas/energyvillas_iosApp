@@ -9,17 +9,23 @@
 #import "DPDataLoader.h"
 #import <CommonCrypto/CommonDigest.h>
 #import "DPConstants.h"
+#import "DPAppHelper.h"
+#import "DPDataCache.h"
 
 
-@interface DPDataLoader ()
+@interface DPDataLoader () {
+    DPDataCache *_dataCache;
+}
 
 @property (weak, nonatomic) UIViewController *controller;
 @property (strong, nonatomic) UIActivityIndicatorView *busyIndicator;
 @property (strong, nonatomic) NSOperationQueue *queue;
+@property (strong, nonatomic, readonly, getter = getDataCache) DPDataCache *dataCache;
 
 @end
 
 @implementation DPDataLoader
+
 
 - (id) initWithController:(UIViewController *)controller {
     self = [super init];
@@ -72,8 +78,36 @@
 #pragma mark === downloading handling  ===
 
 - (void) loadData {
-    ASIFormDataRequest *request = [self createAndPrepareRequest];
-    [self startRequest:request];
+    BOOL cacheExpired = self.dataCache.isExpired;
+    BOOL netIsAlive = [[DPAppHelper sharedInstance] hostIsReachable];
+
+    if (cacheExpired && netIsAlive) {
+        ASIFormDataRequest *request = [self createAndPrepareRequest];
+        [self startRequest:request];
+    } else {
+        self.datalist = self.dataCache.dataList;
+        
+        if (self.datalist)
+            [self notifySuccess];
+        else
+            [self notifyFailure];
+    }
+}
+
+- (DPDataCache *) getDataCache {
+    if (!_dataCache)
+        _dataCache = [self createDataCache];
+    
+    return _dataCache;
+}
+
+- (DPDataCache *) createDataCache {
+    return nil;
+}
+
+- (void) updateCachedData {
+    self.dataCache.dataList = self.datalist;
+    [self.dataCache saveToFile];
 }
 
 - (ASIFormDataRequest *) createAndPrepareRequest {
@@ -111,8 +145,8 @@
     
     self.datalist = [self parseResponse:resp];
     
-    if ([self.delegate respondsToSelector:@selector(loadFinished:)])
-        [self.delegate loadFinished:self];    
+    [self updateCachedData];
+    [self notifySuccess];
 }
 
 - (NSArray *) parseResponse:(NSString *)response {
@@ -123,11 +157,17 @@
 	NSLog(@"Request Failed: %@", [request error]);
     
 	[self stopIndicator];
-    
+
+    [self notifyFailure];
+}
+
+- (void) notifySuccess {
+    if ([self.delegate respondsToSelector:@selector(loadFinished:)])
+        [self.delegate loadFinished:self];
+}
+- (void) notifyFailure {
     if ([self.delegate respondsToSelector:@selector(loadFailed:)])
         [self.delegate loadFailed:self];
 }
-
-
 
 @end

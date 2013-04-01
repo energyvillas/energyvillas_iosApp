@@ -78,8 +78,8 @@
  
     if (articles.count == 0)
         showAlertMessage(nil,
-                         NSLocalizedString(@"URL_LOAD_FAILED_TITLE", nil),
-                         NSLocalizedString(@"URL_LOAD_FAILED_MESSAGE", nil));
+                         NSLocalizedString(@"INFO_MSG_TITLE", nil),
+                         NSLocalizedString(@"NO_DATA_FOUND_MESSAGE", nil));
     else {
         NSString *body = ((Article *)articles[0]).body;
         body = [[body stringByReplacingOccurrencesOfString:@"&gt;" withString:@">"]

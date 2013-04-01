@@ -139,7 +139,7 @@ static NSString *kName_videolength = @"videolength";
 		
 	}else if ([elementName isEqualToString:kName_article]) {
 		Article *article  = [[Article alloc] init];
-		article.articleId=self.articleId;
+		article.key=self.articleId;
 		article.title=self.title;
 		article.body=self.body;
 		article.image=self.image;
@@ -195,7 +195,7 @@ parseErrorOccurred:(NSError *)parseError {
 	NSLog(@"url: %@",self.url);
 	
 	for (Article* article in articles) {
-		NSLog(@"ROW id=%@ title=%@ image=%@ url=%@", article.articleId, article.title, article.image, article.url);
+		NSLog(@"ROW id=%@ title=%@ image=%@ url=%@", article.key, article.title, article.image, article.url);
 	}
 	
 }

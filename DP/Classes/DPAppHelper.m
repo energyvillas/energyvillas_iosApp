@@ -8,11 +8,18 @@
 
 #import "DPAppHelper.h"
 #import "DPImageInfo.h"
+#import "Reachability.h"
+
+
 
 NSString *const FREE_DET_IMGNAME_FMT = @"free_detimage_10%i_%@.jpg";
 NSString *const FREE_DET_IMGTITLE_FMT = @"FREE_DET_TITLE_10%i";
 
 @interface DPAppHelper ()
+
+@property (strong, nonatomic) Reachability* hostReach;
+//@property (strong, nonatomic) Reachability* internetReach;
+//@property (strong, nonatomic) Reachability* wifiReach;
 
 @end
 
@@ -20,6 +27,8 @@ NSString *const FREE_DET_IMGTITLE_FMT = @"FREE_DET_TITLE_10%i";
 
 }
 
+@synthesize connectionRequired = _connectionRequired;
+@synthesize hostIsReachable = _hostIsReachable;
 
 + (DPAppHelper *)sharedInstance {
     static dispatch_once_t once;
@@ -35,6 +44,9 @@ NSString *const FREE_DET_IMGTITLE_FMT = @"FREE_DET_TITLE_10%i";
 - (id)init {
     self = [super init];
     if (self) {
+        _connectionRequired = true;
+        _hostIsReachable = false;
+        [self configureReachability];
         [self addFreeDetails];
         [self addFreeBuyContent];
     }
@@ -81,5 +93,53 @@ NSString *const FREE_DET_IMGTITLE_FMT = @"FREE_DET_TITLE_10%i";
     
     self.freeBuyContent = [NSArray arrayWithArray:list];
 }
+
+
+#pragma -
+#pragma reachability handling
+
+- (void) configureReachability {
+    [[NSNotificationCenter defaultCenter] addObserver: self selector: @selector(reachabilityChanged:) name: kReachabilityChangedNotification object: nil];
+    
+    //Change the host name here to change the server your monitoring
+	self.hostReach = [Reachability reachabilityWithHostName: @"www.designprojectsapps.com"];
+	[self.hostReach startNotifier];
+	[self updateWithReachability: self.hostReach];
+	
+//    self.internetReach = [Reachability reachabilityForInternetConnection];
+//	[self.internetReach startNotifier];
+//	[self updateWithReachability: self.internetReach];
+//    
+//    self.wifiReach = [Reachability reachabilityForLocalWiFi];
+//	[self.wifiReach startNotifier];
+//	[self updateWithReachability: self.wifiReach];
+}
+
+- (void) reachabilityChanged: (NSNotification* )note
+{
+	Reachability* curReach = [note object];
+	NSParameterAssert([curReach isKindOfClass: [Reachability class]]);
+	[self updateWithReachability: curReach];
+}
+
+- (void) updateWithReachability: (Reachability*) curReach
+{
+    if(curReach == self.hostReach)
+	{
+        _hostIsReachable = [curReach currentReachabilityStatus] != NotReachable;
+        _connectionRequired = [curReach connectionRequired];
+    }
+    
+//	if(curReach == self.internetReach)
+//	{
+//		[self configureTextField: internetConnectionStatusField imageView: internetConnectionIcon reachability: curReach];
+//	}
+    
+//	if(curReach == self.wifiReach)
+//	{
+//		[self configureTextField: localWiFiConnectionStatusField imageView: localWiFiConnectionIcon reachability: curReach];
+//	}
+}
+
 
 @end

@@ -126,6 +126,8 @@
 		5EC255F81701054A0045AB99 /* DPCategoryView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5EC255F71701054A0045AB99 /* DPCategoryView.xib */; };
 		5EC6FE311703AC07009910CF /* 3D_logo_horizontal_el.png in Resources */ = {isa = PBXBuildFile; fileRef = 5EC6FE2F1703AC07009910CF /* 3D_logo_horizontal_el.png */; };
 		5EC6FE321703AC07009910CF /* 3D_logo_horizontal_en.png in Resources */ = {isa = PBXBuildFile; fileRef = 5EC6FE301703AC07009910CF /* 3D_logo_horizontal_en.png */; };
+		5EFCCCFA1709BE6C00C1FE88 /* DPDataCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EFCCCF91709BE6C00C1FE88 /* DPDataCache.m */; };
+		5EFCCCFD1709C37100C1FE88 /* DPDataElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EFCCCFC1709C37100C1FE88 /* DPDataElement.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -305,6 +307,10 @@
 		5EC255F917010D610045AB99 /* DPScrollableViewDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DPScrollableViewDelegate.h; sourceTree = "<group>"; };
 		5EC6FE2F1703AC07009910CF /* 3D_logo_horizontal_el.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 3D_logo_horizontal_el.png; sourceTree = "<group>"; };
 		5EC6FE301703AC07009910CF /* 3D_logo_horizontal_en.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 3D_logo_horizontal_en.png; sourceTree = "<group>"; };
+		5EFCCCF81709BE6C00C1FE88 /* DPDataCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPDataCache.h; sourceTree = "<group>"; };
+		5EFCCCF91709BE6C00C1FE88 /* DPDataCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPDataCache.m; sourceTree = "<group>"; };
+		5EFCCCFB1709C37100C1FE88 /* DPDataElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPDataElement.h; sourceTree = "<group>"; };
+		5EFCCCFC1709C37100C1FE88 /* DPDataElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPDataElement.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -664,10 +670,14 @@
 				5EC255E2170090A10045AB99 /* Article.m */,
 				5EC255E3170090A10045AB99 /* ArticleParser.h */,
 				5EC255E4170090A10045AB99 /* ArticleParser.m */,
-				5EC255EA1700AECF0045AB99 /* DPDataLoader.h */,
-				5EC255EB1700AECF0045AB99 /* DPDataLoader.m */,
 				5E36052F1708C91C00DB7B20 /* DPArticlesLoader.h */,
 				5E3605301708C91C00DB7B20 /* DPArticlesLoader.m */,
+				5EC255EA1700AECF0045AB99 /* DPDataLoader.h */,
+				5EC255EB1700AECF0045AB99 /* DPDataLoader.m */,
+				5EFCCCF81709BE6C00C1FE88 /* DPDataCache.h */,
+				5EFCCCF91709BE6C00C1FE88 /* DPDataCache.m */,
+				5EFCCCFB1709C37100C1FE88 /* DPDataElement.h */,
+				5EFCCCFC1709C37100C1FE88 /* DPDataElement.m */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -864,6 +874,8 @@
 				5E3605291708B5B600DB7B20 /* DPFloatingViewController.m in Sources */,
 				5E36052E1708C83400DB7B20 /* DPAdsViewController.m in Sources */,
 				5E3605311708C91C00DB7B20 /* DPArticlesLoader.m in Sources */,
+				5EFCCCFA1709BE6C00C1FE88 /* DPDataCache.m in Sources */,
+				5EFCCCFD1709C37100C1FE88 /* DPDataElement.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

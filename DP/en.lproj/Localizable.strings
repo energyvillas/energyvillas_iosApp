@@ -12,6 +12,9 @@
 "URL_LOAD_FAILED_TITLE"="Connection Failed";
 "URL_LOAD_FAILED_MESSAGE"="Data retrieval failed! Please try again later...";
 
+"INFO_MSG_TITLE"="Information";
+"NO_DATA_FOUND_MESSAGE"="No data available! Please try again later...";
+
 "IMAGE_RESET_MENU"="Reset";
 
 

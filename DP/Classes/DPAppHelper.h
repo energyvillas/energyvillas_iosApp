@@ -13,6 +13,9 @@
 @property (strong, nonatomic) NSArray *freeDetails;
 @property (strong, nonatomic) NSArray *freeBuyContent;
 
+@property (readonly) BOOL connectionRequired;
+@property (readonly) BOOL hostIsReachable;
+
 //===========
 
 + (DPAppHelper *)sharedInstance;

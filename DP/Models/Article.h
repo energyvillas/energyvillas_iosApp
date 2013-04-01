@@ -7,8 +7,10 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "DPDataElement.h"
+#import "DPDataCache.h"
 
-#define encArticleId @"ID"
+//#define encArticleId @"ID"
 #define encArticleTitle @"Title"
 #define encArticleImage @"Image"
 #define encArticleBody @"Body"
@@ -19,9 +21,9 @@
 #define encArticleImageData @"ImageData"
 
 
-@interface Article: NSObject <NSCoding>
+@interface Article: DPDataElement 
     
-@property (nonatomic, strong) NSString *articleId;
+//@property (nonatomic, strong) NSString *articleId;
 @property (nonatomic, strong) NSString *title;
 @property (nonatomic, strong) NSString *image;
 @property (nonatomic, strong) NSString *body;
@@ -47,16 +49,5 @@
 //==============================================================================
 
 
-@interface ArticleCache : NSObject
 
-@property (nonatomic, strong) NSMutableArray *articleList;
-
--(NSString *)archivePath;
--(void)archiveArticles;
--(void)unarchiveArticles;
--(id)initWithRetrieval;
--(BOOL)articleExists:(NSString *)aArticleId;
--(void)deleteArticle:(NSString *)aArticleId;
-
-@end
 

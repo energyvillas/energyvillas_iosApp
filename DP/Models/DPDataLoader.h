@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "ASIFormDataRequest.h"
+#import "DPDataCache.h"
 
 
 @class DPDataLoader;
@@ -40,7 +41,9 @@
 
 #pragma -
 #pragma "abstract" methods
+- (DPDataCache *) createDataCache;
 - (ASIFormDataRequest *) createAndPrepareRequest;
+- (NSArray *) parseResponse:(NSString *)response;
 
 @end
 
