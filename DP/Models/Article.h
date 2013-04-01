@@ -11,6 +11,7 @@
 #import "DPDataCache.h"
 
 //#define encArticleId @"ID"
+#define encArticleLang @"Lang"
 #define encArticleTitle @"Title"
 #define encArticleImage @"Image"
 #define encArticleBody @"Body"
@@ -24,6 +25,7 @@
 @interface Article: DPDataElement 
     
 //@property (nonatomic, strong) NSString *articleId;
+@property (strong, nonatomic) NSString *lang;
 @property (nonatomic, strong) NSString *title;
 @property (nonatomic, strong) NSString *image;
 @property (nonatomic, strong) NSString *body;
@@ -36,6 +38,7 @@
 -(void)encodeWithCoder:(NSCoder *)encoder;
 
 -(id)initWithValues:(NSString *)aId
+               lang:(NSString *)lang
               title:(NSString *)aTitle
               image:(NSString *)aImage
                body:(NSString *)Body

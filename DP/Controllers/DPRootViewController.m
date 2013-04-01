@@ -174,10 +174,12 @@
 
         if (!self.coverFlowData) {
             NSMutableArray *data = [[NSMutableArray alloc] initWithCapacity:imgCount];
-
+            NSString *lang = [[NSLocale preferredLanguages] objectAtIndex:0];
+            
             for (int i=0; i < imgCount; i++) {
                 Article *article = [[Article alloc]
                                     initWithValues:[NSString stringWithFormat:@"%i", i]
+                                    lang:lang
                                     title:[NSString stringWithFormat:@"image %i", i]
                                     image:nil
                                     body:nil

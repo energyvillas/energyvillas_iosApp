@@ -128,6 +128,7 @@
 		5EC6FE321703AC07009910CF /* 3D_logo_horizontal_en.png in Resources */ = {isa = PBXBuildFile; fileRef = 5EC6FE301703AC07009910CF /* 3D_logo_horizontal_en.png */; };
 		5EFCCCFA1709BE6C00C1FE88 /* DPDataCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EFCCCF91709BE6C00C1FE88 /* DPDataCache.m */; };
 		5EFCCCFD1709C37100C1FE88 /* DPDataElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EFCCCFC1709C37100C1FE88 /* DPDataElement.m */; };
+		5EFCCD001709DECA00C1FE88 /* Banner.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EFCCCFF1709DECA00C1FE88 /* Banner.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -311,6 +312,8 @@
 		5EFCCCF91709BE6C00C1FE88 /* DPDataCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPDataCache.m; sourceTree = "<group>"; };
 		5EFCCCFB1709C37100C1FE88 /* DPDataElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPDataElement.h; sourceTree = "<group>"; };
 		5EFCCCFC1709C37100C1FE88 /* DPDataElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPDataElement.m; sourceTree = "<group>"; };
+		5EFCCCFE1709DECA00C1FE88 /* Banner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Banner.h; sourceTree = "<group>"; };
+		5EFCCCFF1709DECA00C1FE88 /* Banner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Banner.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -678,6 +681,8 @@
 				5EFCCCF91709BE6C00C1FE88 /* DPDataCache.m */,
 				5EFCCCFB1709C37100C1FE88 /* DPDataElement.h */,
 				5EFCCCFC1709C37100C1FE88 /* DPDataElement.m */,
+				5EFCCCFE1709DECA00C1FE88 /* Banner.h */,
+				5EFCCCFF1709DECA00C1FE88 /* Banner.m */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -876,6 +881,7 @@
 				5E3605311708C91C00DB7B20 /* DPArticlesLoader.m in Sources */,
 				5EFCCCFA1709BE6C00C1FE88 /* DPDataCache.m in Sources */,
 				5EFCCCFD1709C37100C1FE88 /* DPDataElement.m in Sources */,
+				5EFCCD001709DECA00C1FE88 /* Banner.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

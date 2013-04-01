@@ -10,12 +10,13 @@
 
 @implementation Article
 
-@synthesize title,url,body,image,publishDate,videofile,videolength,imageData;
+//@synthesize title,url,body,image,publishDate,videofile,videolength,imageData;
 
 
 -(void)encodeWithCoder:(NSCoder *)encoder{
     [super encodeWithCoder:encoder];
     
+	[encoder encodeObject:self.lang forKey:encArticleLang];
 	[encoder encodeObject:self.title forKey:encArticleTitle];
 	[encoder encodeObject:self.body forKey:encArticleBody];
 	[encoder encodeObject:self.image forKey:encArticleImage];
@@ -31,6 +32,7 @@
     
 	if (self) {
 
+		self.lang = [aDecoder decodeObjectForKey:encArticleLang];
 		self.title = [aDecoder decodeObjectForKey:encArticleTitle];
 		self.body = [aDecoder decodeObjectForKey:encArticleBody];
 		self.url = [aDecoder decodeObjectForKey:encArticleURL];
@@ -44,7 +46,8 @@
 	return self;
 }
 
-- (id)initWithValues:(NSString *)aId
+- (id) initWithValues:(NSString *)aId
+                 lang:(NSString *)aLang
               title:(NSString *)aTitle
               image:(NSString *)aImage
                body:(NSString *)aBody
@@ -56,6 +59,7 @@
     
 	if (self) {
 		self.key = aId;
+        self.lang = aLang;
 		self.title = aTitle;
 		self.image = aImage;
 		self.body = aBody;

@@ -17,6 +17,7 @@
 @property (nonatomic, strong) NSMutableArray *articles;
 @property (nonatomic)  BOOL storingCharacters;
 @property (nonatomic, strong) NSString *articleId;
+@property (nonatomic, strong) NSString *langcode;
 @property (nonatomic, strong) NSString *title;
 @property (nonatomic, strong) NSString *image;
 @property (nonatomic, strong) NSString *body;

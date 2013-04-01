@@ -13,7 +13,8 @@
 
 @implementation ArticleParser
 
-@synthesize currentString,responseCode,articles,storingCharacters,title,url,body,image,publishDate,articleId,articlevideo,articlevideolength;
+@synthesize currentString,responseCode,articles,storingCharacters,langcode,
+            title,url,body,image,publishDate,articleId,articlevideo,articlevideolength;
 
 /*
  to parse a XML file from path. 
@@ -42,6 +43,7 @@ static NSString *kName_responseCode = @"responseCode";
 static NSString *kName_articles = @"articles";
 static NSString *kName_article = @"article";
 static NSString *kName_articleid = @"articleid";
+static NSString *kName_langcode = @"langcode";
 static NSString *kName_title = @"title";
 static NSString *kName_url = @"url";
 static NSString *kName_image = @"image";
@@ -78,6 +80,10 @@ static NSString *kName_videolength = @"videolength";
 		self.storingCharacters = YES;
 		
 	}else if ([elementName isEqualToString:kName_articleid]) {
+		[self.currentString setString:@""];
+		self.storingCharacters = YES;
+		
+	}else if ([elementName isEqualToString:kName_langcode]) {
 		[self.currentString setString:@""];
 		self.storingCharacters = YES;
 		
@@ -140,13 +146,14 @@ static NSString *kName_videolength = @"videolength";
 	}else if ([elementName isEqualToString:kName_article]) {
 		Article *article  = [[Article alloc] init];
 		article.key=self.articleId;
-		article.title=self.title;
-		article.body=self.body;
-		article.image=self.image;
-		article.url=self.url;
-		article.publishDate=self.publishDate;
-		article.videofile=self.articlevideo;
-		article.videolength=self.articlevideolength;
+        article.lang=self.langcode;
+		article.title = self.title == nil || [self.title compare:@""] == NSOrderedSame ? nil : self.title;
+		article.body = self.body == nil || [self.body compare:@""] == NSOrderedSame ? nil : self.body;
+		article.image = self.image == nil || [self.image compare:@""] == NSOrderedSame ? nil : self.image;
+		article.url = self.url == nil || [self.url compare:@""] == NSOrderedSame ? nil : self.url;
+		article.publishDate = self.publishDate == nil || [self.publishDate compare:@""] == NSOrderedSame ? nil : self.publishDate;
+		article.videofile = self.articlevideo == nil || [self.articlevideo compare:@""] == NSOrderedSame ? nil : self.articlevideo;
+		article.videolength = self.articlevideolength == nil || [self.articlevideolength compare:@""] == NSOrderedSame ? nil : self.articlevideolength;
 		[self.articles insertObject:article atIndex:index];
 		index=index+1;
 		article=nil;
@@ -162,6 +169,8 @@ static NSString *kName_videolength = @"videolength";
 		self.publishDate=[[NSString alloc] initWithString: aElementValue];
 	}else if ([elementName isEqualToString:kName_articleid]) {
 		self.articleId=[[NSString alloc] initWithString: aElementValue];
+	}else if ([elementName isEqualToString:kName_langcode]) {
+		self.langcode=[[NSString alloc] initWithString: aElementValue];
 	}else if ([elementName isEqualToString:kName_videourl]) {
 		self.articlevideo=[[NSString alloc] initWithString: aElementValue];
 	}else if ([elementName isEqualToString:kName_videolength]) {
@@ -195,7 +204,7 @@ parseErrorOccurred:(NSError *)parseError {
 	NSLog(@"url: %@",self.url);
 	
 	for (Article* article in articles) {
-		NSLog(@"ROW id=%@ title=%@ image=%@ url=%@", article.key, article.title, article.image, article.url);
+		NSLog(@"ROW id=%@ lang=%@ title=%@ image=%@ url=%@", article.key, article.lang, article.title, article.image, article.url);
 	}
 	
 }
@@ -211,6 +220,7 @@ parseErrorOccurred:(NSError *)parseError {
 	self.articlevideo = nil;
 	self.articlevideolength = nil;
 	self.articleId = nil;
+    self.langcode = nil;
 }
 
 
