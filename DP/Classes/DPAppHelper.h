@@ -10,14 +10,18 @@
 
 @interface DPAppHelper : NSObject
 
-@property (strong, nonatomic) NSArray *freeDetails;
-@property (strong, nonatomic) NSArray *freeBuyContent;
-
 @property (readonly) BOOL connectionRequired;
 @property (readonly) BOOL hostIsReachable;
+
+@property (strong, nonatomic) NSString *currentLang;
 
 //===========
 
 + (DPAppHelper *)sharedInstance;
+
+- (NSArray *) freeDetailsFor:(NSString *)lang;
+- (NSArray *) freeBuyContentFor:(NSString *)lang;
+- (NSArray *) freeCoverFlowFor:(NSString *)lang;
+- (NSArray *) paidArticlesOfCategory:(int)aId lang:(NSString *)lang;
 
 @end

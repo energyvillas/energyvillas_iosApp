@@ -18,9 +18,10 @@
 
 @interface DPHtmlContentViewController ()
 
+@property (strong, nonatomic) NSURL *url;
 @property (strong, nonatomic) NSString *htmlData;
-//@property (strong, nonatomic) UIActivityIndicatorView *busyIndicator;
-//@property (strong, nonatomic) NSOperationQueue *queue;
+@property (strong, nonatomic) NSString *mimetype;
+@property (strong, nonatomic) NSData *mimeData;
 @property (strong, nonatomic) DPArticlesLoader *articlesLoader;
 @property int categoryID;
 @property (strong, nonatomic) NSString *lang;
@@ -37,6 +38,23 @@
     if (self) {
         // Custom initialization
     }
+    return self;
+}
+
+- (id) initWithUrl:(NSURL *)aUrl {
+    if (self = [super init]) {
+        self.url = aUrl;
+    }
+    
+    return self;
+}
+
+- (id) initWithData:(NSData *)aData mimetype:(NSString *)aMimeType {
+    if (self = [super init]) {
+        self.mimeData = aData;
+        self.mimetype = aMimeType;
+    }
+    
     return self;
 }
 
@@ -61,14 +79,26 @@
     return self;
 }
 
-- (void) doInitWebView {
-    NSLog(@"%@", self.htmlData);
+- (void) doInitWebView {    
+    CGRect aframe = CGRectMake(0, 0,
+                               self.view.superview.frame.size.width,
+                               self.view.superview.frame.size.height);
     
-    CGRect aframe = CGRectMake(0, 0, self.view.superview.frame.size.width, self.view.superview.frame.size.height);
     UIWebView *webView = [[UIWebView alloc] initWithFrame:aframe];
     webView.contentMode = UIViewContentModeScaleAspectFit;
     webView.userInteractionEnabled = YES;
-    [webView loadHTMLString:self.htmlData baseURL:nil];
+    if (self.url) {
+        NSURLRequest * request = [[NSURLRequest alloc] initWithURL:self.url];
+        [webView loadRequest:request];
+    } else if (self.htmlData)
+        [webView loadHTMLString:self.htmlData
+                        baseURL:nil];
+    else if (self.mimeData)
+        [webView loadData:self.mimeData
+                 MIMEType:self.mimetype
+         textEncodingName:@"utf-8"
+                  baseURL:nil];
+    
 //    [self addGestureRecognizersTo:webView];
     [self.view addSubview:webView];
 }
@@ -102,7 +132,11 @@
 }
 
 - (void) viewWillAppear:(BOOL)animated {
-    if (self.htmlData)
+    if (self.url)
+        [self doInitWebView];
+    else if (self.htmlData)
+        [self doInitWebView];
+    else if (self.mimeData)
         [self doInitWebView];
     
     [super viewWillAppear:animated];

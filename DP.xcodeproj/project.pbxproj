@@ -8,12 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		5E3605021707154E00DB7B20 /* DPAppHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E3605011707154E00DB7B20 /* DPAppHelper.m */; };
-		5E360508170730E100DB7B20 /* free_detimage_100_el.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 5E360504170730E100DB7B20 /* free_detimage_100_el.jpg */; };
-		5E360509170730E100DB7B20 /* free_detimage_100_en.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 5E360505170730E100DB7B20 /* free_detimage_100_en.jpg */; };
-		5E36050A170730E100DB7B20 /* free_detimage_101_el.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 5E360506170730E100DB7B20 /* free_detimage_101_el.jpg */; };
-		5E36050B170730E100DB7B20 /* free_detimage_101_en.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 5E360507170730E100DB7B20 /* free_detimage_101_en.jpg */; };
-		5E36050E1707825E00DB7B20 /* free_detimage_102_el.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 5E36050C1707825E00DB7B20 /* free_detimage_102_el.jpg */; };
-		5E36050F1707825E00DB7B20 /* free_detimage_102_en.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 5E36050D1707825E00DB7B20 /* free_detimage_102_en.jpg */; };
 		5E3605121707A72400DB7B20 /* DPBuyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E3605111707A72400DB7B20 /* DPBuyViewController.m */; };
 		5E3605141707A74300DB7B20 /* DPBuyView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5E3605131707A74300DB7B20 /* DPBuyView.xib */; };
 		5E3605171707BDE600DB7B20 /* UIApplication+ScreenDimensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E3605161707BDD900DB7B20 /* UIApplication+ScreenDimensions.m */; };
@@ -134,17 +128,40 @@
 		5EFCCD091709F10700C1FE88 /* Category.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EFCCD081709F10700C1FE88 /* Category.m */; };
 		5EFCCD0C1709F2EE00C1FE88 /* CategoryParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EFCCD0B1709F2ED00C1FE88 /* CategoryParser.m */; };
 		5EFCCD0F1709F30700C1FE88 /* DPCategoryLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EFCCD0E1709F30700C1FE88 /* DPCategoryLoader.m */; };
+		5EFCCD13170ACBC200C1FE88 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 5EFCCD12170ACBC200C1FE88 /* Icon.png */; };
+		5EFCCD15170ACBD600C1FE88 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5EFCCD14170ACBD600C1FE88 /* Icon@2x.png */; };
+		5EFCCD17170ACCDB00C1FE88 /* Icon-72.png in Resources */ = {isa = PBXBuildFile; fileRef = 5EFCCD16170ACCDB00C1FE88 /* Icon-72.png */; };
+		5EFCCD19170ACCE200C1FE88 /* Icon-72@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5EFCCD18170ACCE200C1FE88 /* Icon-72@2x.png */; };
+		5EFCCD1B170ADF0E00C1FE88 /* free-details.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5EFCCD1A170ADF0E00C1FE88 /* free-details.plist */; };
+		5EFCCD25170AEEF600C1FE88 /* Greek Island Houses.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 5EFCCD1C170AEEF600C1FE88 /* Greek Island Houses.jpg */; };
+		5EFCCD26170AEEF600C1FE88 /* Loft Houses.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 5EFCCD1D170AEEF600C1FE88 /* Loft Houses.jpg */; };
+		5EFCCD27170AEEF600C1FE88 /* Smart Houses.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 5EFCCD1E170AEEF600C1FE88 /* Smart Houses.jpg */; };
+		5EFCCD28170AEEF600C1FE88 /* Έξυπνες Κατοικίες.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 5EFCCD1F170AEEF600C1FE88 /* Έξυπνες Κατοικίες.jpg */; };
+		5EFCCD29170AEEF600C1FE88 /* Κατοικίες Container.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 5EFCCD20170AEEF600C1FE88 /* Κατοικίες Container.jpg */; };
+		5EFCCD2A170AEEF600C1FE88 /* Κατοικίες Country.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 5EFCCD21170AEEF600C1FE88 /* Κατοικίες Country.jpg */; };
+		5EFCCD2B170AEEF600C1FE88 /* Κατοικίες Loft.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 5EFCCD22170AEEF600C1FE88 /* Κατοικίες Loft.jpg */; };
+		5EFCCD2C170AEEF600C1FE88 /* Νησιώτικες Κατοικίες.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 5EFCCD23170AEEF600C1FE88 /* Νησιώτικες Κατοικίες.jpg */; };
+		5EFCCD2D170AEEF600C1FE88 /* Φιλανδικές Κατοικίες.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 5EFCCD24170AEEF600C1FE88 /* Φιλανδικές Κατοικίες.jpg */; };
+		5EFCCD31170AEF0500C1FE88 /* Container Houses.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 5EFCCD2E170AEF0500C1FE88 /* Container Houses.jpg */; };
+		5EFCCD32170AEF0500C1FE88 /* Country Houses.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 5EFCCD2F170AEF0500C1FE88 /* Country Houses.jpg */; };
+		5EFCCD33170AEF0500C1FE88 /* Finnish Houses.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 5EFCCD30170AEF0500C1FE88 /* Finnish Houses.jpg */; };
+		5EFCCD35170B18BC00C1FE88 /* free-Buy.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5EFCCD34170B18BC00C1FE88 /* free-Buy.plist */; };
+		5EFCCD37170B26D300C1FE88 /* free-CoverFlow.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5EFCCD36170B26D200C1FE88 /* free-CoverFlow.plist */; };
+		5EFCCD39170B469900C1FE88 /* paid-MainMenu.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5EFCCD38170B469900C1FE88 /* paid-MainMenu.plist */; };
+		5EFCCD3B170B48DC00C1FE88 /* paid-Islands.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5EFCCD3A170B48DC00C1FE88 /* paid-Islands.plist */; };
+		5EFCCD3D170B4BF400C1FE88 /* paid-Exclusive.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5EFCCD3C170B4BF400C1FE88 /* paid-Exclusive.plist */; };
+		5EFCCD3F170B520100C1FE88 /* rootCategories.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5EFCCD3E170B520100C1FE88 /* rootCategories.plist */; };
+		5EFCCD46170B92B300C1FE88 /* Aegean house 82 τ.μ..jpg in Resources */ = {isa = PBXBuildFile; fileRef = 5EFCCD40170B92B300C1FE88 /* Aegean house 82 τ.μ..jpg */; };
+		5EFCCD47170B92B300C1FE88 /* Cycladic house 90τ.μ. .jpg in Resources */ = {isa = PBXBuildFile; fileRef = 5EFCCD41170B92B300C1FE88 /* Cycladic house 90τ.μ. .jpg */; };
+		5EFCCD48170B92B300C1FE88 /* Ionian house 90 τ.μ..jpg in Resources */ = {isa = PBXBuildFile; fileRef = 5EFCCD42170B92B300C1FE88 /* Ionian house 90 τ.μ..jpg */; };
+		5EFCCD49170B92B300C1FE88 /* Αγαιοπελαγίτικη κατοικία 82 τ.μ..jpg in Resources */ = {isa = PBXBuildFile; fileRef = 5EFCCD43170B92B300C1FE88 /* Αγαιοπελαγίτικη κατοικία 82 τ.μ..jpg */; };
+		5EFCCD4A170B92B300C1FE88 /* Κατοικία Ιονίων νήσων  90τ.μ..jpg in Resources */ = {isa = PBXBuildFile; fileRef = 5EFCCD44170B92B300C1FE88 /* Κατοικία Ιονίων νήσων  90τ.μ..jpg */; };
+		5EFCCD4B170B92B300C1FE88 /* Κυκλαδίτικη κατοικία 90 τ.μ..jpg in Resources */ = {isa = PBXBuildFile; fileRef = 5EFCCD45170B92B300C1FE88 /* Κυκλαδίτικη κατοικία 90 τ.μ..jpg */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		5E3605001707154E00DB7B20 /* DPAppHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPAppHelper.h; sourceTree = "<group>"; };
 		5E3605011707154E00DB7B20 /* DPAppHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPAppHelper.m; sourceTree = "<group>"; };
-		5E360504170730E100DB7B20 /* free_detimage_100_el.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = free_detimage_100_el.jpg; sourceTree = "<group>"; };
-		5E360505170730E100DB7B20 /* free_detimage_100_en.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = free_detimage_100_en.jpg; sourceTree = "<group>"; };
-		5E360506170730E100DB7B20 /* free_detimage_101_el.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = free_detimage_101_el.jpg; sourceTree = "<group>"; };
-		5E360507170730E100DB7B20 /* free_detimage_101_en.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = free_detimage_101_en.jpg; sourceTree = "<group>"; };
-		5E36050C1707825E00DB7B20 /* free_detimage_102_el.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = free_detimage_102_el.jpg; sourceTree = "<group>"; };
-		5E36050D1707825E00DB7B20 /* free_detimage_102_en.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = free_detimage_102_en.jpg; sourceTree = "<group>"; };
 		5E3605101707A72400DB7B20 /* DPBuyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPBuyViewController.h; sourceTree = "<group>"; };
 		5E3605111707A72400DB7B20 /* DPBuyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPBuyViewController.m; sourceTree = "<group>"; };
 		5E3605131707A74300DB7B20 /* DPBuyView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DPBuyView.xib; sourceTree = "<group>"; };
@@ -329,6 +346,35 @@
 		5EFCCD0B1709F2ED00C1FE88 /* CategoryParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CategoryParser.m; sourceTree = "<group>"; };
 		5EFCCD0D1709F30600C1FE88 /* DPCategoryLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPCategoryLoader.h; sourceTree = "<group>"; };
 		5EFCCD0E1709F30700C1FE88 /* DPCategoryLoader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPCategoryLoader.m; sourceTree = "<group>"; };
+		5EFCCD12170ACBC200C1FE88 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Icon.png; path = ../Icon.png; sourceTree = "<group>"; };
+		5EFCCD14170ACBD600C1FE88 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon@2x.png"; path = "../Icon@2x.png"; sourceTree = "<group>"; };
+		5EFCCD16170ACCDB00C1FE88 /* Icon-72.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-72.png"; path = "../Icon-72.png"; sourceTree = "<group>"; };
+		5EFCCD18170ACCE200C1FE88 /* Icon-72@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-72@2x.png"; path = "../Icon-72@2x.png"; sourceTree = "<group>"; };
+		5EFCCD1A170ADF0E00C1FE88 /* free-details.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "free-details.plist"; sourceTree = "<group>"; };
+		5EFCCD1C170AEEF600C1FE88 /* Greek Island Houses.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "Greek Island Houses.jpg"; sourceTree = "<group>"; };
+		5EFCCD1D170AEEF600C1FE88 /* Loft Houses.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "Loft Houses.jpg"; sourceTree = "<group>"; };
+		5EFCCD1E170AEEF600C1FE88 /* Smart Houses.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "Smart Houses.jpg"; sourceTree = "<group>"; };
+		5EFCCD1F170AEEF600C1FE88 /* Έξυπνες Κατοικίες.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "Έξυπνες Κατοικίες.jpg"; sourceTree = "<group>"; };
+		5EFCCD20170AEEF600C1FE88 /* Κατοικίες Container.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "Κατοικίες Container.jpg"; sourceTree = "<group>"; };
+		5EFCCD21170AEEF600C1FE88 /* Κατοικίες Country.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "Κατοικίες Country.jpg"; sourceTree = "<group>"; };
+		5EFCCD22170AEEF600C1FE88 /* Κατοικίες Loft.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "Κατοικίες Loft.jpg"; sourceTree = "<group>"; };
+		5EFCCD23170AEEF600C1FE88 /* Νησιώτικες Κατοικίες.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "Νησιώτικες Κατοικίες.jpg"; sourceTree = "<group>"; };
+		5EFCCD24170AEEF600C1FE88 /* Φιλανδικές Κατοικίες.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "Φιλανδικές Κατοικίες.jpg"; sourceTree = "<group>"; };
+		5EFCCD2E170AEF0500C1FE88 /* Container Houses.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "Container Houses.jpg"; sourceTree = "<group>"; };
+		5EFCCD2F170AEF0500C1FE88 /* Country Houses.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "Country Houses.jpg"; sourceTree = "<group>"; };
+		5EFCCD30170AEF0500C1FE88 /* Finnish Houses.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "Finnish Houses.jpg"; sourceTree = "<group>"; };
+		5EFCCD34170B18BC00C1FE88 /* free-Buy.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "free-Buy.plist"; sourceTree = "<group>"; };
+		5EFCCD36170B26D200C1FE88 /* free-CoverFlow.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "free-CoverFlow.plist"; sourceTree = "<group>"; };
+		5EFCCD38170B469900C1FE88 /* paid-MainMenu.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "paid-MainMenu.plist"; sourceTree = "<group>"; };
+		5EFCCD3A170B48DC00C1FE88 /* paid-Islands.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "paid-Islands.plist"; sourceTree = "<group>"; };
+		5EFCCD3C170B4BF400C1FE88 /* paid-Exclusive.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "paid-Exclusive.plist"; sourceTree = "<group>"; };
+		5EFCCD3E170B520100C1FE88 /* rootCategories.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = rootCategories.plist; sourceTree = "<group>"; };
+		5EFCCD40170B92B300C1FE88 /* Aegean house 82 τ.μ..jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "Aegean house 82 τ.μ..jpg"; sourceTree = "<group>"; };
+		5EFCCD41170B92B300C1FE88 /* Cycladic house 90τ.μ. .jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "Cycladic house 90τ.μ. .jpg"; sourceTree = "<group>"; };
+		5EFCCD42170B92B300C1FE88 /* Ionian house 90 τ.μ..jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "Ionian house 90 τ.μ..jpg"; sourceTree = "<group>"; };
+		5EFCCD43170B92B300C1FE88 /* Αγαιοπελαγίτικη κατοικία 82 τ.μ..jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "Αγαιοπελαγίτικη κατοικία 82 τ.μ..jpg"; sourceTree = "<group>"; };
+		5EFCCD44170B92B300C1FE88 /* Κατοικία Ιονίων νήσων  90τ.μ..jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "Κατοικία Ιονίων νήσων  90τ.μ..jpg"; sourceTree = "<group>"; };
+		5EFCCD45170B92B300C1FE88 /* Κυκλαδίτικη κατοικία 90 τ.μ..jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "Κυκλαδίτικη κατοικία 90 τ.μ..jpg"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -355,12 +401,24 @@
 		5E360503170730E100DB7B20 /* FreeDetails */ = {
 			isa = PBXGroup;
 			children = (
-				5E360504170730E100DB7B20 /* free_detimage_100_el.jpg */,
-				5E360505170730E100DB7B20 /* free_detimage_100_en.jpg */,
-				5E360506170730E100DB7B20 /* free_detimage_101_el.jpg */,
-				5E360507170730E100DB7B20 /* free_detimage_101_en.jpg */,
-				5E36050C1707825E00DB7B20 /* free_detimage_102_el.jpg */,
-				5E36050D1707825E00DB7B20 /* free_detimage_102_en.jpg */,
+				5EFCCD1E170AEEF600C1FE88 /* Smart Houses.jpg */,
+				5EFCCD1D170AEEF600C1FE88 /* Loft Houses.jpg */,
+				5EFCCD30170AEF0500C1FE88 /* Finnish Houses.jpg */,
+				5EFCCD1C170AEEF600C1FE88 /* Greek Island Houses.jpg */,
+				5EFCCD2F170AEF0500C1FE88 /* Country Houses.jpg */,
+				5EFCCD2E170AEF0500C1FE88 /* Container Houses.jpg */,
+				5EFCCD41170B92B300C1FE88 /* Cycladic house 90τ.μ. .jpg */,
+				5EFCCD40170B92B300C1FE88 /* Aegean house 82 τ.μ..jpg */,
+				5EFCCD42170B92B300C1FE88 /* Ionian house 90 τ.μ..jpg */,
+				5EFCCD1F170AEEF600C1FE88 /* Έξυπνες Κατοικίες.jpg */,
+				5EFCCD22170AEEF600C1FE88 /* Κατοικίες Loft.jpg */,
+				5EFCCD24170AEEF600C1FE88 /* Φιλανδικές Κατοικίες.jpg */,
+				5EFCCD23170AEEF600C1FE88 /* Νησιώτικες Κατοικίες.jpg */,
+				5EFCCD21170AEEF600C1FE88 /* Κατοικίες Country.jpg */,
+				5EFCCD20170AEEF600C1FE88 /* Κατοικίες Container.jpg */,
+				5EFCCD45170B92B300C1FE88 /* Κυκλαδίτικη κατοικία 90 τ.μ..jpg */,
+				5EFCCD43170B92B300C1FE88 /* Αγαιοπελαγίτικη κατοικία 82 τ.μ..jpg */,
+				5EFCCD44170B92B300C1FE88 /* Κατοικία Ιονίων νήσων  90τ.μ..jpg */,
 			);
 			path = FreeDetails;
 			sourceTree = "<group>";
@@ -447,6 +505,10 @@
 				5E71A3C016F9973500E7AFF9 /* InfoPlist.strings */,
 				5EC255D416FF95040045AB99 /* Localizable.strings */,
 				5E71A3C316F9973500E7AFF9 /* main.m */,
+				5EFCCD12170ACBC200C1FE88 /* Icon.png */,
+				5EFCCD14170ACBD600C1FE88 /* Icon@2x.png */,
+				5EFCCD18170ACCE200C1FE88 /* Icon-72@2x.png */,
+				5EFCCD16170ACCDB00C1FE88 /* Icon-72.png */,
 				5E71A3C516F9973500E7AFF9 /* DP-Prefix.pch */,
 				5E71A3C916F9973500E7AFF9 /* Default.png */,
 				5E71A3CB16F9973500E7AFF9 /* Default@2x.png */,
@@ -570,6 +632,13 @@
 				5EC255D716FFA4170045AB99 /* logosmall.png */,
 				5E36051F1708438F00DB7B20 /* close.png */,
 				5E3605201708438F00DB7B20 /* close@2x.png */,
+				5EFCCD1A170ADF0E00C1FE88 /* free-details.plist */,
+				5EFCCD34170B18BC00C1FE88 /* free-Buy.plist */,
+				5EFCCD36170B26D200C1FE88 /* free-CoverFlow.plist */,
+				5EFCCD38170B469900C1FE88 /* paid-MainMenu.plist */,
+				5EFCCD3A170B48DC00C1FE88 /* paid-Islands.plist */,
+				5EFCCD3C170B4BF400C1FE88 /* paid-Exclusive.plist */,
+				5EFCCD3E170B520100C1FE88 /* rootCategories.plist */,
 				5EC6FE20170378FE009910CF /* logo */,
 				5E360503170730E100DB7B20 /* FreeDetails */,
 				5E71A40016F9B5F900E7AFF9 /* CoverImages */,
@@ -838,16 +907,39 @@
 				5E4E40971703AFDD00364854 /* 001-en.jpg in Resources */,
 				5E4E40981703AFDD00364854 /* 002-el.jpg in Resources */,
 				5E4E40991703AFDD00364854 /* 002-en.jpg in Resources */,
-				5E360508170730E100DB7B20 /* free_detimage_100_el.jpg in Resources */,
-				5E360509170730E100DB7B20 /* free_detimage_100_en.jpg in Resources */,
-				5E36050A170730E100DB7B20 /* free_detimage_101_el.jpg in Resources */,
-				5E36050B170730E100DB7B20 /* free_detimage_101_en.jpg in Resources */,
-				5E36050E1707825E00DB7B20 /* free_detimage_102_el.jpg in Resources */,
-				5E36050F1707825E00DB7B20 /* free_detimage_102_en.jpg in Resources */,
 				5E3605141707A74300DB7B20 /* DPBuyView.xib in Resources */,
 				5E3605211708438F00DB7B20 /* close.png in Resources */,
 				5E3605221708438F00DB7B20 /* close@2x.png in Resources */,
 				5E36052B1708B5E300DB7B20 /* DPFloatingView.xib in Resources */,
+				5EFCCD13170ACBC200C1FE88 /* Icon.png in Resources */,
+				5EFCCD15170ACBD600C1FE88 /* Icon@2x.png in Resources */,
+				5EFCCD17170ACCDB00C1FE88 /* Icon-72.png in Resources */,
+				5EFCCD19170ACCE200C1FE88 /* Icon-72@2x.png in Resources */,
+				5EFCCD1B170ADF0E00C1FE88 /* free-details.plist in Resources */,
+				5EFCCD25170AEEF600C1FE88 /* Greek Island Houses.jpg in Resources */,
+				5EFCCD26170AEEF600C1FE88 /* Loft Houses.jpg in Resources */,
+				5EFCCD27170AEEF600C1FE88 /* Smart Houses.jpg in Resources */,
+				5EFCCD28170AEEF600C1FE88 /* Έξυπνες Κατοικίες.jpg in Resources */,
+				5EFCCD29170AEEF600C1FE88 /* Κατοικίες Container.jpg in Resources */,
+				5EFCCD2A170AEEF600C1FE88 /* Κατοικίες Country.jpg in Resources */,
+				5EFCCD2B170AEEF600C1FE88 /* Κατοικίες Loft.jpg in Resources */,
+				5EFCCD2C170AEEF600C1FE88 /* Νησιώτικες Κατοικίες.jpg in Resources */,
+				5EFCCD2D170AEEF600C1FE88 /* Φιλανδικές Κατοικίες.jpg in Resources */,
+				5EFCCD31170AEF0500C1FE88 /* Container Houses.jpg in Resources */,
+				5EFCCD32170AEF0500C1FE88 /* Country Houses.jpg in Resources */,
+				5EFCCD33170AEF0500C1FE88 /* Finnish Houses.jpg in Resources */,
+				5EFCCD35170B18BC00C1FE88 /* free-Buy.plist in Resources */,
+				5EFCCD37170B26D300C1FE88 /* free-CoverFlow.plist in Resources */,
+				5EFCCD39170B469900C1FE88 /* paid-MainMenu.plist in Resources */,
+				5EFCCD3B170B48DC00C1FE88 /* paid-Islands.plist in Resources */,
+				5EFCCD3D170B4BF400C1FE88 /* paid-Exclusive.plist in Resources */,
+				5EFCCD3F170B520100C1FE88 /* rootCategories.plist in Resources */,
+				5EFCCD46170B92B300C1FE88 /* Aegean house 82 τ.μ..jpg in Resources */,
+				5EFCCD47170B92B300C1FE88 /* Cycladic house 90τ.μ. .jpg in Resources */,
+				5EFCCD48170B92B300C1FE88 /* Ionian house 90 τ.μ..jpg in Resources */,
+				5EFCCD49170B92B300C1FE88 /* Αγαιοπελαγίτικη κατοικία 82 τ.μ..jpg in Resources */,
+				5EFCCD4A170B92B300C1FE88 /* Κατοικία Ιονίων νήσων  90τ.μ..jpg in Resources */,
+				5EFCCD4B170B92B300C1FE88 /* Κυκλαδίτικη κατοικία 90 τ.μ..jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

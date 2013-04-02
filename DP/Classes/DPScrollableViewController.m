@@ -8,7 +8,7 @@
 
 #import "DPScrollableViewController.h"
 #import "../External/ImageHelper/ImageResizing.h"
-#import "../Classes/DPImageInfo.h"
+#import "Article.h"
 #import "DPTestViewController.h"
 #import "DPConstants.h"
 #include <Quartzcore/Quartzcore.h>
@@ -31,7 +31,7 @@
  }
 
 @synthesize scrollView, pageControl;
-@synthesize contentList, currentPage;
+@synthesize currentPage;
 @synthesize colCount, rowCount;
 
 @synthesize viewDelegate;
@@ -75,8 +75,8 @@
 	// Do any additional setup after loading the view.
 }
 
-- (void) viewDidDisappear:(BOOL)animated{
-    [super viewDidDisappear:animated];
+- (void) viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
     [self killUserTimer];
     [self killTimer];
 }
@@ -144,7 +144,7 @@
         if (!isRendered) {
             // content rendered for portrait...
             self.portraitRendered = [[NSMutableArray alloc] init];
-            for (unsigned i = 0; i < contentList.count; i++)
+            for (unsigned i = 0; i < self.contentList.count; i++)
             {
                 [self.portraitRendered addObject: [NSNull null]];
             }
@@ -154,7 +154,7 @@
         if (!isRendered) {
             // content rendered for portrait...
             self.landscapeRendered = [[NSMutableArray alloc] init];
-            for (unsigned i = 0; i < contentList.count; i++)
+            for (unsigned i = 0; i < self.contentList.count; i++)
             {
                 [self.landscapeRendered addObject: [NSNull null]];
             }
@@ -191,6 +191,9 @@
     int pageWidth = self.scrollView.frame.size.width;
     int colWidth = pageWidth / colCount;
     int rowHeight = self.scrollView.frame.size.height / rowCount;
+    
+    if (colWidth == 0 || rowHeight == 0) return;
+    
     int rowHeightResidue = (int)self.scrollView.frame.size.height % rowCount;
     int fixHeight = (rowHeightResidue > 0 ? 1 : 0);
     
@@ -212,7 +215,7 @@
             int indx = page * (rowCount * colCount) + r * colCount + c;
             fixWidth = (colWidthResidue > 0 ? 1 : 0);
 
-            if (indx < contentList.count) {
+            if (indx < self.contentList.count) {
                 if (contentRendered[indx] == [NSNull null]) {
                     CGRect r = CGRectMake(posX, posY, colWidth + fixWidth, rowHeight + fixHeight);
                     UIView *v = [[UIView alloc] initWithFrame:r];
@@ -221,7 +224,8 @@
                     r = CGRectMake(0, 0, colWidth + fixWidth, rowHeight + fixHeight);
                     UIImageView *iv = [[UIImageView alloc] initWithFrame: r];
                     iv.contentMode = UIViewContentModeScaleAspectFill; //UIViewContentModeScaleToFill; //UIViewContentModeScaleAspectFill; //UIViewContentModeScaleAspectFit;
-                    iv.image = ((DPImageInfo *)contentList[indx]).image;
+                    Article *article = self.contentList[indx];
+                    iv.image = [UIImage imageNamed:article.imageUrl];
                     iv.tag = indx;
                     UITapGestureRecognizer *tapper = [[UITapGestureRecognizer alloc]
                                                       initWithTarget:self action:@selector(handleTap:)];
@@ -236,8 +240,7 @@
                     else
                         lv.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:12];
                     lv.adjustsFontSizeToFitWidth = YES;
-                    NSString *dl = ((DPImageInfo *)contentList[indx]).displayNname;
-                    lv.text = dl ? dl : ((DPImageInfo *)contentList[indx]).name;
+                    lv.text = article.title;
                     lv.backgroundColor = [UIColor clearColor];
                     [lv sizeToFit];
                     CGRect b = lv.bounds;
@@ -279,10 +282,10 @@
     if (sender.state == UIGestureRecognizerStateEnded) {
         // handling code
         int indx = sender.view.tag;
-        DPImageInfo * ii = contentList[indx];
-        NSLog(@"Clicked image at index %i named %@", indx, ii.name);
+        Article * article = self.contentList[indx];
+        NSLog(@"Clicked image at index %i named %@", indx, article.title);
         
-        [self invokeViewDelegate:ii];
+        [self invokeViewDelegate:article];
         
         // navigation logic goes here. create and push a new view controller;
 //        DPTestViewController *vc = [[DPTestViewController alloc] init];

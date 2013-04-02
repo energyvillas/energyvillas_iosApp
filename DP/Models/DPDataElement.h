@@ -13,5 +13,6 @@
 @interface DPDataElement : NSObject <NSCoding>
 
 @property (strong, nonatomic) NSString *key;
+@property (readonly, getter = getID) int Id;
 
 @end

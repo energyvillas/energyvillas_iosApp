@@ -8,17 +8,52 @@
 
 #import "UINavContentViewController.h"
 #import "DPConstants.h"
+#import "DPAppHelper.h"
 
 @interface UINavContentViewController ()
 @end
 
-@implementation UINavContentViewController
+@implementation UINavContentViewController {
+    UISegmentedControl *_langSelControl;
+}
 
+
+- (void) hookToNotifications {
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(onNotified:)
+                                                 name:DPN_currentLangChanged
+                                               object:nil];
+}
+
+- (void) onNotified:(NSNotification *) notification
+{
+    // [notification name] should always be @"TestNotification"
+    // unless you use this method for observation of other notifications
+    // as well.
+    
+    if ([[notification name] isEqualToString:DPN_currentLangChanged]) {
+        NSLog (@"Successfully received the test notification!");
+        
+        [self doLocalize];
+    }
+}
+
+- (void) doLocalize {
+    
+}
+
+
+- (void) viewDidUnload {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+
+    [super viewDidUnload];
+}
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
+    [self hookToNotifications];
     [self setupNavBar];
 }
 
@@ -65,6 +100,49 @@
 }
 */
 
+- (UISegmentedControl*) langSelControl {
+    if (!_langSelControl) {
+//        _langSelControl = [[UISegmentedControl alloc] initWithItems:[NSArray arrayWithObjects:@"en",@"el", nil]];
+        _langSelControl = [[UISegmentedControl alloc] initWithItems:[NSArray arrayWithObjects:[UIImage imageNamed:@"flag-us.png"], [UIImage imageNamed:@"flag-gr.png"], nil]];
+        
+        [_langSelControl setSegmentedControlStyle:UISegmentedControlStyleBar];
+        [_langSelControl addTarget:self action:@selector(langSelControlPressed:) forControlEvents:UIControlEventValueChanged];
+        
+        if ([[DPAppHelper sharedInstance].currentLang isEqualToString:@"en"])
+            _langSelControl.selectedSegmentIndex = 0;
+        else if ([[DPAppHelper sharedInstance].currentLang isEqualToString:@"el"])
+            _langSelControl.selectedSegmentIndex = 1;
+
+        _langSelControl.autoresizingMask = UIViewAutoresizingFlexibleHeight ;
+        CGRect newFrame = CGRectMake(0, 0, 70, 30);
+//        newFrame.size.height = self.navigationController.navigationBar.frame.size.height * .8;
+        _langSelControl.frame = newFrame;
+         
+    }    
+    return _langSelControl;
+}
+
+- (void) langSelControlPressed:(id)sender {
+    if (sender == _langSelControl) {
+        int indx = _langSelControl.selectedSegmentIndex;
+        if (indx >= 0) {
+            for (int i=0; i<[_langSelControl.subviews count]; i++)
+            {
+                if ([_langSelControl.subviews[i] respondsToSelector:@selector(isSelected)]) {
+                    if ([_langSelControl.subviews[i] isSelected])
+                        [_langSelControl.subviews[i] setTintColor:[UIColor lightGrayColor]];
+                    else
+                        [_langSelControl.subviews[i] setTintColor:[UIColor blackColor]];
+                }
+            }
+            if (indx == 0)
+                [DPAppHelper sharedInstance].currentLang = @"en";
+            else if (indx == 1)
+                [DPAppHelper sharedInstance].currentLang = @"el";
+        }
+    }
+}
+
 - (void) setupNavBar {
     if (!self.navigationController) return;
     
@@ -75,7 +153,7 @@
     bool ischild = self.navigationController.viewControllers[0] != self &&
                     self.navigationController.topViewController == self;
     
-    NSString *lang = [[NSLocale preferredLanguages] objectAtIndex:0];
+    NSString *lang = [DPAppHelper sharedInstance].currentLang;
     NSString *imgName = [NSString stringWithFormat: @"3D_logo_horizontal_%@.png", lang];
     
     UIBarButtonItem *titleitem = [[UIBarButtonItem alloc]
@@ -114,18 +192,23 @@
                                                                       action:@selector(showView:)]],
 
                                                 [[UIBarButtonItem alloc]
-                                                 initWithCustomView: [self
-                                                                      createButtonWithImage:@"flag-gr.png"
-                                                                      tag:102
-                                                                      action:@selector(showView:)]],
-                                                
-
-                                                [[UIBarButtonItem alloc]
-                                                 initWithCustomView: [self
-                                                                      createButtonWithImage:@"flag-us.png"
-                                                                      tag:101
-                                                                      action:@selector(showView:)]]
+                                                 initWithCustomView: [self langSelControl]]
+ 
+//                                                [[UIBarButtonItem alloc]
+//                                                 initWithCustomView: [self
+//                                                                      createButtonWithImage:@"flag-gr.png"
+//                                                                      tag:102
+//                                                                      action:@selector(showView:)]],
+//                                                
+//
+//                                                [[UIBarButtonItem alloc]
+//                                                 initWithCustomView: [self
+//                                                                      createButtonWithImage:@"flag-us.png"
+//                                                                      tag:101
+//                                                                      action:@selector(showView:)]]
                                                 ];
+    
+    [self langSelControlPressed:_langSelControl];
 }
 
 - (UIButton *) createButtonWithImage:(NSString *)imgName

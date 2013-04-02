@@ -8,14 +8,14 @@
 
 #import <Foundation/Foundation.h>
 
-@interface DPImageInfo : NSObject
+@interface DPImageInfoxx : NSObject
 
 @property (strong, nonatomic) NSString *displayNname;
 @property (strong, nonatomic) NSString *name;
-@property (strong, nonatomic) UIImage *image;
+@property (strong, nonatomic, readonly, getter = getImage) UIImage *image;
 @property int tag;
 
-- (id) initWithName:(NSString *)aName image:(UIImage *)aImage;
-- (id) initWithName:(NSString *)aName image:(UIImage *)aImage displayName:(NSString *)aDisplayName;
+- (id) initWithName:(NSString *)aName
+        displayName:(NSString *)aDisplayName;
 
 @end

@@ -39,7 +39,7 @@ FOUNDATION_EXPORT NSString *const MySecondConstant;
 #define TAG_MM_SMART ((int)100)
 #define TAG_MM_LOFT ((int)101)
 #define TAG_MM_FINLAND ((int)102)
-#define TAG_MM_ISLAND ((int)103)
+#define TAG_MM_ISLAND ((int)55) // 103)
 #define TAG_MM_COUNTRY ((int)104)
 #define TAG_MM_CONTAINER ((int)105)
 #define TAG_MM_VILLAS ((int)106)
@@ -54,6 +54,10 @@ FOUNDATION_EXPORT NSString *const MySecondConstant;
 
 // predefined categories IDs
 #define CTGID_WHO_WE_ARE ((int)60)
+
+// notifications
+UIKIT_EXTERN NSString *const DPN_currentLangChanged;
+
 
 // bundle id
 UIKIT_EXTERN NSString *const PRODUCT_IDENTIFIER;
@@ -82,6 +86,10 @@ UIKIT_EXTERN NSString *const MENU_TITLE_Fmt;
 
 UIKIT_EXTERN NSString *const kIMAGE_RESET_MENU;
 
-
+// functions
 void showAlertMessage(id delegate, NSString *aTitle, NSString *aMessage);
+
+NSString* DPLocalizedString(NSString *key);
+
+NSString* NullIfEmpty(NSString *aString);
 

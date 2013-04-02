@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Categories</key>
+	<array>
+		<integer>62</integer>
+		<integer>63</integer>
+		<integer>64</integer>
+	</array>
+	<key>en</key>
+	<dict>
+		<key>Titles</key>
+		<array>
+			<string>Cycladic Ηouses</string>
+			<string>Aegean Ηouses</string>
+			<string>Ionian Ηouses</string>
+		</array>
+		<key>Images</key>
+		<array>
+			<string>Cycladic house 90τ.μ. .jpg</string>
+			<string>Aegean house 82 τ.μ..jpg</string>
+			<string>Ionian house 90 τ.μ.</string>
+		</array>
+		<key>Videos</key>
+		<array>
+			<string></string>
+			<string></string>
+			<string></string>
+		</array>
+	</dict>
+	<key>el</key>
+	<dict>
+		<key>Titles</key>
+		<array>
+			<string>Κυκλαδίτικες Κατοικίες</string>
+			<string>Αιγαιοπελαγίτικες Κατοικίες</string>
+			<string>Κατοικίες Ιονίων Νήσων</string>
+		</array>
+		<key>Images</key>
+		<array>
+			<string>Κυκλαδίτικη κατοικία 90 τ.μ..jpg</string>
+			<string>Αγαιοπελαγίτικη κατοικία 82 τ.μ..jpg</string>
+			<string>Κατοικία Ιονίων νήσων  90τ.μ..jpg</string>
+		</array>
+		<key>Videos</key>
+		<array>
+			<string></string>
+			<string></string>
+			<string></string>
+		</array>
+	</dict>
+</dict>
+</plist>

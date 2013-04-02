@@ -7,9 +7,16 @@
 //
 
 #import "Category.h"
+#import "DPConstants.h"
 
 @implementation Category
 
+- (int) getParentID {
+   if (!self.parent)
+       return -1;
+    
+    return self.parent.intValue;
+}
 
 -(void)encodeWithCoder:(NSCoder *)encoder{
     [super encodeWithCoder:encoder];
@@ -42,8 +49,8 @@
 	if (self) {
 		self.key = aId;
         self.lang = aLang;
-		self.title = aTitle;
-		self.parent = aParent;
+		self.title = NullIfEmpty(aTitle);
+		self.parent = NullIfEmpty(aParent);
 	}
     
 	return self;

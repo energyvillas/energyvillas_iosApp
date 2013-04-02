@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>SubMenus</key>
+	<dict>
+		<key>55</key>
+		<string>paid-Islands.plist</string>
+		<key>58</key>
+		<string>paid-Exclusive.plist</string>
+	</dict>
+	<key>Categories</key>
+	<array>
+		<integer>52</integer>
+		<integer>53</integer>
+		<integer>54</integer>
+		<integer>55</integer>
+		<integer>56</integer>
+		<integer>65</integer>
+		<integer>57</integer>
+		<integer>58</integer>
+		<integer>59</integer>
+	</array>
+	<key>en</key>
+	<dict>
+		<key>Titles</key>
+		<array>
+			<string>Smart Houses</string>
+			<string>Loft Houses</string>
+			<string>Finnish Houses</string>
+			<string>Greek Island Houses</string>
+			<string>Country Houses</string>
+			<string>Container Houses</string>
+			<string>Villas</string>
+			<string>Exclusive Ηouses</string>
+			<string>Videos</string>
+		</array>
+		<key>Images</key>
+		<array>
+			<string>Smart Houses.jpg</string>
+			<string>Loft Houses.jpg</string>
+			<string>Finnish Houses.jpg</string>
+			<string>Greek Island Houses.jpg</string>
+			<string>Country Houses.jpg</string>
+			<string>Container Houses.jpg</string>
+			<string></string>
+			<string></string>
+			<string></string>
+		</array>
+		<key>Videos</key>
+		<array>
+			<string>http://vimeo.com/58323794</string>
+			<string></string>
+			<string></string>
+			<string></string>
+			<string></string>
+			<string></string>
+			<string></string>
+			<string></string>
+			<string></string>
+		</array>
+	</dict>
+	<key>el</key>
+	<dict>
+		<key>Titles</key>
+		<array>
+			<string>Έξυπνες Κατοικίες</string>
+			<string>Κατοικίες Loft</string>
+			<string>Φιλανδικές Κατοικίες</string>
+			<string>Νησιώτικες Κατοικίες</string>
+			<string>Κατοικίες Country</string>
+			<string>Κατοικίες Container</string>
+			<string>Βίλλες</string>
+			<string>Κατοικίες Exclusive</string>
+			<string>Videos</string>
+		</array>
+		<key>Images</key>
+		<array>
+			<string>Έξυπνες Κατοικίες.jpg</string>
+			<string>Κατοικίες Loft.jpg</string>
+			<string>Φιλανδικές Κατοικίες.jpg</string>
+			<string>Νησιώτικες Κατοικίες.jpg</string>
+			<string>Κατοικίες Country.jpg</string>
+			<string>Κατοικίες Container.jpg</string>
+			<string></string>
+			<string></string>
+			<string></string>
+		</array>
+		<key>Videos</key>
+		<array>
+			<string>http://vimeo.com/58323794</string>
+			<string></string>
+			<string></string>
+			<string></string>
+			<string></string>
+			<string></string>
+			<string></string>
+			<string></string>
+			<string></string>
+		</array>
+	</dict>
+</dict>
+</plist>

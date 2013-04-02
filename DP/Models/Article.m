@@ -7,6 +7,7 @@
 //
 
 #import "Article.h"
+#import "DPConstants.h"
 
 @implementation Article
 
@@ -17,14 +18,15 @@
     [super encodeWithCoder:encoder];
     
 	[encoder encodeObject:self.lang forKey:encArticleLang];
+	[encoder encodeObject:self.category forKey:encArticleCategory];
 	[encoder encodeObject:self.title forKey:encArticleTitle];
 	[encoder encodeObject:self.body forKey:encArticleBody];
-	[encoder encodeObject:self.image forKey:encArticleImage];
+	[encoder encodeObject:self.imageUrl forKey:encArticleImage];
 	[encoder encodeObject:self.url forKey:encArticleURL];
 	[encoder encodeObject:self.publishDate forKey:encArticlePublishDate];
-	[encoder encodeObject:self.videofile forKey:encArticleVideoFile];
+	[encoder encodeObject:self.videoUrl forKey:encArticleVideoFile];
 	[encoder encodeObject:self.videolength forKey:encArticleVideoLength];
-	[encoder encodeObject:self.imageData forKey:encArticleImageData];
+//	[encoder encodeObject:self.imageData forKey:encArticleImageData];
 }
 
 -(id)initWithCoder:(NSCoder *)aDecoder{
@@ -33,14 +35,15 @@
 	if (self) {
 
 		self.lang = [aDecoder decodeObjectForKey:encArticleLang];
+		self.category = [aDecoder decodeObjectForKey:encArticleCategory];
 		self.title = [aDecoder decodeObjectForKey:encArticleTitle];
 		self.body = [aDecoder decodeObjectForKey:encArticleBody];
 		self.url = [aDecoder decodeObjectForKey:encArticleURL];
-		self.image = [aDecoder decodeObjectForKey:encArticleImage];
+		self.imageUrl = [aDecoder decodeObjectForKey:encArticleImage];
 		self.publishDate = [aDecoder decodeObjectForKey:encArticlePublishDate];
-		self.videofile = [aDecoder decodeObjectForKey:encArticleVideoFile];
+		self.videoUrl = [aDecoder decodeObjectForKey:encArticleVideoFile];
 		self.videolength = [aDecoder decodeObjectForKey:encArticleVideoLength];
-		self.imageData = [aDecoder decodeObjectForKey:encArticleImageData];
+//		self.imageData = [aDecoder decodeObjectForKey:encArticleImageData];
 	}
     
 	return self;
@@ -48,25 +51,27 @@
 
 - (id) initWithValues:(NSString *)aId
                  lang:(NSString *)aLang
+             category:(NSString*)aCategory
               title:(NSString *)aTitle
-              image:(NSString *)aImage
+              imageUrl:(NSString *)aImage
                body:(NSString *)aBody
                 url:(NSString *)aURL
         publishDate:(NSString *)aPublishDate
-          videofile:(NSString *)aVideoFile
+          videoUrl:(NSString *)aVideoFile
         videolength:(NSString *)aVideoLength {
     self = [super init];
     
 	if (self) {
 		self.key = aId;
         self.lang = aLang;
-		self.title = aTitle;
-		self.image = aImage;
-		self.body = aBody;
-		self.publishDate = aPublishDate;
-		self.url = aURL;
-		self.videofile = aVideoFile;
-		self.videolength = aVideoLength;
+        self.category = NullIfEmpty(aCategory);
+        self.title = NullIfEmpty(aTitle);
+		self.imageUrl = NullIfEmpty(aImage);
+		self.body = NullIfEmpty(aBody);
+		self.publishDate = NullIfEmpty(aPublishDate);
+		self.url = NullIfEmpty(aURL);
+		self.videoUrl = NullIfEmpty(aVideoFile);
+		self.videolength = NullIfEmpty(aVideoLength);
 	}
     
 	return self;

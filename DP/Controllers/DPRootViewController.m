@@ -49,11 +49,17 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
-    bbiMore.title = NSLocalizedString(kbbiMore_Title, nil);
-    bbiBuy.title = NSLocalizedString(kbbiBuy_Title, nil);
-    
+    [self doLocalize];
     [bbiMore setAction:@selector(doMore:)];
     [bbiBuy setAction:@selector(doBuy:)];
+}
+
+- (void) doLocalize {
+    bbiMore.title = DPLocalizedString(kbbiMore_Title);
+    bbiBuy.title = DPLocalizedString(kbbiBuy_Title);
+    
+    if (self.bottomView.subviews.count > 0)
+        [self loadDetailView:YES];
 }
 
 - (void) doBuy:(id) sender {
@@ -90,7 +96,7 @@
     }
 
     CGRect vf = self.view.frame;
-    CGRect svf = self.view.superview.frame;
+//    CGRect svf = self.view.superview.frame;
     
     int h = isPortrait ? vf.size.height : vf.size.height - vf.origin.y ;
     int w = vf.size.width;    
@@ -117,18 +123,24 @@
                                        w, BOTTOM_HEIGHT);
 
     [self loadOpenFlow];
-    [self loadDetailView];
-    
+    [self loadDetailView:NO];
 }
 
-- (void) loadDetailView {
+- (void) loadDetailView:(BOOL)reload{
     UIView *bcv = self.bottomView;
     
     NSLog(@"bvc frame : (x, y, w, h) = (%f, %f, %f, %f)", bcv.frame.origin.x, bcv.frame.origin.y, bcv.frame.size.width, bcv.frame.size.height);
 
     DPCtgScrollViewController *detvc;
+    if (reload && bcv.subviews.count > 0) {
+        detvc = (DPCtgScrollViewController *)self.childViewControllers[0];
+        [detvc.view removeFromSuperview];
+        [detvc removeFromParentViewController];
+        detvc = nil;
+    }        
+    
     if (bcv.subviews.count == 0) {
-        NSArray *content = [DPAppHelper sharedInstance].freeDetails;
+        NSArray *content = [[DPAppHelper sharedInstance] freeDetailsFor:[DPAppHelper sharedInstance].currentLang];
         if (isPortrait)
             detvc = [[DPCtgScrollViewController alloc] 
                      initWithContent:content rows:2 columns:2 autoScroll:YES];
@@ -170,34 +182,10 @@
 
         [ofvc addSubview:ofv];
         
-        int imgCount = 30;
-
-        if (!self.coverFlowData) {
-            NSMutableArray *data = [[NSMutableArray alloc] initWithCapacity:imgCount];
-            NSString *lang = [[NSLocale preferredLanguages] objectAtIndex:0];
-            
-            for (int i=0; i < imgCount; i++) {
-                Article *article = [[Article alloc]
-                                    initWithValues:[NSString stringWithFormat:@"%i", i]
-                                    lang:lang
-                                    title:[NSString stringWithFormat:@"image %i", i]
-                                    image:nil
-                                    body:nil
-                                    url:[NSString stringWithFormat:@"%d.jpg", i]
-                                    publishDate:nil
-                                    videofile:i % 3 == 0 ? @"http://vimeo.com/58323794" : nil
-                                    videolength:nil];
-                
-                [data addObject:article];
-//                [data addObject:[self imageForIndex:i withFrame:&topFrame]];
-            }
-            self.coverFlowData = [NSArray arrayWithArray:data];
-        }
-
-//        for (int i=0; i < imgCount; i++)
-//            [ofv setImage:[self imageForIndex:i-imgBase withFrame:&topFrame] forIndex:i];
+        if (!self.coverFlowData) 
+            self.coverFlowData = [[DPAppHelper sharedInstance]
+                                  freeCoverFlowFor:[DPAppHelper sharedInstance].currentLang];
         
-//        [ofv setNumberOfImages:imgCount-imgBase];
         [ofv setNumberOfImages:self.coverFlowData.count];
         if (currentIndex != -1)
             [ofv setSelectedCover: currentIndex];
@@ -223,7 +211,7 @@
     }
 }
 
-- (UIImage *) imageForIndex:(int) indx withFrame:(CGRect *) targetFrame {
+- (UIImage *) imageForIndex:(int)indx withFrame:(CGRect *) targetFrame {
     UIImage *img = [UIImage imageNamed:[NSString stringWithFormat:@"%d.jpg", indx]];
 
     if (targetFrame == nil) return img;
@@ -262,13 +250,14 @@
     
     Article *article = self.coverFlowData[index];
 
-    if (article.videofile == nil) {
+    if (article.videoUrl == nil) {
         DPImageContentViewController *vc = [[DPImageContentViewController alloc]
-                                            initWithImageName:article.url];
+                                            initWithImageName:article.imageUrl];
         [self.navigationController pushViewController:vc animated:YES];
     } else {
+        NSString *videourl = article.videoUrl;
         DPVimeoPlayerViewController *vimeo = [[DPVimeoPlayerViewController alloc]
-                                              initWithUrl:article.videofile];
+                                              initWithUrl:videourl];
         [self.navigationController pushViewController:vimeo animated:YES];
     }
     
@@ -288,12 +277,11 @@
     currentIndex = index;
 }
 
-
 // protocol AFOpenFlowViewDatasource
 - (void) openFlowView:(AFOpenFlowView *)openFlowView requestImageForIndex:(int)index {
     Article *article = self.coverFlowData[index];
     CGRect frm = topView.frame;
-    UIImage *img = [self imageNamed:article.url withFrame:&frm];
+    UIImage *img = [self imageNamed:article.imageUrl withFrame:&frm];
     [openFlowView setImage:img forIndex:index];
 }
 

@@ -11,5 +11,6 @@
 @interface UINavContentViewController : UIViewController
 
 - (void) layoutForOrientation:(UIInterfaceOrientation) toOrientation fixtop:(BOOL)fixtop;
+- (void) doLocalize;
 
 @end

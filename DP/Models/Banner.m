@@ -7,6 +7,7 @@
 //
 
 #import "Banner.h"
+#import "DPConstants.h"
 
 @implementation Banner
 
@@ -47,11 +48,11 @@
     
 	if (self) {
 		self.key = aId;
-		self.title = aTitle;
-		self.image = aImage;
-		self.body = aBody;
-		self.publishDate = aPublishDate;
-		self.url = aURL;
+		self.title = NullIfEmpty(aTitle);
+		self.image = NullIfEmpty(aImage);
+		self.body = NullIfEmpty(aBody);
+		self.publishDate = NullIfEmpty(aPublishDate);
+		self.url = NullIfEmpty(aURL);
 	}
     
 	return self;

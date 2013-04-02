@@ -5,7 +5,7 @@
 //  Created by Γεώργιος Γράβος on 3/20/13.
 //  Copyright (c) 2013 Γεώργιος Γράβος. All rights reserved.
 //
-
+#import <Foundation/Foundation.h>
 #import "DPAppDelegate.h"
 #import "Classes/DPIAPHelper.h"
 #import "Controllers/DPMainViewController.h"
@@ -18,7 +18,7 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     [DPIAPHelper sharedInstance];
-    [DPAppHelper sharedInstance];
+    [DPAppHelper sharedInstance].currentLang = [[NSLocale preferredLanguages] objectAtIndex:0];//@"el";
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
@@ -31,7 +31,16 @@
     self.window.rootViewController = self.controller;
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
+
+    NSSetUncaughtExceptionHandler (&myExceptionHandler);
+
     return YES;
+}
+
+void myExceptionHandler (NSException *exception)
+{
+    NSArray *stack = [exception callStackReturnAddresses];
+    NSLog(@"Stack trace: %@", stack);
 }
 
 - (bool) isPurchased {

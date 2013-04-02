@@ -11,6 +11,8 @@
 
 @interface DPHtmlContentViewController : UINavContentViewController <DPDataLoaderDelegate>
 
+- (id) initWithUrl:(NSURL *)aUrl;
+- (id) initWithData:(NSData *)aData mimetype:(NSString *)aMimeType;
 - (id) initWithHTML:(NSString *)aHtml;
 - (id) initWithCategory:(int)ctgid lang:(NSString *) aLang;
 

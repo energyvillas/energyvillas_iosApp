@@ -8,32 +8,41 @@
 
 #import "DPImageInfo.h"
 
-@implementation DPImageInfo
+@implementation DPImageInfoxx {
+    UIImage *_image;
+}
 
 @synthesize name, image, tag, displayNname;
 
-- (id) initWithName:(NSString *)aName image:(UIImage *)aImage {
-    if(self = [super init]) {
-        [self doInitWithName:aName image:aImage];
-	}
-	return self;
-}
-
-- (id) initWithName:(NSString *)aName image:(UIImage *)aImage displayName:(NSString *)aDisplayName {
+//- (id) initWithName:(NSString *)aName image:(UIImage *)aImage {
+//    if(self = [super init]) {
+//        [self doInitWithName:aName image:aImage];
+//	}
+//	return self;
+//}
+//
+- (id) initWithName:(NSString *)aName displayName:(NSString *)aDisplayName {
     if (self = [super init]) {
-        [self doInitWithName:aName image:aImage displayName:aDisplayName];
+        self.name = aName;
+        self.displayNname = aDisplayName;
     }
     return self;
 }
 
-- (void) doInitWithName:(NSString *)aName image:(UIImage *)aImage {
-    self.name = aName;
-    self.image = aImage;    
+- (UIImage *) getImage {
+    if (!_image)
+        _image = [UIImage imageNamed:self.name];
+    
+    return _image;    
 }
-
-- (void) doInitWithName:(NSString *)aName image:(UIImage *)aImage displayName:(NSString *)aDisplayName {
-    [self doInitWithName:aName image:aImage];
-    self.displayNname = aDisplayName;
-}
+//- (void) doInitWithName:(NSString *)aName image:(UIImage *)aImage {
+//    self.name = aName;
+////    self.image = aImage;
+//}
+//
+//- (void) doInitWithName:(NSString *)aName image:(UIImage *)aImage displayName:(NSString *)aDisplayName {
+//    [self doInitWithName:aName image:aImage];
+//    self.displayNname = aDisplayName;
+//}
 
 @end

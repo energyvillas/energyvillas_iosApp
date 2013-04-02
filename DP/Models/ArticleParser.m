@@ -146,10 +146,10 @@ static NSString *kName_videolength = @"videolength";
         article.lang=self.langcode;
 		article.title = self.title == nil || [self.title compare:@""] == NSOrderedSame ? nil : self.title;
 		article.body = self.body == nil || [self.body compare:@""] == NSOrderedSame ? nil : self.body;
-		article.image = self.image == nil || [self.image compare:@""] == NSOrderedSame ? nil : self.image;
+		article.imageUrl = self.image == nil || [self.image compare:@""] == NSOrderedSame ? nil : self.image;
 		article.url = self.url == nil || [self.url compare:@""] == NSOrderedSame ? nil : self.url;
 		article.publishDate = self.publishDate == nil || [self.publishDate compare:@""] == NSOrderedSame ? nil : self.publishDate;
-		article.videofile = self.articlevideo == nil || [self.articlevideo compare:@""] == NSOrderedSame ? nil : self.articlevideo;
+		article.videoUrl = self.articlevideo == nil || [self.articlevideo compare:@""] == NSOrderedSame ? nil : self.articlevideo;
 		article.videolength = self.articlevideolength == nil || [self.articlevideolength compare:@""] == NSOrderedSame ? nil : self.articlevideolength;
 		[self.articles insertObject:article atIndex:index];
 		index=index+1;
@@ -201,7 +201,7 @@ parseErrorOccurred:(NSError *)parseError {
 	NSLog(@"url: %@",self.url);
 	
 	for (Article* article in self.articles) {
-		NSLog(@"ROW id=%@ lang=%@ title=%@ image=%@ url=%@", article.key, article.lang, article.title, article.image, article.url);
+		NSLog(@"ROW id=%@ lang=%@ title=%@ image=%@ url=%@", article.key, article.lang, article.title, article.imageUrl, article.url);
 	}
 	
 }

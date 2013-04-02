@@ -10,25 +10,23 @@
 #import "../Classes/DPHtmlContentViewController.h"
 #import "../Classes/DPImageContentViewController.h"
 #import "../Controllers/DPCtgScrollViewController.h"
-#import "../Classes/DPImageInfo.h"
+#import "Article.h"
+#import "DPImageInfo.h"
 #import "../External/OpenFlow/UIImageExtras.h"
 #import "DPCategoryViewController.h"
 #import "DPConstants.h"
+#import "DPAppHelper.h"
 
 
 @interface DPPaidRootViewController ()
 
-@property (strong, nonatomic) UIViewController *whoViewController;
-@property (strong, nonatomic) UIViewController *buyViewController;
-@property (strong, nonatomic) UIViewController *callViewController;
-@property (strong, nonatomic) UIViewController *moreViewController;
 
 @property (strong, nonatomic) DPCtgScrollViewController *nnViewController;
 @property (strong, nonatomic) DPCtgScrollViewController *mmViewController;
 
-@property (strong, nonatomic) FPPopoverController *popoverController;
+@property (strong, nonatomic) FPPopoverController *popController;
 @property (strong, nonatomic) UIViewController *islandPopupViewController;
-@property (strong, nonatomic) NSMutableArray *islandsContent;
+@property (strong, nonatomic) NSArray *islandsContent;
 
 @end
 
@@ -41,9 +39,6 @@
     int island_height;
 }
 
-@synthesize whoViewController, buyViewController, callViewController, moreViewController;
-@synthesize nnViewController, mmViewController;
-@synthesize popoverController, islandPopupViewController, islandsContent;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -62,9 +57,9 @@
 
 - (void) layoutForOrientation:(UIInterfaceOrientation)toOrientation fixtop:(BOOL)fixtop {
     // dismiss popover since the positioning will be wrong
-    if (self.popoverController) {
-        [self.popoverController dismissPopoverAnimated:YES];
-        self.popoverController = nil;
+    if (self.popController) {
+        [self.popController dismissPopoverAnimated:YES];
+        self.popController = nil;
     }
     
     self.islandPopupViewController = nil;
@@ -84,7 +79,7 @@
     }
     
     CGRect vf = self.view.frame;
-    CGRect svf = self.view.superview.frame;
+//    CGRect svf = self.view.superview.frame;
     
     int h = isPortrait ? vf.size.height : vf.size.height - vf.origin.y ;
     int w = vf.size.width;
@@ -180,42 +175,53 @@
     
     if (bcv.subviews.count == 0) {
         NSMutableArray *content = [[NSMutableArray alloc] init];
+        DPAppHelper *apphelper = [DPAppHelper sharedInstance];
         for (int i = 0; i < 2; i++) {
-            DPImageInfo *ii = [[DPImageInfo alloc]
-                               initWithName:[NSString stringWithFormat:@"%d.jpg", i+20]
-                               image:[self imageForIndex:i+20 withFrame:nil]];
-            [content addObject: ii];
+            Article *article = [[Article alloc] initWithValues:[NSString stringWithFormat:@"%d", i]
+                                                          lang:apphelper.currentLang
+                                                      category:nil
+                                                         title:nil
+                                                      imageUrl:[NSString stringWithFormat:@"%d.jpg", i+20]
+                                                          body:nil
+                                                           url:nil
+                                                   publishDate:nil
+                                                      videoUrl:nil
+                                                   videolength:nil];
+            
+
+            [content addObject: article];
         }
         
         if (isPortrait)
-            nnViewController = [[DPCtgScrollViewController alloc]
+            self.nnViewController = [[DPCtgScrollViewController alloc]
                      initWithContent:content rows:1 columns:2 autoScroll:NO];
         else
-            nnViewController = [[DPCtgScrollViewController alloc]
+            self.nnViewController = [[DPCtgScrollViewController alloc]
                      initWithContent:content rows:2 columns:1 autoScroll:NO];
         
         content = nil;
         
-        [self addChildViewController: nnViewController];
-        [bcv addSubview: nnViewController.view];
+        [self addChildViewController: self.nnViewController];
+        [bcv addSubview: self.nnViewController.view];
     } else {
         if (isPortrait) {
-            [nnViewController changeRows:1 columns:2];
+            [self.nnViewController changeRows:1 columns:2];
         } else {
-            [nnViewController changeRows:2 columns:1];
+            [self.nnViewController changeRows:2 columns:1];
         }
         
     }
 }
 
 - (void) elementTapped:(id)element {
-    DPImageInfo *ii = element;
-    if (ii == nil) return;
+    Article *article = element;
+    if (article == nil) return;
     
-    switch (ii.tag) {
+    int ctgid = article.category.intValue;
+    switch (ctgid) {
         case TAG_MM_ISLAND: {
-            UIView *scrlv = mmViewController.view.subviews[0];
-            [self showIslandMenu:scrlv.subviews[3]];
+            UIView *scrlv = self.mmViewController.view.subviews[0];
+            [self showIslandMenu:scrlv.subviews[3] ofCategory:article.category.intValue];
             break;
         }
             
@@ -229,7 +235,7 @@
         case TAG_MM_COUNTRY:
         case TAG_MM_CONTAINER:
         case TAG_MM_VILLAS: {
-            DPCategoryViewController *ctgVC = [[DPCategoryViewController alloc] initWithCategory:ii.tag];
+            DPCategoryViewController *ctgVC = [[DPCategoryViewController alloc] initWithCategory:article.category.intValue];
             [self.navigationController pushViewController:ctgVC animated:YES];
             
             break;
@@ -263,29 +269,23 @@
           bcv.frame.origin.x, bcv.frame.origin.y, bcv.frame.size.width, bcv.frame.size.height);
 
     if (bcv.subviews.count == 0) {
-        NSMutableArray *content = [[NSMutableArray alloc] init];
-        for (int i = 0; i < 9; i++) {
-            DPImageInfo *ii = [[DPImageInfo alloc]
-                               initWithName:[NSString stringWithFormat:@"%d.jpg", i+11]
-                               image:[self imageForIndex:i+11 withFrame:nil]];
-            ii.tag = i + 100;
-            [content addObject: ii];
-
-        }
+        DPAppHelper *apphelper = [DPAppHelper sharedInstance];
+        NSArray *content = [apphelper paidArticlesOfCategory:-1
+                                                        lang:apphelper.currentLang];
        
-        mmViewController = [[DPCtgScrollViewController alloc]
+        self.mmViewController = [[DPCtgScrollViewController alloc]
                  initWithContent:content rows:3 columns:3 autoScroll:NO];
 
         content = nil;
-        mmViewController.viewDelegate = self;
-        [self addChildViewController: mmViewController];
-        [bcv addSubview: mmViewController.view];
+        self.mmViewController.viewDelegate = self;
+        [self addChildViewController: self.mmViewController];
+        [bcv addSubview: self.mmViewController.view];
     } else {
-        [mmViewController changeRows:3 columns:3];
+        [self.mmViewController changeRows:3 columns:3];
     }
 }
 
-- (UIView *) doCreateItem:(DPImageInfo *) ii tag:(int)indx{
+- (UIView *) doCreateItem:(Article *)article tag:(int)indx{
     CGRect frm = CGRectMake(island_width * indx, 0, island_width, island_height);
 
     UIView *v = [[UIView alloc] initWithFrame: frm];
@@ -293,7 +293,7 @@
     
     frm = CGRectMake(0, 0, island_width, island_height);
     UIImageView *iv = [[UIImageView alloc] initWithFrame: frm];
-    iv.image = ii.image;
+    iv.image = [UIImage imageNamed: article.imageUrl];
     iv.contentMode = UIViewContentModeScaleAspectFill; //UIViewContentModeScaleAspectFit;
     iv.tag = indx;
     UITapGestureRecognizer *tapper = [[UITapGestureRecognizer alloc]
@@ -303,9 +303,12 @@
     
     UILabel *lv = [[UILabel alloc] initWithFrame: frm];
     lv.textAlignment = NSTextAlignmentCenter;
+    if (IS_IPAD)
+        lv.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:16];
+    else
+        lv.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:12];
     lv.adjustsFontSizeToFitWidth = YES;
-    NSString *dl = ii.displayNname;
-    lv.text = dl ? dl : ii.name;
+    lv.text = article.title;
     lv.backgroundColor = [UIColor clearColor];
     lv.textColor = [UIColor whiteColor];
     [lv sizeToFit];
@@ -321,37 +324,31 @@
 }
 
 - (void)handleIslandTap:(UITapGestureRecognizer *)sender {
-    [self.popoverController dismissPopoverAnimated:YES];
-    self.popoverController = nil;
+    [self.popController dismissPopoverAnimated:YES];
+    self.popController = nil;
     
     if (sender.state == UIGestureRecognizerStateEnded) {
         // handling code
         int indx = sender.view.tag;
-        DPImageInfo * ii = self.islandsContent[indx];
-        NSLog(@"Clicked island image at index %i named %@ with tag %i", indx, ii.name, ii.tag);
+        Article *article = self.islandsContent[indx];
+        NSLog(@"Clicked island image at index %i named %@ ", indx, article.title);
         
-        [self elementTapped:ii];
+        [self elementTapped:article];
     }
 }
 
--(id) doCreateIslandViewController {
+-(id) doCreateIslandViewController:(int)ctgId {
     UIViewController *vc = [[UIViewController alloc] init];
     vc.view.frame = CGRectMake(island_width * islands_count, 0, island_width, island_height);
     
-    self.islandsContent = [[NSMutableArray alloc] init];
-    
-    CGRect imgfrm = CGRectMake(0, 0, island_width, island_height);
-    for (int i = 0; i < islands_count; i++) {
-        DPImageInfo *ii = [[DPImageInfo alloc]
-                           initWithName:[NSString stringWithFormat:@"%d.jpg", i+11]
-                           image:[self imageForIndex:i+11
-                                                       withFrame:&imgfrm]];
-        ii.tag = i + TAG_MM_ISLAND * TAG_MM_ISLAND_SHIFT;
-        
-        [self.islandsContent addObject: ii];
-        [vc.view addSubview:[self doCreateItem:ii tag:i]];
+    DPAppHelper *appHelper = [DPAppHelper sharedInstance];
+    self.islandsContent = [appHelper paidArticlesOfCategory:ctgId lang:appHelper.currentLang];
+
+    for (int i = 0; i < self.islandsContent.count; i++) {
+        Article *article = self.islandsContent[i];
+        [vc.view addSubview:[self doCreateItem:article tag:i]];
     }
-         
+    
     return vc;
 }
 
@@ -365,7 +362,7 @@
     
 }
 
--(void) showIslandMenu:(id)fromView {
+-(void) showIslandMenu:(id)fromView ofCategory:(int)ctgId{
     CGRect mmfrm = self.mmView.frame;
     islands_count = 3;
 
@@ -375,7 +372,7 @@
     if (UIInterfaceOrientationIsPortrait(INTERFACE_ORIENTATION)) {
         CGFloat ratio = mmfrm.size.width / mmfrm.size.height;
         island_width = (mmfrm.size.width / 3) - 8;
-        island_height = (mmfrm.size.height / 3) / ratio;
+        island_height = island_width / ratio;
 
         pnt = CGPointMake(mmfrm.origin.x + 2,
                           self.view.frame.origin.y + mmfrm.origin.y + (mmfrm.size.height / 3) * 2.1);
@@ -389,20 +386,20 @@
     
     //the view controller you want to present as popover
     if (!self.islandPopupViewController)
-        self.islandPopupViewController = [self doCreateIslandViewController];
+        self.islandPopupViewController = [self doCreateIslandViewController:ctgId];
     
     self.islandPopupViewController.title = nil;
 
     //our popover
-    self.popoverController = [[FPPopoverController alloc]
+    self.popController = [[FPPopoverController alloc]
                                     initWithViewController:self.islandPopupViewController];
-    self.popoverController.delegate = self;
-    self.popoverController.border = YES;
-    self.popoverController.contentSize = CGSizeMake(island_width * 3 + 20, island_height + 40);
-    self.popoverController.arrowDirection = FPPopoverArrowDirectionDown;//FPPopoverArrowDirectionDown | FPPopoverArrowDirectionRight;
+    self.popController.delegate = self;
+    self.popController.border = YES;
+    self.popController.contentSize = CGSizeMake(island_width * 3 + 20, island_height + 40);
+    self.popController.arrowDirection = FPPopoverArrowDirectionDown;//FPPopoverArrowDirectionDown | FPPopoverArrowDirectionRight;
     
     //[self.popoverController presentPopoverFromPoint:pnt];
-    [self.popoverController presentPopoverFromView:fromView];
+    [self.popController presentPopoverFromView:fromView];
 }
 
 - (UIImage *) imageForIndex:(int) indx withFrame:(CGRect *) targetFrame {

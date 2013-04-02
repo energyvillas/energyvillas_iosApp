@@ -19,7 +19,10 @@
 
 @property (strong, nonatomic) NSString *lang;
 @property (nonatomic, strong) NSString *title;
+@property (nonatomic, strong) NSDictionary *titles;
 @property (nonatomic, strong) NSString *parent;
+@property (readonly, getter = getParentID) int parentId;
+@property (strong, nonatomic) NSMutableArray *children;
 
 -(void)encodeWithCoder:(NSCoder *)encoder;
 

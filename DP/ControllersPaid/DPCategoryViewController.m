@@ -11,6 +11,7 @@
 #import "../Classes/DPImageInfo.h"
 #import "../External/OpenFlow/UIImageExtras.h"
 #import "DPConstants.h"
+#import "DPAppHelper.h"
 #import "DPFloatingViewController.h"
 
 @interface DPCategoryViewController ()
@@ -83,7 +84,7 @@
     }
     
     CGRect vf = self.view.frame;
-    CGRect svf = self.view.superview.frame;
+//    CGRect svf = self.view.superview.frame;
     
     int h = isPortrait ? vf.size.height : vf.size.height - vf.origin.y;
     int w = vf.size.width;
@@ -197,11 +198,8 @@
           bcv.frame.origin.x, bcv.frame.origin.y, bcv.frame.size.width, bcv.frame.size.height);
     
     if (bcv.subviews.count == 0) {
-        NSMutableArray *content = [[NSMutableArray alloc] init];
-        for (int i = 0; i < 9; i++)
-            [content addObject:[[DPImageInfo alloc]
-                                initWithName:[NSString stringWithFormat:@"%d.jpg", i+11]
-                                image:[self imageForIndex:i+11 withFrame:nil]]];
+        DPAppHelper *apphelper = [DPAppHelper sharedInstance];
+        NSArray *content = [apphelper paidArticlesOfCategory:-1 lang:apphelper.currentLang];
         
         if (isPortrait)
             mmViewController = [[DPCtgScrollViewController alloc]
@@ -211,8 +209,6 @@
             mmViewController = [[DPCtgScrollViewController alloc]
                                 initWithContent:content rows:3 columns:1
                                 autoScroll:NO];
-        
-        content = nil;
         
         [self addChildViewController: mmViewController];
         [bcv addSubview: mmViewController.view];

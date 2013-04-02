@@ -96,7 +96,7 @@
 								<int key="IBUISystemItemIdentifier">5</int>
 							</object>
 						</array>
-						<object class="NSColor" key="IBUITintColor" id="138877039">
+						<object class="NSColor" key="IBUITintColor">
 							<int key="NSColorSpace">3</int>
 							<bytes key="NSWhite">MAA</bytes>
 						</object>
@@ -117,7 +117,10 @@
 				<reference key="NSSuperview"/>
 				<reference key="NSWindow"/>
 				<reference key="NSNextKeyView" ref="279523803"/>
-				<reference key="IBUIBackgroundColor" ref="138877039"/>
+				<object class="NSColor" key="IBUIBackgroundColor">
+					<int key="NSColorSpace">3</int>
+					<bytes key="NSWhite">MC4zMzMzMzMzMzMzAA</bytes>
+				</object>
 				<object class="IBUISimulatedStatusBarMetrics" key="IBUISimulatedStatusBarMetrics"/>
 				<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 			</object>

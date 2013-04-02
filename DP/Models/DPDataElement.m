@@ -21,4 +21,11 @@
 	return self;
 }
 
+-(int) getID {
+    if (!self.key)
+        return -1;
+    
+    return self.key.intValue;
+}
+
 @end

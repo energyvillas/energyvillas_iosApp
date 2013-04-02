@@ -7,11 +7,14 @@
 //
 
 #import "DPConstants.h"
+#import "DPAppHelper.h"
 /*
 NSString *const MyFirstConstant = @"FirstConstant";
 NSString *const MySecondConstant = @"SecondConstant";
 */
 
+//notifications
+NSString *const DPN_currentLangChanged = @"DPN_currentLangChanged";
 
 // bundle id
 NSString *const PRODUCT_IDENTIFIER = @"gr.DesignProjects.DP";
@@ -58,3 +61,27 @@ void showAlertMessage(id aDelegate, NSString *aTitle, NSString *aMessage) {
     
 	[alertDialog show];
 }
+
+NSString* DPLocalizedString(NSString *key)
+{
+    NSString *langCode = [DPAppHelper sharedInstance].currentLang;
+    
+    // langCode should be set as a global variable somewhere
+    NSString *path = [[NSBundle mainBundle] pathForResource:langCode ofType:@"lproj"];
+    NSBundle* languageBundle = [NSBundle bundleWithPath:path];
+
+    NSString *result = [languageBundle localizedStringForKey:key value:@"" table:nil];
+    if ([result isEqualToString:@""]) {
+        path = [[NSBundle mainBundle] pathForResource:@"en" ofType:@"lproj"];
+        languageBundle = [NSBundle bundleWithPath:path];
+
+        result = [languageBundle localizedStringForKey:key value:@"" table:nil];
+    }
+    
+    return result;
+}
+
+NSString* NullIfEmpty(NSString *aString) {
+    return aString == nil || [aString isEqualToString:@""] ? nil : aString;
+}
+

@@ -40,25 +40,40 @@
     
     [self.view bringSubviewToFront:self.contentView];
     
-    self.bbiClose.title = NSLocalizedString(@"BUY_DLG_bbiClose_Title", nil);
-    self.bbiTitle.title = NSLocalizedString(@"BUY_DLG_TITLE_Title", nil);
-    [self.btnBuy setTitle:NSLocalizedString(@"BUY_DLG_btnBuy_Title", nil)
-                 forState:UIControlStateNormal];
-    [self.btnRestore setTitle:NSLocalizedString(@"BUY_DLG_btnRestore_Title", nil)
-                     forState:UIControlStateNormal];
+    [self doLocalize];
 
-    [self loadDetailView];
+    [self loadDetailView: NO];
 }
 
-- (void) loadDetailView {
+- (void) doLocalize {
+    self.bbiClose.title = DPLocalizedString(@"BUY_DLG_bbiClose_Title");
+    self.bbiTitle.title = DPLocalizedString(@"BUY_DLG_TITLE_Title");
+    [self.btnBuy setTitle:DPLocalizedString(@"BUY_DLG_btnBuy_Title")
+                 forState:UIControlStateNormal];
+    [self.btnRestore setTitle:DPLocalizedString(@"BUY_DLG_btnRestore_Title")
+                     forState:UIControlStateNormal];    
+
+    if (self.innerView.subviews.count > 0)
+        [self loadDetailView:YES];
+}
+
+- (void) loadDetailView:(BOOL)reload {
     UIView *bcv = self.innerView;
     
     NSLog(@"inner frame : (x, y, w, h) = (%f, %f, %f, %f)", bcv.frame.origin.x, bcv.frame.origin.y, bcv.frame.size.width, bcv.frame.size.height);
-    
+  
     DPCtgScrollViewController *detvc;
+    if (reload && bcv.subviews.count > 0) {
+        detvc = (DPCtgScrollViewController *)self.childViewControllers[0];
+        [detvc.view removeFromSuperview];
+        [detvc removeFromParentViewController];
+        detvc = nil;
+    }
+
     if (bcv.subviews.count == 0) {
                 
-        NSArray *content = [DPAppHelper sharedInstance].freeBuyContent;
+        NSArray *content = [[DPAppHelper sharedInstance] freeDetailsFor:[DPAppHelper sharedInstance].currentLang];
+        
         detvc = [[DPCtgScrollViewController alloc]
                      initWithContent:content rows:1 columns:1 autoScroll:YES];
         
@@ -119,6 +134,7 @@
     self.innerView.frame = CGRectMake(0, toolbarHeight,
                                       cf.size.width, cf.size.height - toolbarHeight - 40);
     
+    self.bbiTitle.width = cf.size.width - 80;
     [self.btnBuy sizeToFit];
     [self.btnRestore sizeToFit];
     CGRect br = self.btnBuy.frame;
