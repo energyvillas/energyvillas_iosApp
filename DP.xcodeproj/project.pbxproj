@@ -129,6 +129,11 @@
 		5EFCCCFA1709BE6C00C1FE88 /* DPDataCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EFCCCF91709BE6C00C1FE88 /* DPDataCache.m */; };
 		5EFCCCFD1709C37100C1FE88 /* DPDataElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EFCCCFC1709C37100C1FE88 /* DPDataElement.m */; };
 		5EFCCD001709DECA00C1FE88 /* Banner.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EFCCCFF1709DECA00C1FE88 /* Banner.m */; };
+		5EFCCD031709ECCE00C1FE88 /* BannerParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EFCCD021709ECCE00C1FE88 /* BannerParser.m */; };
+		5EFCCD061709EF6400C1FE88 /* DPBannersLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EFCCD051709EF6400C1FE88 /* DPBannersLoader.m */; };
+		5EFCCD091709F10700C1FE88 /* Category.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EFCCD081709F10700C1FE88 /* Category.m */; };
+		5EFCCD0C1709F2EE00C1FE88 /* CategoryParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EFCCD0B1709F2ED00C1FE88 /* CategoryParser.m */; };
+		5EFCCD0F1709F30700C1FE88 /* DPCategoryLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EFCCD0E1709F30700C1FE88 /* DPCategoryLoader.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -314,6 +319,16 @@
 		5EFCCCFC1709C37100C1FE88 /* DPDataElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPDataElement.m; sourceTree = "<group>"; };
 		5EFCCCFE1709DECA00C1FE88 /* Banner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Banner.h; sourceTree = "<group>"; };
 		5EFCCCFF1709DECA00C1FE88 /* Banner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Banner.m; sourceTree = "<group>"; };
+		5EFCCD011709ECCE00C1FE88 /* BannerParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BannerParser.h; sourceTree = "<group>"; };
+		5EFCCD021709ECCE00C1FE88 /* BannerParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BannerParser.m; sourceTree = "<group>"; };
+		5EFCCD041709EF6300C1FE88 /* DPBannersLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPBannersLoader.h; sourceTree = "<group>"; };
+		5EFCCD051709EF6400C1FE88 /* DPBannersLoader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPBannersLoader.m; sourceTree = "<group>"; };
+		5EFCCD071709F10700C1FE88 /* Category.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Category.h; sourceTree = "<group>"; };
+		5EFCCD081709F10700C1FE88 /* Category.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Category.m; sourceTree = "<group>"; };
+		5EFCCD0A1709F2ED00C1FE88 /* CategoryParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CategoryParser.h; sourceTree = "<group>"; };
+		5EFCCD0B1709F2ED00C1FE88 /* CategoryParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CategoryParser.m; sourceTree = "<group>"; };
+		5EFCCD0D1709F30600C1FE88 /* DPCategoryLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPCategoryLoader.h; sourceTree = "<group>"; };
+		5EFCCD0E1709F30700C1FE88 /* DPCategoryLoader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPCategoryLoader.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -683,6 +698,16 @@
 				5EFCCCFC1709C37100C1FE88 /* DPDataElement.m */,
 				5EFCCCFE1709DECA00C1FE88 /* Banner.h */,
 				5EFCCCFF1709DECA00C1FE88 /* Banner.m */,
+				5EFCCD011709ECCE00C1FE88 /* BannerParser.h */,
+				5EFCCD021709ECCE00C1FE88 /* BannerParser.m */,
+				5EFCCD041709EF6300C1FE88 /* DPBannersLoader.h */,
+				5EFCCD051709EF6400C1FE88 /* DPBannersLoader.m */,
+				5EFCCD071709F10700C1FE88 /* Category.h */,
+				5EFCCD081709F10700C1FE88 /* Category.m */,
+				5EFCCD0A1709F2ED00C1FE88 /* CategoryParser.h */,
+				5EFCCD0B1709F2ED00C1FE88 /* CategoryParser.m */,
+				5EFCCD0D1709F30600C1FE88 /* DPCategoryLoader.h */,
+				5EFCCD0E1709F30700C1FE88 /* DPCategoryLoader.m */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -882,6 +907,11 @@
 				5EFCCCFA1709BE6C00C1FE88 /* DPDataCache.m in Sources */,
 				5EFCCCFD1709C37100C1FE88 /* DPDataElement.m in Sources */,
 				5EFCCD001709DECA00C1FE88 /* Banner.m in Sources */,
+				5EFCCD031709ECCE00C1FE88 /* BannerParser.m in Sources */,
+				5EFCCD061709EF6400C1FE88 /* DPBannersLoader.m in Sources */,
+				5EFCCD091709F10700C1FE88 /* Category.m in Sources */,
+				5EFCCD0C1709F2EE00C1FE88 /* CategoryParser.m in Sources */,
+				5EFCCD0F1709F30700C1FE88 /* DPCategoryLoader.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

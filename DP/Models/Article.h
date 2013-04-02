@@ -10,7 +10,6 @@
 #import "DPDataElement.h"
 #import "DPDataCache.h"
 
-//#define encArticleId @"ID"
 #define encArticleLang @"Lang"
 #define encArticleTitle @"Title"
 #define encArticleImage @"Image"
@@ -24,7 +23,6 @@
 
 @interface Article: DPDataElement 
     
-//@property (nonatomic, strong) NSString *articleId;
 @property (strong, nonatomic) NSString *lang;
 @property (nonatomic, strong) NSString *title;
 @property (nonatomic, strong) NSString *image;
@@ -47,10 +45,3 @@
           videofile:(NSString *)aVideoFile
         videolength:(NSString *)aVideoLength;
 @end
-
-
-//==============================================================================
-
-
-
-

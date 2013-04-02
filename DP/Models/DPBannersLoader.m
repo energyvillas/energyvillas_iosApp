@@ -1,42 +1,40 @@
 //
-//  DPArticlesLoader.m
+//  DPBannersLoader.m
 //  DP
 //
-//  Created by Γεώργιος Γράβος on 3/31/13.
+//  Created by Γεώργιος Γράβος on 4/1/13.
 //  Copyright (c) 2013 Γεώργιος Γράβος. All rights reserved.
 //
 
-#import "DPArticlesLoader.h"
+#import "DPBannersLoader.h"
 #import "ASIFormDataRequest.h"
 #import "DPConstants.h"
 #import <CommonCrypto/CommonDigest.h>
-#import "Article.h"
-#import "ArticleParser.h"
+#import "Banner.h"
+#import "BannerParser.h"
 #import "DPDataCache.h"
 
 
-@interface DPArticlesLoader ()
+@interface DPBannersLoader ()
 
-@property int categoryID;
-@property (strong, nonatomic) NSString *lang;
+@property int groupID;
 
 @end
 
 
-@implementation DPArticlesLoader
+@implementation DPBannersLoader
 
-- (id) initWithController:(UIViewController *)controller category:(int)ctgID lang:(NSString *)aLang {
+- (id) initWithController:(UIViewController *)controller group:(int)grpID {
     self = [super initWithController:controller];
     if (self) {
-        self.categoryID = ctgID;
-        self.lang = aLang;
+        self.groupID = grpID;
     }
     
     return self;
 }
 
 - (NSString *) cacheFileName {
-    return [NSString stringWithFormat:@"articles-%@-%d.dat", self.lang, self.categoryID];
+    return [NSString stringWithFormat:@"banners-%d.dat", self.groupID];
 }
 
 - (DPDataCache *) createDataCache {
@@ -44,12 +42,11 @@
 }
 
 - (ASIFormDataRequest *) createAndPrepareRequest {
-    NSURL *ctgUrl = [NSURL URLWithString:ARTICLES_URL];
-
+    NSURL *ctgUrl = [NSURL URLWithString:BANNERS_URL];
+    
     NSDictionary *ctgParams = [NSDictionary
                                dictionaryWithObjectsAndKeys:
-                               self.lang, @"lang",
-                               [NSString stringWithFormat:@"%d", self.categoryID], @"cid",
+                               [NSString stringWithFormat:@"%d", self.groupID], @"group",
                                nil];
     
     ASIFormDataRequest *request = [self
@@ -60,10 +57,10 @@
 }
 
 - (NSArray *) parseResponse:(NSString *)response {
-    ArticleParser *parser = [[ArticleParser alloc] init];
+    BannerParser *parser = [[BannerParser alloc] init];
 	[parser parseXMLFile:response];
-    NSArray *articles = [NSArray arrayWithArray:parser.articles];
-    return articles;
+    NSArray *banners = [NSArray arrayWithArray:parser.banners];
+    return banners;
 }
 
 @end

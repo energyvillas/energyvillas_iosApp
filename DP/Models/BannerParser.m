@@ -1,26 +1,25 @@
 //
-//  XMLParser.m
-//  RankingServiceTest
+//  BannerParser.m
+//  DP
 //
-//  Created by Damia Ferrer on 16/10/10.
-//  Copyright 2010 __MyCompanyName__. All rights reserved.
+//  Created by Γεώργιος Γράβος on 4/1/13.
+//  Copyright (c) 2013 Γεώργιος Γράβος. All rights reserved.
 //
 
-#import "ArticleParser.h"
-#import "Article.h"
-//#import "RotationAppDelegate.h"
+#import "BannerParser.h"
+#import "Banner.h"
 
+@implementation BannerParser
 
-@implementation ArticleParser
 
 /*
- to parse a XML file from path. 
+ to parse a XML file from path.
  */
 - (void)parseXMLFile:(NSString *)data {
 	//array for the ranking
-	self.articles = [[NSMutableArray alloc] init];
+	self.banners = [[NSMutableArray alloc] init];
 	index = 0;
-
+    
 	self.currentString = [NSMutableString string];
 	self.storingCharacters = YES;
     NSXMLParser *parser = [[NSXMLParser alloc] initWithData:[data dataUsingEncoding: NSUTF8StringEncoding]];
@@ -32,22 +31,20 @@
 
 #pragma mark NSXMLParser Parsing Callbacks
 
-// Constants for the XML element names that will be considered during the parse. 
+// Constants for the XML element names that will be considered during the parse.
 // Declaring these as static constants reduces the number of objects created during the run
 // and is less prone to programmer error.
 static NSString *kName_response = @"response";
 static NSString *kName_responseCode = @"responseCode";
-static NSString *kName_articles = @"articles";
-static NSString *kName_article = @"article";
-static NSString *kName_articleid = @"articleid";
-static NSString *kName_langcode = @"langcode";
+static NSString *kName_banners = @"articles";
+static NSString *kName_banner = @"article";
+static NSString *kName_bannerid = @"articleid";
 static NSString *kName_title = @"title";
 static NSString *kName_url = @"url";
 static NSString *kName_image = @"image";
 static NSString *kName_body = @"body";
 static NSString *kName_publishDate = @"publishDate";
-static NSString *kName_videourl = @"videourl";
-static NSString *kName_videolength = @"videolength";
+
 /*
  Sent by a parser object to its delegate when it encounters a start tag for a given element.
  Parameters
@@ -64,9 +61,9 @@ static NSString *kName_videolength = @"videolength";
 	}else if ([elementName isEqualToString:kName_responseCode]) {
 		[self.currentString setString:@""];
 		self.storingCharacters = YES;
-	}else if ([elementName isEqualToString:kName_articles]) {
+	}else if ([elementName isEqualToString:kName_banners]) {
 		
-	}else if ([elementName isEqualToString:kName_article]) {
+	}else if ([elementName isEqualToString:kName_banner]) {
 		
 	}else if ([elementName isEqualToString:kName_title]) {
 		[self.currentString setString:@""];
@@ -76,33 +73,22 @@ static NSString *kName_videolength = @"videolength";
 		[self.currentString setString:@""];
 		self.storingCharacters = YES;
 		
-	}else if ([elementName isEqualToString:kName_articleid]) {
-		[self.currentString setString:@""];
-		self.storingCharacters = YES;
-		
-	}else if ([elementName isEqualToString:kName_langcode]) {
+	}else if ([elementName isEqualToString:kName_bannerid]) {
 		[self.currentString setString:@""];
 		self.storingCharacters = YES;
 		
 	}else if ([elementName isEqualToString:kName_image]) {
 		[self.currentString setString:@""];
 		self.storingCharacters = YES;
-
+        
 	}else if ([elementName isEqualToString:kName_publishDate]) {
 		[self.currentString setString:@""];
 		self.storingCharacters = YES;
-
+        
 	}else if ([elementName isEqualToString:kName_body]) {
 		[self.currentString setString:@""];
 		self.storingCharacters = YES;
 		
-	}else if ([elementName isEqualToString:kName_videourl]) {
-		[self.currentString setString:@""];
-		self.storingCharacters = YES;
-		
-	}else if ([elementName isEqualToString:kName_videolength]) {
-		[self.currentString setString:@""];
-		self.storingCharacters = YES;
 	}
 }
 
@@ -130,30 +116,27 @@ static NSString *kName_videolength = @"videolength";
  didEndElement:(NSString *)elementName
   namespaceURI:(NSString *)namespaceURI
  qualifiedName:(NSString *)qName {
-	NSString *aElementValue = [[NSString alloc] initWithString: 
-												[[self.currentString stringByReplacingOccurrencesOfString:@"&quot;" withString:@"'"] 
-												 stringByReplacingOccurrencesOfString:@"&#39;" withString:@"'"]];
-
+	NSString *aElementValue = [[NSString alloc] initWithString:
+                               [[self.currentString stringByReplacingOccurrencesOfString:@"&quot;" withString:@"'"]
+                                stringByReplacingOccurrencesOfString:@"&#39;" withString:@"'"]];
+    
 	if ([elementName isEqualToString:kName_response]) {
 		
 	}else if ([elementName isEqualToString:kName_responseCode]) {
 		self.responseCode=[[NSString alloc] initWithString: aElementValue];
-	}else if ([elementName isEqualToString:kName_articles]) {
+	}else if ([elementName isEqualToString:kName_banners]) {
 		
-	}else if ([elementName isEqualToString:kName_article]) {
-		Article *article  = [[Article alloc] init];
-		article.key=self.articleId;
-        article.lang=self.langcode;
-		article.title = self.title == nil || [self.title compare:@""] == NSOrderedSame ? nil : self.title;
-		article.body = self.body == nil || [self.body compare:@""] == NSOrderedSame ? nil : self.body;
-		article.image = self.image == nil || [self.image compare:@""] == NSOrderedSame ? nil : self.image;
-		article.url = self.url == nil || [self.url compare:@""] == NSOrderedSame ? nil : self.url;
-		article.publishDate = self.publishDate == nil || [self.publishDate compare:@""] == NSOrderedSame ? nil : self.publishDate;
-		article.videofile = self.articlevideo == nil || [self.articlevideo compare:@""] == NSOrderedSame ? nil : self.articlevideo;
-		article.videolength = self.articlevideolength == nil || [self.articlevideolength compare:@""] == NSOrderedSame ? nil : self.articlevideolength;
-		[self.articles insertObject:article atIndex:index];
+	}else if ([elementName isEqualToString:kName_banner]) {
+		Banner *banner  = [[Banner alloc] init];
+		banner.key=self.bannerId;
+		banner.title = self.title == nil || [self.title compare:@""] == NSOrderedSame ? nil : self.title;
+		banner.body = self.body == nil || [self.body compare:@""] == NSOrderedSame ? nil : self.body;
+		banner.image = self.image == nil || [self.image compare:@""] == NSOrderedSame ? nil : self.image;
+		banner.url = self.url == nil || [self.url compare:@""] == NSOrderedSame ? nil : self.url;
+		banner.publishDate = self.publishDate == nil || [self.publishDate compare:@""] == NSOrderedSame ? nil : self.publishDate;
+		[self.banners insertObject:banner atIndex:index];
 		index=index+1;
-		article=nil;
+		banner=nil;
 	}else if ([elementName isEqualToString:kName_title]) {
 		self.title=[[NSString alloc] initWithString: aElementValue];
 	}else if ([elementName isEqualToString:kName_image]) {
@@ -164,16 +147,10 @@ static NSString *kName_videolength = @"videolength";
 		self.body=[[NSString alloc] initWithString: aElementValue];
 	}else if ([elementName isEqualToString:kName_publishDate]) {
 		self.publishDate=[[NSString alloc] initWithString: aElementValue];
-	}else if ([elementName isEqualToString:kName_articleid]) {
-		self.articleId=[[NSString alloc] initWithString: aElementValue];
-	}else if ([elementName isEqualToString:kName_langcode]) {
-		self.langcode=[[NSString alloc] initWithString: aElementValue];
-	}else if ([elementName isEqualToString:kName_videourl]) {
-		self.articlevideo=[[NSString alloc] initWithString: aElementValue];
-	}else if ([elementName isEqualToString:kName_videolength]) {
-		self.articlevideolength=[[NSString alloc] initWithString: aElementValue];
+	}else if ([elementName isEqualToString:kName_bannerid]) {
+		self.bannerId=[[NSString alloc] initWithString: aElementValue];
 	}
-
+    
 	self.storingCharacters = NO;
 	aElementValue = nil;
 }
@@ -186,9 +163,9 @@ static NSString *kName_videolength = @"videolength";
  */
 - (void)parser:(NSXMLParser *)parser
 parseErrorOccurred:(NSError *)parseError {
-	NSString *error=[NSString stringWithFormat:@"Error %i, Description: %@, Line: %i, Column: %i", 
+	NSString *error=[NSString stringWithFormat:@"Error %i, Description: %@, Line: %i, Column: %i",
 					 [parseError code],
-					 [[parser parserError] localizedDescription], 
+					 [[parser parserError] localizedDescription],
 					 [parser lineNumber],
 					 [parser columnNumber]];
 	
@@ -200,11 +177,10 @@ parseErrorOccurred:(NSError *)parseError {
 	NSLog(@"title: %@",self.title);
 	NSLog(@"url: %@",self.url);
 	
-	for (Article* article in self.articles) {
-		NSLog(@"ROW id=%@ lang=%@ title=%@ image=%@ url=%@", article.key, article.lang, article.title, article.image, article.url);
+	for (Banner* banner in self.banners) {
+		NSLog(@"ROW id=%@ title=%@ image=%@ url=%@", banner.key, banner.title, banner.image, banner.url);
 	}
 	
 }
-
 
 @end
