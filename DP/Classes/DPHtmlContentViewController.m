@@ -87,6 +87,7 @@
     UIWebView *webView = [[UIWebView alloc] initWithFrame:aframe];
     webView.contentMode = UIViewContentModeScaleAspectFit;
     webView.userInteractionEnabled = YES;
+    
     if (self.url) {
         NSURLRequest * request = [[NSURLRequest alloc] initWithURL:self.url];
         [webView loadRequest:request];
@@ -108,8 +109,8 @@
  
     if (articles.count == 0)
         showAlertMessage(nil,
-                         NSLocalizedString(@"INFO_MSG_TITLE", nil),
-                         NSLocalizedString(@"NO_DATA_FOUND_MESSAGE", nil));
+                         DPLocalizedString(kERR_TITLE_INFO),
+                         DPLocalizedString(kERR_MSG_NO_DATA_FOUND));
     else {
         NSString *body = ((Article *)articles[0]).body;
         body = [[body stringByReplacingOccurrencesOfString:@"&gt;" withString:@">"]
@@ -121,8 +122,8 @@
 
 - (void)loadFailed:(DPDataLoader *)loader {
     showAlertMessage(nil,
-                     NSLocalizedString(@"URL_LOAD_FAILED_TITLE", nil),
-                     NSLocalizedString(@"URL_LOAD_FAILED_MESSAGE", nil));
+                     DPLocalizedString(kERR_TITLE_URL_NOT_FOUND),
+                     DPLocalizedString(kERR_MSG_DATA_LOAD_FAILED));
 }
 
 - (void)viewDidLoad

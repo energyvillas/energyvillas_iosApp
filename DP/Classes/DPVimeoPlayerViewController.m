@@ -151,8 +151,8 @@
 {
     NSLog(@"ERROR: %@", [error localizedDescription]);
     showAlertMessage(self,
-                     @"Αποτυχία Σύνδεσης",
-                     @"Παρακαλούμε δοκιμάστε αργότερα...");
+                     DPLocalizedString(kERR_TITLE_CONNECTION_FAILED),
+                     DPLocalizedString(kERR_MSG_TRY_LATER));
 }
 
 - (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex {

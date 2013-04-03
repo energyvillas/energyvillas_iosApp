@@ -36,6 +36,8 @@ NSString *const ARTICLES_URL = @"http://designprojectsapps.com/iphonenews.php";
 
 
 // localization keys
+NSString *const kbtnOK_Title = @"btnOK_Title";
+
 NSString *const ktbiMain_Title = @"tbiMain_Title";
 NSString *const ktbiWho_Title = @"tbiWho_Title";
 NSString *const ktbiBuy_Title = @"tbiBuy_Title";
@@ -45,9 +47,18 @@ NSString *const ktbiMore_Title = @"tbiMore_Title";
 NSString *const kbbiMore_Title = @"bbiMore_Title";
 NSString *const kbbiBuy_Title = @"bbiBuy_Title";
 
-NSString *const MENU_TITLE_Fmt = @"MENU_TITLE_%i";
+NSString *const kMENU_TITLE_Fmt = @"MENU_TITLE_%i";
 
 NSString *const kIMAGE_RESET_MENU = @"IMAGE_RESET_MENU";
+
+NSString *const kERR_TITLE_URL_NOT_FOUND = @"ERR_TITLE_URL_NOT_FOUND";
+NSString *const kERR_MSG_DATA_LOAD_FAILED = @"ERR_MSG_DATA_LOAD_FAILED";
+
+NSString *const kERR_TITLE_INFO = @"ERR_TITLE_INFO";
+NSString *const kERR_MSG_NO_DATA_FOUND = @"ERR_MSG_NO_DATA_FOUND";
+
+NSString *const kERR_TITLE_CONNECTION_FAILED = @"ERR_TITLE_CONNECTION_FAILED";
+NSString *const kERR_MSG_TRY_LATER = @"ERR_MSG_TRY_LATER";
 
 
 void showAlertMessage(id aDelegate, NSString *aTitle, NSString *aMessage) {
@@ -56,7 +67,7 @@ void showAlertMessage(id aDelegate, NSString *aTitle, NSString *aMessage) {
                    initWithTitle:aTitle
                    message:aMessage
                    delegate:aDelegate
-                   cancelButtonTitle: NSLocalizedString(@"btnOK_Title", nil)
+                   cancelButtonTitle: DPLocalizedString(kbtnOK_Title)
                    otherButtonTitles:nil];
     
 	[alertDialog show];

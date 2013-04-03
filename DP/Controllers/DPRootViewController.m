@@ -21,6 +21,7 @@
 #import "Article.h"
 
 
+
 @interface DPRootViewController ()
 
 @property (strong, nonatomic) NSArray *coverFlowData;
@@ -226,21 +227,22 @@
 }
 
 -(UIImage *) rescaleImage:(UIImage *)image toFrame:(CGRect *) targetFrame {
-    float coeff = 1.0;
+//    float coeff = 1.0;
     float vh = (*targetFrame).size.height;
     float vw = (*targetFrame).size.width;
     float ih = image.size.height;
     float iw = image.size.width;
-    if (iw/vw > ih/vh)
-        coeff = (vw / iw);
-    else
-        coeff = (vh / ih);
     
-    if (coeff > 1.5) coeff = 1.5;
-    
-    ih = ih * coeff * 0.8;
-    iw = iw * coeff * 0.8;
-    
+    float ir = ih / iw;
+    float vr = vh / vw;
+    if (vr < ir) {
+        ih = vh;
+        iw = ih / ir;
+    } else {
+        iw = vw;
+        ih = iw * ir;
+    }
+
     return [image rescaleImageToSize:CGSizeMake(iw, ih)];
 }
 

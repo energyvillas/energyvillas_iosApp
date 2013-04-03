@@ -18,7 +18,7 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     [DPIAPHelper sharedInstance];
-    [DPAppHelper sharedInstance].currentLang = [[NSLocale preferredLanguages] objectAtIndex:0];//@"el";
+    [DPAppHelper sharedInstance].currentLang =@"el"; //[[NSLocale preferredLanguages] objectAtIndex:0];//@"el";
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
@@ -44,7 +44,7 @@ void myExceptionHandler (NSException *exception)
 }
 
 - (bool) isPurchased {
-    return YES;
+    //return YES;
     
     NSUserDefaults *usrDefaults = [NSUserDefaults standardUserDefaults];
     BOOL productPurchased = [usrDefaults boolForKey:PRODUCT_IDENTIFIER];

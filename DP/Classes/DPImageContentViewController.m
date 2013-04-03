@@ -116,7 +116,7 @@
     if ([gestureRecognizer state] == UIGestureRecognizerStateBegan) {
         UIMenuController *menuController = [UIMenuController sharedMenuController];
         UIMenuItem *resetMenuItem = [[UIMenuItem alloc]
-                                     initWithTitle:NSLocalizedString(kIMAGE_RESET_MENU, nil)
+                                     initWithTitle:DPLocalizedString(kIMAGE_RESET_MENU)
                                      action:@selector(resetPiece:)];
         CGPoint location = [gestureRecognizer locationInView:[gestureRecognizer view]];
         
@@ -285,8 +285,8 @@
 	[self stopIndicator];
 
     showAlertMessage(nil,
-                     @"Αποτυχία Σύνδεσης",
-                     @"Η διαδικασία ανάκτησης νέων απέτυχε! Παρακαλούμε δοκιμάστε αργότερα...");
+                     DPLocalizedString(kERR_TITLE_URL_NOT_FOUND),
+                     DPLocalizedString(kERR_MSG_DATA_LOAD_FAILED));
 /*
 	UIAlertView *alertDialog;
 	alertDialog = [[UIAlertView alloc]

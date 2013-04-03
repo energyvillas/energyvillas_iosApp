@@ -46,11 +46,11 @@
     [self.view addSubview: self.navController.view];
     self.navController.delegate = self;
 
-    self.tbiMain.title = NSLocalizedString(ktbiMain_Title, nil);
-    self.tbiWho.title = NSLocalizedString(ktbiWho_Title, nil);
-    self.tbiBuy.title = NSLocalizedString(ktbiBuy_Title, nil);
-    self.tbiCall.title = NSLocalizedString(ktbiCall_Title, nil);
-    self.tbiMore.title = NSLocalizedString(ktbiMore_Title, nil);
+    self.tbiMain.title = DPLocalizedString(ktbiMain_Title);
+    self.tbiWho.title = DPLocalizedString(ktbiWho_Title);
+    self.tbiBuy.title = DPLocalizedString(ktbiBuy_Title);
+    self.tbiCall.title = DPLocalizedString(ktbiCall_Title);
+    self.tbiMore.title = DPLocalizedString(ktbiMore_Title);
     
     self.tabBar.delegate = self;
 }

@@ -9,11 +9,17 @@
 /* ======= common ====== */
 "btnOK_Title"="OK";
 
-"URL_LOAD_FAILED_TITLE"="Connection Failed";
-"URL_LOAD_FAILED_MESSAGE"="Data retrieval failed! Please try again later...";
 
-"INFO_MSG_TITLE"="Information";
-"NO_DATA_FOUND_MESSAGE"="No data available! Please try again later...";
+"ERR_TITLE_URL_NOT_FOUND"="Connection Failed";
+"ERR_MSG_DATA_LOAD_FAILED"="Connection not found! Please try again later...";
+
+"ERR_TITLE_INFO"="Information";
+"ERR_MSG_NO_DATA_FOUND"="No data available! Please try again later...";
+
+"ERR_TITLE_CONNECTION_FAILED"="Connection Failed";
+"ERR_MSG_TRY_LATER"="Please try again later...";
+
+
 
 "IMAGE_RESET_MENU"="Reset";
 

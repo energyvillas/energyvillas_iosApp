@@ -25,9 +25,17 @@
 //#if defined(USE_TI_UIIOSCOVERFLOWVIEW) || defined(USE_TI_UICOVERFLOWVIEW)
 
 // For OpenFlow
-#define COVER_SPACING 40
-#define CENTER_COVER_OFFSET 70
-#define SIDE_COVER_ANGLE .79
-#define SIDE_COVER_ZPOSITION -80
+// GEORGE GRAVOS these are the original that fail on ipad
+//#define COVER_SPACING 40
+//#define CENTER_COVER_OFFSET 70
+//#define SIDE_COVER_ANGLE .79
+//#define SIDE_COVER_ZPOSITION -80
+
+// GEORGE GRAVOS - these numbers are the ones that work correct for both iphone and ipad
+// do not change them!!!!
+#define COVER_SPACING 80
+#define CENTER_COVER_OFFSET 140
+#define SIDE_COVER_ANGLE .15 //.15
+#define SIDE_COVER_ZPOSITION -40 //-40
 
 //#endif

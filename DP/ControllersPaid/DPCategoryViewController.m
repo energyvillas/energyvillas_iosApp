@@ -52,8 +52,8 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
-    NSString *ctgTitleKey = [NSString stringWithFormat:MENU_TITLE_Fmt, category];
-    lblTitle.text = NSLocalizedString(ctgTitleKey, nil);
+    NSString *ctgTitleKey = [NSString stringWithFormat:kMENU_TITLE_Fmt, category];
+    lblTitle.text = DPLocalizedString(ctgTitleKey);
 }
 
 - (void)didReceiveMemoryWarning

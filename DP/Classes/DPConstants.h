@@ -36,7 +36,7 @@ FOUNDATION_EXPORT NSString *const MySecondConstant;
 #define TAG_TBI_MORE ((int)1005)
 
 // main menu buttons
-#define TAG_MM_SMART ((int)100)
+#define TAG_MM_SMART ((int)52) //100)
 #define TAG_MM_LOFT ((int)101)
 #define TAG_MM_FINLAND ((int)102)
 #define TAG_MM_ISLAND ((int)55) // 103)
@@ -73,6 +73,8 @@ UIKIT_EXTERN NSString *const ARTICLES_URL;
 
 
 // localization keys
+UIKIT_EXTERN NSString *const kbtnOK_Title;
+
 UIKIT_EXTERN NSString *const ktbiMain_Title;
 UIKIT_EXTERN NSString *const ktbiWho_Title;
 UIKIT_EXTERN NSString *const ktbiBuy_Title;
@@ -82,9 +84,19 @@ UIKIT_EXTERN NSString *const ktbiMore_Title;
 UIKIT_EXTERN NSString *const kbbiMore_Title;
 UIKIT_EXTERN NSString *const kbbiBuy_Title;
 
-UIKIT_EXTERN NSString *const MENU_TITLE_Fmt;
+UIKIT_EXTERN NSString *const kMENU_TITLE_Fmt;
 
 UIKIT_EXTERN NSString *const kIMAGE_RESET_MENU;
+
+UIKIT_EXTERN NSString *const kERR_TITLE_URL_NOT_FOUND;
+UIKIT_EXTERN NSString *const kERR_MSG_DATA_LOAD_FAILED;
+
+UIKIT_EXTERN NSString *const kERR_TITLE_INFO;
+UIKIT_EXTERN NSString *const kERR_MSG_NO_DATA_FOUND;
+
+UIKIT_EXTERN NSString *const kERR_TITLE_CONNECTION_FAILED;
+UIKIT_EXTERN NSString *const kERR_MSG_TRY_LATER;
+
 
 // functions
 void showAlertMessage(id delegate, NSString *aTitle, NSString *aMessage);

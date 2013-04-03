@@ -34,6 +34,7 @@
     if ([[notification name] isEqualToString:DPN_currentLangChanged]) {
         NSLog (@"Successfully received the test notification!");
         
+        [self langSelected];
         [self doLocalize];
     }
 }
@@ -59,6 +60,11 @@
 
 - (void) viewWillAppear:(BOOL)animated {
     [self layoutForOrientation:INTERFACE_ORIENTATION fixtop:NO];
+}
+
+- (void) viewDidAppear:(BOOL)animated {
+    [self langSelected];
+    [super viewDidAppear:animated];
 }
 
 - (void) layoutForOrientation:(UIInterfaceOrientation) toOrientation fixtop:(BOOL)fixtop {
@@ -108,10 +114,7 @@
         [_langSelControl setSegmentedControlStyle:UISegmentedControlStyleBar];
         [_langSelControl addTarget:self action:@selector(langSelControlPressed:) forControlEvents:UIControlEventValueChanged];
         
-        if ([[DPAppHelper sharedInstance].currentLang isEqualToString:@"en"])
-            _langSelControl.selectedSegmentIndex = 0;
-        else if ([[DPAppHelper sharedInstance].currentLang isEqualToString:@"el"])
-            _langSelControl.selectedSegmentIndex = 1;
+        [self langSelected];
 
         _langSelControl.autoresizingMask = UIViewAutoresizingFlexibleHeight ;
         CGRect newFrame = CGRectMake(0, 0, 70, 30);
@@ -122,8 +125,22 @@
     return _langSelControl;
 }
 
+- (void) langSelected {
+    if (_langSelControl) {
+        NSString *lng = [DPAppHelper sharedInstance].currentLang;
+        if ([lng isEqualToString:@"el"])
+            _langSelControl.selectedSegmentIndex = 1;
+        else if ([lng isEqualToString:@"en"])
+            _langSelControl.selectedSegmentIndex = 0;
+        else // fall back to default
+            _langSelControl.selectedSegmentIndex = 0;
+        
+        [self langSelControlPressed:_langSelControl];
+    }
+}
+
 - (void) langSelControlPressed:(id)sender {
-    if (sender == _langSelControl) {
+    if (sender != nil && sender == _langSelControl) {
         int indx = _langSelControl.selectedSegmentIndex;
         if (indx >= 0) {
             for (int i=0; i<[_langSelControl.subviews count]; i++)
@@ -207,8 +224,7 @@
 //                                                                      tag:101
 //                                                                      action:@selector(showView:)]]
                                                 ];
-    
-    [self langSelControlPressed:_langSelControl];
+    [self langSelected];
 }
 
 - (UIButton *) createButtonWithImage:(NSString *)imgName
