@@ -120,6 +120,11 @@
 		5EC255F81701054A0045AB99 /* DPCategoryView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5EC255F71701054A0045AB99 /* DPCategoryView.xib */; };
 		5EC6FE311703AC07009910CF /* 3D_logo_horizontal_el.png in Resources */ = {isa = PBXBuildFile; fileRef = 5EC6FE2F1703AC07009910CF /* 3D_logo_horizontal_el.png */; };
 		5EC6FE321703AC07009910CF /* 3D_logo_horizontal_en.png in Resources */ = {isa = PBXBuildFile; fileRef = 5EC6FE301703AC07009910CF /* 3D_logo_horizontal_en.png */; };
+		5EDF094F170C990100774682 /* Container Houses.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 5EDF094A170C990100774682 /* Container Houses.jpg */; };
+		5EDF0950170C990100774682 /* Country Houses.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 5EDF094B170C990100774682 /* Country Houses.jpg */; };
+		5EDF0951170C990100774682 /* Greek Island Houses.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 5EDF094C170C990100774682 /* Greek Island Houses.jpg */; };
+		5EDF0952170C990100774682 /* Loft Houses.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 5EDF094D170C990100774682 /* Loft Houses.jpg */; };
+		5EDF0953170C990100774682 /* Smart Houses.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 5EDF094E170C990100774682 /* Smart Houses.jpg */; };
 		5EFCCCFA1709BE6C00C1FE88 /* DPDataCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EFCCCF91709BE6C00C1FE88 /* DPDataCache.m */; };
 		5EFCCCFD1709C37100C1FE88 /* DPDataElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EFCCCFC1709C37100C1FE88 /* DPDataElement.m */; };
 		5EFCCD001709DECA00C1FE88 /* Banner.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EFCCCFF1709DECA00C1FE88 /* Banner.m */; };
@@ -312,6 +317,11 @@
 		5EC255F917010D610045AB99 /* DPScrollableViewDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DPScrollableViewDelegate.h; sourceTree = "<group>"; };
 		5EC6FE2F1703AC07009910CF /* 3D_logo_horizontal_el.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 3D_logo_horizontal_el.png; sourceTree = "<group>"; };
 		5EC6FE301703AC07009910CF /* 3D_logo_horizontal_en.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 3D_logo_horizontal_en.png; sourceTree = "<group>"; };
+		5EDF094A170C990100774682 /* Container Houses.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "Container Houses.jpg"; sourceTree = "<group>"; };
+		5EDF094B170C990100774682 /* Country Houses.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "Country Houses.jpg"; sourceTree = "<group>"; };
+		5EDF094C170C990100774682 /* Greek Island Houses.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "Greek Island Houses.jpg"; sourceTree = "<group>"; };
+		5EDF094D170C990100774682 /* Loft Houses.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "Loft Houses.jpg"; sourceTree = "<group>"; };
+		5EDF094E170C990100774682 /* Smart Houses.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "Smart Houses.jpg"; sourceTree = "<group>"; };
 		5EFCCCF81709BE6C00C1FE88 /* DPDataCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPDataCache.h; sourceTree = "<group>"; };
 		5EFCCCF91709BE6C00C1FE88 /* DPDataCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPDataCache.m; sourceTree = "<group>"; };
 		5EFCCCFB1709C37100C1FE88 /* DPDataElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPDataElement.h; sourceTree = "<group>"; };
@@ -564,6 +574,7 @@
 		5E71A3FF16F9B5F900E7AFF9 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				5EDF0949170C990100774682 /* FreeImages */,
 				5E951D0D1702F0B900DFDE43 /* bookmark-new-2.png */,
 				5E951D111702F50200DFDE43 /* flag-gr.png */,
 				5E951D121702F50200DFDE43 /* flag-us.png */,
@@ -739,6 +750,18 @@
 			path = logo;
 			sourceTree = "<group>";
 		};
+		5EDF0949170C990100774682 /* FreeImages */ = {
+			isa = PBXGroup;
+			children = (
+				5EDF094A170C990100774682 /* Container Houses.jpg */,
+				5EDF094B170C990100774682 /* Country Houses.jpg */,
+				5EDF094C170C990100774682 /* Greek Island Houses.jpg */,
+				5EDF094D170C990100774682 /* Loft Houses.jpg */,
+				5EDF094E170C990100774682 /* Smart Houses.jpg */,
+			);
+			path = FreeImages;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -860,6 +883,11 @@
 				5EFCCD3B170B48DC00C1FE88 /* paid-Islands.plist in Resources */,
 				5EFCCD3D170B4BF400C1FE88 /* paid-Exclusive.plist in Resources */,
 				5EFCCD3F170B520100C1FE88 /* rootCategories.plist in Resources */,
+				5EDF094F170C990100774682 /* Container Houses.jpg in Resources */,
+				5EDF0950170C990100774682 /* Country Houses.jpg in Resources */,
+				5EDF0951170C990100774682 /* Greek Island Houses.jpg in Resources */,
+				5EDF0952170C990100774682 /* Loft Houses.jpg in Resources */,
+				5EDF0953170C990100774682 /* Smart Houses.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
