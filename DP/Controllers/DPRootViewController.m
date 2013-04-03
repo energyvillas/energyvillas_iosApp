@@ -24,7 +24,7 @@
 
 @interface DPRootViewController ()
 
-@property (strong, nonatomic) NSArray *coverFlowData;
+@property (strong, nonatomic) NSMutableDictionary *coverFlowDict;
 
 @end
 
@@ -59,8 +59,10 @@
     bbiMore.title = DPLocalizedString(kbbiMore_Title);
     bbiBuy.title = DPLocalizedString(kbbiBuy_Title);
     
-    if (self.bottomView.subviews.count > 0)
+    if (self.bottomView.subviews.count > 0) {
         [self loadDetailView:YES];
+        [self loadOpenFlow];
+    }
 }
 
 - (void) doBuy:(id) sender {
@@ -183,11 +185,9 @@
 
         [ofvc addSubview:ofv];
         
-        if (!self.coverFlowData) 
-            self.coverFlowData = [[DPAppHelper sharedInstance]
-                                  freeCoverFlowFor:[DPAppHelper sharedInstance].currentLang];
+        NSArray *langCoverFlow = [self currlangCoverFlow];
         
-        [ofv setNumberOfImages:self.coverFlowData.count];
+        [ofv setNumberOfImages:langCoverFlow.count];
         if (currentIndex != -1)
             [ofv setSelectedCover: currentIndex];
     }
@@ -196,6 +196,21 @@
         if (currentIndex != -1)
             [ofv setSelectedCover: currentIndex];
     }
+}
+
+- (NSArray *) currlangCoverFlow {
+    DPAppHelper *apphelper = [DPAppHelper sharedInstance];
+
+    if (!self.coverFlowDict)
+        self.coverFlowDict = [[NSMutableDictionary alloc] initWithCapacity:2];
+
+    NSArray *langCoverFlow = self.coverFlowDict[apphelper.currentLang];
+    if (!langCoverFlow) {
+        langCoverFlow = [apphelper freeCoverFlowFor:apphelper.currentLang];
+        [self.coverFlowDict setValue:langCoverFlow forKey:apphelper.currentLang];
+    }
+    
+    return langCoverFlow;
 }
 
 -(void) viewDidAppear:(BOOL)animated {
@@ -250,7 +265,7 @@
 - (void) openFlowView:(AFOpenFlowView *)openFlowView click:(int)index {
     NSLog(@"Clicked image at index %i", index);
     
-    Article *article = self.coverFlowData[index];
+    Article *article = [self currlangCoverFlow][index];
 
     if (article.videoUrl == nil) {
         DPImageContentViewController *vc = [[DPImageContentViewController alloc]
@@ -281,7 +296,7 @@
 
 // protocol AFOpenFlowViewDatasource
 - (void) openFlowView:(AFOpenFlowView *)openFlowView requestImageForIndex:(int)index {
-    Article *article = self.coverFlowData[index];
+    Article *article = [self currlangCoverFlow][index];
     CGRect frm = topView.frame;
     UIImage *img = [self imageNamed:article.imageUrl withFrame:&frm];
     [openFlowView setImage:img forIndex:index];

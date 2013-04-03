@@ -750,11 +750,11 @@
 		5EDF0949170C990100774682 /* FreeImages */ = {
 			isa = PBXGroup;
 			children = (
-				5EDF094A170C990100774682 /* Container Houses.jpg */,
-				5EDF094B170C990100774682 /* Country Houses.jpg */,
-				5EDF094C170C990100774682 /* Greek Island Houses.jpg */,
-				5EDF094D170C990100774682 /* Loft Houses.jpg */,
 				5EDF094E170C990100774682 /* Smart Houses.jpg */,
+				5EDF094D170C990100774682 /* Loft Houses.jpg */,
+				5EDF094C170C990100774682 /* Greek Island Houses.jpg */,
+				5EDF094B170C990100774682 /* Country Houses.jpg */,
+				5EDF094A170C990100774682 /* Container Houses.jpg */,
 			);
 			path = FreeImages;
 			sourceTree = "<group>";
