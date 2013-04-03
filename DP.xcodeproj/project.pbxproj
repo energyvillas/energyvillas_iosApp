@@ -133,10 +133,6 @@
 		5EFCCD091709F10700C1FE88 /* Category.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EFCCD081709F10700C1FE88 /* Category.m */; };
 		5EFCCD0C1709F2EE00C1FE88 /* CategoryParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EFCCD0B1709F2ED00C1FE88 /* CategoryParser.m */; };
 		5EFCCD0F1709F30700C1FE88 /* DPCategoryLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EFCCD0E1709F30700C1FE88 /* DPCategoryLoader.m */; };
-		5EFCCD13170ACBC200C1FE88 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 5EFCCD12170ACBC200C1FE88 /* Icon.png */; };
-		5EFCCD15170ACBD600C1FE88 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5EFCCD14170ACBD600C1FE88 /* Icon@2x.png */; };
-		5EFCCD17170ACCDB00C1FE88 /* Icon-72.png in Resources */ = {isa = PBXBuildFile; fileRef = 5EFCCD16170ACCDB00C1FE88 /* Icon-72.png */; };
-		5EFCCD19170ACCE200C1FE88 /* Icon-72@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5EFCCD18170ACCE200C1FE88 /* Icon-72@2x.png */; };
 		5EFCCD1B170ADF0E00C1FE88 /* free-details.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5EFCCD1A170ADF0E00C1FE88 /* free-details.plist */; };
 		5EFCCD35170B18BC00C1FE88 /* free-Buy.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5EFCCD34170B18BC00C1FE88 /* free-Buy.plist */; };
 		5EFCCD37170B26D300C1FE88 /* free-CoverFlow.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5EFCCD36170B26D200C1FE88 /* free-CoverFlow.plist */; };
@@ -338,10 +334,6 @@
 		5EFCCD0B1709F2ED00C1FE88 /* CategoryParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CategoryParser.m; sourceTree = "<group>"; };
 		5EFCCD0D1709F30600C1FE88 /* DPCategoryLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPCategoryLoader.h; sourceTree = "<group>"; };
 		5EFCCD0E1709F30700C1FE88 /* DPCategoryLoader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPCategoryLoader.m; sourceTree = "<group>"; };
-		5EFCCD12170ACBC200C1FE88 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Icon.png; path = ../Icon.png; sourceTree = "<group>"; };
-		5EFCCD14170ACBD600C1FE88 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon@2x.png"; path = "../Icon@2x.png"; sourceTree = "<group>"; };
-		5EFCCD16170ACCDB00C1FE88 /* Icon-72.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-72.png"; path = "../Icon-72.png"; sourceTree = "<group>"; };
-		5EFCCD18170ACCE200C1FE88 /* Icon-72@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-72@2x.png"; path = "../Icon-72@2x.png"; sourceTree = "<group>"; };
 		5EFCCD1A170ADF0E00C1FE88 /* free-details.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "free-details.plist"; sourceTree = "<group>"; };
 		5EFCCD34170B18BC00C1FE88 /* free-Buy.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "free-Buy.plist"; sourceTree = "<group>"; };
 		5EFCCD36170B26D200C1FE88 /* free-CoverFlow.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "free-CoverFlow.plist"; sourceTree = "<group>"; };
@@ -454,10 +446,6 @@
 				5E71A3C016F9973500E7AFF9 /* InfoPlist.strings */,
 				5EC255D416FF95040045AB99 /* Localizable.strings */,
 				5E71A3C316F9973500E7AFF9 /* main.m */,
-				5EFCCD12170ACBC200C1FE88 /* Icon.png */,
-				5EFCCD14170ACBD600C1FE88 /* Icon@2x.png */,
-				5EFCCD18170ACCE200C1FE88 /* Icon-72@2x.png */,
-				5EFCCD16170ACCDB00C1FE88 /* Icon-72.png */,
 				5E71A3C516F9973500E7AFF9 /* DP-Prefix.pch */,
 				5E71A3C916F9973500E7AFF9 /* Default.png */,
 				5E71A3CB16F9973500E7AFF9 /* Default@2x.png */,
@@ -872,10 +860,6 @@
 				5E3605211708438F00DB7B20 /* close.png in Resources */,
 				5E3605221708438F00DB7B20 /* close@2x.png in Resources */,
 				5E36052B1708B5E300DB7B20 /* DPFloatingView.xib in Resources */,
-				5EFCCD13170ACBC200C1FE88 /* Icon.png in Resources */,
-				5EFCCD15170ACBD600C1FE88 /* Icon@2x.png in Resources */,
-				5EFCCD17170ACCDB00C1FE88 /* Icon-72.png in Resources */,
-				5EFCCD19170ACCE200C1FE88 /* Icon-72@2x.png in Resources */,
 				5EFCCD1B170ADF0E00C1FE88 /* free-details.plist in Resources */,
 				5EFCCD35170B18BC00C1FE88 /* free-Buy.plist in Resources */,
 				5EFCCD37170B26D300C1FE88 /* free-CoverFlow.plist in Resources */,
