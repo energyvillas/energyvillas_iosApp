@@ -563,6 +563,8 @@
 			isa = PBXGroup;
 			children = (
 				5EDF0949170C990100774682 /* FreeImages */,
+				5EC6FE20170378FE009910CF /* logo */,
+				5E71A40016F9B5F900E7AFF9 /* CoverImages */,
 				5E951D0D1702F0B900DFDE43 /* bookmark-new-2.png */,
 				5E951D111702F50200DFDE43 /* flag-gr.png */,
 				5E951D121702F50200DFDE43 /* flag-us.png */,
@@ -577,8 +579,6 @@
 				5EFCCD3A170B48DC00C1FE88 /* paid-Islands.plist */,
 				5EFCCD3C170B4BF400C1FE88 /* paid-Exclusive.plist */,
 				5EFCCD3E170B520100C1FE88 /* rootCategories.plist */,
-				5EC6FE20170378FE009910CF /* logo */,
-				5E71A40016F9B5F900E7AFF9 /* CoverImages */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
