@@ -12,6 +12,7 @@
 
 #define encCategoryLang @"Lang"
 #define encCategoryTitle @"Title"
+#define encCategoryImageUrl @"ImageUrl"
 #define encCategoryParent @"Parent"
 
 
@@ -19,7 +20,9 @@
 
 @property (strong, nonatomic) NSString *lang;
 @property (nonatomic, strong) NSString *title;
+@property (nonatomic, strong) NSString *imageUrl;
 @property (nonatomic, strong) NSDictionary *titles;
+@property (nonatomic, strong) NSDictionary *imageUrls;
 @property (nonatomic, strong) NSString *parent;
 @property (readonly, getter = getParentID) int parentId;
 @property (strong, nonatomic) NSMutableArray *children;
@@ -29,6 +32,7 @@
 -(id)initWithValues:(NSString *)aId
                lang:(NSString *)aLang
               title:(NSString *)aTitle
+           imageUrl:(NSString *)aImageUrl
              parent:(NSString *)aParent;
 
 

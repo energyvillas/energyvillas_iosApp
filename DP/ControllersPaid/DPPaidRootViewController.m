@@ -235,7 +235,8 @@
         case TAG_MM_COUNTRY:
         case TAG_MM_CONTAINER:
         case TAG_MM_VILLAS: {
-            DPCategoryViewController *ctgVC = [[DPCategoryViewController alloc] initWithCategory:article.category.intValue];
+            DPCategoryViewController *ctgVC = [[DPCategoryViewController alloc]
+                                                initWithCategory:55];//article.category.intValue];
             [self.navigationController pushViewController:ctgVC animated:YES];
             
             break;

@@ -40,6 +40,7 @@ static NSString *kName_category = @"category";
 static NSString *kName_categoryid = @"id";
 static NSString *kName_langcode = @"langcode";
 static NSString *kName_title = @"description";
+static NSString *kName_imageUrl = @"image"; // ?????????????
 static NSString *kName_parent = @"parentid";
 
 /*
@@ -71,6 +72,10 @@ static NSString *kName_parent = @"parentid";
 		self.storingCharacters = YES;
 		
 	}else if ([elementName isEqualToString:kName_title]) {
+		[self.currentString setString:@""];
+		self.storingCharacters = YES;
+		
+	}else if ([elementName isEqualToString:kName_imageUrl]) {
 		[self.currentString setString:@""];
 		self.storingCharacters = YES;
 		
@@ -119,8 +124,9 @@ static NSString *kName_parent = @"parentid";
 		Category *category  = [[Category alloc] init];
 		category.key = self.ctgId;
         category.lang = self.langcode;
-		category.title = self.title == nil || [self.title compare:@""] == NSOrderedSame ? nil : self.title;
-		category.parent = self.parent == nil || [self.parent compare:@""] == NSOrderedSame ? nil : self.parent;
+		category.title = self.title;
+		category.imageUrl = self.imageUrl;
+		category.parent = self.parent;
 		[self.categories insertObject:category atIndex:index];
 		index=index+1;
 		category=nil;
@@ -133,7 +139,10 @@ static NSString *kName_parent = @"parentid";
         
 	}else if ([elementName isEqualToString:kName_title]) {
 		self.title=[[NSString alloc] initWithString: aElementValue];
-
+        
+	}else if ([elementName isEqualToString:kName_imageUrl]) {
+		self.imageUrl=[[NSString alloc] initWithString: aElementValue];
+        
     }else if ([elementName isEqualToString:kName_parent]) {
 		self.parent=[[NSString alloc] initWithString: aElementValue];
 	}

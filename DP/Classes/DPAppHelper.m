@@ -119,7 +119,6 @@ NSString *const FREE_DET_IMGTITLE_FMT = @"FREE_DET_TITLE_10%i";
     return [NSArray arrayWithArray:res];
 }
 
-
 - (void) addFreeDetails {
     self.freeDetails = [self doGetDictionaryFrom:@"free-details.plist"];
 }
@@ -144,49 +143,103 @@ NSString *const FREE_DET_IMGTITLE_FMT = @"FREE_DET_TITLE_10%i";
     return [self doGetArticlesFrom:self.freeCoverFlow lang:lang];
 }
 
+#pragma -
+#pragma CATEGORIES
+
+- (NSArray *) doGetCategoriesFrom:(NSDictionary *)dict lang:(NSString *)lang {
+    NSDictionary *lfd = [dict objectForKey:lang];
+    if (!lfd) {
+        lang = @"en";
+        lfd = [dict objectForKey:lang];
+    }
+    
+    NSArray *categories = [dict objectForKey:@"Categories"];
+    NSArray *titles = [lfd objectForKey:@"Titles"];
+    NSArray *images = [lfd objectForKey:@"Images"];
+    NSArray *videos = [lfd objectForKey:@"Videos"];
+    
+    NSMutableArray *res = [[NSMutableArray alloc] initWithCapacity:titles.count];
+    for (int i=0; i<titles.count; i++) {
+        [res addObject:[[Article alloc] initWithValues:[NSString stringWithFormat:@"%d", i]
+                                                  lang:lang
+                                              category:categories == nil ? nil : [NSString stringWithFormat:@"%@", categories[i]]
+                                                 title:titles[i]
+                                              imageUrl:images[i]
+                                                  body:nil
+                                                   url:nil
+                                           publishDate:nil
+                                              videoUrl:videos == nil ? nil : videos[i]
+                                           videolength:nil]];
+    }
+    
+    return [NSArray arrayWithArray:res];
+}
+
+
+// i load it and keep it flat not as tree.
 - (void) loadCategories {
     NSString *path = [[NSBundle mainBundle] bundlePath];
     NSString *finalPath = [path stringByAppendingPathComponent:@"rootCategories.plist"];
     NSDictionary *dict = [NSDictionary dictionaryWithContentsOfFile:finalPath];
+    
+    
     NSMutableArray *roots = [[NSMutableArray alloc] initWithCapacity:dict.count];
-    NSMutableArray *subs = [[NSMutableArray alloc] initWithCapacity:dict.count];
+//    NSMutableArray *subs = [[NSMutableArray alloc] initWithCapacity:dict.count];
     
     for (NSString *key in dict.allKeys) {
         NSDictionary *ctg = dict[key];
+        NSDictionary *titles = ctg[@"titles"];
+        NSDictionary *images = ctg[@"images"];
+
+        id prntno = ctg[@"parent"];
+        NSString *prnt = prntno == nil ? nil : [NSString
+                                                stringWithFormat:@"%@", prntno];
+        
         Category *category = [[Category alloc] initWithValues: key
                                                          lang:@"en"
-                                                        title:ctg[@"en"]
-                                                       parent:[NSString stringWithFormat:@"%@", ctg[@"parent"]]];
-        NSMutableDictionary *titles = [NSMutableDictionary dictionaryWithDictionary:ctg];
-        [titles removeObjectForKey:@"parent"];
+                                                        title:titles[@"en"]
+                                                     imageUrl:images[@"en"]
+                                                       parent:prnt];
+
         category.titles = [NSDictionary dictionaryWithDictionary:titles];
-        if (category.parentId == -1)
+        category.imageUrls = [NSDictionary dictionaryWithDictionary:images];
+        
+//        if (category.parentId == -1)
             [roots addObject: category];
-        else
-            [subs addObject:category];
+//        else
+//            [subs addObject:category];
     }
     
-    while (subs.count > 0) {
-        Category *sub = subs[0];
-        NSUInteger indx = [roots indexOfObjectPassingTest:^BOOL(id obj, NSUInteger idx, BOOL *stop) {
-            Category *it = obj;
-            *stop = it.Id == sub.parentId;
-            return it.Id == sub.parentId;
-        }];
-
-        if (indx == NSNotFound ) {
-            [subs removeObjectAtIndex:0];
-            continue;
-        }
-
-        Category *root = (Category *)roots[indx];
-        if (!root.children )
-            root.children = [[NSMutableArray alloc] init];
-
-        [root.children addObject:sub];
-    }
+//    while (subs.count > 0) {
+//        Category *sub = subs[0];
+//        NSUInteger indx = [roots indexOfObjectPassingTest:^BOOL(id obj, NSUInteger idx, BOOL *stop) {
+//            Category *it = obj;
+//            *stop = it.Id == sub.parentId;
+//            return it.Id == sub.parentId;
+//        }];
+//
+//        if (indx == NSNotFound ) {
+//            [subs removeObjectAtIndex:0];
+//            continue;
+//        }
+//
+//        Category *root = (Category *)roots[indx];
+//        if (!root.children )
+//            root.children = [[NSMutableArray alloc] init];
+//
+//        [root.children addObject:sub];
+//    }
     
     self.categories = roots;
+}
+
+- (NSArray *) getSubCategoriesOf:(int)parentid {
+    NSMutableArray *list = [[NSMutableArray alloc] init];
+    for (Category *ctg in self.categories)
+        if (ctg.parentId == parentid)
+            [list addObject:ctg];
+    
+    return [NSArray arrayWithArray:list];
 }
 
 - (void) addPaidMainMenu{
@@ -225,15 +278,13 @@ NSString *const FREE_DET_IMGTITLE_FMT = @"FREE_DET_TITLE_10%i";
 //	[self updateWithReachability: self.wifiReach];
 }
 
-- (void) reachabilityChanged: (NSNotification* )note
-{
+- (void) reachabilityChanged: (NSNotification* )note {
 	Reachability* curReach = [note object];
 	NSParameterAssert([curReach isKindOfClass: [Reachability class]]);
 	[self updateWithReachability: curReach];
 }
 
-- (void) updateWithReachability: (Reachability*) curReach
-{
+- (void) updateWithReachability: (Reachability*) curReach {
     if(curReach == self.hostReach)
 	{
         _hostIsReachable = [curReach currentReachabilityStatus] != NotReachable;

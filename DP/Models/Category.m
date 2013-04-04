@@ -23,6 +23,7 @@
     
 	[encoder encodeObject:self.lang forKey:encCategoryLang];
 	[encoder encodeObject:self.title forKey:encCategoryTitle];
+	[encoder encodeObject:self.imageUrl forKey:encCategoryImageUrl];
 	[encoder encodeObject:self.parent forKey:encCategoryParent];
 }
 
@@ -33,6 +34,7 @@
         
 		self.lang = [aDecoder decodeObjectForKey:encCategoryLang];
 		self.title = [aDecoder decodeObjectForKey:encCategoryTitle];
+		self.imageUrl = [aDecoder decodeObjectForKey:encCategoryImageUrl];
 		self.parent = [aDecoder decodeObjectForKey:encCategoryParent];
 	}
     
@@ -42,6 +44,7 @@
 - (id) initWithValues:(NSString *)aId
                  lang:(NSString *)aLang
                 title:(NSString *)aTitle
+             imageUrl:(NSString *)aImageUrl
                 parent:(NSString *)aParent
 {
     self = [super init];
@@ -50,6 +53,7 @@
 		self.key = aId;
         self.lang = aLang;
 		self.title = NullIfEmpty(aTitle);
+		self.imageUrl = NullIfEmpty(aImageUrl);
 		self.parent = NullIfEmpty(aParent);
 	}
     

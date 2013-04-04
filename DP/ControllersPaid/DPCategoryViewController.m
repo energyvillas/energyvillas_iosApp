@@ -12,11 +12,12 @@
 #import "../External/OpenFlow/UIImageExtras.h"
 #import "DPConstants.h"
 #import "DPAppHelper.h"
-#import "DPFloatingViewController.h"
+#import "DPAnimatedCategoriesView.h"
 
 @interface DPCategoryViewController ()
 
 @property (strong, nonatomic) DPCtgScrollViewController *mmViewController;
+@property (strong, nonatomic) NSArray *categories;
 
 @end
 
@@ -25,14 +26,15 @@
     int category;
 }
 
-@synthesize ctgView, adsView, mmView, lblTitle;
+//@synthesize ctgView, adsView, mmView, lblTitle;
 
-@synthesize mmViewController;
+//@synthesize mmViewController;
 
 
 - (id) initWithCategory:(int)ctgID {
     if (self = [super init]) {
         category = ctgID;
+        self.categories = [[DPAppHelper sharedInstance] getSubCategoriesOf:ctgID];
     }
     
     return self;
@@ -52,8 +54,11 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
+    self.adsView.backgroundColor = [UIColor clearColor];
+    self.ctgView.backgroundColor = [UIColor clearColor];
+    self.mmView.backgroundColor = [UIColor clearColor];
     NSString *ctgTitleKey = [NSString stringWithFormat:kMENU_TITLE_Fmt, category];
-    lblTitle.text = DPLocalizedString(ctgTitleKey);
+    self.lblTitle.text = DPLocalizedString(ctgTitleKey);
 }
 
 - (void)didReceiveMemoryWarning
@@ -137,23 +142,25 @@
 }
 
 - (void) loadCategoryView {
-    DPFloatingViewController *fvc;
+    DPAnimatedCategoriesView *acv;
+    CGRect frm = self.ctgView.bounds;
+    if (CGRectIsEmpty(frm)) return;
+    
+    frm = CGRectInset(frm, 0, 0);
     if (self.ctgView.subviews.count == 0) {
-        fvc = [[DPFloatingViewController alloc] init];
-        fvc.view.frame = self.ctgView.bounds;
-        [self addChildViewController:fvc];
-        [self.ctgView addSubview: fvc.view];
+        acv = [[DPAnimatedCategoriesView alloc] initWithFrame:frm
+                                                   categories:self.categories];
+        [self.ctgView addSubview: acv];
     } else {
-        id cvc;
-        for (cvc in self.childViewControllers) {
-            if ([cvc isKindOfClass:[DPFloatingViewController class]])
-                 fvc = cvc;
-            if (fvc) break;
+        for (id v in self.ctgView.subviews) {
+            if ([v isKindOfClass:[DPAnimatedCategoriesView class]])
+                 acv = v;
+            if (acv) break;
         }
         
-        if (fvc) {
-            fvc.view.frame = self.ctgView.bounds;            
-            [fvc layoutForOrientation:INTERFACE_ORIENTATION fixtop:NO];
+        if (acv) {
+            acv.frame = self.ctgView.bounds;
+            //[acv layoutForOrientation:INTERFACE_ORIENTATION fixtop:NO];
         }
     }
 /*
@@ -202,21 +209,21 @@
         NSArray *content = [apphelper paidArticlesOfCategory:-1 lang:apphelper.currentLang];
         
         if (isPortrait)
-            mmViewController = [[DPCtgScrollViewController alloc]
+            self.mmViewController = [[DPCtgScrollViewController alloc]
                                 initWithContent:content rows:1 columns:3
                                 autoScroll:NO];
         else
-            mmViewController = [[DPCtgScrollViewController alloc]
+            self.mmViewController = [[DPCtgScrollViewController alloc]
                                 initWithContent:content rows:3 columns:1
                                 autoScroll:NO];
         
-        [self addChildViewController: mmViewController];
-        [bcv addSubview: mmViewController.view];
+        [self addChildViewController: self.mmViewController];
+        [bcv addSubview: self.mmViewController.view];
     } else {
         if (isPortrait)
-            [mmViewController changeRows:1 columns:3];
+            [self.mmViewController changeRows:1 columns:3];
         else
-            [mmViewController changeRows:3 columns:1];
+            [self.mmViewController changeRows:3 columns:1];
     }
 }
 

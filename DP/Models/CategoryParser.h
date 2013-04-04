@@ -19,6 +19,7 @@
 @property (nonatomic, strong) NSString *ctgId;
 @property (nonatomic, strong) NSString *langcode;
 @property (nonatomic, strong) NSString *title;
+@property (nonatomic, strong) NSString *imageUrl;
 @property (nonatomic, strong) NSString *parent;
 
 - (void)parseXMLFile:(NSString *)pathToFile;

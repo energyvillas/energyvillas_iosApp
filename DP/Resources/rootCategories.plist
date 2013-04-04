@@ -4,111 +4,181 @@
 <dict>
 	<key>52</key>
 	<dict>
-		<key>en</key>
-		<string>Smart Houses</string>
-		<key>el</key>
-		<string>Έξυπνες Κατοικίες</string>
+		<key>titles</key>
+		<dict>
+			<key>el</key>
+			<string>Έξυπνες Κατοικίες</string>
+			<key>en</key>
+			<string>Smart Houses</string>
+		</dict>
+		<key>images</key>
+		<dict/>
 	</dict>
 	<key>53</key>
 	<dict>
-		<key>en</key>
-		<string>Loft Houses</string>
-		<key>el</key>
-		<string>Κατοικίες Loft</string>
+		<key>images</key>
+		<dict/>
+		<key>titles</key>
+		<dict>
+			<key>el</key>
+			<string>Κατοικίες Loft</string>
+			<key>en</key>
+			<string>Loft Houses</string>
+		</dict>
 	</dict>
 	<key>54</key>
 	<dict>
-		<key>en</key>
-		<string>Finnish Houses</string>
-		<key>el</key>
-		<string>Φιλανδικές Κατοικίες</string>
+		<key>images</key>
+		<dict/>
+		<key>titles</key>
+		<dict>
+			<key>el</key>
+			<string>Φιλανδικές Κατοικίες</string>
+			<key>en</key>
+			<string>Finnish Houses</string>
+		</dict>
 	</dict>
 	<key>55</key>
 	<dict>
-		<key>en</key>
-		<string>Greek Island Houses</string>
-		<key>el</key>
-		<string>Νησιώτικες Κατοικίες</string>
+		<key>images</key>
+		<dict/>
+		<key>titles</key>
+		<dict>
+			<key>el</key>
+			<string>Νησιώτικες Κατοικίες</string>
+			<key>en</key>
+			<string>Greek Island Houses</string>
+		</dict>
 	</dict>
 	<key>56</key>
 	<dict>
-		<key>en</key>
-		<string>Country Houses</string>
-		<key>el</key>
-		<string>Κατοικίες Country</string>
+		<key>images</key>
+		<dict/>
+		<key>titles</key>
+		<dict>
+			<key>el</key>
+			<string>Κατοικίες Country</string>
+			<key>en</key>
+			<string>Country Houses</string>
+		</dict>
 	</dict>
 	<key>65</key>
 	<dict>
-		<key>en</key>
-		<string>Container Houses</string>
-		<key>el</key>
-		<string>Κατοικίες Container</string>
+		<key>titles</key>
+		<dict>
+			<key>el</key>
+			<string>Κατοικίες Container</string>
+			<key>en</key>
+			<string>Container Houses</string>
+		</dict>
+		<key>images</key>
+		<dict/>
 	</dict>
 	<key>57</key>
 	<dict>
-		<key>en</key>
-		<string>Villas Houses</string>
-		<key>el</key>
-		<string>Βίλλες</string>
+		<key>images</key>
+		<dict/>
+		<key>titles</key>
+		<dict>
+			<key>el</key>
+			<string>Βίλλες</string>
+			<key>en</key>
+			<string>Villas Houses</string>
+		</dict>
 	</dict>
 	<key>58</key>
 	<dict>
-		<key>en</key>
-		<string>Exclusive Houses</string>
-		<key>el</key>
-		<string>Κατοικίες Exclusive</string>
+		<key>images</key>
+		<dict/>
+		<key>titles</key>
+		<dict>
+			<key>el</key>
+			<string>Κατοικίες Exclusive</string>
+			<key>en</key>
+			<string>Exclusive Houses</string>
+		</dict>
 	</dict>
 	<key>59</key>
 	<dict>
-		<key>en</key>
-		<string>Videos</string>
-		<key>el</key>
-		<string>Videos</string>
+		<key>images</key>
+		<dict/>
+		<key>titles</key>
+		<dict>
+			<key>el</key>
+			<string>Videos</string>
+			<key>en</key>
+			<string>Videos</string>
+		</dict>
 	</dict>
 	<key>62</key>
 	<dict>
+		<key>images</key>
+		<dict/>
+		<key>titles</key>
+		<dict>
+			<key>en</key>
+			<string>Cycladic Houses</string>
+			<key>el</key>
+			<string>Κυκλαδίτικες Κατοικίες</string>
+		</dict>
 		<key>parent</key>
 		<integer>55</integer>
-		<key>en</key>
-		<string>Cycladic Houses</string>
-		<key>el</key>
-		<string>Κυκλαδίτικες Κατοικίες</string>
 	</dict>
 	<key>63</key>
 	<dict>
+		<key>images</key>
+		<dict/>
+		<key>titles</key>
+		<dict>
+			<key>el</key>
+			<string>Αιγαιοπελαγίτικες Κατοικίες</string>
+			<key>en</key>
+			<string>Aegean Houses</string>
+		</dict>
 		<key>parent</key>
 		<integer>55</integer>
-		<key>en</key>
-		<string>Aegean Houses</string>
-		<key>el</key>
-		<string>Αιγαιοπελαγίτικες Κατοικίες</string>
 	</dict>
 	<key>64</key>
 	<dict>
+		<key>images</key>
+		<dict/>
+		<key>titles</key>
+		<dict>
+			<key>el</key>
+			<string>Κατοικίες Ιονίων Νήσων</string>
+			<key>en</key>
+			<string>Ionian Island Houses</string>
+		</dict>
 		<key>parent</key>
 		<integer>55</integer>
-		<key>en</key>
-		<string>Ionian Island Houses</string>
-		<key>el</key>
-		<string>Κατοικίες Ιονίων Νήσων</string>
 	</dict>
 	<key>74</key>
 	<dict>
+		<key>images</key>
+		<dict/>
+		<key>titles</key>
+		<dict>
+			<key>el</key>
+			<string>Κατοικίες Exclusive</string>
+			<key>en</key>
+			<string>Exclusive Houses</string>
+		</dict>
 		<key>parent</key>
 		<integer>58</integer>
-		<key>en</key>
-		<string>Exclusive Houses</string>
-		<key>el</key>
-		<string>Κατοικίες Exclusive</string>
 	</dict>
 	<key>75</key>
 	<dict>
+		<key>images</key>
+		<dict/>
+		<key>titles</key>
+		<dict>
+			<key>el</key>
+			<string>Κατοικίες Art</string>
+			<key>en</key>
+			<string>Art Houses</string>
+		</dict>
 		<key>parent</key>
 		<integer>58</integer>
-		<key>en</key>
-		<string>Art Houses</string>
-		<key>el</key>
-		<string>Κατοικίες Art</string>
 	</dict>
 </dict>
 </plist>

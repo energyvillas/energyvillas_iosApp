@@ -129,11 +129,11 @@ static NSString *kName_publishDate = @"publishDate";
 	}else if ([elementName isEqualToString:kName_banner]) {
 		Banner *banner  = [[Banner alloc] init];
 		banner.key=self.bannerId;
-		banner.title = self.title == nil || [self.title compare:@""] == NSOrderedSame ? nil : self.title;
-		banner.body = self.body == nil || [self.body compare:@""] == NSOrderedSame ? nil : self.body;
-		banner.image = self.image == nil || [self.image compare:@""] == NSOrderedSame ? nil : self.image;
-		banner.url = self.url == nil || [self.url compare:@""] == NSOrderedSame ? nil : self.url;
-		banner.publishDate = self.publishDate == nil || [self.publishDate compare:@""] == NSOrderedSame ? nil : self.publishDate;
+		banner.title = self.title;
+		banner.body = self.body;
+		banner.image = self.image;
+		banner.url = self.url;
+		banner.publishDate = self.publishDate;
 		[self.banners insertObject:banner atIndex:index];
 		index=index+1;
 		banner=nil;

@@ -22,6 +22,8 @@
 - (NSArray *) freeDetailsFor:(NSString *)lang;
 - (NSArray *) freeBuyContentFor:(NSString *)lang;
 - (NSArray *) freeCoverFlowFor:(NSString *)lang;
-- (NSArray *) paidArticlesOfCategory:(int)aId lang:(NSString *)lang;
+- (NSArray *) paidArticlesOfCategory:(int)aId
+                                lang:(NSString *)lang;
+- (NSArray *) getSubCategoriesOf:(int)parentid;
 
 @end
