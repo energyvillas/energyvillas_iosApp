@@ -7,17 +7,14 @@
 //
 
 #import "DPPaidRootViewController.h"
-#import "../Classes/DPHtmlContentViewController.h"
-#import "../Classes/DPImageContentViewController.h"
-#import "../Controllers/DPCtgScrollViewController.h"
-#import "DPAdsViewController.h"
-#import "DPDataElement.h"
-#import "Article.h"
-//#import "DPImageInfo.h"
-#import "../External/OpenFlow/UIImageExtras.h"
-#import "DPCategoryViewController.h"
 #import "DPConstants.h"
+
+#import "../Controllers/DPCtgScrollViewController.h"
+#import "Article.h"
 #import "DPAppHelper.h"
+
+#import "DPAdsViewController.h"
+#import "DPMenuViewController.h"
 
 
 @interface DPPaidRootViewController ()
@@ -25,21 +22,12 @@
 
 @property (strong, nonatomic) DPAdsViewController *adsViewController;
 @property (strong, nonatomic) DPCtgScrollViewController *nnViewController;
-@property (strong, nonatomic) DPCtgScrollViewController *mmViewController;
-
-@property (strong, nonatomic) FPPopoverController *popController;
-@property (strong, nonatomic) UIViewController *islandPopupViewController;
-@property (strong, nonatomic) NSArray *islandsContent;
+@property (strong, nonatomic) DPMenuViewController *mmViewController;
 
 @end
 
 @implementation DPPaidRootViewController {
-    //int currentIndex;
     bool isPortrait;
-    
-    int islands_count;
-    int island_width;
-    int island_height;
 }
 
 
@@ -59,15 +47,6 @@
 }
 
 - (void) layoutForOrientation:(UIInterfaceOrientation)toOrientation fixtop:(BOOL)fixtop {
-    // dismiss popover since the positioning will be wrong
-    if (self.popController) {
-        [self.popController dismissPopoverAnimated:YES];
-        self.popController = nil;
-    }
-    
-    self.islandPopupViewController = nil;
-    self.islandsContent = nil;
-
     // handle orientation change
     switch (toOrientation) {
         case UIInterfaceOrientationLandscapeLeft:
@@ -178,7 +157,7 @@
         [self addChildViewController:self.adsViewController];
         [self.adsView addSubview:self.adsViewController.view];
     }
-   // else pending ???
+    // else pending ???
 }
 
 - (void) loadNewNextView {
@@ -202,16 +181,16 @@
                                                       videoUrl:nil
                                                    videolength:nil];
             
-
+            
             [content addObject: article];
         }
         
         if (isPortrait)
             self.nnViewController = [[DPCtgScrollViewController alloc]
-                     initWithContent:content rows:1 columns:2 autoScroll:NO];
+                                     initWithContent:content rows:1 columns:2 autoScroll:NO];
         else
             self.nnViewController = [[DPCtgScrollViewController alloc]
-                     initWithContent:content rows:2 columns:1 autoScroll:NO];
+                                     initWithContent:content rows:2 columns:1 autoScroll:NO];
         
         content = nil;
         
@@ -227,226 +206,41 @@
     }
 }
 
-- (void) elementTapped:(id)tappedelement {
-    DPDataElement *element = tappedelement;
-    if (element == nil) return;
-    
-    switch (element.Id) {
-        case CTGID_ISLAND: {
-            UIView *scrlv = self.mmViewController.view.subviews[0];
-            [self showIslandMenu:scrlv.subviews[3] ofCategory:element.Id];
-            break;
-        }
-            
-        case CTGID_EXCLUSIVE:
-            
-            break;
-            
-        case CTGID_SMART:
-        case CTGID_LOFT:
-        case CTGID_FINLAND:
-        case CTGID_COUNTRY:
-        case CTGID_CONTAINER:
-        case CTGID_VILLAS: {
-            DPCategoryViewController *ctgVC = [[DPCategoryViewController alloc]
-                                                initWithCategory:element.Id];
-            [self.navigationController pushViewController:ctgVC animated:YES];
-            
-            break;
-        }
-            
-        case CTGID_VIDEOS:
-            
-            break;
-            
-        case CTGID_ISLAND_AEGEAN:
-            
-            break;
-            
-        case CTGID_ISLAND_CYCLADIC:
-            
-            break;
-            
-        case CTGID_ISLAND_IONIAN:
-            
-            break;
-            
-        case CTGID_EXCLUSIVE_EXCLUSIVE:
-            
-            break;
-            
-        case CTGID_EXCLUSIVE_ART:
-            
-            break;
-            
-        default:
-            break;
-    }
-}
-
 - (void) loadMenuView {
-    UIView *bcv = self.mmView;
-    
-    NSLog(@"bvc frame : (x, y, w, h) = (%f, %f, %f, %f)",
-          bcv.frame.origin.x, bcv.frame.origin.y, bcv.frame.size.width, bcv.frame.size.height);
-
-    if (bcv.subviews.count == 0) {
-        DPAppHelper *apphelper = [DPAppHelper sharedInstance];
-        NSArray *content = [apphelper paidMenuOfCategory:-1
-                                                    lang:apphelper.currentLang];
-       
-        self.mmViewController = [[DPCtgScrollViewController alloc]
-                 initWithContent:content rows:3 columns:3 autoScroll:NO];
-
-        content = nil;
-        self.mmViewController.viewDelegate = self;
-        [self addChildViewController: self.mmViewController];
-        [bcv addSubview: self.mmViewController.view];
-    } else {
-        [self.mmViewController changeRows:3 columns:3];
+    if (self.mmView.subviews.count == 0)
+    {
+        self.mmViewController = [[DPMenuViewController alloc] initWithRows:3 columns:3 autoScroll:NO];
+        [self addChildViewController:self.mmViewController];
+        [self.mmView addSubview:self.mmViewController.view];
     }
-}
-
-- (UIView *) doCreateItem:(DPDataElement *)element tag:(int)indx{
-    CGRect frm = CGRectMake(island_width * indx, 0, island_width, island_height);
-
-    UIView *v = [[UIView alloc] initWithFrame: frm];
-    v.clipsToBounds = YES;
-    
-    frm = CGRectMake(0, 0, island_width, island_height);
-    UIImageView *iv = [[UIImageView alloc] initWithFrame: frm];
-    iv.image = [UIImage imageNamed: element.imageUrl];
-    iv.contentMode = UIViewContentModeScaleAspectFill; //UIViewContentModeScaleAspectFit;
-    iv.tag = indx;
-    UITapGestureRecognizer *tapper = [[UITapGestureRecognizer alloc]
-                                      initWithTarget:self action:@selector(handleIslandTap:)];
-    [iv addGestureRecognizer:tapper];
-    iv.userInteractionEnabled = YES;
-    
-    UILabel *lv = [[UILabel alloc] initWithFrame: frm];
-    lv.textAlignment = NSTextAlignmentCenter;
-    if (IS_IPAD)
-        lv.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:16];
     else
-        lv.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:12];
-    lv.adjustsFontSizeToFitWidth = YES;
-    lv.text = element.title;
-    lv.backgroundColor = [UIColor clearColor];
-    lv.textColor = [UIColor whiteColor];
-    [lv sizeToFit];
-    CGRect b = lv.bounds;
-    frm = CGRectMake(frm.origin.x, frm.origin.y + frm.size.height - b.size.height,
-                     frm.size.width, b.size.height);
-    lv.frame = frm;
-    
-    [v addSubview:iv];
-    [v addSubview:lv];
-    
-    return v;
+        [self.mmViewController changeRows:3
+                                  columns:3];
 }
 
-- (void)handleIslandTap:(UITapGestureRecognizer *)sender {
-    [self.popController dismissPopoverAnimated:YES];
-    self.popController = nil;
-    
-    if (sender.state == UIGestureRecognizerStateEnded) {
-        // handling code
-        int indx = sender.view.tag;
-        DPDataElement *element = self.islandsContent[indx];
-        NSLog(@"Clicked island image at index %i named %@ ", indx, element.title);
-        
-        [self elementTapped:element];
-    }
-}
-
--(id) doCreateIslandViewController:(int)ctgId {
-    UIViewController *vc = [[UIViewController alloc] init];
-    vc.view.frame = CGRectMake(island_width * islands_count, 0, island_width, island_height);
-    
-    DPAppHelper *appHelper = [DPAppHelper sharedInstance];
-    self.islandsContent = [appHelper paidMenuOfCategory:ctgId lang:appHelper.currentLang];
-
-    for (int i = 0; i < self.islandsContent.count; i++) {
-        DPDataElement *element = self.islandsContent[i];
-        [vc.view addSubview:[self doCreateItem:element tag:i]];
-    }
-    
-    return vc;
-}
-
-- (void)presentedNewPopoverController:(FPPopoverController *)newPopoverController
-          shouldDismissVisiblePopover:(FPPopoverController*)visiblePopoverController
-{
-    [visiblePopoverController dismissPopoverAnimated:YES];
-}
-
-- (void)popoverControllerDidDismissPopover:(FPPopoverController *)popoverController {
-    
-}
-
--(void) showIslandMenu:(id)fromView ofCategory:(int)ctgId{
-    CGRect mmfrm = self.mmView.frame;
-    islands_count = 3;
-
-    //the popover will be presented to a point relative to mmview
-    CGPoint pnt;
-
-    if (UIInterfaceOrientationIsPortrait(INTERFACE_ORIENTATION)) {
-        CGFloat ratio = mmfrm.size.width / mmfrm.size.height;
-        island_width = (mmfrm.size.width / 3) - 8;
-        island_height = island_width / ratio;
-
-        pnt = CGPointMake(mmfrm.origin.x + 2,
-                          self.view.frame.origin.y + mmfrm.origin.y + (mmfrm.size.height / 3) * 2.1);
-    } else {
-        island_width = mmfrm.size.width / 3;
-        island_height = mmfrm.size.height / 3;
-
-        pnt = CGPointMake(mmfrm.origin.x + island_width * 2,
-                                  self.view.frame.origin.y + mmfrm.origin.y + (mmfrm.size.height / 3) * 2.1);
-    }
-    
-    //the view controller you want to present as popover
-    if (!self.islandPopupViewController)
-        self.islandPopupViewController = [self doCreateIslandViewController:ctgId];
-    
-    self.islandPopupViewController.title = nil;
-
-    //our popover
-    self.popController = [[FPPopoverController alloc]
-                                    initWithViewController:self.islandPopupViewController];
-    self.popController.delegate = self;
-    self.popController.border = YES;
-    self.popController.contentSize = CGSizeMake(island_width * 3 + 20, island_height + 40);
-    self.popController.arrowDirection = FPPopoverArrowDirectionDown;//FPPopoverArrowDirectionDown | FPPopoverArrowDirectionRight;
-    
-    //[self.popoverController presentPopoverFromPoint:pnt];
-    [self.popController presentPopoverFromView:fromView];
-}
-
-- (UIImage *) imageForIndex:(int) indx withFrame:(CGRect *) targetFrame {
-    UIImage *img = [UIImage imageNamed:[NSString stringWithFormat:@"%d.jpg", indx]];
-    
-    if (targetFrame == nil) return img;
-    
-    float coeff = 1.0;
-    float vh = (*targetFrame).size.height;
-    float vw = (*targetFrame).size.width;
-    float ih = img.size.height;
-    float iw = img.size.width;
-    if (iw/vw > ih/vh)
-        coeff = (vw / iw);
-    else
-        coeff = (vh / ih);
-    
-    if (coeff > 1.5) coeff = 1.5;
-    
-    ih = ih * coeff;
-    iw = iw * coeff;
-    
-    NSLog(@"scaling image %d.jpg from (%f, %f) => (%f, %f)", indx, img.size.width, img.size.height, iw, ih);
-    return [img rescaleImageToSize:CGSizeMake(iw, ih)];
-}
+//- (UIImage *) imageForIndex:(int) indx withFrame:(CGRect *) targetFrame {
+//    UIImage *img = [UIImage imageNamed:[NSString stringWithFormat:@"%d.jpg", indx]];
+//    
+//    if (targetFrame == nil) return img;
+//    
+//    float coeff = 1.0;
+//    float vh = (*targetFrame).size.height;
+//    float vw = (*targetFrame).size.width;
+//    float ih = img.size.height;
+//    float iw = img.size.width;
+//    if (iw/vw > ih/vh)
+//        coeff = (vw / iw);
+//    else
+//        coeff = (vh / ih);
+//    
+//    if (coeff > 1.5) coeff = 1.5;
+//    
+//    ih = ih * coeff;
+//    iw = iw * coeff;
+//    
+//    NSLog(@"scaling image %d.jpg from (%f, %f) => (%f, %f)", indx, img.size.width, img.size.height, iw, ih);
+//    return [img rescaleImageToSize:CGSizeMake(iw, ih)];
+//}
 
 - (void)didReceiveMemoryWarning
 {

@@ -7,7 +7,12 @@
 //
 
 #import "DPScrollableViewController.h"
+#import "FPPopoverController.h"
 
-@interface DPMenuViewController : DPScrollableViewController
+@interface DPMenuViewController : DPScrollableViewController <DPScrollableViewDelegate, FPPopoverControllerDelegate>
+
+- (id) initWithRows:(int)rows
+            columns:(int)columns
+         autoScroll:(BOOL)autoscroll;
 
 @end

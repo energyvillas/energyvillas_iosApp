@@ -14,12 +14,13 @@
 #import "DPAppHelper.h"
 #import "DPAnimatedCategoriesView.h"
 #import "DPAdsViewController.h"
+#import "DPMenuViewController.h"
 
 
 @interface DPCategoryViewController ()
 
 @property (strong, nonatomic) DPAdsViewController *adsViewController;
-@property (strong, nonatomic) DPCtgScrollViewController *mmViewController;
+@property (strong, nonatomic) DPMenuViewController *mmViewController;
 @property (strong, nonatomic) NSArray *categories;
 
 @end
@@ -215,57 +216,75 @@
 }
 
 - (void) loadMenuView {
-    UIView *bcv = self.mmView;
+    int rows = isPortrait ? 1 : 3;
+    int cols = isPortrait ? 3 : 1;
     
-    NSLog(@"bvc frame : (x, y, w, h) = (%f, %f, %f, %f)",
-          bcv.frame.origin.x, bcv.frame.origin.y, bcv.frame.size.width, bcv.frame.size.height);
-    
-    if (bcv.subviews.count == 0) {
-        DPAppHelper *apphelper = [DPAppHelper sharedInstance];
-        NSArray *content = [apphelper paidMenuOfCategory:-1 lang:apphelper.currentLang];
+    if (self.mmView.subviews.count == 0)
+    {
+        self.mmViewController = [[DPMenuViewController alloc] initWithRows:rows
+                                                                   columns:cols
+                                                                autoScroll:NO];
         
-        if (isPortrait)
-            self.mmViewController = [[DPCtgScrollViewController alloc]
-                                initWithContent:content rows:1 columns:3
-                                autoScroll:NO];
-        else
-            self.mmViewController = [[DPCtgScrollViewController alloc]
-                                initWithContent:content rows:3 columns:1
-                                autoScroll:NO];
-        
-        [self addChildViewController: self.mmViewController];
-        [bcv addSubview: self.mmViewController.view];
-    } else {
-        if (isPortrait)
-            [self.mmViewController changeRows:1 columns:3];
-        else
-            [self.mmViewController changeRows:3 columns:1];
+        [self addChildViewController:self.mmViewController];
+        [self.mmView addSubview:self.mmViewController.view];
     }
+    else
+        [self.mmViewController changeRows:rows
+                                  columns:cols];
 }
 
-- (UIImage *) imageForIndex:(int) indx withFrame:(CGRect *) targetFrame {
-    UIImage *img = [UIImage imageNamed:[NSString stringWithFormat:@"%d.jpg", indx]];
-    
-    if (targetFrame == nil) return img;
-    
-    float coeff = 1.0;
-    float vh = (*targetFrame).size.height;
-    float vw = (*targetFrame).size.width;
-    float ih = img.size.height;
-    float iw = img.size.width;
-    if (iw/vw > ih/vh)
-        coeff = (vw / iw);
-    else
-        coeff = (vh / ih);
-    
-    if (coeff > 1.5) coeff = 1.5;
-    
-    ih = ih * coeff;
-    iw = iw * coeff;
-    
-    NSLog(@"scaling image %d.jpg from (%f, %f) => (%f, %f)", indx, img.size.width, img.size.height, iw, ih);
-    return [img rescaleImageToSize:CGSizeMake(iw, ih)];
-}
+
+//    UIView *bcv = self.mmView;
+//
+//    NSLog(@"bvc frame : (x, y, w, h) = (%f, %f, %f, %f)",
+//          bcv.frame.origin.x, bcv.frame.origin.y, bcv.frame.size.width, bcv.frame.size.height);
+//    
+//    if (bcv.subviews.count == 0) {
+//        DPAppHelper *apphelper = [DPAppHelper sharedInstance];
+//        NSArray *content = [apphelper paidMenuOfCategory:-1 lang:apphelper.currentLang];
+//        
+//        if (isPortrait)
+//            self.mmViewController = [[DPCtgScrollViewController alloc]
+//                                initWithContent:content rows:1 columns:3
+//                                autoScroll:NO];
+//        else
+//            self.mmViewController = [[DPCtgScrollViewController alloc]
+//                                initWithContent:content rows:3 columns:1
+//                                autoScroll:NO];
+//        
+//        [self addChildViewController: self.mmViewController];
+//        [bcv addSubview: self.mmViewController.view];
+//    } else {
+//        if (isPortrait)
+//            [self.mmViewController changeRows:1 columns:3];
+//        else
+//            [self.mmViewController changeRows:3 columns:1];
+//    }
+//}
+
+//- (UIImage *) imageForIndex:(int) indx withFrame:(CGRect *) targetFrame {
+//    UIImage *img = [UIImage imageNamed:[NSString stringWithFormat:@"%d.jpg", indx]];
+//    
+//    if (targetFrame == nil) return img;
+//    
+//    float coeff = 1.0;
+//    float vh = (*targetFrame).size.height;
+//    float vw = (*targetFrame).size.width;
+//    float ih = img.size.height;
+//    float iw = img.size.width;
+//    if (iw/vw > ih/vh)
+//        coeff = (vw / iw);
+//    else
+//        coeff = (vh / ih);
+//    
+//    if (coeff > 1.5) coeff = 1.5;
+//    
+//    ih = ih * coeff;
+//    iw = iw * coeff;
+//    
+//    NSLog(@"scaling image %d.jpg from (%f, %f) => (%f, %f)", indx, img.size.width, img.size.height, iw, ih);
+//    return [img rescaleImageToSize:CGSizeMake(iw, ih)];
+//}
 
 
 @end

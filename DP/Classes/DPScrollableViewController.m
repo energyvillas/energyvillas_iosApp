@@ -131,7 +131,11 @@
     
     self.colCount = columns;
     self.rowCount = rows;
-    self.currentPage = oldpage * oldcols * oldrows / (rows * columns);
+    if (self.rowCount * self.colCount == 0)
+        self.currentPage = -1;
+    else
+        self.currentPage = oldpage * oldcols * oldrows / (rows * columns);
+    
     while (self.scrollView.subviews.count>0) {
         UIView *v = self.scrollView.subviews[0];
         [v removeFromSuperview];
@@ -174,6 +178,8 @@
             }
         }
     }
+    
+    if (self.rowCount * self.colCount == 0) return;
     
 	int pageCount = [self calcPageCount];
     
