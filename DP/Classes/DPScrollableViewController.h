@@ -25,4 +25,8 @@
 - (id) initWithContent:(NSArray *)content autoScroll:(BOOL)autoscroll;
 - (void) changeRows:(int)rows columns:(int)columns;
 
+
+// protected virtual
+- (void) contentLoaded:(NSArray *)content;
+
 @end

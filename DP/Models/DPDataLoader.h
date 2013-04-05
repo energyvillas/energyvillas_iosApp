@@ -26,6 +26,8 @@
 
 @property (weak, nonatomic) id <DPDataLoaderDelegate> delegate;
 @property (strong, nonatomic) NSArray *datalist;
+@property (readonly, getter = getDataRefreshNeeded) BOOL dataRefreshNeeded;
+
 
 +(NSString*) digestSHA1:(NSString*)input;
 

@@ -6,6 +6,7 @@
 //  Copyright (c) 2013 Γεώργιος Γράβος. All rights reserved.
 //
 
+#import <Foundation/Foundation.h>
 #import "DPPaidMainViewController.h"
 #import "../Classes/DPHtmlContentViewController.h"
 #import "../Classes/DPImageContentViewController.h"

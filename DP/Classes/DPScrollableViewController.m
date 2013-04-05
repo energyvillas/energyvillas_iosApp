@@ -8,10 +8,11 @@
 
 #import "DPScrollableViewController.h"
 #import "../External/ImageHelper/ImageResizing.h"
-#import "Article.h"
-#import "DPTestViewController.h"
+#import "DPDataElement.h"
+//#import "DPTestViewController.h"
 #import "DPConstants.h"
-#include <Quartzcore/Quartzcore.h>
+#import <Quartzcore/Quartzcore.h>
+#import "ASIHTTPRequest.h"
 
 
 @interface DPScrollableViewController ()
@@ -20,6 +21,9 @@
 
 @property (strong, nonatomic) NSMutableArray *portraitRendered;
 @property (strong, nonatomic) NSMutableArray *landscapeRendered;
+
+@property (strong, nonatomic) UIActivityIndicatorView *busyIndicator;
+@property (strong, nonatomic) NSOperationQueue *downloadQueue;
 
 @end
 
@@ -69,6 +73,10 @@
     return self;
 }
 
+- (void) contentLoaded:(NSArray *)content {
+    self.contentList = content;
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -107,6 +115,9 @@
 }
 
 - (void)viewDidUnload {
+    [self stopIndicator];
+    if (self.downloadQueue)
+        [self.downloadQueue cancelAllOperations];
     [self setScrollView:nil];
     [self setPageControl:nil];
     [super viewDidUnload];
@@ -138,6 +149,8 @@
 }
 
 - (void) doInit {
+    if (self.contentList == nil || self.contentList.count == 0) return;
+    
     BOOL isRendered = NO;
     if (UIInterfaceOrientationIsPortrait(INTERFACE_ORIENTATION)) {
         isRendered = self.portraitRendered != nil;
@@ -224,8 +237,12 @@
                     r = CGRectMake(0, 0, colWidth + fixWidth, rowHeight + fixHeight);
                     UIImageView *iv = [[UIImageView alloc] initWithFrame: r];
                     iv.contentMode = UIViewContentModeScaleAspectFill; //UIViewContentModeScaleToFill; //UIViewContentModeScaleAspectFill; //UIViewContentModeScaleAspectFit;
-                    Article *article = self.contentList[indx];
-                    iv.image = [UIImage imageNamed:article.imageUrl];
+                    DPDataElement *element = self.contentList[indx];
+                    if ([self isLocalUrl:element.imageUrl])
+                        iv.image = [UIImage imageNamed:element.imageUrl];
+                    else {
+                        [self loadImageAsync:element inView:iv];
+                    }
                     iv.tag = indx;
                     UITapGestureRecognizer *tapper = [[UITapGestureRecognizer alloc]
                                                       initWithTarget:self action:@selector(handleTap:)];
@@ -240,7 +257,7 @@
                     else
                         lv.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:12];
                     lv.adjustsFontSizeToFitWidth = YES;
-                    lv.text = article.title;
+                    lv.text = element.title;
                     lv.backgroundColor = [UIColor clearColor];
                     [lv sizeToFit];
                     CGRect b = lv.bounds;
@@ -282,10 +299,10 @@
     if (sender.state == UIGestureRecognizerStateEnded) {
         // handling code
         int indx = sender.view.tag;
-        Article * article = self.contentList[indx];
-        NSLog(@"Clicked image at index %i named %@", indx, article.title);
+        DPDataElement * element = self.contentList[indx];
+        NSLog(@"Clicked image at index %i named %@", indx, element.title);
         
-        [self invokeViewDelegate:article];
+        [self invokeViewDelegate:element];
         
         // navigation logic goes here. create and push a new view controller;
 //        DPTestViewController *vc = [[DPTestViewController alloc] init];
@@ -415,6 +432,84 @@
     usertimer = nil;
     userTimerActive = 0;
     timerUsed = NO;
+}
+
+
+- (BOOL) isLocalUrl:(NSString *)urlstr {
+    NSURL *url = [NSURL URLWithString:urlstr];
+    return url.isFileReferenceURL || url.host == nil;
+}
+
+- (void) startIndicator {
+    if(!self.busyIndicator) {
+		self.busyIndicator = [[UIActivityIndicatorView alloc]
+                              initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+		self.busyIndicator.frame = CGRectMake((self.view.frame.size.width-25)/2,
+                                              (self.view.frame.size.height-25)/2,
+                                              25, 25);
+		self.busyIndicator.hidesWhenStopped = TRUE;
+        [self.view addSubview:self.busyIndicator];
+	}
+    
+    if (!self.busyIndicator.isAnimating)
+        [self.busyIndicator startAnimating];
+}
+
+- (void) stopIndicator {
+    if (self.busyIndicator &&
+        self.downloadQueue &&
+        self.downloadQueue.operationCount == 0) {
+        [self.busyIndicator stopAnimating];
+        [self.busyIndicator removeFromSuperview];
+        self.busyIndicator = nil;
+    }
+}
+
+- (void) loadImageAsync:(DPDataElement *)elm inView:(UIImageView *)imgView {
+    if (!self.downloadQueue)
+        self.downloadQueue = [[NSOperationQueue alloc] init];
+
+    ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:[NSURL URLWithString:elm.imageUrl]];
+    [request setDelegate:self];
+    [request setDidFinishSelector:@selector(requestDone:)];
+    request.userInfo = [NSDictionary dictionaryWithObjectsAndKeys:
+                        elm, @"element",
+                        imgView, @"imageView",
+                        nil];
+    [self.downloadQueue addOperation:request];
+
+    [self startIndicator];
+    
+
+    
+//    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0),
+//                   ^{
+//                       NSURL *url = [NSURL URLWithString:elm.imageUrl];
+//                       NSURLConnection *conn = [NSURLConnection ]
+//                       // on finish update the imageview's image in main thread...
+//                       dispatch_async(dispatch_get_main_queue(),
+//                                      ^{
+//                                      });
+//                   }
+//    );
+}
+
+
+- (void)requestDone:(ASIHTTPRequest *)request{
+    [self stopIndicator];
+
+    NSDictionary *uiDict = request.userInfo;
+//    DPDataElement *elm = uiDict[@"element"];
+    UIImageView *iv = uiDict[@"imageView"];
+
+    //elm.imageData = [request responseData];
+    iv.image = [UIImage imageWithData:[request responseData]];
+}
+
+- (void)requestFailed:(ASIHTTPRequest *)request
+{
+    [self stopIndicator];
+	NSLog(@"Request Failed: %@", [request error]);    
 }
 
 @end

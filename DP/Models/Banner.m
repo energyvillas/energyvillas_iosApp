@@ -15,9 +15,9 @@
 -(void)encodeWithCoder:(NSCoder *)encoder{
     [super encodeWithCoder:encoder];
     
-	[encoder encodeObject:self.title forKey:encBannerTitle];
+//	[encoder encodeObject:self.title forKey:encBannerTitle];
+//	[encoder encodeObject:self.image forKey:encBannerImage];
 	[encoder encodeObject:self.body forKey:encBannerBody];
-	[encoder encodeObject:self.image forKey:encBannerImage];
 	[encoder encodeObject:self.url forKey:encBannerURL];
 	[encoder encodeObject:self.publishDate forKey:encBannerPublishDate];
 }
@@ -27,10 +27,10 @@
     
 	if (self) {
         
-		self.title = [aDecoder decodeObjectForKey:encBannerTitle];
+//		self.title = [aDecoder decodeObjectForKey:encBannerTitle];
+//		self.image = [aDecoder decodeObjectForKey:encBannerImage];
 		self.body = [aDecoder decodeObjectForKey:encBannerBody];
 		self.url = [aDecoder decodeObjectForKey:encBannerURL];
-		self.image = [aDecoder decodeObjectForKey:encBannerImage];
 		self.publishDate = [aDecoder decodeObjectForKey:encBannerPublishDate];
 	}
     
@@ -39,17 +39,17 @@
 
 - (id) initWithValues:(NSString *)aId
                 title:(NSString *)aTitle
-                image:(NSString *)aImage
+             imageUrl:(NSString *)aImageUrl
                  body:(NSString *)aBody
                   url:(NSString *)aURL
           publishDate:(NSString *)aPublishDate
 {
-    self = [super init];
+    self = [super initWithValues:aId title:aTitle imageUrl:aImageUrl];
     
 	if (self) {
 		self.key = aId;
-		self.title = NullIfEmpty(aTitle);
-		self.image = NullIfEmpty(aImage);
+//		self.title = NullIfEmpty(aTitle);
+//		self.image = NullIfEmpty(aImage);
 		self.body = NullIfEmpty(aBody);
 		self.publishDate = NullIfEmpty(aPublishDate);
 		self.url = NullIfEmpty(aURL);

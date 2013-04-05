@@ -7,6 +7,7 @@
 //
 
 #import "UINavContentViewController.h"
+#import "Reachability.h"
 #import "DPConstants.h"
 #import "DPAppHelper.h"
 
@@ -23,20 +24,31 @@
                                              selector:@selector(onNotified:)
                                                  name:DPN_currentLangChanged
                                                object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(onNotified:)
+                                                 name:kReachabilityChangedNotification
+                                               object:nil];
 }
 
 - (void) onNotified:(NSNotification *) notification
 {
-    // [notification name] should always be @"TestNotification"
-    // unless you use this method for observation of other notifications
-    // as well.
-    
     if ([[notification name] isEqualToString:DPN_currentLangChanged]) {
-        NSLog (@"Successfully received the test notification!");
+        NSLog (@"Successfully received the ==DPN_currentLangChanged== notification!");
         
         [self langSelected];
         [self doLocalize];
     }
+    
+    if ([[notification name] isEqualToString:kReachabilityChangedNotification]) {
+        NSLog (@"Successfully received the ==kReachabilityChangedNotification== notification!");
+        
+        [self reachabilityChanged];
+    }
+}
+
+- (void) reachabilityChanged {
+    
 }
 
 - (void) doLocalize {

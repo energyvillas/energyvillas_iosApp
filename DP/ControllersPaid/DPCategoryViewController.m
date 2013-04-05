@@ -206,7 +206,7 @@
     
     if (bcv.subviews.count == 0) {
         DPAppHelper *apphelper = [DPAppHelper sharedInstance];
-        NSArray *content = [apphelper paidArticlesOfCategory:-1 lang:apphelper.currentLang];
+        NSArray *content = [apphelper paidMenuOfCategory:-1 lang:apphelper.currentLang];
         
         if (isPortrait)
             self.mmViewController = [[DPCtgScrollViewController alloc]

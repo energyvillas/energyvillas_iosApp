@@ -131,7 +131,7 @@ static NSString *kName_publishDate = @"publishDate";
 		banner.key=self.bannerId;
 		banner.title = self.title;
 		banner.body = self.body;
-		banner.image = self.image;
+		banner.imageUrl = self.image;
 		banner.url = self.url;
 		banner.publishDate = self.publishDate;
 		[self.banners insertObject:banner atIndex:index];
@@ -178,7 +178,7 @@ parseErrorOccurred:(NSError *)parseError {
 	NSLog(@"url: %@",self.url);
 	
 	for (Banner* banner in self.banners) {
-		NSLog(@"ROW id=%@ title=%@ image=%@ url=%@", banner.key, banner.title, banner.image, banner.url);
+		NSLog(@"ROW id=%@ title=%@ image=%@ url=%@", banner.key, banner.title, banner.imageUrl, banner.url);
 	}
 	
 }

@@ -10,8 +10,10 @@
 #import "../Classes/DPHtmlContentViewController.h"
 #import "../Classes/DPImageContentViewController.h"
 #import "../Controllers/DPCtgScrollViewController.h"
+#import "DPAdsViewController.h"
+#import "DPDataElement.h"
 #import "Article.h"
-#import "DPImageInfo.h"
+//#import "DPImageInfo.h"
 #import "../External/OpenFlow/UIImageExtras.h"
 #import "DPCategoryViewController.h"
 #import "DPConstants.h"
@@ -21,6 +23,7 @@
 @interface DPPaidRootViewController ()
 
 
+@property (strong, nonatomic) DPAdsViewController *adsViewController;
 @property (strong, nonatomic) DPCtgScrollViewController *nnViewController;
 @property (strong, nonatomic) DPCtgScrollViewController *mmViewController;
 
@@ -163,8 +166,19 @@
         }
     }
     
+    [self loadAdsView];
     [self loadNewNextView];
     [self loadMenuView];
+}
+
+- (void) loadAdsView {
+    if (self.adsView.subviews.count == 0)
+    {
+        self.adsViewController = [[DPAdsViewController alloc] initWithGroup:1];
+        [self addChildViewController:self.adsViewController];
+        [self.adsView addSubview:self.adsViewController.view];
+    }
+   // else pending ???
 }
 
 - (void) loadNewNextView {
@@ -213,48 +227,55 @@
     }
 }
 
-- (void) elementTapped:(id)element {
-    Article *article = element;
-    if (article == nil) return;
+- (void) elementTapped:(id)tappedelement {
+    DPDataElement *element = tappedelement;
+    if (element == nil) return;
     
-    int ctgid = article.category.intValue;
-    switch (ctgid) {
-        case TAG_MM_ISLAND: {
+    switch (element.Id) {
+        case CTGID_ISLAND: {
             UIView *scrlv = self.mmViewController.view.subviews[0];
-            [self showIslandMenu:scrlv.subviews[3] ofCategory:article.category.intValue];
+            [self showIslandMenu:scrlv.subviews[3] ofCategory:element.Id];
             break;
         }
             
-        case TAG_MM_EXCLUSIVE:
+        case CTGID_EXCLUSIVE:
             
             break;
             
-        case TAG_MM_SMART:
-        case TAG_MM_LOFT:
-        case TAG_MM_FINLAND:
-        case TAG_MM_COUNTRY:
-        case TAG_MM_CONTAINER:
-        case TAG_MM_VILLAS: {
+        case CTGID_SMART:
+        case CTGID_LOFT:
+        case CTGID_FINLAND:
+        case CTGID_COUNTRY:
+        case CTGID_CONTAINER:
+        case CTGID_VILLAS: {
             DPCategoryViewController *ctgVC = [[DPCategoryViewController alloc]
-                                                initWithCategory:55];//article.category.intValue];
+                                                initWithCategory:element.Id];
             [self.navigationController pushViewController:ctgVC animated:YES];
             
             break;
         }
             
-        case TAG_MM_VIDEOS:
+        case CTGID_VIDEOS:
             
             break;
             
-        case TAG_MM_ISLAND_AEGEAN:
+        case CTGID_ISLAND_AEGEAN:
             
             break;
             
-        case TAG_MM_ISLAND_CYCLADIC:
+        case CTGID_ISLAND_CYCLADIC:
             
             break;
             
-        case TAG_MM_ISLAND_IONIAN:
+        case CTGID_ISLAND_IONIAN:
+            
+            break;
+            
+        case CTGID_EXCLUSIVE_EXCLUSIVE:
+            
+            break;
+            
+        case CTGID_EXCLUSIVE_ART:
             
             break;
             
@@ -271,8 +292,8 @@
 
     if (bcv.subviews.count == 0) {
         DPAppHelper *apphelper = [DPAppHelper sharedInstance];
-        NSArray *content = [apphelper paidArticlesOfCategory:-1
-                                                        lang:apphelper.currentLang];
+        NSArray *content = [apphelper paidMenuOfCategory:-1
+                                                    lang:apphelper.currentLang];
        
         self.mmViewController = [[DPCtgScrollViewController alloc]
                  initWithContent:content rows:3 columns:3 autoScroll:NO];
@@ -286,7 +307,7 @@
     }
 }
 
-- (UIView *) doCreateItem:(Article *)article tag:(int)indx{
+- (UIView *) doCreateItem:(DPDataElement *)element tag:(int)indx{
     CGRect frm = CGRectMake(island_width * indx, 0, island_width, island_height);
 
     UIView *v = [[UIView alloc] initWithFrame: frm];
@@ -294,7 +315,7 @@
     
     frm = CGRectMake(0, 0, island_width, island_height);
     UIImageView *iv = [[UIImageView alloc] initWithFrame: frm];
-    iv.image = [UIImage imageNamed: article.imageUrl];
+    iv.image = [UIImage imageNamed: element.imageUrl];
     iv.contentMode = UIViewContentModeScaleAspectFill; //UIViewContentModeScaleAspectFit;
     iv.tag = indx;
     UITapGestureRecognizer *tapper = [[UITapGestureRecognizer alloc]
@@ -309,7 +330,7 @@
     else
         lv.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:12];
     lv.adjustsFontSizeToFitWidth = YES;
-    lv.text = article.title;
+    lv.text = element.title;
     lv.backgroundColor = [UIColor clearColor];
     lv.textColor = [UIColor whiteColor];
     [lv sizeToFit];
@@ -331,10 +352,10 @@
     if (sender.state == UIGestureRecognizerStateEnded) {
         // handling code
         int indx = sender.view.tag;
-        Article *article = self.islandsContent[indx];
-        NSLog(@"Clicked island image at index %i named %@ ", indx, article.title);
+        DPDataElement *element = self.islandsContent[indx];
+        NSLog(@"Clicked island image at index %i named %@ ", indx, element.title);
         
-        [self elementTapped:article];
+        [self elementTapped:element];
     }
 }
 
@@ -343,11 +364,11 @@
     vc.view.frame = CGRectMake(island_width * islands_count, 0, island_width, island_height);
     
     DPAppHelper *appHelper = [DPAppHelper sharedInstance];
-    self.islandsContent = [appHelper paidArticlesOfCategory:ctgId lang:appHelper.currentLang];
+    self.islandsContent = [appHelper paidMenuOfCategory:ctgId lang:appHelper.currentLang];
 
     for (int i = 0; i < self.islandsContent.count; i++) {
-        Article *article = self.islandsContent[i];
-        [vc.view addSubview:[self doCreateItem:article tag:i]];
+        DPDataElement *element = self.islandsContent[i];
+        [vc.view addSubview:[self doCreateItem:element tag:i]];
     }
     
     return vc;

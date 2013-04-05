@@ -287,17 +287,6 @@
     showAlertMessage(nil,
                      DPLocalizedString(kERR_TITLE_URL_NOT_FOUND),
                      DPLocalizedString(kERR_MSG_DATA_LOAD_FAILED));
-/*
-	UIAlertView *alertDialog;
-	alertDialog = [[UIAlertView alloc]
-                   initWithTitle:@"Αποτυχία Σύνδεσης"
-                   message:@"Η διαδικασία ανάκτησης νέων απέτυχε! Παρακαλούμε δοκιμάστε αργότερα..."
-                   delegate:nil
-                   cancelButtonTitle:@"OK"
-                   otherButtonTitles:nil];
-    
-	[alertDialog show];
-*/
 }
 
 #pragma mark -

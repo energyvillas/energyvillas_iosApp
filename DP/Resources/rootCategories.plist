@@ -12,7 +12,10 @@
 			<string>Smart Houses</string>
 		</dict>
 		<key>images</key>
-		<dict/>
+		<dict>
+			<key>en</key>
+			<string>Smart Houses.jpg</string>
+		</dict>
 	</dict>
 	<key>53</key>
 	<dict>

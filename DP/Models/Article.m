@@ -19,9 +19,9 @@
     
 	[encoder encodeObject:self.lang forKey:encArticleLang];
 	[encoder encodeObject:self.category forKey:encArticleCategory];
-	[encoder encodeObject:self.title forKey:encArticleTitle];
+//	[encoder encodeObject:self.title forKey:encArticleTitle];
+//	[encoder encodeObject:self.imageUrl forKey:encArticleImage];
 	[encoder encodeObject:self.body forKey:encArticleBody];
-	[encoder encodeObject:self.imageUrl forKey:encArticleImage];
 	[encoder encodeObject:self.url forKey:encArticleURL];
 	[encoder encodeObject:self.publishDate forKey:encArticlePublishDate];
 	[encoder encodeObject:self.videoUrl forKey:encArticleVideoFile];
@@ -36,10 +36,10 @@
 
 		self.lang = [aDecoder decodeObjectForKey:encArticleLang];
 		self.category = [aDecoder decodeObjectForKey:encArticleCategory];
-		self.title = [aDecoder decodeObjectForKey:encArticleTitle];
+//		self.title = [aDecoder decodeObjectForKey:encArticleTitle];
+//		self.imageUrl = [aDecoder decodeObjectForKey:encArticleImage];
 		self.body = [aDecoder decodeObjectForKey:encArticleBody];
 		self.url = [aDecoder decodeObjectForKey:encArticleURL];
-		self.imageUrl = [aDecoder decodeObjectForKey:encArticleImage];
 		self.publishDate = [aDecoder decodeObjectForKey:encArticlePublishDate];
 		self.videoUrl = [aDecoder decodeObjectForKey:encArticleVideoFile];
 		self.videolength = [aDecoder decodeObjectForKey:encArticleVideoLength];
@@ -52,21 +52,22 @@
 - (id) initWithValues:(NSString *)aId
                  lang:(NSString *)aLang
              category:(NSString*)aCategory
-              title:(NSString *)aTitle
-              imageUrl:(NSString *)aImage
-               body:(NSString *)aBody
-                url:(NSString *)aURL
-        publishDate:(NSString *)aPublishDate
-          videoUrl:(NSString *)aVideoFile
-        videolength:(NSString *)aVideoLength {
-    self = [super init];
+                title:(NSString *)aTitle
+             imageUrl:(NSString *)aImageUrl
+                 body:(NSString *)aBody
+                  url:(NSString *)aURL
+          publishDate:(NSString *)aPublishDate
+             videoUrl:(NSString *)aVideoFile
+          videolength:(NSString *)aVideoLength
+{
+    self = [super initWithValues:aId title:aTitle imageUrl:aImageUrl];
     
 	if (self) {
-		self.key = aId;
+//		self.key = aId;
         self.lang = aLang;
         self.category = NullIfEmpty(aCategory);
-        self.title = NullIfEmpty(aTitle);
-		self.imageUrl = NullIfEmpty(aImage);
+//        self.title = NullIfEmpty(aTitle);
+//		self.imageUrl = NullIfEmpty(aImage);
 		self.body = NullIfEmpty(aBody);
 		self.publishDate = NullIfEmpty(aPublishDate);
 		self.url = NullIfEmpty(aURL);

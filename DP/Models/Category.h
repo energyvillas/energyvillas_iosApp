@@ -11,16 +11,16 @@
 #import "DPDataCache.h"
 
 #define encCategoryLang @"Lang"
-#define encCategoryTitle @"Title"
-#define encCategoryImageUrl @"ImageUrl"
+//#define encCategoryTitle @"Title"
+//#define encCategoryImageUrl @"Image"
 #define encCategoryParent @"Parent"
 
 
 @interface Category : DPDataElement
 
 @property (strong, nonatomic) NSString *lang;
-@property (nonatomic, strong) NSString *title;
-@property (nonatomic, strong) NSString *imageUrl;
+//@property (nonatomic, strong) NSString *title;
+//@property (nonatomic, strong) NSString *imageUrl;
 @property (nonatomic, strong) NSDictionary *titles;
 @property (nonatomic, strong) NSDictionary *imageUrls;
 @property (nonatomic, strong) NSString *parent;

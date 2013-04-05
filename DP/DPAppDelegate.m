@@ -18,7 +18,9 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     [DPIAPHelper sharedInstance];
-    [DPAppHelper sharedInstance].currentLang =@"el"; //[[NSLocale preferredLanguages] objectAtIndex:0];//@"el";
+    
+    [DPAppHelper sharedInstance].useCache = [self useDataCache];
+    [DPAppHelper sharedInstance].currentLang = @"en"; //[[NSLocale preferredLanguages] objectAtIndex:0];//@"el";
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
@@ -43,7 +45,15 @@ void myExceptionHandler (NSException *exception)
     NSLog(@"Stack trace: %@", stack);
 }
 
-- (bool) isPurchased {
+- (BOOL) useDataCache {
+    return NO;
+    
+    NSUserDefaults *usrDefaults = [NSUserDefaults standardUserDefaults];
+    BOOL useDataCaching = [usrDefaults boolForKey:USE_DATA_CACHING];
+    return useDataCaching;
+    
+}
+- (BOOL) isPurchased {
     return YES;
     
     NSUserDefaults *usrDefaults = [NSUserDefaults standardUserDefaults];

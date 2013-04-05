@@ -104,6 +104,9 @@
     [self.view addSubview:webView];
 }
 
+#pragma -
+#pragma dataloaderdelegate methods
+
 - (void)loadFinished:(DPDataLoader *)loader {
     NSArray *articles = loader.datalist;
  
@@ -125,6 +128,8 @@
                      DPLocalizedString(kERR_TITLE_URL_NOT_FOUND),
                      DPLocalizedString(kERR_MSG_DATA_LOAD_FAILED));
 }
+
+#pragma
 
 - (void)viewDidLoad
 {

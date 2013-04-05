@@ -10,8 +10,8 @@
 #import "DPDataElement.h"
 #import "DPDataCache.h"
 
-#define encBannerTitle @"Title"
-#define encBannerImage @"Image"
+//#define encBannerTitle @"Title"
+//#define encBannerImage @"Image"
 #define encBannerBody @"Body"
 #define encBannerURL @"URL"
 #define encBannerPublishDate @"PublishDate"
@@ -19,8 +19,8 @@
 
 @interface Banner : DPDataElement
 
-@property (nonatomic, strong) NSString *title;
-@property (nonatomic, strong) NSString *image;
+//@property (nonatomic, strong) NSString *title;
+//@property (nonatomic, strong) NSString *image;
 @property (nonatomic, strong) NSString *body;
 @property (nonatomic, strong) NSString *url;
 @property (nonatomic, strong) NSString *publishDate;
@@ -29,7 +29,7 @@
 
 -(id)initWithValues:(NSString *)aId
               title:(NSString *)aTitle
-              image:(NSString *)aImage
+           imageUrl:(NSString *)aImageUrl
                body:(NSString *)Body
                 url:(NSString *)aURL
         publishDate:(NSString *)aPublishDate;

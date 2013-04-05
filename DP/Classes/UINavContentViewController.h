@@ -12,5 +12,6 @@
 
 - (void) layoutForOrientation:(UIInterfaceOrientation) toOrientation fixtop:(BOOL)fixtop;
 - (void) doLocalize;
+- (void) reachabilityChanged;
 
 @end

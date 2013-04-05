@@ -13,6 +13,9 @@ NSString *const MyFirstConstant = @"FirstConstant";
 NSString *const MySecondConstant = @"SecondConstant";
 */
 
+// option identifier
+NSString *const USE_DATA_CACHING = @"USE_DATA_CACHING";
+
 //notifications
 NSString *const DPN_currentLangChanged = @"DPN_currentLangChanged";
 

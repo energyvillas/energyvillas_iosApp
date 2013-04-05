@@ -36,24 +36,29 @@ FOUNDATION_EXPORT NSString *const MySecondConstant;
 #define TAG_TBI_MORE ((int)1005)
 
 // main menu buttons
-#define TAG_MM_SMART ((int)52) //100)
-#define TAG_MM_LOFT ((int)101)
-#define TAG_MM_FINLAND ((int)102)
-#define TAG_MM_ISLAND ((int)55) // 103)
-#define TAG_MM_COUNTRY ((int)104)
-#define TAG_MM_CONTAINER ((int)105)
-#define TAG_MM_VILLAS ((int)106)
-#define TAG_MM_EXCLUSIVE ((int)107)
-#define TAG_MM_VIDEOS ((int)108)
+#define CTGID_SMART ((int)52) //100)
+#define CTGID_LOFT ((int)53)
+#define CTGID_FINLAND ((int)54)
+#define CTGID_ISLAND ((int)55) // 103)
+#define CTGID_COUNTRY ((int)56)
+#define CTGID_CONTAINER ((int)65)
+#define CTGID_VILLAS ((int)57)
+#define CTGID_EXCLUSIVE ((int)58)
+#define CTGID_VIDEOS ((int)59)
 
 // main sub menu buttons
-#define TAG_MM_ISLAND_SHIFT ((int)100)
-#define TAG_MM_ISLAND_AEGEAN ((int)(TAG_MM_ISLAND * TAG_MM_ISLAND_SHIFT) + 00)
-#define TAG_MM_ISLAND_CYCLADIC ((int)(TAG_MM_ISLAND * TAG_MM_ISLAND_SHIFT) + 01)
-#define TAG_MM_ISLAND_IONIAN ((int)(TAG_MM_ISLAND * TAG_MM_ISLAND_SHIFT) + 02)
+#define CTGID_ISLAND_AEGEAN ((int)62)
+#define CTGID_ISLAND_CYCLADIC ((int)63)
+#define CTGID_ISLAND_IONIAN ((int)64)
+
+#define CTGID_EXCLUSIVE_EXCLUSIVE ((int)74)
+#define CTGID_EXCLUSIVE_ART ((int)75)
 
 // predefined categories IDs
 #define CTGID_WHO_WE_ARE ((int)60)
+
+// option identifier
+UIKIT_EXTERN NSString *const USE_DATA_CACHING;
 
 // notifications
 UIKIT_EXTERN NSString *const DPN_currentLangChanged;

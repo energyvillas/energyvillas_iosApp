@@ -22,8 +22,8 @@
     [super encodeWithCoder:encoder];
     
 	[encoder encodeObject:self.lang forKey:encCategoryLang];
-	[encoder encodeObject:self.title forKey:encCategoryTitle];
-	[encoder encodeObject:self.imageUrl forKey:encCategoryImageUrl];
+//	[encoder encodeObject:self.title forKey:encCategoryTitle];
+//	[encoder encodeObject:self.imageUrl forKey:encCategoryImageUrl];
 	[encoder encodeObject:self.parent forKey:encCategoryParent];
 }
 
@@ -33,8 +33,8 @@
 	if (self) {
         
 		self.lang = [aDecoder decodeObjectForKey:encCategoryLang];
-		self.title = [aDecoder decodeObjectForKey:encCategoryTitle];
-		self.imageUrl = [aDecoder decodeObjectForKey:encCategoryImageUrl];
+//		self.title = [aDecoder decodeObjectForKey:encCategoryTitle];
+//		self.imageUrl = [aDecoder decodeObjectForKey:encCategoryImageUrl];
 		self.parent = [aDecoder decodeObjectForKey:encCategoryParent];
 	}
     
@@ -47,13 +47,13 @@
              imageUrl:(NSString *)aImageUrl
                 parent:(NSString *)aParent
 {
-    self = [super init];
+    self = [super initWithValues:aId title:aTitle imageUrl:aImageUrl];
     
 	if (self) {
-		self.key = aId;
+//		self.key = aId;
         self.lang = aLang;
-		self.title = NullIfEmpty(aTitle);
-		self.imageUrl = NullIfEmpty(aImageUrl);
+//		self.title = NullIfEmpty(aTitle);
+//		self.imageUrl = NullIfEmpty(aImageUrl);
 		self.parent = NullIfEmpty(aParent);
 	}
     

@@ -10,9 +10,10 @@
 
 @interface DPAppHelper : NSObject
 
-@property (readonly) BOOL connectionRequired;
-@property (readonly) BOOL hostIsReachable;
+@property (readonly, nonatomic) BOOL connectionRequired;
+@property (readonly, nonatomic) BOOL hostIsReachable;
 
+@property (nonatomic) BOOL useCache;
 @property (strong, nonatomic) NSString *currentLang;
 
 //===========
@@ -22,8 +23,7 @@
 - (NSArray *) freeDetailsFor:(NSString *)lang;
 - (NSArray *) freeBuyContentFor:(NSString *)lang;
 - (NSArray *) freeCoverFlowFor:(NSString *)lang;
-- (NSArray *) paidArticlesOfCategory:(int)aId
-                                lang:(NSString *)lang;
+- (NSArray *) paidMenuOfCategory:(int)aId lang:(NSString *)lang;
 - (NSArray *) getSubCategoriesOf:(int)parentid;
 
 @end

@@ -77,8 +77,10 @@
 }
 
 -(void) loadFromFile {
-	self.dataList = [NSKeyedUnarchiver unarchiveObjectWithFile:self.filePath];
-	if(!self.dataList)
+	NSArray *lst = [NSKeyedUnarchiver unarchiveObjectWithFile:self.filePath];
+	if(lst)
+        self.dataList = lst;
+    else
 		self.dataList = [[NSMutableArray alloc] init];
 }
 

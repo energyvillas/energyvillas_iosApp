@@ -39,6 +39,7 @@ NSString *const FREE_DET_IMGTITLE_FMT = @"FREE_DET_TITLE_10%i";
 @synthesize connectionRequired = _connectionRequired;
 @synthesize hostIsReachable = _hostIsReachable;
 @synthesize currentLang = _currentLang;
+@synthesize useCache = _useCache;
 
 + (DPAppHelper *)sharedInstance {
     static dispatch_once_t once;
@@ -146,7 +147,7 @@ NSString *const FREE_DET_IMGTITLE_FMT = @"FREE_DET_TITLE_10%i";
 #pragma -
 #pragma CATEGORIES
 
-- (NSArray *) doGetCategoriesFrom:(NSDictionary *)dict lang:(NSString *)lang {
+- (NSArray *) doGetCategoriesFrom:(NSDictionary *)dict lang:(NSString *)lang parent:(int)pid{
     NSDictionary *lfd = [dict objectForKey:lang];
     if (!lfd) {
         lang = @"en";
@@ -156,20 +157,14 @@ NSString *const FREE_DET_IMGTITLE_FMT = @"FREE_DET_TITLE_10%i";
     NSArray *categories = [dict objectForKey:@"Categories"];
     NSArray *titles = [lfd objectForKey:@"Titles"];
     NSArray *images = [lfd objectForKey:@"Images"];
-    NSArray *videos = [lfd objectForKey:@"Videos"];
     
     NSMutableArray *res = [[NSMutableArray alloc] initWithCapacity:titles.count];
-    for (int i=0; i<titles.count; i++) {
-        [res addObject:[[Article alloc] initWithValues:[NSString stringWithFormat:@"%d", i]
-                                                  lang:lang
-                                              category:categories == nil ? nil : [NSString stringWithFormat:@"%@", categories[i]]
-                                                 title:titles[i]
-                                              imageUrl:images[i]
-                                                  body:nil
-                                                   url:nil
-                                           publishDate:nil
-                                              videoUrl:videos == nil ? nil : videos[i]
-                                           videolength:nil]];
+    for (int i=0; i<categories.count; i++) {
+        [res addObject:[[Category alloc] initWithValues:[NSString stringWithFormat:@"%@", categories[i]]
+                                                   lang:lang
+                                                  title:titles[i]
+                                               imageUrl:images[i]
+                                                 parent:pid == -1 ? nil : [NSString stringWithFormat:@"%d", pid]]];
     }
     
     return [NSArray arrayWithArray:res];
@@ -246,14 +241,16 @@ NSString *const FREE_DET_IMGTITLE_FMT = @"FREE_DET_TITLE_10%i";
     self.paidMainMenu = [self doGetDictionaryFrom:@"paid-MainMenu.plist"];
 }
 
-- (NSArray *) paidArticlesOfCategory:(int)aId lang:(NSString *)lang {
+- (NSArray *) paidMenuOfCategory:(int)aId lang:(NSString *)lang {
     if (aId == -1) {
-        return [self doGetArticlesFrom:self.paidMainMenu lang:lang];
+        return [self doGetCategoriesFrom:self.paidMainMenu lang:lang parent:-1];
     } else {
         NSDictionary *subs = self.paidMainMenu[@"SubMenus"];
         NSString *menufile = subs[[NSString stringWithFormat:@"%d", aId]];
         
-        return [self doGetArticlesFrom:[self doGetDictionaryFrom:menufile] lang:lang];
+        return [self doGetCategoriesFrom:[self doGetDictionaryFrom:menufile]
+                                    lang:lang
+                                  parent:aId];
     }
 }
 

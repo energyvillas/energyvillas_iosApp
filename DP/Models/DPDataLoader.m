@@ -76,12 +76,16 @@
 
 #pragma mark -
 #pragma mark === downloading handling  ===
+- (BOOL) getDataRefreshNeeded {
+    BOOL cacheValid = [[DPAppHelper sharedInstance] useCache] && !self.dataCache.isExpired;
+    return !cacheValid;
+}
 
 - (void) loadData {
-    BOOL cacheExpired = self.dataCache.isExpired;
+    BOOL cacheValid = [[DPAppHelper sharedInstance] useCache] && !self.dataCache.isExpired;
     BOOL netIsAlive = [[DPAppHelper sharedInstance] hostIsReachable];
 
-    if (cacheExpired && netIsAlive) {
+    if (!cacheValid && netIsAlive) {
         ASIFormDataRequest *request = [self createAndPrepareRequest];
         [self startRequest:request];
     } else {
@@ -144,6 +148,8 @@
 	NSLog(@"Response: \n%@", resp);
     
     self.datalist = [self parseResponse:resp];
+    
+    NSDictionary *images = [[NSDictionary alloc] init];
     
     [self updateCachedData];
     [self notifySuccess];
