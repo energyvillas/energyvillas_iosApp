@@ -19,7 +19,6 @@
 {
     [DPIAPHelper sharedInstance];
     
-    [DPAppHelper sharedInstance].useCache = [self useDataCache];
     [DPAppHelper sharedInstance].currentLang = @"en"; //[[NSLocale preferredLanguages] objectAtIndex:0];//@"el";
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
@@ -45,14 +44,7 @@ void myExceptionHandler (NSException *exception)
     NSLog(@"Stack trace: %@", stack);
 }
 
-- (BOOL) useDataCache {
-    return NO;
-    
-    NSUserDefaults *usrDefaults = [NSUserDefaults standardUserDefaults];
-    BOOL useDataCaching = [usrDefaults boolForKey:USE_DATA_CACHING];
-    return useDataCaching;
-    
-}
+
 - (BOOL) isPurchased {
     return YES;
     

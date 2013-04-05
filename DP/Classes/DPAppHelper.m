@@ -25,6 +25,7 @@ NSString *const FREE_DET_IMGTITLE_FMT = @"FREE_DET_TITLE_10%i";
 @property (strong, nonatomic) NSDictionary *freeCoverFlow;
 @property (strong, nonatomic) NSDictionary *paidMainMenu;
 @property (strong, nonatomic) NSArray *categories;
+@property (strong, nonatomic) NSMutableDictionary *imageCache;
 
 @property (strong, nonatomic) Reachability* hostReach;
 //@property (strong, nonatomic) Reachability* internetReach;
@@ -39,7 +40,6 @@ NSString *const FREE_DET_IMGTITLE_FMT = @"FREE_DET_TITLE_10%i";
 @synthesize connectionRequired = _connectionRequired;
 @synthesize hostIsReachable = _hostIsReachable;
 @synthesize currentLang = _currentLang;
-@synthesize useCache = _useCache;
 
 + (DPAppHelper *)sharedInstance {
     static dispatch_once_t once;
@@ -55,6 +55,7 @@ NSString *const FREE_DET_IMGTITLE_FMT = @"FREE_DET_TITLE_10%i";
 - (id)init {
     self = [super init];
     if (self) {
+        [self createDefaults];
         _connectionRequired = true;
         _hostIsReachable = false;
         [self configureReachability];
@@ -66,6 +67,16 @@ NSString *const FREE_DET_IMGTITLE_FMT = @"FREE_DET_TITLE_10%i";
     }
     
     return self;
+}
+
+- (void) createDefaults {
+    NSDictionary *defaults = [NSDictionary dictionaryWithObjectsAndKeys:
+            [NSNumber numberWithBool:YES], USE_DATA_CACHING,
+            nil];
+    
+    NSUserDefaults *usrDefaults = [NSUserDefaults standardUserDefaults];
+    [usrDefaults registerDefaults:defaults];
+    _useCache = [usrDefaults boolForKey:USE_DATA_CACHING];
 }
 
 - (void) setCurrentLang:(NSString *)aCurrentLang {
@@ -254,9 +265,25 @@ NSString *const FREE_DET_IMGTITLE_FMT = @"FREE_DET_TITLE_10%i";
     }
 }
 
+#pragma mark -
+#pragma mark transient image cache handling
 
-#pragma -
-#pragma reachability handling
+- (void) saveImageToCache:(NSString *)url data:(NSData *)imgData {
+    if (!self.imageCache)
+        self.imageCache = [[NSMutableDictionary alloc] init];
+    
+    self.imageCache[url] = imgData;
+}
+- (NSData *) loadImageFromCache:(NSString *)url {
+    NSData *result = nil;
+    if (self.imageCache) {
+        result = self.imageCache[url];
+    }
+    return result;
+}
+
+#pragma mark -
+#pragma mark reachability handling
 
 - (void) configureReachability {
     [[NSNotificationCenter defaultCenter] addObserver: self selector: @selector(reachabilityChanged:) name: kReachabilityChangedNotification object: nil];

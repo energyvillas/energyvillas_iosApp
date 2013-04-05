@@ -13,6 +13,7 @@
 #import "DPConstants.h"
 #import <Quartzcore/Quartzcore.h>
 #import "ASIHTTPRequest.h"
+#import "DPAppHelper.h"
 
 
 @interface DPScrollableViewController ()
@@ -465,7 +466,24 @@
     }
 }
 
+- (void) fix:(DPDataElement *)elm imageView:(UIImageView *)imgView
+        data:(NSData *)imgData addToCache:(BOOL)addToCache{
+    //elm.imageData = [request responseData];
+    imgView.image = [UIImage imageWithData:imgData];
+    if (addToCache)
+        [[DPAppHelper sharedInstance] saveImageToCache:elm.imageUrl data:imgData];
+}
+
 - (void) loadImageAsync:(DPDataElement *)elm inView:(UIImageView *)imgView {
+    DPAppHelper *appHelper = [DPAppHelper sharedInstance];
+    NSData *imgData = [appHelper loadImageFromCache:elm.imageUrl];
+    if (imgData) 
+        [self fix:elm imageView:imgView data:imgData addToCache:NO];
+    else
+        [self doloadImageAsync:elm inView:imgView];
+}
+
+- (void) doloadImageAsync:(DPDataElement *)elm inView:(UIImageView *)imgView {
     if (!self.downloadQueue)
         self.downloadQueue = [[NSOperationQueue alloc] init];
 
@@ -479,31 +497,17 @@
     [self.downloadQueue addOperation:request];
 
     [self startIndicator];
-    
-
-    
-//    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0),
-//                   ^{
-//                       NSURL *url = [NSURL URLWithString:elm.imageUrl];
-//                       NSURLConnection *conn = [NSURLConnection ]
-//                       // on finish update the imageview's image in main thread...
-//                       dispatch_async(dispatch_get_main_queue(),
-//                                      ^{
-//                                      });
-//                   }
-//    );
 }
-
 
 - (void)requestDone:(ASIHTTPRequest *)request{
     [self stopIndicator];
 
     NSDictionary *uiDict = request.userInfo;
-//    DPDataElement *elm = uiDict[@"element"];
-    UIImageView *iv = uiDict[@"imageView"];
 
-    //elm.imageData = [request responseData];
-    iv.image = [UIImage imageWithData:[request responseData]];
+    [self fix:uiDict[@"element"]
+    imageView:uiDict[@"imageView"]
+         data:[request responseData]
+   addToCache:YES];
 }
 
 - (void)requestFailed:(ASIHTTPRequest *)request

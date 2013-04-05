@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5E0C7653170F32E300F572A0 /* DPMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E0C7652170F32E200F572A0 /* DPMenuViewController.m */; };
 		5E3605021707154E00DB7B20 /* DPAppHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E3605011707154E00DB7B20 /* DPAppHelper.m */; };
 		5E3605121707A72400DB7B20 /* DPBuyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E3605111707A72400DB7B20 /* DPBuyViewController.m */; };
 		5E3605141707A74300DB7B20 /* DPBuyView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5E3605131707A74300DB7B20 /* DPBuyView.xib */; };
@@ -149,6 +150,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		5E0C7651170F32E200F572A0 /* DPMenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPMenuViewController.h; sourceTree = "<group>"; };
+		5E0C7652170F32E200F572A0 /* DPMenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPMenuViewController.m; sourceTree = "<group>"; };
 		5E3605001707154E00DB7B20 /* DPAppHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPAppHelper.h; sourceTree = "<group>"; };
 		5E3605011707154E00DB7B20 /* DPAppHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPAppHelper.m; sourceTree = "<group>"; };
 		5E3605101707A72400DB7B20 /* DPBuyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPBuyViewController.h; sourceTree = "<group>"; };
@@ -666,6 +669,8 @@
 				5E3605281708B5B600DB7B20 /* DPFloatingViewController.m */,
 				5E36052C1708C83300DB7B20 /* DPAdsViewController.h */,
 				5E36052D1708C83400DB7B20 /* DPAdsViewController.m */,
+				5E0C7651170F32E200F572A0 /* DPMenuViewController.h */,
+				5E0C7652170F32E200F572A0 /* DPMenuViewController.m */,
 			);
 			path = ControllersPaid;
 			sourceTree = "<group>";
@@ -972,6 +977,7 @@
 				5EFCCD0F1709F30700C1FE88 /* DPCategoryLoader.m in Sources */,
 				5EF40842170DE9A100938AEE /* DPCtgCardView.m in Sources */,
 				5EF40845170DE9B200938AEE /* DPAnimatedCategoriesView.m in Sources */,
+				5E0C7653170F32E300F572A0 /* DPMenuViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

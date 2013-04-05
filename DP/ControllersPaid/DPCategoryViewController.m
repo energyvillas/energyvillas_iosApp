@@ -13,9 +13,12 @@
 #import "DPConstants.h"
 #import "DPAppHelper.h"
 #import "DPAnimatedCategoriesView.h"
+#import "DPAdsViewController.h"
+
 
 @interface DPCategoryViewController ()
 
+@property (strong, nonatomic) DPAdsViewController *adsViewController;
 @property (strong, nonatomic) DPCtgScrollViewController *mmViewController;
 @property (strong, nonatomic) NSArray *categories;
 
@@ -137,9 +140,22 @@
         }
     }
     
+    [self loadAdsView];
     [self loadCategoryView];
     [self loadMenuView];
 }
+
+- (void) loadAdsView {
+    self.adsView.backgroundColor = [UIColor orangeColor];
+    if (self.adsView.subviews.count == 0)
+    {
+        self.adsViewController = [[DPAdsViewController alloc] initWithGroup:1];
+        [self addChildViewController:self.adsViewController];
+        [self.adsView addSubview:self.adsViewController.view];
+    }
+    // else pending ???
+}
+
 
 - (void) loadCategoryView {
     DPAnimatedCategoriesView *acv;

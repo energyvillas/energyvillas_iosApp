@@ -13,8 +13,9 @@
 @property (readonly, nonatomic) BOOL connectionRequired;
 @property (readonly, nonatomic) BOOL hostIsReachable;
 
-@property (nonatomic) BOOL useCache;
+@property (nonatomic, readonly) BOOL useCache;
 @property (strong, nonatomic) NSString *currentLang;
+
 
 //===========
 
@@ -26,4 +27,6 @@
 - (NSArray *) paidMenuOfCategory:(int)aId lang:(NSString *)lang;
 - (NSArray *) getSubCategoriesOf:(int)parentid;
 
+- (void) saveImageToCache:(NSString *)url data:(NSData *)imgData;
+- (NSData *) loadImageFromCache:(NSString *)url;
 @end
