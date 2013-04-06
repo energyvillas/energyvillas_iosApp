@@ -6,6 +6,7 @@
 //  Copyright (c) 2013 Γεώργιος Γράβος. All rights reserved.
 //
 #import <Foundation/Foundation.h>
+#import <QuartzCore/QuartzCore.h>
 #import "DPAppDelegate.h"
 #import "Classes/DPIAPHelper.h"
 #import "Controllers/DPMainViewController.h"
@@ -29,8 +30,9 @@
     else
         self.controller = [[DPMainViewController alloc] init];
     
+    self.window.backgroundColor = [UIColor clearColor];
     self.window.rootViewController = self.controller;
-    self.window.backgroundColor = [UIColor whiteColor];
+    
     [self.window makeKeyAndVisible];
 
     NSSetUncaughtExceptionHandler (&myExceptionHandler);
@@ -46,7 +48,7 @@ void myExceptionHandler (NSException *exception)
 
 
 - (BOOL) isPurchased {
-    return YES;
+    //return YES;
     
     NSUserDefaults *usrDefaults = [NSUserDefaults standardUserDefaults];
     BOOL productPurchased = [usrDefaults boolForKey:PRODUCT_IDENTIFIER];

@@ -6,7 +6,11 @@
 //  Copyright (c) 2013 Γεώργιος Γράβος. All rights reserved.
 //
 
+#import <QuartzCore/QuartzCore.h>
 #import "DPMainViewController.h"
+#import "DPConstants.h"
+
+
 
 @interface DPMainViewController ()
 
@@ -38,6 +42,7 @@
 }
 
 - (void) viewWillAppear:(BOOL)animated {
+    [self fixBackgroundImage];
     if (!framesDone) {
         [self fixFrames:YES];
         framesDone = YES;
@@ -92,7 +97,20 @@
     }
 }
 
+- (void) fixBackgroundImage {
+    NSString *imgName;
+    if (IS_PORTRAIT)
+        imgName = @"Background/bg_v.jpg";
+    else
+        imgName = @"Background/bg_h.jpg";
+    
+    
+    self.view.layer.contents = (id)[[UIImage imageNamed:imgName] CGImage];
+}
+
 - (void) willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
+    [self fixBackgroundImage];
+    
     [self fixFrames:NO];
 
     id vc = self.presentedViewController;

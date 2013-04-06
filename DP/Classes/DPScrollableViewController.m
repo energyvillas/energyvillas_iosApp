@@ -63,6 +63,11 @@
         self.view = [[UIView alloc] init];
         self.scrollView = [[UIScrollView alloc] init];
         self.pageControl = [[UIPageControl alloc] init];
+        
+        self.view.backgroundColor = [UIColor clearColor];
+        self.scrollView.backgroundColor = [UIColor clearColor];
+        self.pageControl.backgroundColor = [UIColor clearColor];
+
         [self.pageControl addTarget:self
                              action:@selector(pageChanged:)
                    forControlEvents:UIControlEventValueChanged];
@@ -243,6 +248,7 @@
                     
                     r = CGRectMake(0, 0, colWidth + fixWidth, rowHeight + fixHeight);
                     UIImageView *iv = [[UIImageView alloc] initWithFrame: r];
+                    iv.backgroundColor = [UIColor clearColor];
                     iv.contentMode = UIViewContentModeScaleAspectFill; //UIViewContentModeScaleToFill; //UIViewContentModeScaleAspectFill; //UIViewContentModeScaleAspectFit;
                     DPDataElement *element = self.contentList[indx];
                     if ([self isLocalUrl:element.imageUrl])

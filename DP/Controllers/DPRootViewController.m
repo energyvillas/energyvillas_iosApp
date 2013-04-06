@@ -7,9 +7,8 @@
 //
 
 #import "DPRootViewController.h"
-#import "DPTestViewController.h"
 #import "../External/OpenFlow/UIImageExtras.h"
-#import "../Classes/DPImageInfo.h"
+//#import "../Classes/DPImageInfo.h"
 #import "DPCtgScrollViewController.h"
 #import "../Classes/DPImageContentViewController.h"
 #import "DPConstants.h"
@@ -56,6 +55,7 @@
 }
 
 - (void) doLocalize {
+    [super doLocalize];
     bbiMore.title = DPLocalizedString(kbbiMore_Title);
     bbiBuy.title = DPLocalizedString(kbbiBuy_Title);
     

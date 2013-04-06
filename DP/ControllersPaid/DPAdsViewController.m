@@ -82,42 +82,42 @@
 
 #pragma mark
 
-#pragma mark -
-#pragma mark === image downloading handling  ===
-
-- (void) downloadImageUrl:(NSURL *)imageUrl atIndex:(int)index{
-    if (!self.queue)
-        self.queue = [[NSOperationQueue alloc] init];
-    
-    ASIHTTPRequest *imageRequest = [ASIHTTPRequest requestWithURL:imageUrl];
-    [imageRequest setDelegate:self];
-    [imageRequest setDidFinishSelector:@selector(imageRequestDone:)];
-    imageRequest.userInfo = [NSDictionary dictionaryWithObjectsAndKeys:
-                             [NSNumber numberWithInt:index], @"imageIndex",
-                             nil];
-    
-    [self.queue addOperation:imageRequest];
-//    [self startIndicator];
-}
-
-- (void) imageRequestDone:(ASIHTTPRequest *)request{
-//    [self stopIndicator];
-    
-//	self.datalist[request.userInfo[@"imageIndex"]].imageData = [UIImage imageWithData:[request responseData]];
-//    [self doInitImageView];
-}
-
-- (void) requestFailed:(ASIHTTPRequest *)request {
-	NSLog(@"Request Failed: %@", [request error]);
-    
-//	[self stopIndicator];
-    
-    showAlertMessage(nil,
-                     DPLocalizedString(kERR_TITLE_URL_NOT_FOUND),
-                     DPLocalizedString(kERR_MSG_DATA_LOAD_FAILED));
-}
-
-#pragma mark
+//#pragma mark -
+//#pragma mark === image downloading handling  ===
+//
+//- (void) downloadImageUrl:(NSURL *)imageUrl atIndex:(int)index{
+//    if (!self.queue)
+//        self.queue = [[NSOperationQueue alloc] init];
+//    
+//    ASIHTTPRequest *imageRequest = [ASIHTTPRequest requestWithURL:imageUrl];
+//    [imageRequest setDelegate:self];
+//    [imageRequest setDidFinishSelector:@selector(imageRequestDone:)];
+//    imageRequest.userInfo = [NSDictionary dictionaryWithObjectsAndKeys:
+//                             [NSNumber numberWithInt:index], @"imageIndex",
+//                             nil];
+//    
+//    [self.queue addOperation:imageRequest];
+////    [self startIndicator];
+//}
+//
+//- (void) imageRequestDone:(ASIHTTPRequest *)request{
+////    [self stopIndicator];
+//    
+////	self.datalist[request.userInfo[@"imageIndex"]].imageData = [UIImage imageWithData:[request responseData]];
+////    [self doInitImageView];
+//}
+//
+//- (void) requestFailed:(ASIHTTPRequest *)request {
+//	NSLog(@"Request Failed: %@", [request error]);
+//    
+////	[self stopIndicator];
+//    
+//    showAlertMessage(nil,
+//                     DPLocalizedString(kERR_TITLE_URL_NOT_FOUND),
+//                     DPLocalizedString(kERR_MSG_DATA_LOAD_FAILED));
+//}
+//
+//#pragma mark
 
 - (void)viewDidLoad {
     [super viewDidLoad];

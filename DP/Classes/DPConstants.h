@@ -19,6 +19,9 @@ FOUNDATION_EXPORT NSString *const MySecondConstant;
 
 #define INTERFACE_ORIENTATION ( (UIInterfaceOrientation) [UIApplication sharedApplication].statusBarOrientation)
 
+#define IS_PORTRAIT ((BOOL)UIInterfaceOrientationIsPortrait(INTERFACE_ORIENTATION))
+#define IS_LANDSCAPE ((BOOL)UIInterfaceOrientationIsLandscape(INTERFACE_ORIENTATION))
+
 #define STATUS_BAR_VISIBLE ((BOOL) ![UIApplication sharedApplication].statusBarHidden)
 #define STATUS_BAR_HEIGHT ((CGFloat) ![UIApplication sharedApplication].statusBarFrame.size.height)
 
@@ -26,7 +29,12 @@ FOUNDATION_EXPORT NSString *const MySecondConstant;
 #define AUTO_SCROLL_INTERVAL ((float) 5.0)
 #define USER_SCROLL_INTERVAL ((float) 60.0)
 
-
+//navbar items
+#define TAG_NBI_LANG_EN ((int)101)
+#define TAG_NBI_LANG_EL ((int)102)
+#define TAG_NBI_BACK ((int)103)
+#define TAG_NBI_ADD_FAV ((int)104)
+#define TAG_NBI_SHARE ((int)105)
 
 // tabBar buttons
 #define TAG_TBI_MAIN ((int)1001)

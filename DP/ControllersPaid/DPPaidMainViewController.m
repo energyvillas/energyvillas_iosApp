@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <QuartzCore/QuartzCore.h>
 #import "DPPaidMainViewController.h"
 #import "../Classes/DPHtmlContentViewController.h"
 #import "../Classes/DPImageContentViewController.h"
@@ -56,6 +57,16 @@
     self.tabBar.delegate = self;
 }
 
+- (void) viewWillAppear:(BOOL)animated {
+    [self fixBackgroundImage];
+    if (!framesDone) {
+        [self fixFrames:YES];
+        self.tabBar.selectedItem = self.tbiMain;
+        framesDone = YES;
+    }
+    [super viewWillAppear:animated];
+}
+
 - (void)navigationController:(UINavigationController *)navigationController
       willShowViewController:(UIViewController *)viewController
                     animated:(BOOL)animated {
@@ -70,15 +81,6 @@
                     animated:(BOOL)animated {
 }
 */
-
-- (void) viewWillAppear:(BOOL)animated {
-    if (!framesDone) {
-        [self fixFrames:YES];
-        self.tabBar.selectedItem = self.tbiMain;
-        framesDone = YES;
-    }
-    [super viewWillAppear:animated];
-}
 
 - (void) fixFrames:(BOOL)fixNavView {
     if (fixNavView) {
@@ -109,7 +111,20 @@
     }
 }
 
-- (void) willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {    
+- (void) fixBackgroundImage {
+    NSString *imgName;
+    if (IS_PORTRAIT)
+        imgName = @"Background/bg_v.jpg";
+    else
+        imgName = @"Background/bg_h.jpg";
+    
+    
+    self.view.layer.contents = (id)[[UIImage imageNamed:imgName] CGImage];
+}
+
+- (void) willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
+    [self fixBackgroundImage];
+    
     [self fixFrames:NO];
 
     id tvc = navController.topViewController;

@@ -43,10 +43,13 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [self doLocalize];
 	// Do any additional setup after loading the view.
 }
 
 - (void) layoutForOrientation:(UIInterfaceOrientation)toOrientation fixtop:(BOOL)fixtop {
+    [super layoutForOrientation:toOrientation fixtop:fixtop];
+    
     // handle orientation change
     switch (toOrientation) {
         case UIInterfaceOrientationLandscapeLeft:
@@ -144,6 +147,7 @@
                                            w - PAD_WL_NEW_NEXT, h - PAD_HL_ADS);
         }
     }
+    
     
     [self loadAdsView];
     [self loadNewNextView];
