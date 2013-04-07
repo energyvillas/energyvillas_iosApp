@@ -10,17 +10,24 @@
 #import "DPDataElement.h"
 
 
-@interface DPDataCache () {
-    NSString *_filePath;
-    NSString *_fileName;
-    NSArray *_dataList;
-}
-
+@interface DPDataCache () 
 @property (strong, nonatomic, readonly, getter = getFilePath) NSString *filePath;
 
 @end
 
-@implementation DPDataCache
+//typedef NS_ENUM(NSInteger, DataCacheFileStatus) {
+//    DataCacheFileStatusUnknown = 0,
+//    DataCacheFileStatusMissing = 1,
+//    DataCacheFileStatusPresent = 2
+//}; 
+
+@implementation DPDataCache {
+    NSString *_filePath;
+    NSString *_fileName;
+    NSArray *_dataList;
+//    DataCacheFileStatus _DataCacheFileStatus;
+    BOOL hasloadedfromfile;
+}
 
 
 -(id) initWithFile:(NSString *)aDatafile {
@@ -31,14 +38,16 @@
 }
 
 - (NSArray *) getDataList {
-    if (!_dataList)
+    if (!_dataList) {
         [self loadFromFile];
+    }
     
     return _dataList;
 }
 
-- (void) setDataList:(NSArray *)list {
-    _dataList = list;
+-(void) updateDataList:(NSArray *)newList {
+    _dataList = newList;
+    [self saveToFile];
 }
 
 - (BOOL) getIsExpired {
@@ -71,17 +80,19 @@
 
 -(void) saveToFile {
 	[NSKeyedArchiver archiveRootObject:self.dataList toFile:self.filePath];
-	//RotationAppDelegate* appDelegate = (RotationAppDelegate*)[[UIApplication sharedApplication] delegate];
-	//appDelegate.cacheHasChanged = TRUE;
-	
+    hasloadedfromfile = false;
 }
 
 -(void) loadFromFile {
+    if (!hasloadedfromfile) {
 	NSArray *lst = [NSKeyedUnarchiver unarchiveObjectWithFile:self.filePath];
-	if(lst)
-        self.dataList = lst;
-    else
-		self.dataList = [[NSMutableArray alloc] init];
+//	if (lst)
+//        _dataList = lst;
+//    else
+//		self.dataList = [[NSMutableArray alloc] init];
+    
+    _dataList = lst;
+    }
 }
 
 - (DPDataElement *) findForKey:(NSString *)aKey {

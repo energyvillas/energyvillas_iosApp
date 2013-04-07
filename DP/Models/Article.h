@@ -8,7 +8,6 @@
 
 #import <Foundation/Foundation.h>
 #import "DPDataElement.h"
-#import "DPDataCache.h"
 
 #define encArticleLang @"Lang"
 #define encArticleCategory @"Category"

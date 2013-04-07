@@ -9,7 +9,8 @@
 #import "DPRootViewController.h"
 #import "../External/OpenFlow/UIImageExtras.h"
 //#import "../Classes/DPImageInfo.h"
-#import "DPCtgScrollViewController.h"
+//#import "DPCtgScrollViewController.h"
+#import "DPCategoriesViewController.h"
 #import "../Classes/DPImageContentViewController.h"
 #import "DPConstants.h"
 #import "DPVimeoPlayerViewController.h"
@@ -18,6 +19,7 @@
 #import "DPMainViewController.h"
 #import "DPBuyViewController.h"
 #import "Article.h"
+#import "DPCategoryLoader.h"
 
 
 
@@ -66,7 +68,7 @@
 }
 
 - (void) doBuy:(id) sender {
-    DPBuyViewController *buyVC = [[DPBuyViewController alloc] init];
+    DPBuyViewController *buyVC = [[DPBuyViewController alloc] initWithCategoryId:-1];
 
     id del = self.navigationController.delegate;
     DPMainViewController *main = del;
@@ -134,22 +136,30 @@
     
     NSLog(@"bvc frame : (x, y, w, h) = (%f, %f, %f, %f)", bcv.frame.origin.x, bcv.frame.origin.y, bcv.frame.size.width, bcv.frame.size.height);
 
-    DPCtgScrollViewController *detvc;
+    DPCategoriesViewController *detvc;
     if (reload && bcv.subviews.count > 0) {
-        detvc = (DPCtgScrollViewController *)self.childViewControllers[0];
+        detvc = (DPCategoriesViewController *)self.childViewControllers[0];
         [detvc.view removeFromSuperview];
         [detvc removeFromParentViewController];
         detvc = nil;
     }        
     
     if (bcv.subviews.count == 0) {
-        NSArray *content = [[DPAppHelper sharedInstance] freeDetailsFor:[DPAppHelper sharedInstance].currentLang];
+        DPAppHelper *apphelper = [DPAppHelper sharedInstance];
         if (isPortrait)
-            detvc = [[DPCtgScrollViewController alloc] 
-                     initWithContent:content rows:2 columns:2 autoScroll:YES];
+            detvc = [[DPCategoriesViewController alloc] initWithCategory:-1
+                                                                    lang:apphelper.currentLang
+                                                           localResource:@"free-details.plist"
+                                                                    rows:2
+                                                                 columns:2
+                                                              autoScroll:YES];
         else
-            detvc = [[DPCtgScrollViewController alloc]
-                     initWithContent:content rows:1 columns:4 autoScroll:YES];
+            detvc = [[DPCategoriesViewController alloc] initWithCategory:-1
+                                                                    lang:apphelper.currentLang
+                                                           localResource:@"free-details.plist"
+                                                                    rows:1
+                                                                 columns:4
+                                                              autoScroll:YES];
         
         
         [self addChildViewController: detvc];
@@ -157,7 +167,7 @@
         
         detvc = nil;
     } else {
-        detvc = (DPCtgScrollViewController *)self.childViewControllers[0];
+        detvc = (DPCategoriesViewController *)self.childViewControllers[0];
         if (isPortrait) {
             [detvc changeRows:2 columns:2];
         } else {

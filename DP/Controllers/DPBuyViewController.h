@@ -23,4 +23,7 @@
 - (IBAction)onTouchUpInside:(id)sender forEvent:(UIEvent *)event;
 - (IBAction)onClose:(id)sender;
 
+
+- (id) initWithCategoryId:(int)ctgid;
+
 @end

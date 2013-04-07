@@ -8,7 +8,6 @@
 
 #import <Foundation/Foundation.h>
 #import "ASIFormDataRequest.h"
-#import "DPDataCache.h"
 
 
 @class DPDataLoader;
@@ -27,6 +26,7 @@
 @property (weak, nonatomic) id <DPDataLoaderDelegate> delegate;
 @property (strong, nonatomic) NSArray *datalist;
 @property (readonly, getter = getDataRefreshNeeded) BOOL dataRefreshNeeded;
+//@property (strong, nonatomic, readonly, getter = getplistFile) NSString *plistFile;
 
 
 +(NSString*) digestSHA1:(NSString*)input;
@@ -43,9 +43,10 @@
 
 #pragma -
 #pragma "abstract" methods
-- (DPDataCache *) createDataCache;
+- (NSString *) cacheFileName;
 - (ASIFormDataRequest *) createAndPrepareRequest;
 - (NSArray *) parseResponse:(NSString *)response;
-
+- (void) loadFromPlist;
+- (BOOL) useInternetForLoading;
 @end
 

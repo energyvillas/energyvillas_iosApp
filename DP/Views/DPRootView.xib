@@ -97,8 +97,8 @@
 							</object>
 						</array>
 						<object class="NSColor" key="IBUITintColor">
-							<int key="NSColorSpace">3</int>
-							<bytes key="NSWhite">MAA</bytes>
+							<int key="NSColorSpace">1</int>
+							<bytes key="NSRGB">MC43ODgyMzUyOTQxIDAuOCAwLjc5NjA3ODQzMTQgMC4xNQA</bytes>
 						</object>
 					</object>
 					<object class="IBUIView" id="261397471">

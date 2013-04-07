@@ -10,6 +10,9 @@
 
 @interface DPCategoryLoader : DPDataLoader
 
-- (id) initWithController:(UIViewController *)controller category:(int)ctgID lang:(NSString *)aLang;
+- (id) initWithController:(UIViewController *)controller
+                 category:(int)ctgID
+                     lang:(NSString *)aLang
+            localResource:(NSString *)plistFile;
 
 @end

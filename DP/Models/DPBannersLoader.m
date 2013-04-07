@@ -12,7 +12,6 @@
 #import <CommonCrypto/CommonDigest.h>
 #import "Banner.h"
 #import "BannerParser.h"
-#import "DPDataCache.h"
 
 
 @interface DPBannersLoader ()
@@ -35,10 +34,6 @@
 
 - (NSString *) cacheFileName {
     return [NSString stringWithFormat:@"banners-%d.dat", self.groupID];
-}
-
-- (DPDataCache *) createDataCache {
-    return [[DPDataCache alloc] initWithFile:[self cacheFileName]];
 }
 
 - (ASIFormDataRequest *) createAndPrepareRequest {

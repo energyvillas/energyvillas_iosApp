@@ -8,7 +8,6 @@
 
 #import <Foundation/Foundation.h>
 #import "DPDataElement.h"
-#import "DPDataCache.h"
 
 //#define encBannerTitle @"Title"
 //#define encBannerImage @"Image"

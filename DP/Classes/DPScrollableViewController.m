@@ -110,8 +110,8 @@
     
     self.scrollView.frame = CGRectMake(0, 0, w, h);
     
-    self.pageControl.frame = CGRectMake(0, h - pageControl.frame.size.height,
-                                        w, pageControl.frame.size.height);
+    self.pageControl.frame = CGRectMake(0, h - 10, //pageControl.frame.size.height,
+                                        w, 10);//pageControl.frame.size.height);
 }
 
 - (void) didReceiveMemoryWarning
@@ -208,6 +208,10 @@
 	[self pageChanged:nil];
 }
 
+- (NSString *) calcImageName:(NSString *)baseName {
+    return baseName;
+}
+
 - (void)loadScrollViewWithPage:(int)page{
     if (initializing) return;
     if (page < 0) return;
@@ -252,7 +256,7 @@
                     iv.contentMode = UIViewContentModeScaleAspectFill; //UIViewContentModeScaleToFill; //UIViewContentModeScaleAspectFill; //UIViewContentModeScaleAspectFit;
                     DPDataElement *element = self.contentList[indx];
                     if ([self isLocalUrl:element.imageUrl])
-                        iv.image = [UIImage imageNamed:element.imageUrl];
+                        iv.image = [UIImage imageNamed:[self calcImageName: element.imageUrl]];
                     else {
                         [self loadImageAsync:element inView:iv];
                     }
@@ -282,7 +286,7 @@
                     lv.textColor = [UIColor whiteColor];
                     lv.layer.shadowOffset = CGSizeMake(0.0, 0.0);
                     lv.layer.masksToBounds = NO;                    
-                    lv.layer.shadowRadius = 1.5f;
+                    lv.layer.shadowRadius = 1.9f;
                     lv.layer.shadowOpacity = 0.95;
 
                     // insert image and label in the view
@@ -478,19 +482,22 @@
     }
 }
 
-- (void) fix:(DPDataElement *)elm imageView:(UIImageView *)imgView
-        data:(NSData *)imgData addToCache:(BOOL)addToCache{
+- (void) fix:(DPDataElement *)elm
+   imageView:(UIImageView *)imgView
+   imageUrl:(NSString *)imageUrl
+        data:(NSData *)imgData
+  addToCache:(BOOL)addToCache{
     //elm.imageData = [request responseData];
     imgView.image = [UIImage imageWithData:imgData];
     if (addToCache)
-        [[DPAppHelper sharedInstance] saveImageToCache:elm.imageUrl data:imgData];
+        [[DPAppHelper sharedInstance] saveImageToCache:imageUrl data:imgData];
 }
 
 - (void) loadImageAsync:(DPDataElement *)elm inView:(UIImageView *)imgView {
     DPAppHelper *appHelper = [DPAppHelper sharedInstance];
-    NSData *imgData = [appHelper loadImageFromCache:elm.imageUrl];
+    NSData *imgData = [appHelper loadImageFromCache:[self calcImageName: elm.imageUrl]];
     if (imgData) 
-        [self fix:elm imageView:imgView data:imgData addToCache:NO];
+        [self fix:elm imageView:imgView imageUrl:[self calcImageName: elm.imageUrl] data:imgData addToCache:NO];
     else
         [self doloadImageAsync:elm inView:imgView];
 }
@@ -499,12 +506,13 @@
     if (!self.downloadQueue)
         self.downloadQueue = [[NSOperationQueue alloc] init];
 
-    ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:[NSURL URLWithString:elm.imageUrl]];
+    ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:[NSURL URLWithString:[self calcImageName:elm.imageUrl]]];
     [request setDelegate:self];
     [request setDidFinishSelector:@selector(requestDone:)];
     request.userInfo = [NSDictionary dictionaryWithObjectsAndKeys:
                         elm, @"element",
                         imgView, @"imageView",
+                        [self calcImageName:elm.imageUrl], @"imageUrl",
                         nil];
     [self.downloadQueue addOperation:request];
 
@@ -518,6 +526,7 @@
 
     [self fix:uiDict[@"element"]
     imageView:uiDict[@"imageView"]
+     imageUrl:uiDict[@"imageUrl"]
          data:[request responseData]
    addToCache:YES];
 }

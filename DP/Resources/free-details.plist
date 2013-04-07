@@ -2,6 +2,17 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>Categories</key>
+	<array>
+		<integer>52</integer>
+		<integer>53</integer>
+		<integer>54</integer>
+		<integer>55</integer>
+		<integer>56</integer>
+		<integer>65</integer>
+		<integer>57</integer>
+		<integer>58</integer>
+	</array>
 	<key>el</key>
 	<dict>
 		<key>Titles</key>
@@ -17,14 +28,14 @@
 		</array>
 		<key>Images</key>
 		<array>
-			<string>Έξυπνες Κατοικίες.jpg</string>
-			<string>Κατοικίες Loft.jpg</string>
-			<string>Φιλανδικές Κατοικίες.jpg</string>
-			<string>Νησιώτικες Κατοικίες.jpg</string>
-			<string>Κατοικίες Country.jpg</string>
-			<string>Κατοικίες Container.jpg</string>
-			<string></string>
-			<string></string>
+			<string>Exupnes.png</string>
+			<string>Loft.png</string>
+			<string>Finlandikes.png</string>
+			<string>Nisiotikes.png</string>
+			<string>Country.png</string>
+			<string>Container.png</string>
+			<string>Villas.png</string>
+			<string>Exclusive.png</string>
 		</array>
 	</dict>
 	<key>en</key>
@@ -42,14 +53,14 @@
 		</array>
 		<key>Images</key>
 		<array>
-			<string>Smart Houses.jpg</string>
-			<string>Loft Houses.jpg</string>
-			<string>Finnish Houses.jpg</string>
-			<string>Greek Island Houses.jpg</string>
-			<string>Country Houses.jpg</string>
-			<string>Container Houses.jpg</string>
-			<string></string>
-			<string></string>
+			<string>Exupnes.png</string>
+			<string>Loft.png</string>
+			<string>Finlandikes.png</string>
+			<string>Nisiotikes.png</string>
+			<string>Country.png</string>
+			<string>Container.png</string>
+			<string>Villas.png</string>
+			<string>Exclusive.png</string>
 		</array>
 	</dict>
 </dict>

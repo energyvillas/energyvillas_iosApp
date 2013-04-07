@@ -28,5 +28,6 @@
 
 // protected virtual
 - (void) contentLoaded:(NSArray *)content;
+- (NSString *) calcImageName:(NSString *)baseName;
 
 @end

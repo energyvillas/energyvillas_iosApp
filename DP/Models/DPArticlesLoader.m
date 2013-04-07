@@ -12,7 +12,6 @@
 #import <CommonCrypto/CommonDigest.h>
 #import "Article.h"
 #import "ArticleParser.h"
-#import "DPDataCache.h"
 
 
 @interface DPArticlesLoader ()
@@ -37,10 +36,6 @@
 
 - (NSString *) cacheFileName {
     return [NSString stringWithFormat:@"articles-%@-%d.dat", self.lang, self.categoryID];
-}
-
-- (DPDataCache *) createDataCache {
-    return [[DPDataCache alloc] initWithFile:[self cacheFileName]];
 }
 
 - (ASIFormDataRequest *) createAndPrepareRequest {

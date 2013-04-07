@@ -8,7 +8,9 @@
 
 #import "DPCategoryLoader.h"
 #import "DPConstants.h"
+#import "Category.h"
 #import "CategoryParser.h"
+#import "DPDataCache.h"
 
 
 @interface DPCategoryLoader ()
@@ -20,19 +22,67 @@
 
 
 
-@implementation DPCategoryLoader
+@implementation DPCategoryLoader {
+    NSString *_plistFile;
+}
 
 - (id) initWithController:(UIViewController *)controller
                  category:(int)ctgID
-                     lang:(NSString *)aLang {
+                     lang:(NSString *)aLang
+            localResource:(NSString *)aplistFile {
     self = [super initWithController:controller];
     if (self) {
         self.ctgID = ctgID;
         self.lang = aLang;
+        _plistFile = aplistFile;
     }
     
     return self;
 }
+
+- (BOOL) useInternetForLoading {
+    return self.ctgID != -1;
+}
+
+- (void) loadFromPlist {
+    if (_plistFile) {
+        self.datalist = [self doGetCategoriesFrom:[self doGetDictionaryFrom:_plistFile]
+                                             lang:self.lang
+                                           parent:self.ctgID];
+    }
+}
+
+- (NSDictionary *) doGetDictionaryFrom:(NSString *)aFileName {
+    NSString *path = [[NSBundle mainBundle] bundlePath];
+    NSString *finalPath = [path stringByAppendingPathComponent:aFileName];
+    NSDictionary *dict = [NSDictionary dictionaryWithContentsOfFile:finalPath];
+    
+    return dict;
+}
+
+- (NSArray *) doGetCategoriesFrom:(NSDictionary *)dict lang:(NSString *)lang parent:(int)pid{
+    NSDictionary *lfd = [dict objectForKey:lang];
+    if (!lfd) {
+        lang = @"en";
+        lfd = [dict objectForKey:lang];
+    }
+    
+    NSArray *categories = [dict objectForKey:@"Categories"];
+    NSArray *titles = [lfd objectForKey:@"Titles"];
+    NSArray *images = [lfd objectForKey:@"Images"];
+    
+    NSMutableArray *res = [[NSMutableArray alloc] initWithCapacity:titles.count];
+    for (int i=0; i<categories.count; i++) {
+        [res addObject:[[Category alloc] initWithValues:[NSString stringWithFormat:@"%@", categories[i]]
+                                                   lang:lang
+                                                  title:titles[i]
+                                               imageUrl:images[i]
+                                                 parent:pid == -1 ? nil : [NSString stringWithFormat:@"%d", pid]]];
+    }
+    
+    return [NSArray arrayWithArray:res];
+}
+
 
 - (NSString *) cacheFileName {
     return [NSString stringWithFormat:@"categories-%@-%d.dat", self.lang, self.ctgID];

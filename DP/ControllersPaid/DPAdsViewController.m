@@ -60,13 +60,8 @@
 - (void)loadFinished:(DPDataLoader *)loader {
     if (loader.datalist.count == 0)
         ; // no worries....
-        
-//        showAlertMessage(nil,
-//                         DPLocalizedString(kERR_TITLE_INFO),
-//                         DPLocalizedString(kERR_MSG_NO_DATA_FOUND));
-    else {
+    else 
         [self contentLoaded:loader.datalist];
-    }
 }
 
 //- (void) contentLoaded:(NSArray *)content {

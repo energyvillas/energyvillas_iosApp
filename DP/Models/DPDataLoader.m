@@ -81,15 +81,27 @@
     return !cacheValid;
 }
 
+- (BOOL) useInternetForLoading {
+    return YES;
+}
+
 - (void) loadData {
     BOOL cacheValid = [[DPAppHelper sharedInstance] useCache] && !self.dataCache.isExpired;
     BOOL netIsAlive = [[DPAppHelper sharedInstance] hostIsReachable];
-
-    if (!cacheValid && netIsAlive) {
+    BOOL useInternet = [self useInternetForLoading];
+    
+    if (!cacheValid && netIsAlive && useInternet) {
         ASIFormDataRequest *request = [self createAndPrepareRequest];
         [self startRequest:request];
     } else {
         self.datalist = self.dataCache.dataList;
+        
+        if (!self.datalist) {
+//            NSString *file = self.plistFile;
+//            if (file) {
+                [self loadFromPlist];
+//            }
+        }
         
         if (self.datalist)
             [self notifySuccess];
@@ -98,6 +110,11 @@
     }
 }
 
+- (void) loadFromPlist {
+    
+}
+
+
 - (DPDataCache *) getDataCache {
     if (!_dataCache)
         _dataCache = [self createDataCache];
@@ -105,13 +122,16 @@
     return _dataCache;
 }
 
-- (DPDataCache *) createDataCache {
+- (NSString *) cacheFileName {
     return nil;
 }
 
+- (DPDataCache *) createDataCache {
+    return [[DPDataCache alloc] initWithFile:[self cacheFileName]];
+}
+
 - (void) updateCachedData {
-    self.dataCache.dataList = self.datalist;
-    [self.dataCache saveToFile];
+    [self.dataCache updateDataList: self.datalist];
 }
 
 - (ASIFormDataRequest *) createAndPrepareRequest {

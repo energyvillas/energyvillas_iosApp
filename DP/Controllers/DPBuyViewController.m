@@ -19,7 +19,9 @@
 
 @end
 
-@implementation DPBuyViewController
+@implementation DPBuyViewController {
+    int category;
+}
 
 //@synthesize backView, contentView;
 
@@ -29,6 +31,14 @@
     if (self) {
         // Custom initialization
 //        self.wantsFullScreenLayout = YES;
+    }
+    return self;
+}
+
+- (id) initWithCategoryId:(int)ctgid {
+    self = [super init];
+    if (self) {
+        category = ctgid;
     }
     return self;
 }
