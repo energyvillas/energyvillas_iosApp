@@ -9,6 +9,8 @@
 #import "DPCtgCardView.h"
 #import "DPConstants.h"
 #import <Quartzcore/Quartzcore.h>
+#import "DPAppHelper.h"
+#import "ASIHTTPRequest.h"
 
 #define IPHONE_LABEL_MARGIN_VERT ((int)2)
 #define IPAD_LABEL_MARGIN_VERT ((int)2)
@@ -26,6 +28,9 @@
 @property (strong, nonatomic) UIImageView *imageView;
 @property (strong, nonatomic) UILabel *label;
 
+@property (strong, nonatomic) UIActivityIndicatorView *busyIndicator;
+@property (strong, nonatomic) NSOperationQueue *downloadQueue;
+
 @end
 
 @implementation DPCtgCardView {
@@ -37,12 +42,16 @@
 @synthesize category, imageView, label;
 
 - (id)initWithFrame:(CGRect)frame category:(Category *)ctg {
+    cardSize = IS_IPAD
+                    ? CGSizeMake(IPAD_CARD_WIDTH, IPAD_CARD_HEIGHT)
+                    : CGSizeMake(IPHONE_CARD_WIDTH, IPHONE_CARD_HEIGHT);
+    
+    frame.size.width = cardSize.width;
+    frame.size.height =cardSize.height;
+    
     self = [super initWithFrame:frame];
     if (self) {
         category = ctg;
-        cardSize = IS_IPAD
-                ? CGSizeMake(IPAD_CARD_WIDTH, IPAD_CARD_HEIGHT)
-                : CGSizeMake(IPHONE_CARD_WIDTH, IPHONE_CARD_HEIGHT);
         
         self.backgroundColor = [UIColor colorWithHue: (arc4random() % 1000) / 1000.0
                                           saturation:1.0
@@ -57,8 +66,14 @@
         if (!imageView) {
             imageView = [[UIImageView alloc] initWithFrame:self.bounds];
             imageView.contentMode = UIViewContentModeScaleAspectFit;
+            
+            if ([self isLocalUrl:category.imageUrl])
+                imageView.image = [UIImage imageNamed:[self calcImageName: category.imageUrl]];
+            else
+                [self loadImageAsync:category inView:imageView];
+
             imageView.image = [UIImage imageNamed:category.imageUrl];
-            imageView.backgroundColor = [UIColor redColor];
+           // imageView.backgroundColor = [UIColor redColor];
         }
         
         if (!label) {
@@ -84,8 +99,8 @@
     
 }
 
-- (void) zoomCard {
-    [UIView animateWithDuration:DURATION_ZOOM
+- (void) zoomCard:(NSTimeInterval)duration {
+    [UIView animateWithDuration:duration
                           delay:0.0
                         options:UIViewAnimationOptionCurveLinear | UIViewAnimationOptionBeginFromCurrentState
                      animations:^{
@@ -102,8 +117,8 @@
                      completion:nil];
 }
 
-- (void) cancelCardZoom {
-    [UIView animateWithDuration:DURATION_ZOOM
+- (void) cancelCardZoom:(NSTimeInterval)duration {
+    [UIView animateWithDuration:duration
                           delay:0.0
                         options:UIViewAnimationOptionCurveLinear | UIViewAnimationOptionBeginFromCurrentState
                      animations:^{
@@ -175,6 +190,115 @@
         zoomFontSize = self.label.font.pointSize;
     }
 }
+
+#pragma mark - loading of image data
+
+- (NSString *) calcImageName:(NSString *)baseName {
+    NSLog(@"**** imageUrl (base) = %@", baseName);
+    
+    @try {
+        NSArray *parts = [baseName componentsSeparatedByString:@"."];
+        if (parts && parts.count == 2) {
+            NSString *orientation = IS_PORTRAIT ? @"v" : @"h";
+            // pending also fix the format string below.... NSString *lang = [DPAppHelper sharedInstance].currentLang;
+            NSString *result = [NSString stringWithFormat:@"FreeDetails/%@_%@.%@", parts[0], orientation, parts[1]];
+            return result;
+        }
+        else
+            return baseName;
+    }
+    @catch (NSException* exception) {
+        NSLog(@"Uncaught exception: %@", exception.description);
+        NSLog(@"Stack trace: %@", [exception callStackSymbols]);
+        return baseName;
+    }
+}
+
+- (BOOL) isLocalUrl:(NSString *)urlstr {
+    NSURL *url = [NSURL URLWithString:urlstr];
+    return url.isFileReferenceURL || url.host == nil;
+}
+
+- (void) startIndicator {
+    if(!self.busyIndicator) {
+		self.busyIndicator = [[UIActivityIndicatorView alloc]
+                              initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+		self.busyIndicator.frame = CGRectMake((self.frame.size.width-25)/2,
+                                              (self.frame.size.height-25)/2,
+                                              25, 25);
+		self.busyIndicator.hidesWhenStopped = TRUE;
+        [self addSubview:self.busyIndicator];
+	}
+    
+    if (!self.busyIndicator.isAnimating)
+        [self.busyIndicator startAnimating];
+}
+
+- (void) stopIndicator {
+    if (self.busyIndicator &&
+        self.downloadQueue &&
+        self.downloadQueue.operationCount == 0) {
+        [self.busyIndicator stopAnimating];
+        [self.busyIndicator removeFromSuperview];
+        self.busyIndicator = nil;
+    }
+}
+
+- (void) fix:(DPDataElement *)elm
+   imageView:(UIImageView *)imgView
+    imageUrl:(NSString *)imageUrl
+        data:(NSData *)imgData
+  addToCache:(BOOL)addToCache{
+    //elm.imageData = [request responseData];
+    imgView.image = [UIImage imageWithData:imgData];
+    if (addToCache)
+        [[DPAppHelper sharedInstance] saveImageToCache:imageUrl data:imgData];
+}
+
+- (void) loadImageAsync:(DPDataElement *)elm inView:(UIImageView *)imgView {
+    DPAppHelper *appHelper = [DPAppHelper sharedInstance];
+    NSData *imgData = [appHelper loadImageFromCache:[self calcImageName: elm.imageUrl]];
+    if (imgData)
+        [self fix:elm imageView:imgView imageUrl:[self calcImageName: elm.imageUrl] data:imgData addToCache:NO];
+    else
+        [self doloadImageAsync:elm inView:imgView];
+}
+
+- (void) doloadImageAsync:(DPDataElement *)elm inView:(UIImageView *)imgView {
+    if (!self.downloadQueue)
+        self.downloadQueue = [[NSOperationQueue alloc] init];
+    
+    ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:[NSURL URLWithString:[self calcImageName:elm.imageUrl]]];
+    [request setDelegate:self];
+    [request setDidFinishSelector:@selector(requestDone:)];
+    request.userInfo = [NSDictionary dictionaryWithObjectsAndKeys:
+                        elm, @"element",
+                        imgView, @"imageView",
+                        [self calcImageName:elm.imageUrl], @"imageUrl",
+                        nil];
+    [self.downloadQueue addOperation:request];
+    
+    [self startIndicator];
+}
+
+- (void)requestDone:(ASIHTTPRequest *)request{
+    [self stopIndicator];
+    
+    NSDictionary *uiDict = request.userInfo;
+    
+    [self fix:uiDict[@"element"]
+    imageView:uiDict[@"imageView"]
+     imageUrl:uiDict[@"imageUrl"]
+         data:[request responseData]
+   addToCache:YES];
+}
+
+- (void)requestFailed:(ASIHTTPRequest *)request
+{
+    [self stopIndicator];
+	NSLog(@"Request Failed: %@", [request error]);
+}
+
 
 @end
 

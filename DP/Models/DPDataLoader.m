@@ -17,7 +17,7 @@
     DPDataCache *_dataCache;
 }
 
-@property (weak, nonatomic) UIViewController *controller;
+@property (weak, nonatomic) UIView *indicatorContainer;
 @property (strong, nonatomic) UIActivityIndicatorView *busyIndicator;
 @property (strong, nonatomic) NSOperationQueue *queue;
 @property (strong, nonatomic, readonly, getter = getDataCache) DPDataCache *dataCache;
@@ -27,10 +27,10 @@
 @implementation DPDataLoader
 
 
-- (id) initWithController:(UIViewController *)controller {
+- (id) initWithView:(UIView *)indicatorcontainer {
     self = [super init];
     if (self) {
-        self.controller = controller;
+        self.indicatorContainer = indicatorcontainer;
     }
     
     return self;
@@ -54,14 +54,16 @@
 #pragma mark === busy indication handling  ===
 
 - (void) startIndicator {
+    if (!self.indicatorContainer) return;
+    
     if(!self.busyIndicator) {
 		self.busyIndicator = [[UIActivityIndicatorView alloc]
                               initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
-		self.busyIndicator.frame = CGRectMake((self.controller.view.frame.size.width-25)/2,
-                                              (self.controller.view.frame.size.height-25)/2,
+		self.busyIndicator.frame = CGRectMake((self.indicatorContainer.frame.size.width-25)/2,
+                                              (self.indicatorContainer.frame.size.height-25)/2,
                                               25, 25);
 		self.busyIndicator.hidesWhenStopped = TRUE;
-        [self.controller.view addSubview:self.busyIndicator];
+        [self.indicatorContainer addSubview:self.busyIndicator];
 	}
     [self.busyIndicator startAnimating];
 }
@@ -146,6 +148,7 @@
     
     for (id key in kvlist) {
         [request setPostValue:[kvlist objectForKey:key] forKey:key];
+        NSLog(@"POST :: KEY='%@' VALUE='%@'", key, [kvlist objectForKey:key]);
     }
     
     return request;
@@ -169,7 +172,7 @@
     
     self.datalist = [self parseResponse:resp];
     
-    NSDictionary *images = [[NSDictionary alloc] init];
+//    NSDictionary *images = [[NSDictionary alloc] init];
     
     [self updateCachedData];
     [self notifySuccess];

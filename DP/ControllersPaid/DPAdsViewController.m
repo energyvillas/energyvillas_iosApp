@@ -40,7 +40,7 @@
         self.rowCount = 1;
         self.colCount = 1;
         
-        self.dataLoader = [[DPBannersLoader alloc] initWithController:self group:self.group];
+        self.dataLoader = [[DPBannersLoader alloc] initWithView:self.view group:self.group];
         self.dataLoader.delegate = self;
         [self.dataLoader loadData];
     }

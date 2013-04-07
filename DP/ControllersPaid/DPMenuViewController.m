@@ -48,7 +48,7 @@
     self = [super initWithContent:content autoScroll:NO];
     
     if (self) {
-        self.viewDelegate = self;
+        self.scrollableViewDelegate = self;
         self.rowCount = rows;
         self.colCount = columns;
     }

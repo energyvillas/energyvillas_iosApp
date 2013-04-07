@@ -25,6 +25,7 @@
 @property (strong, nonatomic) NSArray *categories;
 @property (strong, nonatomic) UIView *tapView;
 @property (strong, nonatomic) UITapGestureRecognizer *tapGesture;
+@property (strong, nonatomic) UILongPressGestureRecognizer *longPressGesture;
 @property (nonatomic, setter = setCurrentCard:) int currentCard;
 @property (nonatomic) CGSize cardSize;
 
@@ -37,7 +38,7 @@
 
 - (void) setCurrentCard:(int)value {
     _currentCard = value;
-    NSLog(@"*** currentCard = %i", value);
+//    NSLog(@"*** currentCard = %i", value);
 }
 
 - (id)initWithFrame:(CGRect)frame categories:(NSArray *)aCategories {
@@ -58,22 +59,41 @@
 -  (void) didMoveToSuperview {
     [super didMoveToSuperview];
     if (self.superview != nil) {
-        [self setupCards];
-        for (UIView *card in cards)
-            [self addSubview:card];
-        
-        [self setupTapView];
+        [self addCardAndTapViews];
         [self animateCards:moveDuration];
-   }
+    }
 }
 
 - (void) removeFromSuperview {
     [self cancelAllAnimations];
+    [self cleanCards];
     [super removeFromSuperview];
 }
 
 - (void) layoutSubviews {
     [super layoutSubviews];
+    
+/* ========= CAUTION ===========
+    NEVER CALL animateCards, animateCard, etc....
+    cause this method is called when we tap on a card 
+    (zooming brings card tapped in front which causes the call to that method....)
+*/
+}
+
+- (void) cleanCards {
+    if  (self.cards)
+        for (UIView *card in cards)
+            [card removeFromSuperview];
+
+    self.cards = nil;
+}
+
+- (void) addCardAndTapViews {
+    [self setupCards];
+    for (UIView *card in cards)
+        [self addSubview:card];
+    
+    [self setupTapView];
 }
 
 - (void) setupTapView {
@@ -82,6 +102,12 @@
                            initWithTarget:self
                            action:@selector(handleTapGesture:)];
         self.tapGesture.numberOfTapsRequired = 1;
+    }
+    if (!self.longPressGesture) {
+        self.longPressGesture = [[UILongPressGestureRecognizer alloc]
+                           initWithTarget:self
+                           action:@selector(handleLongPressGesture:)];
+//        self.longPressGesture.numberOfTapsRequired = 1;
     }
     
     if (!tapView) {
@@ -94,19 +120,28 @@
     
     [tapView removeGestureRecognizer:self.tapGesture];
     [tapView addGestureRecognizer:self.tapGesture];
+    [tapView removeGestureRecognizer:self.longPressGesture];
+    [tapView addGestureRecognizer:self.longPressGesture];
+    
+    [self bringSubviewToFront:tapView];
+}
+
+
+-(void) handleLongPressGesture:(UIGestureRecognizer *) sender {
+    [self frameChanged];
 }
 
 -(void) handleTapGesture:(UIGestureRecognizer *) sender {
     CGPoint tapPoint = [sender locationInView:tapView];
-    int tapX = (int) tapPoint.x;
-    int tapY = (int) tapPoint.y;
-    NSLog(@"TAPPED X:%d Y:%d", tapX, tapY);
+//    int tapX = (int) tapPoint.x;
+//    int tapY = (int) tapPoint.y;
+//    NSLog(@"TAPPED X:%d Y:%d", tapX, tapY);
 
     int oldCurrent = self.currentCard;
     int cnt = cards.count - 1;
     self.currentCard = -1;
     
-    // downwards cause views are in stack fashion - i>j => v[i] in front/on top of v[j]
+    // for loop downwards cause views are in stack fashion - i>j => v[i] in front/on top of v[j]
     for (int i = cnt; i >= 0 ; i--) { 
         UIView *card = (UIView *)cards[i];
         if ( [self point:tapPoint inPresentationFrame:card] ) {
@@ -120,34 +155,48 @@
             // handle tap
             DPCtgCardView *card = cards[self.currentCard];
             [self cancelCardAnimation:card];
-            [self zoomCard:cards[self.currentCard]];
+            [self zoomCard:cards[self.currentCard] duration:zoomDuration];
         }
     } else {
         if (self.currentCard == -1) {
             // resume card animation
             self.currentCard = -1;
-            [self cancelCardZoom:cards[oldCurrent]];
+            [self cancelCardZoom:cards[oldCurrent] duration:zoomDuration];
             [self animateCard:cards[oldCurrent]
+                           to:[self calcNewCenter]
                      duration:moveDuration];
         } else if (self.currentCard == oldCurrent) {
             // stop ALL animations
             // launch the card's sub view
+            Category *element = ((DPCtgCardView *)cards[self.currentCard]).category;
+            [self cancelAllAnimations];
+            [self elementTapped:element];
         } else { // we tapped another card
             // we can either :
             //      resume old, stop and zoom curr,
             // i prefer that ====
             
             // resume
-            [self cancelCardZoom:cards[oldCurrent]];
+            [self cancelCardZoom:cards[oldCurrent] duration:zoomDuration];
             [self animateCard:cards[oldCurrent]
+                           to:[self calcNewCenter]
                      duration:moveDuration];
             
             // stop
             [self cancelCardAnimation:cards[self.currentCard]];
-            [self zoomCard:cards[self.currentCard]];
+            [self zoomCard:cards[self.currentCard] duration:zoomDuration];
             
             // or
             //      just resume old and set curr to -1...
+        }
+    }
+}
+
+// DPScrollableViewDelegate method
+- (void) elementTapped:(id)element {
+    if (self.scrollableViewDelegate != nil) {
+        if([self.scrollableViewDelegate respondsToSelector:@selector(elementTapped:)]) {
+            [self.scrollableViewDelegate elementTapped:element];
         }
     }
 }
@@ -172,30 +221,34 @@
 
 - (void) animateCards:(NSTimeInterval)duration {
     for (id card in cards)
-        [self animateCard:card duration:duration];
+        [self animateCard:card to:[self calcNewCenter] duration:duration];
     
 }
 
 - (void) cancelAllAnimations {
     for (id card in cards) {
         [self cancelCardAnimation:card];
-        [self cancelCardZoom:card];
+        [self cancelCardZoom:card duration:0.0];
     }
+    
+    self.currentCard = -1;
 }
 
-- (void) animateCard:(DPCtgCardView *)card
+- (void) animateCard:(DPCtgCardView *)card to:(CGPoint)newCenter
               duration:(NSTimeInterval)duration {
     [UIView animateWithDuration:duration
                           delay:0.0
                         options:UIViewAnimationCurveLinear | UIViewAnimationOptionBeginFromCurrentState
                      animations:^{
-                         card.center = [self calcNewCenter];
+                         card.center = newCenter;
                      }
                      completion:^(BOOL finished){                       
-                         if (finished)
-                             dispatch_async(dispatch_get_main_queue(), ^{
-                                 [self animateCard:card duration:duration];
-                             });
+                         if (!finished)
+                             return;
+                         
+                         dispatch_async(dispatch_get_main_queue(), ^{
+                             [self animateCard:card to:[self calcNewCenter] duration:duration];
+                         });
                      }
      ];
 }
@@ -222,29 +275,29 @@
     }
 }
 
-- (void) zoomCard:(DPCtgCardView *)card {
+- (void) zoomCard:(DPCtgCardView *)card duration:(NSTimeInterval)duration {
     [self bringCardForward:card];
 
-    [card zoomCard];
+    [card zoomCard:duration];
 }
 
-- (void) cancelCardZoom:(DPCtgCardView *)card {
-    [card cancelCardZoom];
+- (void) cancelCardZoom:(DPCtgCardView *)card duration:(NSTimeInterval)duration {
+    [card cancelCardZoom:duration];
 }
 
-- (int) findCardWithKey:(NSString *)key {
-    int indx = -1;
-    
-    for (int i = 0; i < cards.count; i++) {
-        DPCtgCardView *card = cards[i];
-        if ( [card.category.key isEqualToString:key] ) {
-            indx = i;
-            break;
-        }
-    }
-    
-    return indx;
-}
+//- (int) findCardWithKey:(NSString *)key {
+//    int indx = -1;
+//    
+//    for (int i = 0; i < cards.count; i++) {
+//        DPCtgCardView *card = cards[i];
+//        if ( [card.category.key isEqualToString:key] ) {
+//            indx = i;
+//            break;
+//        }
+//    }
+//    
+//    return indx;
+//}
 
 - (CGPoint) calcNewCenter {
     [self calcSizes];
@@ -260,6 +313,7 @@
     maxY = containerSize.height - cardSize.height;
     ofsX = cardSize.width / 2;
     ofsY = cardSize.height / 2;
+    NSLogFrame(@"ANIM frame", self.frame);
 }
 
 - (void) setupCards {
@@ -278,6 +332,19 @@
         [mcards addObject:card];
     }
     cards = [NSArray arrayWithArray:mcards];
+}
+
+- (void) frameChanged {
+    [self cancelAllAnimations];
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        maxX = 0;
+//        [self calcSizes];
+//        [self randomizePositions];
+        [self cleanCards];
+        [self addCardAndTapViews];
+        [self animateCards:moveDuration];
+    });
 }
 
 @end

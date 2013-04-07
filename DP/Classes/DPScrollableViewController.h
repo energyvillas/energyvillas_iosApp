@@ -19,7 +19,8 @@
 @property (nonatomic) int rowCount;
 @property (nonatomic) int colCount;
 
-@property (nonatomic, weak) id <DPScrollableViewDelegate> viewDelegate;
+@property (nonatomic, weak) id <DPScrollableViewDelegate> scrollableViewDelegate;
+@property (nonatomic, weak) id <DPScrollableDataSourceDelegate> dataDelegate;
 
 
 - (id) initWithContent:(NSArray *)content autoScroll:(BOOL)autoscroll;

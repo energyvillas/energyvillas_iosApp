@@ -38,6 +38,9 @@
 - (void) viewWillLayoutSubviews {
     [super viewWillLayoutSubviews];
     
+}
+
+- (void) layoutForOrientation:(UIInterfaceOrientation)toOrientation fixtop:(BOOL)fixtop {
     int szx = IS_IPAD ? 2 * 85 : 85;
     int szy = szx;
     CGRect frm = CGRectMake(0, 0, szx, szy);

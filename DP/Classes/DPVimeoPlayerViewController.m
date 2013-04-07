@@ -36,7 +36,7 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
-        self.wantsFullScreenLayout = YES;
+//        self.wantsFullScreenLayout = YES;
     }
     return self;
 }
@@ -62,19 +62,20 @@
 - (void) doClose {
     self.extractor = nil;
     self.playerView = nil;
-    if (self.navigationController)
+    if (self.navigationController) {
+        [self.navigationController setNavigationBarHidden:NO];    // it shows
         [self.navigationController popToRootViewControllerAnimated:YES];
-    else
+    }else
         [self dismissViewControllerAnimated:YES completion:^{ }];
 }
 
 -(void)viewWillAppear:(BOOL)animated{
-    [self.navigationController setNavigationBarHidden:YES];   //it hides
+//    [self.navigationController setNavigationBarHidden:YES];   //it hides
     [super viewWillAppear:animated];
 }
 
 -(void)viewWillDisappear:(BOOL)animated{
-    [self.navigationController setNavigationBarHidden:NO];    // it shows
+//    [self.navigationController setNavigationBarHidden:NO];    // it shows
     [super viewWillDisappear:animated];
 }
 
@@ -162,6 +163,7 @@
 
 - (void)runPlayer:(NSURL *)url
 {
+    [self.navigationController setNavigationBarHidden:YES];   //it hides
     _fullScreen = YES;
     
     // wrap controller initialization call in an artificial drawing context

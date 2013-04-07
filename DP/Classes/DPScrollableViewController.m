@@ -39,7 +39,6 @@
 @synthesize currentPage;
 @synthesize colCount, rowCount;
 
-@synthesize viewDelegate;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -47,10 +46,10 @@
     if (self) {
         // Custom initialization
         
-        if (self.view)
-            NSLog(@"has view");
-        else
-            NSLog(@"view nil");
+//        if (self.view)
+//            NSLog(@"has view");
+//        else
+//            NSLog(@"view nil");
     }
     return self;
 }
@@ -60,7 +59,8 @@
     if (self) {
         autoScroll = autoscroll;
         self.contentList = content;
-        self.view = [[UIView alloc] init];
+//        if (!self.view)
+            self.view = [[UIView alloc] init];
         self.scrollView = [[UIScrollView alloc] init];
         self.pageControl = [[UIPageControl alloc] init];
         
@@ -250,48 +250,7 @@
                     UIView *v = [[UIView alloc] initWithFrame:r];
                     v.clipsToBounds = YES;
                     
-                    r = CGRectMake(0, 0, colWidth + fixWidth, rowHeight + fixHeight);
-                    UIImageView *iv = [[UIImageView alloc] initWithFrame: r];
-                    iv.backgroundColor = [UIColor clearColor];
-                    iv.contentMode = UIViewContentModeScaleAspectFill; //UIViewContentModeScaleToFill; //UIViewContentModeScaleAspectFill; //UIViewContentModeScaleAspectFit;
-                    DPDataElement *element = self.contentList[indx];
-                    if ([self isLocalUrl:element.imageUrl])
-                        iv.image = [UIImage imageNamed:[self calcImageName: element.imageUrl]];
-                    else {
-                        [self loadImageAsync:element inView:iv];
-                    }
-                    iv.tag = indx;
-                    UITapGestureRecognizer *tapper = [[UITapGestureRecognizer alloc]
-                                                      initWithTarget:self action:@selector(handleTap:)];
-                    [iv addGestureRecognizer:tapper];
-                    iv.userInteractionEnabled = YES;
-                    
-                    // add label
-                    UILabel *lv = [[UILabel alloc] initWithFrame: r];
-                    lv.textAlignment = NSTextAlignmentCenter;
-                    if (IS_IPAD)
-                        lv.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:16];
-                    else
-                        lv.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:12];
-                    lv.adjustsFontSizeToFitWidth = YES;
-                    lv.text = element.title;
-                    lv.backgroundColor = [UIColor clearColor];
-                    [lv sizeToFit];
-                    CGRect b = lv.bounds;
-                    int offsetfix = IS_IPAD ? 4 : 2;
-                    lv.frame = CGRectMake(r.origin.x, r.origin.y + r.size.height - b.size.height - offsetfix, r.size.width, b.size.height);
-                    // setup text shadow
-                    lv.textColor = [UIColor blackColor];
-                    lv.layer.shadowColor = [lv.textColor CGColor];
-                    lv.textColor = [UIColor whiteColor];
-                    lv.layer.shadowOffset = CGSizeMake(0.0, 0.0);
-                    lv.layer.masksToBounds = NO;                    
-                    lv.layer.shadowRadius = 1.9f;
-                    lv.layer.shadowOpacity = 0.95;
-
-                    // insert image and label in the view
-                    [v addSubview:iv];
-                    [v addSubview:lv];
+                    [self loadPage:indx inView:v frameSize:CGSizeMake(colWidth + fixWidth, rowHeight + fixHeight)];
                     
                     contentRendered[indx] = v;
                 }
@@ -307,9 +266,63 @@
     }
 }
 
+
+- (void) loadPage:(int)contentIndex inView:(UIView *)container frameSize:(CGSize)size {
+    if ([self.dataDelegate respondsToSelector:@selector(loadPage:inView:frameSize:)])
+        [self.dataDelegate loadPage:contentIndex inView:container frameSize:size];
+    else
+        [self doloadPage:contentIndex inView:container frameSize:size];
+}
+
+- (void) doloadPage:(int)contentIndex inView:(UIView *)container frameSize:(CGSize)size {
+    CGRect r = CGRectMake(0, 0, size.width, size.height);
+    
+    UIImageView *iv = [[UIImageView alloc] initWithFrame: r];
+    iv.backgroundColor = [UIColor clearColor];
+    iv.contentMode = UIViewContentModeScaleAspectFill; //UIViewContentModeScaleToFill; //UIViewContentModeScaleAspectFill; //UIViewContentModeScaleAspectFit;
+    DPDataElement *element = self.contentList[contentIndex];
+    if ([self isLocalUrl:element.imageUrl])
+        iv.image = [UIImage imageNamed:[self calcImageName: element.imageUrl]];
+    else
+        [self loadImageAsync:element inView:iv];
+    
+    iv.tag = contentIndex;
+    UITapGestureRecognizer *tapper = [[UITapGestureRecognizer alloc]
+                                      initWithTarget:self action:@selector(handleTap:)];
+    [iv addGestureRecognizer:tapper];
+    iv.userInteractionEnabled = YES;
+    
+    // add label
+    UILabel *lv = [[UILabel alloc] initWithFrame: r];
+    lv.textAlignment = NSTextAlignmentCenter;
+    if (IS_IPAD)
+        lv.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:16];
+    else
+        lv.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:12];
+    lv.adjustsFontSizeToFitWidth = YES;
+    lv.text = element.title;
+    lv.backgroundColor = [UIColor clearColor];
+    [lv sizeToFit];
+    CGRect b = lv.bounds;
+    int offsetfix = IS_IPAD ? 4 : 2;
+    lv.frame = CGRectMake(r.origin.x, r.origin.y + r.size.height - b.size.height - offsetfix, r.size.width, b.size.height);
+    // setup text shadow
+    lv.textColor = [UIColor blackColor];
+    lv.layer.shadowColor = [lv.textColor CGColor];
+    lv.textColor = [UIColor whiteColor];
+    lv.layer.shadowOffset = CGSizeMake(0.0, 0.0);
+    lv.layer.masksToBounds = NO;
+    lv.layer.shadowRadius = 1.9f;
+    lv.layer.shadowOpacity = 0.95;
+    
+    // insert image and label in the view
+    [container addSubview:iv];
+    [container addSubview:lv];
+}
+
 - (void) invokeViewDelegate:(id) element {
-    if ([self.viewDelegate respondsToSelector:@selector(elementTapped:)])
-        [self.viewDelegate elementTapped:element];
+    if ([self.scrollableViewDelegate respondsToSelector:@selector(elementTapped:)])
+        [self.scrollableViewDelegate elementTapped:element];
 
 }
 - (void)handleTap:(UITapGestureRecognizer *)sender {
@@ -403,7 +416,7 @@
     [dateFormatter setTimeStyle:NSDateFormatterLongStyle];
     [dateFormatter setDateStyle:NSDateFormatterNoStyle];
     
-    NSLog(@"onTimer - time: %@", [dateFormatter stringFromDate:[NSDate date]]);
+//    NSLog(@"onTimer - time: %@", [dateFormatter stringFromDate:[NSDate date]]);
     //This makes the scrollView scroll to the desired position
     //[scrollView setContentOffset:CGPointMake(TIMED_SCROLL_WIDTH, 0) animated:YES];
     int cp = self.pageControl.currentPage + 1;
@@ -451,6 +464,7 @@
     timerUsed = NO;
 }
 
+#pragma mark - loading of image data
 
 - (BOOL) isLocalUrl:(NSString *)urlstr {
     NSURL *url = [NSURL URLWithString:urlstr];

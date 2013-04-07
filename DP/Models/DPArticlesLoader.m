@@ -24,8 +24,8 @@
 
 @implementation DPArticlesLoader
 
-- (id) initWithController:(UIViewController *)controller category:(int)ctgID lang:(NSString *)aLang {
-    self = [super initWithController:controller];
+- (id) initWithView:(UIView *)indicatorcontainer  category:(int)ctgID lang:(NSString *)aLang {
+    self = [super initWithView:indicatorcontainer ];
     if (self) {
         self.categoryID = ctgID;
         self.lang = aLang;

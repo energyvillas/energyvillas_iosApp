@@ -10,7 +10,7 @@
 
 @interface DPCategoryLoader : DPDataLoader
 
-- (id) initWithController:(UIViewController *)controller
+- (id) initWithView:(UIView *)indicatorcontainer 
                  category:(int)ctgID
                      lang:(NSString *)aLang
             localResource:(NSString *)plistFile;

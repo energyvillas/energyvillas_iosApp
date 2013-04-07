@@ -42,12 +42,12 @@
              autoScroll:(BOOL)autoscroll {
     self = [super initWithContent:nil rows:rows columns:cols autoScroll:autoscroll];
     if (self) {
-        self.viewDelegate = self;
+        self.scrollableViewDelegate = self;
         self.category = ctg;
         self.lang = lang;
         self.plistFile = resfile;
         
-        self.dataLoader = [[DPCategoryLoader alloc] initWithController:self
+        self.dataLoader = [[DPCategoryLoader alloc] initWithView:self.view
                                                               category:self.category
                                                                   lang:self.lang
                                                          localResource:self.plistFile];
@@ -107,7 +107,7 @@
     @try {
         NSArray *parts = [baseName componentsSeparatedByString:@"."];
         if (parts && parts.count == 2) {
-            NSString *orientation = IS_PORTRAIT ? @"v" : @"h";
+            NSString *orientation = IS_PORTRAIT ? @"h" : @"h";  //PENDING
             // pending also fix the format string below.... NSString *lang = [DPAppHelper sharedInstance].currentLang;
             NSString *result = [NSString stringWithFormat:@"FreeDetails/%@_%@.%@", parts[0], orientation, parts[1]];
             return result;

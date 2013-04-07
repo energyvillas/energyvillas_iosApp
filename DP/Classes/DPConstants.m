@@ -99,3 +99,9 @@ NSString* NullIfEmpty(NSString *aString) {
     return aString == nil || [aString isEqualToString:@""] ? nil : aString;
 }
 
+void NSLogFrame(NSString *msg, CGRect frame) {
+    NSLog(@"%@ :: frame(x, y, w, h) = (%f, %f, %f, %f)",
+          msg,
+          frame.origin.x, frame.origin.y,
+          frame.size.width, frame.size.height);
+}

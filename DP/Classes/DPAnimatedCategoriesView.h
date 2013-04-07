@@ -7,9 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "DPScrollableViewDelegate.h"
 
-@interface DPAnimatedCategoriesView : UIView
+@interface DPAnimatedCategoriesView : UIView <DPScrollableViewDelegate>
+
+@property (nonatomic, weak) id <DPScrollableViewDelegate> scrollableViewDelegate;
 
 - (id)initWithFrame:(CGRect)frame categories:(NSArray *)categories;
 
+- (void) frameChanged;
 @end

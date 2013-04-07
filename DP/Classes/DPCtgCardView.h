@@ -23,7 +23,7 @@
 
 - (id) initWithFrame:(CGRect)frame category:(Category *)ctg;
 
-- (void) zoomCard;
-- (void) cancelCardZoom;
+- (void) zoomCard:(NSTimeInterval)duration;
+- (void) cancelCardZoom:(NSTimeInterval)duration;
 
 @end

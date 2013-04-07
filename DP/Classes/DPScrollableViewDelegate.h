@@ -13,3 +13,9 @@
 - (void) elementTapped:(id)element;
 
 @end
+
+@protocol DPScrollableDataSourceDelegate <NSObject>
+
+- (void) loadPage:(int)contentIndex inView:(UIView *)container frameSize:(CGSize)size;
+
+@end

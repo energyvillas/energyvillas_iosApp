@@ -9,7 +9,6 @@
 /* ======= common ====== */
 "btnOK_Title"="OK";
 
-
 "ERR_TITLE_URL_NOT_FOUND"="Connection Failed";
 "ERR_MSG_DATA_LOAD_FAILED"="Connection not found! Please try again later...";
 
@@ -18,8 +17,6 @@
 
 "ERR_TITLE_CONNECTION_FAILED"="Connection Failed";
 "ERR_MSG_TRY_LATER"="Please try again later...";
-
-
 
 "IMAGE_RESET_MENU"="Reset";
 
@@ -51,22 +48,22 @@
 "tbiMore_Title"="More";
 
 
-"MENU_TITLE_100"="Smart Ηouses";
-"MENU_TITLE_101"="Loft Ηouses";
-"MENU_TITLE_102"="Finnish Ηouses";
-"MENU_TITLE_103"="Greek Island Houses";
-"MENU_TITLE_104"="Country Ηouses";
-"MENU_TITLE_105"="Container Ηouses";
-"MENU_TITLE_106"="Villas";
-"MENU_TITLE_107"="Exclusive Ηouses";
-"MENU_TITLE_108"="Videos";
+"MENU_TITLE_52"="Smart Ηouses";
+"MENU_TITLE_53"="Loft Ηouses";
+"MENU_TITLE_54"="Finnish Ηouses";
+"MENU_TITLE_55"="Greek Island Houses";
+"MENU_TITLE_56"="Country Ηouses";
+"MENU_TITLE_65"="Container Ηouses";
+"MENU_TITLE_57"="Villas";
+"MENU_TITLE_58"="Exclusive Ηouses";
+"MENU_TITLE_59"="Videos";
 
-"MENU_TITLE_103_00"="Cycladic Ηouses";
-"MENU_TITLE_103_01"="Aegean Ηouses";
-"MENU_TITLE_103_02"="Ionian Ηouses";
+"MENU_TITLE_62"="Cycladic Ηouses";
+"MENU_TITLE_63"="Aegean Ηouses";
+"MENU_TITLE_64"="Ionian Ηouses";
 
-"MENU_TITLE_107_00"="Exclusive";
-"MENU_TITLE_107_01"="Art";
+"MENU_TITLE_74"="Exclusive";
+"MENU_TITLE_75"="Art";
 
 
 

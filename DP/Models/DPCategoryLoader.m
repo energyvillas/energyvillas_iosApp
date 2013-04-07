@@ -26,11 +26,11 @@
     NSString *_plistFile;
 }
 
-- (id) initWithController:(UIViewController *)controller
+- (id) initWithView:(UIView *)indicatorcontainer 
                  category:(int)ctgID
                      lang:(NSString *)aLang
             localResource:(NSString *)aplistFile {
-    self = [super initWithController:controller];
+    self = [super initWithView:indicatorcontainer];
     if (self) {
         self.ctgID = ctgID;
         self.lang = aLang;

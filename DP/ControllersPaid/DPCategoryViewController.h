@@ -8,13 +8,14 @@
 
 #import "UINavContentViewController.h"
 
-@interface DPCategoryViewController : UINavContentViewController
+@interface DPCategoryViewController : UINavContentViewController 
 
 @property (strong, nonatomic) IBOutlet UIView *ctgView;
 @property (strong, nonatomic) IBOutlet UIView *adsView;
 @property (strong, nonatomic) IBOutlet UIView *mmView;
 
 @property (strong, nonatomic) IBOutlet UILabel *lblTitle;
+@property (strong, nonatomic) IBOutlet UIView *actualCtgView;
 
 - (id) initWithCategory:(int)ctgID;
 

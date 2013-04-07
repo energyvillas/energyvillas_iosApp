@@ -123,6 +123,7 @@
     
     self.toolbar.frame = CGRectMake(0, top + topHeight,
                                     w, toolbarHeight);
+    self.toolbarBackView.frame = self.toolbar.frame;
     
     self.bottomView.frame = CGRectMake(0, top + topHeight + toolbarHeight,
                                        w, BOTTOM_HEIGHT);
@@ -134,7 +135,7 @@
 - (void) loadDetailView:(BOOL)reload{
     UIView *bcv = self.bottomView;
     
-    NSLog(@"bvc frame : (x, y, w, h) = (%f, %f, %f, %f)", bcv.frame.origin.x, bcv.frame.origin.y, bcv.frame.size.width, bcv.frame.size.height);
+//    NSLog(@"bvc frame : (x, y, w, h) = (%f, %f, %f, %f)", bcv.frame.origin.x, bcv.frame.origin.y, bcv.frame.size.width, bcv.frame.size.height);
 
     DPCategoriesViewController *detvc;
     if (reload && bcv.subviews.count > 0) {
@@ -181,7 +182,7 @@
     UIView *ofvc = self.topView;
     AFOpenFlowView *ofv = nil;
     
-    NSLog(@"ofvc frame : (x, y, w, h) = (%f, %f, %f, %f)", ofvc.frame.origin.x, ofvc.frame.origin.y, ofvc.frame.size.width, ofvc.frame.size.height);
+//    NSLog(@"ofvc frame : (x, y, w, h) = (%f, %f, %f, %f)", ofvc.frame.origin.x, ofvc.frame.origin.y, ofvc.frame.size.width, ofvc.frame.size.height);
 
     ofv = ofvc.subviews.count == 0 ? nil : ofvc.subviews[0];
     if (ofv)
@@ -273,7 +274,7 @@
 
 // protocol AFOpenFlowViewDelegate
 - (void) openFlowView:(AFOpenFlowView *)openFlowView click:(int)index {
-    NSLog(@"Clicked image at index %i", index);
+//    NSLog(@"Clicked image at index %i", index);
     
     Article *article = [self currlangCoverFlow][index];
 
@@ -287,17 +288,6 @@
                                               initWithUrl:videourl];
         [self.navigationController pushViewController:vimeo animated:YES];
     }
-    
-/*
-    // navigation logic goes here. create and push a new view controller;
-    DPImageContentViewController *vc = [[DPImageContentViewController alloc]
-                                        initWithImageName:[NSString stringWithFormat:@"%d.jpg", index]];
-    [self.navigationController pushViewController:vc animated:YES];
-*/
-
-//    DPVimeoPlayerViewController *vimeo = [[DPVimeoPlayerViewController alloc] 
-//                                          initWithUrl:@"http://vimeo.com/58323794"];
-//    [self.navigationController pushViewController:vimeo animated:YES];
 }
 
 - (void) openFlowView:(AFOpenFlowView *)openFlowView selectionDidChange:(int)index {
@@ -322,6 +312,7 @@
     [self setBbiBuy:nil];
     [self setTopView:nil];
     [self setBottomView:nil];
+    [self setToolbarBackView:nil];
     [super viewDidUnload];
 }
 

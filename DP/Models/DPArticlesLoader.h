@@ -11,6 +11,6 @@
 
 @interface DPArticlesLoader : DPDataLoader
 
-- (id) initWithController:(UIViewController *)controller category:(int)ctgID lang:(NSString *)aLang;
+- (id) initWithView:(UIView *)indicatorcontainer category:(int)ctgID lang:(NSString *)aLang;
 
 @end

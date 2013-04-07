@@ -71,7 +71,7 @@
 //        [self downloadUrl:aUrl];
         self.categoryID = ctgid;
         self.lang = aLang;
-        self.articlesLoader = [[DPArticlesLoader alloc] initWithController:self category:ctgid lang:aLang];
+        self.articlesLoader = [[DPArticlesLoader alloc] initWithView:self.view category:ctgid lang:aLang];
         self.articlesLoader.delegate = self;
         [self.articlesLoader loadData];
     }

@@ -31,7 +31,7 @@
 
 +(NSString*) digestSHA1:(NSString*)input;
 
-- (id) initWithController:(UIViewController *)controller;
+- (id) initWithView:(UIView *)indicatorcontainer;
 
 #pragma -
 #pragma public methods

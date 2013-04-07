@@ -23,8 +23,8 @@
 
 @implementation DPBannersLoader
 
-- (id) initWithController:(UIViewController *)controller group:(int)grpID {
-    self = [super initWithController:controller];
+- (id) initWithView:(UIView *)indicatorcontainer group:(int)grpID {
+    self = [super initWithView:indicatorcontainer];
     if (self) {
         self.groupID = grpID;
     }
