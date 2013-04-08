@@ -162,8 +162,8 @@
     }
 }
 
-NSString *const NAVBAR_BACK_IMG = @"Navbar/back.png";
-NSString *const NAVBAR_BACK_SEL_IMG = @"Navbar/back_roll.png";
+NSString *const NAVBAR_BACK_IMG = @"Navbar/back_arrow.png";
+NSString *const NAVBAR_BACK_SEL_IMG = @"Navbar/back_arrow_rol.png";
 
 NSString *const NAVBAR_LOGO_IMG_FMT = @"Navbar/logo_%@.png";
 
@@ -185,6 +185,27 @@ NSString *const NAVBAR_SHARE_SEL_IMG = @"Navbar/share_roll.png";
     return imgName;
 }
 
+- (NSString *) calcImageName:(NSString *)baseName {
+    @try {
+        NSArray *parts = [baseName componentsSeparatedByString:@"."];
+        if (parts && parts.count == 2) {
+            NSString *lang = [DPAppHelper sharedInstance].currentLang;
+//            NSString *orientation = IS_PORTRAIT ? @"h" : @"h";  //PENDING
+//            // pending also fix the format string below.... NSString *lang = [DPAppHelper sharedInstance].currentLang;
+            NSString *result = [NSString stringWithFormat:@"%@_%@.%@", parts[0], lang, parts[1]];
+            return result;
+        }
+        else
+            return baseName;
+    }
+    @catch (NSException* exception) {
+        NSLog(@"Uncaught exception: %@", exception.description);
+        NSLog(@"Stack trace: %@", [exception callStackSymbols]);
+        return baseName;
+    }
+}
+
+
 - (void) setupNavBar {
     if (!self.navigationController) return;
     
@@ -205,8 +226,8 @@ NSString *const NAVBAR_SHARE_SEL_IMG = @"Navbar/share_roll.png";
         self.navigationItem.leftBarButtonItems = @[
                                                    [[UIBarButtonItem alloc]
                                                     initWithCustomView: [self
-                                                                         createButtonWithImage:NAVBAR_BACK_IMG
-                                                                         highlightedImage: NAVBAR_BACK_SEL_IMG
+                                                                         createButtonWithImage:[self calcImageName:NAVBAR_BACK_IMG]
+                                                                         highlightedImage: [self calcImageName:NAVBAR_BACK_SEL_IMG]
                                                                          tag:TAG_NBI_BACK
                                                                          action:@selector(onNavButtonTapped:)]],
                                                    
