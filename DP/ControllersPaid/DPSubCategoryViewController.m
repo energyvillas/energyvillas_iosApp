@@ -65,8 +65,8 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
-    self.photoView.backgroundColor = [UIColor clearColor];
-    self.htmlView.backgroundColor = [UIColor clearColor];
+    self.photoView.backgroundColor = [UIColor orangeColor];//]clearColor];
+    self.htmlView.backgroundColor = [UIColor whiteColor];//clearColor];
     self.subCtgView.backgroundColor = [UIColor clearColor];
     
     self.label.text = self.category.title;
@@ -139,23 +139,23 @@
     
     // iphone sizes
     //portrait
-    int PH_LBL = 30;
-    int PH_PHT = 62;//80;
-    int PH_HTM = 60;
+    int PH_LBL = 24;
+    int PH_PHT = 126;
+    int PH_HTM = 80;
     //landscape
-    int LH_LBL = 60;
-    int LH_PHT = 62;
-    int LW_PHT = 60;
+    int LH_LBL = 24;
+    int LH_PHT = 110;
+    int LW_PHT = 280;
     
     // ipad sizes
     //portrait
-    int PAD_PH_LBL = 60;
-    int PAD_PH_PHT = 62;//80;
-    int PAD_PH_HTM = 60;
+    int PAD_PH_LBL = 21;
+    int PAD_PH_PHT = 300;//80;
+    int PAD_PH_HTM = 200;
     //landscape
-    int PAD_LH_LBL = 60;
-    int PAD_LH_PHT = 62;
-    int PAD_LW_PHT = 60;
+    int PAD_LH_LBL = 21;
+    int PAD_LH_PHT = 350;
+    int PAD_LW_PHT = 450;
     
     
     if (IS_IPHONE || IS_IPHONE_5) {

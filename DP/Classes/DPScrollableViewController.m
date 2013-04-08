@@ -137,8 +137,8 @@
     self.scrollView.frame = CGRectMake(0, 0, w, h);
     
     CGRect pcf = self.pageControl.frame;
-    self.pageControl.frame = CGRectMake(0, h - pcf.size.height,
-                                        w, pcf.size.height);
+    self.pageControl.frame = CGRectMake(0, h - 36, //pcf.size.height,
+                                        w, 36);//pcf.size.height);
 }
 
 - (void) didReceiveMemoryWarning
