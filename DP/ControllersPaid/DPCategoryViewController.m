@@ -206,19 +206,38 @@
 - (void) loadMenuView {
     int rows = isPortrait ? 1 : 3;
     int cols = isPortrait ? 3 : 1;
+    DPScrollDirection scrolldir = isPortrait ? DPScrollDirectionHorizontal : DPScrollDirectionVertical;
     
     if (self.mmView.subviews.count == 0)
     {
         self.mmViewController = [[DPMenuViewController alloc] initWithRows:rows
                                                                    columns:cols
-                                                                autoScroll:NO];
+                                                                autoScroll:NO
+                                                                 showPages:NO
+                                                           scrollDirection:scrolldir];
         
         [self addChildViewController:self.mmViewController];
         [self.mmView addSubview:self.mmViewController.view];
     }
     else
         [self.mmViewController changeRows:rows
-                                  columns:cols];
+                                  columns:cols
+                          scrollDirection:scrolldir];
+
+////////
+//    if (self.mmViewController) {
+//        [self.mmView removeFromSuperview];
+//        [self.mmViewController removeFromParentViewController];
+//    }
+//    
+//    self.mmViewController = [[DPMenuViewController alloc] initWithRows:isPortrait ? 1 : 3
+//                                                               columns:isPortrait ? 3 : 1
+//                                                            autoScroll:NO
+//                                                             showPages:NO
+//                                                       scrollDirection:isPortrait ? DPScrollDirectionHorizontal : DPScrollDirectionVertical];
+//    
+//    [self addChildViewController:self.mmViewController];
+//    [self.mmView addSubview:self.mmViewController.view];
 }
 
 @end

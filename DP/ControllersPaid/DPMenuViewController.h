@@ -15,4 +15,10 @@
             columns:(int)columns
          autoScroll:(BOOL)autoscroll;
 
+- (id) initWithRows:(int)rows
+            columns:(int)columns
+         autoScroll:(BOOL)autoscroll
+          showPages:(BOOL)showpages
+    scrollDirection:(DPScrollDirection)scrolldir;
+
 @end

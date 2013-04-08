@@ -9,6 +9,12 @@
 #import "UINavContentViewController.h"
 #import "DPScrollableViewDelegate.h"
 
+typedef NS_ENUM(NSInteger, DPScrollDirection) {
+    DPScrollDirectionHorizontal,
+    DPScrollDirectionVertical
+};
+
+
 @interface DPScrollableViewController : UINavContentViewController <UIScrollViewDelegate>
 
 @property (strong, nonatomic) UIScrollView *scrollView;
@@ -23,8 +29,17 @@
 @property (nonatomic, weak) id <DPScrollableDataSourceDelegate> dataDelegate;
 
 
-- (id) initWithContent:(NSArray *)content autoScroll:(BOOL)autoscroll;
+- (id) initWithContent:(NSArray *)content
+            autoScroll:(BOOL)autoscroll
+             showPages:(BOOL)showpages
+       scrollDirection:(DPScrollDirection)scrolldir;
+
+- (id) initWithContent:(NSArray *)content
+            autoScroll:(BOOL)autoscroll;
+
 - (void) changeRows:(int)rows columns:(int)columns;
+- (void) changeRows:(int)rows columns:(int)columns scrollDirection:(DPScrollDirection)scrolldir;
+- (void) changeScrollDirection:(DPScrollDirection)scrolldir;
 
 
 // protected virtual
@@ -32,3 +47,4 @@
 - (NSString *) calcImageName:(NSString *)baseName;
 
 @end
+

@@ -29,7 +29,8 @@
 @end
 
 @implementation DPScrollableViewController {
-    bool initializing, pageControlUsed, timerUsed, autoScroll;
+    bool initializing, pageControlUsed, timerUsed, autoScroll, showPages;
+    DPScrollDirection scrollDirection;
     int userTimerActive;
     NSTimer *timer, *usertimer;
     int TIMED_SCROLL_WIDTH;
@@ -54,10 +55,21 @@
     return self;
 }
 
-- (id) initWithContent:(NSArray *)content autoScroll:(BOOL)autoscroll {
+- (id) initWithContent:(NSArray *)content
+            autoScroll:(BOOL)autoscroll {
+    self = [self initWithContent:content autoScroll:autoscroll showPages:YES scrollDirection:DPScrollDirectionHorizontal];
+    return self;
+}
+
+- (id) initWithContent:(NSArray *)content
+            autoScroll:(BOOL)autoscroll
+             showPages:(BOOL)showpages
+       scrollDirection:(DPScrollDirection)scrolldir {
     self = [super init];
     if (self) {
         autoScroll = autoscroll;
+        showPages = showpages;
+        scrollDirection = scrolldir;
         self.contentList = content;
 //        if (!self.view)
             self.view = [[UIView alloc] init];
@@ -110,8 +122,8 @@
     
     self.scrollView.frame = CGRectMake(0, 0, w, h);
     
-    self.pageControl.frame = CGRectMake(0, h - 10, //pageControl.frame.size.height,
-                                        w, 10);//pageControl.frame.size.height);
+    self.pageControl.frame = CGRectMake(0, h - pageControl.frame.size.height,
+                                        w, pageControl.frame.size.height);
 }
 
 - (void) didReceiveMemoryWarning
@@ -129,7 +141,15 @@
     [super viewDidUnload];
 }
 
+- (void) changeScrollDirection:(DPScrollDirection)scrolldir {
+    [self changeRows:self.rowCount columns:self.colCount scrollDirection:scrollDirection];
+}
+
 - (void) changeRows:(int)rows columns:(int)columns {
+    [self changeRows:rows columns:columns scrollDirection:scrollDirection];
+}
+
+- (void) changeRows:(int)rows columns:(int)columns scrollDirection:(DPScrollDirection)scrolldir {
     int oldpage = self.currentPage;
     int oldrows = self.rowCount;
     int oldcols = self.colCount;
@@ -202,6 +222,7 @@
     self.pageControl.hidesForSinglePage = YES;
     self.pageControl.numberOfPages = pageCount;
     self.pageControl.currentPage = self.currentPage;
+    if (!showPages) self.pageControl.hidden = YES;
     
     TIMED_SCROLL_WIDTH = fw;
     [self engageAutoTimer];

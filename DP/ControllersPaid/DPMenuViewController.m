@@ -40,12 +40,28 @@
 - (id) initWithRows:(int)rows
             columns:(int)columns
          autoScroll:(BOOL)autoscroll {
+    self = [self initWithRows:rows
+                      columns:columns
+                   autoScroll:autoscroll
+                    showPages:YES
+              scrollDirection:DPScrollDirectionHorizontal];
+    return self;
+}
+
+- (id) initWithRows:(int)rows
+            columns:(int)columns
+         autoScroll:(BOOL)autoscroll
+          showPages:(BOOL)showpages
+    scrollDirection:(DPScrollDirection)scrolldir {
 
     DPAppHelper *apphelper = [DPAppHelper sharedInstance];
     NSArray *content = [apphelper paidMenuOfCategory:-1
                                                 lang:apphelper.currentLang];
     
-    self = [super initWithContent:content autoScroll:NO];
+    self = [super initWithContent:content
+                       autoScroll:NO
+                        showPages:showpages
+                  scrollDirection:scrolldir];
     
     if (self) {
         self.scrollableViewDelegate = self;
