@@ -93,6 +93,10 @@
 
 - (void) viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    if (self.ctgViewController)
+        [self.ctgViewController changeRows:self.ctgViewController.rowCount
+                                   columns:self.ctgViewController.colCount
+                           scrollDirection:self.ctgViewController.scrollDirection];
 }
 
 - (void) viewWillDisappear:(BOOL)animated {

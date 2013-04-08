@@ -138,6 +138,20 @@
     [self.dataLoader loadData];
 }
 
+- (void) changeRows:(int)rows columns:(int)columns scrollDirection:(DPScrollDirection)scrolldir {
+    [super changeRows:rows columns:columns scrollDirection:scrolldir];
+    
+    int pg = self.pageControl.currentPage;
+    if (pg>=0){
+        UIView *container = self.scrollView.subviews[pg];
+        if (container.subviews.count == 1 &&
+            [container.subviews[0] isKindOfClass:[DPAnimatedCategoriesView class]]) {
+            DPAnimatedCategoriesView *acv = container.subviews[0];
+            [acv frameChanged];
+        }
+    }
+}
+
 #pragma mark -
 #pragma mark dataloaderdelegate methods
 
