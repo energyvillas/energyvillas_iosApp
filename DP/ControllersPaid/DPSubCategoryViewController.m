@@ -97,7 +97,7 @@
     }
 //    else  { // if (loader == self.categoriesLoader)
 //        if (loader.datalist.count == 0)
-//            showAlertMessage(nil, kERR_TITLE_INFO, kERR_MSG_NO_DATA_FOUND);
+//            showAlertMessage(nil, DPLocalizedString(kERR_TITLE_INFO), DPLocalizedString(kERR_MSG_NO_DATA_FOUND));
 //        else {
 //            NSMutableArray *children = [[NSMutableArray alloc] init];
 //            for (Category *ctg in loader.datalist)
@@ -110,7 +110,9 @@
 }
 
 - (void)loadFailed:(DPDataLoader *)loader {
-    showAlertMessage(nil, kERR_TITLE_CONNECTION_FAILED, kERR_MSG_DATA_LOAD_FAILED);
+    showAlertMessage(nil,
+                     DPLocalizedString(kERR_TITLE_CONNECTION_FAILED),
+                     DPLocalizedString(kERR_MSG_DATA_LOAD_FAILED));
 }
 
 #pragma

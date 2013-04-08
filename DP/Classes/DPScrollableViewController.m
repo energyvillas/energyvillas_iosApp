@@ -279,7 +279,7 @@
     
     UIImageView *iv = [[UIImageView alloc] initWithFrame: r];
     iv.backgroundColor = [UIColor clearColor];
-    iv.contentMode = UIViewContentModeScaleAspectFill; //UIViewContentModeScaleToFill; //UIViewContentModeScaleAspectFill; //UIViewContentModeScaleAspectFit;
+    iv.contentMode = UIViewContentModeScaleAspectFit;
     DPDataElement *element = self.contentList[contentIndex];
     if ([self isLocalUrl:element.imageUrl])
         iv.image = [UIImage imageNamed:[self calcImageName: element.imageUrl]];

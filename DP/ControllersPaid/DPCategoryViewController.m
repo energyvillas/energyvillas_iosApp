@@ -182,7 +182,8 @@
         [self addChildViewController:self.adsViewController];
         [self.adsView addSubview:self.adsViewController.view];
     }
-    // else pending ???
+    else
+        [self.adsViewController layoutForOrientation:INTERFACE_ORIENTATION fixtop:NO];
 }
 
 - (void) loadCategoryView {    

@@ -143,7 +143,9 @@
 
 - (void)loadFinished:(DPDataLoader *)loader {
     if (loader.datalist.count == 0)
-        showAlertMessage(nil, kERR_TITLE_INFO, kERR_MSG_NO_DATA_FOUND);
+        showAlertMessage(nil,
+                         DPLocalizedString(kERR_TITLE_INFO),
+                         DPLocalizedString(kERR_MSG_NO_DATA_FOUND));
     else {
         // keep only children of category
         NSMutableArray *children = [[NSMutableArray alloc] init];

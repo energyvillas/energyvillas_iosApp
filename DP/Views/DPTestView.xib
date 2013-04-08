@@ -111,7 +111,7 @@
 						<int key="NSvFlags">292</int>
 						<string key="NSFrame">{{58, 211}, {194, 44}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
-						<reference key="NSNextKeyView" ref="759410610"/>
+						<reference key="NSNextKeyView" ref="669845991"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="IBUIOpaque">NO</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
@@ -151,7 +151,7 @@
 						<int key="NSvFlags">292</int>
 						<string key="NSFrame">{{58, 290}, {73, 44}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
-						<reference key="NSNextKeyView" ref="669845991"/>
+						<reference key="NSNextKeyView" ref="495962518"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="IBUIOpaque">NO</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
@@ -177,15 +177,21 @@
 					<object class="IBUIImageView" id="669845991">
 						<reference key="NSNextResponder" ref="191373211"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{40, 268}, {240, 128}}</string>
+						<string key="NSFrame">{{40, 372}, {240, 128}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
+						<reference key="NSNextKeyView" ref="759410610"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<object class="NSColor" key="IBUIBackgroundColor">
 							<int key="NSColorSpace">3</int>
 							<bytes key="NSWhite">MCAwAA</bytes>
 						</object>
+						<int key="IBUIContentMode">1</int>
 						<bool key="IBUIUserInteractionEnabled">NO</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
+						<object class="NSCustomResource" key="IBUIImage">
+							<string key="NSClassName">NSImage</string>
+							<string key="NSResourceName">0.jpg</string>
+						</object>
 					</object>
 					<object class="IBUISegmentedControl" id="260205838">
 						<reference key="NSNextResponder" ref="191373211"/>
@@ -235,6 +241,7 @@
 						<int key="NSvFlags">292</int>
 						<string key="NSFrame">{{111, 435}, {42, 21}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
+						<reference key="NSNextKeyView"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="IBUIOpaque">NO</bool>
 						<bool key="IBUIClipsSubviews">YES</bool>
@@ -306,8 +313,8 @@
 							<reference ref="996729030"/>
 							<reference ref="116987499"/>
 							<reference ref="260205838"/>
-							<reference ref="669845991"/>
 							<reference ref="495962518"/>
+							<reference ref="669845991"/>
 						</array>
 						<reference key="parent" ref="0"/>
 					</object>
@@ -389,6 +396,7 @@
 		<bool key="IBDocument.PluginDeclaredDependenciesTrackSystemTargetVersion">YES</bool>
 		<int key="IBDocument.defaultPropertyAccessControl">3</int>
 		<dictionary class="NSMutableDictionary" key="IBDocument.LastKnownImageSizes">
+			<string key="0.jpg">{300, 200}</string>
 			<string key="001-el.jpg">{1920, 1080}</string>
 			<string key="flag-gr.png">{16, 16}</string>
 			<string key="navbar/ENG_Lang.png">{16, 16}</string>

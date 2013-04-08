@@ -79,7 +79,7 @@ void showAlertMessage(id aDelegate, NSString *aTitle, NSString *aMessage) {
 NSString* DPLocalizedString(NSString *key)
 {
     NSString *langCode = [DPAppHelper sharedInstance].currentLang;
-    
+
     // langCode should be set as a global variable somewhere
     NSString *path = [[NSBundle mainBundle] pathForResource:langCode ofType:@"lproj"];
     NSBundle* languageBundle = [NSBundle bundleWithPath:path];
@@ -91,6 +91,8 @@ NSString* DPLocalizedString(NSString *key)
 
         result = [languageBundle localizedStringForKey:key value:@"" table:nil];
     }
+    
+    NSLog(@"Localized Key:%@, Value:%@", key, result);
     
     return result;
 }
