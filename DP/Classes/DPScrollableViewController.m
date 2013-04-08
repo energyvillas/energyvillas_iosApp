@@ -153,6 +153,7 @@
     int oldpage = self.currentPage;
     int oldrows = self.rowCount;
     int oldcols = self.colCount;
+    scrollDirection = scrolldir;
     
     self.colCount = columns;
     self.rowCount = rows;
@@ -208,11 +209,16 @@
     
 	int pageCount = [self calcPageCount];
     
-    // a page is the width of the scroll view
+    // a page is the width/height of the scroll view
     self.scrollView.pagingEnabled = YES;
     int fw = self.scrollView.frame.size.width;
     int fh = self.scrollView.frame.size.height;
-    self.scrollView.contentSize = CGSizeMake(fw * pageCount, fh);
+    
+    if (scrollDirection == DPScrollDirectionHorizontal)
+        self.scrollView.contentSize = CGSizeMake(fw * pageCount, fh);
+    else
+        self.scrollView.contentSize = CGSizeMake(fw, fh * pageCount);
+    
     self.scrollView.showsHorizontalScrollIndicator = NO;
     self.scrollView.showsVerticalScrollIndicator = NO;
     self.scrollView.scrollsToTop = NO;
@@ -234,10 +240,16 @@
 }
 
 - (void)loadScrollViewWithPage:(int)page{
+    if (scrollDirection == DPScrollDirectionHorizontal)
+        [self loadHorizontalScrollViewWithPage:page];
+    else
+        [self loadVerticalScrollViewWithPage:page];
+}
+- (void)loadHorizontalScrollViewWithPage:(int)page{
     if (initializing) return;
     if (page < 0) return;
     if (page >= self.pageControl.numberOfPages) return;
-
+    
     int pageWidth = self.scrollView.frame.size.width;
     int colWidth = pageWidth / colCount;
     int rowHeight = self.scrollView.frame.size.height / rowCount;
@@ -255,16 +267,16 @@
         posY = posY + (rowHeight + fixHeight) * (r == 0 ? 0 : 1);
         int colWidthResidue = pageWidth % colCount;
         fixHeight = (rowHeightResidue > 0 ? 1 : 0);
-
+        
         int posX = page * pageWidth;
-
+        
         int fixWidth = (colWidthResidue > 0 ? 1 : 0);
         for (int c = 0; c<colCount; c++)
         {
             posX = posX + (colWidth + fixWidth) * (c == 0 ? 0 : 1);
             int indx = page * (rowCount * colCount) + r * colCount + c;
             fixWidth = (colWidthResidue > 0 ? 1 : 0);
-
+            
             if (indx < self.contentList.count) {
                 if (contentRendered[indx] == [NSNull null]) {
                     CGRect r = CGRectMake(posX, posY, colWidth + fixWidth, rowHeight + fixHeight);
@@ -278,7 +290,62 @@
                 int scrlvc = self.scrollView.subviews.count;
                 [self.scrollView addSubview: contentRendered[indx]];
                 scrlvc = self.scrollView.subviews.count;
+                
+            }
+            colWidthResidue = colWidthResidue > 0 ? colWidthResidue - 1 : 0;
+        }
+        
+        rowHeightResidue = rowHeightResidue > 0 ? rowHeightResidue - 1 : 0;
+    }
+}
 
+- (void)loadVerticalScrollViewWithPage:(int)page{
+    if (initializing) return;
+    if (page < 0) return;
+    if (page >= self.pageControl.numberOfPages) return;
+    
+    int pageWidth = self.scrollView.frame.size.width;
+    int pageHeight = self.scrollView.frame.size.height;
+    int colWidth = pageWidth / colCount;
+    int rowHeight = pageHeight / rowCount;
+    
+    if (colWidth == 0 || rowHeight == 0) return;
+    
+    int rowHeightResidue = (int)pageHeight % rowCount;
+    int fixHeight = (rowHeightResidue > 0 ? 1 : 0);
+    
+    NSMutableArray *contentRendered = UIInterfaceOrientationIsPortrait(INTERFACE_ORIENTATION) ? self.portraitRendered : self.landscapeRendered;
+    
+    int posY = page * pageHeight;
+    for (int r = 0; r<rowCount; r++)
+    {
+        posY = posY + (rowHeight + fixHeight) * (r == 0 ? 0 : 1);
+        int colWidthResidue = pageWidth % colCount;
+        fixHeight = (rowHeightResidue > 0 ? 1 : 0);
+        
+        int posX = 0;
+        
+        int fixWidth = (colWidthResidue > 0 ? 1 : 0);
+        for (int c = 0; c<colCount; c++)
+        {
+            posX = posX + (colWidth + fixWidth) * (c == 0 ? 0 : 1);
+            int indx = page * (rowCount * colCount) + r * colCount + c;
+            fixWidth = (colWidthResidue > 0 ? 1 : 0);
+            
+            if (indx < self.contentList.count) {
+                if (contentRendered[indx] == [NSNull null]) {
+                    CGRect r = CGRectMake(posX, posY, colWidth + fixWidth, rowHeight + fixHeight);
+                    UIView *v = [[UIView alloc] initWithFrame:r];
+                    v.clipsToBounds = YES;
+                    
+                    [self loadPage:indx inView:v frameSize:CGSizeMake(colWidth + fixWidth, rowHeight + fixHeight)];
+                    
+                    contentRendered[indx] = v;
+                }
+                int scrlvc = self.scrollView.subviews.count;
+                [self.scrollView addSubview: contentRendered[indx]];
+                scrlvc = self.scrollView.subviews.count;
+                
             }
             colWidthResidue = colWidthResidue > 0 ? colWidthResidue - 1 : 0;
         }

@@ -15,6 +15,7 @@
 			<string>IBUIButton</string>
 			<string>IBUIImageView</string>
 			<string>IBUILabel</string>
+			<string>IBUIPageControl</string>
 			<string>IBUIScrollView</string>
 			<string>IBUISegmentedControl</string>
 			<string>IBUIView</string>
@@ -256,10 +257,25 @@
 						<reference key="IBUIFont" ref="225899166"/>
 						<bool key="IBUIAdjustsFontSizeToFit">NO</bool>
 					</object>
-					<object class="IBUIScrollView" id="153156507">
+					<object class="IBUIScrollView" id="1005766017">
 						<reference key="NSNextResponder" ref="191373211"/>
 						<int key="NSvFlags">268</int>
-						<string key="NSFrame">{{69, 197}, {240, 240}}</string>
+						<array class="NSMutableArray" key="NSSubviews">
+							<object class="IBUIPageControl" id="549865074">
+								<reference key="NSNextResponder" ref="1005766017"/>
+								<int key="NSvFlags">1316</int>
+								<object class="NSPSMatrix" key="NSFrameMatrix"/>
+								<string key="NSFrame">{{0, 204}, {240, 36}}</string>
+								<reference key="NSSuperview" ref="1005766017"/>
+								<string key="NSReuseIdentifierKey">_NS:9</string>
+								<bool key="IBUIOpaque">NO</bool>
+								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
+								<int key="IBUIContentHorizontalAlignment">0</int>
+								<int key="IBUIContentVerticalAlignment">0</int>
+								<int key="IBUINumberOfPages">3</int>
+							</object>
+						</array>
+						<string key="NSFrame">{{28, 31}, {240, 240}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="IBUIClipsSubviews">YES</bool>
@@ -325,7 +341,7 @@
 							<reference ref="260205838"/>
 							<reference ref="495962518"/>
 							<reference ref="669845991"/>
-							<reference ref="153156507"/>
+							<reference ref="1005766017"/>
 						</array>
 						<reference key="parent" ref="0"/>
 					</object>
@@ -378,8 +394,16 @@
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">14</int>
-						<reference key="object" ref="153156507"/>
+						<reference key="object" ref="1005766017"/>
+						<array class="NSMutableArray" key="children">
+							<reference ref="549865074"/>
+						</array>
 						<reference key="parent" ref="191373211"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">15</int>
+						<reference key="object" ref="549865074"/>
+						<reference key="parent" ref="1005766017"/>
 					</object>
 				</array>
 			</object>
@@ -395,6 +419,7 @@
 				<integer value="0" key="12.IUISegmentedControlInspectorSelectedSegmentMetadataKey"/>
 				<string key="13.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="14.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
+				<string key="15.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="3.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="8.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="9.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
@@ -405,7 +430,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">14</int>
+			<int key="maxID">15</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes"/>
 		<int key="IBDocument.localizationMode">0</int>
