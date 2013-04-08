@@ -24,6 +24,7 @@ typedef NS_ENUM(NSInteger, DPScrollDirection) {
 
 @property (nonatomic) int rowCount;
 @property (nonatomic) int colCount;
+@property (nonatomic, readonly, getter = getScrollDir) DPScrollDirection scrollDirection;
 
 @property (nonatomic, weak) id <DPScrollableViewDelegate> scrollableViewDelegate;
 @property (nonatomic, weak) id <DPScrollableDataSourceDelegate> dataDelegate;

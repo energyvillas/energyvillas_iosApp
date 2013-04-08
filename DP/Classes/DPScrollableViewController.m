@@ -91,6 +91,10 @@
     return self;
 }
 
+- (DPScrollDirection) getScrollDir {
+    return scrollDirection;
+}
+
 - (void) contentLoaded:(NSArray *)content {
     self.contentList = content;
 }
@@ -108,22 +112,33 @@
 }
 - (void) viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
+    
+    CGRect svf = self.view.superview.frame;
+    int h = svf.size.height;
+    int w = svf.size.width;
+    self.view.frame = CGRectMake(0, 0, w, h);
+
     [self calcFrames];
+
     [self doInit];
 }
 
 - (void) calcFrames {
-    UIView *v = self.view;
-    UIView *sv = v.superview;
-    int h = sv.frame.size.height;
-    int w = sv.frame.size.width;
+    CGRect vf = self.view.frame;
+//    if (CGRectIsEmpty(vf)) return;
+    CGRect svf = self.view.superview.frame;
     
-    self.view.frame = CGRectMake(0,0, w, h);
+    int h = svf.size.height;
+    int w = svf.size.width;
+    
+
+//    self.view.frame = CGRectMake(0, 0, w, h);
     
     self.scrollView.frame = CGRectMake(0, 0, w, h);
     
-    self.pageControl.frame = CGRectMake(0, h - pageControl.frame.size.height,
-                                        w, pageControl.frame.size.height);
+    CGRect pcf = self.pageControl.frame;
+    self.pageControl.frame = CGRectMake(0, h - pcf.size.height,
+                                        w, pcf.size.height);
 }
 
 - (void) didReceiveMemoryWarning
@@ -181,6 +196,7 @@
 
 - (void) doInit {
     if (self.contentList == nil || self.contentList.count == 0) return;
+    if (CGRectIsEmpty(self.view.bounds)) return;
     
     BOOL isRendered = NO;
     if (UIInterfaceOrientationIsPortrait(INTERFACE_ORIENTATION)) {

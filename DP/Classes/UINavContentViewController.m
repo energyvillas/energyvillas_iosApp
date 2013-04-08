@@ -84,7 +84,8 @@
 }
 
 - (void) viewWillAppear:(BOOL)animated {
-    [self layoutForOrientation:INTERFACE_ORIENTATION fixtop:NO];
+    [super viewWillAppear:animated];
+    [self layoutForOrientation:INTERFACE_ORIENTATION fixtop:YES];
 }
 
 - (void) viewDidAppear:(BOOL)animated {

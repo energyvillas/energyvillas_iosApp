@@ -23,7 +23,7 @@
 @implementation DPMenuViewController {
         bool isPortrait;
     
-    int islands_count;
+//    int islands_count;
     int island_width;
     int island_height;
 }
@@ -99,6 +99,10 @@
     self.islandsContent = nil;
 }
 
+- (void) viewWillLayoutSubviews {
+    [super viewWillLayoutSubviews];
+    [self layoutForOrientation:INTERFACE_ORIENTATION fixtop:YES];
+}
 - (void) layoutForOrientation:(UIInterfaceOrientation)toOrientation fixtop:(BOOL)fixtop {
     // dismiss popover since the positioning will be wrong
     [self clearPopups];
@@ -118,13 +122,18 @@
     
     UIView *sv;
     sv = self.view.superview;
-    
-    int h = sv.bounds.size.height;
-    int w = sv.bounds.size.width;
+
+    CGRect vf = self.view.frame;
+//    int top = fixtop ? vf.origin.y : 0;
+//    int h = (isPortrait ? vf.size.height : vf.size.height - vf.origin.y) - top;
+//    int w = vf.size.width;
+    int top = 0;
+    int h = vf.size.height;//sv.bounds.size.height;
+    int w = vf.size.width;//sv.bounds.size.width;
     int pgCtrlHeight = 36; //self.pageControl.frame.size.height;
     //self.view.frame = CGRectMake(0, 0, w, h);
-    self.scrollView.frame = CGRectMake(0, 0, w, h);
-    self.pageControl.frame = CGRectMake(0, h - pgCtrlHeight, w, pgCtrlHeight);
+    self.scrollView.frame = CGRectMake(0, top, w, h);
+    self.pageControl.frame = CGRectMake(0, h + top - pgCtrlHeight, w, pgCtrlHeight);
     
     [self changeRows:self.rowCount columns:self.colCount];
 }
@@ -135,7 +144,9 @@
     
     switch (element.Id) {
         case CTGID_ISLAND: {
-             [self showIslandMenu:self.scrollView.subviews[3] ofCategory:element.Id];
+            [self showIslandMenu:self.scrollView.subviews[3]
+                      ofCategory:element.Id
+                    islandsCount:3];
             break;
         }
             
@@ -185,8 +196,24 @@
     }
 }
 
+- (void)handleIslandTap:(UITapGestureRecognizer *)sender {
+    [self.popController dismissPopoverAnimated:YES];
+    self.popController = nil;
+    
+    if (sender.state == UIGestureRecognizerStateEnded) {
+        // handling code
+        int indx = sender.view.tag;
+        DPDataElement *element = self.islandsContent[indx];
+        NSLog(@"Clicked island image at index %i named %@ ", indx, element.title);
+        
+        [self elementTapped:element];
+    }
+}
+
 - (UIView *) doCreateItem:(DPDataElement *)element tag:(int)indx{
-    CGRect frm = CGRectMake(island_width * indx, 0, island_width, island_height);
+    int posX = self.scrollDirection == DPScrollDirectionHorizontal ? island_width * indx : 0;
+    int posY = self.scrollDirection == DPScrollDirectionVertical ? island_height * indx : 0;
+    CGRect frm = CGRectMake(posX, posY, island_width,  island_height);
     
     UIView *v = [[UIView alloc] initWithFrame: frm];
     v.clipsToBounds = YES;
@@ -194,7 +221,7 @@
     frm = CGRectMake(0, 0, island_width, island_height);
     UIImageView *iv = [[UIImageView alloc] initWithFrame: frm];
     iv.image = [UIImage imageNamed: element.imageUrl];
-    iv.contentMode = UIViewContentModeScaleAspectFill; //UIViewContentModeScaleAspectFit;
+    iv.contentMode = UIViewContentModeScaleAspectFit; 
     iv.tag = indx;
     UITapGestureRecognizer *tapper = [[UITapGestureRecognizer alloc]
                                       initWithTarget:self action:@selector(handleIslandTap:)];
@@ -223,23 +250,9 @@
     return v;
 }
 
-- (void)handleIslandTap:(UITapGestureRecognizer *)sender {
-    [self.popController dismissPopoverAnimated:YES];
-    self.popController = nil;
-    
-    if (sender.state == UIGestureRecognizerStateEnded) {
-        // handling code
-        int indx = sender.view.tag;
-        DPDataElement *element = self.islandsContent[indx];
-        NSLog(@"Clicked island image at index %i named %@ ", indx, element.title);
-        
-        [self elementTapped:element];
-    }
-}
-
--(id) doCreateIslandViewController:(int)ctgId {
+-(id) doCreateIslandViewController:(int)ctgId islandsCount:(int)islandsCount frame:(CGRect)vframe {
     UIViewController *vc = [[UIViewController alloc] init];
-    vc.view.frame = CGRectMake(island_width * islands_count, 0, island_width, island_height);
+    vc.view.frame = vframe;
     
     DPAppHelper *appHelper = [DPAppHelper sharedInstance];
     self.islandsContent = [appHelper paidMenuOfCategory:ctgId lang:appHelper.currentLang];
@@ -252,29 +265,32 @@
     return vc;
 }
 
-- (void)presentedNewPopoverController:(FPPopoverController *)newPopoverController
-          shouldDismissVisiblePopover:(FPPopoverController*)visiblePopoverController
-{
-    [visiblePopoverController dismissPopoverAnimated:YES];
-}
-
-- (void)popoverControllerDidDismissPopover:(FPPopoverController *)popoverController {
-    
-}
-
--(void) showIslandMenu:(id)fromView ofCategory:(int)ctgId{
+-(void) showIslandMenu:(id)fromView ofCategory:(int)ctgId islandsCount:(int)islandsCount {
     CGRect mmfrm = self.view.superview.frame;
-    islands_count = 3;
-        
+    
     island_width = mmfrm.size.width / self.colCount;
-    island_height = mmfrm.size.height / self.rowCount;    
-    CGFloat ratio = island_width / island_height;
+    island_height = mmfrm.size.height / self.rowCount;
+    CGFloat ratio = (1.0 * island_width) / island_height;
     island_width = island_width - 8;
     island_height = island_width / ratio;
-        
+    
+    int width = island_width;
+    int height = island_height;
+    if (self.scrollDirection == DPScrollDirectionHorizontal)
+        width = width * islandsCount;
+    else
+        height = height * islandsCount;
+    
+    CGRect frame = CGRectMake(0, //island_width * islandsCount,
+                              0,
+                              width,//island_width,
+                              height);//island_height);
+
     //the view controller you want to present as popover
     if (!self.islandPopupViewController)
-        self.islandPopupViewController = [self doCreateIslandViewController:ctgId];
+        self.islandPopupViewController = [self doCreateIslandViewController:ctgId
+                                                               islandsCount:islandsCount
+                                                                      frame:frame];
     
     self.islandPopupViewController.title = nil;
     
@@ -283,10 +299,27 @@
                           initWithViewController:self.islandPopupViewController];
     self.popController.delegate = self;
     self.popController.border = YES;
-    self.popController.contentSize = CGSizeMake(island_width * 3 + 20, island_height + 40);
-    self.popController.arrowDirection = FPPopoverArrowDirectionDown;//FPPopoverArrowDirectionDown | FPPopoverArrowDirectionRight;
+    if (self.scrollDirection == DPScrollDirectionHorizontal) {
+        self.popController.arrowDirection = FPPopoverArrowDirectionDown;
+        self.popController.contentSize = CGSizeMake(frame.size.width + 20, frame.size.height + 40);
+    } else {
+        self.popController.arrowDirection = FPPopoverArrowDirectionRight;
+        self.popController.contentSize = CGSizeMake(frame.size.width + 40, frame.size.height + 80);
+
+    }
     
     [self.popController presentPopoverFromView:fromView];
+}
+
+
+- (void)presentedNewPopoverController:(FPPopoverController *)newPopoverController
+          shouldDismissVisiblePopover:(FPPopoverController*)visiblePopoverController
+{
+    [visiblePopoverController dismissPopoverAnimated:YES];
+}
+
+- (void)popoverControllerDidDismissPopover:(FPPopoverController *)popoverController {
+    
 }
 
 
