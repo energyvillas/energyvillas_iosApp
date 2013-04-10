@@ -101,17 +101,79 @@
 
 - (void) elementTapped:(id)sender element:(id)element {
     DPDataElement *elm = element;
-//    DPBuyViewController *buyVC = [[DPBuyViewController alloc] initWithCategoryId:elm.Id];
-//    
-//    id del = self.navigationController.delegate;
-//    DPMainViewController *main = del;
-//    
-//    [main addChildViewController:buyVC];
-//    [main.view addSubview:buyVC.view];
+    
+//    [UIView animateWithDuration:12.5
+//                          delay:0.0
+//                        options:UIViewAnimationCurveLinear | UIViewAnimationOptionBeginFromCurrentState
+//                     animations:^{
+//                         [sender setHighlighted:YES];
+//                     }
+//                     completion:^(BOOL finished){
+//                         if (!finished)
+//                             return;
+//                         
+//                         dispatch_async(dispatch_get_main_queue(), ^{
+//                             id pvc = self.parentVC;
+//                             if (pvc && [pvc conformsToProtocol:@protocol(DPBuyAppProtocol)])
+//                                 [pvc showBuyDialog:elm.Id];
+//                         });
+//                     }];
     
     id pvc = self.parentVC;
     if (pvc && [pvc conformsToProtocol:@protocol(DPBuyAppProtocol)])
         [pvc showBuyDialog:elm.Id];
+}
+
+#pragma mark - DPScrollableDataSourceDelegate
+
+- (void) onTap:(id)sender {
+        int indx = ((UIButton *)sender).tag;
+        DPDataElement * element = self.contentList[indx];
+        NSLog(@"Clicked image at index %i named %@", indx, element.title);
+        
+        [self elementTapped:sender element:element];
+        
+        // navigation logic goes here. create and push a new view controller;
+        //        DPTestViewController *vc = [[DPTestViewController alloc] init];
+        //        [self.navigationController pushViewController: vc animated: YES];
+
+}
+
+-(void) loadPage:(int)contentIndex inView:(UIView *)container frame:(CGRect)frame {
+    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+    button.showsTouchWhenHighlighted = YES;
+    [button addTarget:self action:@selector(onTap:) forControlEvents:UIControlEventTouchUpInside];
+    
+    DPDataElement *element = self.contentList[contentIndex];
+    
+    NSString *imgname =[self resolveImageName:element];
+    UIImage *img = [UIImage imageNamed:imgname];
+    button.frame = CGRectMake((frame.size.width - img.size.width) / 2.0,
+                              0 ,
+                              img.size.width, img.size.height);
+    [button setImage:img forState:UIControlStateNormal];
+    
+    NSString *imghighname =[self resolveHighlightImageName:element];
+    if (imghighname) {
+        img = [UIImage imageNamed:imghighname];
+        [button setImage:img forState:UIControlStateHighlighted];
+    }
+    
+    [button setTag: contentIndex];
+    
+    UILabel *label = createLabel(frame, element.title);
+    int ofs = 0; 
+    if (IS_IPAD) {
+        ofs = IS_PORTRAIT ? -20 : -10;
+    } else if (IS_IPHONE) {
+        ofs = IS_PORTRAIT ? -5 : -2;
+    } else if (IS_IPHONE_5) {
+        ofs = IS_PORTRAIT ? -5 : -13;
+    }
+    label.frame = CGRectOffset(label.frame, 0, ofs);
+
+    [container addSubview: button];
+    [container addSubview: label];
 }
 
 #pragma mark overrides

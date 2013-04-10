@@ -9,7 +9,10 @@
 #import "DPCtgScrollViewController.h"
 #import "DPDataLoader.h"
 
-@interface DPCategoriesViewController : DPCtgScrollViewController <DPScrollableViewDelegate, DPDataLoaderDelegate>
+@interface DPCategoriesViewController : DPCtgScrollViewController
+        <DPScrollableViewDelegate,
+        DPScrollableDataSourceDelegate,
+        DPDataLoaderDelegate>
 
 - (id) initWithCategory:(int)ctg
                    lang:(NSString *)lang

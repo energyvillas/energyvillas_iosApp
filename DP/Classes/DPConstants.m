@@ -8,6 +8,7 @@
 
 #import "DPConstants.h"
 #import "DPAppHelper.h"
+#import <QuartzCore/QuartzCore.h>
 /*
 NSString *const MyFirstConstant = @"FirstConstant";
 NSString *const MySecondConstant = @"SecondConstant";
@@ -106,4 +107,33 @@ void NSLogFrame(NSString *msg, CGRect frame) {
           msg,
           frame.origin.x, frame.origin.y,
           frame.size.width, frame.size.height);
+}
+
+
+UILabel * createLabel(CGRect frame, NSString *title) {
+    // add label
+    UILabel *lv = [[UILabel alloc] initWithFrame: frame];
+    lv.textAlignment = NSTextAlignmentCenter;
+    if (IS_IPAD)
+        lv.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:16];
+    else
+        lv.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:12];
+    lv.adjustsFontSizeToFitWidth = YES;
+    lv.text = /*element.*/title;
+    lv.backgroundColor = [UIColor clearColor];
+    [lv sizeToFit];
+    CGRect b = lv.bounds;
+    int offsetfix = IS_IPAD ? 4 : 2;
+    lv.frame = CGRectMake(frame.origin.x, frame.origin.y + frame.size.height - b.size.height - offsetfix,
+                          frame.size.width, b.size.height);
+    // setup text shadow
+    lv.textColor = [UIColor blackColor];
+    lv.layer.shadowColor = [lv.textColor CGColor];
+    lv.textColor = [UIColor whiteColor];
+    lv.layer.shadowOffset = CGSizeMake(0.0, 0.0);
+    lv.layer.masksToBounds = NO;
+    lv.layer.shadowRadius = 1.9f;
+    lv.layer.shadowOpacity = 0.95;
+
+    return lv;
 }

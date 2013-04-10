@@ -119,3 +119,5 @@ NSString* DPLocalizedString(NSString *key);
 NSString* NullIfEmpty(NSString *aString);
 
 void NSLogFrame(NSString *msg, CGRect frame);
+
+UILabel * createLabel(CGRect frame, NSString *title);
