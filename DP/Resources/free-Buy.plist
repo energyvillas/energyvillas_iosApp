@@ -4,7 +4,7 @@
 <dict>
 	<key>Categories</key>
 	<array>
-		<string>-1</string>
+		<integer>-1</integer>
 		<integer>52</integer>
 		<integer>53</integer>
 		<integer>54</integer>
@@ -50,7 +50,7 @@
 	<dict>
 		<key>Images</key>
 		<array>
-			<string></string>
+			<array/>
 			<array>
 				<string>01-Buy_our_app_exupnes.png</string>
 				<string>02-Buy_our_app_exupnes_No1.png</string>

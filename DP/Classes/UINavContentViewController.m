@@ -297,10 +297,11 @@ NSString *const NAVBAR_SHARE_SEL_IMG = @"Navbar/share_roll.png";
         [button addTarget:self action:sel forControlEvents:UIControlEventTouchUpInside];
     
     UIImage *img = [UIImage imageNamed: imgName];
+     
     if (CGRectEqualToRect(aFrame, CGRectZero))
-        button.frame = CGRectMake(0, (44 - img.size.height) / 2 , img.size.width, img.size.height);
-    else
-        button.frame = aFrame;
+        aFrame = CGRectMake(0, (44 - img.size.height) / 2 , img.size.width, img.size.height);
+
+    button.frame = aFrame;
     
     [button setImage: img forState:UIControlStateNormal];
     [button setTag: index];

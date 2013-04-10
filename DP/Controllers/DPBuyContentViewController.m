@@ -153,6 +153,24 @@
 
 #pragma mark - START DPScrollableDataSourceDelegate
 
+//- (void) onTap:(id)sender {
+//    int indx = ((UIButton *)sender).tag;
+//    DPDataElement * element = self.contentList[indx];
+//    NSLog(@"Clicked image at index %i named %@", indx, element.title);
+//    
+//    [self elementTapped:sender element:element];
+//    
+//    // navigation logic goes here. create and push a new view controller;
+//    //        DPTestViewController *vc = [[DPTestViewController alloc] init];
+//    //        [self.navigationController pushViewController: vc animated: YES];
+//    
+//}
+
+- (UILabel *) createLabel:(CGRect)frame title:(NSString *)title {
+    UILabel *label = [super createLabel:frame title:title];
+    label.frame = CGRectOffset(label.frame, 0, -label.frame.origin.y);
+    return label;
+}
 //- (void) loadPage:(int)contentIndex
 //           inView:(UIView *)container
 //            frame:(CGRect)frame {
@@ -171,17 +189,18 @@
 //                NSString *imghighname =[self resolveHighlightImageName:ctg];
 //                if (imghighname)
 //                    iv.highlightedImage = [UIImage imageNamed:imghighname];
-//            } else
-//                [self loadImageAsync:ctg inView:iv];
+//            }
+////            else
+////                [self loadImageAsync:ctg inView:iv];
 //
 //        }
 //            
 //            
 //    }
 //    @catch (NSException *exception) {
-//        UIView *v = 
+//       // UIView *v =
 //    }
-//    [container addSubview:v];
+//   // [container addSubview:v];
 //}
 
 #pragma mark END DPScrollableDataSourceDelegate
@@ -191,6 +210,7 @@
 #pragma mark - START virtual overrides
 
 - (NSString *) calcImageName:(NSString *)baseName {
+    NSLog(@"buy content ::: '%@'", baseName);
     if ([self isLocalUrl:baseName]) {
         @try {
             NSArray *parts = [baseName componentsSeparatedByString:@"."];

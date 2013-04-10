@@ -154,13 +154,15 @@
     NSArray *imageurls = images[indx];
     
     NSMutableArray *res = [[NSMutableArray alloc] initWithCapacity:titles.count];
-    for (int i=0; i<imageurls.count; i++) {
-        [res addObject:[[Category alloc] initWithValues:[NSString stringWithFormat:@"%d", i]
-                                                  lang:lang
-                                                 title:title
-                                              imageUrl:imageurls[i]
-                                                 parent:strctg]];
-    }
+    if (imageurls)
+        for (int i=0; i<imageurls.count; i++) {
+            NSString *imgname = imageurls[i];
+            [res addObject:[[Category alloc] initWithValues:[NSString stringWithFormat:@"%d", i]
+                                                       lang:lang
+                                                      title:title
+                                                   imageUrl:imgname
+                                                     parent:strctg]];
+        }
     
     return [NSArray arrayWithArray:res];
 }
@@ -205,10 +207,11 @@
     
     NSMutableArray *res = [[NSMutableArray alloc] initWithCapacity:titles.count];
     for (int i=0; i<categories.count; i++) {
+        NSString *imgname = images[i];
         [res addObject:[[Category alloc] initWithValues:[NSString stringWithFormat:@"%@", categories[i]]
                                                    lang:lang
                                                   title:titles[i]
-                                               imageUrl:images[i]
+                                               imageUrl:imgname
                                                  parent:pid == -1 ? nil : [NSString stringWithFormat:@"%d", pid]]];
     }
     

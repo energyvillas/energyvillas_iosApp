@@ -185,7 +185,7 @@
     
     self.toolbar.frame = CGRectMake(0, top + topHeight,
                                     w, toolbarHeight);
-    self.toolbarBackView.frame = self.toolbar.frame;
+//    self.toolbarBackView.frame = self.toolbar.frame;
     
     self.bottomView.frame = CGRectMake(0, top + topHeight + toolbarHeight,
                                        w, BOTTOM_HEIGHT);
@@ -233,7 +233,7 @@
     
     self.toolbar.frame = CGRectMake(0, top + topHeight,
                                     w, toolbarHeight);
-    self.toolbarBackView.frame = self.toolbar.frame;
+//    self.toolbarBackView.frame = self.toolbar.frame;
     
     self.bottomView.frame = CGRectMake(0, top + topHeight + toolbarHeight,
                                        w, BOTTOM_HEIGHT);
@@ -447,7 +447,7 @@
     [self setBbiBuy:nil];
     [self setTopView:nil];
     [self setBottomView:nil];
-    [self setToolbarBackView:nil];
+//    [self setToolbarBackView:nil];
     [super viewDidUnload];
 }
 

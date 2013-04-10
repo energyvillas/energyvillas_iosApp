@@ -399,6 +399,7 @@
     iv.backgroundColor = [UIColor clearColor];
     iv.contentMode = UIViewContentModeCenter; //ScaleAspectFit;//Center;//ScaleAspectFit;
     DPDataElement *element = self.contentList[contentIndex];
+    NSLog(@"ImageUrl:: '%@'", element.imageUrl);
     if ([self isLocalUrl:element.imageUrl]) {
         NSString *imgname =[self resolveImageName:element];
         iv.image = [UIImage imageNamed:imgname];
@@ -416,32 +417,15 @@
     iv.userInteractionEnabled = YES;
     
     // add label
-    UILabel *lv = [[UILabel alloc] initWithFrame: frame];
-    lv.textAlignment = NSTextAlignmentCenter;
-    if (IS_IPAD)
-        lv.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:16];
-    else
-        lv.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:12];
-    lv.adjustsFontSizeToFitWidth = YES;
-    lv.text = element.title;
-    lv.backgroundColor = [UIColor clearColor];
-    [lv sizeToFit];
-    CGRect b = lv.bounds;
-    int offsetfix = IS_IPAD ? 4 : 2;
-    lv.frame = CGRectMake(frame.origin.x, frame.origin.y + frame.size.height - b.size.height - offsetfix,
-                          frame.size.width, b.size.height);
-    // setup text shadow
-    lv.textColor = [UIColor blackColor];
-    lv.layer.shadowColor = [lv.textColor CGColor];
-    lv.textColor = [UIColor whiteColor];
-    lv.layer.shadowOffset = CGSizeMake(0.0, 0.0);
-    lv.layer.masksToBounds = NO;
-    lv.layer.shadowRadius = 1.9f;
-    lv.layer.shadowOpacity = 0.95;
+    UILabel *lv = [self createLabel:frame title:element.title];
     
     // insert image and label in the view
     [container addSubview:iv];
     [container addSubview:lv];
+}
+
+- (UILabel *) createLabel:(CGRect)frame title:(NSString *)title {
+    return createLabel(frame, title);
 }
 
 - (void) invokeViewDelegate:(UITapGestureRecognizer *)sender element:(id)element {
