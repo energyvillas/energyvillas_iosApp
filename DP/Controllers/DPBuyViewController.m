@@ -198,13 +198,28 @@
     img = [UIImage imageNamed:[self calcImageName:dlgImgName
                                       isHighlight:YES ]];
     [self.btnBuy setBackgroundImage:img forState:UIControlStateHighlighted];
-    UIFont *font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:IS_IPAD?44.0:28.0];
+    
+    CGFloat fntSize = IS_IPAD ? 44.0 : 28.0;
+    if (category == CTGID_EXCLUSIVE)
+        fntSize = IS_IPAD ? 44.0 : 26.0;
+    UIFont *font = [UIFont fontWithName:@"HelveticaNeue" size:fntSize];
+
+    UIColor *textColor = category == CTGID_EXCLUSIVE
+            ? [UIColor colorWithRed:226/256.0 green:109/256.0 blue:51/256.0 alpha:1.0]
+            : [UIColor whiteColor];
+    [self.btnBuy setTitleColor:textColor forState:UIControlStateNormal];
+    [self.btnBuy setTitleColor:textColor forState:UIControlStateHighlighted];
+
     self.btnBuy.titleLabel.font = font;
     NSString *btnTitle = self.btnBuy.titleLabel.text;
 
     CGSize lblsize = [btnTitle sizeWithFont:font];
     int start = IS_IPAD ? 26 : 8;
     int width = IS_IPAD ? 108 : 70;
+    if (category == CTGID_EXCLUSIVE) {
+        start = IS_IPAD ? 10 : 0;
+        width = IS_IPAD ? 90 : 60;
+    }
     start = start + (width - lblsize.width) / 2;
     [self.btnBuy setTitleEdgeInsets:UIEdgeInsetsMake(0, start, 0, 0)];
 
