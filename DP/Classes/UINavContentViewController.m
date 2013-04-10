@@ -241,21 +241,21 @@ NSString *const NAVBAR_SHARE_SEL_IMG = @"Navbar/share_roll.png";
     
     UIView *rightButtons = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 120, 44)];
     
-    self.navbarLang_EN = [self
-                          createButtonWithImage:NAVBAR_LANG_EN_IMG
-                          highlightedImage:NAVBAR_LANG_EN_SEL_IMG
-                          frame:CGRectMake(0, 7, 30, 30)
-                          tag:TAG_NBI_LANG_EN
-                          action:@selector(onNavButtonTapped:)];
-    [rightButtons addSubview: self.navbarLang_EN];
-    
     self.navbarLang_EL = [self
                           createButtonWithImage:NAVBAR_LANG_EL_IMG
                           highlightedImage:NAVBAR_LANG_EL_SEL_IMG
-                          frame:CGRectMake(30, 7, 30, 30)
+                          frame:CGRectMake(0, 7, 30, 30)
                           tag:TAG_NBI_LANG_EL
                           action:@selector(onNavButtonTapped:)];
     [rightButtons addSubview: self.navbarLang_EL];
+    
+    self.navbarLang_EN = [self
+                          createButtonWithImage:NAVBAR_LANG_EN_IMG
+                          highlightedImage:NAVBAR_LANG_EN_SEL_IMG
+                          frame:CGRectMake(30, 7, 30, 30)
+                          tag:TAG_NBI_LANG_EN
+                          action:@selector(onNavButtonTapped:)];
+    [rightButtons addSubview: self.navbarLang_EN];
     
     [rightButtons addSubview:[self
                               createButtonWithImage:NAVBAR_FAV_IMG
