@@ -216,23 +216,33 @@ NSString *const NAVBAR_SHARE_SEL_IMG = @"Navbar/share_roll.png";
     bool ischild = self.navigationController.viewControllers[0] != self &&
                     self.navigationController.topViewController == self;
     
-    self.navbarTitleItemButton = [self
-                                  createButtonWithImage: [self calcTitleImageName]
-                                  highlightedImage: [self calcTitleImageName]
-                                  tag:0
-                                  action:nil];
-
+    UIView *leftButtons = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 180, 44)];
+    
+    self.navbarTitleItemButton = [self createButtonWithImage: [self calcTitleImageName]
+                                            highlightedImage: [self calcTitleImageName]
+                                                       frame:CGRectZero//CGRectMake(30, 7, 30, 30)
+                                                         tag:0
+                                                      action:nil];
+    self.navbarTitleItemButton.userInteractionEnabled = NO;
+    
     if (ischild) {
+        UIButton *backBtn = [self createButtonWithImage:[self calcImageName:NAVBAR_BACK_IMG]
+                                       highlightedImage: [self calcImageName:NAVBAR_BACK_SEL_IMG]
+                                                  frame:CGRectZero //CGRectMake(0, 7, 30, 30)
+                                                    tag:TAG_NBI_BACK
+                                                 action:@selector(onNavButtonTapped:)];
+        
+        CGRect frm = CGRectMake(backBtn.frame.origin.x + backBtn.frame.size.width - 10,
+                                7,
+                                self.navbarTitleItemButton.frame.size.width,
+                                self.navbarTitleItemButton.frame.size.height);
+        self.navbarTitleItemButton.frame = frm;
+        
+        [leftButtons addSubview: backBtn];
+        [leftButtons addSubview: self.navbarTitleItemButton];
+
         self.navigationItem.leftBarButtonItems = @[
-                                                   [[UIBarButtonItem alloc]
-                                                    initWithCustomView: [self
-                                                                         createButtonWithImage:[self calcImageName:NAVBAR_BACK_IMG]
-                                                                         highlightedImage: [self calcImageName:NAVBAR_BACK_SEL_IMG]
-                                                                         tag:TAG_NBI_BACK
-                                                                         action:@selector(onNavButtonTapped:)]],
-                                                   
-                                                   [[UIBarButtonItem alloc]
-                                                    initWithCustomView: self.navbarTitleItemButton]
+                                                   [[UIBarButtonItem alloc] initWithCustomView: leftButtons]
                                                    ];
     }
     else
