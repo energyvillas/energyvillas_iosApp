@@ -36,6 +36,10 @@
 
 @synthesize topView, toolbar, bbiBuy, bbiMore, bottomView;
 
+- (id) init {
+    self = [super init];
+    return self;
+}
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -67,18 +71,48 @@
     }
 }
 
-- (void) doBuy:(id) sender {
-    DPBuyViewController *buyVC = [[DPBuyViewController alloc] initWithCategoryId:-1];
+//- (BOOL) isBuyRunning {
+//    id del = self.navigationController.delegate;
+//    DPMainViewController *main = del;
+//    
+//    BOOL isRunning = NO;
+//    for (id vc in main.childViewControllers)
+//        if ([vc isMemberOfClass:[DPBuyViewController class]]) {
+//            isRunning = YES;
+//            break;
+//        }
+//    return isRunning;
+//}
+
+- (void) showBuyDialog:(int)ctgId {
+//    if ([self isBuyRunning]) return;
 
     id del = self.navigationController.delegate;
     DPMainViewController *main = del;
+    
+    DPBuyViewController *buyVC = [[DPBuyViewController alloc]
+                                  initWithCategoryId:ctgId
+                                  completion:^{
+                                      self.view.userInteractionEnabled = YES;
+                                  }];
+    
+//    buyVC.modalPresentationStyle = UIModalPresentationCurrentContext;
+//    [self presentViewController:buyVC animated:YES];
+    
+    self.view.userInteractionEnabled = NO;
 
     [main addChildViewController:buyVC];
     [main.view addSubview:buyVC.view];
 }
 
+- (void) doBuy:(id) sender {
+    [self showBuyDialog:-1];
+}
+
 - (void) doMore:(id) sender {
-    
+//    if ([self isBuyRunning]) return;
+
+    // do the more stuff here
 }
 
 - (void)didReceiveMemoryWarning
@@ -87,7 +121,83 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (void) viewWillLayoutSubviews {
+    switch (INTERFACE_ORIENTATION) {
+        case UIInterfaceOrientationLandscapeLeft:
+        case UIInterfaceOrientationLandscapeRight:
+            isPortrait = NO;
+            break;
+            
+        case UIInterfaceOrientationPortraitUpsideDown:
+        case UIInterfaceOrientationPortrait:
+            isPortrait = YES;
+            break;
+    }
+    
+    CGRect vf = self.view.frame;
+    
+    int h = isPortrait ? vf.size.height : vf.size.height - vf.origin.y ;
+    int w = vf.size.width;
+    int top = 0; //fixtop ? vf.origin.y : 0;
+    
+
+//    int carouselHeight = 0;
+//    int toolbarHeight = self.toolbar.bounds.size.height;
+//    int detailsHeight = 0;
+//    
+//    if (IS_IPHONE) {
+//        carouselHeight = (isPortrait) ? 202 : 148;
+//        detailsHeight = (isPortrait) ? 170 : 64;
+//    } else if (IS_IPHONE_5) {
+//        carouselHeight = (isPortrait) ? 290 : 137;
+//        detailsHeight = (isPortrait) ? 170 : 75;
+//    } else if (IS_IPAD) {
+//        carouselHeight = (isPortrait) ? 508 : 524;
+//        detailsHeight = (isPortrait) ? 408 : 136;
+//    }
+//
+//    self.topView.frame = CGRectMake(0, top, w, carouselHeight);
+//    
+//    self.toolbar.frame = CGRectMake(0, top + carouselHeight,
+//                                    w, toolbarHeight);
+//    
+//    self.toolbarBackView.frame = self.toolbar.frame;
+//    
+//    self.bottomView.frame = CGRectMake(0, top + carouselHeight + toolbarHeight,
+//                                       w, detailsHeight);
+  
+//////////////////////
+    
+    int toolbarHeight = self.toolbar.frame.size.height;
+
+    int BOTTOM_HEIGHT;
+    if (IS_IPHONE)
+        BOTTOM_HEIGHT = (isPortrait) ? 170 : 64;
+    else if (IS_IPHONE_5)
+        BOTTOM_HEIGHT = (isPortrait) ? 170 : 75;
+    else // if (IS_IPAD)
+        BOTTOM_HEIGHT = (isPortrait) ? 408 : 136;//340 : 114;
+    
+    //self.view.frame = CGRectMake(0, 0, w, h);
+    int topHeight = h - toolbarHeight - BOTTOM_HEIGHT;
+    
+    self.topView.frame = CGRectMake(0, top, w, topHeight);
+    
+    self.toolbar.frame = CGRectMake(0, top + topHeight,
+                                    w, toolbarHeight);
+    self.toolbarBackView.frame = self.toolbar.frame;
+    
+    self.bottomView.frame = CGRectMake(0, top + topHeight + toolbarHeight,
+                                       w, BOTTOM_HEIGHT);
+    
+    [self loadOpenFlow];
+    [self loadDetailView:NO];
+
+}
 - (void) layoutForOrientation:(UIInterfaceOrientation)toOrientation fixtop:(BOOL)fixtop{
+    return;
+    
+    
     switch (toOrientation) {
         case UIInterfaceOrientationLandscapeLeft:
         case UIInterfaceOrientationLandscapeRight:
@@ -101,7 +211,7 @@
     }
 
     CGRect vf = self.view.frame;
-//    CGRect svf = self.view.superview.frame;
+//    CGRect vf = self.view.superview.frame;
     
     int h = isPortrait ? vf.size.height : vf.size.height - vf.origin.y ;
     int w = vf.size.width;    
@@ -153,14 +263,16 @@
                                                            localResource:@"free-details.plist"
                                                                     rows:2
                                                                  columns:2
-                                                              autoScroll:YES];
+                                                              autoScroll:YES
+                                                                  parent:self];
         else
             detvc = [[DPCategoriesViewController alloc] initWithCategory:-1
                                                                     lang:apphelper.currentLang
                                                            localResource:@"free-details.plist"
                                                                     rows:1
                                                                  columns:4
-                                                              autoScroll:YES];
+                                                              autoScroll:YES
+                                                                  parent:self];
         
         
         [self addChildViewController: detvc];
@@ -274,13 +386,13 @@
 
 // protocol AFOpenFlowViewDelegate
 - (void) openFlowView:(AFOpenFlowView *)openFlowView click:(int)index {
-//    NSLog(@"Clicked image at index %i", index);
+//    if ([self isBuyRunning]) return;
     
     Article *article = [self currlangCoverFlow][index];
 
     if (article.videoUrl == nil) {
         DPImageContentViewController *vc = [[DPImageContentViewController alloc]
-                                            initWithImageName:article.imageUrl];
+                                            initWithImageName:[self calcImageName:article.imageUrl]];
         [self.navigationController pushViewController:vc animated:YES];
     } else {
         NSString *videourl = article.videoUrl;
@@ -297,9 +409,32 @@
 // protocol AFOpenFlowViewDatasource
 - (void) openFlowView:(AFOpenFlowView *)openFlowView requestImageForIndex:(int)index {
     Article *article = [self currlangCoverFlow][index];
-    CGRect frm = topView.frame;
-    UIImage *img = [self imageNamed:article.imageUrl withFrame:&frm];
+//    CGRect frm = topView.frame;
+//    UIImage *img = [self imageNamed:[self calcImageName:article.imageUrl] withFrame:&frm];
+    NSString *imgName = [self calcImageName:article.imageUrl];
+    UIImage *img = [UIImage imageNamed:imgName];
+    
     [openFlowView setImage:img forIndex:index];
+}
+
+- (NSString *) calcImageName:(NSString *)baseName {
+    @try {
+        NSArray *parts = [baseName componentsSeparatedByString:@"."];
+        if (parts && parts.count == 2) {
+            NSString *lang = @"el"; //[DPAppHelper sharedInstance].currentLang;
+            NSString *orientation = IS_PORTRAIT ? @"v" : @"h";
+            NSString *result = [NSString stringWithFormat:@"Carousel/%@_%@_%@.%@",
+                                parts[0], lang, orientation, parts[1]];
+            return result;
+        }
+        else
+            return baseName;
+    }
+    @catch (NSException* exception) {
+        NSLog(@"Uncaught exception: %@", exception.description);
+        NSLog(@"Stack trace: %@", [exception callStackSymbols]);
+        return baseName;
+    }
 }
 
 - (UIImage *) defaultImage {

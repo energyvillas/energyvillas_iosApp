@@ -99,7 +99,22 @@
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 */
+
+- (void) willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
+    [super willAnimateRotationToInterfaceOrientation:toInterfaceOrientation duration:duration];
+
+    CGSize nextViewSize = [UIApplication sizeInOrientation:toInterfaceOrientation];
+    self.view.frame = CGRectMake(0, 0, nextViewSize.width, nextViewSize.height);
+}
+- (void) viewWillLayoutSubviews {
+    [super viewWillLayoutSubviews];
+
+    UIView *innerview = self.view.subviews.count == 1 ? self.view.subviews[0] : nil;
+    if (innerview) 
+        innerview.frame = self.view.frame;
+}
 - (void) layoutForOrientation:(UIInterfaceOrientation) toOrientation fixtop:(BOOL)fixtop{
+    return;
 /*
     CGRect svf = self.view.superview.frame;
     CGRect vf = self.view.frame;

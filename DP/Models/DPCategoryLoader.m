@@ -17,35 +17,56 @@
 
 @property int ctgID;
 @property (strong, nonatomic) NSString *lang;
+@property (strong, nonatomic) NSString *plistFile;
+@property (strong, nonatomic) NSArray *localData;
 
 @end
 
 
 
 @implementation DPCategoryLoader {
-    NSString *_plistFile;
 }
 
-- (id) initWithView:(UIView *)indicatorcontainer 
-                 category:(int)ctgID
-                     lang:(NSString *)aLang
-            localResource:(NSString *)aplistFile {
-    self = [super initWithView:indicatorcontainer];
+- (id) initWithView:(UIView *)indicatorcontainer
+         useCaching:(BOOL)useCaching
+           category:(int)ctgID
+               lang:(NSString *)aLang
+      localResource:(NSString *)aplistFile {
+    self = [super initWithView:indicatorcontainer useCaching:useCaching];
     if (self) {
         self.ctgID = ctgID;
         self.lang = aLang;
-        _plistFile = aplistFile;
+        self.plistFile = aplistFile;
     }
     
     return self;
 }
+
+- (id) initWithView:(UIView *)indicatorcontainer
+         useCaching:(BOOL)useCaching
+           category:(int)ctgID
+               lang:(NSString *)aLang
+          localData:(NSArray *)localData {
+    self = [super initWithView:indicatorcontainer useCaching:useCaching];
+    if (self) {
+        self.ctgID = ctgID;
+        self.lang = aLang;
+        self.localData = localData;
+    }
+    
+    return self;
+}
+
+
 
 - (BOOL) useInternetForLoading {
     return self.ctgID != -1;
 }
 
 - (void) loadFromPlist {
-    if (_plistFile) {
+    if (self.localData)
+        self.datalist = self.localData;
+    else  if (_plistFile) {
         self.datalist = [self doGetCategoriesFrom:[self doGetDictionaryFrom:_plistFile]
                                              lang:self.lang
                                            parent:self.ctgID];

@@ -12,15 +12,23 @@
 #import <StoreKit/StoreKit.h>
 #import "DPIAPHelper.h"
 #import "DPAppHelper.h"
+#import "DPConstants.h"
 #import "DPCtgScrollViewController.h"
+#import <UIKit/UIKit.h>
+#import "DPBuyContentViewController.h"
 
 
 @interface DPBuyViewController ()
+
+//@property (strong, nonatomic) DPBuyContentViewController *contentController;
+@property (strong) void (^onClose)(void);
 
 @end
 
 @implementation DPBuyViewController {
     int category;
+    UIInterfaceOrientation uiio;
+    
 }
 
 //@synthesize backView, contentView;
@@ -35,10 +43,12 @@
     return self;
 }
 
-- (id) initWithCategoryId:(int)ctgid {
+- (id) initWithCategoryId:(int)ctgid completion:(void (^)(void))completion {
     self = [super init];
     if (self) {
         category = ctgid;
+        uiio = -1;
+        self.onClose = completion;
     }
     return self;
 }
@@ -56,12 +66,16 @@
 }
 
 - (void) doLocalize {
-    self.bbiClose.title = DPLocalizedString(@"BUY_DLG_bbiClose_Title");
-    self.bbiTitle.title = DPLocalizedString(@"BUY_DLG_TITLE_Title");
-    [self.btnBuy setTitle:DPLocalizedString(@"BUY_DLG_btnBuy_Title")
+    [self.btnClose setTitle:DPLocalizedString(@"BUY_DLG_bbiClose_Title")
                  forState:UIControlStateNormal];
+    
     [self.btnRestore setTitle:DPLocalizedString(@"BUY_DLG_btnRestore_Title")
-                     forState:UIControlStateNormal];    
+                     forState:UIControlStateNormal];
+    
+    [self.btnBuy setTitle:@"€2.99" // TODO:GGSE :: DPLocalizedString(@"BUY_DLG_btnBuy_Title")
+                 forState:UIControlStateNormal];
+    
+    [self doLayoutSubViews];
 
     if (self.innerView.subviews.count > 0)
         [self loadDetailView:YES];
@@ -72,31 +86,31 @@
     
     NSLog(@"inner frame : (x, y, w, h) = (%f, %f, %f, %f)", bcv.frame.origin.x, bcv.frame.origin.y, bcv.frame.size.width, bcv.frame.size.height);
   
-    DPCtgScrollViewController *detvc;
+    DPBuyContentViewController *contentController;
     if (reload && bcv.subviews.count > 0) {
-        detvc = (DPCtgScrollViewController *)self.childViewControllers[0];
-        [detvc.view removeFromSuperview];
-        [detvc removeFromParentViewController];
-        detvc = nil;
+        contentController = (DPBuyContentViewController *)self.childViewControllers[0];
+        [contentController.view removeFromSuperview];
+        [contentController removeFromParentViewController];
     }
 
     if (bcv.subviews.count == 0) {
-                
-        NSArray *content = [[DPAppHelper sharedInstance] freeDetailsFor:[DPAppHelper sharedInstance].currentLang];
+        contentController = [[DPBuyContentViewController alloc] initWithCategory:category];
         
-        detvc = [[DPCtgScrollViewController alloc]
-                     initWithContent:content rows:1 columns:1 autoScroll:YES];
-        
-        [self addChildViewController: detvc];
-        [bcv addSubview: detvc.view];
-        
-        detvc = nil;
+        [self addChildViewController: contentController];
+        [bcv addSubview: contentController.view];        
     } else {
-        detvc = (DPCtgScrollViewController *)self.childViewControllers[0];
-        [detvc changeRows:1 columns:1];
+        contentController = (DPBuyContentViewController *)self.childViewControllers[0];
+        [contentController changeRows:1 columns:1];
     }
 }
 
+-(void) willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
+    [super willAnimateRotationToInterfaceOrientation:toInterfaceOrientation duration:duration];
+    
+//    CGSize nextViewSize = [UIApplication sizeInOrientation:toInterfaceOrientation];
+//    self.view.frame = CGRectMake(0, 0, nextViewSize.width, nextViewSize.height);
+
+}
 
 -(void)viewWillAppear:(BOOL)animated{
     [self.navigationController setNavigationBarHidden:YES];   //it hides
@@ -113,55 +127,170 @@
     [super viewWillDisappear:animated];
 }
 
-- (void) layoutForOrientation:(UIInterfaceOrientation) toOrientation fixtop:(BOOL)fixtop{
-    CGSize nextViewSize = [UIApplication sizeInOrientation:toOrientation];
-    self.view.frame = CGRectMake(0, 0, nextViewSize.width, nextViewSize.height);
-    self.backView.frame = self.view.frame;
-    
-    int PHONE_W = 280;
-    int PHONE_H = 250;
-    
-    int PAD_W = 680;
-    int PAD_H = PAD_W * PHONE_H / PHONE_W;
-    
-    int toolbarHeight = self.toolbar.frame.size.height;
-    if (toolbarHeight == 0)
-        toolbarHeight = 44;
+-(void)viewWillLayoutSubviews {
+    [super viewWillLayoutSubviews];
+    [self doLayoutSubViews];
+}
 
+-(void) doLayoutSubViews {
+    
+    if (uiio == INTERFACE_ORIENTATION) return;
+    uiio = INTERFACE_ORIENTATION;
+    
+    CGSize nextViewSize = [UIApplication sizeInOrientation:INTERFACE_ORIENTATION];
+    self.backView.frame = CGRectMake(0, 0, nextViewSize.width, nextViewSize.height);//self.view.bounds;
+
+    BOOL isPortrait = UIInterfaceOrientationIsPortrait(INTERFACE_ORIENTATION);
     CGRect cf;
-    if (IS_IPHONE || IS_IPHONE_5) {
-        cf = CGRectMake((nextViewSize.width - PHONE_W) / 2,
-                               (nextViewSize.height - PHONE_H) / 2,
-                               PHONE_W, PHONE_H);
-    } else {
-        cf = CGRectMake((nextViewSize.width - PAD_W) / 2,
-                               (nextViewSize.height - PAD_H) / 2,
-                               PAD_W, PAD_H);
+    if (IS_IPHONE) {
+        cf = CGRectMake(0, 18,
+                        nextViewSize.width, nextViewSize.height);
+    } else if (IS_IPHONE_5) {
+        cf = CGRectMake(0, isPortrait ? 105 : 18,
+                        nextViewSize.width, nextViewSize.height);        
+    } else if (IS_IPAD) {
+        cf = CGRectMake(0, isPortrait ? 170 : 120,
+                        nextViewSize.width, nextViewSize.height);
     }
-
+    
     self.contentView.frame = cf;
-    self.toolbar.frame = CGRectMake(0, 0, cf.size.width, toolbarHeight);
-    self.innerView.frame = CGRectMake(0, toolbarHeight,
-                                      cf.size.width, cf.size.height - toolbarHeight - 40);
-    
-    self.bbiTitle.width = cf.size.width - 80;
-    [self.btnBuy sizeToFit];
-    [self.btnRestore sizeToFit];
-    CGRect br = self.btnBuy.frame;
-    CGRect rr = self.btnRestore.frame;
-    
-    br = CGRectInset(br, -8, -2);
-    rr = CGRectInset(rr, -8, -2);
 
-    br.origin = CGPointMake((cf.size.width - br.size.width - rr.size.width - 8) / 2,
-                            cf.size.height - br.size.height - 8);
+    // toolbar
+    NSString *dlgImgName = category == CTGID_EXCLUSIVE ? @"BuyDialog/Buy_our_app_exclusive_01.png" : @"BuyDialog/Buy_our_app_01.png";
+    UIImage *img = [UIImage imageNamed:dlgImgName];
+    CGRect frm = CGRectMake(0, 0,
+                            img.size.width, img.size.height);
+    self.toolbar.frame = frm;
+    self.toolbar.image = img;
     
-    rr.origin = CGPointMake(br.origin.x + br.size.width + 8,
-                            cf.size.height - rr.size.height - 8);
+    int BTN_HEIGHT = 22;
+    // btn close
+    [self.btnClose sizeToFit];
+    self.btnClose.frame = CGRectMake(frm.origin.x + 10,
+                                     (frm.size.height - BTN_HEIGHT /*self.btnClose.bounds.size.height*/) / 2,
+                                     self.btnClose.bounds.size.width,
+                                     BTN_HEIGHT /*self.btnClose.bounds.size.height*/);
+
+    // btn Restore
+    [self.btnRestore sizeToFit];
+    self.btnRestore.frame = CGRectMake(frm.origin.x + frm.size.width -
+                                       self.btnRestore.bounds.size.width - 10,
+                                       (frm.size.height - BTN_HEIGHT /*self.btnRestore.bounds.size.height*/) / 2,
+                                       self.btnRestore.bounds.size.width,
+                                       BTN_HEIGHT /*self.btnRestore.bounds.size.height*/);
     
-    self.btnBuy.frame = br;
+    // center
+    dlgImgName = category == CTGID_EXCLUSIVE ? @"BuyDialog/Buy_our_app_exclusive_02.png" : @"BuyDialog/Buy_our_app_02.png";
+    img = [UIImage imageNamed:dlgImgName];
+    frm = CGRectMake(0, frm.origin.y + frm.size.height,
+                     img.size.width, img.size.height);
+    self.innerView.frame = frm;
+    self.innerView.image = img;
     
-    self.btnRestore.frame = rr;
+    // buy btn
+    dlgImgName = category == CTGID_EXCLUSIVE ? @"BuyDialog/Buy_our_app_exclusive_03.png" : @"BuyDialog/Buy_our_app_03.png";
+    img = [UIImage imageNamed:[self calcImageName:dlgImgName
+                                      isHighlight:NO ]];
+    frm = CGRectMake(0, frm.origin.y + frm.size.height,
+                     img.size.width, img.size.height);
+    self.btnBuy.frame = frm;
+    [self.btnBuy setBackgroundImage:img forState:UIControlStateNormal];
+    img = [UIImage imageNamed:[self calcImageName:dlgImgName
+                                      isHighlight:YES ]];
+    [self.btnBuy setBackgroundImage:img forState:UIControlStateHighlighted];
+    UIFont *font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:IS_IPAD?44.0:28.0];
+    self.btnBuy.titleLabel.font = font;
+    NSString *btnTitle = self.btnBuy.titleLabel.text;
+
+    CGSize lblsize = [btnTitle sizeWithFont:font];
+    int start = IS_IPAD ? 26 : 8;
+    int width = IS_IPAD ? 108 : 70;
+    start = start + (width - lblsize.width) / 2;
+    [self.btnBuy setTitleEdgeInsets:UIEdgeInsetsMake(0, start, 0, 0)];
+
+    // container
+    cf = CGRectMake((nextViewSize.width - frm.size.width) / 2,
+                     cf.origin.y,
+                     frm.size.width,
+                     frm.origin.y + frm.size.height);
+    self.contentView.frame = cf;
+}
+
+- (NSString *) calcImageName:(NSString *)baseName {
+    return [self calcImageName:baseName isHighlight:NO];
+}
+- (NSString *) calcImageName:(NSString *)baseName isHighlight:(BOOL)ishighlight {
+    @try {
+        NSArray *parts = [baseName componentsSeparatedByString:@"."];
+        if (parts && parts.count == 2) {
+            //NSString *orientation = IS_PORTRAIT ? @"v" : @"h";
+            NSString *high = ishighlight ? @"_roll" : @"";
+            NSString *lang = [DPAppHelper sharedInstance].currentLang;
+            NSString *result = [NSString stringWithFormat:@"%@%@_%@.%@",
+                                parts[0], high, lang, parts[1]];
+            return result;
+        }
+        else
+            return baseName;
+    }
+    @catch (NSException* exception) {
+        NSLog(@"Uncaught exception: %@", exception.description);
+        NSLog(@"Stack trace: %@", [exception callStackSymbols]);
+        return baseName;
+    }
+}
+
+- (void) layoutForOrientation:(UIInterfaceOrientation) toOrientation fixtop:(BOOL)fixtop{
+    return;
+    
+//    CGSize nextViewSize = [UIApplication sizeInOrientation:toOrientation];
+//    self.view.frame = CGRectMake(0, 0, nextViewSize.width, nextViewSize.height);
+//    self.backView.frame = self.view.frame;
+//    
+//    int PHONE_W = 280;
+//    int PHONE_H = 250;
+//    
+//    int PAD_W = 680;
+//    int PAD_H = PAD_W * PHONE_H / PHONE_W;
+//    
+//    int toolbarHeight = self.toolbar.frame.size.height;
+//    if (toolbarHeight == 0)
+//        toolbarHeight = 44;
+//
+//    CGRect cf;
+//    if (IS_IPHONE || IS_IPHONE_5) {
+//        cf = CGRectMake((nextViewSize.width - PHONE_W) / 2,
+//                               (nextViewSize.height - PHONE_H) / 2,
+//                               PHONE_W, PHONE_H);
+//    } else {
+//        cf = CGRectMake((nextViewSize.width - PAD_W) / 2,
+//                               (nextViewSize.height - PAD_H) / 2,
+//                               PAD_W, PAD_H);
+//    }
+//
+//    self.contentView.frame = cf;
+//    self.toolbar.frame = CGRectMake(0, 0, cf.size.width, toolbarHeight);
+//    self.innerView.frame = CGRectMake(0, toolbarHeight,
+//                                      cf.size.width, cf.size.height - toolbarHeight - 40);
+//    
+//    self.bbiTitle.width = cf.size.width - 80;
+//    [self.btnBuy sizeToFit];
+//    [self.btnRestore sizeToFit];
+//    CGRect br = self.btnBuy.frame;
+//    CGRect rr = self.btnRestore.frame;
+//    
+//    br = CGRectInset(br, -8, -2);
+//    rr = CGRectInset(rr, -8, -2);
+//
+//    br.origin = CGPointMake((cf.size.width - br.size.width - rr.size.width - 8) / 2,
+//                            cf.size.height - br.size.height - 8);
+//    
+//    rr.origin = CGPointMake(br.origin.x + br.size.width + 8,
+//                            cf.size.height - rr.size.height - 8);
+//    
+//    self.btnBuy.frame = br;
+//    
+//    self.btnRestore.frame = rr;
 }
 
 - (void)didReceiveMemoryWarning
@@ -171,7 +300,13 @@
 }
 
 - (IBAction)onTouchUpInside:(id)sender forEvent:(UIEvent *)event {
-    if (sender == self.btnBuy) {
+    if (sender == self.btnClose) {
+//        [self.presentingViewController dismissModalViewControllerAnimated:YES];
+        [self.view removeFromSuperview];
+        [self removeFromParentViewController];
+        if (self.onClose != nil)
+            self.onClose();
+    } else if (sender == self.btnBuy) {
         NSLog(@"buy tapped");
 //        SKProduct *product = [[SKProduct alloc] init];
 //        //product.
@@ -184,23 +319,15 @@
     }
 }
 
-- (IBAction)onClose:(id)sender {
-    [self.view removeFromSuperview];
-    [self removeFromParentViewController];
-}
-
--(void) dealloc {
-    
-}
 - (void)viewDidUnload {
     [self setBackView:nil];
     [self setContentView:nil];
     [self setInnerView:nil];
     [self setToolbar:nil];
     [self setBtnBuy:nil];
-    [self setBbiTitle:nil];
-    [self setBbiClose:nil];
+    [self setBtnClose:nil];
     [self setBtnRestore:nil];
+    self.onClose = nil;
     [super viewDidUnload];
 }
 @end

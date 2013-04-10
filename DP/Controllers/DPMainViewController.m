@@ -37,7 +37,9 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
-    [self.view addSubview: self.navController.view];
+    UIView *navView = self.navController.view;
+//    CGRect frm = navView.frame;
+    [self.view addSubview: navView];
     self.navController.delegate = self;
 }
 
@@ -50,9 +52,21 @@
     [super viewWillAppear:animated];
 }
 
+-(void) viewWillLayoutSubviews {
+    [super viewWillLayoutSubviews];
+    int cnt = self.view.subviews.count;
+    if (cnt == 1) {
+        UIView *v = self.view.subviews[0];
+        CGRect frm = v.frame;
+        frm = self.view.bounds;
+        v.frame = frm;
+    }
+}
+
 - (void)navigationController:(UINavigationController *)navigationController
       willShowViewController:(UIViewController *)viewController
                     animated:(BOOL)animated {
+    return;
     [self fixFrames:NO];
     UIInterfaceOrientation orientation = [UIApplication sharedApplication].statusBarOrientation;
     if (viewController && [viewController isKindOfClass:[UINavContentViewController class]])
@@ -66,6 +80,7 @@
  */
 
 - (void) fixFrames:(BOOL)fixNavView {
+    return;
     if (fixNavView) {
         CGRect sf = [UIScreen mainScreen].applicationFrame;
         self.view.frame = sf;
@@ -113,6 +128,7 @@
     
     [self fixFrames:NO];
 
+    return;
     id vc = self.presentedViewController;
 
     if (!vc)

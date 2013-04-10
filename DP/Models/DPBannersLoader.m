@@ -24,7 +24,7 @@
 @implementation DPBannersLoader
 
 - (id) initWithView:(UIView *)indicatorcontainer group:(int)grpID {
-    self = [super initWithView:indicatorcontainer];
+    self = [super initWithView:indicatorcontainer useCaching:YES];
     if (self) {
         self.groupID = grpID;
     }

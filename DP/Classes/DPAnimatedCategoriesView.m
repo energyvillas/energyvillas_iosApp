@@ -26,7 +26,8 @@
 @property (strong, nonatomic) UIView *tapView;
 @property (strong, nonatomic) UITapGestureRecognizer *tapGesture;
 //@property (strong, nonatomic) UILongPressGestureRecognizer *longPressGesture;
-@property (nonatomic, setter = setCurrentCard:) int currentCard;
+//@property (nonatomic, setter = setCurrentCard:) int currentCard;
+@property (strong, nonatomic) DPCtgCardView *currentCard;
 @property (nonatomic) CGSize cardSize;
 
 @end 
@@ -34,15 +35,15 @@
 
 @implementation DPAnimatedCategoriesView
 
-- (void) setCurrentCard:(int)value {
-    _currentCard = value;
-//    NSLog(@"*** currentCard = %i", value);
-}
+//- (void) setCurrentCard:(int)value {
+//    _currentCard = value;
+////    NSLog(@"*** currentCard = %i", value);
+//}
 
 - (id)initWithFrame:(CGRect)frame categories:(NSArray *)aCategories {
     self = [self initWithFrame:frame];
     if (self) {
-        self.currentCard = -1;
+        self.currentCard = nil; // -1
         self.cardSize = IS_IPAD
                 ? CGSizeMake(IPAD_CARD_WIDTH, IPAD_CARD_HEIGHT)
                 : CGSizeMake(IPHONE_CARD_WIDTH, IPHONE_CARD_HEIGHT);
@@ -135,47 +136,47 @@
 //    int tapY = (int) tapPoint.y;
 //    NSLog(@"TAPPED X:%d Y:%d", tapX, tapY);
 
-    int oldCurrent = self.currentCard;
+    DPCtgCardView *oldCurrent = self.currentCard;
     int cnt = self.cards.count - 1;
-    self.currentCard = -1;
+    self.currentCard = nil;//-1;
     
     // for loop downwards cause views are in stack fashion - i>j => v[i] in front/on top of v[j]
     for (int i = cnt; i >= 0 ; i--) { 
         UIView *card = (UIView *)self.cards[i];
         if ( [self point:tapPoint inPresentationFrame:card] ) {
-            self.currentCard = i;
+            self.currentCard = self.cards[i];//i;
             break;
         }
     };
    
-    if (oldCurrent == -1) {
-        if (self.currentCard != -1) {
+    if (oldCurrent == nil/*-1*/) {
+        if (self.currentCard != nil/*-1*/) {
             // handle tap
-            DPCtgCardView *card = self.cards[self.currentCard];
+            DPCtgCardView *card = self.currentCard; //self.cards[self.currentCard];
             [self cancelCardAnimation:card];
             [self zoomCard:card duration:zoomDuration];
         }
     } else {
-        if (self.currentCard == -1) {
+        if (self.currentCard == nil/*-1*/) {
             // resume card animation
-            DPCtgCardView *oldcard = self.cards[oldCurrent];
-            self.currentCard = -1;
+            DPCtgCardView *oldcard = oldCurrent; //self.cards[oldCurrent];
+            self.currentCard = nil/*-1*/;
             [self cancelCardZoom:oldcard duration:zoomDuration];
             [self animateCard:oldcard to:[self calcNewCenter] duration:moveDuration];
         } else if (self.currentCard == oldCurrent) {
             // stop ALL animations
             // launch the card's sub view
-            Category *element = ((DPCtgCardView *)self.cards[self.currentCard]).category;
+            Category *element = self.currentCard.category;//((DPCtgCardView *)self.cards[self.currentCard]).category;
             [self cancelAllAnimations];
-            [self elementTapped:element];
+            [self elementTapped:nil element:element];
         } else { // we tapped another card
             // we can either :
             //      resume old, stop and zoom curr,
             // i prefer that ====
             
             // resume
-            DPCtgCardView *oldcard = self.cards[oldCurrent];
-            DPCtgCardView *currcard = self.cards[self.currentCard];
+            DPCtgCardView *oldcard = oldCurrent;//self.cards[oldCurrent];
+            DPCtgCardView *currcard = self.currentCard;//self.cards[self.currentCard];
             
             [self cancelCardZoom:oldcard duration:zoomDuration];
             [self animateCard:oldcard to:[self calcNewCenter] duration:moveDuration];
@@ -191,10 +192,10 @@
 }
 
 // DPScrollableViewDelegate method
-- (void) elementTapped:(id)element {
+- (void) elementTapped:(id)sender element:(id)element {
     if (self.scrollableViewDelegate != nil) {
-        if([self.scrollableViewDelegate respondsToSelector:@selector(elementTapped:)]) {
-            [self.scrollableViewDelegate elementTapped:element];
+        if([self.scrollableViewDelegate respondsToSelector:@selector(elementTapped:element:)]) {
+            [self.scrollableViewDelegate elementTapped:nil element:element];
         }
     }
 }
@@ -229,7 +230,7 @@
         [self cancelCardZoom:card duration:0.0];
     }
     
-    self.currentCard = -1;
+    self.currentCard = nil/*-1*/;
 }
 
 - (void) animateCard:(DPCtgCardView *)card to:(CGPoint)newCenter
@@ -263,11 +264,11 @@
 }
 
 - (void) bringCardForward:(DPCtgCardView *)card {
-    if (self.currentCard != -1 && self.cards[self.currentCard] == card) {
+    if (self.currentCard != nil/*-1*/ && self.currentCard == card/*self.cards[self.currentCard] == card*/) {
         int cardIndex = [self.subviews indexOfObject:card];
         int topCardIndex = [self.subviews indexOfObject:self.tapView] - 1;
         if (cardIndex < topCardIndex) {
-//            [self.cards exchangeObjectAtIndex:cardIndex withObjectAtIndex:topCardIndex];
+            [self.cards exchangeObjectAtIndex:cardIndex withObjectAtIndex:topCardIndex];
             [self bringSubviewToFront:card];
             [self bringSubviewToFront:self.tapView];
         }

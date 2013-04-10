@@ -138,7 +138,7 @@
     [self changeRows:self.rowCount columns:self.colCount];
 }
 
-- (void) elementTapped:(id)tappedelement {
+- (void) elementTapped:(id)sender element:(id)tappedelement {
     DPDataElement *element = tappedelement;
     if (element == nil) return;
     
@@ -206,7 +206,7 @@
         DPDataElement *element = self.islandsContent[indx];
         NSLog(@"Clicked island image at index %i named %@ ", indx, element.title);
         
-        [self elementTapped:element];
+        [self elementTapped:nil element:element];
     }
 }
 

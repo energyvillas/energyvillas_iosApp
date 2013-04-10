@@ -21,16 +21,18 @@
 @property (strong, nonatomic) UIActivityIndicatorView *busyIndicator;
 @property (strong, nonatomic) NSOperationQueue *queue;
 @property (strong, nonatomic, readonly, getter = getDataCache) DPDataCache *dataCache;
+@property BOOL useCaching;
 
 @end
 
 @implementation DPDataLoader
 
 
-- (id) initWithView:(UIView *)indicatorcontainer {
+- (id) initWithView:(UIView *)indicatorcontainer  useCaching:(BOOL)useCaching{
     self = [super init];
     if (self) {
         self.indicatorContainer = indicatorcontainer;
+        self.useCaching = useCaching;
     }
     
     return self;
@@ -79,16 +81,20 @@
 #pragma mark -
 #pragma mark === downloading handling  ===
 - (BOOL) getDataRefreshNeeded {
-    BOOL cacheValid = [[DPAppHelper sharedInstance] useCache] && !self.dataCache.isExpired;
-    return !cacheValid;
-}
+    if (self.useCaching) {
+        BOOL cacheValid = [[DPAppHelper sharedInstance] useCache] && !self.dataCache.isExpired;
+        return !cacheValid;
+    }
+    else
+        return NO;
+ }
 
 - (BOOL) useInternetForLoading {
     return YES;
 }
 
 - (void) loadData {
-    BOOL cacheValid = [[DPAppHelper sharedInstance] useCache] && !self.dataCache.isExpired;
+    BOOL cacheValid = self.useCaching && [[DPAppHelper sharedInstance] useCache] && !self.dataCache.isExpired;
     BOOL netIsAlive = [[DPAppHelper sharedInstance] hostIsReachable];
     BOOL useInternet = [self useInternetForLoading];
     
@@ -96,19 +102,26 @@
         ASIFormDataRequest *request = [self createAndPrepareRequest];
         [self startRequest:request];
     } else {
-        self.datalist = self.dataCache.dataList;
-        
-        if (!self.datalist) {
-//            NSString *file = self.plistFile;
-//            if (file) {
-                [self loadFromPlist];
-//            }
-        }
+        BOOL fromcache;
+        [self loadLocalData:&fromcache];
         
         if (self.datalist)
             [self notifySuccess];
         else
             [self notifyFailure];
+    }
+}
+
+- (void) loadLocalData:(BOOL *)loadedfromcache{
+    if (self.useCaching)
+        self.datalist = self.dataCache.dataList;
+    
+    *loadedfromcache = self.datalist != nil;
+    if (!(*loadedfromcache)) {
+        //            NSString *file = self.plistFile;
+        //            if (file) {
+        [self loadFromPlist];
+        //            }
     }
 }
 
@@ -133,7 +146,8 @@
 }
 
 - (void) updateCachedData {
-    [self.dataCache updateDataList: self.datalist];
+    if (self.useCaching)
+        [self.dataCache updateDataList: self.datalist];
 }
 
 - (ASIFormDataRequest *) createAndPrepareRequest {
@@ -172,9 +186,14 @@
     
     self.datalist = [self parseResponse:resp];
     
-//    NSDictionary *images = [[NSDictionary alloc] init];
+    BOOL fromcache = NO;
+    if ((!self.datalist) || self.datalist.count == 0) {
+        [self loadLocalData:&fromcache];
+    }
     
-    [self updateCachedData];
+    if (!fromcache)
+        [self updateCachedData];
+    
     [self notifySuccess];
 }
 
@@ -186,8 +205,16 @@
 	NSLog(@"Request Failed: %@", [request error]);
     
 	[self stopIndicator];
-
-    [self notifyFailure];
+    
+    BOOL fromcache;
+    [self loadLocalData:&fromcache];
+    if ((!self.datalist) && self.datalist.count == 0)
+        self.datalist = nil;
+    
+    if (self.datalist)
+        [self notifySuccess];
+    else
+        [self notifyFailure];
 }
 
 - (void) notifySuccess {

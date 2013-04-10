@@ -10,9 +10,17 @@
 
 @interface DPCategoryLoader : DPDataLoader
 
-- (id) initWithView:(UIView *)indicatorcontainer 
-                 category:(int)ctgID
-                     lang:(NSString *)aLang
-            localResource:(NSString *)plistFile;
+- (id) initWithView:(UIView *)indicatorcontainer
+         useCaching:(BOOL)useCaching
+           category:(int)ctgID
+               lang:(NSString *)aLang
+      localResource:(NSString *)plistFile;
+
+- (id) initWithView:(UIView *)indicatorcontainer
+         useCaching:(BOOL)useCaching
+           category:(int)ctgID
+               lang:(NSString *)aLang
+          localData:(NSArray *)localData;
+
 
 @end

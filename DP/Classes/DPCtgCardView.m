@@ -15,10 +15,10 @@
 #define IPHONE_LABEL_MARGIN_VERT ((int)2)
 #define IPAD_LABEL_MARGIN_VERT ((int)2)
 
-#define IPHONE_CARD_RESIZE_WIDTH ((int)-5)
-#define IPHONE_CARD_RESIZE_HEIGHT ((int)-5)
-#define IPAD_CARD_RESIZE_WIDTH ((int)-10)
-#define IPAD_CARD_RESIZE_HEIGHT ((int)-10)
+#define IPHONE_CARD_RESIZE_WIDTH ((int)-15)
+#define IPHONE_CARD_RESIZE_HEIGHT ((int)-15)
+#define IPAD_CARD_RESIZE_WIDTH ((int)-30)
+#define IPAD_CARD_RESIZE_HEIGHT ((int)-30)
 
 #define IPHONE_LABEL_HEIGHT ((int)18)
 #define IPAD_LABEL_HEIGHT ((int)22)

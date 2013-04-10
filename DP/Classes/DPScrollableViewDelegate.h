@@ -10,12 +10,14 @@
 
 @protocol DPScrollableViewDelegate <NSObject>
 
-- (void) elementTapped:(id)element;
+- (void) elementTapped:(id)sender element:(id)element;
 
 @end
 
 @protocol DPScrollableDataSourceDelegate <NSObject>
 
-- (void) loadPage:(int)contentIndex inView:(UIView *)container frameSize:(CGSize)size;
+- (void) loadPage:(int)contentIndex
+           inView:(UIView *)container
+            frame:(CGRect)frame;
 
 @end

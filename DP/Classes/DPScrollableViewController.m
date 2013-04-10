@@ -124,7 +124,7 @@
 }
 
 - (void) calcFrames {
-    CGRect vf = self.view.frame;
+//    CGRect vf = self.view.frame;
 //    if (CGRectIsEmpty(vf)) return;
     CGRect svf = self.view.superview.frame;
     
@@ -136,9 +136,9 @@
     
     self.scrollView.frame = CGRectMake(0, 0, w, h);
     
-    CGRect pcf = self.pageControl.frame;
-    self.pageControl.frame = CGRectMake(0, h - 36, //pcf.size.height,
-                                        w, 36);//pcf.size.height);
+//    CGRect pcf = self.pageControl.frame;
+    self.pageControl.frame = CGRectMake(0, h - 20, //pcf.size.height,
+                                        w, 20);//pcf.size.height);
 }
 
 - (void) didReceiveMemoryWarning
@@ -255,67 +255,15 @@
     return baseName;
 }
 
-- (void)loadScrollViewWithPage:(int)page{
-    if (scrollDirection == DPScrollDirectionHorizontal)
-        [self loadHorizontalScrollViewWithPage:page];
-    else
-        [self loadVerticalScrollViewWithPage:page];
-}
-- (void)loadHorizontalScrollViewWithPage:(int)page{
-    if (initializing) return;
-    if (page < 0) return;
-    if (page >= self.pageControl.numberOfPages) return;
-    
-    int pageWidth = self.scrollView.frame.size.width;
-    int colWidth = pageWidth / colCount;
-    int rowHeight = self.scrollView.frame.size.height / rowCount;
-    
-    if (colWidth == 0 || rowHeight == 0) return;
-    
-    int rowHeightResidue = (int)self.scrollView.frame.size.height % rowCount;
-    int fixHeight = (rowHeightResidue > 0 ? 1 : 0);
-    
-    NSMutableArray *contentRendered = UIInterfaceOrientationIsPortrait(INTERFACE_ORIENTATION) ? self.portraitRendered : self.landscapeRendered;
-    
-    int posY = 0;
-    for (int r = 0; r<rowCount; r++)
-    {
-        posY = posY + (rowHeight + fixHeight) * (r == 0 ? 0 : 1);
-        int colWidthResidue = pageWidth % colCount;
-        fixHeight = (rowHeightResidue > 0 ? 1 : 0);
-        
-        int posX = page * pageWidth;
-        
-        int fixWidth = (colWidthResidue > 0 ? 1 : 0);
-        for (int c = 0; c<colCount; c++)
-        {
-            posX = posX + (colWidth + fixWidth) * (c == 0 ? 0 : 1);
-            int indx = page * (rowCount * colCount) + r * colCount + c;
-            fixWidth = (colWidthResidue > 0 ? 1 : 0);
-            
-            if (indx < self.contentList.count) {
-                if (contentRendered[indx] == [NSNull null]) {
-                    CGRect r = CGRectMake(posX, posY, colWidth + fixWidth, rowHeight + fixHeight);
-                    UIView *v = [[UIView alloc] initWithFrame:r];
-                    v.clipsToBounds = YES;
-                    
-                    [self loadPage:indx inView:v frameSize:CGSizeMake(colWidth + fixWidth, rowHeight + fixHeight)];
-                    
-                    contentRendered[indx] = v;
-                }
-                int scrlvc = self.scrollView.subviews.count;
-                [self.scrollView addSubview: contentRendered[indx]];
-                scrlvc = self.scrollView.subviews.count;
-                
-            }
-            colWidthResidue = colWidthResidue > 0 ? colWidthResidue - 1 : 0;
-        }
-        
-        rowHeightResidue = rowHeightResidue > 0 ? rowHeightResidue - 1 : 0;
-    }
-}
+//- (void)loadScrollViewWithPage:(int)page{
+//    if (scrollDirection == DPScrollDirectionHorizontal)
+//        [self loadHorizontalScrollViewWithPage:page];
+//    else
+//        [self loadVerticalScrollViewWithPage:page];
+//}
 
-- (void)loadVerticalScrollViewWithPage:(int)page{
+//- (void)loadHorizontalScrollViewWithPage:(int)page{
+- (void)loadScrollViewWithPage:(int)page{
     if (initializing) return;
     if (page < 0) return;
     if (page >= self.pageControl.numberOfPages) return;
@@ -332,14 +280,14 @@
     
     NSMutableArray *contentRendered = UIInterfaceOrientationIsPortrait(INTERFACE_ORIENTATION) ? self.portraitRendered : self.landscapeRendered;
     
-    int posY = page * pageHeight;
+    int posY = scrollDirection == DPScrollDirectionHorizontal ? 0 : page * pageHeight;
     for (int r = 0; r<rowCount; r++)
     {
         posY = posY + (rowHeight + fixHeight) * (r == 0 ? 0 : 1);
         int colWidthResidue = pageWidth % colCount;
         fixHeight = (rowHeightResidue > 0 ? 1 : 0);
         
-        int posX = 0;
+        int posX = scrollDirection == DPScrollDirectionHorizontal ? page * pageWidth : 0;
         
         int fixWidth = (colWidthResidue > 0 ? 1 : 0);
         for (int c = 0; c<colCount; c++)
@@ -354,7 +302,9 @@
                     UIView *v = [[UIView alloc] initWithFrame:r];
                     v.clipsToBounds = YES;
                     
-                    [self loadPage:indx inView:v frameSize:CGSizeMake(colWidth + fixWidth, rowHeight + fixHeight)];
+                    [self loadPage:indx inView:v frame:CGRectMake(0, 0,
+                                                                  colWidth + fixWidth,
+                                                                  rowHeight + fixHeight)];
                     
                     contentRendered[indx] = v;
                 }
@@ -370,25 +320,94 @@
     }
 }
 
+//- (void)loadVerticalScrollViewWithPage:(int)page{
+//    if (initializing) return;
+//    if (page < 0) return;
+//    if (page >= self.pageControl.numberOfPages) return;
+//    
+//    int pageWidth = self.scrollView.frame.size.width;
+//    int pageHeight = self.scrollView.frame.size.height;
+//    int colWidth = pageWidth / colCount;
+//    int rowHeight = pageHeight / rowCount;
+//    
+//    if (colWidth == 0 || rowHeight == 0) return;
+//    
+//    int rowHeightResidue = (int)pageHeight % rowCount;
+//    int fixHeight = (rowHeightResidue > 0 ? 1 : 0);
+//    
+//    NSMutableArray *contentRendered = UIInterfaceOrientationIsPortrait(INTERFACE_ORIENTATION) ? self.portraitRendered : self.landscapeRendered;
+//    
+//    int posY = page * pageHeight;
+//    for (int r = 0; r<rowCount; r++)
+//    {
+//        posY = posY + (rowHeight + fixHeight) * (r == 0 ? 0 : 1);
+//        int colWidthResidue = pageWidth % colCount;
+//        fixHeight = (rowHeightResidue > 0 ? 1 : 0);
+//        
+//        int posX = 0;
+//        
+//        int fixWidth = (colWidthResidue > 0 ? 1 : 0);
+//        for (int c = 0; c<colCount; c++)
+//        {
+//            posX = posX + (colWidth + fixWidth) * (c == 0 ? 0 : 1);
+//            int indx = page * (rowCount * colCount) + r * colCount + c;
+//            fixWidth = (colWidthResidue > 0 ? 1 : 0);
+//            
+//            if (indx < self.contentList.count) {
+//                if (contentRendered[indx] == [NSNull null]) {
+//                    CGRect r = CGRectMake(posX, posY, colWidth + fixWidth, rowHeight + fixHeight);
+//                    UIView *v = [[UIView alloc] initWithFrame:r];
+//                    v.clipsToBounds = YES;
+//                    
+//                    [self loadPage:indx inView:v frame:CGRectMake(0, 0,
+//                                                                  colWidth + fixWidth,
+//                                                                  rowHeight + fixHeight)];
+//                    
+//                    contentRendered[indx] = v;
+//                }
+//                int scrlvc = self.scrollView.subviews.count;
+//                [self.scrollView addSubview: contentRendered[indx]];
+//                scrlvc = self.scrollView.subviews.count;
+//                
+//            }
+//            colWidthResidue = colWidthResidue > 0 ? colWidthResidue - 1 : 0;
+//        }
+//        
+//        rowHeightResidue = rowHeightResidue > 0 ? rowHeightResidue - 1 : 0;
+//    }
+//}
 
-- (void) loadPage:(int)contentIndex inView:(UIView *)container frameSize:(CGSize)size {
+
+- (void) loadPage:(int)contentIndex inView:(UIView *)container frame:(CGRect)frame {
     if ([self.dataDelegate respondsToSelector:@selector(loadPage:inView:frameSize:)])
-        [self.dataDelegate loadPage:contentIndex inView:container frameSize:size];
+        [self.dataDelegate loadPage:contentIndex inView:container frame:frame];
     else
-        [self doloadPage:contentIndex inView:container frameSize:size];
+        [self doloadPage:contentIndex inView:container frame:frame];
 }
 
-- (void) doloadPage:(int)contentIndex inView:(UIView *)container frameSize:(CGSize)size {
-    CGRect r = CGRectMake(0, 0, size.width, size.height);
+- (NSString *) resolveImageName:(DPDataElement *)elm {
+    return [self calcImageName: elm.imageUrl];
+}
+- (NSString *) resolveHighlightImageName:(DPDataElement *)elm  {
+    return nil;
+}
+
+- (void) doloadPage:(int)contentIndex inView:(UIView *)container frame:(CGRect)frame {
+    //CGRect r = CGRectMake(0, 0, size.width, size.height);
     
-    UIImageView *iv = [[UIImageView alloc] initWithFrame: r];
+    UIImageView *iv = [[UIImageView alloc] initWithFrame: frame];
     iv.backgroundColor = [UIColor clearColor];
-    iv.contentMode = UIViewContentModeScaleAspectFit;
+    iv.contentMode = UIViewContentModeCenter; //ScaleAspectFit;//Center;//ScaleAspectFit;
     DPDataElement *element = self.contentList[contentIndex];
-    if ([self isLocalUrl:element.imageUrl])
-        iv.image = [UIImage imageNamed:[self calcImageName: element.imageUrl]];
-    else
-        [self loadImageAsync:element inView:iv];
+    if ([self isLocalUrl:element.imageUrl]) {
+        NSString *imgname =[self resolveImageName:element];
+        iv.image = [UIImage imageNamed:imgname];
+
+        NSString *imghighname =[self resolveHighlightImageName:element];
+        if (imghighname)
+            iv.highlightedImage = [UIImage imageNamed:imghighname];
+    } else
+        [self loadImageAsync:element inView:iv cacheImage:YES];
     
     iv.tag = contentIndex;
     UITapGestureRecognizer *tapper = [[UITapGestureRecognizer alloc]
@@ -397,7 +416,7 @@
     iv.userInteractionEnabled = YES;
     
     // add label
-    UILabel *lv = [[UILabel alloc] initWithFrame: r];
+    UILabel *lv = [[UILabel alloc] initWithFrame: frame];
     lv.textAlignment = NSTextAlignmentCenter;
     if (IS_IPAD)
         lv.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:16];
@@ -409,7 +428,8 @@
     [lv sizeToFit];
     CGRect b = lv.bounds;
     int offsetfix = IS_IPAD ? 4 : 2;
-    lv.frame = CGRectMake(r.origin.x, r.origin.y + r.size.height - b.size.height - offsetfix, r.size.width, b.size.height);
+    lv.frame = CGRectMake(frame.origin.x, frame.origin.y + frame.size.height - b.size.height - offsetfix,
+                          frame.size.width, b.size.height);
     // setup text shadow
     lv.textColor = [UIColor blackColor];
     lv.layer.shadowColor = [lv.textColor CGColor];
@@ -424,9 +444,9 @@
     [container addSubview:lv];
 }
 
-- (void) invokeViewDelegate:(id) element {
-    if ([self.scrollableViewDelegate respondsToSelector:@selector(elementTapped:)])
-        [self.scrollableViewDelegate elementTapped:element];
+- (void) invokeViewDelegate:(UITapGestureRecognizer *)sender element:(id)element {
+    if ([self.scrollableViewDelegate respondsToSelector:@selector(elementTapped:element:)])
+        [self.scrollableViewDelegate elementTapped:sender element:element];
 
 }
 - (void)handleTap:(UITapGestureRecognizer *)sender {
@@ -436,7 +456,7 @@
         DPDataElement * element = self.contentList[indx];
         NSLog(@"Clicked image at index %i named %@", indx, element.title);
         
-        [self invokeViewDelegate:element];
+        [self invokeViewDelegate:sender element:element];
         
         // navigation logic goes here. create and push a new view controller;
 //        DPTestViewController *vc = [[DPTestViewController alloc] init];
@@ -611,16 +631,18 @@
         [[DPAppHelper sharedInstance] saveImageToCache:imageUrl data:imgData];
 }
 
-- (void) loadImageAsync:(DPDataElement *)elm inView:(UIImageView *)imgView {
+//PENDING : i think i must pass just the elm.imageUrl not the calced name!!!!
+// in the whole async process!!!!
+- (void) loadImageAsync:(DPDataElement *)elm inView:(UIImageView *)imgView cacheImage:(BOOL)cacheimage{
     DPAppHelper *appHelper = [DPAppHelper sharedInstance];
     NSData *imgData = [appHelper loadImageFromCache:[self calcImageName: elm.imageUrl]];
     if (imgData) 
         [self fix:elm imageView:imgView imageUrl:[self calcImageName: elm.imageUrl] data:imgData addToCache:NO];
     else
-        [self doloadImageAsync:elm inView:imgView];
+        [self doloadImageAsync:elm inView:imgView cacheImage:cacheimage];
 }
 
-- (void) doloadImageAsync:(DPDataElement *)elm inView:(UIImageView *)imgView {
+- (void) doloadImageAsync:(DPDataElement *)elm inView:(UIImageView *)imgView cacheImage:(BOOL)cacheimage{
     if (!self.downloadQueue)
         self.downloadQueue = [[NSOperationQueue alloc] init];
 
@@ -631,6 +653,7 @@
                         elm, @"element",
                         imgView, @"imageView",
                         [self calcImageName:elm.imageUrl], @"imageUrl",
+                        [NSNumber numberWithBool:cacheimage], @"cacheimage",
                         nil];
     [self.downloadQueue addOperation:request];
 
@@ -646,7 +669,7 @@
     imageView:uiDict[@"imageView"]
      imageUrl:uiDict[@"imageUrl"]
          data:[request responseData]
-   addToCache:YES];
+   addToCache:[(NSNumber *)uiDict[@"cacheimage"] boolValue]];
 }
 
 - (void)requestFailed:(ASIHTTPRequest *)request

@@ -59,7 +59,7 @@
 #pragma mark -
 #pragma mark scrollableview delegate methods
 
-- (void) elementTapped:(id)element {
+- (void) elementTapped:(id)sender element:(id)element {
     if (!isLeafCategory) {
         Category *elm = element;
         DPSubCategoryViewController *ctrlr = [[DPSubCategoryViewController alloc] initWithCategory:elm];
@@ -92,10 +92,10 @@
 #pragma mark -
 #pragma mark scrollabledatasource methods
 
-- (void) loadPage:(int)contentIndex inView:(UIView *)container frameSize:(CGSize)size {
+- (void) loadPage:(int)contentIndex inView:(UIView *)container frame:(CGRect)frm {
     if (!self.contentList || self.contentList.count == 0) return;
     
-    CGRect frm = CGRectMake(0, 0, size.width, size.height);
+    //CGRect frm = CGRectMake(0, 0, size.width, size.height);
     if (CGRectIsEmpty(frm)) return;
     
     DPAnimatedCategoriesView *acv = [[DPAnimatedCategoriesView alloc]
@@ -131,6 +131,7 @@
 
 - (void) loadData {
     self.dataLoader = [[DPCategoryLoader alloc] initWithView:self.view
+                                                  useCaching:YES
                                                     category:category
                                                         lang:[DPAppHelper sharedInstance].currentLang
                                                localResource:nil];

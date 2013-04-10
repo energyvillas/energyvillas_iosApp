@@ -15,9 +15,6 @@
 
 
 
-NSString *const FREE_DET_IMGNAME_FMT = @"free_detimage_10%i_%@.jpg";
-NSString *const FREE_DET_IMGTITLE_FMT = @"FREE_DET_TITLE_10%i";
-
 @interface DPAppHelper ()
 
 @property (strong, nonatomic) NSDictionary *freeDetails;
@@ -71,7 +68,7 @@ NSString *const FREE_DET_IMGTITLE_FMT = @"FREE_DET_TITLE_10%i";
 
 - (void) createDefaults {
     NSDictionary *defaults = [NSDictionary dictionaryWithObjectsAndKeys:
-            [NSNumber numberWithBool:YES], USE_DATA_CACHING,
+            [NSNumber numberWithBool:NO], USE_DATA_CACHING,
             nil];
     
     NSUserDefaults *usrDefaults = [NSUserDefaults standardUserDefaults];
@@ -131,6 +128,43 @@ NSString *const FREE_DET_IMGTITLE_FMT = @"FREE_DET_TITLE_10%i";
     return [NSArray arrayWithArray:res];
 }
 
+- (NSArray *) doGetBuyCategoriesFrom:(NSDictionary *)dict category:(int)ctgid lang:(NSString *)lang {
+    NSDictionary *lfd = [dict objectForKey:lang];
+    if (!lfd) {
+        lang = @"en";
+        lfd = [dict objectForKey:lang];
+    }
+    
+    NSArray *categories = [dict objectForKey:@"Categories"];
+    NSArray *titles = [lfd objectForKey:@"Titles"];
+    NSArray *images = [lfd objectForKey:@"Images"];
+//    NSArray *videos = [lfd objectForKey:@"Videos"];
+    
+    int indx = -1;
+        for (int i = 0; i < categories.count; i++)
+            if ([(NSNumber *)categories[i] intValue] == ctgid) {
+                indx = i;
+                break;
+            }
+    
+    if (indx == -1) return nil;
+    
+    NSString *strctg = [NSString stringWithFormat:@"%d", ctgid];
+    NSString *title = titles[indx];
+    NSArray *imageurls = images[indx];
+    
+    NSMutableArray *res = [[NSMutableArray alloc] initWithCapacity:titles.count];
+    for (int i=0; i<imageurls.count; i++) {
+        [res addObject:[[Category alloc] initWithValues:[NSString stringWithFormat:@"%d", i]
+                                                  lang:lang
+                                                 title:title
+                                              imageUrl:imageurls[i]
+                                                 parent:strctg]];
+    }
+    
+    return [NSArray arrayWithArray:res];
+}
+
 - (void) addFreeDetails {
     self.freeDetails = [self doGetDictionaryFrom:@"free-details.plist"];
 }
@@ -143,8 +177,8 @@ NSString *const FREE_DET_IMGTITLE_FMT = @"FREE_DET_TITLE_10%i";
     self.freeBuyContent = [self doGetDictionaryFrom:@"free-Buy.plist"];
 }
 
-- (NSArray *) freeBuyContentFor:(NSString *)lang {
-    return [self doGetArticlesFrom:self.freeBuyContent lang:lang];
+- (NSArray *) freeBuyContentFor:(int)ctgid lang:(NSString *)lang {
+    return [self doGetBuyCategoriesFrom:self.freeBuyContent category:ctgid lang:lang];
 }
 
 - (void) addFreeCoverFlow{    

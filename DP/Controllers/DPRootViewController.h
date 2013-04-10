@@ -9,8 +9,15 @@
 #import "UINavContentViewController.h"
 #import "AFOpenFlowView.h"
 
+@protocol DPBuyAppProtocol <NSObject>
+
+-(void) showBuyDialog:(int)ctgId;
+
+@end
+
+
 @interface DPRootViewController : UINavContentViewController
-    <AFOpenFlowViewDataSource, AFOpenFlowViewDelegate>
+    <AFOpenFlowViewDataSource, AFOpenFlowViewDelegate, DPBuyAppProtocol>
 
 @property (strong, nonatomic) IBOutlet UIView *topView;
 @property (strong, nonatomic) IBOutlet UIView *toolbarBackView;
@@ -18,5 +25,9 @@
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *bbiMore;
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *bbiBuy;
 @property (strong, nonatomic) IBOutlet UIView *bottomView;
+
+//@property (weak, nonatomic) id <DPBuyAppProtocol> buyAppDelegate;
+
+-(id) init;
 
 @end

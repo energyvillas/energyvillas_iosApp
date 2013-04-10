@@ -26,12 +26,11 @@
 @property (weak, nonatomic) id <DPDataLoaderDelegate> delegate;
 @property (strong, nonatomic) NSArray *datalist;
 @property (readonly, getter = getDataRefreshNeeded) BOOL dataRefreshNeeded;
-//@property (strong, nonatomic, readonly, getter = getplistFile) NSString *plistFile;
 
 
 +(NSString*) digestSHA1:(NSString*)input;
 
-- (id) initWithView:(UIView *)indicatorcontainer;
+- (id) initWithView:(UIView *)indicatorcontainer useCaching:(BOOL)useCaching;
 
 #pragma -
 #pragma public methods

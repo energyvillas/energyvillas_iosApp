@@ -60,7 +60,8 @@
 }
 
 - (void) doInitImageView {
-    CGRect aframe = CGRectMake(0, 0, self.view.superview.frame.size.width, self.view.superview.frame.size.height);
+//    CGRect aframe = CGRectMake(0, 0, self.view.superview.frame.size.width, self.view.superview.frame.size.height);
+    CGRect aframe = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
     UIImageView *imgView = [[UIImageView alloc] initWithFrame:aframe];
     imgView.contentMode = UIViewContentModeScaleAspectFit;
     imgView.userInteractionEnabled = YES;
@@ -289,10 +290,22 @@
                      DPLocalizedString(kERR_MSG_DATA_LOAD_FAILED));
 }
 
+-(void) viewWillLayoutSubviews {
+    [super viewWillLayoutSubviews];
+    
+    UIView *innerview = self.view.subviews.count == 1 ? self.view.subviews[0] : nil;
+    if (innerview) {
+        innerview.frame = CGRectMake(0, 0,
+                                     self.view.bounds.size.width,
+                                     self.view.bounds.size.height);
+    }
+}
 #pragma mark -
 #pragma mark === device orientation change handling  ===
 
 - (void) layoutForOrientation:(UIInterfaceOrientation) toOrientation fixtop:(BOOL)fixtop{
+    return;
+    
     UIView *innerview = self.view.subviews.count == 1 ? self.view.subviews[0] : nil;
     if (innerview) {
         innerview.frame = CGRectMake(0, 0,

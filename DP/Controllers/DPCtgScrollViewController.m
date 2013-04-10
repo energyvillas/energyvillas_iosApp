@@ -38,7 +38,23 @@
     return self;
 }
 
+- (void) viewWillLayoutSubviews {
+    [super viewWillLayoutSubviews];
+    
+    UIView *sv;
+    sv = self.view;
+    
+    int h = sv.bounds.size.height;
+    int w = sv.bounds.size.width;
+    int pgCtrlHeight = self.pageControl.frame.size.height; //36; //self.pageControl.frame.size.height;
+    self.scrollView.frame = CGRectMake(0, 0, w, h);
+    self.pageControl.frame = CGRectMake(0, h - pgCtrlHeight, w, pgCtrlHeight);
+    
+    [self changeRows:self.rowCount columns:self.colCount];
+}
 - (void) layoutForOrientation:(UIInterfaceOrientation)toOrientation fixtop:(BOOL)fixtop {
+    return;
+    
     switch (toOrientation) {
         case UIInterfaceOrientationLandscapeLeft:
         case UIInterfaceOrientationLandscapeRight:
@@ -56,7 +72,7 @@
     
     int h = sv.bounds.size.height;
     int w = sv.bounds.size.width;
-    int pgCtrlHeight = 36; //self.pageControl.frame.size.height;
+    int pgCtrlHeight = 20; //self.pageControl.frame.size.height;
     //self.view.frame = CGRectMake(0, 0, w, h);
     self.scrollView.frame = CGRectMake(0, 0, w, h);
     self.pageControl.frame = CGRectMake(0, h - pgCtrlHeight, w, pgCtrlHeight);

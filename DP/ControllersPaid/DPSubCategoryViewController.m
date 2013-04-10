@@ -139,21 +139,21 @@
     
     // iphone sizes
     //portrait
-    int PH_LBL = 24;
+    int PH_LBL = 24; // font helvetica neue bold 18
     int PH_PHT = 126;
     int PH_HTM = 80;
     //landscape
     int LH_LBL = 24;
-    int LH_PHT = 110;
+    int LH_PHT = 130;
     int LW_PHT = 280;
     
     // ipad sizes
     //portrait
-    int PAD_PH_LBL = 21;
-    int PAD_PH_PHT = 300;//80;
-    int PAD_PH_HTM = 200;
+    int PAD_PH_LBL = 30; // // font helvetica neue bold 24
+    int PAD_PH_PHT = 320;//80;
+    int PAD_PH_HTM = 184;
     //landscape
-    int PAD_LH_LBL = 21;
+    int PAD_LH_LBL = 30;
     int PAD_LH_PHT = 350;
     int PAD_LW_PHT = 450;
     

@@ -16,6 +16,7 @@
           localResource:(NSString *)resfile
                    rows:(int)rows
                 columns:(int)cols
-             autoScroll:(BOOL)autoscroll;
+             autoScroll:(BOOL)autoscroll
+                 parent:(UIViewController *)parentVC;
 
 @end
