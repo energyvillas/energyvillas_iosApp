@@ -54,7 +54,8 @@
         self.plistFile = resfile;
         
         self.dataLoader = [[DPCategoryLoader alloc] initWithView:self.view
-                                                      useCaching:YES
+                                                     useInternet:NO
+                                                      useCaching:NO
                                                         category:self.category
                                                             lang:self.lang
                                                    localResource:self.plistFile];
@@ -138,7 +139,23 @@
         //        [self.navigationController pushViewController: vc animated: YES];
 
 }
-
+/** /
+- (UILabel *) createLabel:(CGRect)frame title:(NSString *)title {
+    UILabel *label = createLabel(frame, title, nil);
+    int ofs = 0;
+    if (IS_IPAD) {
+        ofs = IS_PORTRAIT ? -20 : -10;
+    } else if (IS_IPHONE) {
+        ofs = IS_PORTRAIT ? -5 : -2;
+    } else if (IS_IPHONE_5) {
+        ofs = IS_PORTRAIT ? -5 : -13;
+    }
+    label.frame = CGRectOffset(label.frame, 0, ofs);
+    
+    return label;
+}
+/ **/
+/**/
 -(void) loadPage:(int)contentIndex inView:(UIView *)container frame:(CGRect)frame {
     UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
     button.showsTouchWhenHighlighted = YES;
@@ -148,9 +165,10 @@
     
     NSString *imgname =[self resolveImageName:element];
     UIImage *img = [UIImage imageNamed:imgname];
-    button.frame = CGRectMake((frame.size.width - img.size.width) / 2.0,
-                              0 ,
-                              img.size.width, img.size.height);
+    CGSize imgsize = img.size;
+    button.frame = CGRectMake((frame.size.width - imgsize.width) / 2.0,
+                              (frame.size.height - imgsize.height) / 2.0,
+                              imgsize.width, imgsize.height);
     [button setImage:img forState:UIControlStateNormal];
     
     NSString *imghighname =[self resolveHighlightImageName:element];
@@ -161,21 +179,21 @@
     
     [button setTag: contentIndex];
     
-    UILabel *label = createLabel(frame, element.title);
+    UILabel *label = createLabel(frame, element.title, nil);
     int ofs = 0; 
     if (IS_IPAD) {
         ofs = IS_PORTRAIT ? -20 : -10;
     } else if (IS_IPHONE) {
         ofs = IS_PORTRAIT ? -5 : -2;
     } else if (IS_IPHONE_5) {
-        ofs = IS_PORTRAIT ? -5 : -13;
+        ofs = IS_PORTRAIT ? -5 : -4;
     }
     label.frame = CGRectOffset(label.frame, 0, ofs);
 
     [container addSubview: button];
     [container addSubview: label];
 }
-
+/**/
 #pragma mark overrides
 
 //- (NSString *) resolveImageName:(DPDataElement *)elm {
@@ -191,6 +209,7 @@
 }
 - (NSString *) calcImageName:(NSString *)baseName isHighlight:(BOOL)ishighlight {
     @try {
+        NSLog(@"CategoriesVC - calcImageName - baseName='%@'", baseName);
         NSArray *parts = [baseName componentsSeparatedByString:@"."];
         if (parts && parts.count == 2) {
             NSString *orientation = IS_PORTRAIT ? @"v" : @"h";

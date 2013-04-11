@@ -15,7 +15,7 @@
     <
     DPDataLoaderDelegate
     , DPScrollableViewDelegate
-//    , DPScrollableDataSourceDelegate
+    , DPScrollableDataSourceDelegate
     >
 
 - (id) initWithCategory:(int)ctgID;

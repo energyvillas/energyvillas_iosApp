@@ -13,7 +13,7 @@
 
 @property (strong, nonatomic) IBOutlet UIView *backView;
 @property (strong, nonatomic) IBOutlet UIView *contentView;
-@property (strong, nonatomic) IBOutlet UIImageView *innerView;
+@property (strong, nonatomic) IBOutlet UIView *innerView;
 @property (strong, nonatomic) IBOutlet UIImageView *toolbar;
 @property (strong, nonatomic) IBOutlet UIButton *btnBuy;
 @property (strong, nonatomic) IBOutlet UIButton *btnRestore;

@@ -25,6 +25,9 @@ FOUNDATION_EXPORT NSString *const MySecondConstant;
 #define STATUS_BAR_VISIBLE ((BOOL) ![UIApplication sharedApplication].statusBarHidden)
 #define STATUS_BAR_HEIGHT ((CGFloat) ![UIApplication sharedApplication].statusBarFrame.size.height)
 
+// for scrollable views
+#define PAGE_CONTROL_HEIGHT ((int)16)
+
 // timer intervals
 #define AUTO_SCROLL_INTERVAL ((float) 5.0)
 #define USER_SCROLL_INTERVAL ((float) 60.0)
@@ -120,4 +123,4 @@ NSString* NullIfEmpty(NSString *aString);
 
 void NSLogFrame(NSString *msg, CGRect frame);
 
-UILabel * createLabel(CGRect frame, NSString *title);
+UILabel * createLabel(CGRect frame, NSString *title, UIFont *font);

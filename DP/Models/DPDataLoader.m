@@ -22,17 +22,21 @@
 @property (strong, nonatomic) NSOperationQueue *queue;
 @property (strong, nonatomic, readonly, getter = getDataCache) DPDataCache *dataCache;
 @property BOOL useCaching;
+@property BOOL useInternet;
 
 @end
 
 @implementation DPDataLoader
 
 
-- (id) initWithView:(UIView *)indicatorcontainer  useCaching:(BOOL)useCaching{
-    self = [super init];
+- (id) initWithView:(UIView *)indicatorcontainer
+        useInternet:(BOOL)useInternet
+         useCaching:(BOOL)useCaching{
+    self = [self init];
     if (self) {
         self.indicatorContainer = indicatorcontainer;
         self.useCaching = useCaching;
+        self.useInternet = useInternet;
     }
     
     return self;
@@ -89,16 +93,11 @@
         return NO;
  }
 
-- (BOOL) useInternetForLoading {
-    return YES;
-}
-
 - (void) loadData {
     BOOL cacheValid = self.useCaching && [[DPAppHelper sharedInstance] useCache] && !self.dataCache.isExpired;
     BOOL netIsAlive = [[DPAppHelper sharedInstance] hostIsReachable];
-    BOOL useInternet = [self useInternetForLoading];
     
-    if (!cacheValid && netIsAlive && useInternet) {
+    if (!cacheValid && netIsAlive && self.useInternet) {
         ASIFormDataRequest *request = [self createAndPrepareRequest];
         [self startRequest:request];
     } else {
@@ -160,6 +159,7 @@
 	[request setPostValue:USER_NAME forKey:@"user"];
 	[request setPostValue:[DPDataLoader digestSHA1:PASSWORD] forKey:@"pass"];
     
+    NSLog(@"POST :: URL='%@' ", aUrl);
     for (id key in kvlist) {
         [request setPostValue:[kvlist objectForKey:key] forKey:key];
         NSLog(@"POST :: KEY='%@' VALUE='%@'", key, [kvlist objectForKey:key]);

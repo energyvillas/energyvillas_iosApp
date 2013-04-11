@@ -55,7 +55,7 @@ typedef NS_ENUM(NSInteger, DPScrollDirection) {
 - (NSString *) calcImageName:(NSString *)baseName;
 - (void) loadImageAsync:(DPDataElement *)elm inView:(UIImageView *)imgView cacheImage:(BOOL)cacheimage;
 - (BOOL) isLocalUrl:(NSString *)urlstr;
-- (UILabel *) createLabel:(CGRect)frame title:(NSString *)title;
+
 
 @end
 

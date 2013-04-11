@@ -81,23 +81,26 @@
         [self loadDetailView:YES];
 }
 
-- (void) loadDetailView:(BOOL)reload {
-    UIView *bcv = self.innerView;
+- (void) removeBuyContent {
+    if (self.innerView.subviews.count == 0) return;
     
-    NSLog(@"inner frame : (x, y, w, h) = (%f, %f, %f, %f)", bcv.frame.origin.x, bcv.frame.origin.y, bcv.frame.size.width, bcv.frame.size.height);
-  
-    DPBuyContentViewController *contentController;
-    if (reload && bcv.subviews.count > 0) {
-        contentController = (DPBuyContentViewController *)self.childViewControllers[0];
-        [contentController.view removeFromSuperview];
-        [contentController removeFromParentViewController];
-    }
+    DPBuyContentViewController *contentController =
+                (DPBuyContentViewController *)self.childViewControllers[0];
+    
+    [contentController.view removeFromSuperview];
+    [contentController removeFromParentViewController];
+}
 
-    if (bcv.subviews.count == 0) {
+- (void) loadDetailView:(BOOL)reload {
+    if (reload)
+        [self removeBuyContent];
+    
+    DPBuyContentViewController *contentController;
+    if (self.innerView.subviews.count == 0) {
         contentController = [[DPBuyContentViewController alloc] initWithCategory:category];
         
         [self addChildViewController: contentController];
-        [bcv addSubview: contentController.view];        
+        [self.innerView addSubview: contentController.view];        
     } else {
         contentController = (DPBuyContentViewController *)self.childViewControllers[0];
         [contentController changeRows:1 columns:1];
@@ -140,16 +143,15 @@
     CGSize nextViewSize = [UIApplication sizeInOrientation:INTERFACE_ORIENTATION];
     self.backView.frame = CGRectMake(0, 0, nextViewSize.width, nextViewSize.height);//self.view.bounds;
 
-    BOOL isPortrait = UIInterfaceOrientationIsPortrait(INTERFACE_ORIENTATION);
     CGRect cf;
     if (IS_IPHONE) {
-        cf = CGRectMake(0, 18,
+        cf = CGRectMake(0, IS_PORTRAIT ? 18 - PAGE_CONTROL_HEIGHT : 18,
                         nextViewSize.width, nextViewSize.height);
     } else if (IS_IPHONE_5) {
-        cf = CGRectMake(0, isPortrait ? 105 : 18,
+        cf = CGRectMake(0, IS_PORTRAIT ? 105 - PAGE_CONTROL_HEIGHT : 18,
                         nextViewSize.width, nextViewSize.height);        
     } else if (IS_IPAD) {
-        cf = CGRectMake(0, isPortrait ? 170 : 120,
+        cf = CGRectMake(0, IS_PORTRAIT ? 170 - PAGE_CONTROL_HEIGHT : 120 - PAGE_CONTROL_HEIGHT,
                         nextViewSize.width, nextViewSize.height);
     }
     
@@ -185,7 +187,7 @@
     frm = CGRectMake(0, frm.origin.y + frm.size.height,
                      img.size.width, img.size.height);
     self.innerView.frame = frm;
-    self.innerView.image = img;
+    self.innerView.backgroundColor = [UIColor colorWithPatternImage:img];
     
     // buy btn
     dlgImgName = category == CTGID_EXCLUSIVE ? @"BuyDialog/Buy_our_app_exclusive_03.png" : @"BuyDialog/Buy_our_app_03.png";
@@ -335,6 +337,7 @@
 }
 
 - (void)viewDidUnload {
+    [self removeBuyContent];
     [self setBackView:nil];
     [self setContentView:nil];
     [self setInnerView:nil];

@@ -38,7 +38,7 @@
 }
 
 - (id) initWithCategory:(int)ctgID {
-    self = [super initWithContent:nil rows:0 columns:0 autoScroll:NO];
+    self = [super initWithContent:nil rows:0 columns:0 autoScroll:YES];
     
     if (self) {
         category = ctgID;
@@ -84,6 +84,7 @@
 //    NSArray *content = [[DPAppHelper sharedInstance] freeDetailsFor:[DPAppHelper sharedInstance].currentLang];
 
     self.dataLoader = [[DPCategoryLoader alloc] initWithView:self.view
+                                                 useInternet:NO //PENDING::GGSE
                                                   useCaching:NO
                                                     category:category
                                                         lang:[DPAppHelper sharedInstance].currentLang
@@ -128,6 +129,7 @@
 //        
 //        [self contentLoaded:datalists];
 //        [self changeRows:1 columns:1];
+        
         [self contentLoaded:self.dataLoader.datalist];
         [self changeRows:1 columns:1];
     }
@@ -167,9 +169,35 @@
 //}
 
 - (UILabel *) createLabel:(CGRect)frame title:(NSString *)title {
-    UILabel *label = [super createLabel:frame title:title];
+    UIFont *font = IS_IPAD
+            ? [UIFont fontWithName:@"HelveticaNeue-Bold" size:24]
+            : [UIFont fontWithName:@"HelveticaNeue-Bold" size:18];
+
+    UILabel *label = createLabel(frame, title, font);
     label.frame = CGRectOffset(label.frame, 0, -label.frame.origin.y);
     return label;
+}
+
+- (UIView *) createViewFor:(int)contentIndex frame:(CGRect)frame {
+    DPDataElement *elm = self.contentList[contentIndex];
+    UILabel *label = [self createLabel:frame title:elm.title];
+    int fixBy = label.bounds.size.height + 8;
+    frame = CGRectMake(frame.origin.x,
+                       frame.origin.y + fixBy,
+                       frame.size.width,
+                       frame.size.height - fixBy);
+
+    UIImageView *imgView = [[UIImageView alloc] initWithFrame: frame];
+    imgView.backgroundColor = [UIColor clearColor];
+    imgView.contentMode = UIViewContentModeCenter; //ScaleAspectFit;//Center;//ScaleAspectFit;
+    
+    imgView.tag = contentIndex;
+    UITapGestureRecognizer *tapper = [[UITapGestureRecognizer alloc]
+                                      initWithTarget:self action:@selector(handleTap:)];
+    [imgView addGestureRecognizer:tapper];
+    imgView.userInteractionEnabled = YES;
+    
+    return imgView;
 }
 //- (void) loadPage:(int)contentIndex
 //           inView:(UIView *)container

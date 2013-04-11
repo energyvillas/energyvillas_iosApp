@@ -25,7 +25,7 @@
 @implementation DPArticlesLoader
 
 - (id) initWithView:(UIView *)indicatorcontainer  category:(int)ctgID lang:(NSString *)aLang {
-    self = [super initWithView:indicatorcontainer useCaching:YES ];
+    self = [super initWithView:indicatorcontainer useInternet:YES useCaching:YES ];
     if (self) {
         self.categoryID = ctgID;
         self.lang = aLang;

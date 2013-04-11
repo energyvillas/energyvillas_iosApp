@@ -13,6 +13,7 @@
 #import "ControllersPaid/DPPaidMainViewController.h"
 #import "DPConstants.h"
 #import "DPAppHelper.h"
+#import "UIImage+Retina4.h"
 
 @implementation DPAppDelegate
 

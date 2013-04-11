@@ -76,9 +76,9 @@
         self.scrollView = [[UIScrollView alloc] init];
         self.pageControl = [[UIPageControl alloc] init];
         
-        self.view.backgroundColor = [UIColor clearColor];
-        self.scrollView.backgroundColor = [UIColor clearColor];
-        self.pageControl.backgroundColor = [UIColor clearColor];
+        self.view.backgroundColor = [UIColor blueColor];//clearColor];
+        self.scrollView.backgroundColor = [UIColor orangeColor];//clearColor];
+        self.pageControl.backgroundColor = [UIColor purpleColor];//]clearColor];
 
         [self.pageControl addTarget:self
                              action:@selector(pageChanged:)
@@ -113,32 +113,32 @@
 - (void) viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     
-    CGRect svf = self.view.superview.frame;
-    int h = svf.size.height;
-    int w = svf.size.width;
-    self.view.frame = CGRectMake(0, 0, w, h);
+    CGSize sz = self.view.superview.frame.size;
+    self.view.frame = CGRectMake(0, 0, sz.width, sz.height);
 
-    [self calcFrames];
+//    [self calcFrames];
+//    [self doInit];
+}
 
-    [self doInit];
+- (void) viewWillLayoutSubviews {
+    [super viewWillLayoutSubviews];
+    //[self calcFrames];
+    [self changeRows:self.rowCount columns:self.colCount];
 }
 
 - (void) calcFrames {
-//    CGRect vf = self.view.frame;
-//    if (CGRectIsEmpty(vf)) return;
-    CGRect svf = self.view.superview.frame;
+    CGRect vf = self.view.frame;
+    if (CGRectIsEmpty(vf)) return;
+//    CGRect vf = self.view.superview.frame;
     
-    int h = svf.size.height;
-    int w = svf.size.width;
+    int h = vf.size.height;
+    int w = vf.size.width;
     
-
-//    self.view.frame = CGRectMake(0, 0, w, h);
-    
-    self.scrollView.frame = CGRectMake(0, 0, w, h);
+    self.scrollView.frame = CGRectMake(0, 0, w, h - PAGE_CONTROL_HEIGHT);
     
 //    CGRect pcf = self.pageControl.frame;
-    self.pageControl.frame = CGRectMake(0, h - 20, //pcf.size.height,
-                                        w, 20);//pcf.size.height);
+    self.pageControl.frame = CGRectMake(0, h - PAGE_CONTROL_HEIGHT, //pcf.size.height,
+                                        w, PAGE_CONTROL_HEIGHT);//pcf.size.height);
 }
 
 - (void) didReceiveMemoryWarning
@@ -241,6 +241,7 @@
     
     self.scrollView.delegate = self;
 
+    NSLog(@"PAGES:: %@", [[self class] description]);
     self.pageControl.hidesForSinglePage = YES;
     self.pageControl.numberOfPages = pageCount;
     self.pageControl.currentPage = self.currentPage;
@@ -392,40 +393,70 @@
     return nil;
 }
 
-- (void) doloadPage:(int)contentIndex inView:(UIView *)container frame:(CGRect)frame {
-    //CGRect r = CGRectMake(0, 0, size.width, size.height);
-    
-    UIImageView *iv = [[UIImageView alloc] initWithFrame: frame];
-    iv.backgroundColor = [UIColor clearColor];
-    iv.contentMode = UIViewContentModeCenter; //ScaleAspectFit;//Center;//ScaleAspectFit;
-    DPDataElement *element = self.contentList[contentIndex];
+- (void) loadImageFor:(DPDataElement *)element inView:(UIImageView *)imgView {
     NSLog(@"ImageUrl:: '%@'", element.imageUrl);
     if ([self isLocalUrl:element.imageUrl]) {
         NSString *imgname =[self resolveImageName:element];
-        iv.image = [UIImage imageNamed:imgname];
-
+        imgView.image = [UIImage imageNamed:imgname];
+        
         NSString *imghighname =[self resolveHighlightImageName:element];
         if (imghighname)
-            iv.highlightedImage = [UIImage imageNamed:imghighname];
+            imgView.highlightedImage = [UIImage imageNamed:imghighname];
     } else
-        [self loadImageAsync:element inView:iv cacheImage:YES];
-    
-    iv.tag = contentIndex;
+        [self loadImageAsync:element inView:imgView cacheImage:YES];
+}
+
+- (UIView *) createViewFor:(int)contentIndex frame:(CGRect)frame {
+    UIView *result = nil;
+    if ([self.dataDelegate respondsToSelector:@selector(createViewFor:frame:)])
+        result = [self.dataDelegate createViewFor:contentIndex frame:frame];
+    else
+        result = [self doCreateViewFor:contentIndex frame:frame];
+    return result;
+}
+- (UIView *) doCreateViewFor:(int)contentIndex frame:(CGRect)frame {
+    UIImageView *imgView = [[UIImageView alloc] initWithFrame: frame];
+    imgView.backgroundColor = [UIColor clearColor];
+    imgView.contentMode = UIViewContentModeCenter; //ScaleAspectFit;//Center;//ScaleAspectFit;
+
+    imgView.tag = contentIndex;
     UITapGestureRecognizer *tapper = [[UITapGestureRecognizer alloc]
                                       initWithTarget:self action:@selector(handleTap:)];
-    [iv addGestureRecognizer:tapper];
-    iv.userInteractionEnabled = YES;
+    [imgView addGestureRecognizer:tapper];
+    imgView.userInteractionEnabled = YES;
     
-    // add label
-    UILabel *lv = [self createLabel:frame title:element.title];
-    
-    // insert image and label in the view
-    [container addSubview:iv];
-    [container addSubview:lv];
+    return imgView;
 }
 
 - (UILabel *) createLabel:(CGRect)frame title:(NSString *)title {
-    return createLabel(frame, title);
+    UILabel *result= nil;
+    if ([self.dataDelegate respondsToSelector:@selector(createLabel:title:)])
+        result = [self.dataDelegate createLabel:frame title:title];
+    else
+        result = [self doCreateLabel:frame title:title];
+    return result;
+}
+- (UILabel *) doCreateLabel:(CGRect)frame title:(NSString *)title {
+    return createLabel(frame, title, nil);
+}
+
+
+- (void) doloadPage:(int)contentIndex inView:(UIView *)container frame:(CGRect)frame {
+    //CGRect r = CGRectMake(0, 0, size.width, size.height);
+    
+    DPDataElement *element = self.contentList[contentIndex];
+    
+    // add imageview
+    UIView *aView = [self createViewFor:contentIndex frame:frame];
+    if ([aView isKindOfClass:[UIImageView class]])
+        [self loadImageFor:element inView:(UIImageView *)aView];
+
+    // add label
+    UILabel *lblView = [self createLabel:frame title:element.title];
+    
+    // insert image and label in the view
+    [container addSubview:aView];
+    [container addSubview:lblView];
 }
 
 - (void) invokeViewDelegate:(UITapGestureRecognizer *)sender element:(id)element {

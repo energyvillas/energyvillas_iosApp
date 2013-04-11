@@ -110,14 +110,16 @@ void NSLogFrame(NSString *msg, CGRect frame) {
 }
 
 
-UILabel * createLabel(CGRect frame, NSString *title) {
+UILabel * createLabel(CGRect frame, NSString *title, UIFont *font) {
     // add label
     UILabel *lv = [[UILabel alloc] initWithFrame: frame];
     lv.textAlignment = NSTextAlignmentCenter;
-    if (IS_IPAD)
-        lv.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:16];
-    else
-        lv.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:12];
+    if (font==nil) {
+        if (IS_IPAD)
+            lv.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:16];
+        else
+            lv.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:12];
+    }
     lv.adjustsFontSizeToFitWidth = YES;
     lv.text = /*element.*/title;
     lv.backgroundColor = [UIColor clearColor];

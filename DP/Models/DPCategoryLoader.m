@@ -28,11 +28,12 @@
 }
 
 - (id) initWithView:(UIView *)indicatorcontainer
+        useInternet:(BOOL)useInternet
          useCaching:(BOOL)useCaching
            category:(int)ctgID
                lang:(NSString *)aLang
       localResource:(NSString *)aplistFile {
-    self = [super initWithView:indicatorcontainer useCaching:useCaching];
+    self = [super initWithView:indicatorcontainer useInternet:useInternet useCaching:useCaching];
     if (self) {
         self.ctgID = ctgID;
         self.lang = aLang;
@@ -43,11 +44,12 @@
 }
 
 - (id) initWithView:(UIView *)indicatorcontainer
+        useInternet:(BOOL)useInternet
          useCaching:(BOOL)useCaching
            category:(int)ctgID
                lang:(NSString *)aLang
           localData:(NSArray *)localData {
-    self = [super initWithView:indicatorcontainer useCaching:useCaching];
+    self = [super initWithView:indicatorcontainer useInternet:useInternet useCaching:useCaching];
     if (self) {
         self.ctgID = ctgID;
         self.lang = aLang;
@@ -59,10 +61,10 @@
 
 
 
-- (BOOL) useInternetForLoading {
-    return self.ctgID != -1;
-}
-
+//- (BOOL) useInternetForLoading {
+//    return self.ctgID != -1;
+//}
+//
 - (void) loadFromPlist {
     if (self.localData)
         self.datalist = self.localData;

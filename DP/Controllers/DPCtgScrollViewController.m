@@ -41,6 +41,9 @@
 - (void) viewWillLayoutSubviews {
     [super viewWillLayoutSubviews];
     
+    return;
+    
+    
     UIView *sv;
     sv = self.view;
     

@@ -30,7 +30,7 @@
 
 +(NSString*) digestSHA1:(NSString*)input;
 
-- (id) initWithView:(UIView *)indicatorcontainer useCaching:(BOOL)useCaching;
+- (id) initWithView:(UIView *)indicatorcontainer useInternet:(BOOL)useInternet useCaching:(BOOL)useCaching;
 
 #pragma -
 #pragma public methods
@@ -46,6 +46,5 @@
 - (ASIFormDataRequest *) createAndPrepareRequest;
 - (NSArray *) parseResponse:(NSString *)response;
 - (void) loadFromPlist;
-- (BOOL) useInternetForLoading;
 @end
 

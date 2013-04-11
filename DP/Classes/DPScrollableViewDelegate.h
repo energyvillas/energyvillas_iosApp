@@ -16,8 +16,15 @@
 
 @protocol DPScrollableDataSourceDelegate <NSObject>
 
+@optional
+
 - (void) loadPage:(int)contentIndex
            inView:(UIView *)container
             frame:(CGRect)frame;
 
+- (UIView *) createViewFor:(int)contentIndex
+                     frame:(CGRect)frame;
+
+- (UILabel *) createLabel:(CGRect)frame
+                    title:(NSString *)title;
 @end

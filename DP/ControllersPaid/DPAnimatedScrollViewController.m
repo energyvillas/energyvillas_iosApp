@@ -130,7 +130,7 @@
 }
 
 - (void) loadData {
-    self.dataLoader = [[DPCategoryLoader alloc] initWithView:self.view
+    self.dataLoader = [[DPCategoryLoader alloc] initWithView:self.view useInternet:!isLeafCategory
                                                   useCaching:YES
                                                     category:category
                                                         lang:[DPAppHelper sharedInstance].currentLang

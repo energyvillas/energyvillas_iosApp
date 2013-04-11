@@ -178,7 +178,9 @@
     else // if (IS_IPAD)
         BOTTOM_HEIGHT = (isPortrait) ? 408 : 136;//340 : 114;
     
-    //self.view.frame = CGRectMake(0, 0, w, h);
+    // adjust for pagecontrol
+    BOTTOM_HEIGHT = BOTTOM_HEIGHT + PAGE_CONTROL_HEIGHT;
+
     int topHeight = h - toolbarHeight - BOTTOM_HEIGHT;
     
     self.topView.frame = CGRectMake(0, top, w, topHeight);
@@ -281,6 +283,7 @@
         detvc = nil;
     } else {
         detvc = (DPCategoriesViewController *)self.childViewControllers[0];
+        detvc.view.frame = self.bottomView.bounds;
         if (isPortrait) {
             [detvc changeRows:2 columns:2];
         } else {
@@ -302,7 +305,7 @@
     ofv = nil;
 
     if (ofvc.subviews.count == 0) {
-        ofv = [[AFOpenFlowView alloc] initWithFrame:ofvc.frame];
+        ofv = [[AFOpenFlowView alloc] initWithFrame:ofvc.bounds];
         ofv.viewDelegate = self;
         ofv.dataSource = self;
 
