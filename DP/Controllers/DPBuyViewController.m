@@ -151,7 +151,7 @@
         cf = CGRectMake(0, IS_PORTRAIT ? 105 - PAGE_CONTROL_HEIGHT : 18,
                         nextViewSize.width, nextViewSize.height);        
     } else if (IS_IPAD) {
-        cf = CGRectMake(0, IS_PORTRAIT ? 170 - PAGE_CONTROL_HEIGHT : 120 - PAGE_CONTROL_HEIGHT,
+        cf = CGRectMake(0, IS_PORTRAIT ? 165 - PAGE_CONTROL_HEIGHT : 180 - PAGE_CONTROL_HEIGHT,
                         nextViewSize.width, nextViewSize.height);
     }
     

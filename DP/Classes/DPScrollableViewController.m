@@ -77,8 +77,8 @@
         self.pageControl = [[UIPageControl alloc] init];
         
         self.view.backgroundColor = [UIColor blueColor];//clearColor];
-        self.scrollView.backgroundColor = [UIColor orangeColor];//clearColor];
-        self.pageControl.backgroundColor = [UIColor purpleColor];//]clearColor];
+        self.scrollView.backgroundColor = [UIColor clearColor];
+        self.pageControl.backgroundColor = [UIColor clearColor];
 
         [self.pageControl addTarget:self
                              action:@selector(pageChanged:)
