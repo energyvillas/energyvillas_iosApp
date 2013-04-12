@@ -339,6 +339,15 @@
     return result;
 }
 
+- (void) postProcessView:(UIView *)aView
+            contentIndex:(int)contentIndex
+                   frame:(CGRect)frame {
+    if ([self.dataDelegate respondsToSelector:@selector(postProcessView:contentIndex:frame:)])
+        [self.dataDelegate postProcessView:aView
+                              contentIndex:contentIndex
+                                     frame:frame];
+}
+
 - (UIView *) doCreateViewFor:(int)contentIndex frame:(CGRect)frame {
     UIImageView *imgView = [[UIImageView alloc] initWithFrame: frame];
     imgView.backgroundColor = [UIColor clearColor];
@@ -350,19 +359,37 @@
     [imgView addGestureRecognizer:tapper];
     imgView.userInteractionEnabled = YES;
     
+    [self postProcessView:imgView contentIndex:contentIndex frame:frame];
+    
     return imgView;
 }
 
-- (UILabel *) createLabel:(CGRect)frame title:(NSString *)title {
+- (UILabel *) createLabelFor:(int)contentIndex
+                       frame:(CGRect)frame
+                       title:(NSString *)title {
     UILabel *result= nil;
     if ([self.dataDelegate respondsToSelector:@selector(createLabel:title:)])
-        result = [self.dataDelegate createLabel:frame title:title];
+        result = [self.dataDelegate createLabelFor:contentIndex frame:frame title:title];
     else
-        result = [self doCreateLabel:frame title:title];
+        result = [self doCreateLabelFor:contentIndex frame:frame title:title];
     return result;
 }
-- (UILabel *) doCreateLabel:(CGRect)frame title:(NSString *)title {
-    return createLabel(frame, title, nil);
+
+- (void) postProcessLabel:(UILabel *)aLabel
+            contentIndex:(int)contentIndex
+                   frame:(CGRect)frame {
+    if ([self.dataDelegate respondsToSelector:@selector(postProcessLabel:contentIndex:frame:)])
+        [self.dataDelegate postProcessLabel:aLabel
+                               contentIndex:contentIndex
+                                      frame:frame];
+}
+
+- (UILabel *) doCreateLabelFor:(int)contentIndex
+                         frame:(CGRect)frame
+                         title:(NSString *)title {
+    UILabel *label = createLabel(frame, title, nil);
+    [self postProcessLabel:label contentIndex:contentIndex frame:frame];
+    return label;
 }
 
 
@@ -377,7 +404,7 @@
         [self loadImageFor:element inView:(UIImageView *)aView];
 
     // add label
-    UILabel *lblView = [self createLabel:frame title:element.title];
+    UILabel *lblView = [self createLabelFor:contentIndex frame:frame title:element.title];
     
     // insert image and label in the view
     [container addSubview:aView];
@@ -390,9 +417,11 @@
 
 }
 - (void)handleTap:(UITapGestureRecognizer *)sender {
+    if (sender == nil) return;
     if (sender.state == UIGestureRecognizerStateEnded) {
         // handling code
         int indx = sender.view.tag;
+
         DPDataElement * element = self.contentList[indx];
         NSLog(@"Clicked image at index %i named %@", indx, element.title);
         

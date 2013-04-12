@@ -156,7 +156,9 @@
 }
 / **/
 /**/
--(void) loadPage:(int)contentIndex inView:(UIView *)container frame:(CGRect)frame {
+
+- (UIView *) createViewFor:(int)contentIndex
+                     frame:(CGRect)frame {
     UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
     button.showsTouchWhenHighlighted = YES;
     [button addTarget:self action:@selector(onTap:) forControlEvents:UIControlEventTouchUpInside];
@@ -179,8 +181,19 @@
     
     [button setTag: contentIndex];
     
-    UILabel *label = createLabel(frame, element.title, nil);
-    int ofs = 0; 
+    return button;
+}
+
+//- (void) postProcessView:(UIView *)aView
+//            contentIndex:(int)contentIndex
+//                   frame:(CGRect)frame {
+//    
+//}
+
+- (void) postProcessLabel:(UILabel *)aLabel
+             contentIndex:(int)contentIndex
+                    frame:(CGRect)frame {
+    int ofs = 0;
     if (IS_IPAD) {
         ofs = IS_PORTRAIT ? -20 : -10;
     } else if (IS_IPHONE) {
@@ -188,11 +201,47 @@
     } else if (IS_IPHONE_5) {
         ofs = IS_PORTRAIT ? -5 : -4;
     }
-    label.frame = CGRectOffset(label.frame, 0, ofs);
-
-    [container addSubview: button];
-    [container addSubview: label];
+    aLabel.frame = CGRectOffset(aLabel.frame, 0, ofs);
 }
+
+
+//-(void) loadPage:(int)contentIndex inView:(UIView *)container frame:(CGRect)frame {
+//    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+//    button.showsTouchWhenHighlighted = YES;
+//    [button addTarget:self action:@selector(onTap:) forControlEvents:UIControlEventTouchUpInside];
+//    
+//    DPDataElement *element = self.contentList[contentIndex];
+//    
+//    NSString *imgname =[self resolveImageName:element];
+//    UIImage *img = [UIImage imageNamed:imgname];
+//    CGSize imgsize = img.size;
+//    button.frame = CGRectMake((frame.size.width - imgsize.width) / 2.0,
+//                              (frame.size.height - imgsize.height) / 2.0,
+//                              imgsize.width, imgsize.height);
+//    [button setImage:img forState:UIControlStateNormal];
+//    
+//    NSString *imghighname =[self resolveHighlightImageName:element];
+//    if (imghighname) {
+//        img = [UIImage imageNamed:imghighname];
+//        [button setImage:img forState:UIControlStateHighlighted];
+//    }
+//    
+//    [button setTag: contentIndex];
+//
+//    UILabel *label = createLabel(frame, element.title, nil);
+//    int ofs = 0; 
+//    if (IS_IPAD) {
+//        ofs = IS_PORTRAIT ? -20 : -10;
+//    } else if (IS_IPHONE) {
+//        ofs = IS_PORTRAIT ? -5 : -2;
+//    } else if (IS_IPHONE_5) {
+//        ofs = IS_PORTRAIT ? -5 : -4;
+//    }
+//    label.frame = CGRectOffset(label.frame, 0, ofs);
+//
+//    [container addSubview: button];
+//    [container addSubview: label];
+//}
 /**/
 #pragma mark overrides
 

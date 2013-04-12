@@ -25,6 +25,15 @@
 - (UIView *) createViewFor:(int)contentIndex
                      frame:(CGRect)frame;
 
-- (UILabel *) createLabel:(CGRect)frame
-                    title:(NSString *)title;
+- (void) postProcessView:(UIView *)aView
+            contentIndex:(int)contentIndex
+                   frame:(CGRect)frame;
+
+- (UILabel *) createLabelFor:(int)contentIndex
+                       frame:(CGRect)frame
+                       title:(NSString *)title;
+
+- (void) postProcessLabel:(UILabel *)aLabel
+             contentIndex:(int)contentIndex
+                    frame:(CGRect)frame;
 @end

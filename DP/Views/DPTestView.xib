@@ -202,7 +202,7 @@
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 						<object class="NSCustomResource" key="IBUIImage">
 							<string key="NSClassName">NSImage</string>
-							<string key="NSResourceName">Container_h-568h@2x.png</string>
+							<string key="NSResourceName">Container_h@2x~iphone.png</string>
 						</object>
 						<object class="NSCustomResource" key="IBUIHighlightedImage">
 							<string key="NSClassName">NSImage</string>
@@ -454,7 +454,7 @@
 		<dictionary class="NSMutableDictionary" key="IBDocument.LastKnownImageSizes">
 			<string key="001-el.jpg">{16, 16}</string>
 			<string key="Container_Roll_h-568h@2x.png">{16, 16}</string>
-			<string key="Container_h-568h@2x.png">{16, 16}</string>
+			<string key="Container_h@2x~iphone.png">{240, 128}</string>
 			<string key="flag-gr.png">{16, 16}</string>
 			<string key="navbar/ENG_Lang.png">{16, 16}</string>
 		</dictionary>

@@ -70,7 +70,7 @@
     [self.btnRestore setTitle:DPLocalizedString(@"BUY_DLG_btnRestore_Title")
                      forState:UIControlStateNormal];
     
-    [self.btnBuy setTitle:@"€2.99" // TODO:GGSE 
+    [self.btnBuy setTitle:[self buyBtnTitle] // TODO:GGSE
                  forState:UIControlStateNormal];
     
     [self doLayoutSubViews];
@@ -79,33 +79,40 @@
         [self loadDetailView:YES];
 }
 
+- (NSString *) buyBtnTitle {
+    return [NSString stringWithFormat:@"€%.2f", 2.99];
+    //return [NSString stringWithFormat:@"%@", @"2"];
+}
+
 -(void) prepareBuyBtn {
     CGFloat fntSize = IS_IPAD ? 44.0 : 28.0;
     if (self.category == CTGID_EXCLUSIVE)
         fntSize = IS_IPAD ? 44.0 : 26.0;
     
-    UIFont *font = nil;
-    if (self.btnBuy.titleLabel.font.pointSize != fntSize)
-        font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:fntSize];
+    UIFont *font = [UIFont fontWithName:@"HelveticaNeue-CondensedBold"
+                                   size:fntSize];
     
     UIColor *textColor = self.category == CTGID_EXCLUSIVE
     ? [UIColor colorWithRed:226/256.0 green:109/256.0 blue:51/256.0 alpha:1.0]
     : [UIColor whiteColor];
     [self.btnBuy setTitleColor:textColor forState:UIControlStateNormal];
     [self.btnBuy setTitleColor:textColor forState:UIControlStateHighlighted];
-    
-    if (font!=nil)
-        self.btnBuy.titleLabel.font = font;
-    NSString *btnTitle = self.btnBuy.titleLabel.text;
-    
-    CGSize lblsize = [btnTitle sizeWithFont:font];
-    int start = IS_IPAD ? 26 : 8;
-    int width = IS_IPAD ? 108 : 70;
+        
+    int start = IS_IPAD ? 20 : IS_IPHONE ? 6 : 6;
+    int width = IS_IPAD ? 116 : IS_IPHONE ? 70 : 70;
     if (self.category == CTGID_EXCLUSIVE) {
-        start = IS_IPAD ? 10 : 0;
-        width = IS_IPAD ? 90 : 60;
+        start = IS_IPAD ? 0 : IS_IPHONE ? 0 : 0;
+        width = IS_IPAD ? 110 : IS_IPHONE ? 60 : 60;
     }
+
+    NSString *btnTitle = [self buyBtnTitle]; //self.btnBuy.currentTitle;// titleLabel.text;
+    CGFloat actualFontSize;
+    CGSize lblsize = [btnTitle sizeWithFont:font minFontSize:fntSize*0.5 actualFontSize:&actualFontSize forWidth:width lineBreakMode:UILineBreakModeWordWrap];
     start = start + (width - lblsize.width) / 2;
+    
+    font = [UIFont fontWithName:@"HelveticaNeue-CondensedBold"
+                           size:actualFontSize];
+    self.btnBuy.titleLabel.font = font;
     [self.btnBuy setTitleEdgeInsets:UIEdgeInsetsMake(0, start, 0, 0)];
 }
 
