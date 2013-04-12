@@ -19,10 +19,13 @@
 @property (strong, nonatomic) IBOutlet UIButton *btnRestore;
 @property (strong, nonatomic) IBOutlet UIButton *btnClose;
 
+@property (readonly) int category;
+
 - (IBAction)onTouchUpInside:(id)sender forEvent:(UIEvent *)event;
 
 
 
 - (id) initWithCategoryId:(int)ctgid completion:(void (^)(void))completion;
 
+-(CGRect) calcFrame;
 @end

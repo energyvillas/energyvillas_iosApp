@@ -46,11 +46,6 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
-        
-//        if (self.view)
-//            NSLog(@"has view");
-//        else
-//            NSLog(@"view nil");
     }
     return self;
 }
@@ -76,7 +71,7 @@
         self.scrollView = [[UIScrollView alloc] init];
         self.pageControl = [[UIPageControl alloc] init];
         
-        self.view.backgroundColor = [UIColor blueColor];//clearColor];
+        self.view.backgroundColor = [UIColor clearColor];
         self.scrollView.backgroundColor = [UIColor clearColor];
         self.pageControl.backgroundColor = [UIColor clearColor];
 
@@ -115,21 +110,16 @@
     
     CGSize sz = self.view.superview.frame.size;
     self.view.frame = CGRectMake(0, 0, sz.width, sz.height);
-
-//    [self calcFrames];
-//    [self doInit];
 }
 
 - (void) viewWillLayoutSubviews {
     [super viewWillLayoutSubviews];
-    //[self calcFrames];
     [self changeRows:self.rowCount columns:self.colCount];
 }
 
 - (void) calcFrames {
     CGRect vf = self.view.frame;
     if (CGRectIsEmpty(vf)) return;
-//    CGRect vf = self.view.superview.frame;
     
     int h = vf.size.height;
     int w = vf.size.width;
@@ -212,7 +202,7 @@
     } else {
         isRendered = self.landscapeRendered != nil;
         if (!isRendered) {
-            // content rendered for portrait...
+            // content rendered for landscape...
             self.landscapeRendered = [[NSMutableArray alloc] init];
             for (unsigned i = 0; i < self.contentList.count; i++)
             {
@@ -256,14 +246,6 @@
     return baseName;
 }
 
-//- (void)loadScrollViewWithPage:(int)page{
-//    if (scrollDirection == DPScrollDirectionHorizontal)
-//        [self loadHorizontalScrollViewWithPage:page];
-//    else
-//        [self loadVerticalScrollViewWithPage:page];
-//}
-
-//- (void)loadHorizontalScrollViewWithPage:(int)page{
 - (void)loadScrollViewWithPage:(int)page{
     if (initializing) return;
     if (page < 0) return;
@@ -321,64 +303,6 @@
     }
 }
 
-//- (void)loadVerticalScrollViewWithPage:(int)page{
-//    if (initializing) return;
-//    if (page < 0) return;
-//    if (page >= self.pageControl.numberOfPages) return;
-//    
-//    int pageWidth = self.scrollView.frame.size.width;
-//    int pageHeight = self.scrollView.frame.size.height;
-//    int colWidth = pageWidth / colCount;
-//    int rowHeight = pageHeight / rowCount;
-//    
-//    if (colWidth == 0 || rowHeight == 0) return;
-//    
-//    int rowHeightResidue = (int)pageHeight % rowCount;
-//    int fixHeight = (rowHeightResidue > 0 ? 1 : 0);
-//    
-//    NSMutableArray *contentRendered = UIInterfaceOrientationIsPortrait(INTERFACE_ORIENTATION) ? self.portraitRendered : self.landscapeRendered;
-//    
-//    int posY = page * pageHeight;
-//    for (int r = 0; r<rowCount; r++)
-//    {
-//        posY = posY + (rowHeight + fixHeight) * (r == 0 ? 0 : 1);
-//        int colWidthResidue = pageWidth % colCount;
-//        fixHeight = (rowHeightResidue > 0 ? 1 : 0);
-//        
-//        int posX = 0;
-//        
-//        int fixWidth = (colWidthResidue > 0 ? 1 : 0);
-//        for (int c = 0; c<colCount; c++)
-//        {
-//            posX = posX + (colWidth + fixWidth) * (c == 0 ? 0 : 1);
-//            int indx = page * (rowCount * colCount) + r * colCount + c;
-//            fixWidth = (colWidthResidue > 0 ? 1 : 0);
-//            
-//            if (indx < self.contentList.count) {
-//                if (contentRendered[indx] == [NSNull null]) {
-//                    CGRect r = CGRectMake(posX, posY, colWidth + fixWidth, rowHeight + fixHeight);
-//                    UIView *v = [[UIView alloc] initWithFrame:r];
-//                    v.clipsToBounds = YES;
-//                    
-//                    [self loadPage:indx inView:v frame:CGRectMake(0, 0,
-//                                                                  colWidth + fixWidth,
-//                                                                  rowHeight + fixHeight)];
-//                    
-//                    contentRendered[indx] = v;
-//                }
-//                int scrlvc = self.scrollView.subviews.count;
-//                [self.scrollView addSubview: contentRendered[indx]];
-//                scrlvc = self.scrollView.subviews.count;
-//                
-//            }
-//            colWidthResidue = colWidthResidue > 0 ? colWidthResidue - 1 : 0;
-//        }
-//        
-//        rowHeightResidue = rowHeightResidue > 0 ? rowHeightResidue - 1 : 0;
-//    }
-//}
-
-
 - (void) loadPage:(int)contentIndex inView:(UIView *)container frame:(CGRect)frame {
     if ([self.dataDelegate respondsToSelector:@selector(loadPage:inView:frameSize:)])
         [self.dataDelegate loadPage:contentIndex inView:container frame:frame];
@@ -414,6 +338,7 @@
         result = [self doCreateViewFor:contentIndex frame:frame];
     return result;
 }
+
 - (UIView *) doCreateViewFor:(int)contentIndex frame:(CGRect)frame {
     UIImageView *imgView = [[UIImageView alloc] initWithFrame: frame];
     imgView.backgroundColor = [UIColor clearColor];

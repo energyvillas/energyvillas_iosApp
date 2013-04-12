@@ -8,13 +8,10 @@
 
 #import "DPRootViewController.h"
 #import "../External/OpenFlow/UIImageExtras.h"
-//#import "../Classes/DPImageInfo.h"
-//#import "DPCtgScrollViewController.h"
 #import "DPCategoriesViewController.h"
 #import "../Classes/DPImageContentViewController.h"
 #import "DPConstants.h"
 #import "DPVimeoPlayerViewController.h"
-//#import "DPIAPHelper.h"
 #import "DPAppHelper.h"
 #import "DPMainViewController.h"
 #import "DPBuyViewController.h"
@@ -26,15 +23,13 @@
 @interface DPRootViewController ()
 
 @property (strong, nonatomic) NSMutableDictionary *coverFlowDict;
+@property (strong, nonatomic) DPBuyViewController *buyController;
 
 @end
 
 @implementation DPRootViewController {
     int currentIndex;
-    bool isPortrait;
 }
-
-@synthesize topView, toolbar, bbiBuy, bbiMore, bottomView;
 
 - (id) init {
     self = [super init];
@@ -56,14 +51,14 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     [self doLocalize];
-    [bbiMore setAction:@selector(doMore:)];
-    [bbiBuy setAction:@selector(doBuy:)];
+    [self.bbiMore setAction:@selector(doMore:)];
+    [self.bbiBuy setAction:@selector(doBuy:)];
 }
 
 - (void) doLocalize {
     [super doLocalize];
-    bbiMore.title = DPLocalizedString(kbbiMore_Title);
-    bbiBuy.title = DPLocalizedString(kbbiBuy_Title);
+    self.bbiMore.title = DPLocalizedString(kbbiMore_Title);
+    self.bbiBuy.title = DPLocalizedString(kbbiBuy_Title);
     
     if (self.bottomView.subviews.count > 0) {
         [self loadDetailView:YES];
@@ -71,22 +66,33 @@
     }
 }
 
-//- (BOOL) isBuyRunning {
-//    id del = self.navigationController.delegate;
-//    DPMainViewController *main = del;
-//    
-//    BOOL isRunning = NO;
-//    for (id vc in main.childViewControllers)
-//        if ([vc isMemberOfClass:[DPBuyViewController class]]) {
-//            isRunning = YES;
-//            break;
-//        }
-//    return isRunning;
-//}
-
 - (void) showBuyDialog:(int)ctgId {
-//    if ([self isBuyRunning]) return;
+    if (IS_IPAD)
+        [self showBuyDialog_iPads:ctgId];
+    else
+        [self showBuyDialog_iPhones:ctgId];
+}
 
+- (void) showBuyDialog_iPads:(int)ctgId {    
+    self.buyController = [[DPBuyViewController alloc]
+                                  initWithCategoryId:ctgId
+                                  completion:^{
+                                      self.view.userInteractionEnabled = YES;
+                                      self.buyController = nil;
+                                  }];
+    
+    self.view.userInteractionEnabled = NO;
+    self.buyController.modalPresentationStyle = UIModalPresentationFormSheet;
+    self.navigationController.modalPresentationStyle = UIModalPresentationFormSheet;
+    [self.navigationController presentViewController:self.buyController animated:YES completion:nil];
+    CGRect svfrm = [self.buyController calcFrame];
+    if (IS_PORTRAIT)
+        self.buyController.view.superview.frame = CGRectOffset(svfrm, 0, 170);
+    else
+        self.buyController.view.superview.frame = CGRectOffset(svfrm, 0, 180);
+}
+
+- (void) showBuyDialog_iPhones:(int)ctgId {
     id del = self.navigationController.delegate;
     DPMainViewController *main = del;
     
@@ -94,11 +100,9 @@
                                   initWithCategoryId:ctgId
                                   completion:^{
                                       self.view.userInteractionEnabled = YES;
+                                      self.buyController = nil;
                                   }];
-    
-//    buyVC.modalPresentationStyle = UIModalPresentationCurrentContext;
-//    [self presentViewController:buyVC animated:YES];
-    
+
     self.view.userInteractionEnabled = NO;
 
     [main addChildViewController:buyVC];
@@ -110,8 +114,6 @@
 }
 
 - (void) doMore:(id) sender {
-//    if ([self isBuyRunning]) return;
-
     // do the more stuff here
 }
 
@@ -121,133 +123,49 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (void) viewWillLayoutSubviews {
-    switch (INTERFACE_ORIENTATION) {
-        case UIInterfaceOrientationLandscapeLeft:
-        case UIInterfaceOrientationLandscapeRight:
-            isPortrait = NO;
-            break;
-            
-        case UIInterfaceOrientationPortraitUpsideDown:
-        case UIInterfaceOrientationPortrait:
-            isPortrait = YES;
-            break;
-    }
-    
+- (void) viewWillLayoutSubviews {    
     CGRect vf = self.view.frame;
     
-    int h = isPortrait ? vf.size.height : vf.size.height - vf.origin.y ;
+    int h = IS_PORTRAIT ? vf.size.height : vf.size.height - vf.origin.y ;
     int w = vf.size.width;
-    int top = 0; //fixtop ? vf.origin.y : 0;
-    
-
-//    int carouselHeight = 0;
-//    int toolbarHeight = self.toolbar.bounds.size.height;
-//    int detailsHeight = 0;
-//    
-//    if (IS_IPHONE) {
-//        carouselHeight = (isPortrait) ? 202 : 148;
-//        detailsHeight = (isPortrait) ? 170 : 64;
-//    } else if (IS_IPHONE_5) {
-//        carouselHeight = (isPortrait) ? 290 : 137;
-//        detailsHeight = (isPortrait) ? 170 : 75;
-//    } else if (IS_IPAD) {
-//        carouselHeight = (isPortrait) ? 508 : 524;
-//        detailsHeight = (isPortrait) ? 408 : 136;
-//    }
-//
-//    self.topView.frame = CGRectMake(0, top, w, carouselHeight);
-//    
-//    self.toolbar.frame = CGRectMake(0, top + carouselHeight,
-//                                    w, toolbarHeight);
-//    
-//    self.toolbarBackView.frame = self.toolbar.frame;
-//    
-//    self.bottomView.frame = CGRectMake(0, top + carouselHeight + toolbarHeight,
-//                                       w, detailsHeight);
-  
-//////////////////////
-    
+        
     int toolbarHeight = self.toolbar.frame.size.height;
 
     int BOTTOM_HEIGHT;
     if (IS_IPHONE)
-        BOTTOM_HEIGHT = (isPortrait) ? 170 : 64;
+        BOTTOM_HEIGHT = (IS_PORTRAIT) ? 170 : 64;
     else if (IS_IPHONE_5)
-        BOTTOM_HEIGHT = (isPortrait) ? 170 : 75;
+        BOTTOM_HEIGHT = (IS_PORTRAIT) ? 170 : 75;
     else // if (IS_IPAD)
-        BOTTOM_HEIGHT = (isPortrait) ? 408 : 136;//340 : 114;
+        BOTTOM_HEIGHT = (IS_PORTRAIT) ? 408 : 136;;
     
     // adjust for pagecontrol
     BOTTOM_HEIGHT = BOTTOM_HEIGHT + PAGE_CONTROL_HEIGHT;
 
     int topHeight = h - toolbarHeight - BOTTOM_HEIGHT;
     
-    self.topView.frame = CGRectMake(0, top, w, topHeight);
+    self.topView.frame = CGRectMake(0, 0, w, topHeight);
     
-    self.toolbar.frame = CGRectMake(0, top + topHeight,
+    self.toolbar.frame = CGRectMake(0, topHeight,
                                     w, toolbarHeight);
-//    self.toolbarBackView.frame = self.toolbar.frame;
     
-    self.bottomView.frame = CGRectMake(0, top + topHeight + toolbarHeight,
+    self.bottomView.frame = CGRectMake(0, topHeight + toolbarHeight,
                                        w, BOTTOM_HEIGHT);
     
     [self loadOpenFlow];
     [self loadDetailView:NO];
-
-}
-- (void) layoutForOrientation:(UIInterfaceOrientation)toOrientation fixtop:(BOOL)fixtop{
-    return;
     
-    
-    switch (toOrientation) {
-        case UIInterfaceOrientationLandscapeLeft:
-        case UIInterfaceOrientationLandscapeRight:
-            isPortrait = NO;
-            break;
-            
-        case UIInterfaceOrientationPortraitUpsideDown:
-        case UIInterfaceOrientationPortrait:
-            isPortrait = YES;
-            break;
+    if (/*IS_IPAD && */self.buyController) {
+        int ctgid = self.buyController.category;
+        [self.navigationController dismissViewControllerAnimated:NO completion:nil];
+        self.view.userInteractionEnabled = YES;
+        self.buyController = nil;
+        [self showBuyDialog:ctgid];
     }
-
-    CGRect vf = self.view.frame;
-//    CGRect vf = self.view.superview.frame;
-    
-    int h = isPortrait ? vf.size.height : vf.size.height - vf.origin.y ;
-    int w = vf.size.width;    
-    int top = fixtop ? vf.origin.y : 0;    
-
-    int BOTTOM_HEIGHT;
-    if (IS_IPHONE) 
-        BOTTOM_HEIGHT = (isPortrait) ? 170 : 64;
-    else if (IS_IPHONE_5)
-        BOTTOM_HEIGHT = (isPortrait) ? 170 : 72;
-    else // if (IS_IPAD)
-        BOTTOM_HEIGHT = (isPortrait) ? 408 : 136;//340 : 114;
-
-    //self.view.frame = CGRectMake(0, 0, w, h);
-    int toolbarHeight = self.toolbar.frame.size.height;
-    int topHeight = h - toolbarHeight - BOTTOM_HEIGHT;
-    
-    self.topView.frame = CGRectMake(0, top, w, topHeight);
-    
-    self.toolbar.frame = CGRectMake(0, top + topHeight,
-                                    w, toolbarHeight);
-//    self.toolbarBackView.frame = self.toolbar.frame;
-    
-    self.bottomView.frame = CGRectMake(0, top + topHeight + toolbarHeight,
-                                       w, BOTTOM_HEIGHT);
-
-    [self loadOpenFlow];
-    [self loadDetailView:NO];
 }
 
 - (void) loadDetailView:(BOOL)reload{
     UIView *bcv = self.bottomView;
-    
-//    NSLog(@"bvc frame : (x, y, w, h) = (%f, %f, %f, %f)", bcv.frame.origin.x, bcv.frame.origin.y, bcv.frame.size.width, bcv.frame.size.height);
 
     DPCategoriesViewController *detvc;
     if (reload && bcv.subviews.count > 0) {
@@ -259,7 +177,7 @@
     
     if (bcv.subviews.count == 0) {
         DPAppHelper *apphelper = [DPAppHelper sharedInstance];
-        if (isPortrait)
+        if (IS_PORTRAIT)
             detvc = [[DPCategoriesViewController alloc] initWithCategory:-1
                                                                     lang:apphelper.currentLang
                                                            localResource:@"free-details.plist"
@@ -284,20 +202,16 @@
     } else {
         detvc = (DPCategoriesViewController *)self.childViewControllers[0];
         detvc.view.frame = self.bottomView.bounds;
-        if (isPortrait) {
+        if (IS_PORTRAIT) 
             [detvc changeRows:2 columns:2];
-        } else {
+        else
             [detvc changeRows:1 columns:4];
-        }
-        
     }
 }
 
 - (void) loadOpenFlow {
     UIView *ofvc = self.topView;
     AFOpenFlowView *ofv = nil;
-    
-//    NSLog(@"ofvc frame : (x, y, w, h) = (%f, %f, %f, %f)", ofvc.frame.origin.x, ofvc.frame.origin.y, ofvc.frame.size.width, ofvc.frame.size.height);
 
     ofv = ofvc.subviews.count == 0 ? nil : ofvc.subviews[0];
     if (ofv)
@@ -353,43 +267,8 @@
     }
 }
 
-- (UIImage *) imageForIndex:(int)indx withFrame:(CGRect *) targetFrame {
-    UIImage *img = [UIImage imageNamed:[NSString stringWithFormat:@"%d.jpg", indx]];
-
-    if (targetFrame == nil) return img;
-    else return [self rescaleImage:img toFrame:targetFrame];
-}
-
-- (UIImage *) imageNamed:(NSString *)imgName withFrame:(CGRect *) targetFrame {
-    UIImage *img = [UIImage imageNamed:imgName];
-    
-    if (targetFrame == nil) return img;
-    else return [self rescaleImage:img toFrame:targetFrame];
-}
-
--(UIImage *) rescaleImage:(UIImage *)image toFrame:(CGRect *) targetFrame {
-//    float coeff = 1.0;
-    float vh = (*targetFrame).size.height;
-    float vw = (*targetFrame).size.width;
-    float ih = image.size.height;
-    float iw = image.size.width;
-    
-    float ir = ih / iw;
-    float vr = vh / vw;
-    if (vr < ir) {
-        ih = vh;
-        iw = ih / ir;
-    } else {
-        iw = vw;
-        ih = iw * ir;
-    }
-
-    return [image rescaleImageToSize:CGSizeMake(iw, ih)];
-}
-
 // protocol AFOpenFlowViewDelegate
 - (void) openFlowView:(AFOpenFlowView *)openFlowView click:(int)index {
-//    if ([self isBuyRunning]) return;
     
     Article *article = [self currlangCoverFlow][index];
 
@@ -412,8 +291,6 @@
 // protocol AFOpenFlowViewDatasource
 - (void) openFlowView:(AFOpenFlowView *)openFlowView requestImageForIndex:(int)index {
     Article *article = [self currlangCoverFlow][index];
-//    CGRect frm = topView.frame;
-//    UIImage *img = [self imageNamed:[self calcImageName:article.imageUrl] withFrame:&frm];
     NSString *imgName = [self calcImageName:article.imageUrl];
     UIImage *img = [UIImage imageNamed:imgName];
     
@@ -424,7 +301,7 @@
     @try {
         NSArray *parts = [baseName componentsSeparatedByString:@"."];
         if (parts && parts.count == 2) {
-            NSString *lang = @"el"; //[DPAppHelper sharedInstance].currentLang;
+            NSString *lang = [DPAppHelper sharedInstance].currentLang;
             NSString *orientation = IS_PORTRAIT ? @"v" : @"h";
             NSString *result = [NSString stringWithFormat:@"Carousel/%@_%@_%@.%@",
                                 parts[0], lang, orientation, parts[1]];
@@ -441,7 +318,7 @@
 }
 
 - (UIImage *) defaultImage {
-    return nil; // thi should return the missing image replacement
+    return nil; // this should return the missing image replacement
 }
 
 - (void)viewDidUnload {
@@ -450,7 +327,6 @@
     [self setBbiBuy:nil];
     [self setTopView:nil];
     [self setBottomView:nil];
-//    [self setToolbarBackView:nil];
     [super viewDidUnload];
 }
 
