@@ -81,18 +81,25 @@
 }
 
 - (void) loadData {
-//    NSArray *content = [[DPAppHelper sharedInstance] freeDetailsFor:[DPAppHelper sharedInstance].currentLang];
-
-    self.dataLoader = [[DPCategoryLoader alloc] initWithView:self.view
-                                                 useInternet:NO //PENDING::GGSE
-                                                  useCaching:NO
-                                                    category:category
-                                                        lang:[DPAppHelper sharedInstance].currentLang
-                                                   localData:[[DPAppHelper sharedInstance]
-                                                              freeBuyContentFor:category
-                                                              lang:[DPAppHelper sharedInstance].currentLang]];
-    self.dataLoader.delegate = self;
-    [self.dataLoader loadData];
+    if (category == -1) {
+        NSArray *list = [NSArray arrayWithObject:[[Category alloc] initWithValues:@"-1"
+                                                                            title:@"General"
+                                                                         imageUrl:@"BuyGeneral/words_%.3d.jpg"]];
+        [self contentLoaded:list];
+        [self changeRows:1 columns:1];        
+    }
+    else {
+        self.dataLoader = [[DPCategoryLoader alloc] initWithView:self.view
+                                                     useInternet:NO //PENDING::GGSE
+                                                      useCaching:NO
+                                                        category:category
+                                                            lang:[DPAppHelper sharedInstance].currentLang
+                                                       localData:[[DPAppHelper sharedInstance]
+                                                                  freeBuyContentFor:category
+                                                                  lang:[DPAppHelper sharedInstance].currentLang]];
+        self.dataLoader.delegate = self;
+        [self.dataLoader loadData];
+    }
 }
 
 //==============================================================================
@@ -168,68 +175,70 @@
 //    
 //}
 
-- (UILabel *) createLabel:(CGRect)frame title:(NSString *)title {
+- (UILabel *) createLabelFor:(int)contentIndex frame:(CGRect)frame title:(NSString *)title {
     UIFont *font = IS_IPAD
             ? [UIFont fontWithName:@"HelveticaNeue-Bold" size:24]
             : [UIFont fontWithName:@"HelveticaNeue-Bold" size:18];
 
     UILabel *label = createLabel(frame, title, font);
-    label.frame = CGRectOffset(label.frame, 0, -label.frame.origin.y);
+    CGRect lblframe = label.frame;
+    frame = CGRectMake(frame.origin.x, frame.origin.y,
+                       frame.size.width, lblframe.size.height);
+    label.frame = frame;
     return label;
+}
+
+- (void) postProcessView:(UIView *)aView
+            contentIndex:(int)contentIndex
+                   frame:(CGRect)frame {
+    if (category == -1) {
+        Category *ctg = self.contentList[0];
+        UIImageView *imgView = (UIImageView *)aView;
+        NSMutableArray *list = [[NSMutableArray alloc] initWithCapacity:121];
+        for (int i = 1; i<=121; i++)
+            [list addObject:[UIImage imageNamed:[NSString stringWithFormat:ctg.imageUrl, i]]];
+            
+        imgView.animationImages = list;
+        imgView.animationDuration = 121 / 25.0;
+        [imgView startAnimating];
+    }
 }
 
 - (UIView *) createViewFor:(int)contentIndex frame:(CGRect)frame {
     DPDataElement *elm = self.contentList[contentIndex];
-    UILabel *label = [self createLabel:frame title:elm.title];
+    UILabel *label = [self createLabelFor:contentIndex frame:frame title:elm.title];
     int fixBy = label.bounds.size.height + 8;
-    frame = CGRectMake(frame.origin.x,
+    frame = CGRectMake(frame.origin.x +2,
                        frame.origin.y + fixBy,
-                       frame.size.width,
+                       frame.size.width - 4,
                        frame.size.height - fixBy);
 
     UIImageView *imgView = [[UIImageView alloc] initWithFrame: frame];
     imgView.backgroundColor = [UIColor clearColor];
     imgView.contentMode = UIViewContentModeCenter; //ScaleAspectFit;//Center;//ScaleAspectFit;
+    imgView.clipsToBounds = YES;
     
-    imgView.tag = contentIndex;
-    UITapGestureRecognizer *tapper = [[UITapGestureRecognizer alloc]
-                                      initWithTarget:self action:@selector(handleTap:)];
-    [imgView addGestureRecognizer:tapper];
-    imgView.userInteractionEnabled = YES;
+    // nothing to do when tapped 
+//    imgView.tag = contentIndex;
+//    UITapGestureRecognizer *tapper = [[UITapGestureRecognizer alloc]
+//                                      initWithTarget:self action:@selector(handleTap:)];
+//    [imgView addGestureRecognizer:tapper];
+//    imgView.userInteractionEnabled = YES;
+    
+    if (category == -1) {
+        Category *ctg = self.contentList[0];
+        //UIImageView *imgView = (UIImageView *)aView;
+        NSMutableArray *list = [[NSMutableArray alloc] initWithCapacity:121];
+        for (int i = 1; i<=121; i++)
+            [list addObject:[UIImage imageNamed:[NSString stringWithFormat:ctg.imageUrl, i]]];
+        
+        imgView.animationImages = list;
+        imgView.animationDuration = 121 / 25.0;
+        [imgView startAnimating];
+    }
     
     return imgView;
 }
-//- (void) loadPage:(int)contentIndex
-//           inView:(UIView *)container
-//            frame:(CGRect)frame {
-//    @try {
-//        Category *ctg = self.contentList[contentIndex];
-//        id v;
-//        if (ctg.imageUrl) {
-//            UIImageView *iv = [[UIImageView alloc] initWithFrame:frame];
-//            iv.backgroundColor = [UIColor clearColor];
-//            iv.contentMode = UIViewContentModeCenter; //ScaleAspectFit;//Center;//ScaleAspectFit;
-//
-//            if ([self isLocalUrl:ctg.imageUrl]) {
-//                NSString *imgname =[self resolveImageName:ctg];
-//                iv.image = [UIImage imageNamed:imgname];
-//                
-//                NSString *imghighname =[self resolveHighlightImageName:ctg];
-//                if (imghighname)
-//                    iv.highlightedImage = [UIImage imageNamed:imghighname];
-//            }
-////            else
-////                [self loadImageAsync:ctg inView:iv];
-//
-//        }
-//            
-//            
-//    }
-//    @catch (NSException *exception) {
-//       // UIView *v =
-//    }
-//   // [container addSubview:v];
-//}
 
 #pragma mark END DPScrollableDataSourceDelegate
 
@@ -262,9 +271,9 @@
         return baseName;
 }
 
-- (void) loadImageAsync:(DPDataElement *)elm inView:(UIImageView *)imgView cacheImage:(BOOL)cacheimage {
-    [super loadImageAsync:elm inView:imgView cacheImage:YES];
-}
+//- (void) loadImageAsync:(DPDataElement *)elm inView:(UIImageView *)imgView cacheImage:(BOOL)cacheimage {
+//    [super loadImageAsync:elm inView:imgView cacheImage:YES];
+//}
 
 #pragma mark - END virtual overrides
 
