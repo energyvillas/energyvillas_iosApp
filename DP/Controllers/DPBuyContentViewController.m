@@ -85,7 +85,7 @@
         if (self.contentList == nil) {
             NSArray *list = [NSArray arrayWithObject:[[Category alloc] initWithValues:@"-1"
                                                                                 title:@"General"
-                                                                             imageUrl:@"BuyGeneral/words_%.3d.jpg"]];
+                                                                             imageUrl:@"BuyContentGeneral/buy-words_%@_%.4d.jpg"]];
             [self contentLoaded:list];
         }
         [self changeRows:1 columns:1];
@@ -200,21 +200,26 @@
     if (category == -1) {
         Category *ctg = self.contentList[0];
         UIImageView *imgView = (UIImageView *)aView;
-        NSMutableArray *list = [[NSMutableArray alloc] init];
-        int cnt = 121;
-        for (int i = 1; i <= cnt; i++) {
-            UIImage *img = [UIImage imageNamed:[NSString stringWithFormat:ctg.imageUrl, i]];
-            if (img == nil) break;
-            [list addObject: img];
-        }
         
-        if (list.count > 0) {
-            imgView.animationImages = list;
-            imgView.animationDuration = 121 / 25.0;
-            [imgView startAnimating];
-        }
+        NSString *lang = [[DPAppHelper sharedInstance] currentLang];
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+            NSMutableArray *list = [[NSMutableArray alloc] init];
+            int GEN_CTG_FRAME_COUNT = 390;
+            for (int i = 1; i <= GEN_CTG_FRAME_COUNT; i++) {
+                UIImage *img = [UIImage imageNamed:[NSString stringWithFormat:ctg.imageUrl, lang, i]];
+                if (img == nil) continue;
+                [list addObject: img];
+            }
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                if (list.count > 0) {
+                    imgView.animationImages = list;
+                    imgView.animationDuration = GEN_CTG_FRAME_COUNT / 25.0;
+                    [imgView startAnimating];
+                }
+            });
+        });        
     }
-
 }
 
 - (UIView *) createViewFor:(int)contentIndex frame:(CGRect)frame {

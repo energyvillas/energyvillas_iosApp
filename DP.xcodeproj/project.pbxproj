@@ -89,10 +89,10 @@
 		5EC255F5170101540045AB99 /* DPPaidMainView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5EC255F3170101540045AB99 /* DPPaidMainView.xib */; };
 		5EC255F6170101540045AB99 /* DPPaidRootView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5EC255F4170101540045AB99 /* DPPaidRootView.xib */; };
 		5EC255F81701054A0045AB99 /* DPCategoryView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5EC255F71701054A0045AB99 /* DPCategoryView.xib */; };
-		5EC48CD31714315C00A9566E /* Carousel in Resources */ = {isa = PBXBuildFile; fileRef = 5EC48CD21714315C00A9566E /* Carousel */; };
 		5EC48CDB1714B7CF00A9566E /* testView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5EC48CDA1714B7CF00A9566E /* testView.xib */; };
 		5EC48CDE1714BF7E00A9566E /* DPBuyContentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EC48CDD1714BF7E00A9566E /* DPBuyContentViewController.m */; };
 		5EC48CE01714CD5C00A9566E /* BuyDialogImages in Resources */ = {isa = PBXBuildFile; fileRef = 5EC48CDF1714CD5B00A9566E /* BuyDialogImages */; };
+		5EC99A09171B1E4900C6DA9D /* BuyContentGeneral in Resources */ = {isa = PBXBuildFile; fileRef = 5EC99A08171B1E4900C6DA9D /* BuyContentGeneral */; };
 		5EDF095B170C9CBE00774682 /* Icon-72.png in Resources */ = {isa = PBXBuildFile; fileRef = 5EDF0957170C9CBE00774682 /* Icon-72.png */; };
 		5EDF095C170C9CBE00774682 /* Icon-72@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5EDF0958170C9CBE00774682 /* Icon-72@2x.png */; };
 		5EDF095D170C9CBE00774682 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 5EDF0959170C9CBE00774682 /* Icon.png */; };
@@ -261,11 +261,11 @@
 		5EC255F4170101540045AB99 /* DPPaidRootView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DPPaidRootView.xib; sourceTree = "<group>"; };
 		5EC255F71701054A0045AB99 /* DPCategoryView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DPCategoryView.xib; sourceTree = "<group>"; };
 		5EC255F917010D610045AB99 /* DPScrollableViewDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DPScrollableViewDelegate.h; sourceTree = "<group>"; };
-		5EC48CD21714315C00A9566E /* Carousel */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Carousel; sourceTree = "<group>"; };
 		5EC48CDA1714B7CF00A9566E /* testView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = testView.xib; sourceTree = "<group>"; };
 		5EC48CDC1714BF7E00A9566E /* DPBuyContentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPBuyContentViewController.h; sourceTree = "<group>"; };
 		5EC48CDD1714BF7E00A9566E /* DPBuyContentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPBuyContentViewController.m; sourceTree = "<group>"; };
 		5EC48CDF1714CD5B00A9566E /* BuyDialogImages */ = {isa = PBXFileReference; lastKnownFileType = folder; path = BuyDialogImages; sourceTree = "<group>"; };
+		5EC99A08171B1E4900C6DA9D /* BuyContentGeneral */ = {isa = PBXFileReference; lastKnownFileType = folder; path = BuyContentGeneral; sourceTree = "<group>"; };
 		5EDF0957170C9CBE00774682 /* Icon-72.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-72.png"; sourceTree = "<group>"; };
 		5EDF0958170C9CBE00774682 /* Icon-72@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-72@2x.png"; sourceTree = "<group>"; };
 		5EDF0959170C9CBE00774682 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
@@ -532,9 +532,9 @@
 			isa = PBXGroup;
 			children = (
 				5E4E85121710356A005DAD06 /* Background */,
+				5EC99A08171B1E4900C6DA9D /* BuyContentGeneral */,
 				5E03E922171578FB00F0C6F3 /* BuyDialog */,
 				5EC48CDF1714CD5B00A9566E /* BuyDialogImages */,
-				5EC48CD21714315C00A9566E /* Carousel */,
 				5E8AB0CD17170B52004AFE76 /* FreeImages */,
 				5EDF0956170C9CBE00774682 /* Icons */,
 				5E4E8514171059AA005DAD06 /* Navbar */,
@@ -755,11 +755,11 @@
 				5E4E85131710356A005DAD06 /* Background in Resources */,
 				5E4E8515171059AA005DAD06 /* Navbar in Resources */,
 				5E4E851F1711E542005DAD06 /* DPSubCategoryView.xib in Resources */,
-				5EC48CD31714315C00A9566E /* Carousel in Resources */,
 				5EC48CDB1714B7CF00A9566E /* testView.xib in Resources */,
 				5EC48CE01714CD5C00A9566E /* BuyDialogImages in Resources */,
 				5E03E923171578FB00F0C6F3 /* BuyDialog in Resources */,
 				5E8AB0CE17170B52004AFE76 /* FreeImages in Resources */,
+				5EC99A09171B1E4900C6DA9D /* BuyContentGeneral in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
