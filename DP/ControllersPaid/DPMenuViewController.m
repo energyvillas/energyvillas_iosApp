@@ -21,9 +21,6 @@
 @end
 
 @implementation DPMenuViewController {
-        bool isPortrait;
-    
-//    int islands_count;
     int island_width;
     int island_height;
 }
@@ -99,41 +96,16 @@
     self.islandsContent = nil;
 }
 
-- (void) viewWillLayoutSubviews {
-    [super viewWillLayoutSubviews];
-    [self layoutForOrientation:INTERFACE_ORIENTATION fixtop:YES];
-}
-- (void) layoutForOrientation:(UIInterfaceOrientation)toOrientation fixtop:(BOOL)fixtop {
+- (void) doLayoutSubviews {
     // dismiss popover since the positioning will be wrong
     [self clearPopups];
-
-    //
-    switch (toOrientation) {
-        case UIInterfaceOrientationLandscapeLeft:
-        case UIInterfaceOrientationLandscapeRight:
-            isPortrait = NO;
-            break;
-            
-        case UIInterfaceOrientationPortraitUpsideDown:
-        case UIInterfaceOrientationPortrait:
-            isPortrait = YES;
-            break;
-    }
     
-    UIView *sv;
-    sv = self.view.superview;
-
-    CGRect vf = self.view.frame;
-//    int top = fixtop ? vf.origin.y : 0;
-//    int h = (isPortrait ? vf.size.height : vf.size.height - vf.origin.y) - top;
-//    int w = vf.size.width;
-    int top = 0;
-    int h = vf.size.height;//sv.bounds.size.height;
-    int w = vf.size.width;//sv.bounds.size.width;
-    int pgCtrlHeight = 36; //self.pageControl.frame.size.height;
+//    CGRect vf = self.view.frame;
+//    int h = vf.size.height;//sv.bounds.size.height;
+//    int w = vf.size.width;//sv.bounds.size.width;
     //self.view.frame = CGRectMake(0, 0, w, h);
-    self.scrollView.frame = CGRectMake(0, top, w, h);
-    self.pageControl.frame = CGRectMake(0, h + top - pgCtrlHeight, w, pgCtrlHeight);
+//    self.scrollView.frame = CGRectMake(0, 0, w, h);
+//    self.pageControl.frame = CGRectMake(0, h - PAGE_CONTROL_HEIGHT, w, PAGE_CONTROL_HEIGHT);
     
     [self changeRows:self.rowCount columns:self.colCount];
 }

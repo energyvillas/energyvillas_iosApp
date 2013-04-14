@@ -85,7 +85,6 @@
 
 - (void) viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    [self layoutForOrientation:INTERFACE_ORIENTATION fixtop:YES];
 }
 
 - (void) viewDidAppear:(BOOL)animated {
@@ -93,7 +92,13 @@
     [super viewDidAppear:animated];
 }
 
-- (void) layoutForOrientation:(UIInterfaceOrientation) toOrientation fixtop:(BOOL)fixtop {
+- (void) viewWillLayoutSubviews {
+    [super viewWillLayoutSubviews];
+    [self doLayoutSubViews];
+}
+
+- (void) doLayoutSubViews {
+    
 }
 
 - (BOOL) shouldAutorotate {
@@ -111,11 +116,8 @@
 			interfaceOrientation == UIInterfaceOrientationLandscapeRight ||
 			interfaceOrientation == UIInterfaceOrientationLandscapeLeft);
 }
-/*
--(void) willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
-    [self layoutForOrientation:toInterfaceOrientation fixtop:YES];
-}
-*/
+
+
 /*
 - (UIButton *) createButtonWithImageUrl:(NSURL *)imgUrl
                                  tag:(int)index

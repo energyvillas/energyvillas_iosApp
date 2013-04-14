@@ -26,10 +26,7 @@
 
 @end
 
-@implementation DPPaidRootViewController {
-    bool isPortrait;
-}
-
+@implementation DPPaidRootViewController 
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -47,32 +44,17 @@
 	// Do any additional setup after loading the view.
 }
 
-- (void) layoutForOrientation:(UIInterfaceOrientation)toOrientation fixtop:(BOOL)fixtop {
-    [super layoutForOrientation:toOrientation fixtop:fixtop];
-    
-    // handle orientation change
-    switch (toOrientation) {
-        case UIInterfaceOrientationLandscapeLeft:
-        case UIInterfaceOrientationLandscapeRight:
-            isPortrait = NO;
-            break;
-            
-        case UIInterfaceOrientationPortraitUpsideDown:
-        case UIInterfaceOrientationPortrait:
-            isPortrait = YES;
-            break;
-    }
-    
+- (void) doLayoutSubViews {    
     CGRect vf = self.view.frame;
-//    CGRect svf = self.view.superview.frame;
     
-    int h = isPortrait ? vf.size.height : vf.size.height - vf.origin.y ;
-    int w = vf.size.width;
-    
-    int top = fixtop ? vf.origin.y : 0;
+    int MAGIC_FIX = 12;
+    BOOL fixtop = !IS_PORTRAIT;
+    int h = fixtop ? vf.size.height - MAGIC_FIX : vf.size.height;
+    int w = vf.size.width;    
+    int top = fixtop ? MAGIC_FIX : 0;
     
     // iphone sizes
-    int PHONE_H_ADS = 60; 
+    int PHONE_H_ADS = 60;
     int PHONE_H_NEW_NEXT = 92;
     
     int PHONE_HL_ADS = 60; 
@@ -94,7 +76,7 @@
     
     
     if (IS_IPHONE) {
-        if (isPortrait) {
+        if (IS_PORTRAIT) {
             self.adsView.frame = CGRectMake(0, top, w, PHONE_H_ADS);
             
             self.nnView.frame = CGRectMake(0, top + PHONE_H_ADS, w, PHONE_H_NEW_NEXT);
@@ -111,7 +93,7 @@
                                            w - PHONE_WL_NEW_NEXT, h - PHONE_HL_ADS);
         }
     } else if (IS_IPHONE_5) {
-        if (isPortrait) {
+        if (IS_PORTRAIT) {
             self.adsView.frame = CGRectMake(0, top, w, PHONE5_H_ADS);
             
             self.nnView.frame = CGRectMake(0, top + PHONE5_H_ADS, w, PHONE5_H_NEW_NEXT);
@@ -129,7 +111,7 @@
                                            w - PHONE5_WL_NEW_NEXT, h - PHONE5_HL_ADS);
         }
     } else /* if (IS_IPAD) */ {
-        if (isPortrait) {
+        if (IS_PORTRAIT) {
             self.adsView.frame = CGRectMake(0, top, w, PAD_H_ADS);
             
             self.nnView.frame = CGRectMake(0, top + PAD_H_ADS,
@@ -158,10 +140,11 @@
     if (self.adsView.subviews.count == 0)
     {
         self.adsViewController = [[DPAdsViewController alloc] initWithGroup:1];
+        //self.adsViewController.view.frame = self.adsView.bounds;
         [self addChildViewController:self.adsViewController];
         [self.adsView addSubview:self.adsViewController.view];
     }
-    // else pending ???
+    self.adsViewController.view.frame = self.adsView.bounds;
 }
 
 - (void) loadNewNextView {
@@ -189,7 +172,7 @@
             [content addObject: article];
         }
         
-        if (isPortrait)
+        if (IS_PORTRAIT)
             self.nnViewController = [[DPCtgScrollViewController alloc]
                                      initWithContent:content rows:1 columns:2 autoScroll:NO];
         else
@@ -197,11 +180,12 @@
                                      initWithContent:content rows:2 columns:1 autoScroll:NO];
         
         content = nil;
-        
+        self.nnViewController.view.frame = self.nnView.bounds;
         [self addChildViewController: self.nnViewController];
         [bcv addSubview: self.nnViewController.view];
     } else {
-        if (isPortrait) {
+        self.nnViewController.view.frame = self.nnView.bounds;
+        if (IS_PORTRAIT) {
             [self.nnViewController changeRows:1 columns:2];
         } else {
             [self.nnViewController changeRows:2 columns:1];
@@ -214,12 +198,15 @@
     if (self.mmView.subviews.count == 0)
     {
         self.mmViewController = [[DPMenuViewController alloc] initWithRows:3 columns:3 autoScroll:NO];
+        self.mmViewController.view.frame = self.mmView.bounds;
         [self addChildViewController:self.mmViewController];
         [self.mmView addSubview:self.mmViewController.view];
     }
-    else
+    else {
+        self.mmViewController.view.frame = self.mmView.bounds;
         [self.mmViewController changeRows:3
                                   columns:3];
+    }
 }
 
 //- (UIImage *) imageForIndex:(int) indx withFrame:(CGRect *) targetFrame {

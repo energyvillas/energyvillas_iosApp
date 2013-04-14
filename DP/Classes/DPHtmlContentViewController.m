@@ -81,8 +81,8 @@
 
 - (void) doInitWebView {    
     CGRect aframe = CGRectMake(0, 0,
-                               self.view.superview.frame.size.width,
-                               self.view.superview.frame.size.height);
+                               self.view.frame.size.width,
+                               self.view.frame.size.height);
     
     UIWebView *webView = [[UIWebView alloc] initWithFrame:aframe];
     webView.contentMode = UIViewContentModeScaleAspectFit;
@@ -135,6 +135,11 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
+    CGRect aframe = CGRectMake(0, 0,
+                               self.view.superview.frame.size.width,
+                               self.view.superview.frame.size.height);
+    self.view.frame = aframe;
+
 }
 
 - (void) viewWillAppear:(BOOL)animated {
@@ -148,15 +153,13 @@
     [super viewWillAppear:animated];
 }
 
-#pragma mark -
-#pragma mark === device orientation change handling  ===
 
-- (void) layoutForOrientation:(UIInterfaceOrientation) toOrientation fixtop:(BOOL)fixtop{
+- (void) doLayoutSubViews {
     UIView *innerview = self.view.subviews.count == 1 ? self.view.subviews[0] : nil;
     if (innerview) {
         innerview.frame = CGRectMake(0, 0,
-                                     self.view.superview.bounds.size.width,
-                                     self.view.superview.bounds.size.height);
+                                     self.view.bounds.size.width,
+                                     self.view.bounds.size.height);
     }
 }
 

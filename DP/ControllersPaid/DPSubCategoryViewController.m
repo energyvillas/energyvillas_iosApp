@@ -117,23 +117,12 @@
 
 #pragma
 
-- (void) layoutForOrientation:(UIInterfaceOrientation)toOrientation fixtop:(BOOL)fixtop {
-    switch (toOrientation) {
-        case UIInterfaceOrientationLandscapeLeft:
-        case UIInterfaceOrientationLandscapeRight:
-            isPortrait = NO;
-            break;
-            
-        case UIInterfaceOrientationPortraitUpsideDown:
-        case UIInterfaceOrientationPortrait:
-            isPortrait = YES;
-            break;
-    }
-    
+- (void) doLayoutSubViews {    
     CGRect vf = self.view.frame;
     //    CGRect svf = self.view.superview.frame;
     
-    int h = isPortrait ? vf.size.height : vf.size.height - vf.origin.y;
+    BOOL fixtop = NO;
+    int h = IS_PORTRAIT ? vf.size.height : vf.size.height - vf.origin.y;
     int w = vf.size.width;
     int top = fixtop ? vf.origin.y : 0;
     
@@ -159,7 +148,7 @@
     
     
     if (IS_IPHONE || IS_IPHONE_5) {
-        if (isPortrait) {
+        if (IS_PORTRAIT) {
             self.label.frame = CGRectMake(0, top,
                                           w, PH_LBL);
             
@@ -185,7 +174,7 @@
                                                w - LW_PHT, h - top + LH_LBL);
         }
     } else /* IF (IS_IPAD) */{
-        if (isPortrait) {
+        if (IS_PORTRAIT) {
             self.label.frame = CGRectMake(0, top,
                                           w, PAD_PH_LBL);
             

@@ -152,10 +152,6 @@
     [super viewWillDisappear:animated];
 }
 
--(void)viewWillLayoutSubviews {
-    [super viewWillLayoutSubviews];
-    [self doLayoutSubViews];
-}
 
 -(CGRect) calcFrame {
     [self doLayoutSubViews];
@@ -176,7 +172,7 @@
         } else if (IS_IPHONE_5) {
             cf = CGRectMake(0, IS_PORTRAIT ? 105 - PAGE_CONTROL_HEIGHT : 18,
                             nextViewSize.width, nextViewSize.height);
-        } else if (IS_IPAD) {
+        } else /*if (IS_IPAD)*/ {
             cf = CGRectMake(0, IS_PORTRAIT ? 165 - PAGE_CONTROL_HEIGHT : 180 - PAGE_CONTROL_HEIGHT,
                             nextViewSize.width, nextViewSize.height);
         }

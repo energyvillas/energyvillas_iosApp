@@ -228,13 +228,19 @@
     if (category == -1) {
         Category *ctg = self.contentList[0];
         //UIImageView *imgView = (UIImageView *)aView;
-        NSMutableArray *list = [[NSMutableArray alloc] initWithCapacity:121];
-        for (int i = 1; i<=121; i++)
-            [list addObject:[UIImage imageNamed:[NSString stringWithFormat:ctg.imageUrl, i]]];
+        NSMutableArray *list = [[NSMutableArray alloc] init];
+        int cnt = 121;
+        for (int i = 1; i <= cnt; i++) {
+            UIImage *img = [UIImage imageNamed:[NSString stringWithFormat:ctg.imageUrl, i]];
+            if (img == nil) break;
+            [list addObject: img];
+        }
         
-        imgView.animationImages = list;
-        imgView.animationDuration = 121 / 25.0;
-        [imgView startAnimating];
+        if (list.count > 0) {
+            imgView.animationImages = list;
+            imgView.animationDuration = 121 / 25.0;
+            [imgView startAnimating];
+        }
     }
     
     return imgView;

@@ -33,8 +33,7 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
-    UIView *navView = self.navController.view;
-    [self.view addSubview: navView];
+    [self.view addSubview: self.navController.view];
     self.navController.delegate = self;
 }
 
@@ -43,14 +42,15 @@
     [super viewWillAppear:animated];
 }
 
--(void) viewWillLayoutSubviews {
-    [super viewWillLayoutSubviews];
+-(void) doLayoutSubViews {
     int cnt = self.view.subviews.count;
     if (cnt == 1) {
         UIView *v = self.view.subviews[0];
-        CGRect frm = v.frame;
-        frm = self.view.bounds;
-        v.frame = frm;
+        if (v == self.navController.view) {
+            CGRect frm = v.frame;
+            frm = self.view.bounds;
+            v.frame = frm;
+        }
     }
 }
 

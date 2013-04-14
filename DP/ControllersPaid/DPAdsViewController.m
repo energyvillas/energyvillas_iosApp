@@ -33,7 +33,10 @@
 }
 
 - (id) initWithGroup:(int)aGroup {
-    self = [super initWithContent:nil autoScroll:YES];
+    self = [super initWithContent:nil
+                       autoScroll:YES
+                        showPages:NO
+                  scrollDirection:DPScrollDirectionHorizontal];
     
     if (self) {
         self.group = aGroup;

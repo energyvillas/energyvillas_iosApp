@@ -66,7 +66,7 @@
         showPages = showpages;
         scrollDirection = scrolldir;
         self.contentList = content;
-//        if (!self.view)
+        if (!self.view)
             self.view = [[UIView alloc] init];
         self.scrollView = [[UIScrollView alloc] init];
         self.pageControl = [[UIPageControl alloc] init];
@@ -112,8 +112,8 @@
     self.view.frame = CGRectMake(0, 0, sz.width, sz.height);
 }
 
-- (void) viewWillLayoutSubviews {
-    [super viewWillLayoutSubviews];
+- (void) doLayoutSubViews {
+    [super doLayoutSubViews];
     [self changeRows:self.rowCount columns:self.colCount];
 }
 
@@ -124,7 +124,11 @@
     int h = vf.size.height;
     int w = vf.size.width;
     
-    self.scrollView.frame = CGRectMake(0, 0, w, h - PAGE_CONTROL_HEIGHT);
+    int pgCount = [self calcPageCount];
+    if (showPages && pgCount > 1)
+        self.scrollView.frame = CGRectMake(0, 0, w, h - PAGE_CONTROL_HEIGHT);
+    else
+        self.scrollView.frame = CGRectMake(0, 0, w, h);
     
 //    CGRect pcf = self.pageControl.frame;
     self.pageControl.frame = CGRectMake(0, h - PAGE_CONTROL_HEIGHT, //pcf.size.height,

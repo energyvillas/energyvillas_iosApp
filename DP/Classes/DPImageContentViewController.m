@@ -290,9 +290,7 @@
                      DPLocalizedString(kERR_MSG_DATA_LOAD_FAILED));
 }
 
--(void) viewWillLayoutSubviews {
-    [super viewWillLayoutSubviews];
-    
+-(void) doLayoutSubViews {
     UIView *innerview = self.view.subviews.count == 1 ? self.view.subviews[0] : nil;
     if (innerview) {
         innerview.frame = CGRectMake(0, 0,
@@ -302,17 +300,6 @@
 }
 #pragma mark -
 #pragma mark === device orientation change handling  ===
-
-- (void) layoutForOrientation:(UIInterfaceOrientation) toOrientation fixtop:(BOOL)fixtop{
-    return;
-    
-    UIView *innerview = self.view.subviews.count == 1 ? self.view.subviews[0] : nil;
-    if (innerview) {
-        innerview.frame = CGRectMake(0, 0,
-                                     self.view.superview.bounds.size.width,
-                                     self.view.superview.bounds.size.height);
-    }
-}
 
 - (void)didReceiveMemoryWarning
 {

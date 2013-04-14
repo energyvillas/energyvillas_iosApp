@@ -106,41 +106,10 @@
     CGSize nextViewSize = [UIApplication sizeInOrientation:toInterfaceOrientation];
     self.view.frame = CGRectMake(0, 0, nextViewSize.width, nextViewSize.height);
 }
-- (void) viewWillLayoutSubviews {
-    [super viewWillLayoutSubviews];
-
+- (void) doLayoutSubViews {
     UIView *innerview = self.view.subviews.count == 1 ? self.view.subviews[0] : nil;
     if (innerview) 
         innerview.frame = self.view.frame;
-}
-- (void) layoutForOrientation:(UIInterfaceOrientation) toOrientation fixtop:(BOOL)fixtop{
-    return;
-/*
-    CGRect svf = self.view.superview.frame;
-    CGRect vf = self.view.frame;
-    
-    int sbh = [UIApplication sharedApplication].statusBarFrame.size.height;
-    vf = CGRectMake(0, 0, svf.size.width, svf.origin.y + svf.size.height + sbh);
-    NSLog(@"======> vimeo vf : (x, y, w, h) = ****** (%f, %f, %f, %f) ********",
-          vf.origin.x, vf.origin.y, vf.size.width, vf.size.height);
- //   self.view.frame = vf;
-
-    //self.view.frame = []
-    UIView *innerview = self.view.subviews.count == 1 ? self.view.subviews[0] : nil;
-    if (innerview) {
-        CGRect frm = CGRectMake(0, 0,
-                                vf.size.width,
-                                vf.size.height);
-//        innerview.frame = frm;
-    }
-*/
-    
-    CGSize nextViewSize = [UIApplication sizeInOrientation:toOrientation];
-    self.view.frame = CGRectMake(0, 0, nextViewSize.width, nextViewSize.height);
-    UIView *innerview = self.view.subviews.count == 1 ? self.view.subviews[0] : nil;
-    if (innerview) {
-        innerview.frame = self.view.frame;
-    }
 }
 
 #pragma mark -

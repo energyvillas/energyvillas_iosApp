@@ -51,6 +51,7 @@
         self.scrollableViewDelegate = self;
         self.rowCount = 0;
         self.colCount = 0;
+        [self loadData];
     }
     
     return self;
@@ -110,8 +111,7 @@
 
 - (void) reachabilityChanged {
     [super reachabilityChanged];
-    if (self.contentList.count == 0 || self.dataLoader.dataRefreshNeeded)
-        [self.dataLoader loadData];
+    [self loadData];
 }
 
 - (void) viewDidLoad
@@ -130,13 +130,16 @@
 }
 
 - (void) loadData {
-    self.dataLoader = [[DPCategoryLoader alloc] initWithView:self.view useInternet:!isLeafCategory
-                                                  useCaching:YES
-                                                    category:category
-                                                        lang:[DPAppHelper sharedInstance].currentLang
-                                               localResource:nil];
-    self.dataLoader.delegate = self;
-    [self.dataLoader loadData];
+    if (self.dataLoader == nil) {
+        self.dataLoader = [[DPCategoryLoader alloc] initWithView:self.view useInternet:!isLeafCategory
+                                                      useCaching:YES
+                                                        category:category
+                                                            lang:[DPAppHelper sharedInstance].currentLang
+                                                   localResource:nil];
+        self.dataLoader.delegate = self;
+    }
+    if (self.contentList.count == 0 || self.dataLoader.dataRefreshNeeded)
+        [self.dataLoader loadData];
 }
 
 - (void) changeRows:(int)rows columns:(int)columns scrollDirection:(DPScrollDirection)scrolldir {

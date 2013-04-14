@@ -30,7 +30,6 @@
 @end
 
 @implementation DPCategoryViewController {
-    bool isPortrait;
     int category;
 }
 
@@ -104,23 +103,11 @@
 }
 
 
-- (void) layoutForOrientation:(UIInterfaceOrientation)toOrientation fixtop:(BOOL)fixtop {
-    switch (toOrientation) {
-        case UIInterfaceOrientationLandscapeLeft:
-        case UIInterfaceOrientationLandscapeRight:
-            isPortrait = NO;
-            break;
-            
-        case UIInterfaceOrientationPortraitUpsideDown:
-        case UIInterfaceOrientationPortrait:
-            isPortrait = YES;
-            break;
-    }
-    
+- (void) doLayoutSubViews {
     CGRect vf = self.view.frame;
 //    CGRect svf = self.view.superview.frame;
-    
-    int h = isPortrait ? vf.size.height : vf.size.height - vf.origin.y;
+    BOOL fixtop = NO;
+    int h = IS_PORTRAIT ? vf.size.height : vf.size.height - vf.origin.y;
     int w = vf.size.width;
     int top = fixtop ? vf.origin.y : 0;
     
@@ -137,7 +124,7 @@
     int PAD_WL_MENU= 250;
     
     if (IS_IPHONE || IS_IPHONE_5) {
-        if (isPortrait) {
+        if (IS_PORTRAIT) {
             self.adsView.frame = CGRectMake(0, top, w, H_ADS);
             
             self.ctgView.frame = CGRectMake(0, top + H_ADS, w, h - H_ADS - H_MENU);
@@ -151,7 +138,7 @@
             self.mmView.frame = CGRectMake(w - WL_MENU, top, WL_MENU, h);
         }
     } else /* IF (IS_IPAD) */{
-        if (isPortrait) {
+        if (IS_PORTRAIT) {
             self.adsView.frame = CGRectMake(0, top, w, PAD_H_ADS);
             
             self.ctgView.frame = CGRectMake(0, top + PAD_H_ADS, w, h - PAD_H_ADS - PAD_H_MENU);
@@ -183,11 +170,11 @@
     if (self.adsView.subviews.count == 0)
     {
         self.adsViewController = [[DPAdsViewController alloc] initWithGroup:1];
+        self.adsViewController.view.frame = self.adsView.bounds;
         [self addChildViewController:self.adsViewController];
         [self.adsView addSubview:self.adsViewController.view];
-    }
-    else
-        [self.adsViewController layoutForOrientation:INTERFACE_ORIENTATION fixtop:NO];
+    } else
+        self.adsViewController.view.frame = self.adsView.bounds;
 }
 
 - (void) loadCategoryView {    
@@ -198,19 +185,20 @@
     {
         self.ctgViewController = [[DPAnimatedScrollViewController alloc] initWithCategory:category isLeaf:NO];
         
-        //[[DPtestanimViewController alloc] initWithCategory:category isLeaf:NO];
-        
+        self.ctgViewController.view.frame = self.actualCtgView.bounds;
         [self addChildViewController:self.ctgViewController];
         [self.actualCtgView addSubview:self.ctgViewController.view];
     }
-    else
+    else {
+        self.ctgViewController.view.frame = self.actualCtgView.bounds;
         [self.ctgViewController changeRows:1 columns:1];
+    }
 }
 
 - (void) loadMenuView {
-    int rows = isPortrait ? 1 : 3;
-    int cols = isPortrait ? 3 : 1;
-    DPScrollDirection scrolldir = isPortrait ? DPScrollDirectionHorizontal : DPScrollDirectionVertical;
+    int rows = IS_PORTRAIT ? 1 : 3;
+    int cols = IS_PORTRAIT ? 3 : 1;
+    DPScrollDirection scrolldir = IS_PORTRAIT ? DPScrollDirectionHorizontal : DPScrollDirectionVertical;
     
     if (self.mmView.subviews.count == 0)
     {
@@ -222,11 +210,14 @@
         
         [self addChildViewController:self.mmViewController];
         [self.mmView addSubview:self.mmViewController.view];
+        self.mmViewController.view.frame = self.mmView.bounds;
     }
-    else
+    else {
+        self.mmViewController.view.frame = self.mmView.bounds;
         [self.mmViewController changeRows:rows
                                   columns:cols
                           scrollDirection:scrolldir];
+    }
 
 ////////
 //    if (self.mmViewController) {

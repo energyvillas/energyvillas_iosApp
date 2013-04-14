@@ -123,7 +123,7 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (void) viewWillLayoutSubviews {    
+- (void) doLayoutSubViews {    
     CGRect vf = self.view.frame;
     
     int h = IS_PORTRAIT ? vf.size.height : vf.size.height - vf.origin.y ;
@@ -194,7 +194,7 @@
                                                               autoScroll:YES
                                                                   parent:self];
         
-        
+        detvc.view.frame = self.bottomView.bounds;
         [self addChildViewController: detvc];
         [bcv addSubview: detvc.view];
         
