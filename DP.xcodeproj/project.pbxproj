@@ -56,7 +56,6 @@
 		5E71A3FE16F99DD900E7AFF9 /* DPRootView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5E71A3FD16F99DD900E7AFF9 /* DPRootView.xib */; };
 		5E8AB0CC171706D1004AFE76 /* UIImage+Retina4.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E8AB0CB171706D1004AFE76 /* UIImage+Retina4.m */; };
 		5E8AB0CE17170B52004AFE76 /* FreeImages in Resources */ = {isa = PBXBuildFile; fileRef = 5E8AB0CD17170B52004AFE76 /* FreeImages */; };
-		5E8AB0D017183EB8004AFE76 /* BuyGeneral in Resources */ = {isa = PBXBuildFile; fileRef = 5E8AB0CF17183EB8004AFE76 /* BuyGeneral */; };
 		5E9ABBDE16F9F3CA000EAB46 /* DPTestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E9ABBDD16F9F3CA000EAB46 /* DPTestViewController.m */; };
 		5E9ABBE016F9F3E2000EAB46 /* DPTestView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5E9ABBDF16F9F3E2000EAB46 /* DPTestView.xib */; };
 		5EC2557D16FC64400045AB99 /* DPImageInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EC2557C16FC64400045AB99 /* DPImageInfo.m */; };
@@ -199,7 +198,6 @@
 		5E8AB0CA171706D1004AFE76 /* UIImage+Retina4.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Retina4.h"; sourceTree = "<group>"; };
 		5E8AB0CB171706D1004AFE76 /* UIImage+Retina4.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Retina4.m"; sourceTree = "<group>"; };
 		5E8AB0CD17170B52004AFE76 /* FreeImages */ = {isa = PBXFileReference; lastKnownFileType = folder; path = FreeImages; sourceTree = "<group>"; };
-		5E8AB0CF17183EB8004AFE76 /* BuyGeneral */ = {isa = PBXFileReference; lastKnownFileType = folder; path = BuyGeneral; sourceTree = "<group>"; };
 		5E9ABBDC16F9F3CA000EAB46 /* DPTestViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPTestViewController.h; sourceTree = "<group>"; };
 		5E9ABBDD16F9F3CA000EAB46 /* DPTestViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPTestViewController.m; sourceTree = "<group>"; };
 		5E9ABBDF16F9F3E2000EAB46 /* DPTestView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DPTestView.xib; sourceTree = "<group>"; };
@@ -536,7 +534,6 @@
 				5E4E85121710356A005DAD06 /* Background */,
 				5E03E922171578FB00F0C6F3 /* BuyDialog */,
 				5EC48CDF1714CD5B00A9566E /* BuyDialogImages */,
-				5E8AB0CF17183EB8004AFE76 /* BuyGeneral */,
 				5EC48CD21714315C00A9566E /* Carousel */,
 				5E8AB0CD17170B52004AFE76 /* FreeImages */,
 				5EDF0956170C9CBE00774682 /* Icons */,
@@ -763,7 +760,6 @@
 				5EC48CE01714CD5C00A9566E /* BuyDialogImages in Resources */,
 				5E03E923171578FB00F0C6F3 /* BuyDialog in Resources */,
 				5E8AB0CE17170B52004AFE76 /* FreeImages in Resources */,
-				5E8AB0D017183EB8004AFE76 /* BuyGeneral in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
