@@ -43,6 +43,7 @@
     if (self) {
         category = ctgID;
         self.scrollableViewDelegate = self;
+        self.dataDelegate = self;
     }
     
     return self;
@@ -76,29 +77,34 @@
 
 - (void) reachabilityChanged {
     [super reachabilityChanged];
-    if (self.contentList.count == 0 || self.dataLoader.dataRefreshNeeded)
-        [self.dataLoader loadData];
+    [self loadData];
 }
 
 - (void) loadData {
     if (category == -1) {
-        NSArray *list = [NSArray arrayWithObject:[[Category alloc] initWithValues:@"-1"
-                                                                            title:@"General"
-                                                                         imageUrl:@"BuyGeneral/words_%.3d.jpg"]];
-        [self contentLoaded:list];
-        [self changeRows:1 columns:1];        
+        if (self.contentList == nil) {
+            NSArray *list = [NSArray arrayWithObject:[[Category alloc] initWithValues:@"-1"
+                                                                                title:@"General"
+                                                                             imageUrl:@"BuyGeneral/words_%.3d.jpg"]];
+            [self contentLoaded:list];
+        }
+        [self changeRows:1 columns:1];
     }
     else {
-        self.dataLoader = [[DPCategoryLoader alloc] initWithView:self.view
-                                                     useInternet:NO //PENDING::GGSE
-                                                      useCaching:NO
-                                                        category:category
-                                                            lang:[DPAppHelper sharedInstance].currentLang
-                                                       localData:[[DPAppHelper sharedInstance]
-                                                                  freeBuyContentFor:category
-                                                                  lang:[DPAppHelper sharedInstance].currentLang]];
-        self.dataLoader.delegate = self;
-        [self.dataLoader loadData];
+        if (self.dataLoader == nil) {
+            self.dataLoader = [[DPCategoryLoader alloc] initWithView:self.view
+                                                         useInternet:NO //PENDING::GGSE
+                                                          useCaching:NO
+                                                            category:category
+                                                                lang:[DPAppHelper sharedInstance].currentLang
+                                                           localData:[[DPAppHelper sharedInstance]
+                                                                      freeBuyContentFor:category
+                                                                      lang:[DPAppHelper sharedInstance].currentLang]];
+            self.dataLoader.delegate = self;
+        }
+        
+        if (self.contentList.count == 0 || self.dataLoader.dataRefreshNeeded)
+            [self.dataLoader loadData];
     }
 }
 
@@ -194,14 +200,21 @@
     if (category == -1) {
         Category *ctg = self.contentList[0];
         UIImageView *imgView = (UIImageView *)aView;
-        NSMutableArray *list = [[NSMutableArray alloc] initWithCapacity:121];
-        for (int i = 1; i<=121; i++)
-            [list addObject:[UIImage imageNamed:[NSString stringWithFormat:ctg.imageUrl, i]]];
-            
-        imgView.animationImages = list;
-        imgView.animationDuration = 121 / 25.0;
-        [imgView startAnimating];
+        NSMutableArray *list = [[NSMutableArray alloc] init];
+        int cnt = 121;
+        for (int i = 1; i <= cnt; i++) {
+            UIImage *img = [UIImage imageNamed:[NSString stringWithFormat:ctg.imageUrl, i]];
+            if (img == nil) break;
+            [list addObject: img];
+        }
+        
+        if (list.count > 0) {
+            imgView.animationImages = list;
+            imgView.animationDuration = 121 / 25.0;
+            [imgView startAnimating];
+        }
     }
+
 }
 
 - (UIView *) createViewFor:(int)contentIndex frame:(CGRect)frame {
@@ -224,25 +237,7 @@
 //                                      initWithTarget:self action:@selector(handleTap:)];
 //    [imgView addGestureRecognizer:tapper];
 //    imgView.userInteractionEnabled = YES;
-    
-    if (category == -1) {
-        Category *ctg = self.contentList[0];
-        //UIImageView *imgView = (UIImageView *)aView;
-        NSMutableArray *list = [[NSMutableArray alloc] init];
-        int cnt = 121;
-        for (int i = 1; i <= cnt; i++) {
-            UIImage *img = [UIImage imageNamed:[NSString stringWithFormat:ctg.imageUrl, i]];
-            if (img == nil) break;
-            [list addObject: img];
-        }
         
-        if (list.count > 0) {
-            imgView.animationImages = list;
-            imgView.animationDuration = 121 / 25.0;
-            [imgView startAnimating];
-        }
-    }
-    
     return imgView;
 }
 

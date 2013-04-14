@@ -49,6 +49,7 @@
     if (self) {
         self.parentVC = parentVC;
         self.scrollableViewDelegate = self;
+        self.dataDelegate = self;
         self.category = ctg;
         self.lang = lang;
         self.plistFile = resfile;

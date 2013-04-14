@@ -334,16 +334,19 @@
         [self loadImageAsync:element inView:imgView cacheImage:YES];
 }
 
-- (UIView *) createViewFor:(int)contentIndex frame:(CGRect)frame {
+- (UIView *) internalCreateViewFor:(int)contentIndex frame:(CGRect)frame {
     UIView *result = nil;
     if ([self.dataDelegate respondsToSelector:@selector(createViewFor:frame:)])
         result = [self.dataDelegate createViewFor:contentIndex frame:frame];
     else
         result = [self doCreateViewFor:contentIndex frame:frame];
+
+    [self internalPostProcessView:result contentIndex:contentIndex frame:frame];
+    
     return result;
 }
 
-- (void) postProcessView:(UIView *)aView
+- (void) internalPostProcessView:(UIView *)aView
             contentIndex:(int)contentIndex
                    frame:(CGRect)frame {
     if ([self.dataDelegate respondsToSelector:@selector(postProcessView:contentIndex:frame:)])
@@ -363,23 +366,24 @@
     [imgView addGestureRecognizer:tapper];
     imgView.userInteractionEnabled = YES;
     
-    [self postProcessView:imgView contentIndex:contentIndex frame:frame];
-    
     return imgView;
 }
 
-- (UILabel *) createLabelFor:(int)contentIndex
+- (UILabel *) internalCreateLabelFor:(int)contentIndex
                        frame:(CGRect)frame
                        title:(NSString *)title {
     UILabel *result= nil;
-    if ([self.dataDelegate respondsToSelector:@selector(createLabel:title:)])
+    if ([self.dataDelegate respondsToSelector:@selector(createLabelFor:frame:title:)])
         result = [self.dataDelegate createLabelFor:contentIndex frame:frame title:title];
     else
         result = [self doCreateLabelFor:contentIndex frame:frame title:title];
+    
+    [self internalPostProcessLabel:result contentIndex:contentIndex frame:frame];
+
     return result;
 }
 
-- (void) postProcessLabel:(UILabel *)aLabel
+- (void) internalPostProcessLabel:(UILabel *)aLabel
             contentIndex:(int)contentIndex
                    frame:(CGRect)frame {
     if ([self.dataDelegate respondsToSelector:@selector(postProcessLabel:contentIndex:frame:)])
@@ -392,7 +396,6 @@
                          frame:(CGRect)frame
                          title:(NSString *)title {
     UILabel *label = createLabel(frame, title, nil);
-    [self postProcessLabel:label contentIndex:contentIndex frame:frame];
     return label;
 }
 
@@ -403,12 +406,12 @@
     DPDataElement *element = self.contentList[contentIndex];
     
     // add imageview
-    UIView *aView = [self createViewFor:contentIndex frame:frame];
+    UIView *aView = [self internalCreateViewFor:contentIndex frame:frame];
     if ([aView isKindOfClass:[UIImageView class]])
         [self loadImageFor:element inView:(UIImageView *)aView];
 
     // add label
-    UILabel *lblView = [self createLabelFor:contentIndex frame:frame title:element.title];
+    UILabel *lblView = [self internalCreateLabelFor:contentIndex frame:frame title:element.title];
     
     // insert image and label in the view
     [container addSubview:aView];

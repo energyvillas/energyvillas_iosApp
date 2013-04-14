@@ -20,7 +20,7 @@
 
 @interface DPBuyViewController ()
 
-//@property (strong, nonatomic) DPBuyContentViewController *contentController;
+@property (strong, nonatomic) DPBuyContentViewController *buyContentController;
 @property (strong) void (^onClose)(void);
 
 @end
@@ -60,7 +60,7 @@
     
     [self doLocalize];
     [self prepareBuyBtn];
-    [self loadDetailView: NO];
+    //[self loadDetailView: NO];
 }
 
 - (void) doLocalize {
@@ -75,8 +75,8 @@
     
     [self doLayoutSubViews];
 
-    if (self.innerView.subviews.count > 0)
-        [self loadDetailView:YES];
+//    if (self.innerView.subviews.count > 0)
+//        [self loadDetailView:YES];
 }
 
 - (NSString *) buyBtnTitle {
@@ -117,28 +117,25 @@
 }
 
 - (void) removeBuyContent {
-    if (self.innerView.subviews.count == 0) return;
-    
-    DPBuyContentViewController *contentController =
-                (DPBuyContentViewController *)self.childViewControllers[0];
-    
-    [contentController.view removeFromSuperview];
-    [contentController removeFromParentViewController];
+    if (self.buyContentController != nil) {
+        [self.buyContentController.view removeFromSuperview];
+        [self.buyContentController removeFromParentViewController];
+    }
 }
 
 - (void) loadDetailView:(BOOL)reload {
     if (reload)
         [self removeBuyContent];
     
-    DPBuyContentViewController *contentController;
-    if (self.innerView.subviews.count == 0) {
-        contentController = [[DPBuyContentViewController alloc] initWithCategory:self.category];
+    if (self.buyContentController == nil) {
+        self.buyContentController = [[DPBuyContentViewController alloc] initWithCategory:self.category];
         
-        [self addChildViewController: contentController];
-        [self.innerView addSubview: contentController.view];        
+        self.buyContentController.view.frame = self.innerView.bounds;
+        [self addChildViewController: self.buyContentController];
+        [self.innerView addSubview: self.buyContentController.view];        
     } else {
-        contentController = (DPBuyContentViewController *)self.childViewControllers[0];
-        [contentController changeRows:1 columns:1];
+        self.buyContentController.view.frame = self.innerView.bounds;
+        [self.buyContentController changeRows:1 columns:1];
     }
 }
 
@@ -154,11 +151,16 @@
 
 
 -(CGRect) calcFrame {
-    [self doLayoutSubViews];
+    [self internalLayoutSubViews];
     return actualFrame;
 }
 
--(void) doLayoutSubViews {  
+-(void) doLayoutSubViews {
+    [self internalLayoutSubViews];
+    [self loadDetailView:NO];
+}
+
+-(void) internalLayoutSubViews {
         CGSize nextViewSize = [UIApplication sizeInOrientation:INTERFACE_ORIENTATION];
         if (IS_IPAD)
             self.backView.hidden = YES;
