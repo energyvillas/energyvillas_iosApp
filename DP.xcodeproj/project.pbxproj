@@ -92,11 +92,11 @@
 		5EC48CDB1714B7CF00A9566E /* testView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5EC48CDA1714B7CF00A9566E /* testView.xib */; };
 		5EC48CDE1714BF7E00A9566E /* DPBuyContentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EC48CDD1714BF7E00A9566E /* DPBuyContentViewController.m */; };
 		5EC48CE01714CD5C00A9566E /* BuyDialogImages in Resources */ = {isa = PBXBuildFile; fileRef = 5EC48CDF1714CD5B00A9566E /* BuyDialogImages */; };
-		5EC99A09171B1E4900C6DA9D /* BuyContentGeneral in Resources */ = {isa = PBXBuildFile; fileRef = 5EC99A08171B1E4900C6DA9D /* BuyContentGeneral */; };
 		5EDF095B170C9CBE00774682 /* Icon-72.png in Resources */ = {isa = PBXBuildFile; fileRef = 5EDF0957170C9CBE00774682 /* Icon-72.png */; };
 		5EDF095C170C9CBE00774682 /* Icon-72@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5EDF0958170C9CBE00774682 /* Icon-72@2x.png */; };
 		5EDF095D170C9CBE00774682 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 5EDF0959170C9CBE00774682 /* Icon.png */; };
 		5EDF095E170C9CBE00774682 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5EDF095A170C9CBE00774682 /* Icon@2x.png */; };
+		5EE16DFD171C1AF40006E1CE /* Videos in Resources */ = {isa = PBXBuildFile; fileRef = 5EE16DFC171C1AF40006E1CE /* Videos */; };
 		5EF40842170DE9A100938AEE /* DPCtgCardView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EF40841170DE9A100938AEE /* DPCtgCardView.m */; };
 		5EF40845170DE9B200938AEE /* DPAnimatedCategoriesView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EF40844170DE9B200938AEE /* DPAnimatedCategoriesView.m */; };
 		5EFCCCFA1709BE6C00C1FE88 /* DPDataCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EFCCCF91709BE6C00C1FE88 /* DPDataCache.m */; };
@@ -265,11 +265,11 @@
 		5EC48CDC1714BF7E00A9566E /* DPBuyContentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPBuyContentViewController.h; sourceTree = "<group>"; };
 		5EC48CDD1714BF7E00A9566E /* DPBuyContentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPBuyContentViewController.m; sourceTree = "<group>"; };
 		5EC48CDF1714CD5B00A9566E /* BuyDialogImages */ = {isa = PBXFileReference; lastKnownFileType = folder; path = BuyDialogImages; sourceTree = "<group>"; };
-		5EC99A08171B1E4900C6DA9D /* BuyContentGeneral */ = {isa = PBXFileReference; lastKnownFileType = folder; path = BuyContentGeneral; sourceTree = "<group>"; };
 		5EDF0957170C9CBE00774682 /* Icon-72.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-72.png"; sourceTree = "<group>"; };
 		5EDF0958170C9CBE00774682 /* Icon-72@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-72@2x.png"; sourceTree = "<group>"; };
 		5EDF0959170C9CBE00774682 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
 		5EDF095A170C9CBE00774682 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
+		5EE16DFC171C1AF40006E1CE /* Videos */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Videos; sourceTree = "<group>"; };
 		5EF40840170DE9A100938AEE /* DPCtgCardView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPCtgCardView.h; sourceTree = "<group>"; };
 		5EF40841170DE9A100938AEE /* DPCtgCardView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPCtgCardView.m; sourceTree = "<group>"; };
 		5EF40843170DE9B200938AEE /* DPAnimatedCategoriesView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPAnimatedCategoriesView.h; sourceTree = "<group>"; };
@@ -531,8 +531,8 @@
 		5E71A3FF16F9B5F900E7AFF9 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				5EE16DFC171C1AF40006E1CE /* Videos */,
 				5E4E85121710356A005DAD06 /* Background */,
-				5EC99A08171B1E4900C6DA9D /* BuyContentGeneral */,
 				5E03E922171578FB00F0C6F3 /* BuyDialog */,
 				5EC48CDF1714CD5B00A9566E /* BuyDialogImages */,
 				5E8AB0CD17170B52004AFE76 /* FreeImages */,
@@ -759,7 +759,7 @@
 				5EC48CE01714CD5C00A9566E /* BuyDialogImages in Resources */,
 				5E03E923171578FB00F0C6F3 /* BuyDialog in Resources */,
 				5E8AB0CE17170B52004AFE76 /* FreeImages in Resources */,
-				5EC99A09171B1E4900C6DA9D /* BuyContentGeneral in Resources */,
+				5EE16DFD171C1AF40006E1CE /* Videos in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

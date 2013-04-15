@@ -16,11 +16,14 @@
 #import "DPCtgScrollViewController.h"
 #import <UIKit/UIKit.h>
 #import "DPBuyContentViewController.h"
+#import <MediaPlayer/MediaPlayer.h>
 
 
 @interface DPBuyViewController ()
 
 @property (strong, nonatomic) DPBuyContentViewController *buyContentController;
+@property (strong, nonatomic) MPMoviePlayerViewController *playerVC;
+@property (strong, nonatomic) MPMoviePlayerController *playerController;
 @property (strong) void (^onClose)(void);
 
 @end
@@ -121,12 +124,91 @@
         [self.buyContentController.view removeFromSuperview];
         [self.buyContentController removeFromParentViewController];
     }
+    
+    if (self.playerVC) {
+        MPMoviePlayerViewController *mpvc = self.playerVC;
+        [self.playerVC.moviePlayer.view removeFromSuperview];
+        self.playerVC = nil;
+        [mpvc.moviePlayer stop];
+    }
+
+    if (self.playerController) {
+        MPMoviePlayerController *mpc = self.playerController;
+        [self.playerController.view removeFromSuperview];
+        self.playerController = nil;
+        [mpc stop];
+    }
+}
+
+- (void) createAndConfigMoviePlayer {
+    if (!self.playerVC) {
+        NSBundle *bundle = [NSBundle mainBundle];
+        NSString *moviePath = [bundle pathForResource:@"Videos/test-video" ofType:@"mp4"];
+        NSURL *movieURL = [NSURL fileURLWithPath:moviePath];
+        
+        self.playerVC= [[MPMoviePlayerViewController alloc] initWithContentURL: movieURL];
+        self.playerVC.view.frame = self.innerView.bounds;
+        
+        self.playerVC.moviePlayer.controlStyle = MPMovieControlStyleNone;
+        
+        [self.playerVC.moviePlayer prepareToPlay];
+        self.playerVC.moviePlayer.repeatMode = MPMovieRepeatModeOne;
+        self.playerVC.moviePlayer.scalingMode = MPMovieScalingModeAspectFill;
+        
+        [self.innerView addSubview:self.playerVC.moviePlayer.view];
+        [self.playerVC.moviePlayer play];
+    } else
+        self.playerVC.view.frame = self.innerView.bounds;
+}
+
+- (void) createAndConfigMoviePlayer2 {
+    if (!self.playerController) {
+        NSBundle *bundle = [NSBundle mainBundle];
+        NSString *moviePath = [bundle pathForResource:@"Videos/test-video" ofType:@"mp4"];
+        NSURL *movieURL = [NSURL fileURLWithPath:moviePath];
+        
+        self.playerController= [[MPMoviePlayerController alloc] initWithContentURL: movieURL];
+        self.playerController.view.frame = self.innerView.bounds;
+        
+        self.playerController.controlStyle = MPMovieControlStyleNone;
+        
+        [self.playerController prepareToPlay];
+        self.playerController.scalingMode = MPMovieScalingModeAspectFill;
+        self.playerController.repeatMode = MPMovieRepeatModeNone;
+        
+        [self.innerView addSubview:self.playerController.view];
+        [self.playerController play];
+
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(moviePlayBackDidFinished:)
+                                                     name:MPMoviePlayerPlaybackDidFinishNotification
+                                                   object:self.playerController];
+    } else {
+        NSTimeInterval pos = self.playerController.currentPlaybackTime;
+        [self.playerController pause];
+        self.playerController.view.frame = self.innerView.bounds;
+        self.playerController.currentPlaybackTime = pos;
+    }
+}
+
+-(void)moviePlayBackDidFinished:(NSNotification *)notification {
+    if ([[notification name] isEqualToString:MPMoviePlayerPlaybackDidFinishNotification]) {
+        NSLog (@"Successfully received the ==MPMoviePlayerPlaybackDidFinishNotification== notification!");
+     
+//        notification.userInfo[MPMoviePlayerPlaybackDidFinishReasonUserInfoKey]
+        if (self.playerController != nil)
+            [self.playerController play];
+    }
+
 }
 
 - (void) loadDetailView:(BOOL)reload {
     if (reload)
         [self removeBuyContent];
     
+    if (self.category == -1) {
+        [self createAndConfigMoviePlayer2];
+    } else {
     if (self.buyContentController == nil) {
         self.buyContentController = [[DPBuyContentViewController alloc] initWithCategory:self.category];
         
@@ -136,6 +218,7 @@
     } else {
         self.buyContentController.view.frame = self.innerView.bounds;
         [self.buyContentController changeRows:1 columns:1];
+    }
     }
 }
 
@@ -300,6 +383,8 @@
 }
 
 - (void)viewDidUnload {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+
     [self removeBuyContent];
     [self setBackView:nil];
     [self setContentView:nil];
