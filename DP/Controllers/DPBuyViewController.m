@@ -153,7 +153,7 @@
         
         [self.playerVC.moviePlayer prepareToPlay];
         self.playerVC.moviePlayer.repeatMode = MPMovieRepeatModeOne;
-        self.playerVC.moviePlayer.scalingMode = MPMovieScalingModeAspectFill;
+        self.playerVC.moviePlayer.scalingMode = MPMovieScalingModeAspectFit;
         
         [self.innerView addSubview:self.playerVC.moviePlayer.view];
         [self.playerVC.moviePlayer play];
@@ -168,12 +168,12 @@
         NSURL *movieURL = [NSURL fileURLWithPath:moviePath];
         
         self.playerController= [[MPMoviePlayerController alloc] initWithContentURL: movieURL];
-        self.playerController.view.frame = self.innerView.bounds;
+        self.playerController.view.frame = CGRectInset(self.innerView.bounds, 2, 2);
         
         self.playerController.controlStyle = MPMovieControlStyleNone;
         
         [self.playerController prepareToPlay];
-        self.playerController.scalingMode = MPMovieScalingModeAspectFill;
+        self.playerController.scalingMode = MPMovieScalingModeAspectFit;
         self.playerController.repeatMode = MPMovieRepeatModeNone;
         
         [self.innerView addSubview:self.playerController.view];
@@ -186,7 +186,7 @@
     } else {
         NSTimeInterval pos = self.playerController.currentPlaybackTime;
         [self.playerController pause];
-        self.playerController.view.frame = self.innerView.bounds;
+        self.playerController.view.frame = CGRectInset(self.innerView.bounds, 2, 2);
         self.playerController.currentPlaybackTime = pos;
     }
 }
