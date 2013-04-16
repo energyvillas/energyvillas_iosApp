@@ -43,6 +43,7 @@
         self.rowCount = 1;
         self.colCount = 1;
         
+        self.dataDelegate = self;
         self.dataLoader = [[DPBannersLoader alloc] initWithView:self.view group:self.group];
         self.dataLoader.delegate = self;
         [self.dataLoader loadData];
@@ -57,8 +58,7 @@
         [self.dataLoader loadData];    
 }
 
-#pragma mark -
-#pragma mark dataloaderdelegate methods
+#pragma mark - dataloaderdelegate methods
 
 - (void)loadFinished:(DPDataLoader *)loader {
     if (loader.datalist.count == 0)
@@ -78,44 +78,14 @@
 //                     DPLocalizedString(kERR_MSG_DATA_LOAD_FAILED));
 }
 
-#pragma mark
+#pragma mark - DPScrollableDataSourceDelegate
 
-//#pragma mark -
-//#pragma mark === image downloading handling  ===
-//
-//- (void) downloadImageUrl:(NSURL *)imageUrl atIndex:(int)index{
-//    if (!self.queue)
-//        self.queue = [[NSOperationQueue alloc] init];
-//    
-//    ASIHTTPRequest *imageRequest = [ASIHTTPRequest requestWithURL:imageUrl];
-//    [imageRequest setDelegate:self];
-//    [imageRequest setDidFinishSelector:@selector(imageRequestDone:)];
-//    imageRequest.userInfo = [NSDictionary dictionaryWithObjectsAndKeys:
-//                             [NSNumber numberWithInt:index], @"imageIndex",
-//                             nil];
-//    
-//    [self.queue addOperation:imageRequest];
-////    [self startIndicator];
-//}
-//
-//- (void) imageRequestDone:(ASIHTTPRequest *)request{
-////    [self stopIndicator];
-//    
-////	self.datalist[request.userInfo[@"imageIndex"]].imageData = [UIImage imageWithData:[request responseData]];
-////    [self doInitImageView];
-//}
-//
-//- (void) requestFailed:(ASIHTTPRequest *)request {
-//	NSLog(@"Request Failed: %@", [request error]);
-//    
-////	[self stopIndicator];
-//    
-//    showAlertMessage(nil,
-//                     DPLocalizedString(kERR_TITLE_URL_NOT_FOUND),
-//                     DPLocalizedString(kERR_MSG_DATA_LOAD_FAILED));
-//}
-//
-//#pragma mark
+- (UILabel *) createLabelFor:(int)contentIndex
+                       frame:(CGRect)frame
+                       title:(NSString *)title {
+    return nil;
+}
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];

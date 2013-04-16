@@ -234,8 +234,7 @@
     [super viewWillAppear:animated];
 }
 
-#pragma mark -
-#pragma mark === busy indication handling  ===
+#pragma mark - === busy indication handling  ===
 
 - (void) startIndicator {
     if(!self.busyIndicator) {

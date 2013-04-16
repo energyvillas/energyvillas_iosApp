@@ -39,8 +39,15 @@ static NSString *kName_response = @"response";
 static NSString *kName_responseCode = @"responseCode";
 static NSString *kName_articles = @"articles";
 static NSString *kName_article = @"article";
+
 static NSString *kName_articleid = @"articleid";
+static NSString *kName_categoryid = @"categoryid";
 static NSString *kName_langcode = @"langcode";
+
+static NSString *kName_orderno = @"orderno";
+static NSString *kName_forfree = @"forfree";
+static NSString *kName_imagethumburl = @"imagethumb";
+
 static NSString *kName_title = @"title";
 static NSString *kName_url = @"url";
 static NSString *kName_image = @"image";
@@ -80,11 +87,32 @@ static NSString *kName_videolength = @"videolength";
 		[self.currentString setString:@""];
 		self.storingCharacters = YES;
 		
+	}else if ([elementName isEqualToString:kName_categoryid]) {
+		[self.currentString setString:@""];
+		self.storingCharacters = YES;
+		
 	}else if ([elementName isEqualToString:kName_langcode]) {
 		[self.currentString setString:@""];
 		self.storingCharacters = YES;
 		
-	}else if ([elementName isEqualToString:kName_image]) {
+        
+
+	}else if ([elementName isEqualToString:kName_forfree]) {
+		[self.currentString setString:@""];
+		self.storingCharacters = YES;
+		
+	}else if ([elementName isEqualToString:kName_orderno]) {
+		[self.currentString setString:@""];
+		self.storingCharacters = YES;
+		
+	}else if ([elementName isEqualToString:kName_imagethumburl]) {
+		[self.currentString setString:@""];
+		self.storingCharacters = YES;
+		
+    
+    
+    
+    }else if ([elementName isEqualToString:kName_image]) {
 		[self.currentString setString:@""];
 		self.storingCharacters = YES;
 
@@ -138,14 +166,27 @@ static NSString *kName_videolength = @"videolength";
 		
 	}else if ([elementName isEqualToString:kName_responseCode]) {
 		self.responseCode=[[NSString alloc] initWithString: aElementValue];
+        
 	}else if ([elementName isEqualToString:kName_articles]) {
 		
 	}else if ([elementName isEqualToString:kName_article]) {
 		Article *article  = [[Article alloc] init];
 		article.key=self.articleId;
         article.lang=self.langcode;
+        article.category = [self.categoryId intValue];
+        article.forFree = [self.forFree boolValue];
+        article.orderNo = [self.orderNo intValue];
+        article.imageThumbUrl = self.imageThumbUrl;
+        
 		article.title = self.title;
-		article.body = self.body;
+        
+        if (self.body && self.body.length > 0) {
+            NSString *clearedbody = [[self.body stringByReplacingOccurrencesOfString:@"&gt;" withString:@">"]
+                                     stringByReplacingOccurrencesOfString:@"&lt;" withString:@"<"];
+            
+            article.body = clearedbody;
+        }
+
 		article.imageUrl = self.image;
 		article.url = self.url;
 		article.publishDate = self.publishDate;
@@ -154,25 +195,48 @@ static NSString *kName_videolength = @"videolength";
 		[self.articles insertObject:article atIndex:index];
 		index=index+1;
 		article=nil;
+        
 	}else if ([elementName isEqualToString:kName_title]) {
 		self.title=[[NSString alloc] initWithString: aElementValue];
+        
 	}else if ([elementName isEqualToString:kName_image]) {
 		self.image=[[NSString alloc] initWithString: aElementValue];
+        
 	}else if ([elementName isEqualToString:kName_url]) {
 		self.url=[[NSString alloc] initWithString: aElementValue];
+        
 	}else if ([elementName isEqualToString:kName_body]) {
 		self.body=[[NSString alloc] initWithString: aElementValue];
+        
 	}else if ([elementName isEqualToString:kName_publishDate]) {
 		self.publishDate=[[NSString alloc] initWithString: aElementValue];
+        
 	}else if ([elementName isEqualToString:kName_articleid]) {
 		self.articleId=[[NSString alloc] initWithString: aElementValue];
+        
+	}else if ([elementName isEqualToString:kName_categoryid]) {
+		self.categoryId=[[NSString alloc] initWithString: aElementValue];
+        
 	}else if ([elementName isEqualToString:kName_langcode]) {
 		self.langcode=[[NSString alloc] initWithString: aElementValue];
+        
 	}else if ([elementName isEqualToString:kName_videourl]) {
 		self.articlevideo=[[NSString alloc] initWithString: aElementValue];
+        
 	}else if ([elementName isEqualToString:kName_videolength]) {
 		self.articlevideolength=[[NSString alloc] initWithString: aElementValue];
-	}
+
+	
+	}else if ([elementName isEqualToString:kName_forfree]) {
+		self.forFree=[[NSString alloc] initWithString: aElementValue];
+        
+	}else if ([elementName isEqualToString:kName_orderno]) {
+		self.orderNo=[[NSString alloc] initWithString: aElementValue];
+        
+	}else if ([elementName isEqualToString:kName_imagethumburl]) {
+		self.imageThumbUrl=[[NSString alloc] initWithString: aElementValue];
+
+    }
 
 	self.storingCharacters = NO;
 	aElementValue = nil;

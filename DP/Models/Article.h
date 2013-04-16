@@ -9,10 +9,12 @@
 #import <Foundation/Foundation.h>
 #import "DPDataElement.h"
 
+#define encArticleOrder @"orderno"
+#define encArticleForFree @"forfree"
+#define encArticleImageThumb @"imagethumb"
+
 #define encArticleLang @"Lang"
 #define encArticleCategory @"Category"
-//#define encArticleTitle @"Title"
-//#define encArticleImage @"Image"
 #define encArticleBody @"Body"
 #define encArticleURL @"URL"
 #define encArticlePublishDate @"PublishDate"
@@ -23,9 +25,12 @@
 @interface Article: DPDataElement 
     
 @property (strong, nonatomic) NSString *lang;
-@property (strong, nonatomic) NSString *category;
-//@property (nonatomic, strong) NSString *title;
-//@property (nonatomic, strong) NSString *imageUrl;
+@property (nonatomic) int category;
+
+@property (nonatomic) int orderNo;
+@property (nonatomic) BOOL forFree;
+@property (nonatomic, strong) NSString *imageThumbUrl;
+
 @property (nonatomic, strong) NSString *body;
 @property (nonatomic, strong) NSString *url;
 @property (nonatomic, strong) NSString *publishDate;
@@ -35,10 +40,13 @@
 -(void)encodeWithCoder:(NSCoder *)encoder;
 
 -(id)initWithValues:(NSString *)aId
-               lang:(NSString *)aCang
-           category:(NSString*)aCategory
+               lang:(NSString *)aLang
+           category:(int)aCategory
+            orderNo:(int)aOrderNo
+            forFree:(BOOL)aForFree
               title:(NSString *)aTitle
            imageUrl:(NSString *)aImageUrl
+      imageThumbUrl:(NSString *)aImageThumbUrl
                body:(NSString *)aBody
                 url:(NSString *)aURL
         publishDate:(NSString *)aPublishDate

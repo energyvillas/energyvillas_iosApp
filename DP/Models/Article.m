@@ -18,9 +18,12 @@
     [super encodeWithCoder:encoder];
     
 	[encoder encodeObject:self.lang forKey:encArticleLang];
-	[encoder encodeObject:self.category forKey:encArticleCategory];
-//	[encoder encodeObject:self.title forKey:encArticleTitle];
-//	[encoder encodeObject:self.imageUrl forKey:encArticleImage];
+	[encoder encodeObject:[NSNumber numberWithInt:self.category] forKey:encArticleCategory];
+    
+	[encoder encodeObject:[NSNumber numberWithBool:self.forFree] forKey:encArticleForFree];
+	[encoder encodeObject:[NSNumber numberWithInt:self.orderNo] forKey:encArticleOrder];
+	[encoder encodeObject:self.imageThumbUrl forKey:encArticleImageThumb];
+
 	[encoder encodeObject:self.body forKey:encArticleBody];
 	[encoder encodeObject:self.url forKey:encArticleURL];
 	[encoder encodeObject:self.publishDate forKey:encArticlePublishDate];
@@ -35,9 +38,12 @@
 	if (self) {
 
 		self.lang = [aDecoder decodeObjectForKey:encArticleLang];
-		self.category = [aDecoder decodeObjectForKey:encArticleCategory];
-//		self.title = [aDecoder decodeObjectForKey:encArticleTitle];
-//		self.imageUrl = [aDecoder decodeObjectForKey:encArticleImage];
+		self.category = [[aDecoder decodeObjectForKey:encArticleCategory] intValue];
+
+        self.forFree = [[aDecoder decodeObjectForKey:encArticleForFree] boolValue];
+        self.orderNo = [[aDecoder decodeObjectForKey:encArticleOrder] intValue];
+		self.imageThumbUrl = [aDecoder decodeObjectForKey:encArticleImageThumb];
+
 		self.body = [aDecoder decodeObjectForKey:encArticleBody];
 		self.url = [aDecoder decodeObjectForKey:encArticleURL];
 		self.publishDate = [aDecoder decodeObjectForKey:encArticlePublishDate];
@@ -51,9 +57,12 @@
 
 - (id) initWithValues:(NSString *)aId
                  lang:(NSString *)aLang
-             category:(NSString*)aCategory
+             category:(int)aCategory
+              orderNo:(int)aOrderNo
+              forFree:(BOOL)aForFree
                 title:(NSString *)aTitle
              imageUrl:(NSString *)aImageUrl
+        imageThumbUrl:(NSString *)aImageThumbUrl
                  body:(NSString *)aBody
                   url:(NSString *)aURL
           publishDate:(NSString *)aPublishDate
@@ -65,9 +74,12 @@
 	if (self) {
 //		self.key = aId;
         self.lang = aLang;
-        self.category = NullIfEmpty(aCategory);
-//        self.title = NullIfEmpty(aTitle);
-//		self.imageUrl = NullIfEmpty(aImage);
+        self.category = aCategory;
+        
+        self.orderNo = aOrderNo;
+        self.forFree = aForFree;
+        self.imageThumbUrl = NullIfEmpty(aImageThumbUrl);
+        
 		self.body = NullIfEmpty(aBody);
 		self.publishDate = NullIfEmpty(aPublishDate);
 		self.url = NullIfEmpty(aURL);

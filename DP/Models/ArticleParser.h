@@ -16,8 +16,16 @@
 @property (nonatomic, strong) NSString *responseCode;
 @property (nonatomic, strong) NSMutableArray *articles;
 @property (nonatomic)  BOOL storingCharacters;
+
 @property (nonatomic, strong) NSString *articleId;
 @property (nonatomic, strong) NSString *langcode;
+@property (nonatomic, strong) NSString *categoryId;
+
+
+@property (nonatomic, strong) NSString *forFree;
+@property (nonatomic, strong) NSString *orderNo;
+@property (nonatomic, strong) NSString *imageThumbUrl;
+
 @property (nonatomic, strong) NSString *title;
 @property (nonatomic, strong) NSString *image;
 @property (nonatomic, strong) NSString *body;

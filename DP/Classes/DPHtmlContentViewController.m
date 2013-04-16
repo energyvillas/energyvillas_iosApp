@@ -116,8 +116,8 @@
                          DPLocalizedString(kERR_MSG_NO_DATA_FOUND));
     else {
         NSString *body = ((Article *)articles[0]).body;
-        body = [[body stringByReplacingOccurrencesOfString:@"&gt;" withString:@">"]
-                stringByReplacingOccurrencesOfString:@"&lt;" withString:@"<"];
+//        body = [[body stringByReplacingOccurrencesOfString:@"&gt;" withString:@">"]
+//                stringByReplacingOccurrencesOfString:@"&lt;" withString:@"<"];
         self.htmlData = body;
         [self doInitWebView];
     }    

@@ -17,7 +17,8 @@
 #import "DPBuyViewController.h"
 #import "Article.h"
 #import "DPCategoryLoader.h"
-
+#import <AudioToolbox/AudioToolbox.h>
+#import "DPCarouselViewController.h"
 
 
 @interface DPRootViewController ()
@@ -27,9 +28,8 @@
 
 @end
 
-@implementation DPRootViewController {
-    int currentIndex;
-}
+@implementation DPRootViewController
+
 
 - (id) init {
     self = [super init];
@@ -41,7 +41,6 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
-        currentIndex = -1;
     }
     return self;
 }
@@ -49,7 +48,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view.
+	// Do any additional setup after loading the view.    
     [self doLocalize];
     [self.bbiMore setAction:@selector(doMore:)];
     [self.bbiBuy setAction:@selector(doBuy:)];
@@ -67,6 +66,7 @@
 }
 
 - (void) showBuyDialog:(int)ctgId {
+    AudioServicesPlaySystemSound(0x528);
     if (IS_IPAD)
         [self showBuyDialog_iPads:ctgId];
     else
@@ -110,7 +110,7 @@
 }
 
 - (void) doBuy:(id) sender {
-    [self showBuyDialog:-1];
+    [self showBuyDialog:CTGID_GENERAL_BUY_DLG];
 }
 
 - (void) doMore:(id) sender {
@@ -200,125 +200,43 @@
         
         detvc = nil;
     } else {
-        detvc = (DPCategoriesViewController *)self.childViewControllers[0];
-        detvc.view.frame = self.bottomView.bounds;
-        if (IS_PORTRAIT) 
-            [detvc changeRows:2 columns:2];
-        else
-            [detvc changeRows:1 columns:4];
+        for (int i = 0; i < self.childViewControllers.count; i++)
+            if ([self.childViewControllers[0] isKindOfClass:[DPCategoriesViewController class]]) {
+                detvc = (DPCategoriesViewController *)self.childViewControllers[i];
+                detvc.view.frame = self.bottomView.bounds;
+                if (IS_PORTRAIT)
+                    [detvc changeRows:2 columns:2];
+                else
+                    [detvc changeRows:1 columns:4];
+                
+                break;
+            }
     }
 }
 
-- (void) loadOpenFlow {
-    UIView *ofvc = self.topView;
-    AFOpenFlowView *ofv = nil;
-
-    ofv = ofvc.subviews.count == 0 ? nil : ofvc.subviews[0];
-    if (ofv)
-        [ofv removeFromSuperview];
-    ofv = nil;
-
-    if (ofvc.subviews.count == 0) {
-        ofv = [[AFOpenFlowView alloc] initWithFrame:ofvc.bounds];
-        ofv.viewDelegate = self;
-        ofv.dataSource = self;
-
-        [ofvc addSubview:ofv];
-        
-        NSArray *langCoverFlow = [self currlangCoverFlow];
-        
-        [ofv setNumberOfImages:langCoverFlow.count];
-        if (currentIndex != -1)
-            [ofv setSelectedCover: currentIndex];
-    }
-    else {
-        ofv = ofvc.subviews[0];
-        if (currentIndex != -1)
-            [ofv setSelectedCover: currentIndex];
-    }
-}
-
-- (NSArray *) currlangCoverFlow {
-    DPAppHelper *apphelper = [DPAppHelper sharedInstance];
-
-    if (!self.coverFlowDict)
-        self.coverFlowDict = [[NSMutableDictionary alloc] initWithCapacity:2];
-
-    NSArray *langCoverFlow = self.coverFlowDict[apphelper.currentLang];
-    if (!langCoverFlow) {
-        langCoverFlow = [apphelper freeCoverFlowFor:apphelper.currentLang];
-        [self.coverFlowDict setValue:langCoverFlow forKey:apphelper.currentLang];
-    }
+- (void) loadOpenFlow {    
+    DPCarouselViewController *carousel = nil;
+    int currImgIndex = -1;
+    for (int i = 0; i < self.childViewControllers.count; i++)
+        if ([self.childViewControllers[0] isKindOfClass:[DPCarouselViewController class]]) {
+            carousel = (DPCarouselViewController *)self.childViewControllers[i];
+            currImgIndex = carousel.currentIndex;
+            [carousel.view removeFromSuperview];
+            [carousel removeFromParentViewController];
+            carousel = nil;
+            break;
+        }
     
-    return langCoverFlow;
+    carousel = [[DPCarouselViewController alloc] init];
+    CGRect frm = self.topView.bounds;
+    carousel.view.frame = frm;
+    [self addChildViewController:carousel];
+    [self.topView addSubview:carousel.view];
+    [carousel makeCurrentImageAtIndex:currImgIndex];
 }
 
 -(void) viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    
-    UIView *ofvc = self.topView;
-    AFOpenFlowView *ofv = nil;
-
-    if (ofvc.subviews.count != 0) {
-        ofv = ofvc.subviews[0];
-        if (currentIndex != -1)
-            [ofv setSelectedCover: currentIndex];
-        [ofv centerOnSelectedCover:YES];
-    }
-}
-
-// protocol AFOpenFlowViewDelegate
-- (void) openFlowView:(AFOpenFlowView *)openFlowView click:(int)index {
-    
-    Article *article = [self currlangCoverFlow][index];
-
-    if (article.videoUrl == nil) {
-        DPImageContentViewController *vc = [[DPImageContentViewController alloc]
-                                            initWithImageName:[self calcImageName:article.imageUrl]];
-        [self.navigationController pushViewController:vc animated:YES];
-    } else {
-        NSString *videourl = article.videoUrl;
-        DPVimeoPlayerViewController *vimeo = [[DPVimeoPlayerViewController alloc]
-                                              initWithUrl:videourl];
-        [self.navigationController pushViewController:vimeo animated:YES];
-    }
-}
-
-- (void) openFlowView:(AFOpenFlowView *)openFlowView selectionDidChange:(int)index {
-    currentIndex = index;
-}
-
-// protocol AFOpenFlowViewDatasource
-- (void) openFlowView:(AFOpenFlowView *)openFlowView requestImageForIndex:(int)index {
-    Article *article = [self currlangCoverFlow][index];
-    NSString *imgName = [self calcImageName:article.imageUrl];
-    UIImage *img = [UIImage imageNamed:imgName];
-    
-    [openFlowView setImage:img forIndex:index];
-}
-
-- (NSString *) calcImageName:(NSString *)baseName {
-    @try {
-        NSArray *parts = [baseName componentsSeparatedByString:@"."];
-        if (parts && parts.count == 2) {
-            NSString *lang = @"el";// [DPAppHelper sharedInstance].currentLang;
-            NSString *orientation = IS_PORTRAIT ? @"v" : @"h";
-            NSString *result = [NSString stringWithFormat:@"Carousel/%@_%@_%@.%@",
-                                parts[0], lang, orientation, parts[1]];
-            return result;
-        }
-        else
-            return baseName;
-    }
-    @catch (NSException* exception) {
-        NSLog(@"Uncaught exception: %@", exception.description);
-        NSLog(@"Stack trace: %@", [exception callStackSymbols]);
-        return baseName;
-    }
-}
-
-- (UIImage *) defaultImage {
-    return nil; // this should return the missing image replacement
 }
 
 - (void)viewDidUnload {

@@ -159,9 +159,12 @@
         for (int i = 0; i < 2; i++) {
             Article *article = [[Article alloc] initWithValues:[NSString stringWithFormat:@"%d", i]
                                                           lang:apphelper.currentLang
-                                                      category:nil
+                                                      category:-1
+                                                       orderNo:0
+                                                       forFree:NO
                                                          title:nil
                                                       imageUrl:[NSString stringWithFormat:@"%d.jpg", i+20]
+                                                 imageThumbUrl:[NSString stringWithFormat:@"%d.jpg", i+20]
                                                           body:nil
                                                            url:nil
                                                    publishDate:nil

@@ -59,12 +59,6 @@
     return self;
 }
 
-
-
-//- (BOOL) useInternetForLoading {
-//    return self.ctgID != -1;
-//}
-//
 - (void) loadFromPlist {
     if (self.localData)
         self.datalist = self.localData;

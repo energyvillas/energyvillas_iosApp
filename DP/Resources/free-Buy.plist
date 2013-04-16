@@ -3,80 +3,184 @@
 <plist version="1.0">
 <dict>
 	<key>Categories</key>
-	<array>
-		<integer>-1</integer>
-		<integer>52</integer>
-		<integer>53</integer>
-		<integer>54</integer>
-		<integer>55</integer>
-		<integer>56</integer>
-		<integer>65</integer>
-		<integer>57</integer>
-		<integer>58</integer>
-	</array>
-	<key>en</key>
 	<dict>
-		<key>Titles</key>
-		<array>
-			<string>General Info</string>
-			<string>Smart Houses</string>
-			<string>Loft Houses</string>
-			<string>Finnish Houses</string>
-			<string>Greek Island Houses</string>
-			<string>Country Houses</string>
-			<string>Container Houses</string>
-			<string>Villas</string>
-			<string>Exclusive Ηouses</string>
-		</array>
-		<key>Images</key>
-		<array>
+		<key>76</key>
+		<dict>
+			<key>Titles</key>
+			<dict>
+				<key>el</key>
+				<array>
+					<string></string>
+				</array>
+				<key>en</key>
+				<array>
+					<string></string>
+				</array>
+			</dict>
+			<key>Images</key>
 			<array/>
+			<key>Videos</key>
+			<array>
+				<string>buy-words_4MBit.mp4</string>
+			</array>
+		</dict>
+		<key>52</key>
+		<dict>
+			<key>Titles</key>
+			<dict>
+				<key>el</key>
+				<array>
+					<string>Εξυπνες Κατοικίες</string>
+					<string>Εξυπνες Κατοικίες</string>
+				</array>
+				<key>en</key>
+				<array>
+					<string>Smart Houses</string>
+					<string>Smart Houses</string>
+				</array>
+			</dict>
+			<key>Images</key>
 			<array>
 				<string>01-Buy_our_app_exupnes.png</string>
-				<string>02-Buy_our_app_exupnes_No1.png</string>
+				<string>02-Buy_our_app_exupnes_No.png</string>
 			</array>
+		</dict>
+		<key>53</key>
+		<dict>
+			<key>Titles</key>
+			<dict>
+				<key>el</key>
+				<array>
+					<string>Κατοικίες Loft</string>
+					<string>Κατοικίες Loft</string>
+				</array>
+				<key>en</key>
+				<array>
+					<string>Loft Houses</string>
+					<string>Loft Houses</string>
+				</array>
+			</dict>
+			<key>Images</key>
 			<array>
 				<string>03-Buy_our_app_loft.png</string>
+				<string>04-Buy_our_app_loft_No.png</string>
+				<string>05-Buy_our_app_loft_No.png</string>
 			</array>
-			<array/>
-			<array/>
-			<array/>
-			<array/>
-			<array/>
-			<array/>
-		</array>
-	</dict>
-	<key>el</key>
-	<dict>
-		<key>Images</key>
-		<array>
-			<array/>
+		</dict>
+		<key>54</key>
+		<dict>
+			<key>Titles</key>
+			<dict>
+				<key>el</key>
+				<array>
+					<string>Φιλανδικές Κατοικίες</string>
+					<string>Φιλανδικές Κατοικίες</string>
+				</array>
+				<key>en</key>
+				<array>
+					<string>Finland Houses</string>
+					<string>Finland Houses</string>
+				</array>
+			</dict>
+			<key>Images</key>
 			<array>
-				<string>01-Buy_our_app_exupnes.png</string>
-				<string>02-Buy_our_app_exupnes_No1.png</string>
+				<string>06-Buy_our_app_filandikes.png</string>
+				<string>07-Buy_our_app_filandikes_No.png</string>
 			</array>
+		</dict>
+		<key>55</key>
+		<dict>
+			<key>Titles</key>
+			<dict>
+				<key>el</key>
+				<array>
+					<string>Κυκλαδίτικες Κατοικίες</string>
+					<string>Κυκλαδίτικες Κατοικίες</string>
+					<string>Αιγαιοπελαγίτικες Κατοικίες</string>
+					<string>Αιγαιοπελαγίτικες Κατοικίες</string>
+					<string>Κατοικίες Ιονίων Νήσων</string>
+				</array>
+				<key>en</key>
+				<array>
+					<string>Cycladic Houses</string>
+					<string>Cycladic Houses</string>
+					<string>Aegean Houses</string>
+					<string>Aegean Houses</string>
+					<string>Ionian Houses</string>
+				</array>
+			</dict>
+			<key>Images</key>
 			<array>
-				<string>03-Buy_our_app_loft.png</string>
+				<string>08-Buy_our_app_Kukladitiki_katoikia.png</string>
+				<string>09-Buy_our_app_kukladitikes_No.png</string>
+				<string>10-Buy_our_app_aigaiopelagitikes.png</string>
+				<string>11-Buy_our_app_aigaiopelagitikes_No.png</string>
+				<string>12-Buy_our_app_ioniou.png</string>
 			</array>
-			<array/>
-			<array/>
-			<array/>
-			<array/>
-			<array/>
-			<array/>
-		</array>
-		<key>Titles</key>
-		<array>
-			<string>Γενικά στοιχεία</string>
-			<string>Έξυπνες Κατοικίες</string>
-			<string>Κατοικίες Loft</string>
-			<string>Φιλανδικές Κατοικίες</string>
-			<string>Νησιώτικες Κατοικίες</string>
-			<string>Κατοικίες Country</string>
-			<string>Κατοικίες Container</string>
-			<string>Βίλλες</string>
-			<string>Exclusive Houses</string>
-		</array>
+		</dict>
+		<key>56</key>
+		<dict>
+			<key>Titles</key>
+			<dict>
+				<key>el</key>
+				<array>
+					<string>Κατοικίες Country</string>
+					<string>Κατοικίες Country</string>
+				</array>
+				<key>en</key>
+				<array>
+					<string>Country Houses</string>
+					<string>Country Houses</string>
+				</array>
+			</dict>
+			<key>Images</key>
+			<array>
+				<string>13-Buy_our_app_Country.png</string>
+				<string>14-Buy_our_app_country_No.png</string>
+				<string>15-Buy_our_app_country_No.png</string>
+			</array>
+		</dict>
+		<key>65</key>
+		<dict>
+			<key>Titles</key>
+			<dict>
+				<key>el</key>
+				<array>
+					<string>Κατοικίες Container</string>
+					<string>Κατοικίες Container</string>
+				</array>
+				<key>en</key>
+				<array>
+					<string>Container Houses</string>
+					<string>Container Houses</string>
+				</array>
+			</dict>
+			<key>Images</key>
+			<array>
+				<string>16-Buy_our_app_container.png</string>
+				<string>17-Buy_our_app_container_No.png</string>
+			</array>
+		</dict>
+		<key>57</key>
+		<dict>
+			<key>Titles</key>
+			<dict>
+				<key>el</key>
+				<array>
+					<string>Villas</string>
+				</array>
+				<key>en</key>
+				<array>
+					<string>Villas</string>
+				</array>
+			</dict>
+			<key>Images</key>
+			<array>
+				<string>18-Buy_our_app_villas.png</string>
+			</array>
+		</dict>
+		<key>58</key>
+		<dict/>
 	</dict>
 </dict>
 </plist>

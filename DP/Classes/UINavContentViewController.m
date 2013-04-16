@@ -117,23 +117,6 @@
 			interfaceOrientation == UIInterfaceOrientationLandscapeLeft);
 }
 
-
-/*
-- (UIButton *) createButtonWithImageUrl:(NSURL *)imgUrl
-                                 tag:(int)index
-                              action:(SEL)sel {
-    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-    if (sel)
-        [button addTarget:self action:sel forControlEvents:UIControlEventTouchUpInside];
-    UIImage *img = [UIImage imageNamed: imgName];
-    button.frame = CGRectMake(0, 0, img.size.width, 30);
-    [button setImage: img forState:UIControlStateNormal];
-    [button setTag: index];
-    
-    return button;
-}
-*/
-
 - (void) langSelected {
     if (self.navbarLang_EN && self.navbarLang_EL) {
         NSString *lng = [DPAppHelper sharedInstance].currentLang;

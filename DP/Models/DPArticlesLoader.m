@@ -12,23 +12,60 @@
 #import <CommonCrypto/CommonDigest.h>
 #import "Article.h"
 #import "ArticleParser.h"
+#import "DPAppHelper.h"
 
 
 @interface DPArticlesLoader ()
 
 @property int categoryID;
 @property (strong, nonatomic) NSString *lang;
+//@property (strong, nonatomic) NSString *plistFile;
+//@property (strong, nonatomic) NSArray *localData;
 
 @end
 
 
 @implementation DPArticlesLoader
 
-- (id) initWithView:(UIView *)indicatorcontainer  category:(int)ctgID lang:(NSString *)aLang {
-    self = [super initWithView:indicatorcontainer useInternet:YES useCaching:YES ];
+- (id) initWithView:(UIView *)indicatorcontainer
+           category:(int)ctgID
+               lang:(NSString *)aLang {
+    self = [self initWithView:indicatorcontainer
+                  useInternet:YES
+                   useCaching:YES
+                     category:ctgID
+                         lang:aLang];
+    
+    return self;
+
+}
+//- (id) initWithView:(UIView *)indicatorcontainer
+//        useInternet:(BOOL)aUseInternet
+//         useCaching:(BOOL)aUseCaching
+//           category:(int)ctgID
+//               lang:(NSString *)aLang
+//      localResource:(NSString *)aplistFile {
+//    self = [super initWithView:indicatorcontainer useInternet:aUseInternet useCaching:aUseCaching];
+//    if (self) {
+//        self.categoryID = ctgID;
+//        self.lang = aLang;
+//        self.plistFile = aplistFile;
+//    }
+//    
+//    return self;
+//}
+
+- (id) initWithView:(UIView *)indicatorcontainer
+        useInternet:(BOOL)aUseInternet
+         useCaching:(BOOL)aUseCaching
+           category:(int)ctgID
+               lang:(NSString *)aLang
+          /*localData:(NSArray *)localData*/ {
+    self = [super initWithView:indicatorcontainer useInternet:aUseInternet useCaching:aUseCaching];
     if (self) {
         self.categoryID = ctgID;
         self.lang = aLang;
+//        self.localData = localData;
     }
     
     return self;
@@ -45,6 +82,7 @@
                                dictionaryWithObjectsAndKeys:
                                self.lang, @"lang",
                                [NSString stringWithFormat:@"%d", self.categoryID], @"cid",
+                               [NSString stringWithFormat:@"%d", IS_APP_FREE ? 1 : 0], @"forfree",
                                nil];
     
     ASIFormDataRequest *request = [self
@@ -57,7 +95,18 @@
 - (NSArray *) parseResponse:(NSString *)response {
     ArticleParser *parser = [[ArticleParser alloc] init];
 	[parser parseXMLFile:response];
-    NSArray *articles = [NSArray arrayWithArray:parser.articles];
+    NSArray *articles = [parser.articles sortedArrayWithOptions:NSSortStable
+                                                usingComparator:^NSComparisonResult(id obj1, id obj2) {
+                                                    Article *a1 = obj1;
+                                                    Article *a2 = obj2;
+                                                    if(a1.orderNo < a2.orderNo)
+                                                        return NSOrderedAscending;
+                                                    else if(a1.orderNo > a2.orderNo)
+                                                        return NSOrderedDescending;
+                                                    else
+                                                        return NSOrderedSame;
+                                                }];
+    
     return articles;
 }
 

@@ -17,6 +17,8 @@ FOUNDATION_EXPORT NSString *const MySecondConstant;
 
 #define IS_IPHONE ( ((BOOL)([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone)) && (!IS_IPHONE_5))
 
+#define IS_RETINA ((BOOL)(abs([UIScreen mainScreen].scale - 2.0) < DBL_EPSILON))
+
 #define INTERFACE_ORIENTATION ( (UIInterfaceOrientation) [UIApplication sharedApplication].statusBarOrientation)
 
 #define IS_PORTRAIT ((BOOL)UIInterfaceOrientationIsPortrait(INTERFACE_ORIENTATION))
@@ -24,6 +26,12 @@ FOUNDATION_EXPORT NSString *const MySecondConstant;
 
 #define STATUS_BAR_VISIBLE ((BOOL) ![UIApplication sharedApplication].statusBarHidden)
 #define STATUS_BAR_HEIGHT ((CGFloat) ![UIApplication sharedApplication].statusBarFrame.size.height)
+
+
+#define CURRENT_LANG ((NSString *)[DPAppHelper sharedInstance].currentLang)
+#define IS_APP_PURCHASED ((BOOL)[DPAppHelper sharedInstance].isPurchased)
+#define IS_APP_FREE ((BOOL)![DPAppHelper sharedInstance].isPurchased)
+
 
 // for scrollable views
 #define PAGE_CONTROL_HEIGHT ((int)16)
@@ -66,6 +74,9 @@ FOUNDATION_EXPORT NSString *const MySecondConstant;
 #define CTGID_EXCLUSIVE_ART ((int)75)
 
 // predefined categories IDs
+#define CTGID_CAROUSEL ((int)77)
+#define CTGID_CAROUSEL_MORE ((int)78)
+#define CTGID_GENERAL_BUY_DLG ((int)76)
 #define CTGID_WHO_WE_ARE ((int)60)
 
 // option identifier
@@ -122,5 +133,7 @@ NSString* DPLocalizedString(NSString *key);
 NSString* NullIfEmpty(NSString *aString);
 
 void NSLogFrame(NSString *msg, CGRect frame);
+
+BOOL isLocalUrl(NSString *urlstr);
 
 UILabel * createLabel(CGRect frame, NSString *title, UIFont *font);

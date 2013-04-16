@@ -26,7 +26,7 @@
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
     
-    if ([self isPurchased])
+    if (IS_APP_PURCHASED)
         self.controller = [[DPPaidMainViewController alloc] init];
     else
         self.controller = [[DPMainViewController alloc] init];
@@ -45,15 +45,6 @@ void myExceptionHandler (NSException *exception)
 {
     NSArray *stack = [exception callStackReturnAddresses];
     NSLog(@"Stack trace: %@", stack);
-}
-
-
-- (BOOL) isPurchased {
-    //return YES;
-    
-    NSUserDefaults *usrDefaults = [NSUserDefaults standardUserDefaults];
-    BOOL productPurchased = [usrDefaults boolForKey:PRODUCT_IDENTIFIER];
-    return productPurchased;
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application

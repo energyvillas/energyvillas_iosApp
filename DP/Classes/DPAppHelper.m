@@ -37,6 +37,8 @@
 @synthesize connectionRequired = _connectionRequired;
 @synthesize hostIsReachable = _hostIsReachable;
 @synthesize currentLang = _currentLang;
+@synthesize isPurchased = _isPurchased;
+@synthesize useCache = _useCache;
 
 + (DPAppHelper *)sharedInstance {
     static dispatch_once_t once;
@@ -55,6 +57,7 @@
         [self createDefaults];
         _connectionRequired = true;
         _hostIsReachable = false;
+        _isPurchased = [self calcIsPurchased];
         [self configureReachability];
         [self loadCategories];
         [self addFreeDetails];
@@ -89,6 +92,14 @@
     }
 }
 
+- (BOOL) calcIsPurchased {
+    //return YES;
+    
+    NSUserDefaults *usrDefaults = [NSUserDefaults standardUserDefaults];
+    BOOL productPurchased = [usrDefaults boolForKey:PRODUCT_IDENTIFIER];
+    return productPurchased;
+}
+
 #define FREE_BUY_CNT ((int) 3)
 
 - (NSDictionary *) doGetDictionaryFrom:(NSString *)aFileName {
@@ -115,9 +126,12 @@
     for (int i=0; i<titles.count; i++) {
         [res addObject:[[Article alloc] initWithValues:[NSString stringWithFormat:@"%d", i]
                                                   lang:lang
-                                              category:categories == nil ? nil : [NSString stringWithFormat:@"%@", categories[i]]
+                                              category:categories == nil ? -1 : [categories[i] intValue]
+                                               orderNo:0
+                                               forFree:NO
                                                  title:titles[i]
                                               imageUrl:images[i]
+                                         imageThumbUrl:images[i]
                                                   body:nil
                                                    url:nil
                                            publishDate:nil
@@ -128,41 +142,66 @@
     return [NSArray arrayWithArray:res];
 }
 
-- (NSArray *) doGetBuyCategoriesFrom:(NSDictionary *)dict category:(int)ctgid lang:(NSString *)lang {
-    NSDictionary *lfd = [dict objectForKey:lang];
-    if (!lfd) {
-        lang = @"en";
-        lfd = [dict objectForKey:lang];
-    }
-    
-    NSArray *categories = [dict objectForKey:@"Categories"];
-    NSArray *titles = [lfd objectForKey:@"Titles"];
-    NSArray *images = [lfd objectForKey:@"Images"];
-//    NSArray *videos = [lfd objectForKey:@"Videos"];
-    
-    int indx = -1;
-        for (int i = 0; i < categories.count; i++)
-            if ([(NSNumber *)categories[i] intValue] == ctgid) {
-                indx = i;
-                break;
-            }
-    
-    if (indx == -1) return nil;
-    
-    NSString *strctg = [NSString stringWithFormat:@"%d", ctgid];
-    NSString *title = titles[indx];
-    NSArray *imageurls = images[indx];
+- (NSArray *) doGetCarouselArticlesFrom:(NSDictionary *)dict lang:(NSString *)lang {    
+    NSArray *titles = [[dict objectForKey:@"Titles"]  objectForKey:lang];
+    NSArray *images = [dict objectForKey:@"Images"];
+    NSArray *thumbs = [dict objectForKey:@"Thumbs"];
+    NSArray *videos = [dict objectForKey:@"Videos"];
     
     NSMutableArray *res = [[NSMutableArray alloc] initWithCapacity:titles.count];
-    if (imageurls)
-        for (int i=0; i<imageurls.count; i++) {
-            NSString *imgname = imageurls[i];
-            [res addObject:[[Category alloc] initWithValues:[NSString stringWithFormat:@"%d", i]
-                                                       lang:lang
-                                                      title:title
-                                                   imageUrl:imgname
-                                                     parent:strctg]];
-        }
+    for (int i=0; i<titles.count; i++) {
+        NSString *title = titles[i];
+        NSString *imgurl = images[i];
+        NSString *thumburl = thumbs[i];
+        NSString *vidurl = videos[i];
+        
+        [res addObject:[[Article alloc] initWithValues:[NSString stringWithFormat:@"%d", i]
+                                                  lang:lang
+                                              category:-1
+                                               orderNo:i
+                                               forFree:YES
+                                                 title:title
+                                              imageUrl:imgurl
+                                         imageThumbUrl:thumburl
+                                                  body:nil
+                                                   url:nil
+                                           publishDate:nil
+                                              videoUrl:vidurl
+                                           videolength:nil]];
+    }
+    
+    return [NSArray arrayWithArray:res];
+}
+
+- (NSArray *) doGetBuyArticlesFrom:(NSDictionary *)dict category:(int)ctgid lang:(NSString *)lang {
+    NSString *strctgid = [NSString stringWithFormat:@"%d", ctgid];
+
+    NSDictionary *categories = [dict objectForKey:@"Categories"];
+    NSDictionary *ctgDict = [categories objectForKey:strctgid];
+    NSArray *titles = [[ctgDict objectForKey:@"Titles"] objectForKey:lang];
+    NSArray *images = [ctgDict objectForKey:@"Images"];
+    NSArray *videos = [ctgDict objectForKey:@"Videos"];
+    
+    NSMutableArray *res = [[NSMutableArray alloc] initWithCapacity:titles.count];
+    for (int i=0; i<titles.count; i++) {
+        NSString *title = titles[i];
+        NSString *imgurl = images != nil && images.count > i ? images[i] : nil;
+        NSString *vidurl = videos != nil && videos.count > i ? videos[i] : nil;
+        
+        [res addObject:[[Article alloc] initWithValues:[NSString stringWithFormat:@"%d", i]
+                                                  lang:lang
+                                              category:ctgid
+                                               orderNo:i
+                                               forFree:YES
+                                                 title:title
+                                              imageUrl:imgurl
+                                         imageThumbUrl:nil
+                                                  body:nil
+                                                   url:nil
+                                           publishDate:nil
+                                              videoUrl:vidurl
+                                           videolength:nil]];
+    }
     
     return [NSArray arrayWithArray:res];
 }
@@ -180,7 +219,7 @@
 }
 
 - (NSArray *) freeBuyContentFor:(int)ctgid lang:(NSString *)lang {
-    return [self doGetBuyCategoriesFrom:self.freeBuyContent category:ctgid lang:lang];
+    return [self doGetBuyArticlesFrom:self.freeBuyContent category:ctgid lang:lang];
 }
 
 - (void) addFreeCoverFlow{    
@@ -188,7 +227,7 @@
 }
 
 - (NSArray *) freeCoverFlowFor:(NSString *)lang {
-    return [self doGetArticlesFrom:self.freeCoverFlow lang:lang];
+    return [self doGetCarouselArticlesFrom:self.freeCoverFlow lang:lang];
 }
 
 #pragma -

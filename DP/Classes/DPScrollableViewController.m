@@ -407,15 +407,18 @@
     
     // add imageview
     UIView *aView = [self internalCreateViewFor:contentIndex frame:frame];
-    if ([aView isKindOfClass:[UIImageView class]])
+    if (aView != nil && [aView isKindOfClass:[UIImageView class]])
         [self loadImageFor:element inView:(UIImageView *)aView];
 
     // add label
     UILabel *lblView = [self internalCreateLabelFor:contentIndex frame:frame title:element.title];
     
     // insert image and label in the view
-    [container addSubview:aView];
-    [container addSubview:lblView];
+    if (aView != nil)
+        [container addSubview:aView];
+    
+    if (lblView != nil)
+        [container addSubview:lblView];
 }
 
 - (void) invokeViewDelegate:(UITapGestureRecognizer *)sender element:(id)element {

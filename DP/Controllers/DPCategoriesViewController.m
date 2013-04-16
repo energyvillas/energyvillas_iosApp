@@ -140,22 +140,22 @@
         //        [self.navigationController pushViewController: vc animated: YES];
 
 }
-/** /
-- (UILabel *) createLabel:(CGRect)frame title:(NSString *)title {
-    UILabel *label = createLabel(frame, title, nil);
-    int ofs = 0;
-    if (IS_IPAD) {
-        ofs = IS_PORTRAIT ? -20 : -10;
-    } else if (IS_IPHONE) {
-        ofs = IS_PORTRAIT ? -5 : -2;
-    } else if (IS_IPHONE_5) {
-        ofs = IS_PORTRAIT ? -5 : -13;
-    }
-    label.frame = CGRectOffset(label.frame, 0, ofs);
-    
-    return label;
+/**/
+ - (UILabel *) createLabelFor:(int)contentIndex
+                        frame:(CGRect)frame
+                        title:(NSString *)title {
+     UIFont *fnt = nil;
+     if (IS_IPAD)
+         fnt = [UIFont fontWithName:@"TrebuchetMS-Bold"/*HelveticaNeue-CondensedBold"*/ size:16];
+     else  if (IS_IPHONE)
+         fnt = [UIFont fontWithName:@"TrebuchetMS-Bold"/*HelveticaNeue-CondensedBold"*/ size:9];
+     else
+         fnt = [UIFont fontWithName:@"TrebuchetMS-Bold"/*HelveticaNeue-CondensedBold"*/ size:11];
+     UILabel *label = createLabel(frame, title, fnt);
+     label.frame = CGRectOffset(label.frame, 0, -2);
+     return label;
 }
-/ **/
+/**/
 /**/
 
 - (UIView *) createViewFor:(int)contentIndex

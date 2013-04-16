@@ -58,6 +58,10 @@
 		5E8AB0CE17170B52004AFE76 /* FreeImages in Resources */ = {isa = PBXBuildFile; fileRef = 5E8AB0CD17170B52004AFE76 /* FreeImages */; };
 		5E9ABBDE16F9F3CA000EAB46 /* DPTestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E9ABBDD16F9F3CA000EAB46 /* DPTestViewController.m */; };
 		5E9ABBE016F9F3E2000EAB46 /* DPTestView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5E9ABBDF16F9F3E2000EAB46 /* DPTestView.xib */; };
+		5EC20D07171D3594006E03B7 /* BuyDialogImages in Resources */ = {isa = PBXBuildFile; fileRef = 5EC20D06171D3594006E03B7 /* BuyDialogImages */; };
+		5EC20D0B171D56D6006E03B7 /* Videos in Resources */ = {isa = PBXBuildFile; fileRef = 5EC20D0A171D56D6006E03B7 /* Videos */; };
+		5EC20D0D171D5D81006E03B7 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5EC20D0C171D5D81006E03B7 /* AudioToolbox.framework */; };
+		5EC20D10171DAD0F006E03B7 /* DPCarouselViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EC20D0F171DAD0F006E03B7 /* DPCarouselViewController.m */; };
 		5EC2557D16FC64400045AB99 /* DPImageInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EC2557C16FC64400045AB99 /* DPImageInfo.m */; };
 		5EC2557F16FC6E480045AB99 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5EC2557E16FC6E480045AB99 /* StoreKit.framework */; };
 		5EC2558416FC71BD0045AB99 /* IAPHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EC2558316FC71BD0045AB99 /* IAPHelper.m */; };
@@ -91,12 +95,11 @@
 		5EC255F81701054A0045AB99 /* DPCategoryView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5EC255F71701054A0045AB99 /* DPCategoryView.xib */; };
 		5EC48CDB1714B7CF00A9566E /* testView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5EC48CDA1714B7CF00A9566E /* testView.xib */; };
 		5EC48CDE1714BF7E00A9566E /* DPBuyContentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EC48CDD1714BF7E00A9566E /* DPBuyContentViewController.m */; };
-		5EC48CE01714CD5C00A9566E /* BuyDialogImages in Resources */ = {isa = PBXBuildFile; fileRef = 5EC48CDF1714CD5B00A9566E /* BuyDialogImages */; };
 		5EDF095B170C9CBE00774682 /* Icon-72.png in Resources */ = {isa = PBXBuildFile; fileRef = 5EDF0957170C9CBE00774682 /* Icon-72.png */; };
 		5EDF095C170C9CBE00774682 /* Icon-72@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5EDF0958170C9CBE00774682 /* Icon-72@2x.png */; };
 		5EDF095D170C9CBE00774682 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 5EDF0959170C9CBE00774682 /* Icon.png */; };
 		5EDF095E170C9CBE00774682 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5EDF095A170C9CBE00774682 /* Icon@2x.png */; };
-		5EE16DFD171C1AF40006E1CE /* Videos in Resources */ = {isa = PBXBuildFile; fileRef = 5EE16DFC171C1AF40006E1CE /* Videos */; };
+		5EE16DFF171C47D10006E1CE /* Carousel in Resources */ = {isa = PBXBuildFile; fileRef = 5EE16DFE171C47D10006E1CE /* Carousel */; };
 		5EF40842170DE9A100938AEE /* DPCtgCardView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EF40841170DE9A100938AEE /* DPCtgCardView.m */; };
 		5EF40845170DE9B200938AEE /* DPAnimatedCategoriesView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EF40844170DE9B200938AEE /* DPAnimatedCategoriesView.m */; };
 		5EFCCCFA1709BE6C00C1FE88 /* DPDataCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EFCCCF91709BE6C00C1FE88 /* DPDataCache.m */; };
@@ -201,6 +204,11 @@
 		5E9ABBDC16F9F3CA000EAB46 /* DPTestViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPTestViewController.h; sourceTree = "<group>"; };
 		5E9ABBDD16F9F3CA000EAB46 /* DPTestViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPTestViewController.m; sourceTree = "<group>"; };
 		5E9ABBDF16F9F3E2000EAB46 /* DPTestView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DPTestView.xib; sourceTree = "<group>"; };
+		5EC20D06171D3594006E03B7 /* BuyDialogImages */ = {isa = PBXFileReference; lastKnownFileType = folder; path = BuyDialogImages; sourceTree = "<group>"; };
+		5EC20D0A171D56D6006E03B7 /* Videos */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Videos; sourceTree = "<group>"; };
+		5EC20D0C171D5D81006E03B7 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		5EC20D0E171DAD0E006E03B7 /* DPCarouselViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPCarouselViewController.h; sourceTree = "<group>"; };
+		5EC20D0F171DAD0F006E03B7 /* DPCarouselViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPCarouselViewController.m; sourceTree = "<group>"; };
 		5EC2557B16FC64400045AB99 /* DPImageInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPImageInfo.h; sourceTree = "<group>"; };
 		5EC2557C16FC64400045AB99 /* DPImageInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPImageInfo.m; sourceTree = "<group>"; };
 		5EC2557E16FC6E480045AB99 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
@@ -264,12 +272,11 @@
 		5EC48CDA1714B7CF00A9566E /* testView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = testView.xib; sourceTree = "<group>"; };
 		5EC48CDC1714BF7E00A9566E /* DPBuyContentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPBuyContentViewController.h; sourceTree = "<group>"; };
 		5EC48CDD1714BF7E00A9566E /* DPBuyContentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPBuyContentViewController.m; sourceTree = "<group>"; };
-		5EC48CDF1714CD5B00A9566E /* BuyDialogImages */ = {isa = PBXFileReference; lastKnownFileType = folder; path = BuyDialogImages; sourceTree = "<group>"; };
 		5EDF0957170C9CBE00774682 /* Icon-72.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-72.png"; sourceTree = "<group>"; };
 		5EDF0958170C9CBE00774682 /* Icon-72@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-72@2x.png"; sourceTree = "<group>"; };
 		5EDF0959170C9CBE00774682 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
 		5EDF095A170C9CBE00774682 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
-		5EE16DFC171C1AF40006E1CE /* Videos */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Videos; sourceTree = "<group>"; };
+		5EE16DFE171C47D10006E1CE /* Carousel */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Carousel; sourceTree = "<group>"; };
 		5EF40840170DE9A100938AEE /* DPCtgCardView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPCtgCardView.h; sourceTree = "<group>"; };
 		5EF40841170DE9A100938AEE /* DPCtgCardView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPCtgCardView.m; sourceTree = "<group>"; };
 		5EF40843170DE9B200938AEE /* DPAnimatedCategoriesView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPAnimatedCategoriesView.h; sourceTree = "<group>"; };
@@ -304,6 +311,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5EC20D0D171D5D81006E03B7 /* AudioToolbox.framework in Frameworks */,
 				5E4E8527171227C2005DAD06 /* CoreText.framework in Frameworks */,
 				5E486C5D170260980040F165 /* MediaPlayer.framework in Frameworks */,
 				5EC255CB16FF4D150045AB99 /* libz.dylib in Frameworks */,
@@ -365,6 +373,7 @@
 			isa = PBXGroup;
 			children = (
 				5EC255CA16FF4D150045AB99 /* libz.dylib */,
+				5EC20D0C171D5D81006E03B7 /* AudioToolbox.framework */,
 				5E4E8526171227BF005DAD06 /* CoreText.framework */,
 				5E486C5C170260980040F165 /* MediaPlayer.framework */,
 				5EC255C816FF4CBC0045AB99 /* SystemConfiguration.framework */,
@@ -512,6 +521,8 @@
 				5E4E851917109D38005DAD06 /* DPCategoriesViewController.m */,
 				5EC48CDC1714BF7E00A9566E /* DPBuyContentViewController.h */,
 				5EC48CDD1714BF7E00A9566E /* DPBuyContentViewController.m */,
+				5EC20D0E171DAD0E006E03B7 /* DPCarouselViewController.h */,
+				5EC20D0F171DAD0F006E03B7 /* DPCarouselViewController.m */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -531,10 +542,11 @@
 		5E71A3FF16F9B5F900E7AFF9 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				5EE16DFC171C1AF40006E1CE /* Videos */,
+				5EC20D0A171D56D6006E03B7 /* Videos */,
+				5EC20D06171D3594006E03B7 /* BuyDialogImages */,
+				5EE16DFE171C47D10006E1CE /* Carousel */,
 				5E4E85121710356A005DAD06 /* Background */,
 				5E03E922171578FB00F0C6F3 /* BuyDialog */,
-				5EC48CDF1714CD5B00A9566E /* BuyDialogImages */,
 				5E8AB0CD17170B52004AFE76 /* FreeImages */,
 				5EDF0956170C9CBE00774682 /* Icons */,
 				5E4E8514171059AA005DAD06 /* Navbar */,
@@ -756,10 +768,11 @@
 				5E4E8515171059AA005DAD06 /* Navbar in Resources */,
 				5E4E851F1711E542005DAD06 /* DPSubCategoryView.xib in Resources */,
 				5EC48CDB1714B7CF00A9566E /* testView.xib in Resources */,
-				5EC48CE01714CD5C00A9566E /* BuyDialogImages in Resources */,
 				5E03E923171578FB00F0C6F3 /* BuyDialog in Resources */,
 				5E8AB0CE17170B52004AFE76 /* FreeImages in Resources */,
-				5EE16DFD171C1AF40006E1CE /* Videos in Resources */,
+				5EE16DFF171C47D10006E1CE /* Carousel in Resources */,
+				5EC20D07171D3594006E03B7 /* BuyDialogImages in Resources */,
+				5EC20D0B171D56D6006E03B7 /* Videos in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -832,6 +845,7 @@
 				5E4E85221711F948005DAD06 /* DPAnimatedScrollViewController.m in Sources */,
 				5EC48CDE1714BF7E00A9566E /* DPBuyContentViewController.m in Sources */,
 				5E8AB0CC171706D1004AFE76 /* UIImage+Retina4.m in Sources */,
+				5EC20D10171DAD0F006E03B7 /* DPCarouselViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

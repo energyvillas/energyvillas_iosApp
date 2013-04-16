@@ -109,18 +109,25 @@ void NSLogFrame(NSString *msg, CGRect frame) {
           frame.size.width, frame.size.height);
 }
 
+BOOL isLocalUrl(NSString *urlstr) {
+    NSURL *url = [NSURL URLWithString:urlstr];
+    return url.isFileReferenceURL || url.host == nil;
+}
+
 
 UILabel * createLabel(CGRect frame, NSString *title, UIFont *font) {
     // add label
     UILabel *lv = [[UILabel alloc] initWithFrame: frame];
     lv.textAlignment = NSTextAlignmentCenter;
-    if (font==nil) {
+    if (font!=nil) {
+        lv.font = font;
+    } else {
         if (IS_IPAD)
             lv.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:16];
         else
             lv.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:12];
     }
-    lv.adjustsFontSizeToFitWidth = YES;
+    lv.adjustsFontSizeToFitWidth = NO;
     lv.text = /*element.*/title;
     lv.backgroundColor = [UIColor clearColor];
     [lv sizeToFit];

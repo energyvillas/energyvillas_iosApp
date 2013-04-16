@@ -9,7 +9,7 @@
 #import "DPScrollableViewController.h"
 #import "DPDataLoader.h"
 
-@interface DPAdsViewController : DPScrollableViewController <DPDataLoaderDelegate>
+@interface DPAdsViewController : DPScrollableViewController <DPDataLoaderDelegate, DPScrollableDataSourceDelegate>
 
 - (id) initWithGroup:(int)aGroup;
 

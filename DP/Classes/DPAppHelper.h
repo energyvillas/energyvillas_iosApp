@@ -14,6 +14,7 @@
 @property (readonly, nonatomic) BOOL hostIsReachable;
 
 @property (nonatomic, readonly) BOOL useCache;
+@property (nonatomic, readonly) BOOL isPurchased;
 @property (strong, nonatomic) NSString *currentLang;
 
 

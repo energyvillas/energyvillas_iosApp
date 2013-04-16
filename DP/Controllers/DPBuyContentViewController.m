@@ -12,14 +12,17 @@
 #import "DPConstants.h"
 
 #import "DPDataElement.h"
-#import "Category.h"
-#import "DPCategoryLoader.h"
+#import "Article.h"
+#import "DPArticlesLoader.h"
+
+#import <MediaPlayer/MediaPlayer.h>
 
 
 
 @interface DPBuyContentViewController ()
 
 @property (strong, nonatomic) DPDataLoader *dataLoader;
+@property (strong, nonatomic) MPMoviePlayerController *playerController;
 
 @end
 
@@ -59,6 +62,10 @@
 	// Do any additional setup after loading the view.
 }
 
+-(void)viewDidUnload {
+    
+}
+
 - (void) viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [self loadData];
@@ -66,8 +73,17 @@
 
 - (void) viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
-}
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 
+    if (self.playerController) {
+        MPMoviePlayerController *mpc = self.playerController;
+        self.playerController = nil;
+        [mpc stop];
+        [mpc.view removeFromSuperview];
+        mpc = nil;
+    }
+}
 
 - (void)didReceiveMemoryWarning
 {
@@ -83,31 +99,15 @@
 }
 
 - (void) loadData {
-    if (category == -1) {
-        if (self.contentList == nil) {
-            NSArray *list = [NSArray arrayWithObject:[[Category alloc] initWithValues:@"-1"
-                                                                                title:@"General"
-                                                                             imageUrl:@"BuyContentGeneral/buy-words_%@_%.4d.jpg"]];
-            [self contentLoaded:list];
-        }
-        [self changeRows:1 columns:1];
-    }
-    else {
         if (self.dataLoader == nil) {
-            self.dataLoader = [[DPCategoryLoader alloc] initWithView:self.view
-                                                         useInternet:NO //PENDING::GGSE
-                                                          useCaching:NO
+            self.dataLoader = [[DPArticlesLoader alloc] initWithView:self.view
                                                             category:category
-                                                                lang:[DPAppHelper sharedInstance].currentLang
-                                                           localData:[[DPAppHelper sharedInstance]
-                                                                      freeBuyContentFor:category
-                                                                      lang:[DPAppHelper sharedInstance].currentLang]];
+                                                                lang:CURRENT_LANG];
             self.dataLoader.delegate = self;
         }
         
         if (self.contentList.count == 0 || self.dataLoader.dataRefreshNeeded)
             [self.dataLoader loadData];
-    }
 }
 
 //==============================================================================
@@ -115,43 +115,25 @@
 #pragma mark - START DPDataLoaderDelegate
 
 - (void)loadFinished:(DPDataLoader *)loader {
-    if (loader.datalist.count == 0) {
-//        showAlertMessage(nil,
-//                         DPLocalizedString(kERR_TITLE_INFO),
-//                         DPLocalizedString(kERR_MSG_NO_DATA_FOUND));
-    } else {
-        // keep only children of category
-//        NSMutableArray *children = [[NSMutableArray alloc] init];
-//        for (Category *ctg in loader.datalist)
-//            if (ctg.parentId == category)
-//                [children addObject:ctg];
-//        
-//        // and split in batches of 5
-//        NSMutableArray *datalists = [[NSMutableArray alloc] init];
-//        NSMutableArray *partDatalist = nil;
-//        
-//        for (int i = 0; i < children.count; i++) {
-//            if ((i % 5) == 0) {
-//                if (partDatalist)
-//                    [datalists addObject:[NSArray arrayWithArray:partDatalist]];
-//                partDatalist = [[NSMutableArray alloc] init];
-//            }
-//            
-//            [partDatalist addObject:children[i]];
-//        }
-//        if (partDatalist)
-//            [datalists addObject:[NSArray arrayWithArray:partDatalist]];
-//        
-//        [self contentLoaded:datalists];
-//        [self changeRows:1 columns:1];
-        
+    if (loader.datalist == nil || loader.datalist.count == 0) {
+        [self loadLocalData];        
+    } else {        
         [self contentLoaded:self.dataLoader.datalist];
         [self changeRows:1 columns:1];
     }
 }
 
 - (void)loadFailed:(DPDataLoader *)loader {
+    [self loadLocalData];
+}
+
+-(void) loadLocalData {
+    NSArray *list = [[DPAppHelper sharedInstance]
+                     freeBuyContentFor:category
+                     lang:[DPAppHelper sharedInstance].currentLang];
     
+    [self contentLoaded:list];
+    [self changeRows:1 columns:1];
 }
 
 #pragma mark END DPDataLoaderDelegate
@@ -170,82 +152,99 @@
 
 #pragma mark - START DPScrollableDataSourceDelegate
 
-//- (void) onTap:(id)sender {
-//    int indx = ((UIButton *)sender).tag;
-//    DPDataElement * element = self.contentList[indx];
-//    NSLog(@"Clicked image at index %i named %@", indx, element.title);
-//    
-//    [self elementTapped:sender element:element];
-//    
-//    // navigation logic goes here. create and push a new view controller;
-//    //        DPTestViewController *vc = [[DPTestViewController alloc] init];
-//    //        [self.navigationController pushViewController: vc animated: YES];
-//    
-//}
-
 - (UILabel *) createLabelFor:(int)contentIndex frame:(CGRect)frame title:(NSString *)title {
+    if (title == nil || title.length==0)
+        return nil;
+    
     UIFont *font = IS_IPAD
             ? [UIFont fontWithName:@"HelveticaNeue-Bold" size:24]
             : [UIFont fontWithName:@"HelveticaNeue-Bold" size:18];
 
     UILabel *label = createLabel(frame, title, font);
     CGRect lblframe = label.frame;
-    frame = CGRectMake(frame.origin.x, frame.origin.y,
+    frame = CGRectMake(frame.origin.x, frame.origin.y + 6,
                        frame.size.width, lblframe.size.height);
     label.frame = frame;
     return label;
 }
 
-- (void) postProcessView:(UIView *)aView
-            contentIndex:(int)contentIndex
-                   frame:(CGRect)frame {
-    if (category == -1) {
-        Category *ctg = self.contentList[0];
-        UIImageView *imgView = (UIImageView *)aView;
-        
-        NSString *lang = [[DPAppHelper sharedInstance] currentLang];
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-            NSMutableArray *list = [[NSMutableArray alloc] init];
-            int GEN_CTG_FRAME_COUNT = 390;
-            for (int i = 1; i <= GEN_CTG_FRAME_COUNT; i++) {
-                UIImage *img = [UIImage imageNamed:[NSString stringWithFormat:ctg.imageUrl, lang, i]];
-                if (img == nil) continue;
-                [list addObject: img];
-            }
-            
-            dispatch_async(dispatch_get_main_queue(), ^{
-                if (list.count > 0) {
-                    imgView.animationImages = list;
-                    imgView.animationDuration = GEN_CTG_FRAME_COUNT / 25.0;
-                    [imgView startAnimating];
-                }
-            });
-        });        
+//pending
+- (UIView *) createViewFor:(int)contentIndex frame:(CGRect)frame {
+    Article *article = self.contentList[contentIndex];
+    UILabel *label = [self createLabelFor:contentIndex frame:frame title:article.title];
+    int fixBy = 0;
+    if (label !=nil) {
+        if (IS_IPHONE) {
+            if (IS_RETINA)
+                fixBy = label.bounds.size.height - 10;
+            else
+                fixBy = label.bounds.size.height + 2;
+        } else if (IS_IPHONE_5)
+            fixBy = label.bounds.size.height;
+        else if (IS_IPAD)
+            fixBy = label.bounds.size.height - 10;
     }
+    frame = CGRectInset(CGRectOffset(frame, 0, fixBy), 2, 2);
+
+    UIView *result = nil;
+    if (article.videoUrl) {
+        result = [self createAndConfigMoviePlayer2:frame videoUrl:[self calcImageName:article.videoUrl]];
+    } else {
+        UIImageView *imgView = [[UIImageView alloc] initWithFrame: frame];
+        imgView.backgroundColor = [UIColor clearColor];
+        imgView.contentMode = UIViewContentModeCenter; //ScaleAspectFit;//Center;//ScaleAspectFit;
+        imgView.clipsToBounds = YES;
+        result = imgView;
+    }
+
+    return result;
 }
 
-- (UIView *) createViewFor:(int)contentIndex frame:(CGRect)frame {
-    DPDataElement *elm = self.contentList[contentIndex];
-    UILabel *label = [self createLabelFor:contentIndex frame:frame title:elm.title];
-    int fixBy = label.bounds.size.height + 8;
-    frame = CGRectMake(frame.origin.x +2,
-                       frame.origin.y + fixBy,
-                       frame.size.width - 4,
-                       frame.size.height - fixBy);
-
-    UIImageView *imgView = [[UIImageView alloc] initWithFrame: frame];
-    imgView.backgroundColor = [UIColor clearColor];
-    imgView.contentMode = UIViewContentModeCenter; //ScaleAspectFit;//Center;//ScaleAspectFit;
-    imgView.clipsToBounds = YES;
-    
-    // nothing to do when tapped 
-//    imgView.tag = contentIndex;
-//    UITapGestureRecognizer *tapper = [[UITapGestureRecognizer alloc]
-//                                      initWithTarget:self action:@selector(handleTap:)];
-//    [imgView addGestureRecognizer:tapper];
-//    imgView.userInteractionEnabled = YES;
+- (UIView *) createAndConfigMoviePlayer2:(CGRect)frame videoUrl:(NSString *)vidurl {
+    if (!self.playerController) {
+        NSBundle *bundle = [NSBundle mainBundle];
+        NSString *moviePath = moviePath = [bundle pathForResource:vidurl ofType:nil];
         
-    return imgView;
+        if (moviePath == nil)
+            return [[UIView alloc] initWithFrame:frame];
+
+        NSURL *movieURL = [NSURL fileURLWithPath:moviePath];
+        
+        self.playerController= [[MPMoviePlayerController alloc] initWithContentURL: movieURL];
+        self.playerController.view.frame = frame; //CGRectInset(containerView.bounds, 2, 2);
+        
+        self.playerController.controlStyle = MPMovieControlStyleNone;
+        
+        [self.playerController prepareToPlay];
+        self.playerController.scalingMode = MPMovieScalingModeAspectFit;
+        self.playerController.repeatMode = MPMovieRepeatModeNone;
+        
+//        [containerView addSubview:self.playerController.view];
+        [self.playerController play];
+        
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(moviePlayBackDidFinished:)
+                                                     name:MPMoviePlayerPlaybackDidFinishNotification
+                                                   object:self.playerController];
+    }
+    else {
+        NSTimeInterval pos = self.playerController.currentPlaybackTime;
+        [self.playerController pause];
+        self.playerController.view.frame = frame;//CGRectInset(containerView.bounds, 2, 2);
+        self.playerController.currentPlaybackTime = pos;
+    }
+    
+    return self.playerController.view;
+}
+
+-(void)moviePlayBackDidFinished:(NSNotification *)notification {
+    if ([[notification name] isEqualToString:MPMoviePlayerPlaybackDidFinishNotification]) {
+        NSLog (@"Successfully received the ==MPMoviePlayerPlaybackDidFinishNotification== notification!");
+        
+        //        notification.userInfo[MPMoviePlayerPlaybackDidFinishReasonUserInfoKey]
+        if (self.playerController != nil)
+            [self.playerController play];
+    }
 }
 
 #pragma mark END DPScrollableDataSourceDelegate
@@ -260,11 +259,13 @@
         @try {
             NSArray *parts = [baseName componentsSeparatedByString:@"."];
             if (parts && parts.count == 2) {
-//                NSString *orientation = IS_PORTRAIT ? @"v" : @"h";
-//                NSString *high = ishighlight ? @"_Roll" : @"";
-                NSString *lang = [DPAppHelper sharedInstance].currentLang;
-                NSString *result = [NSString stringWithFormat:@"BuyDialogImages/%@_%@.%@",
-                                    parts[0], lang, parts[1]];
+                NSString *result = nil;
+                if ([parts[1] isEqualToString:@"png"])
+                    result = [NSString stringWithFormat:@"BuyDialogImages/%@_%@.%@",
+                              parts[0], CURRENT_LANG, parts[1]];
+                else
+                    result = [NSString stringWithFormat:@"Videos/%@_%@.%@",
+                                              parts[0], CURRENT_LANG, parts[1]];
                 return result;
             }
             else
