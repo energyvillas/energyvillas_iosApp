@@ -123,12 +123,15 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (void) doLayoutSubViews {    
+- (void) doLayoutSubViews {
+    [self doLayoutSubViews:NO];
+}
+- (void) doLayoutSubViews:(BOOL)fixtop {
     CGRect vf = self.view.frame;
     
-    int h = IS_PORTRAIT ? vf.size.height : vf.size.height - vf.origin.y ;
+    int h = vf.size.height - vf.origin.y; //IS_PORTRAIT ? vf.size.height : vf.size.height - vf.origin.y;
     int w = vf.size.width;
-        
+    int topOfs = fixtop ? vf.origin.y : 0;
     int toolbarHeight = self.toolbar.frame.size.height;
 
     int BOTTOM_HEIGHT;
@@ -144,12 +147,12 @@
 
     int topHeight = h - toolbarHeight - BOTTOM_HEIGHT;
     
-    self.topView.frame = CGRectMake(0, 0, w, topHeight);
+    self.topView.frame = CGRectMake(0, topOfs, w, topHeight);
     
-    self.toolbar.frame = CGRectMake(0, topHeight,
+    self.toolbar.frame = CGRectMake(0, topOfs + topHeight,
                                     w, toolbarHeight);
     
-    self.bottomView.frame = CGRectMake(0, topHeight + toolbarHeight,
+    self.bottomView.frame = CGRectMake(0, topOfs + topHeight + toolbarHeight,
                                        w, BOTTOM_HEIGHT);
     
     [self loadOpenFlow];
@@ -214,11 +217,13 @@
     }
 }
 
-- (void) loadOpenFlow {    
+- (void) loadOpenFlow {
+    //self.topView.backgroundColor = [UIColor yellowColor];
+    
     DPCarouselViewController *carousel = nil;
-    int currImgIndex = -1;
+    int currImgIndex = 0;
     for (int i = 0; i < self.childViewControllers.count; i++)
-        if ([self.childViewControllers[0] isKindOfClass:[DPCarouselViewController class]]) {
+        if ([self.childViewControllers[i] isKindOfClass:[DPCarouselViewController class]]) {
             carousel = (DPCarouselViewController *)self.childViewControllers[i];
             currImgIndex = carousel.currentIndex;
             [carousel.view removeFromSuperview];
@@ -226,6 +231,8 @@
             carousel = nil;
             break;
         }
+    
+    [self.topView setNeedsDisplay];
     
     carousel = [[DPCarouselViewController alloc] init];
     CGRect frm = self.topView.bounds;

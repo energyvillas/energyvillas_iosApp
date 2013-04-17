@@ -71,7 +71,6 @@
       willShowViewController:(UIViewController *)viewController
                     animated:(BOOL)animated {
     [self fixFrames:NO];
-    UIInterfaceOrientation orientation = [UIApplication sharedApplication].statusBarOrientation;
     if (viewController && [viewController isKindOfClass:[UINavContentViewController class]])
         [(UINavContentViewController *)viewController doLayoutSubViews];
 }

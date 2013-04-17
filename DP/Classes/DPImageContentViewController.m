@@ -290,11 +290,15 @@
 }
 
 -(void) doLayoutSubViews {
+    CGRect vf = self.view.frame;
+    int h = vf.size.height - vf.origin.y; //IS_PORTRAIT ? vf.size.height : vf.size.height - vf.origin.y;
+    int w = vf.size.width;
+
     UIView *innerview = self.view.subviews.count == 1 ? self.view.subviews[0] : nil;
     if (innerview) {
         innerview.frame = CGRectMake(0, 0,
-                                     self.view.bounds.size.width,
-                                     self.view.bounds.size.height);
+                                     w,
+                                     h);
     }
 }
 #pragma mark -

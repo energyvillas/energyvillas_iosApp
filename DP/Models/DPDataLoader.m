@@ -20,6 +20,7 @@
 @property (weak, nonatomic) UIView *indicatorContainer;
 @property (strong, nonatomic) UIActivityIndicatorView *busyIndicator;
 @property (strong, nonatomic) NSOperationQueue *queue;
+@property (strong, nonatomic) ASIFormDataRequest *request;
 @property (strong, nonatomic, readonly, getter = getDataCache) DPDataCache *dataCache;
 @property BOOL useCaching;
 @property BOOL useInternet;
@@ -40,6 +41,18 @@
     }
     
     return self;
+}
+
+-(void) dealloc {
+    if (self.queue) {
+        [self.queue cancelAllOperations];
+    }
+    if (self.request) {
+        [self.request cancel];
+        self.request.delegate = nil;
+    }
+    self.request = nil;
+    self.queue = nil;
 }
 
 +(NSString*) digestSHA1:(NSString*)input {
@@ -98,8 +111,8 @@
     BOOL netIsAlive = [[DPAppHelper sharedInstance] hostIsReachable];
     
     if (!cacheValid && netIsAlive && self.useInternet) {
-        ASIFormDataRequest *request = [self createAndPrepareRequest];
-        [self startRequest:request];
+        self.request = [self createAndPrepareRequest];
+        [self startRequest];
     } else {
         BOOL fromcache;
         [self loadLocalData:&fromcache];
@@ -168,13 +181,15 @@
     return request;
 }
 
-- (void) startRequest:(ASIFormDataRequest *)request  {
+- (void) startRequest  {
+    if (self.request == nil)
+        return;
+    
     if (!self.queue)
         self.queue = [[NSOperationQueue alloc] init];
     
-    
-    [request setDelegate:self];
-    [self.queue addOperation:request];
+    [self.request setDelegate:self];
+    [self.queue addOperation:self.request];
     [self startIndicator];
 }
 

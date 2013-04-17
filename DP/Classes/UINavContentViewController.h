@@ -11,6 +11,7 @@
 @interface UINavContentViewController : UIViewController
 
 - (void) doLayoutSubViews;
+- (void) doLayoutSubViews:(BOOL)fixtop;
 - (void) doLocalize;
 - (void) reachabilityChanged;
 

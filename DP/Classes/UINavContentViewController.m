@@ -98,6 +98,10 @@
 }
 
 - (void) doLayoutSubViews {
+    [self doLayoutSubViews:NO];
+}
+
+- (void) doLayoutSubViews:(BOOL)fixtop {
     
 }
 

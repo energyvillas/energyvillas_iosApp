@@ -55,6 +55,46 @@
     }
 }
 
+- (void)navigationController:(UINavigationController *)navigationController
+      willShowViewController:(UIViewController *)viewController
+                    animated:(BOOL)animated {
+    [self doFixFrames:viewController fixTop:YES];
+}
+
+- (void) willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
+                                          duration:(NSTimeInterval)duration {
+    [self fixBackgroundImage];
+    
+    [self doFixFrames:navController.topViewController fixTop:NO];
+}
+
+-(void) doFixFrames:(UIViewController *)viewController fixTop:(BOOL)fixtop {
+    [self fixFrames];
+    if (viewController && [viewController isKindOfClass:[UINavContentViewController class]]) {
+        if (!fixtop)
+            [(UINavContentViewController *)viewController doLayoutSubViews];
+        else {
+            [(UINavContentViewController *)viewController doLayoutSubViews:fixtop];
+        }
+    }
+}
+
+- (void) fixFrames {
+    UIViewController *tvc = navController.topViewController;
+    
+    CGRect nc_nbf = self.navController.navigationBar.frame;
+    CGRect tvc_svf = tvc.view.superview.frame;
+    CGRect tvc_vf = tvc.view.frame;
+    
+    if (IS_LANDSCAPE) {
+        tvc_vf = CGRectMake(0, nc_nbf.size.height - tvc_svf.origin.y,
+                            tvc_svf.size.width,
+                            tvc_svf.size.height);
+        tvc.view.frame = tvc_vf;
+//        [tvc.view setNeedsDisplay];
+    }
+}
+
 - (void) fixBackgroundImage {
     NSString *imgName;
     if (IS_PORTRAIT)
@@ -64,10 +104,6 @@
     
     
     self.view.layer.contents = (id)[[UIImage imageNamed:imgName] CGImage];
-}
-
-- (void) willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
-    [self fixBackgroundImage];
 }
 
 - (void)didReceiveMemoryWarning
