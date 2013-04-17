@@ -43,7 +43,7 @@
     [super viewWillAppear:animated];
 }
 
--(void) doLayoutSubViews {
+-(void) doLayoutSubViews:(BOOL)fixtop {
     int cnt = self.view.subviews.count;
     if (cnt == 1) {
         UIView *v = self.view.subviews[0];
@@ -70,13 +70,7 @@
 
 -(void) doFixFrames:(UIViewController *)viewController fixTop:(BOOL)fixtop {
     [self fixFrames];
-    if (viewController && [viewController isKindOfClass:[UINavContentViewController class]]) {
-        if (!fixtop)
-            [(UINavContentViewController *)viewController doLayoutSubViews];
-        else {
-            [(UINavContentViewController *)viewController doLayoutSubViews:fixtop];
-        }
-    }
+    if (viewController && [viewController isKindOfClass:[UINavContentViewController class]])            [(UINavContentViewController *)viewController doLayoutSubViews:fixtop];
 }
 
 - (void) fixFrames {

@@ -168,6 +168,7 @@
     
     self.lblTitle = [[UILabel alloc] initWithFrame:CGRectOffset(frm, 52, 0)];
     self.lblTitle.backgroundColor = [UIColor whiteColor];
+    self.lblTitle.textAlignment = UITextAlignmentCenter;
     
     self.lblContainer = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 200, 20)];
     [self.view addSubview:self.lblContainer];
@@ -189,8 +190,8 @@
     self.lblTitle.text = title;
     [self.lblTitle sizeToFit];
     
-    CGRect titlefrm = CGRectMake(counterfrm.size.width + 2, 0,
-                                 self.lblTitle.frame.size.width,
+    CGRect titlefrm = CGRectMake(counterfrm.size.width + 1, 0,
+                                 self.lblTitle.frame.size.width + 6,
                                  self.lblTitle.frame.size.height);     
     self.lblTitle.frame = titlefrm;
 }

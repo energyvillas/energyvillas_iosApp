@@ -123,9 +123,6 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (void) doLayoutSubViews {
-    [self doLayoutSubViews:NO];
-}
 - (void) doLayoutSubViews:(BOOL)fixtop {
     CGRect vf = self.view.frame;
     

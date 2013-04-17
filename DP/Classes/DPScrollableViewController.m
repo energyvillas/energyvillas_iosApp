@@ -112,8 +112,8 @@
     self.view.frame = CGRectMake(0, 0, sz.width, sz.height);
 }
 
-- (void) doLayoutSubViews {
-    [super doLayoutSubViews];
+- (void) doLayoutSubViews:(BOOL)fixtop {
+    [super doLayoutSubViews:fixtop];
     [self changeRows:self.rowCount columns:self.colCount];
 }
 

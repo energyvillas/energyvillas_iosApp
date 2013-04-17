@@ -94,10 +94,6 @@
 
 - (void) viewWillLayoutSubviews {
     [super viewWillLayoutSubviews];
-    [self doLayoutSubViews];
-}
-
-- (void) doLayoutSubViews {
     [self doLayoutSubViews:NO];
 }
 

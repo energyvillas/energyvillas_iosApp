@@ -96,7 +96,7 @@
     self.islandsContent = nil;
 }
 
-- (void) doLayoutSubviews {
+- (void) doLayoutSubviews:(BOOL)fixtop {
     // dismiss popover since the positioning will be wrong
     [self clearPopups];
     

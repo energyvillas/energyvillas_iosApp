@@ -44,14 +44,13 @@
 	// Do any additional setup after loading the view.
 }
 
-- (void) doLayoutSubViews {    
+- (void) doLayoutSubViews:(BOOL)fixtop {    
     CGRect vf = self.view.frame;
     
-    int MAGIC_FIX = 12;
-    BOOL fixtop = !IS_PORTRAIT;
-    int h = fixtop ? vf.size.height - MAGIC_FIX : vf.size.height;
+    //BOOL fixtop = !IS_PORTRAIT;
+    int h = fixtop ? vf.size.height - vf.origin.y : vf.size.height;
     int w = vf.size.width;    
-    int top = fixtop ? MAGIC_FIX : 0;
+    int top = fixtop ? vf.origin.y : 0;
     
     // iphone sizes
     int PHONE_H_ADS = 60;

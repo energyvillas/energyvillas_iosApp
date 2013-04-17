@@ -289,7 +289,7 @@
                      DPLocalizedString(kERR_MSG_DATA_LOAD_FAILED));
 }
 
--(void) doLayoutSubViews {
+-(void) doLayoutSubViews:(BOOL)fixtop {
     CGRect vf = self.view.frame;
     int h = vf.size.height - vf.origin.y; //IS_PORTRAIT ? vf.size.height : vf.size.height - vf.origin.y;
     int w = vf.size.width;

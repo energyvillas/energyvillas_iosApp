@@ -73,7 +73,7 @@
     [self.btnBuy setTitle:[self buyBtnTitle] // TODO:GGSE
                  forState:UIControlStateNormal];
     
-    [self doLayoutSubViews];
+    [self doLayoutSubViews:NO];
 }
 
 - (NSString *) buyBtnTitle {
@@ -152,7 +152,7 @@
     return actualFrame;
 }
 
--(void) doLayoutSubViews {
+-(void) doLayoutSubViews:(BOOL)fixtop {
     [self internalLayoutSubViews];
     [self loadDetailView:NO];
 }

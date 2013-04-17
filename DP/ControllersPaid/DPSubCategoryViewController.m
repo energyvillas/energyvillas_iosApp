@@ -117,11 +117,11 @@
 
 #pragma
 
-- (void) doLayoutSubViews {    
+- (void) doLayoutSubViews:(BOOL)fixtop {    
     CGRect vf = self.view.frame;
     //    CGRect svf = self.view.superview.frame;
     
-    BOOL fixtop = NO;
+    //BOOL fixtop = NO;
     int h = IS_PORTRAIT ? vf.size.height : vf.size.height - vf.origin.y;
     int w = vf.size.width;
     int top = fixtop ? vf.origin.y : 0;

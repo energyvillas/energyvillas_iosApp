@@ -154,7 +154,7 @@
 }
 
 
-- (void) doLayoutSubViews {
+- (void) doLayoutSubViews:(BOOL)fixtop {
     UIView *innerview = self.view.subviews.count == 1 ? self.view.subviews[0] : nil;
     if (innerview) {
         innerview.frame = CGRectMake(0, 0,

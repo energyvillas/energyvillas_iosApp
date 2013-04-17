@@ -70,9 +70,19 @@
 - (void)navigationController:(UINavigationController *)navigationController
       willShowViewController:(UIViewController *)viewController
                     animated:(BOOL)animated {
+    [self doFixFrames:viewController fixTop:YES];
+}
+
+- (void) willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
+                                          duration:(NSTimeInterval)duration {
+    [self fixBackgroundImage];
+    
+    [self doFixFrames:navController.topViewController fixTop:NO];
+}
+
+-(void) doFixFrames:(UIViewController *)viewController fixTop:(BOOL)fixtop {
     [self fixFrames:NO];
-    if (viewController && [viewController isKindOfClass:[UINavContentViewController class]])
-        [(UINavContentViewController *)viewController doLayoutSubViews];
+    if (viewController && [viewController isKindOfClass:[UINavContentViewController class]])            [(UINavContentViewController *)viewController doLayoutSubViews:fixtop];
 }
 
 - (void) fixFrames:(BOOL)fixNavView {
@@ -84,24 +94,20 @@
         self.navController.view.frame = CGRectMake(0, 0,
                                                    sf.size.width,
                                                    sf.size.height - tbf.size.height);
-    
     } else {
-//        UIViewController *tvc = navController.topViewController;
-//        
-//        CGRect nc_nbf = self.navController.navigationBar.frame;
-//        CGRect tvc_svf = tvc.view.superview.frame;
-//        CGRect tvc_vf = tvc.view.frame;
-//
-//        UIInterfaceOrientation orientation = [UIApplication sharedApplication].statusBarOrientation;
-//        if (UIInterfaceOrientationIsPortrait(orientation))
-//            ;
-//        else {
-//            tvc_vf = CGRectMake(0, nc_nbf.size.height - tvc_svf.origin.y,
-//                                tvc_svf.size.width,
-//                                tvc_svf.size.height);
-////            tvc.view.frame = tvc_vf;
-////            [tvc.view setNeedsDisplay];
-//        }
+        UIViewController *tvc = navController.topViewController;
+        
+        CGRect nc_nbf = self.navController.navigationBar.frame;
+        CGRect tvc_svf = tvc.view.superview.frame;
+        CGRect tvc_vf = tvc.view.frame;
+        
+        if (IS_LANDSCAPE) {
+            tvc_vf = CGRectMake(0, nc_nbf.size.height - tvc_svf.origin.y,
+                                tvc_svf.size.width,
+                                tvc_svf.size.height);
+            tvc.view.frame = tvc_vf;
+            //        [tvc.view setNeedsDisplay];
+        }
     }
 }
 
@@ -114,16 +120,6 @@
     
     
     self.view.layer.contents = (id)[[UIImage imageNamed:imgName] CGImage];
-}
-
-- (void) willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
-    [self fixBackgroundImage];
-    
-//    [self fixFrames:NO];
-
-    id tvc = navController.topViewController;
-    if (tvc && [tvc isKindOfClass:[UINavContentViewController class]])
-        [(UINavContentViewController *)tvc doLayoutSubViews];
 }
 
 - (void) cleanControllers:(UIViewController *)tvc {
