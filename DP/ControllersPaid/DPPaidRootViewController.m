@@ -48,7 +48,7 @@
     CGRect vf = self.view.frame;
     
     //BOOL fixtop = !IS_PORTRAIT;
-    int h = fixtop ? vf.size.height - vf.origin.y : vf.size.height;
+    int h = vf.size.height - vf.origin.y;
     int w = vf.size.width;    
     int top = fixtop ? vf.origin.y : 0;
     
@@ -197,18 +197,16 @@
 }
 
 - (void) loadMenuView {
-    if (self.mmView.subviews.count == 0)
-    {
-        self.mmViewController = [[DPMenuViewController alloc] initWithRows:3 columns:3 autoScroll:NO];
-        self.mmViewController.view.frame = self.mmView.bounds;
-        [self addChildViewController:self.mmViewController];
-        [self.mmView addSubview:self.mmViewController.view];
+    if (self.mmViewController != nil) {
+        [self.mmViewController.view removeFromSuperview];
+        [self.mmViewController removeFromParentViewController];
+        self.mmViewController = nil;
     }
-    else {
-        self.mmViewController.view.frame = self.mmView.bounds;
-        [self.mmViewController changeRows:3
-                                  columns:3];
-    }
+    
+    self.mmViewController = [[DPMenuViewController alloc] initWithRows:3 columns:3 autoScroll:NO];
+    self.mmViewController.view.frame = self.mmView.bounds;
+    [self addChildViewController:self.mmViewController];
+    [self.mmView addSubview:self.mmViewController.view];
 }
 
 //- (UIImage *) imageForIndex:(int) indx withFrame:(CGRect *) targetFrame {

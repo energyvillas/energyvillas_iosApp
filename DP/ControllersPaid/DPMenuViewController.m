@@ -82,6 +82,7 @@
 }
 
 - (void) changeRows:(int)rows columns:(int)columns {
+    // dismiss popover since the positioning will be wrong
     [self clearPopups];
     [super changeRows:rows columns:columns];
 }
@@ -97,9 +98,7 @@
 }
 
 - (void) doLayoutSubviews:(BOOL)fixtop {
-    // dismiss popover since the positioning will be wrong
-    [self clearPopups];
-    
+   
 //    CGRect vf = self.view.frame;
 //    int h = vf.size.height;//sv.bounds.size.height;
 //    int w = vf.size.width;//sv.bounds.size.width;

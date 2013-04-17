@@ -130,6 +130,9 @@
     else
         self.scrollView.frame = CGRectMake(0, 0, w, h);
     
+    NSLog(@"CALCFRAME:: class:'%@', frm=(%d,%d,%d,%f)",
+          [[self class] description], 0, 0, w, self.scrollView.frame.size.height);
+
 //    CGRect pcf = self.pageControl.frame;
     self.pageControl.frame = CGRectMake(0, h - PAGE_CONTROL_HEIGHT, //pcf.size.height,
                                         w, PAGE_CONTROL_HEIGHT);//pcf.size.height);
@@ -308,6 +311,11 @@
 }
 
 - (void) loadPage:(int)contentIndex inView:(UIView *)container frame:(CGRect)frame {
+    NSLog(@"LOADPAGE-FRAME:: class:'%@', frm=(%f,%f,%f,%f)",
+          [[self class] description],
+          frame.origin.x, frame.origin.y,
+          frame.size.width, frame.size.height);
+
     if ([self.dataDelegate respondsToSelector:@selector(loadPage:inView:frameSize:)])
         [self.dataDelegate loadPage:contentIndex inView:container frame:frame];
     else
