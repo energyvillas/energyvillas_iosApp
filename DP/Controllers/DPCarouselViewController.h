@@ -10,8 +10,9 @@
 #import "UINavContentViewController.h"
 #import "DPDataLoader.h"
 #import "AFOpenFlowView.h"
+#import "iCarousel.h"
 
-@interface DPCarouselViewController : UIViewController <AFOpenFlowViewDataSource, AFOpenFlowViewDelegate, DPDataLoaderDelegate>
+@interface DPCarouselViewController : UIViewController <AFOpenFlowViewDataSource, AFOpenFlowViewDelegate, DPDataLoaderDelegate, iCarouselDataSource, iCarouselDelegate>
 
 @property (nonatomic, readonly) int currentIndex;
 

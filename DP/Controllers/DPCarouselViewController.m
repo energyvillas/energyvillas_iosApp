@@ -15,6 +15,8 @@
 #import "DPImageContentViewController.h"
 #import "DPVimeoPlayerViewController.h"
 #import "DPHtmlContentViewController.h"
+#import "AsyncImageView.h"
+#import "FXImageView.h"
 
 @interface DPCarouselViewController ()
 
@@ -24,7 +26,10 @@
 @property (strong, nonatomic) NSArray *datalist;
 @property (strong, nonatomic) NSMutableArray *imageCache;
 @property (strong, nonatomic) AFOpenFlowView *carousel;
+
 @property int carouselCategoryID;
+
+@property (strong, nonatomic) iCarousel *icarousel;
 
 @end
 
@@ -60,7 +65,8 @@
 
 - (void)viewWillLayoutSubviews {
     [super viewWillLayoutSubviews];
-    [self loadOpenFlow];
+    //[self loadOpenFlow];
+    [self loadCarousel];
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -68,10 +74,15 @@
 }
 
 -(void) makeCurrentImageAtIndex:(int)indx {
-    _currentIndex = indx;
-    if (self.currentIndex != -1 && self.carousel)
-        [self.carousel setSelectedCover: self.currentIndex];
-
+    dispatch_async(dispatch_get_main_queue(), ^{
+        if (self.currentIndex != -1 && self.icarousel)
+            [self.icarousel setCurrentItemIndex:indx];
+    });
+//    _currentIndex = indx;
+//    if (self.currentIndex != -1 && self.icarousel)
+//        [self.icarousel setCurrentItemIndex:self.currentIndex];
+//    if (self.currentIndex != -1 && self.carousel)
+//        [self.carousel setSelectedCover: self.currentIndex];
 }
 
 //==============================================================================
@@ -150,7 +161,6 @@
     self.imageCache = [[NSMutableArray alloc] init];
     for (int i = 0; i < self.datalist.count; i ++)
         self.imageCache[i] = [NSNull null];
-    
 }
 
 - (void) dataLoaded {
@@ -158,10 +168,151 @@
     [self setupImageCache];
     
     dispatch_async(dispatch_get_main_queue(), ^{
-        [self loadOpenFlow];
+        //[self loadOpenFlow];
+        [self loadCarousel];
     });
 }
 #pragma mark END DPDataLoaderDelegate
+
+//==============================================================================
+
+-(void) loadCarousel {
+    if (self.datalist && self.datalist.count > 0) {
+        if (self.icarousel) {
+            [self.icarousel removeFromSuperview];
+            self.icarousel.dataSource = nil;
+            self.icarousel.delegate = nil;
+            self.icarousel = nil;
+        }
+        
+        CGRect frm = self.view.frame;
+        frm = CGRectMake(0, 0, frm.size.width, frm.size.height);
+        iCarousel *ofv = [[iCarousel alloc] initWithFrame:frm];
+        ofv.delegate = self;
+        ofv.dataSource = self;
+        ofv.type = iCarouselTypeCoverFlow2;
+        
+        
+        NSLog(@"2.carousel loaded %d articles", self.datalist.count);
+//        [ofv setNumberOfImages:self.datalist.count];
+        
+        self.icarousel = ofv;
+        [self.view addSubview:self.icarousel];
+        //[self makeCurrentImageAtIndex:self.currentIndex];
+    }  
+}
+
+- (CGFloat)carousel:(iCarousel *)carousel valueForOption:(iCarouselOption)option withDefault:(CGFloat)value
+{
+    //customize carousel display
+    switch (option)
+    {
+        case iCarouselOptionWrap:
+        {
+            //normally you would hard-code this to YES or NO
+            return NO;
+        }
+        case iCarouselOptionVisibleItems: {
+            return value;
+        }
+        case iCarouselOptionShowBackfaces: {
+            return NO;
+        }
+        case iCarouselOptionTilt:
+        {
+            return 0.7527f;
+        }
+        case iCarouselOptionSpacing:
+        {
+            //add a bit of spacing between the item views
+            return value * 1.973f;//1.05f;
+        }
+        case iCarouselOptionFadeMax:
+        {
+            if (carousel.type == iCarouselTypeCustom)
+            {
+                //set opacity based on distance from camera
+                return 0.0f;
+            }
+            return value;
+        }
+        default:
+        {
+            return value;
+        }
+    }
+}
+
+- (NSUInteger)numberOfItemsInCarousel:(iCarousel *)carousel
+{
+    //return the total number of items in the carousel
+    return self.datalist.count;
+}
+- (void)carouselCurrentItemIndexDidChange:(iCarousel *)carousel {
+    _currentIndex = carousel.currentItemIndex;
+}
+- (void)carousel:(iCarousel *)carousel didSelectItemAtIndex:(NSInteger)index {
+    if (index == carousel.currentItemIndex)
+        [self articleAtIndexTapped:index];
+}
+- (UIView *)carousel:(iCarousel *)carousel viewForItemAtIndex:(NSUInteger)index reusingView:(UIView *)view
+{
+//    //create new view if no view is available for recycling
+//    if (view == nil)
+//    {
+//        view = [[[AsyncImageView alloc] initWithFrame:CGRectMake(0, 0, 200.0f, 200.0f)] autorelease];
+//        view.contentMode = UIViewContentModeScaleAspectFit;
+//    }
+//    
+//    //cancel any previously loading images for this view
+//    [[AsyncImageLoader sharedLoader] cancelLoadingImagesForTarget:view];
+//    
+//    //set image URL. AsyncImageView class will then dynamically load the image
+//    ((AsyncImageView *)view).imageURL = [items objectAtIndex:index];
+//
+//    return view;
+    
+    //=======
+    NSLog(@"3.carousel requested article at index %d", index);
+    
+    Article *article = self.datalist[index];
+    NSString *imgName = article.imageThumbUrl ? article.imageThumbUrl : article.imageUrl;
+    if (isLocalUrl(imgName)) {
+        imgName = [self calcImageName:imgName];
+        UIImage *img = [UIImage imageNamed:imgName];
+        CGRect frm = CGRectMake(0, 0, img.size.width, img.size.height);
+        UIImageView *imageView = [[UIImageView alloc] initWithFrame:frm];
+        
+//        FXImageView *imageView = [[FXImageView alloc] initWithFrame:frm];
+//        imageView.contentMode = UIViewContentModeCenter;
+//        imageView.asynchronous = YES;
+//        imageView.reflectionScale = 0.5f;
+//        imageView.reflectionAlpha = 0.25f;
+//        imageView.reflectionGap = 10.0f;
+//        imageView.shadowOffset = CGSizeMake(0.0f, 2.0f);
+//        imageView.shadowBlur = 5.0f;
+        //imageView.cornerRadius = 10.0f;
+        imageView.layer.doubleSided = NO;
+        imageView.image = img;
+        return imageView;
+    } else {
+        // Check if image already exists in cache. If yes retrieve it from there, else go to internet...
+        AsyncImageView *aiv = [[AsyncImageView alloc] initWithFrame:CGRectInset(self.icarousel.bounds, -30, -10)];
+        aiv.contentMode = UIViewContentModeCenter;
+
+        //set image URL. AsyncImageView class will then dynamically load the image
+        aiv.imageURL = [NSURL URLWithString:imgName];
+        return aiv;
+
+//        if(self.imageCache[index] != [NSNull null]) {
+//            UIImage *img = [UIImage imageWithData:self.imageCache[index]];
+//            [openFlowView setImage:img forIndex:index];
+//        }else{
+//            [self downloadImageUrl:imgName atIndex:index];
+//        }
+    }
+
+}
 
 //==============================================================================
 
@@ -194,7 +345,10 @@
 
 - (void) openFlowView:(AFOpenFlowView *)openFlowView
                 click:(int)index {
-    
+    [self articleAtIndexTapped:index];
+}
+
+-(void) articleAtIndexTapped:(int)index {
     Article *article = self.datalist[index];
     
     if (article.body != nil) {

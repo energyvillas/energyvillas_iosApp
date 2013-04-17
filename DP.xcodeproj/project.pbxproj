@@ -95,6 +95,10 @@
 		5EC255F81701054A0045AB99 /* DPCategoryView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5EC255F71701054A0045AB99 /* DPCategoryView.xib */; };
 		5EC48CDB1714B7CF00A9566E /* testView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5EC48CDA1714B7CF00A9566E /* testView.xib */; };
 		5EC48CDE1714BF7E00A9566E /* DPBuyContentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EC48CDD1714BF7E00A9566E /* DPBuyContentViewController.m */; };
+		5ED20279171E9624006AC1FC /* iCarousel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5ED20278171E9624006AC1FC /* iCarousel.m */; };
+		5ED2027D171E99F7006AC1FC /* AsyncImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5ED2027C171E99F7006AC1FC /* AsyncImageView.m */; };
+		5ED20283171EA757006AC1FC /* FXImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5ED20280171EA757006AC1FC /* FXImageView.m */; };
+		5ED20284171EA757006AC1FC /* UIImage+FX.m in Sources */ = {isa = PBXBuildFile; fileRef = 5ED20282171EA757006AC1FC /* UIImage+FX.m */; };
 		5EDF095B170C9CBE00774682 /* Icon-72.png in Resources */ = {isa = PBXBuildFile; fileRef = 5EDF0957170C9CBE00774682 /* Icon-72.png */; };
 		5EDF095C170C9CBE00774682 /* Icon-72@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5EDF0958170C9CBE00774682 /* Icon-72@2x.png */; };
 		5EDF095D170C9CBE00774682 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 5EDF0959170C9CBE00774682 /* Icon.png */; };
@@ -272,6 +276,14 @@
 		5EC48CDA1714B7CF00A9566E /* testView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = testView.xib; sourceTree = "<group>"; };
 		5EC48CDC1714BF7E00A9566E /* DPBuyContentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPBuyContentViewController.h; sourceTree = "<group>"; };
 		5EC48CDD1714BF7E00A9566E /* DPBuyContentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPBuyContentViewController.m; sourceTree = "<group>"; };
+		5ED20277171E9624006AC1FC /* iCarousel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iCarousel.h; sourceTree = "<group>"; };
+		5ED20278171E9624006AC1FC /* iCarousel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iCarousel.m; sourceTree = "<group>"; };
+		5ED2027B171E99F7006AC1FC /* AsyncImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AsyncImageView.h; sourceTree = "<group>"; };
+		5ED2027C171E99F7006AC1FC /* AsyncImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AsyncImageView.m; sourceTree = "<group>"; };
+		5ED2027F171EA757006AC1FC /* FXImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FXImageView.h; sourceTree = "<group>"; };
+		5ED20280171EA757006AC1FC /* FXImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FXImageView.m; sourceTree = "<group>"; };
+		5ED20281171EA757006AC1FC /* UIImage+FX.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+FX.h"; sourceTree = "<group>"; };
+		5ED20282171EA757006AC1FC /* UIImage+FX.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+FX.m"; sourceTree = "<group>"; };
 		5EDF0957170C9CBE00774682 /* Icon-72.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-72.png"; sourceTree = "<group>"; };
 		5EDF0958170C9CBE00774682 /* Icon-72@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-72@2x.png"; sourceTree = "<group>"; };
 		5EDF0959170C9CBE00774682 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
@@ -458,6 +470,9 @@
 		5E71A3D816F9991000E7AFF9 /* External */ = {
 			isa = PBXGroup;
 			children = (
+				5ED20276171E9624006AC1FC /* iCarousel */,
+				5ED2027A171E99F7006AC1FC /* AsyncImageView */,
+				5ED2027E171EA757006AC1FC /* FXImageView */,
 				5EC255A216FF29190045AB99 /* ASIHttpRequest */,
 				5EC2558116FC71BD0045AB99 /* IAPHelper */,
 				5E71A3D916F9991000E7AFF9 /* Components */,
@@ -674,6 +689,35 @@
 			path = ViewsPaid;
 			sourceTree = "<group>";
 		};
+		5ED20276171E9624006AC1FC /* iCarousel */ = {
+			isa = PBXGroup;
+			children = (
+				5ED20277171E9624006AC1FC /* iCarousel.h */,
+				5ED20278171E9624006AC1FC /* iCarousel.m */,
+			);
+			path = iCarousel;
+			sourceTree = "<group>";
+		};
+		5ED2027A171E99F7006AC1FC /* AsyncImageView */ = {
+			isa = PBXGroup;
+			children = (
+				5ED2027B171E99F7006AC1FC /* AsyncImageView.h */,
+				5ED2027C171E99F7006AC1FC /* AsyncImageView.m */,
+			);
+			path = AsyncImageView;
+			sourceTree = "<group>";
+		};
+		5ED2027E171EA757006AC1FC /* FXImageView */ = {
+			isa = PBXGroup;
+			children = (
+				5ED2027F171EA757006AC1FC /* FXImageView.h */,
+				5ED20280171EA757006AC1FC /* FXImageView.m */,
+				5ED20281171EA757006AC1FC /* UIImage+FX.h */,
+				5ED20282171EA757006AC1FC /* UIImage+FX.m */,
+			);
+			path = FXImageView;
+			sourceTree = "<group>";
+		};
 		5EDF0956170C9CBE00774682 /* Icons */ = {
 			isa = PBXGroup;
 			children = (
@@ -846,6 +890,10 @@
 				5EC48CDE1714BF7E00A9566E /* DPBuyContentViewController.m in Sources */,
 				5E8AB0CC171706D1004AFE76 /* UIImage+Retina4.m in Sources */,
 				5EC20D10171DAD0F006E03B7 /* DPCarouselViewController.m in Sources */,
+				5ED20279171E9624006AC1FC /* iCarousel.m in Sources */,
+				5ED2027D171E99F7006AC1FC /* AsyncImageView.m in Sources */,
+				5ED20283171EA757006AC1FC /* FXImageView.m in Sources */,
+				5ED20284171EA757006AC1FC /* UIImage+FX.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
