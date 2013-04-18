@@ -167,14 +167,14 @@
 		5E4E85201711F947005DAD06 /* DPAnimatedScrollViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPAnimatedScrollViewController.h; sourceTree = "<group>"; };
 		5E4E85211711F947005DAD06 /* DPAnimatedScrollViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPAnimatedScrollViewController.m; sourceTree = "<group>"; };
 		5E4E8526171227BF005DAD06 /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
-		5E71A3B416F9973500E7AFF9 /* DP.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DP.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		5E71A3B416F9973500E7AFF9 /* energyVillas.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = energyVillas.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5E71A3B716F9973500E7AFF9 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		5E71A3B916F9973500E7AFF9 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		5E71A3BB16F9973500E7AFF9 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
-		5E71A3BF16F9973500E7AFF9 /* DP-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "DP-Info.plist"; sourceTree = "<group>"; };
+		5E71A3BF16F9973500E7AFF9 /* energyVillas-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "energyVillas-Info.plist"; sourceTree = "<group>"; };
 		5E71A3C116F9973500E7AFF9 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		5E71A3C316F9973500E7AFF9 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		5E71A3C516F9973500E7AFF9 /* DP-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "DP-Prefix.pch"; sourceTree = "<group>"; };
+		5E71A3C516F9973500E7AFF9 /* energyVillas-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "energyVillas-Prefix.pch"; sourceTree = "<group>"; };
 		5E71A3C616F9973500E7AFF9 /* DPAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DPAppDelegate.h; sourceTree = "<group>"; };
 		5E71A3C716F9973500E7AFF9 /* DPAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DPAppDelegate.m; sourceTree = "<group>"; };
 		5E71A3C916F9973500E7AFF9 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
@@ -376,7 +376,7 @@
 		5E71A3B516F9973500E7AFF9 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				5E71A3B416F9973500E7AFF9 /* DP.app */,
+				5E71A3B416F9973500E7AFF9 /* energyVillas.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -421,11 +421,11 @@
 		5E71A3BE16F9973500E7AFF9 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				5E71A3BF16F9973500E7AFF9 /* DP-Info.plist */,
+				5E71A3BF16F9973500E7AFF9 /* energyVillas-Info.plist */,
 				5E71A3C016F9973500E7AFF9 /* InfoPlist.strings */,
 				5EC255D416FF95040045AB99 /* Localizable.strings */,
 				5E71A3C316F9973500E7AFF9 /* main.m */,
-				5E71A3C516F9973500E7AFF9 /* DP-Prefix.pch */,
+				5E71A3C516F9973500E7AFF9 /* energyVillas-Prefix.pch */,
 				5E71A3C916F9973500E7AFF9 /* Default.png */,
 				5E71A3CB16F9973500E7AFF9 /* Default@2x.png */,
 				5E71A3CD16F9973500E7AFF9 /* Default-568h@2x.png */,
@@ -732,9 +732,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		5E71A3B316F9973500E7AFF9 /* DP */ = {
+		5E71A3B316F9973500E7AFF9 /* energyVillas */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 5E71A3D116F9973500E7AFF9 /* Build configuration list for PBXNativeTarget "DP" */;
+			buildConfigurationList = 5E71A3D116F9973500E7AFF9 /* Build configuration list for PBXNativeTarget "energyVillas" */;
 			buildPhases = (
 				5E71A3B016F9973500E7AFF9 /* Sources */,
 				5E71A3B116F9973500E7AFF9 /* Frameworks */,
@@ -744,9 +744,9 @@
 			);
 			dependencies = (
 			);
-			name = DP;
+			name = energyVillas;
 			productName = DP;
-			productReference = 5E71A3B416F9973500E7AFF9 /* DP.app */;
+			productReference = 5E71A3B416F9973500E7AFF9 /* energyVillas.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -759,7 +759,7 @@
 				LastUpgradeCheck = 0460;
 				ORGANIZATIONNAME = "Γεώργιος Γράβος";
 			};
-			buildConfigurationList = 5E71A3AF16F9973500E7AFF9 /* Build configuration list for PBXProject "DP" */;
+			buildConfigurationList = 5E71A3AF16F9973500E7AFF9 /* Build configuration list for PBXProject "energyVillas" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -772,7 +772,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				5E71A3B316F9973500E7AFF9 /* DP */,
+				5E71A3B316F9973500E7AFF9 /* energyVillas */,
 			);
 		};
 /* End PBXProject section */
@@ -983,10 +983,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "DP/DP-Prefix.pch";
-				INFOPLIST_FILE = "DP/DP-Info.plist";
+				GCC_PREFIX_HEADER = "DP/energyVillas-Prefix.pch";
+				INFOPLIST_FILE = "DP/energyVillas-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = energyVillas;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -995,10 +995,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "DP/DP-Prefix.pch";
-				INFOPLIST_FILE = "DP/DP-Info.plist";
+				GCC_PREFIX_HEADER = "DP/energyVillas-Prefix.pch";
+				INFOPLIST_FILE = "DP/energyVillas-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = energyVillas;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
@@ -1006,7 +1006,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		5E71A3AF16F9973500E7AFF9 /* Build configuration list for PBXProject "DP" */ = {
+		5E71A3AF16F9973500E7AFF9 /* Build configuration list for PBXProject "energyVillas" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				5E71A3CF16F9973500E7AFF9 /* Debug */,
@@ -1015,7 +1015,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		5E71A3D116F9973500E7AFF9 /* Build configuration list for PBXNativeTarget "DP" */ = {
+		5E71A3D116F9973500E7AFF9 /* Build configuration list for PBXNativeTarget "energyVillas" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				5E71A3D216F9973500E7AFF9 /* Debug */,

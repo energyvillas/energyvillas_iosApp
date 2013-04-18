@@ -82,7 +82,8 @@
 
 -(void) doFixFrames:(UIViewController *)viewController fixTop:(BOOL)fixtop {
     [self fixFrames:NO];
-    if (viewController && [viewController isKindOfClass:[UINavContentViewController class]])            [(UINavContentViewController *)viewController doLayoutSubViews:fixtop];
+    if (viewController && [viewController isKindOfClass:[UINavContentViewController class]])
+        [(UINavContentViewController *)viewController doLayoutSubViews:fixtop];
 }
 
 - (void) fixFrames:(BOOL)fixNavView {
