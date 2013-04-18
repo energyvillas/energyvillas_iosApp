@@ -83,7 +83,6 @@
 		5EC255C516FF4C980045AB99 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5EC255C416FF4C970045AB99 /* CFNetwork.framework */; };
 		5EC255C716FF4CB30045AB99 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5EC255C616FF4CB20045AB99 /* MobileCoreServices.framework */; };
 		5EC255C916FF4CBD0045AB99 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5EC255C816FF4CBC0045AB99 /* SystemConfiguration.framework */; };
-		5EC255CB16FF4D150045AB99 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 5EC255CA16FF4D150045AB99 /* libz.dylib */; };
 		5EC255D216FF95040045AB99 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5EC255D416FF95040045AB99 /* Localizable.strings */; };
 		5EC255DF16FFB1BF0045AB99 /* DPHtmlContentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EC255DE16FFB1BF0045AB99 /* DPHtmlContentViewController.m */; };
 		5EC255E5170090A10045AB99 /* Article.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EC255E2170090A10045AB99 /* Article.m */; };
@@ -99,6 +98,7 @@
 		5ED2027D171E99F7006AC1FC /* AsyncImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5ED2027C171E99F7006AC1FC /* AsyncImageView.m */; };
 		5ED20283171EA757006AC1FC /* FXImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5ED20280171EA757006AC1FC /* FXImageView.m */; };
 		5ED20284171EA757006AC1FC /* UIImage+FX.m in Sources */ = {isa = PBXBuildFile; fileRef = 5ED20282171EA757006AC1FC /* UIImage+FX.m */; };
+		5ED20286171F096E006AC1FC /* libz.1.2.5.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 5ED20285171F096E006AC1FC /* libz.1.2.5.dylib */; };
 		5EDF095B170C9CBE00774682 /* Icon-72.png in Resources */ = {isa = PBXBuildFile; fileRef = 5EDF0957170C9CBE00774682 /* Icon-72.png */; };
 		5EDF095C170C9CBE00774682 /* Icon-72@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5EDF0958170C9CBE00774682 /* Icon-72@2x.png */; };
 		5EDF095D170C9CBE00774682 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 5EDF0959170C9CBE00774682 /* Icon.png */; };
@@ -255,7 +255,6 @@
 		5EC255C416FF4C970045AB99 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		5EC255C616FF4CB20045AB99 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		5EC255C816FF4CBC0045AB99 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
-		5EC255CA16FF4D150045AB99 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		5EC255D316FF95040045AB99 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		5EC255D516FF95CA0045AB99 /* el */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = el; path = el.lproj/Localizable.strings; sourceTree = "<group>"; };
 		5EC255D616FF95CA0045AB99 /* el */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = el; path = el.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -284,6 +283,7 @@
 		5ED20280171EA757006AC1FC /* FXImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FXImageView.m; sourceTree = "<group>"; };
 		5ED20281171EA757006AC1FC /* UIImage+FX.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+FX.h"; sourceTree = "<group>"; };
 		5ED20282171EA757006AC1FC /* UIImage+FX.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+FX.m"; sourceTree = "<group>"; };
+		5ED20285171F096E006AC1FC /* libz.1.2.5.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.1.2.5.dylib; path = usr/lib/libz.1.2.5.dylib; sourceTree = SDKROOT; };
 		5EDF0957170C9CBE00774682 /* Icon-72.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-72.png"; sourceTree = "<group>"; };
 		5EDF0958170C9CBE00774682 /* Icon-72@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-72@2x.png"; sourceTree = "<group>"; };
 		5EDF0959170C9CBE00774682 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
@@ -323,10 +323,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5ED20286171F096E006AC1FC /* libz.1.2.5.dylib in Frameworks */,
 				5EC20D0D171D5D81006E03B7 /* AudioToolbox.framework in Frameworks */,
 				5E4E8527171227C2005DAD06 /* CoreText.framework in Frameworks */,
 				5E486C5D170260980040F165 /* MediaPlayer.framework in Frameworks */,
-				5EC255CB16FF4D150045AB99 /* libz.dylib in Frameworks */,
 				5EC255C916FF4CBD0045AB99 /* SystemConfiguration.framework in Frameworks */,
 				5EC255C716FF4CB30045AB99 /* MobileCoreServices.framework in Frameworks */,
 				5EC255C516FF4C980045AB99 /* CFNetwork.framework in Frameworks */,
@@ -384,7 +384,7 @@
 		5E71A3B616F9973500E7AFF9 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				5EC255CA16FF4D150045AB99 /* libz.dylib */,
+				5ED20285171F096E006AC1FC /* libz.1.2.5.dylib */,
 				5EC20D0C171D5D81006E03B7 /* AudioToolbox.framework */,
 				5E4E8526171227BF005DAD06 /* CoreText.framework */,
 				5E486C5C170260980040F165 /* MediaPlayer.framework */,
