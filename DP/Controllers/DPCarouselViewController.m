@@ -359,7 +359,7 @@
 //        imageView.reflectionGap = 10.0f;
 //        imageView.shadowOffset = CGSizeMake(0.0f, 2.0f);
 //        imageView.shadowBlur = 5.0f;
-        //imageView.cornerRadius = 10.0f;
+//        imageView.cornerRadius = 10.0f;
         imageView.layer.doubleSided = NO;
         imageView.image = img;
         return imageView;

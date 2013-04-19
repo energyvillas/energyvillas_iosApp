@@ -20,6 +20,14 @@
 
 "IMAGE_RESET_MENU"="Επαναφορά";
 
+//social btns
+"SOCIAL_BTN_01"="Facebook";
+"SOCIAL_BTN_02"="Twitter";
+"SOCIAL_BTN_03"="LinkedIn";
+"SOCIAL_BTN_04"="eMail";
+"SOCIAL_BTN_05"="Αγαπημένα";
+"SOCIAL_BTN_06"="Άλλο";
+"SOCIAL_BTN_Close"="Κλείσιμο";
 
 /* ======= FREE ====== */
 "bbiMore_Title"="περισσότερα";

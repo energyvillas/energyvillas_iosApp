@@ -187,6 +187,8 @@
 
 - (int) calcPageCount {
     int rc = self.rowCount * self.colCount;
+    if (rc == 0) return 0;
+    
 	int pageCount = self.contentList.count / rc + (self.contentList.count % rc > 0 ? 1 : 0);
     return pageCount;
 }

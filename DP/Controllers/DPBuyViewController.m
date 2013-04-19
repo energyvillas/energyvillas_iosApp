@@ -61,6 +61,7 @@
     
     [self doLocalize];
     [self prepareBuyBtn];
+    [self doLayoutSubViews:NO];
 }
 
 - (void) doLocalize {
@@ -72,8 +73,6 @@
     
     [self.btnBuy setTitle:[self buyBtnTitle] // TODO:GGSE
                  forState:UIControlStateNormal];
-    
-    [self doLayoutSubViews:NO];
 }
 
 - (NSString *) buyBtnTitle {

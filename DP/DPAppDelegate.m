@@ -14,6 +14,7 @@
 #import "DPConstants.h"
 #import "DPAppHelper.h"
 #import "UIImage+Retina4.h"
+#import <FacebookSDK/FacebookSDK.h>
 
 @implementation DPAppDelegate
 
@@ -69,9 +70,23 @@ void myExceptionHandler (NSException *exception)
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
 }
 
-- (void)applicationWillTerminate:(UIApplication *)application
-{
-    // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+- (BOOL)application:(UIApplication *)application
+            openURL:(NSURL *)url
+  sourceApplication:(NSString *)sourceApplication
+         annotation:(id)annotation {
+    return [FBSession.activeSession handleOpenURL:url];
 }
+
+//- (void)applicationWillTerminate:(UIApplication *)application
+//{
+//    // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+//}
+// FBSample logic
+// It is important to close any FBSession object that is no longer useful
+- (void)applicationWillTerminate:(UIApplication *)application {
+    [FBSession.activeSession close];
+}
+
+
 
 @end

@@ -8,6 +8,7 @@
 
 #import "UINavContentViewController.h"
 //#import "AFOpenFlowView.h"
+#import "MessageUI/MessageUI.h"
 
 @protocol DPBuyAppProtocol <NSObject>
 
@@ -17,7 +18,7 @@
 
 
 @interface DPRootViewController : UINavContentViewController
-    <DPBuyAppProtocol>
+    <DPBuyAppProtocol, DPActionDelegate, MFMailComposeViewControllerDelegate >
 
 @property (strong, nonatomic) IBOutlet UIView *topView;
 @property (strong, nonatomic) IBOutlet UIToolbar *toolbar;

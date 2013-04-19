@@ -12,6 +12,7 @@
 #import "DPConstants.h"
 #import "DPAppHelper.h"
 
+
 @interface UINavContentViewController ()
 
 @property (strong, nonatomic) UIButton *navbarTitleItemButton;
@@ -324,6 +325,14 @@ NSString *const NAVBAR_SHARE_SEL_IMG = @"Navbar/share_roll.png";
     return button;
 }
 
+-(BOOL) doOnTapped:(id)sender {
+    if (self.actionDelegate) {
+        [self.actionDelegate onTapped:sender];
+        return YES;
+    }
+    return NO;
+}
+
 // PENDING use a delegate protocol form handling clicks
 - (void) onNavButtonTapped: (id) sender {
     UIBarButtonItem *bbi = (UIBarButtonItem *)sender;
@@ -344,6 +353,7 @@ NSString *const NAVBAR_SHARE_SEL_IMG = @"Navbar/share_roll.png";
             
         case TAG_NBI_SHARE:
             // do stuff
+            [self doOnTapped:sender];
             break;
             
         default:

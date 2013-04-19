@@ -28,4 +28,5 @@
 - (id) initWithCategoryId:(int)ctgid completion:(void (^)(void))completion;
 
 -(CGRect) calcFrame;
+
 @end

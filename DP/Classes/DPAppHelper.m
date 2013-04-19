@@ -93,7 +93,7 @@
 }
 
 - (BOOL) calcIsPurchased {
-    return YES;
+    //return YES;
     
     NSUserDefaults *usrDefaults = [NSUserDefaults standardUserDefaults];
     BOOL productPurchased = [usrDefaults boolForKey:PRODUCT_IDENTIFIER];

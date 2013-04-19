@@ -40,6 +40,14 @@ FOUNDATION_EXPORT NSString *const MySecondConstant;
 #define AUTO_SCROLL_INTERVAL ((float) 5.0)
 #define USER_SCROLL_INTERVAL ((float) 60.0)
 
+// social button tags
+#define SOCIAL_ACT_FACEBOOK ((int)1)
+#define SOCIAL_ACT_TWITTER ((int)2)
+#define SOCIAL_ACT_LINKEDIN ((int)3)
+#define SOCIAL_ACT_EMAIL ((int)4)
+#define SOCIAL_ACT_FAVS ((int)5)
+#define SOCIAL_ACT_OTHER ((int)6)
+
 //navbar items
 #define TAG_NBI_LANG_EN ((int)101)
 #define TAG_NBI_LANG_EL ((int)102)
