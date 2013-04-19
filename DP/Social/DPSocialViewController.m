@@ -75,9 +75,10 @@
 }
 
 - (void) willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [self doOnBtnTap:-1];
-    });
+    if (!IS_IPAD)
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self doOnBtnTap:-1];
+        });
 }
 
 - (void)didReceiveMemoryWarning

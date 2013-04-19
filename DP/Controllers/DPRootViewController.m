@@ -171,7 +171,7 @@
                                  self.socialController = nil;
                                  
                                  if (indx == -1)
-                                     [self showSocialsDialog];
+                                     ;//[self showSocialsDialog];
                                  else if (indx > 0)
                                      [self launchSocialAction:indx];
                              }];
@@ -342,7 +342,7 @@
         self.buyController = nil;
         [self showBuyDialog:ctgid];
     }
-    if (/*IS_IPAD && */self.socialController) {
+    if (IS_IPAD && self.socialController) {
         //int ctgid = self.socialController.category;
         [self.navigationController dismissViewControllerAnimated:NO completion:nil];
         self.view.userInteractionEnabled = YES;
