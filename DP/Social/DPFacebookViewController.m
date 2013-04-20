@@ -102,4 +102,24 @@
     [self.loginDialog logout];
     [self refresh];
 }
+
+//==============================================================================
+#pragma mark - nav bar button selection
+//- (BOOL) showNavBar {
+//    return self.navigationController != nil;
+//}
+//- (BOOL) showNavBarLanguages {
+//    return YES;
+//}
+//- (BOOL) showNavBarAddToFav {
+//    return NO;
+//}
+//- (BOOL) showNavBarSocial {
+//    return NO;
+//}
+//- (BOOL) showNavBarInfo {
+//    return YES;
+//}
+//==============================================================================
+
 @end
