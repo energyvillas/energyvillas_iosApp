@@ -10,10 +10,10 @@
 #import "Category.h"
 
 
-#define IPHONE_CARD_WIDTH ((int)80)
-#define IPHONE_CARD_HEIGHT ((int)80)
-#define IPAD_CARD_WIDTH ((int)160)
-#define IPAD_CARD_HEIGHT ((int)160)
+#define IPHONE_CARD_WIDTH ((int)90)
+#define IPHONE_CARD_HEIGHT ((int)90)
+#define IPAD_CARD_WIDTH ((int)180)
+#define IPAD_CARD_HEIGHT ((int)180)
 
 #define DURATION_ZOOM ((NSTimeInterval)0.1)
 
