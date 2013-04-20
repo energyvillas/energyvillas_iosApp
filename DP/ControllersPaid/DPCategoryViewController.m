@@ -107,10 +107,16 @@
     CGRect vf = self.view.frame;
 //    CGRect svf = self.view.superview.frame;
 //    fixtop = NO;
-    int h = IS_PORTRAIT ? vf.size.height : vf.size.height - vf.origin.y;
+//    int h = IS_PORTRAIT ? vf.size.height : vf.size.height - vf.origin.y;
+//    int w = vf.size.width;
+//    int top = fixtop ? vf.origin.y : 0;
+    
+    int h = vf.size.height - vf.origin.y;
     int w = vf.size.width;
     int top = fixtop ? vf.origin.y : 0;
     
+    NSLog(@"############## DPCategoryView - h = %d, top = %d", h, top);
+
     // iphone sizes
     int H_ADS = 60;
     int H_MENU = 92;//80;
@@ -180,17 +186,31 @@
 - (void) loadCategoryView {    
     if (category == 0)
         return;
-    
+
+//    if (self.ctgViewController)
+//    {
+//        [self.ctgViewController.view removeFromSuperview];
+//        [self.ctgViewController removeFromParentViewController];
+//        self.ctgViewController = nil;
+//    }
+//
+//    self.ctgViewController = [[DPAnimatedScrollViewController alloc] initWithCategory:category isLeaf:NO frame:self.actualCtgView.bounds];
+//    
+//    [self addChildViewController:self.ctgViewController];
+//    [self.actualCtgView addSubview:self.ctgViewController.view];
+
     if (self.actualCtgView.subviews.count == 0)
     {
-        self.ctgViewController = [[DPAnimatedScrollViewController alloc] initWithCategory:category isLeaf:NO];
+        self.ctgViewController = [[DPAnimatedScrollViewController alloc] initWithCategory:category
+                                                                                   isLeaf:NO
+                                                                                    frame:self.actualCtgView.bounds];
         
-        self.ctgViewController.view.frame = self.actualCtgView.bounds;
+        //[self.ctgViewController changeFrame:self.actualCtgView.bounds];
         [self addChildViewController:self.ctgViewController];
         [self.actualCtgView addSubview:self.ctgViewController.view];
     }
     else {
-        self.ctgViewController.view.frame = self.actualCtgView.bounds;
+        [self.ctgViewController changeFrame:self.actualCtgView.bounds];
         [self.ctgViewController changeRows:1 columns:1];
     }
 }

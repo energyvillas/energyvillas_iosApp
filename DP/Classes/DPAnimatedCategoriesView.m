@@ -11,7 +11,7 @@
 #import "DPConstants.h"
 #import <Quartzcore/Quartzcore.h>
 
-#define DURATION_MOVE ((NSTimeInterval)10.0)
+#define DURATION_MOVE ((NSTimeInterval)5.0)
 
 @interface DPAnimatedCategoriesView () {
     int maxX;
@@ -162,7 +162,7 @@
             DPCtgCardView *oldcard = oldCurrent; //self.cards[oldCurrent];
             self.currentCard = nil/*-1*/;
             [self cancelCardZoom:oldcard duration:zoomDuration];
-            [self animateCard:oldcard to:[self calcNewCenter] duration:moveDuration];
+            [self animateCard:oldcard to:[self calcNewCenter:oldcard] duration:moveDuration];
         } else if (self.currentCard == oldCurrent) {
             // stop ALL animations
             // launch the card's sub view
@@ -179,7 +179,7 @@
             DPCtgCardView *currcard = self.currentCard;//self.cards[self.currentCard];
             
             [self cancelCardZoom:oldcard duration:zoomDuration];
-            [self animateCard:oldcard to:[self calcNewCenter] duration:moveDuration];
+            [self animateCard:oldcard to:[self calcNewCenter:oldcard] duration:moveDuration];
             
             // stop
             [self cancelCardAnimation:currcard];
@@ -220,7 +220,7 @@
 
 - (void) animateCards:(NSTimeInterval)duration {
     for (id card in self.cards)
-        [self animateCard:card to:[self calcNewCenter] duration:duration];
+        [self animateCard:card to:[self calcNewCenter:card] duration:duration];
     
 }
 
@@ -246,7 +246,7 @@
                              return;
                          
                          dispatch_async(dispatch_get_main_queue(), ^{
-                             [self animateCard:card to:[self calcNewCenter] duration:duration];
+                             [self animateCard:card to:[self calcNewCenter:card] duration:duration];
                          });
                      }
      ];
@@ -278,7 +278,8 @@
 - (void) zoomCard:(DPCtgCardView *)card duration:(NSTimeInterval)duration {
     [self bringCardForward:card];
 
-    [card zoomCard:duration];
+    [card zoomCard:duration position:CGPointMake(self.bounds.size.width / 2.0,
+                                                 self.bounds.size.height / 2.0)];
 }
 
 - (void) cancelCardZoom:(DPCtgCardView *)card duration:(NSTimeInterval)duration {
@@ -299,18 +300,60 @@
 //    return indx;
 //}
 
-- (CGPoint) calcNewCenter {
+- (CGPoint) calcNewCenter:(DPCtgCardView *)target {
     [self calcSizes];
+
+    NSLog(@"max (X, Y) = (%d, %d)", maxX, maxY);
+    NSLogFrame(@"CARDS CONTAINER FRAME", self.frame);
+    NSLogFrame(@"CARDS CONTAINER BOUNDS", self.bounds);
+
+    CGPoint c = target.center;
+    BOOL atLeft = c.x < (maxX / 2);
+    BOOL atTop = c.y < (maxY / 2);
     
-    return CGPointMake((arc4random() % maxX) + ofsX,
-                       (arc4random() % maxY) + ofsY);
+    BOOL flipHorz = (arc4random() % 2) == 0;
+    BOOL toLeft = flipHorz ? !atLeft : atLeft;
+    BOOL flipVert = flipHorz || (arc4random() % 2) == 0;
+    BOOL toTop = flipVert ? !atTop : atTop;
+    
+    CGFloat x = (arc4random() % (maxX / 2)) + (toLeft ? 0 : (maxX / 2));
+    CGFloat y = (arc4random() % (maxY / 2)) + (toTop ? 0 : (maxY / 2));
+    NSLog(@"random (X, Y) = (%.0f, %.0f)", x, y);
+    
+    int edge = (arc4random() % 3) == 0;
+    if (edge == 0) {
+        if (toLeft)
+            x = x < ofsX ? ofsX : x;
+        else
+            x = x > (maxX - ofsX) ? maxX - ofsX : x;
+        y = toTop ? ofsY : maxY - ofsY;
+    } else if (edge == 1) {
+        x = toLeft ? ofsX : maxX - ofsX;
+        if (toTop)
+            y = y < ofsY ? ofsY : y;
+        else
+            y = y > (maxY - ofsY) ? maxY - ofsY : y;
+    } else {
+        if (toLeft)
+            x = x < ofsX ? ofsX : x;
+        else
+            x = x > (maxX - ofsX) ? maxX - ofsX : x;
+
+        if (toTop)
+            y = y < ofsY ? ofsY : y;
+        else
+            y = y > (maxY - ofsY) ? maxY - ofsY : y;
+    }
+    
+    NSLog(@"NEW CENTER : (%.0f, %.0f)", x, y);
+    return CGPointMake(x, y);
 }
 
 - (void) calcSizes {
-    if (maxX > 0) return; // means we have done it.
+//    if (maxX > 0) return; // means we have done it.
     CGSize containerSize = self.frame.size;
-    maxX = containerSize.width - self.cardSize.width;
-    maxY = containerSize.height - self.cardSize.height;
+    maxX = containerSize.width;// - self.cardSize.width;
+    maxY = containerSize.height;// - self.cardSize.height;
     ofsX = self.cardSize.width / 2;
     ofsY = self.cardSize.height / 2;
     NSLogFrame(@"ANIM frame", self.frame);
@@ -328,7 +371,7 @@
         DPCtgCardView *card = [[DPCtgCardView alloc]
                                initWithFrame:CGRectMake(rx, ry, self.cardSize.width, self.cardSize.height)
                                     category:self.categories[i]];
-        
+        card.center = [self calcNewCenter:card];        
         [mcards addObject:card];
     }
     self.cards = mcards;

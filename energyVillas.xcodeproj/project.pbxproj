@@ -48,6 +48,9 @@
 		5E4E85221711F948005DAD06 /* DPAnimatedScrollViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E4E85211711F947005DAD06 /* DPAnimatedScrollViewController.m */; };
 		5E4E8527171227C2005DAD06 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E4E8526171227BF005DAD06 /* CoreText.framework */; };
 		5E5F949F17213BF5006C9A88 /* Social in Resources */ = {isa = PBXBuildFile; fileRef = 5E5F949E17213BF5006C9A88 /* Social */; };
+		5E5F94A117219177006C9A88 /* menu_v~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 5E5F94A017219177006C9A88 /* menu_v~iphone.png */; };
+		5E5F94A61722C0EC006C9A88 /* balloon_roll~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 5E5F94A41722C0EB006C9A88 /* balloon_roll~iphone.png */; };
+		5E5F94A71722C0EC006C9A88 /* balloon~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 5E5F94A51722C0EB006C9A88 /* balloon~iphone.png */; };
 		5E71A3B816F9973500E7AFF9 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E71A3B716F9973500E7AFF9 /* UIKit.framework */; };
 		5E71A3BA16F9973500E7AFF9 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E71A3B916F9973500E7AFF9 /* Foundation.framework */; };
 		5E71A3BC16F9973500E7AFF9 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E71A3BB16F9973500E7AFF9 /* CoreGraphics.framework */; };
@@ -201,6 +204,9 @@
 		5E4E85211711F947005DAD06 /* DPAnimatedScrollViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPAnimatedScrollViewController.m; sourceTree = "<group>"; };
 		5E4E8526171227BF005DAD06 /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
 		5E5F949E17213BF5006C9A88 /* Social */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Social; sourceTree = "<group>"; };
+		5E5F94A017219177006C9A88 /* menu_v~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "menu_v~iphone.png"; sourceTree = "<group>"; };
+		5E5F94A41722C0EB006C9A88 /* balloon_roll~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "balloon_roll~iphone.png"; sourceTree = "<group>"; };
+		5E5F94A51722C0EB006C9A88 /* balloon~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "balloon~iphone.png"; sourceTree = "<group>"; };
 		5E71A3B416F9973500E7AFF9 /* energyVillas.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = energyVillas.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5E71A3B716F9973500E7AFF9 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		5E71A3B916F9973500E7AFF9 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -643,6 +649,9 @@
 				5E36051F1708438F00DB7B20 /* close.png */,
 				5E3605201708438F00DB7B20 /* close@2x.png */,
 				5EFCCD1A170ADF0E00C1FE88 /* free-details.plist */,
+				5E5F94A017219177006C9A88 /* menu_v~iphone.png */,
+				5E5F94A41722C0EB006C9A88 /* balloon_roll~iphone.png */,
+				5E5F94A51722C0EB006C9A88 /* balloon~iphone.png */,
 				5EFCCD34170B18BC00C1FE88 /* free-Buy.plist */,
 				5EFCCD36170B26D200C1FE88 /* free-CoverFlow.plist */,
 				5EFCCD38170B469900C1FE88 /* paid-MainMenu.plist */,
@@ -897,6 +906,9 @@
 				5E31F03C172021DB008B15F0 /* DPFacebookView.xib in Resources */,
 				5E31F04B17205AD8008B15F0 /* DPSocialView.xib in Resources */,
 				5E5F949F17213BF5006C9A88 /* Social in Resources */,
+				5E5F94A117219177006C9A88 /* menu_v~iphone.png in Resources */,
+				5E5F94A61722C0EC006C9A88 /* balloon_roll~iphone.png in Resources */,
+				5E5F94A71722C0EC006C9A88 /* balloon~iphone.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

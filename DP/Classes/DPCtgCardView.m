@@ -15,10 +15,10 @@
 #define IPHONE_LABEL_MARGIN_VERT ((int)2)
 #define IPAD_LABEL_MARGIN_VERT ((int)2)
 
-#define IPHONE_CARD_RESIZE_WIDTH ((int)-15)
-#define IPHONE_CARD_RESIZE_HEIGHT ((int)-15)
-#define IPAD_CARD_RESIZE_WIDTH ((int)-30)
-#define IPAD_CARD_RESIZE_HEIGHT ((int)-30)
+#define IPHONE_CARD_RESIZE_WIDTH ((int)15)
+#define IPHONE_CARD_RESIZE_HEIGHT ((int)15)
+#define IPAD_CARD_RESIZE_WIDTH ((int)30)
+#define IPAD_CARD_RESIZE_HEIGHT ((int)30)
 
 #define IPHONE_LABEL_HEIGHT ((int)18)
 #define IPAD_LABEL_HEIGHT ((int)22)
@@ -26,6 +26,7 @@
 @interface DPCtgCardView ()
 
 @property (strong, nonatomic) UIImageView *imageView;
+@property (strong, nonatomic) UIImageView *zoomImageView;
 @property (strong, nonatomic) UILabel *label;
 
 @property (strong, nonatomic) UIActivityIndicatorView *busyIndicator;
@@ -37,11 +38,13 @@
     CGSize cardSize;
     CGFloat baseFontSize, zoomFontSize;
     CGRect baseLabelFrame, zoomLabelFrame;
+    BOOL useLabel;
 }
 
-@synthesize category, imageView, label;
+@synthesize category;
 
 - (id)initWithFrame:(CGRect)frame category:(Category *)ctg {
+    useLabel = NO;
     cardSize = IS_IPAD
                     ? CGSizeMake(IPAD_CARD_WIDTH, IPAD_CARD_HEIGHT)
                     : CGSizeMake(IPHONE_CARD_WIDTH, IPHONE_CARD_HEIGHT);
@@ -53,36 +56,62 @@
     if (self) {
         category = ctg;
         
-        self.backgroundColor = [UIColor colorWithHue: (arc4random() % 1000) / 1000.0
-                                          saturation:1.0
-                                          brightness:1.0
-                                               alpha:1.0];
+        self.backgroundColor = [UIColor clearColor];
+//        self.backgroundColor = [UIColor colorWithHue: (arc4random() % 1000) / 1000.0
+//                                          saturation:1.0
+//                                          brightness:1.0
+//                                               alpha:1.0];
     }
     return self;
 }
 
 - (void) layoutSubviews {
     if (self.subviews.count == 0) {
-        if (!imageView) {
-            imageView = [[UIImageView alloc] initWithFrame:self.bounds];
-            imageView.contentMode = UIViewContentModeScaleAspectFit;
+        // normal image
+        if (!self.imageView) {
+            self.imageView = [[UIImageView alloc] initWithFrame:self.bounds];
+            self.imageView.contentMode = UIViewContentModeScaleAspectFit;
             
-            if ([self isLocalUrl:category.imageUrl])
-                imageView.image = [UIImage imageNamed:[self calcImageName: category.imageUrl]];
+            if (isLocalUrl(category.imageUrl))
+                //TODO
+                self.imageView.image = [UIImage imageNamed:[self calcImageName: category.imageUrl]];
+            //self.imageView.image = [UIImage imageNamed:@"balloon.png"];
             else
-                [self loadImageAsync:category inView:imageView];
-
-            imageView.image = [UIImage imageNamed:category.imageUrl];
-           // imageView.backgroundColor = [UIColor redColor];
+                [self loadImageAsync:category inView:self.imageView];
+            
+            //TODO : this is here ONLY for testing
+            self.imageView.image = [UIImage imageNamed:@"balloon.png"];
         }
-        
-        if (!label) {
-            label = [[UILabel alloc] init];
+        if (!self.zoomImageView) {
+            int rw = IS_IPAD ? IPAD_CARD_RESIZE_WIDTH : IPHONE_CARD_RESIZE_WIDTH;
+            int rh = IS_IPAD ? IPAD_CARD_RESIZE_HEIGHT : IPHONE_CARD_RESIZE_HEIGHT;
+            int w = IS_IPAD ? IPAD_CARD_WIDTH : IPHONE_CARD_WIDTH;
+            int h = IS_IPAD ? IPAD_CARD_HEIGHT : IPHONE_CARD_HEIGHT;
+            
+            CGRect zoomFrame = CGRectMake(0, 0, w  + 2 * rw, h + 2 * rh);
+
+            self.zoomImageView = [[UIImageView alloc] initWithFrame:zoomFrame];
+            self.zoomImageView.contentMode = UIViewContentModeScaleAspectFit;
+            
+            if (isLocalUrl(category.imageUrl))
+                //TODO
+                self.zoomImageView.image = [UIImage imageNamed:[self calcImageName: category.imageUrl]];
+            //self.imageView.image = [UIImage imageNamed:@"balloon.png"];
+            else
+                [self loadImageAsync:category inView:self.zoomImageView];
+            
+            //TODO : this is here ONLY for testing
+            self.zoomImageView.image = [UIImage imageNamed:@"balloon_roll.png"];
+        }
+
+        if (useLabel && !self.label) {
+            self.label = [[UILabel alloc] init];
             [self setupLabel:category.title];
         }
         
-        [self addSubview:imageView];
-        [self addSubview:label];
+        [self addSubview:self.imageView];
+        if (useLabel)
+            [self addSubview:self.label];
     }
 }
 
@@ -99,45 +128,178 @@
     
 }
 
-- (void) zoomCard:(NSTimeInterval)duration {
+CGRect CGRectChangeCenter(CGRect rect, CGPoint center) {
+    CGFloat cx = rect.origin.x + rect.size.width / 2.0;
+    CGFloat cy = rect.origin.y + rect.size.height / 2.0;
+    CGRect result = CGRectOffset(rect, center.x - cx, center.y - cy);
+    return result;
+}
+
+- (void)performTransition:(UIViewAnimationOptions)options
+                 duration:(NSTimeInterval)duration
+               completion:(void(^)(BOOL finished))completion
+{
+    UIView *fromView, *toView;
+    
+    if ([self.imageView superview] != nil)
+    {
+        fromView = self.imageView;
+        toView = self.zoomImageView;
+    }
+    else
+    {
+        fromView = self.zoomImageView;
+        toView = self.imageView;
+    }
+    
+    [UIView transitionFromView:fromView
+                        toView:toView
+                      duration:duration
+                       options:options
+                    completion:completion];
+}
+
+//- (IBAction)fadeAction:(id)sender
+//{
+//    [self performTransition:UIViewAnimationOptionTransitionCrossDissolve];
+//}
+
+//- (IBAction)flipAction:(id)sender
+//{
+//    UIViewAnimationOptions transitionOptions = ([self.frontView superview] != nil) ?
+//    UIViewAnimationOptionTransitionFlipFromLeft : UIViewAnimationOptionTransitionFlipFromRight;
+//    
+//    [self performTransition:transitionOptions];
+//}
+
+- (void) zoomCard:(NSTimeInterval)duration position:(CGPoint)newCenter{
+//    int rw = IS_IPAD ? IPAD_CARD_RESIZE_WIDTH : IPHONE_CARD_RESIZE_WIDTH;
+//    int rh = IS_IPAD ? IPAD_CARD_RESIZE_HEIGHT : IPHONE_CARD_RESIZE_HEIGHT;
+//    int w = IS_IPAD ? IPAD_CARD_WIDTH : IPHONE_CARD_WIDTH;
+//    int h = IS_IPAD ? IPAD_CARD_HEIGHT : IPHONE_CARD_HEIGHT;
+//    
+//    CGRect bigFrame = CGRectInset(self.frame, -1000, -1000);
+//    self.frame = bigFrame;
+//    
+//    self.imageView.frame = CGRectOffset(self.imageView.frame, 1000, 1000);
+//    CGPoint cp = [self convertPoint:newCenter fromView:self.superview];
+//    self.zoomImageView.center = cp;
+//    
+//    [self performTransition:UIViewAnimationOptionTransitionCrossDissolve
+//                   duration:duration
+//                 completion:^(BOOL finished) {
+//                     CGRect zoomFrame = CGRectInset(CGRectMake(0, 0, w, h), -rw, -rh);
+//                     self.frame = CGRectChangeCenter(zoomFrame, newCenter);
+//                     self.zoomImageView.frame = self.bounds;
+//                 }];
+//
+//    return;
+    
+    int rw = IS_IPAD ? IPAD_CARD_RESIZE_WIDTH : IPHONE_CARD_RESIZE_WIDTH;
+    int rh = IS_IPAD ? IPAD_CARD_RESIZE_HEIGHT : IPHONE_CARD_RESIZE_HEIGHT;
+    int w = IS_IPAD ? IPAD_CARD_WIDTH : IPHONE_CARD_WIDTH;
+    int h = IS_IPAD ? IPAD_CARD_HEIGHT : IPHONE_CARD_HEIGHT;
+    
+    CGRect zoomFrame = CGRectInset(CGRectMake(0, 0, w, h), -rw, -rh);
+    zoomFrame = CGRectChangeCenter(zoomFrame, newCenter);
+
+    [UIView beginAnimations:nil context:nil];
+    [UIView setAnimationBeginsFromCurrentState:YES];
+    [UIView setAnimationDelay:0.0];
+    [UIView setAnimationDuration:duration];
+    [UIView setAnimationTransition:UIViewAnimationTransitionFlipFromLeft forView:self cache:YES];
+    [UIView setAnimationCurve:UIViewAnimationCurveLinear];
+    
+    self.frame = zoomFrame;
+    [self.imageView removeFromSuperview];
+    [self addSubview:self.zoomImageView];
+
+    [UIView commitAnimations];
+    
+    return;
+    
     [UIView animateWithDuration:duration
                           delay:0.0
                         options:UIViewAnimationOptionCurveLinear | UIViewAnimationOptionBeginFromCurrentState
                      animations:^{
                          int rw = IS_IPAD ? IPAD_CARD_RESIZE_WIDTH : IPHONE_CARD_RESIZE_WIDTH;
                          int rh = IS_IPAD ? IPAD_CARD_RESIZE_HEIGHT : IPHONE_CARD_RESIZE_HEIGHT;
-                         CGRect zoomFrame = CGRectInset(self.frame, rw, rh);
-                         self.frame = zoomFrame;
-                         imageView.frame = CGRectMake(0, 0,
+                         CGRect zoomFrame = CGRectInset(self.frame, -rw, -rh);
+                         self.frame = CGRectChangeCenter(zoomFrame, newCenter);
+                         self.imageView.frame = CGRectMake(0, 0,
                                                       zoomFrame.size.width,
                                                       zoomFrame.size.height);
-                         label.frame = zoomLabelFrame;
-                         label.font = [label.font fontWithSize:zoomFontSize];
+                         
+                         self.imageView.image = [UIImage imageNamed:@"balloon_roll.png"];
+                         
+                         if (useLabel) {
+                             self.label.frame = zoomLabelFrame;
+                             self.label.font = [self.label.font fontWithSize:zoomFontSize];
+                         }
                      }
                      completion:nil];
 }
 
 - (void) cancelCardZoom:(NSTimeInterval)duration {
+//    CGRect frm = [self presentationFrameOf:self];
+//    int diffX = frm.size.width - cardSize.width;
+//    int diffY = frm.size.height - cardSize.height;
+//    self.frame = CGRectInset(frm, diffX / 2, diffY / 2);
+    
+//    self.imageView.frame = CGRectMake(0, 0,
+//                                      cardSize.width,
+//                                      cardSize.height);
+    
+    int rw = IS_IPAD ? IPAD_CARD_RESIZE_WIDTH : IPHONE_CARD_RESIZE_WIDTH;
+    int rh = IS_IPAD ? IPAD_CARD_RESIZE_HEIGHT : IPHONE_CARD_RESIZE_HEIGHT;
+//    int w = IS_IPAD ? IPAD_CARD_WIDTH : IPHONE_CARD_WIDTH;
+//    int h = IS_IPAD ? IPAD_CARD_HEIGHT : IPHONE_CARD_HEIGHT;
+    
+    CGRect unZoomFrame = CGRectInset(self.frame, rw, rh);
+    
+    [UIView beginAnimations:nil context:nil];
+    [UIView setAnimationBeginsFromCurrentState:YES];
+    [UIView setAnimationDelay:0.0];
+    [UIView setAnimationDuration:duration];
+    [UIView setAnimationTransition:UIViewAnimationTransitionFlipFromLeft forView:self cache:YES];
+    [UIView setAnimationCurve:UIViewAnimationCurveLinear];
+    
+    self.frame = unZoomFrame;
+    [self.zoomImageView removeFromSuperview];
+    [self addSubview:self.imageView];
+    
+    [UIView commitAnimations];
+    
+    
+    return;
+    
     [UIView animateWithDuration:duration
                           delay:0.0
-                        options:UIViewAnimationOptionCurveLinear | UIViewAnimationOptionBeginFromCurrentState
+                        options:UIViewAnimationOptionCurveLinear | UIViewAnimationOptionBeginFromCurrentState |UIViewAnimationOptionTransitionCrossDissolve
                      animations:^{
                          CGRect frm = [self presentationFrameOf:self];
                          int diffX = frm.size.width - cardSize.width;
                          int diffY = frm.size.height - cardSize.height;
                          self.frame = CGRectInset(frm, diffX / 2, diffY / 2);
 
-                         imageView.frame = CGRectMake(0, 0,
+                         self.imageView.frame = CGRectMake(0, 0,
                                                       cardSize.width,
                                                       cardSize.height);
-                         label.frame = baseLabelFrame;
-                         label.font = [label.font fontWithSize:baseFontSize];
+
+                         self.imageView.image = [UIImage imageNamed:@"balloon.png"];
+
+                         if (useLabel) {
+                             self.label.frame = baseLabelFrame;
+                             self.label.font = [self.label.font fontWithSize:baseFontSize];
+                         }
                      }
                      completion:nil];
 }
 
 
 - (void) setupLabel:(NSString *)title {
+    if (!useLabel) return;
+    
     self.label.textAlignment = NSTextAlignmentCenter;
     self.label.backgroundColor = [UIColor clearColor];
     self.label.text = title;
@@ -161,8 +323,8 @@
     int lblheight = IS_IPAD ? IPAD_LABEL_HEIGHT : IPHONE_LABEL_HEIGHT;
     int offsetfix = IS_IPAD ? IPAD_LABEL_MARGIN_VERT : IPHONE_LABEL_MARGIN_VERT;
     CGRect frm = self.frame;
-    int fw = frm.size.width - (!zoomed ? 0 : 2 * (IS_IPAD ? IPAD_CARD_RESIZE_WIDTH : IPHONE_CARD_RESIZE_WIDTH));
-    int fh = frm.size.height - (!zoomed ? 0 : 2 * (IS_IPAD ? IPAD_CARD_RESIZE_HEIGHT : IPHONE_CARD_RESIZE_HEIGHT));
+    int fw = frm.size.width + (!zoomed ? 0 : 2 * (IS_IPAD ? IPAD_CARD_RESIZE_WIDTH : IPHONE_CARD_RESIZE_WIDTH));
+    int fh = frm.size.height + (!zoomed ? 0 : 2 * (IS_IPAD ? IPAD_CARD_RESIZE_HEIGHT : IPHONE_CARD_RESIZE_HEIGHT));
     
     frm = CGRectMake(0, fh - offsetfix - lblheight, fw, lblheight);
     
@@ -212,11 +374,6 @@
         NSLog(@"Stack trace: %@", [exception callStackSymbols]);
         return baseName;
     }
-}
-
-- (BOOL) isLocalUrl:(NSString *)urlstr {
-    NSURL *url = [NSURL URLWithString:urlstr];
-    return url.isFileReferenceURL || url.host == nil;
 }
 
 - (void) startIndicator {

@@ -42,16 +42,17 @@
     return self;
 }
 
-- (id) initWithCategory:(int)ctgID  isLeaf:(BOOL)isLeaf{
+- (id) initWithCategory:(int)ctgID  isLeaf:(BOOL)isLeaf frame:(CGRect)frame {
     self = [super initWithContent:nil autoScroll:NO];
     
     if (self) {
+        self.view.frame = frame;
         category = ctgID;
         isLeafCategory = isLeaf;
         self.scrollableViewDelegate = self;
         self.rowCount = 0;
         self.colCount = 0;
-        [self loadData];
+        //[self loadData];
     }
     
     return self;
@@ -118,15 +119,33 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
+    [self loadData];
 }
 
+-(void)viewDidUnload {
+    [self clearDataLoader];
+    [super viewDidUnload];
+}
 - (void) viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    [self loadData];
 }
 
 - (void) viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
+}
+
+- (void) changeFrame:(CGRect)newFrame {
+    self.view.frame = newFrame;
+    [super changeRows:self.rowCount
+              columns:self.colCount
+      scrollDirection:self.scrollDirection];
+}
+
+-(void)viewWillLayoutSubviews {
+    [super viewWillLayoutSubviews];
+    [super changeRows:self.rowCount
+              columns:self.colCount
+      scrollDirection:self.scrollDirection];
 }
 
 - (void) loadData {
@@ -142,18 +161,28 @@
         [self.dataLoader loadData];
 }
 
-- (void) changeRows:(int)rows columns:(int)columns scrollDirection:(DPScrollDirection)scrolldir {
-    [super changeRows:rows columns:columns scrollDirection:scrolldir];
-    
+- (DPAnimatedCategoriesView *) findAnimCtgView {
+    DPAnimatedCategoriesView *result = nil;
     int pg = self.pageControl.currentPage;
     if (pg>=0){
         UIView *container = self.scrollView.subviews[pg];
         if (container.subviews.count == 1 &&
             [container.subviews[0] isKindOfClass:[DPAnimatedCategoriesView class]]) {
-            DPAnimatedCategoriesView *acv = container.subviews[0];
-            [acv frameChanged];
+            result = container.subviews[0];
         }
     }
+    
+    return result;
+}
+
+- (void) changeRows:(int)rows
+            columns:(int)columns
+    scrollDirection:(DPScrollDirection)scrolldir {
+    [super changeRows:rows columns:columns scrollDirection:scrolldir];
+    
+    DPAnimatedCategoriesView *acv = [self findAnimCtgView];
+    if (acv)
+        [acv frameChanged];
 }
 
 #pragma mark -
@@ -205,6 +234,17 @@
 
 #pragma mark
 
+-(void) clearDataLoader {
+    if (self.dataLoader) {
+        self.dataLoader.delegate = nil;
+    }
+    self.dataLoader = nil;
+}
+
+-(void) dealloc {
+    [self clearDataLoader];
+    self.dataDelegate = nil;
+}
 
 - (void)didReceiveMemoryWarning
 {

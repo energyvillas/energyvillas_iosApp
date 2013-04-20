@@ -15,7 +15,7 @@
 #define IPAD_CARD_WIDTH ((int)180)
 #define IPAD_CARD_HEIGHT ((int)180)
 
-#define DURATION_ZOOM ((NSTimeInterval)0.1)
+#define DURATION_ZOOM ((NSTimeInterval)0.35)
 
 @interface DPCtgCardView : UIView
 
@@ -23,7 +23,7 @@
 
 - (id) initWithFrame:(CGRect)frame category:(Category *)ctg;
 
-- (void) zoomCard:(NSTimeInterval)duration;
+- (void) zoomCard:(NSTimeInterval)duration position:(CGPoint)newCenter;
 - (void) cancelCardZoom:(NSTimeInterval)duration;
 
 @end

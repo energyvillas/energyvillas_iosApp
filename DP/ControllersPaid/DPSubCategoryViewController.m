@@ -210,7 +210,7 @@
 - (void) loadCategoryView {
     if (self.subCtgView.subviews.count == 0)
     {
-        self.subCtgsViewController = [[DPAnimatedScrollViewController alloc] initWithCategory:self.category.Id isLeaf:YES];
+        self.subCtgsViewController = [[DPAnimatedScrollViewController alloc] initWithCategory:self.category.Id isLeaf:YES frame:self.subCtgView.bounds];
         
         [self addChildViewController:self.subCtgsViewController];
         [self.subCtgView addSubview:self.subCtgsViewController.view];
@@ -219,6 +219,16 @@
         [self.subCtgsViewController changeRows:1 columns:1];
 }
 
+-(void) clearDataLoader {
+    if (self.articlesLoader) {
+        self.articlesLoader.delegate = nil;
+    }
+    self.articlesLoader = nil;
+}
+
+-(void) dealloc {
+    [self clearDataLoader];
+}
 
 - (void)didReceiveMemoryWarning
 {
@@ -227,6 +237,7 @@
 }
 
 - (void)viewDidUnload {
+    [self clearDataLoader];
     [self setLabel:nil];
     [self setPhotoView:nil];
     [self setHtmlView:nil];
