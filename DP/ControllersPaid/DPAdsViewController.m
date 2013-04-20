@@ -86,10 +86,24 @@
     return nil;
 }
 
+//- (void) postProcessView:(UIView *)aView contentIndex:(int)contentIndex frame:(CGRect)frame {
+//    aView.frame = CGRectInset(aView.frame, 3, 3);
+//    aView.contentMode = UIViewContentModeScaleToFill;
+//}
+
+#pragma mark -
 
 - (void)viewDidLoad {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
+}
+
+-(void) dealloc {
+    if (self.dataLoader) {
+        self.dataLoader.delegate = nil;
+    }
+    self.dataLoader = nil;
+    self.dataDelegate = nil;
 }
 
 - (void)didReceiveMemoryWarning
