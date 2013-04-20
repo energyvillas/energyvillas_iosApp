@@ -58,11 +58,17 @@
     [self loadData];
 }
 
--(void) viewDidUnload {
+-(void) clearDataLoader {
     if (self.dataLoader) {
         self.dataLoader.delegate = nil;
     }
     self.dataLoader = nil;
+}
+
+-(void) viewDidUnload {
+    [super viewDidUnload];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [self clearDataLoader];
     [self clearCarousel];
 }
 
@@ -72,8 +78,6 @@
 
 - (void) viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
-    
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (void)viewWillLayoutSubviews {
