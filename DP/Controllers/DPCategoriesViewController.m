@@ -72,6 +72,14 @@
 	// Do any additional setup after loading the view.
 }
 
+-(void) dealloc {
+    if (self.dataLoader) {
+        self.dataLoader.delegate = nil;
+    }
+    self.dataLoader = nil;
+    self.dataDelegate = nil;
+}
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
