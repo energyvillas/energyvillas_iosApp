@@ -163,6 +163,16 @@
     }
 }
 
+-(void) clearDataLoader {
+    if (self.articlesLoader) {
+        self.articlesLoader.delegate = nil;
+    }
+    self.articlesLoader = nil;
+}
+
+-(void) dealloc {
+    [self clearDataLoader];
+}
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
