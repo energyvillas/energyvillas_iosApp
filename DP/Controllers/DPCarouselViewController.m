@@ -53,6 +53,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
+    [self hookToNotifications];
     self.carouselCategoryID = CTGID_CAROUSEL;
     [self loadData];
 }
@@ -355,12 +356,13 @@
 //        imageView.contentMode = UIViewContentModeCenter;
 //        imageView.asynchronous = YES;
 //        imageView.reflectionScale = 0.5f;
-//        imageView.reflectionAlpha = 0.25f;
+//        imageView.reflectionAlpha = 0.35f;
 //        imageView.reflectionGap = 10.0f;
 //        imageView.shadowOffset = CGSizeMake(0.0f, 2.0f);
 //        imageView.shadowBlur = 5.0f;
-//        imageView.cornerRadius = 10.0f;
-        imageView.layer.doubleSided = NO;
+
+////        imageView.cornerRadius = 10.0f;
+//        imageView.layer.doubleSided = NO;
         imageView.image = img;
         return imageView;
     } else {
@@ -422,14 +424,18 @@
     if (article.body != nil) {
         DPHtmlContentViewController *vc = [[DPHtmlContentViewController alloc] initWithHTML:article.body];
         [self.navigationController pushViewController:vc animated:YES];
-    } else if (article.videoUrl != nil) {
+    } else if (article.videoUrl != nil && article.videoUrl.length > 0) {
         NSString *videourl = article.videoUrl;
         DPVimeoPlayerViewController *vimeo = [[DPVimeoPlayerViewController alloc]
                                               initWithUrl:videourl];
         [self.navigationController pushViewController:vimeo animated:YES];
     } else if (article.imageUrl != nil) {
-        DPImageContentViewController *vc = [[DPImageContentViewController alloc]
-                                            initWithImageName:[self calcImageName:article.imageUrl]];
+        DPImageContentViewController *vc = nil;
+        if (isLocalUrl(article.imageUrl))
+            vc = [[DPImageContentViewController alloc] initWithImageName:[self calcImageName:article.imageUrl]];
+        else
+            vc = [[DPImageContentViewController alloc] initWithArticle:article];
+        
         [self.navigationController pushViewController:vc animated:YES];
     }
 }
