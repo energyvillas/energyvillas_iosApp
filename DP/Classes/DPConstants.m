@@ -24,8 +24,8 @@ NSString *const DPN_currentLangChanged = @"DPN_currentLangChanged";
 NSString *const PRODUCT_IDENTIFIER = @"gr.DesignProjects.DP";
 
 // web service credentials
-NSString *const USER_NAME = @"phone";
-NSString *const PASSWORD = @"phone";
+NSString *const USER_NAME = @"admin";
+NSString *const PASSWORD = @"demo";
 
 // web service URLs
 NSString *const BANNERS_URL = @"http://designprojectsapps.com/iphonebanners.php";
@@ -99,7 +99,7 @@ NSString* DPLocalizedString(NSString *key)
 }
 
 NSString* NullIfEmpty(NSString *aString) {
-    return aString == nil || [aString isEqualToString:@""] ? nil : aString;
+    return aString == nil || aString.length == 0 || [aString isEqualToString:@""] ? nil : aString;
 }
 
 void NSLogFrame(NSString *msg, CGRect frame) {
