@@ -75,6 +75,16 @@
 	// Do any additional setup after loading the view.
 }
 
+-(void) viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    [self clearPopups];
+}
+
+-(void) viewWillLayoutSubviews {
+    [super viewWillLayoutSubviews];
+    [self clearPopups];
+}
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -96,18 +106,18 @@
     self.islandPopupViewController = nil;
     self.islandsContent = nil;
 }
-
-- (void) doLayoutSubviews:(BOOL)fixtop {
-   
-//    CGRect vf = self.view.frame;
-//    int h = vf.size.height;//sv.bounds.size.height;
-//    int w = vf.size.width;//sv.bounds.size.width;
-    //self.view.frame = CGRectMake(0, 0, w, h);
-//    self.scrollView.frame = CGRectMake(0, 0, w, h);
-//    self.pageControl.frame = CGRectMake(0, h - PAGE_CONTROL_HEIGHT, w, PAGE_CONTROL_HEIGHT);
-    
-    [self changeRows:self.rowCount columns:self.colCount];
-}
+//
+//- (void) doLayoutSubviews:(BOOL)fixtop {
+//   
+////    CGRect vf = self.view.frame;
+////    int h = vf.size.height;//sv.bounds.size.height;
+////    int w = vf.size.width;//sv.bounds.size.width;
+//    //self.view.frame = CGRectMake(0, 0, w, h);
+////    self.scrollView.frame = CGRectMake(0, 0, w, h);
+////    self.pageControl.frame = CGRectMake(0, h - PAGE_CONTROL_HEIGHT, w, PAGE_CONTROL_HEIGHT);
+//    
+//    [self changeRows:self.rowCount columns:self.colCount];
+//}
 
 - (void) elementTapped:(id)sender element:(id)tappedelement {
     DPDataElement *element = tappedelement;
