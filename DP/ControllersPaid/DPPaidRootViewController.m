@@ -129,7 +129,6 @@
         }
     }
     
-    
     [self loadAdsView];
     [self loadNewNextView];
     [self loadMenuView];
@@ -143,14 +142,25 @@
         [self addChildViewController:self.adsViewController];
         [self.adsView addSubview:self.adsViewController.view];
     }
+    NSLogFrame(@"adsView.frame", self.adsView.frame);
+    NSLogFrame(@"adsView.bounds", self.adsView.bounds);
     self.adsViewController.view.frame = self.adsView.bounds;
 }
 
 - (void) loadNewNextView {
     UIView *bcv = self.nnView;
     
-    NSLog(@"bvc frame : (x, y, w, h) = (%f, %f, %f, %f)",
-          bcv.frame.origin.x, bcv.frame.origin.y, bcv.frame.size.width, bcv.frame.size.height);
+//    NSLogFrame(@"nnView.frame", self.nnView.frame);
+//    NSLogFrame(@"nnView.bounds", self.nnView.bounds);
+//    
+//    if (self.nnView.subviews.count > 0) {
+//        [self.nnView.subviews[0] removeFromSuperview];
+//    }
+//    UIView *nn = [[UIView alloc] initWithFrame:CGRectInset(self.nnView.bounds, 3, 3)];
+//    nn.backgroundColor = [UIColor redColor];
+//    [self.nnView addSubview:nn];
+//    
+//    return;
     
     if (bcv.subviews.count == 0) {
         NSMutableArray *content = [[NSMutableArray alloc] init];
@@ -197,6 +207,9 @@
 }
 
 - (void) loadMenuView {
+    NSLogFrame(@"mmView.frame", self.mmView.frame);
+    NSLogFrame(@"mmView.bounds", self.mmView.bounds);
+    
     if (self.mmViewController != nil) {
         [self.mmViewController.view removeFromSuperview];
         [self.mmViewController removeFromParentViewController];
