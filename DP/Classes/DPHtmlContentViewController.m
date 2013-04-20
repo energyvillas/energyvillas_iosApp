@@ -169,4 +169,24 @@
     // Dispose of any resources that can be recreated.
 }
 
+//==============================================================================
+#pragma mark - nav bar button selection
+//- (BOOL) showNavBar {
+//    return self.navigationController != nil;
+//}
+- (BOOL) showNavBarLanguages {
+    return NO;
+}
+- (BOOL) showNavBarAddToFav {
+    return YES;
+}
+- (BOOL) showNavBarSocial {
+    return YES;
+}
+//- (BOOL) showNavBarInfo {
+//    return YES;
+//}
+//==============================================================================
+
+
 @end
