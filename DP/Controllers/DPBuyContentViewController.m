@@ -83,6 +83,19 @@
         [mpc.view removeFromSuperview];
         mpc = nil;
     }
+    
+    [self clearDataLoader];
+}
+
+-(void) clearDataLoader {
+    if (self.dataLoader) {
+        self.dataLoader.delegate = nil;
+    }
+    self.dataLoader = nil;
+}
+-(void) dealloc {
+    [self clearDataLoader];
+    self.dataDelegate = nil;
 }
 
 - (void)didReceiveMemoryWarning
