@@ -113,7 +113,7 @@
     
     // iphone sizes
     int H_ADS = 60;
-    int H_MENU = 62;//80;
+    int H_MENU = 92;//80;
     int HL_ADS = 60;
     int WL_MENU= 120;
     
