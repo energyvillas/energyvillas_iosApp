@@ -191,9 +191,29 @@ NSString *const NAVBAR_SHARE_SEL_IMG = @"Navbar/share_roll.png";
     }
 }
 
+//==============================================================================
+#pragma mark - nav bar button selection
+- (BOOL) showNavBar {
+    return self.navigationController != nil;
+}
+- (BOOL) showNavBarLanguages {
+    return YES;
+}
+- (BOOL) showNavBarAddToFav {
+    return NO;
+}
+- (BOOL) showNavBarSocial {
+    return NO;
+}
+- (BOOL) showNavBarInfo {
+    return YES;
+}
+//==============================================================================
+
+#pragma mark -
 
 - (void) setupNavBar {
-    if (!self.navigationController) return;
+    if (![self showNavBar]) return;
     
     self.navigationItem.title = nil;
     self.navigationItem.leftItemsSupplementBackButton = YES;
@@ -236,40 +256,52 @@ NSString *const NAVBAR_SHARE_SEL_IMG = @"Navbar/share_roll.png";
                                                     initWithCustomView: self.navbarTitleItemButton]];
     
     UIView *rightButtons = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 120, 44)];
+    int pos = 0;
+    if ([self showNavBarLanguages]) {
+        self.navbarLang_EL = [self
+                              createButtonWithImage:NAVBAR_LANG_EL_IMG
+                              highlightedImage:NAVBAR_LANG_EL_SEL_IMG
+                              frame:CGRectMake(pos, 7, 30, 30)
+                              tag:TAG_NBI_LANG_EL
+                              action:@selector(onNavButtonTapped:)];
+        [rightButtons addSubview: self.navbarLang_EL];
+        pos += 30;
+        
+        self.navbarLang_EN = [self
+                              createButtonWithImage:NAVBAR_LANG_EN_IMG
+                              highlightedImage:NAVBAR_LANG_EN_SEL_IMG
+                              frame:CGRectMake(pos, 7, 30, 30)
+                              tag:TAG_NBI_LANG_EN
+                              action:@selector(onNavButtonTapped:)];
+        [rightButtons addSubview: self.navbarLang_EN];
+        pos += 30;
+    }
     
-    self.navbarLang_EL = [self
-                          createButtonWithImage:NAVBAR_LANG_EL_IMG
-                          highlightedImage:NAVBAR_LANG_EL_SEL_IMG
-                          frame:CGRectMake(0, 7, 30, 30)
-                          tag:TAG_NBI_LANG_EL
-                          action:@selector(onNavButtonTapped:)];
-    [rightButtons addSubview: self.navbarLang_EL];
+    if ([self showNavBarAddToFav]) {
+        [rightButtons addSubview:[self
+                                  createButtonWithImage:NAVBAR_FAV_IMG
+                                  highlightedImage:NAVBAR_FAV_SEL_IMG
+                                  frame:CGRectMake(pos, 7, 30, 30)
+                                  tag:TAG_NBI_ADD_FAV
+                                  action:@selector(onNavButtonTapped:)]];
+        pos += 30;
+    }
     
-    self.navbarLang_EN = [self
-                          createButtonWithImage:NAVBAR_LANG_EN_IMG
-                          highlightedImage:NAVBAR_LANG_EN_SEL_IMG
-                          frame:CGRectMake(30, 7, 30, 30)
-                          tag:TAG_NBI_LANG_EN
-                          action:@selector(onNavButtonTapped:)];
-    [rightButtons addSubview: self.navbarLang_EN];
+    if ([self showNavBarSocial]) {
+        [rightButtons addSubview:[self
+                                  createButtonWithImage:NAVBAR_SHARE_IMG
+                                  highlightedImage:NAVBAR_SHARE_SEL_IMG
+                                  frame:CGRectMake(pos, 7, 30, 30)
+                                  tag:TAG_NBI_SHARE
+                                  action:@selector(onNavButtonTapped:)]];
+        pos += 30;
+    }
     
-    [rightButtons addSubview:[self
-                              createButtonWithImage:NAVBAR_FAV_IMG
-                              highlightedImage:NAVBAR_FAV_SEL_IMG
-                              frame:CGRectMake(60, 7, 30, 30)
-                              tag:TAG_NBI_ADD_FAV
-                              action:@selector(onNavButtonTapped:)]];
-    
-    [rightButtons addSubview:[self
-                              createButtonWithImage:NAVBAR_SHARE_IMG
-                              highlightedImage:NAVBAR_SHARE_SEL_IMG
-                              frame:CGRectMake(90, 7, 30, 30)
-                              tag:TAG_NBI_SHARE
-                              action:@selector(onNavButtonTapped:)]];
-    
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]
-                                              initWithCustomView: rightButtons];
-    
+    if (pos > 0) {
+        rightButtons.frame = CGRectMake(0, 0, pos, 44);
+        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]
+                                                  initWithCustomView: rightButtons];
+    }
     [self langSelected];
 }
 
