@@ -7,9 +7,11 @@
 //
 
 #import "UINavContentViewController.h"
+#import "Article.h"
 
 @interface DPImageContentViewController : UINavContentViewController <UIGestureRecognizerDelegate>
 
+- (id) initWithArticle:(Article *)aArticle;
 - (id) initWithImage:(UIImage *)aImage;
 - (id) initWithImageUrl:(NSURL *)imageUrl;
 - (id) initWithImageName:(NSString *)imageName;

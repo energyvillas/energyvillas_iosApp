@@ -10,9 +10,12 @@
 #import "DPImageContentViewController.h"
 #import "../External/ASIHttpRequest/ASIHTTPRequest.h"
 #import "DPConstants.h"
+#import "AsyncImageView.h"
+
 
 @interface DPImageContentViewController ()
 
+@property (strong, nonatomic) Article *article;
 @property (strong, nonatomic) UIImage *image;
 @property (strong, nonatomic) UIActivityIndicatorView *busyIndicator;
 @property (strong, nonatomic) NSOperationQueue *queue;
@@ -32,6 +35,14 @@
     if (self) {
         // Custom initialization
     }
+    return self;
+}
+
+- (id) initWithArticle:(Article *)aArticle {
+    if (self = [super init]) {
+        self.article = aArticle;
+    }
+    
     return self;
 }
 
@@ -189,13 +200,15 @@
 }
 
 // scale the piece by the current scale
-// reset the gesture recognizer's rotation to 0 after applying so the next callback is a delta from the current scale
+// reset the gesture recognizer's scale to 1 after applying so the next callback is a delta from the current scale
 - (void)scalePiece:(UIPinchGestureRecognizer *)gestureRecognizer
 {
     [self adjustAnchorPointForGestureRecognizer:gestureRecognizer];
     
     if ([gestureRecognizer state] == UIGestureRecognizerStateBegan || [gestureRecognizer state] == UIGestureRecognizerStateChanged) {
-        [gestureRecognizer view].transform = CGAffineTransformScale([[gestureRecognizer view] transform], [gestureRecognizer scale], [gestureRecognizer scale]);
+        CGFloat scale = gestureRecognizer.scale;
+        [gestureRecognizer view].transform = CGAffineTransformScale([[gestureRecognizer view] transform], scale, scale);
+        NSLog(@"scaling => %f", scale);
         [gestureRecognizer setScale:1];
     }
 }
@@ -225,10 +238,18 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
+    
+    AsyncImageView *imgView = [[AsyncImageView alloc] initWithFrame:self.view.bounds];    
+    //set image URL. AsyncImageView class will then dynamically load the image
+    imgView.imageURL = [NSURL URLWithString:self.article.imageUrl];
+    imgView.contentMode = UIViewContentModeScaleAspectFit;
+    imgView.userInteractionEnabled = YES;
+    [self addGestureRecognizersTo:imgView];
+    [self.view addSubview:imgView];
 }
 
 - (void) viewWillAppear:(BOOL)animated {
-    if (image)
+    if (image)// && !self.article)
         [self doInitImageView];
     
     [super viewWillAppear:animated];
@@ -313,5 +334,24 @@
 - (void) viewDidUnload {
     [super viewDidUnload];
 }
+
+//==============================================================================
+#pragma mark - nav bar button selection
+//- (BOOL) showNavBar {
+//    return self.navigationController != nil;
+//}
+- (BOOL) showNavBarLanguages {
+    return NO;
+}
+- (BOOL) showNavBarAddToFav {
+    return YES;
+}
+- (BOOL) showNavBarSocial {
+    return YES;
+}
+//- (BOOL) showNavBarInfo {
+//    return YES;
+//}
+//==============================================================================
 
 @end
