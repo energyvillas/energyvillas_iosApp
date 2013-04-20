@@ -66,21 +66,8 @@
         showPages = showpages;
         scrollDirection = scrolldir;
         self.contentList = content;
-        if (!self.view)
-            self.view = [[UIView alloc] init];
-        self.scrollView = [[UIScrollView alloc] init];
-        self.pageControl = [[UIPageControl alloc] init];
-        
-        self.view.backgroundColor = [UIColor clearColor];
-        self.scrollView.backgroundColor = [UIColor clearColor];
-        self.pageControl.backgroundColor = [UIColor clearColor];
-
-        [self.pageControl addTarget:self
-                             action:@selector(pageChanged:)
-                   forControlEvents:UIControlEventValueChanged];
-                
-        [self.view addSubview:self.scrollView];
-        [self.view addSubview:self.pageControl];
+//        if (!self.view)
+//            self.view = [[UIView alloc] init];
     }
     
     return self;
@@ -98,6 +85,19 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
+    self.scrollView = [[UIScrollView alloc] init];
+    self.pageControl = [[UIPageControl alloc] init];
+    
+    self.view.backgroundColor = [UIColor clearColor];
+    self.scrollView.backgroundColor = [UIColor clearColor];
+    self.pageControl.backgroundColor = [UIColor clearColor];
+    
+    [self.pageControl addTarget:self
+                         action:@selector(pageChanged:)
+               forControlEvents:UIControlEventValueChanged];
+    
+    [self.view addSubview:self.scrollView];
+    [self.view addSubview:self.pageControl];
 }
 
 - (void) viewWillDisappear:(BOOL)animated{
@@ -289,7 +289,8 @@
             fixWidth = (colWidthResidue > 0 ? 1 : 0);
             
             if (indx < self.contentList.count) {
-                if (contentRendered[indx] == [NSNull null]) {
+                if (contentRendered[indx] == [NSNull null])
+                {
                     CGRect r = CGRectMake(posX, posY, colWidth + fixWidth, rowHeight + fixHeight);
                     UIView *v = [[UIView alloc] initWithFrame:r];
                     v.clipsToBounds = YES;
@@ -300,9 +301,7 @@
                     
                     contentRendered[indx] = v;
                 }
-                int scrlvc = self.scrollView.subviews.count;
                 [self.scrollView addSubview: contentRendered[indx]];
-                scrlvc = self.scrollView.subviews.count;
                 
             }
             colWidthResidue = colWidthResidue > 0 ? colWidthResidue - 1 : 0;
