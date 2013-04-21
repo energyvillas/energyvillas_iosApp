@@ -6,14 +6,14 @@
 //
 //
 
-#import "DPAnimatedCategoriesView.h"
-#import "DPCtgCardView.h"
+#import "DPAnimatedCardsView.h"
+#import "DPCardView.h"
 #import "DPConstants.h"
 #import <Quartzcore/Quartzcore.h>
 
 #define DURATION_MOVE ((NSTimeInterval)5.0)
 
-@interface DPAnimatedCategoriesView () {
+@interface DPAnimatedCardsView () {
     int maxX;
     int maxY;
     int ofsX;
@@ -27,13 +27,13 @@
 @property (strong, nonatomic) UITapGestureRecognizer *tapGesture;
 //@property (strong, nonatomic) UILongPressGestureRecognizer *longPressGesture;
 //@property (nonatomic, setter = setCurrentCard:) int currentCard;
-@property (strong, nonatomic) DPCtgCardView *currentCard;
+@property (strong, nonatomic) DPCardView *currentCard;
 @property (nonatomic) CGSize cardSize;
 
 @end 
 
 
-@implementation DPAnimatedCategoriesView
+@implementation DPAnimatedCardsView
 
 //- (void) setCurrentCard:(int)value {
 //    _currentCard = value;
@@ -136,7 +136,7 @@
 //    int tapY = (int) tapPoint.y;
 //    NSLog(@"TAPPED X:%d Y:%d", tapX, tapY);
 
-    DPCtgCardView *oldCurrent = self.currentCard;
+    DPCardView *oldCurrent = self.currentCard;
     int cnt = self.cards.count - 1;
     self.currentCard = nil;//-1;
     
@@ -152,21 +152,21 @@
     if (oldCurrent == nil/*-1*/) {
         if (self.currentCard != nil/*-1*/) {
             // handle tap
-            DPCtgCardView *card = self.currentCard; //self.cards[self.currentCard];
+            DPCardView *card = self.currentCard; //self.cards[self.currentCard];
             [self cancelCardAnimation:card];
             [self zoomCard:card duration:zoomDuration];
         }
     } else {
         if (self.currentCard == nil/*-1*/) {
             // resume card animation
-            DPCtgCardView *oldcard = oldCurrent; //self.cards[oldCurrent];
+            DPCardView *oldcard = oldCurrent; //self.cards[oldCurrent];
             self.currentCard = nil/*-1*/;
             [self cancelCardZoom:oldcard duration:zoomDuration];
             [self animateCard:oldcard to:[self calcNewCenter:oldcard] duration:moveDuration];
         } else if (self.currentCard == oldCurrent) {
             // stop ALL animations
             // launch the card's sub view
-            Category *element = self.currentCard.category;//((DPCtgCardView *)self.cards[self.currentCard]).category;
+            DPDataElement *element = self.currentCard.element;//((DPCtgCardView *)self.cards[self.currentCard]).category;
             [self cancelAllAnimations];
             [self elementTapped:nil element:element];
         } else { // we tapped another card
@@ -175,8 +175,8 @@
             // i prefer that ====
             
             // resume
-            DPCtgCardView *oldcard = oldCurrent;//self.cards[oldCurrent];
-            DPCtgCardView *currcard = self.currentCard;//self.cards[self.currentCard];
+            DPCardView *oldcard = oldCurrent;//self.cards[oldCurrent];
+            DPCardView *currcard = self.currentCard;//self.cards[self.currentCard];
             
             [self cancelCardZoom:oldcard duration:zoomDuration];
             [self animateCard:oldcard to:[self calcNewCenter:oldcard] duration:moveDuration];
@@ -233,7 +233,7 @@
     self.currentCard = nil/*-1*/;
 }
 
-- (void) animateCard:(DPCtgCardView *)card to:(CGPoint)newCenter
+- (void) animateCard:(DPCardView *)card to:(CGPoint)newCenter
               duration:(NSTimeInterval)duration {
     [UIView animateWithDuration:duration
                           delay:0.0
@@ -252,7 +252,7 @@
      ];
 }
 
-- (void) cancelCardAnimation:(DPCtgCardView *)card {
+- (void) cancelCardAnimation:(DPCardView *)card {
     [UIView animateWithDuration:0.0
                           delay:0.0
                         options:UIViewAnimationOptionBeginFromCurrentState
@@ -263,7 +263,7 @@
      ];
 }
 
-- (void) bringCardForward:(DPCtgCardView *)card {
+- (void) bringCardForward:(DPCardView *)card {
     if (self.currentCard != nil/*-1*/ && self.currentCard == card/*self.cards[self.currentCard] == card*/) {
         int cardIndex = [self.subviews indexOfObject:card];
         int topCardIndex = [self.subviews indexOfObject:self.tapView] - 1;
@@ -275,14 +275,14 @@
     }
 }
 
-- (void) zoomCard:(DPCtgCardView *)card duration:(NSTimeInterval)duration {
+- (void) zoomCard:(DPCardView *)card duration:(NSTimeInterval)duration {
     [self bringCardForward:card];
 
     [card zoomCard:duration position:CGPointMake(self.bounds.size.width / 2.0,
                                                  self.bounds.size.height / 2.0)];
 }
 
-- (void) cancelCardZoom:(DPCtgCardView *)card duration:(NSTimeInterval)duration {
+- (void) cancelCardZoom:(DPCardView *)card duration:(NSTimeInterval)duration {
     [card cancelCardZoom:duration];
 }
 
@@ -300,7 +300,7 @@
 //    return indx;
 //}
 
-- (CGPoint) calcNewCenter:(DPCtgCardView *)target {
+- (CGPoint) calcNewCenter:(DPCardView *)target {
     [self calcSizes];
 
     NSLog(@"max (X, Y) = (%d, %d)", maxX, maxY);
@@ -368,9 +368,9 @@
     for (int i = 0; i < self.categories.count; i++) {
         NSInteger rx = (arc4random() % maxX);// + ofsX;
         NSInteger ry = (arc4random() % maxY);// + ofsY;
-        DPCtgCardView *card = [[DPCtgCardView alloc]
+        DPCardView *card = [[DPCardView alloc]
                                initWithFrame:CGRectMake(rx, ry, self.cardSize.width, self.cardSize.height)
-                                    category:self.categories[i]];
+                                    dataElement:self.categories[i]];
         card.center = [self calcNewCenter:card];        
         [mcards addObject:card];
     }

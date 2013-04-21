@@ -17,11 +17,11 @@
 
 #define DURATION_ZOOM ((NSTimeInterval)0.35)
 
-@interface DPCtgCardView : UIView
+@interface DPCardView : UIView
 
-@property (strong, nonatomic) Category *category;
+@property (strong, nonatomic) DPDataElement *element;
 
-- (id) initWithFrame:(CGRect)frame category:(Category *)ctg;
+- (id) initWithFrame:(CGRect)frame dataElement:(DPDataElement *)elm;
 
 - (void) zoomCard:(NSTimeInterval)duration position:(CGPoint)newCenter;
 - (void) cancelCardZoom:(NSTimeInterval)duration;

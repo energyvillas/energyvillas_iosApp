@@ -112,6 +112,9 @@
 		5EC255F81701054A0045AB99 /* DPCategoryView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5EC255F71701054A0045AB99 /* DPCategoryView.xib */; };
 		5EC48CDB1714B7CF00A9566E /* testView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5EC48CDA1714B7CF00A9566E /* testView.xib */; };
 		5EC48CDE1714BF7E00A9566E /* DPBuyContentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EC48CDD1714BF7E00A9566E /* DPBuyContentViewController.m */; };
+		5EC573921724860E000B7004 /* TabBar in Resources */ = {isa = PBXBuildFile; fileRef = 5EC573911724860E000B7004 /* TabBar */; };
+		5EC573941724862A000B7004 /* NextModel in Resources */ = {isa = PBXBuildFile; fileRef = 5EC573931724862A000B7004 /* NextModel */; };
+		5EC5739617248681000B7004 /* MainMenu in Resources */ = {isa = PBXBuildFile; fileRef = 5EC5739517248681000B7004 /* MainMenu */; };
 		5ED20279171E9624006AC1FC /* iCarousel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5ED20278171E9624006AC1FC /* iCarousel.m */; };
 		5ED2027D171E99F7006AC1FC /* AsyncImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5ED2027C171E99F7006AC1FC /* AsyncImageView.m */; };
 		5ED20283171EA757006AC1FC /* FXImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5ED20280171EA757006AC1FC /* FXImageView.m */; };
@@ -122,8 +125,8 @@
 		5EDF095D170C9CBE00774682 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 5EDF0959170C9CBE00774682 /* Icon.png */; };
 		5EDF095E170C9CBE00774682 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5EDF095A170C9CBE00774682 /* Icon@2x.png */; };
 		5EE16DFF171C47D10006E1CE /* Carousel in Resources */ = {isa = PBXBuildFile; fileRef = 5EE16DFE171C47D10006E1CE /* Carousel */; };
-		5EF40842170DE9A100938AEE /* DPCtgCardView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EF40841170DE9A100938AEE /* DPCtgCardView.m */; };
-		5EF40845170DE9B200938AEE /* DPAnimatedCategoriesView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EF40844170DE9B200938AEE /* DPAnimatedCategoriesView.m */; };
+		5EF40842170DE9A100938AEE /* DPCardView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EF40841170DE9A100938AEE /* DPCardView.m */; };
+		5EF40845170DE9B200938AEE /* DPAnimatedCardsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EF40844170DE9B200938AEE /* DPAnimatedCardsView.m */; };
 		5EFCCCFA1709BE6C00C1FE88 /* DPDataCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EFCCCF91709BE6C00C1FE88 /* DPDataCache.m */; };
 		5EFCCCFD1709C37100C1FE88 /* DPDataElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EFCCCFC1709C37100C1FE88 /* DPDataElement.m */; };
 		5EFCCD001709DECA00C1FE88 /* Banner.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EFCCCFF1709DECA00C1FE88 /* Banner.m */; };
@@ -315,6 +318,9 @@
 		5EC48CDA1714B7CF00A9566E /* testView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = testView.xib; sourceTree = "<group>"; };
 		5EC48CDC1714BF7E00A9566E /* DPBuyContentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPBuyContentViewController.h; sourceTree = "<group>"; };
 		5EC48CDD1714BF7E00A9566E /* DPBuyContentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPBuyContentViewController.m; sourceTree = "<group>"; };
+		5EC573911724860E000B7004 /* TabBar */ = {isa = PBXFileReference; lastKnownFileType = folder; path = TabBar; sourceTree = "<group>"; };
+		5EC573931724862A000B7004 /* NextModel */ = {isa = PBXFileReference; lastKnownFileType = folder; path = NextModel; sourceTree = "<group>"; };
+		5EC5739517248681000B7004 /* MainMenu */ = {isa = PBXFileReference; lastKnownFileType = folder; path = MainMenu; sourceTree = "<group>"; };
 		5ED20277171E9624006AC1FC /* iCarousel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iCarousel.h; sourceTree = "<group>"; };
 		5ED20278171E9624006AC1FC /* iCarousel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iCarousel.m; sourceTree = "<group>"; };
 		5ED2027B171E99F7006AC1FC /* AsyncImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AsyncImageView.h; sourceTree = "<group>"; };
@@ -329,10 +335,10 @@
 		5EDF0959170C9CBE00774682 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
 		5EDF095A170C9CBE00774682 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
 		5EE16DFE171C47D10006E1CE /* Carousel */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Carousel; sourceTree = "<group>"; };
-		5EF40840170DE9A100938AEE /* DPCtgCardView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPCtgCardView.h; sourceTree = "<group>"; };
-		5EF40841170DE9A100938AEE /* DPCtgCardView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPCtgCardView.m; sourceTree = "<group>"; };
-		5EF40843170DE9B200938AEE /* DPAnimatedCategoriesView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPAnimatedCategoriesView.h; sourceTree = "<group>"; };
-		5EF40844170DE9B200938AEE /* DPAnimatedCategoriesView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPAnimatedCategoriesView.m; sourceTree = "<group>"; };
+		5EF40840170DE9A100938AEE /* DPCardView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPCardView.h; sourceTree = "<group>"; };
+		5EF40841170DE9A100938AEE /* DPCardView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPCardView.m; sourceTree = "<group>"; };
+		5EF40843170DE9B200938AEE /* DPAnimatedCardsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPAnimatedCardsView.h; sourceTree = "<group>"; };
+		5EF40844170DE9B200938AEE /* DPAnimatedCardsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPAnimatedCardsView.m; sourceTree = "<group>"; };
 		5EFCCCF81709BE6C00C1FE88 /* DPDataCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPDataCache.h; sourceTree = "<group>"; };
 		5EFCCCF91709BE6C00C1FE88 /* DPDataCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPDataCache.m; sourceTree = "<group>"; };
 		5EFCCCFB1709C37100C1FE88 /* DPDataElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPDataElement.h; sourceTree = "<group>"; };
@@ -525,10 +531,10 @@
 				5EC2559916FCC7310045AB99 /* DPScrollableViewController.h */,
 				5EC2559A16FCC7310045AB99 /* DPScrollableViewController.m */,
 				5EC255F917010D610045AB99 /* DPScrollableViewDelegate.h */,
-				5EF40843170DE9B200938AEE /* DPAnimatedCategoriesView.h */,
-				5EF40844170DE9B200938AEE /* DPAnimatedCategoriesView.m */,
-				5EF40840170DE9A100938AEE /* DPCtgCardView.h */,
-				5EF40841170DE9A100938AEE /* DPCtgCardView.m */,
+				5EF40843170DE9B200938AEE /* DPAnimatedCardsView.h */,
+				5EF40844170DE9B200938AEE /* DPAnimatedCardsView.m */,
+				5EF40840170DE9A100938AEE /* DPCardView.h */,
+				5EF40841170DE9A100938AEE /* DPCardView.m */,
 				5EC2557B16FC64400045AB99 /* DPImageInfo.h */,
 				5EC2557C16FC64400045AB99 /* DPImageInfo.m */,
 				5EC2558516FC73430045AB99 /* DPIAPHelper.h */,
@@ -646,6 +652,9 @@
 				5EDF0956170C9CBE00774682 /* Icons */,
 				5E4E8514171059AA005DAD06 /* Navbar */,
 				5E5F949E17213BF5006C9A88 /* Social */,
+				5EC5739517248681000B7004 /* MainMenu */,
+				5EC573931724862A000B7004 /* NextModel */,
+				5EC573911724860E000B7004 /* TabBar */,
 				5E36051F1708438F00DB7B20 /* close.png */,
 				5E3605201708438F00DB7B20 /* close@2x.png */,
 				5EFCCD1A170ADF0E00C1FE88 /* free-details.plist */,
@@ -909,6 +918,9 @@
 				5E5F94A117219177006C9A88 /* menu_v~iphone.png in Resources */,
 				5E5F94A61722C0EC006C9A88 /* balloon_roll~iphone.png in Resources */,
 				5E5F94A71722C0EC006C9A88 /* balloon~iphone.png in Resources */,
+				5EC573921724860E000B7004 /* TabBar in Resources */,
+				5EC573941724862A000B7004 /* NextModel in Resources */,
+				5EC5739617248681000B7004 /* MainMenu in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -973,8 +985,8 @@
 				5EFCCD091709F10700C1FE88 /* Category.m in Sources */,
 				5EFCCD0C1709F2EE00C1FE88 /* CategoryParser.m in Sources */,
 				5EFCCD0F1709F30700C1FE88 /* DPCategoryLoader.m in Sources */,
-				5EF40842170DE9A100938AEE /* DPCtgCardView.m in Sources */,
-				5EF40845170DE9B200938AEE /* DPAnimatedCategoriesView.m in Sources */,
+				5EF40842170DE9A100938AEE /* DPCardView.m in Sources */,
+				5EF40845170DE9B200938AEE /* DPAnimatedCardsView.m in Sources */,
 				5E0C7653170F32E300F572A0 /* DPMenuViewController.m in Sources */,
 				5E4E851A17109D38005DAD06 /* DPCategoriesViewController.m in Sources */,
 				5E4E851D1711E501005DAD06 /* DPSubCategoryViewController.m in Sources */,

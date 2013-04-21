@@ -23,7 +23,11 @@
 @end
 
 @implementation DPImageContentViewController {
-    
+	CGFloat lastScale;
+	CGFloat lastRotation;
+	
+	CGFloat firstX;
+	CGFloat firstY;
 }
 
 @synthesize image, busyIndicator, queue;
@@ -71,8 +75,17 @@
 }
 
 - (void) doInitImageView {
-//    CGRect aframe = CGRectMake(0, 0, self.view.superview.frame.size.width, self.view.superview.frame.size.height);
-    CGRect aframe = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
+//    AsyncImageView *imgView = [[AsyncImageView alloc] initWithFrame:self.view.bounds];
+//    //set image URL. AsyncImageView class will then dynamically load the image
+//    imgView.imageURL = [NSURL URLWithString:self.article.imageUrl];
+//    imgView.contentMode = UIViewContentModeScaleAspectFit;
+//    imgView.userInteractionEnabled = YES;
+//    [self addGestureRecognizersTo:imgView];
+//    [self.view addSubview:imgView];
+
+    
+    
+    CGRect aframe = self.view.bounds;//CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
     UIImageView *imgView = [[UIImageView alloc] initWithFrame:aframe];
     imgView.contentMode = UIViewContentModeScaleAspectFit;
     imgView.userInteractionEnabled = YES;
@@ -80,6 +93,27 @@
     [self addGestureRecognizersTo:imgView];
     [self.view addSubview:imgView];
 }
+
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+	// Do any additional setup after loading the view.
+}
+
+- (void) viewWillAppear:(BOOL)animated {
+    if (image)// && !self.article)
+        [self doInitImageView];
+    else if (self.article) {
+        if (isLocalUrl(self.article.imageUrl)) {
+            self.image = [UIImage imageNamed:self.article.imageUrl];
+            [self doInitImageView];
+        } else
+            [self downloadImageUrl:[NSURL URLWithString:self.article.imageUrl]];
+    }
+    
+    [super viewWillAppear:animated];
+}
+
 
 // adds a set of gesture recognizers to one of our piece subviews
 - (void)addGestureRecognizersTo:(UIView *)piece {
@@ -103,7 +137,34 @@
     [piece addGestureRecognizer:longPressGesture];
 }
 
+/*
+- (void)addGestureRecognizersTo:(UIView *)piece {
 
+    UIPinchGestureRecognizer *pinchRecognizer = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(scale:)];
+    [pinchRecognizer setDelegate:self];
+    [piece addGestureRecognizer:pinchRecognizer];
+    
+    UIRotationGestureRecognizer *rotationRecognizer = [[UIRotationGestureRecognizer alloc] initWithTarget:self action:@selector(rotate:)];
+    [rotationRecognizer setDelegate:self];
+    [piece addGestureRecognizer:rotationRecognizer];
+    
+    UIPanGestureRecognizer *panRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(move:)];
+    [panRecognizer setMinimumNumberOfTouches:1];
+    [panRecognizer setMaximumNumberOfTouches:1];
+    [panRecognizer setDelegate:self];
+    [piece addGestureRecognizer:panRecognizer];
+    
+    UITapGestureRecognizer *tapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapped:)];
+    [tapRecognizer setNumberOfTapsRequired:1];
+    [tapRecognizer setDelegate:self];
+    [piece addGestureRecognizer:tapRecognizer];
+    
+    UILongPressGestureRecognizer *longPressGesture = [[UILongPressGestureRecognizer alloc]
+                                                      initWithTarget:self action:@selector(showResetMenu:)];
+    [piece addGestureRecognizer:longPressGesture];
+
+}
+ */
 #pragma mark -
 #pragma mark === Utility methods  ===
 #pragma mark
@@ -194,7 +255,9 @@
     [self adjustAnchorPointForGestureRecognizer:gestureRecognizer];
     
     if ([gestureRecognizer state] == UIGestureRecognizerStateBegan || [gestureRecognizer state] == UIGestureRecognizerStateChanged) {
-        [gestureRecognizer view].transform = CGAffineTransformRotate([[gestureRecognizer view] transform], [gestureRecognizer rotation]);
+        CGFloat rotation = [gestureRecognizer rotation];
+        [gestureRecognizer view].transform = CGAffineTransformRotate([[gestureRecognizer view] transform], rotation);
+        NSLog(@"rotation => %f", rotation);
         [gestureRecognizer setRotation:0];
     }
 }
@@ -234,26 +297,114 @@
     return YES;
 }
 
-
-- (void)viewDidLoad {
-    [super viewDidLoad];
-	// Do any additional setup after loading the view.
-    
-    AsyncImageView *imgView = [[AsyncImageView alloc] initWithFrame:self.view.bounds];    
-    //set image URL. AsyncImageView class will then dynamically load the image
-    imgView.imageURL = [NSURL URLWithString:self.article.imageUrl];
-    imgView.contentMode = UIViewContentModeScaleAspectFit;
-    imgView.userInteractionEnabled = YES;
-    [self addGestureRecognizersTo:imgView];
-    [self.view addSubview:imgView];
+/*
+-(void)scale:(id)sender {
+	
+	[self.view bringSubviewToFront:[(UIPinchGestureRecognizer*)sender view]];
+	
+	if([(UIPinchGestureRecognizer*)sender state] == UIGestureRecognizerStateEnded) {
+		
+		lastScale = 1.0;
+		return;
+	}
+	
+	CGFloat scale = 1.0 - (lastScale - [(UIPinchGestureRecognizer*)sender scale]);
+	
+	CGAffineTransform currentTransform = [(UIPinchGestureRecognizer*)sender view].transform;
+	CGAffineTransform newTransform = CGAffineTransformScale(currentTransform, scale, scale);
+	
+	[[(UIPinchGestureRecognizer*)sender view] setTransform:newTransform];
+	
+	lastScale = [(UIPinchGestureRecognizer*)sender scale];
 }
 
-- (void) viewWillAppear:(BOOL)animated {
-    if (image)// && !self.article)
-        [self doInitImageView];
-    
-    [super viewWillAppear:animated];
+-(void)rotate:(id)sender {
+	
+	[self.view bringSubviewToFront:[(UIRotationGestureRecognizer*)sender view]];
+	
+	if([(UIRotationGestureRecognizer*)sender state] == UIGestureRecognizerStateEnded) {
+		
+		lastRotation = 0.0;
+		return;
+	}
+	
+	CGFloat rotation = 0.0 - (lastRotation - [(UIRotationGestureRecognizer*)sender rotation]);
+	
+	CGAffineTransform currentTransform = [(UIPinchGestureRecognizer*)sender view].transform;
+	CGAffineTransform newTransform = CGAffineTransformRotate(currentTransform,rotation);
+	
+	[[(UIRotationGestureRecognizer*)sender view] setTransform:newTransform];
+	
+	lastRotation = [(UIRotationGestureRecognizer*)sender rotation];
 }
+
+-(void)move:(id)sender {
+	
+	[[[(UITapGestureRecognizer*)sender view] layer] removeAllAnimations];
+	
+	[self.view bringSubviewToFront:[(UIPanGestureRecognizer*)sender view]];
+	CGPoint translatedPoint = [(UIPanGestureRecognizer*)sender translationInView:self.view];
+	
+	if([(UIPanGestureRecognizer*)sender state] == UIGestureRecognizerStateBegan) {
+		
+		firstX = [[sender view] center].x;
+		firstY = [[sender view] center].y;
+	}
+	
+	translatedPoint = CGPointMake(firstX+translatedPoint.x, firstY+translatedPoint.y);
+	
+	[[sender view] setCenter:translatedPoint];
+	
+	if([(UIPanGestureRecognizer*)sender state] == UIGestureRecognizerStateEnded) {
+		
+		CGFloat finalX = translatedPoint.x + (.35*[(UIPanGestureRecognizer*)sender velocityInView:self.view].x);
+		CGFloat finalY = translatedPoint.y + (.35*[(UIPanGestureRecognizer*)sender velocityInView:self.view].y);
+		
+        CGFloat maxX =  self.view.bounds.size.width;
+        CGFloat maxY =  self.view.bounds.size.height;
+        
+        if(finalX < 0)
+            finalX = 0;
+        else if(finalX > maxX)
+            finalX = maxX;
+        
+        if(finalY < 0)
+            finalY = 0;
+        else if(finalY > maxY)
+            finalY = maxY;
+		
+		[UIView beginAnimations:nil context:NULL];
+		[UIView setAnimationDuration:.35];
+		[UIView setAnimationCurve:UIViewAnimationCurveEaseOut];
+		[[sender view] setCenter:CGPointMake(finalX, finalY)];
+		[UIView commitAnimations];
+	}
+}
+
+-(void)tapped:(id)sender {
+	
+	[[[(UITapGestureRecognizer*)sender view] layer] removeAllAnimations];
+}
+
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer {
+	
+    // if the gesture recognizers are on different views, don't allow simultaneous recognition
+    if (gestureRecognizer.view != otherGestureRecognizer.view)
+        return NO;
+    
+    // if either of the gesture recognizers is the long press, don't allow simultaneous recognition
+    if ([gestureRecognizer isKindOfClass:[UILongPressGestureRecognizer class]] ||
+        [otherGestureRecognizer isKindOfClass:[UILongPressGestureRecognizer class]])
+        return NO;
+    
+	if ([gestureRecognizer isKindOfClass:[UIPanGestureRecognizer class]] ||
+        [otherGestureRecognizer isKindOfClass:[UIPanGestureRecognizer class]])
+        return NO;
+    
+    return YES;
+}
+*/
+
 
 #pragma mark - === busy indication handling  ===
 

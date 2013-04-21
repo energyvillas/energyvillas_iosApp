@@ -40,9 +40,25 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [self doLocalize];
 	// Do any additional setup after loading the view.
+    [self doLocalize];
 }
+
+- (void) doLocalize {
+    [super doLocalize];
+//    self.bbiMore.title = DPLocalizedString(kbbiMore_Title);
+//    self.bbiBuy.title = DPLocalizedString(kbbiBuy_Title);
+    
+    if (self.adsView.subviews.count > 0)
+        [self loadAdsView];
+ 
+    if (self.nnView.subviews.count > 0)
+        [self loadNewNextView];
+    
+    if (self.mmView.subviews.count > 0)
+        [self loadMenuView];
+}
+
 
 - (void) doLayoutSubViews:(BOOL)fixtop {    
     CGRect vf = self.view.frame;

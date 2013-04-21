@@ -24,8 +24,8 @@ NSString *const DPN_currentLangChanged = @"DPN_currentLangChanged";
 NSString *const PRODUCT_IDENTIFIER = @"gr.DesignProjects.DP";
 
 // web service credentials
-NSString *const USER_NAME = @"admin";
-NSString *const PASSWORD = @"demo";
+NSString *const USER_NAME = @"phone";
+NSString *const PASSWORD = @"phone";
 
 // web service URLs
 NSString *const BANNERS_URL = @"http://designprojectsapps.com/iphonebanners.php";

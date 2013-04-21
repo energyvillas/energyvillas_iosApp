@@ -7,7 +7,7 @@
 //
 
 #import "DPAnimatedScrollViewController.h"
-#import "DPAnimatedCategoriesView.h"
+#import "DPAnimatedCardsView.h"
 
 #import "DPSubCategoryViewController.h"
 
@@ -100,7 +100,7 @@
     //CGRect frm = CGRectMake(0, 0, size.width, size.height);
     if (CGRectIsEmpty(frm)) return;
     
-    DPAnimatedCategoriesView *acv = [[DPAnimatedCategoriesView alloc]
+    DPAnimatedCardsView *acv = [[DPAnimatedCardsView alloc]
                                      initWithFrame:frm
                                      categories:self.contentList[contentIndex]];
     acv.scrollableViewDelegate = self;
@@ -161,13 +161,13 @@
         [self.dataLoader loadData];
 }
 
-- (DPAnimatedCategoriesView *) findAnimCtgView {
-    DPAnimatedCategoriesView *result = nil;
+- (DPAnimatedCardsView *) findAnimCtgView {
+    DPAnimatedCardsView *result = nil;
     int pg = self.pageControl.currentPage;
     if (pg>=0){
         UIView *container = self.scrollView.subviews[pg];
         if (container.subviews.count == 1 &&
-            [container.subviews[0] isKindOfClass:[DPAnimatedCategoriesView class]]) {
+            [container.subviews[0] isKindOfClass:[DPAnimatedCardsView class]]) {
             result = container.subviews[0];
         }
     }
@@ -180,7 +180,7 @@
     scrollDirection:(DPScrollDirection)scrolldir {
     [super changeRows:rows columns:columns scrollDirection:scrolldir];
     
-    DPAnimatedCategoriesView *acv = [self findAnimCtgView];
+    DPAnimatedCardsView *acv = [self findAnimCtgView];
     if (acv)
         [acv frameChanged];
 }

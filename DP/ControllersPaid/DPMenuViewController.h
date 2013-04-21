@@ -9,7 +9,7 @@
 #import "DPScrollableViewController.h"
 #import "FPPopoverController.h"
 
-@interface DPMenuViewController : DPScrollableViewController <DPScrollableViewDelegate, FPPopoverControllerDelegate>
+@interface DPMenuViewController : DPScrollableViewController <DPScrollableViewDelegate, DPScrollableDataSourceDelegate, FPPopoverControllerDelegate>
 
 - (id) initWithRows:(int)rows
             columns:(int)columns

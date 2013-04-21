@@ -20,11 +20,12 @@
 
 @interface DPCarouselViewController ()
 
-//@property (strong, nonatomic) UIActivityIndicatorView *busyIndicator;
-//@property (strong, nonatomic) NSOperationQueue *queue;
+@property (strong, nonatomic) UIActivityIndicatorView *busyIndicator;
+@property (strong, nonatomic) NSOperationQueue *queue;
 @property (strong, nonatomic) DPDataLoader *dataLoader;
 @property (strong, nonatomic) NSArray *datalist;
-//@property (strong, nonatomic) NSMutableArray *imageCache;
+@property (strong, nonatomic) NSMutableArray *imageCache;
+@property (strong, nonatomic) NSMutableDictionary *imageRequests;
 //@property (strong, nonatomic) AFOpenFlowView *carousel;
 
 @property (strong, nonatomic) UIView *lblContainer;
@@ -67,7 +68,22 @@
 
 -(void) viewDidUnload {
     [super viewDidUnload];
+    [self cleanup];
+}
+-(void) cleanup {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+    if (self.queue) {
+        [self.queue cancelAllOperations];
+        [self stopIndicator];
+
+        for (id op in self.queue.operations)
+            if ([op isKindOfClass:[ASIHTTPRequest class]]) {
+                [((ASIHTTPRequest *)op) setDidFinishSelector:nil];
+                ((ASIHTTPRequest *)op).delegate = nil;
+            }
+    }
+    
+    self.queue = nil;
     [self clearDataLoader];
     [self clearCarousel];
 }
@@ -90,6 +106,9 @@
     // Dispose of any resources that can be recreated.
 }
 
+-(void)dealloc {
+    [self cleanup];
+}
 -(void) makeCurrentImageAtIndex:(int)indx {
 //    dispatch_async(dispatch_get_main_queue(), ^{
 //        if (self.currentIndex != -1 && self.icarousel)
@@ -191,10 +210,14 @@
     CGRect counterfrm = CGRectMake(0, 0, 50, self.lblCounter.frame.size.height);
     self.lblCounter.frame = counterfrm;
     
+    if (self.currentIndex >= self.datalist.count) {
+        self.lblTitle.text = @"";
+        [self.lblTitle sizeToFit];
+    } else {
     NSString *title = [self.datalist[self.currentIndex] title];
-    self.lblTitle.text = title;
-    [self.lblTitle sizeToFit];
-    
+        self.lblTitle.text = title;
+        [self.lblTitle sizeToFit];
+    }
     CGRect titlefrm = CGRectMake(counterfrm.size.width + 1, 0,
                                  self.lblTitle.frame.size.width + 6,
                                  self.lblTitle.frame.size.height);     
@@ -224,9 +247,13 @@
 }
 
 -(void) setupImageCache {
-//    self.imageCache = [[NSMutableArray alloc] init];
-//    for (int i = 0; i < self.datalist.count; i ++)
-//        self.imageCache[i] = [NSNull null];
+    if (self.imageCache == nil) {
+        self.imageCache = [[NSMutableArray alloc] init];
+        for (int i = 0; i < self.datalist.count; i ++)
+            self.imageCache[i] = [NSNull null];
+        
+        self.imageRequests = [[NSMutableDictionary alloc] init];
+    }
 }
 
 - (void) dataLoaded {
@@ -371,19 +398,25 @@
         return imageView;
     } else {
         // Check if image already exists in cache. If yes retrieve it from there, else go to internet...
-        AsyncImageView *aiv = [[AsyncImageView alloc] initWithFrame:CGRectInset(self.icarousel.bounds, -30, -10)];
-        aiv.contentMode = UIViewContentModeCenter;
+//        AsyncImageView *aiv = [[AsyncImageView alloc] initWithFrame:CGRectInset(self.icarousel.bounds, -30, -10)];
+//        aiv.contentMode = UIViewContentModeCenter;
+//
+//        //set image URL. AsyncImageView class will then dynamically load the image
+//        aiv.imageURL = [NSURL URLWithString:imgName];
+//        return aiv;
 
-        //set image URL. AsyncImageView class will then dynamically load the image
-        aiv.imageURL = [NSURL URLWithString:imgName];
-        return aiv;
-
-//        if(self.imageCache[index] != [NSNull null]) {
-//            UIImage *img = [UIImage imageWithData:self.imageCache[index]];
-//            [openFlowView setImage:img forIndex:index];
-//        }else{
-//            [self downloadImageUrl:imgName atIndex:index];
-//        }
+        if(self.imageCache[index] != [NSNull null]) {
+            UIImage *img = self.imageCache[index];//[UIImage imageWithData:self.imageCache[index]];
+            
+            CGRect frm = CGRectMake(0, 0, img.size.width, img.size.height);
+            UIImageView *imageView = [[UIImageView alloc] initWithFrame:frm];
+            imageView.image = img;
+            return imageView;
+            //[openFlowView setImage:img forIndex:index];
+        }else{
+            [self downloadImageUrl:imgName atIndex:index];
+            return nil;
+        }
     }
 
 }
@@ -498,61 +531,67 @@
 //    return nil; // this should return the missing image replacement
 //}
 //
-//#pragma mark - === busy indication handling  ===
-//
-//- (void) startIndicator {
-//    if(!self.busyIndicator) {
-//		self.busyIndicator = [[UIActivityIndicatorView alloc]
-//                              initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
-//		self.busyIndicator.frame = CGRectMake((self.view.frame.size.width-25)/2,
-//                                              (self.view.frame.size.height-25)/2,
-//                                              25, 25);
-//		self.busyIndicator.hidesWhenStopped = TRUE;
-//        [self.view addSubview:self.busyIndicator];
-//	}
-//    [self.busyIndicator startAnimating];
-//}
-//
-//- (void) stopIndicator {
-//    if(self.busyIndicator) {
-//        [self.busyIndicator stopAnimating];
-//        [self.busyIndicator removeFromSuperview];
-//        self.busyIndicator = nil;
-//    }
-//}
-//
-//#pragma mark -
-//#pragma mark === image downloading handling  ===
-//
-//- (void) downloadImageUrl:(NSString *)imageUrl atIndex:(int)aIndex {
-//    if (!self.queue)
-//        self.queue = [[NSOperationQueue alloc] init];
-//    
-//    ASIHTTPRequest *imageRequest = [ASIHTTPRequest requestWithURL:[NSURL URLWithString:imageUrl]];
-//    [imageRequest setDelegate:self];
-//    [imageRequest setDidFinishSelector:@selector(imageRequestDone:)];
-//    imageRequest.userInfo = [NSDictionary dictionaryWithObjectsAndKeys: [NSNumber numberWithInt:aIndex], @"imageIndex", nil];
-//    [self.queue addOperation:imageRequest];
-//    //[self startIndicator];
-//}
-//
-//- (void) imageRequestDone:(ASIHTTPRequest *)request{
-//    //[self stopIndicator];
-//	int aIndex = [[request.userInfo objectForKey:@"imageIndex"] intValue];
-//	UIImage *aImage = [UIImage imageWithData:[request responseData]];
-//    
-//	if(aImage){
-//		[self.imageCache replaceObjectAtIndex:aIndex withObject:aImage];
-//        [self.carousel setImage:aImage forIndex:aIndex];
-//	}
-//}
-//
-//- (void) requestFailed:(ASIHTTPRequest *)request {
-//	NSLog(@"Request Failed: %@", [request error]);
-//    
-//	//[self stopIndicator];
-//}
-//
+#pragma mark - === busy indication handling  ===
+
+- (void) startIndicator {
+    if(!self.busyIndicator) {
+		self.busyIndicator = [[UIActivityIndicatorView alloc]
+                              initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
+		self.busyIndicator.frame = CGRectMake((self.view.frame.size.width-25)/2,
+                                              (self.view.frame.size.height-25)/2,
+                                              25, 25);
+		self.busyIndicator.hidesWhenStopped = TRUE;
+        [self.view addSubview:self.busyIndicator];
+	}
+    [self.busyIndicator startAnimating];
+}
+
+- (void) stopIndicator {
+    if(self.busyIndicator) {
+        [self.busyIndicator stopAnimating];
+        [self.busyIndicator removeFromSuperview];
+        self.busyIndicator = nil;
+    }
+}
+
+#pragma mark -
+#pragma mark === image downloading handling  ===
+
+- (void) downloadImageUrl:(NSString *)imageUrl atIndex:(int)aIndex {
+    if (!self.queue)
+        self.queue = [[NSOperationQueue alloc] init];
+    
+    if ([self.imageRequests objectForKey:imageUrl])
+        return;
+
+    [self.imageRequests setObject:imageUrl forKey:imageUrl];
+    
+    ASIHTTPRequest *imageRequest = [ASIHTTPRequest requestWithURL:[NSURL URLWithString:imageUrl]];
+    [imageRequest setDelegate:self];
+    [imageRequest setDidFinishSelector:@selector(imageRequestDone:)];
+    imageRequest.userInfo = [NSDictionary dictionaryWithObjectsAndKeys: [NSNumber numberWithInt:aIndex], @"imageIndex", nil];
+    [self.queue addOperation:imageRequest];
+    [self startIndicator];
+}
+
+- (void) imageRequestDone:(ASIHTTPRequest *)request{
+    [self stopIndicator];
+	int aIndex = [[request.userInfo objectForKey:@"imageIndex"] intValue];
+	UIImage *aImage = [UIImage imageWithData:[request responseData]];
+    
+	if(aImage){
+		[self.imageCache replaceObjectAtIndex:aIndex withObject:aImage];
+        //[self.carousel setImage:aImage forIndex:aIndex];
+        [self.icarousel reloadItemAtIndex:aIndex animated:YES];
+	}
+}
+
+- (void) requestFailed:(ASIHTTPRequest *)request {
+	NSLog(@"Request Failed: %@", [request error]);
+    
+	//[self stopIndicator];
+}
+
 
 
 @end

@@ -6,7 +6,7 @@
 //
 //
 
-#import "DPCtgCardView.h"
+#import "DPCardView.h"
 #import "DPConstants.h"
 #import <Quartzcore/Quartzcore.h>
 #import "DPAppHelper.h"
@@ -23,7 +23,7 @@
 #define IPHONE_LABEL_HEIGHT ((int)18)
 #define IPAD_LABEL_HEIGHT ((int)22)
 
-@interface DPCtgCardView ()
+@interface DPCardView ()
 
 @property (strong, nonatomic) UIImageView *imageView;
 @property (strong, nonatomic) UIImageView *zoomImageView;
@@ -34,16 +34,16 @@
 
 @end
 
-@implementation DPCtgCardView {
+@implementation DPCardView {
     CGSize cardSize;
     CGFloat baseFontSize, zoomFontSize;
     CGRect baseLabelFrame, zoomLabelFrame;
     BOOL useLabel;
 }
 
-@synthesize category;
+@synthesize element;
 
-- (id)initWithFrame:(CGRect)frame category:(Category *)ctg {
+- (id)initWithFrame:(CGRect)frame dataElement:(DPDataElement *)elm {
     useLabel = NO;
     cardSize = IS_IPAD
                     ? CGSizeMake(IPAD_CARD_WIDTH, IPAD_CARD_HEIGHT)
@@ -54,7 +54,7 @@
     
     self = [super initWithFrame:frame];
     if (self) {
-        category = ctg;
+        element = elm;
         
         self.backgroundColor = [UIColor clearColor];
 //        self.backgroundColor = [UIColor colorWithHue: (arc4random() % 1000) / 1000.0
@@ -72,12 +72,12 @@
             self.imageView = [[UIImageView alloc] initWithFrame:self.bounds];
             self.imageView.contentMode = UIViewContentModeScaleAspectFit;
             
-            if (isLocalUrl(category.imageUrl))
+            if (isLocalUrl(element.imageUrl))
                 //TODO
-                self.imageView.image = [UIImage imageNamed:[self calcImageName: category.imageUrl]];
+                self.imageView.image = [UIImage imageNamed:[self calcImageName: element.imageUrl]];
             //self.imageView.image = [UIImage imageNamed:@"balloon.png"];
             else
-                [self loadImageAsync:category inView:self.imageView];
+                [self loadImageAsync:element inView:self.imageView];
             
             //TODO : this is here ONLY for testing
             self.imageView.image = [UIImage imageNamed:@"balloon.png"];
@@ -93,12 +93,12 @@
             self.zoomImageView = [[UIImageView alloc] initWithFrame:zoomFrame];
             self.zoomImageView.contentMode = UIViewContentModeScaleAspectFit;
             
-            if (isLocalUrl(category.imageUrl))
+            if (isLocalUrl(element.imageUrl))
                 //TODO
-                self.zoomImageView.image = [UIImage imageNamed:[self calcImageName: category.imageUrl]];
+                self.zoomImageView.image = [UIImage imageNamed:[self calcImageName: element.imageUrl]];
             //self.imageView.image = [UIImage imageNamed:@"balloon.png"];
             else
-                [self loadImageAsync:category inView:self.zoomImageView];
+                [self loadImageAsync:element inView:self.zoomImageView];
             
             //TODO : this is here ONLY for testing
             self.zoomImageView.image = [UIImage imageNamed:@"balloon_roll.png"];
@@ -106,7 +106,7 @@
 
         if (useLabel && !self.label) {
             self.label = [[UILabel alloc] init];
-            [self setupLabel:category.title];
+            [self setupLabel:element.title];
         }
         
         [self addSubview:self.imageView];

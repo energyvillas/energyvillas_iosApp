@@ -106,7 +106,8 @@
     self.islandPopupViewController = nil;
     self.islandsContent = nil;
 }
-//
+
+/*
 //- (void) doLayoutSubviews:(BOOL)fixtop {
 //   
 ////    CGRect vf = self.view.frame;
@@ -118,6 +119,7 @@
 //    
 //    [self changeRows:self.rowCount columns:self.colCount];
 //}
+*/
 
 - (void) elementTapped:(id)sender element:(id)tappedelement {
     DPDataElement *element = tappedelement;
@@ -177,6 +179,46 @@
     }
 }
 
+#pragma mark - START :: DPScrollableDataSourceDelegate
+-(NSString *) resolveImageName:(DPDataElement *)elm {
+    return [self calcImageName:elm.imageUrl isHighlight:NO];
+}
+//- (NSString *) calcImageName:(NSString *)baseName {
+//    return [self calcImageName:baseName isHighlight:NO];
+//}
+- (NSString *) calcImageName:(NSString *)baseName isHighlight:(BOOL)ishighlight {
+    @try {
+        NSLog(@"Menu - calcImageName - baseName='%@'", baseName);
+        NSArray *parts = [baseName componentsSeparatedByString:@"."];
+        if (parts && parts.count == 2) {
+            NSString *orientation = IS_PORTRAIT ? @"v" : @"h";
+            NSString *high = ishighlight ? @"_roll" : @"";
+            
+            NSString *result = [NSString stringWithFormat:@"MainMenu/main_menu_%@_%@_%@.%@",
+                                orientation, parts[0], CURRENT_LANG, parts[1]];
+
+//            NSString *result = [NSString stringWithFormat:@"MainMenu/main_menu_%@_%@_%@.%@",
+//                                orientation, parts[0], high, parts[1]];
+
+            return result;
+        }
+        else
+            return baseName;
+    }
+    @catch (NSException* exception) {
+        NSLog(@"Uncaught exception: %@", exception.description);
+        NSLog(@"Stack trace: %@", [exception callStackSymbols]);
+        return baseName;
+    }
+}
+
+
+//-(UIView *) createViewFor:(int)contentIndex frame:(CGRect)frame {
+//    
+//}
+#pragma END :: DPScrollableDataSourceDelegate
+
+#pragma mark - START :: island's and exclusive popover sbmenus
 - (void)handleIslandTap:(UITapGestureRecognizer *)sender {
     [self.popController dismissPopoverAnimated:YES];
     self.popController = nil;
@@ -302,6 +344,7 @@
 - (void)popoverControllerDidDismissPopover:(FPPopoverController *)popoverController {
     
 }
+#pragma END :: islands and exclusive popover sbmenus
 
 
 

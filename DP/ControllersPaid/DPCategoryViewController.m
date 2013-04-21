@@ -12,7 +12,7 @@
 #import "../External/OpenFlow/UIImageExtras.h"
 #import "DPConstants.h"
 #import "DPAppHelper.h"
-#import "DPAnimatedCategoriesView.h"
+#import "DPAnimatedCardsView.h"
 #import "DPAdsViewController.h"
 #import "DPMenuViewController.h"
 #import "DPAnimatedScrollViewController.h"
@@ -70,10 +70,26 @@
     self.adsView.backgroundColor = [UIColor clearColor];
     self.ctgView.backgroundColor = [UIColor clearColor];
     self.mmView.backgroundColor = [UIColor clearColor];
+
+    [self doLocalize];
+}
+
+- (void) doLocalize {
+    [super doLocalize];
     NSString *ctgTitleKey = [NSString stringWithFormat:kMENU_TITLE_Fmt, category];
     self.lblTitle.text = DPLocalizedString(ctgTitleKey);
     //[self fixlabel];
+    
+    if (self.adsView.subviews.count > 0)
+        [self loadAdsView];
+    
+    if (self.actualCtgView.subviews.count > 0)
+        [self loadCategoryView];
+    
+    if (self.mmView.subviews.count > 0)
+        [self loadMenuView];
 }
+
 
 - (void)didReceiveMemoryWarning
 {
@@ -219,40 +235,40 @@
     int rows = IS_PORTRAIT ? 1 : 3;
     int cols = IS_PORTRAIT ? 3 : 1;
     DPScrollDirection scrolldir = IS_PORTRAIT ? DPScrollDirectionHorizontal : DPScrollDirectionVertical;
-    
-    if (self.mmView.subviews.count == 0)
-    {
-        self.mmViewController = [[DPMenuViewController alloc] initWithRows:rows
-                                                                   columns:cols
-                                                                autoScroll:NO
-                                                                 showPages:NO
-                                                           scrollDirection:scrolldir];
-        
-        [self addChildViewController:self.mmViewController];
-        [self.mmView addSubview:self.mmViewController.view];
-        self.mmViewController.view.frame = self.mmView.bounds;
-    }
-    else {
-        self.mmViewController.view.frame = self.mmView.bounds;
-        [self.mmViewController changeRows:rows
-                                  columns:cols
-                          scrollDirection:scrolldir];
-    }
 
-////////
-//    if (self.mmViewController) {
-//        [self.mmView removeFromSuperview];
-//        [self.mmViewController removeFromParentViewController];
+    if (self.mmViewController != nil) {
+        [self.mmViewController.view removeFromSuperview];
+        [self.mmViewController removeFromParentViewController];
+        self.mmViewController = nil;
+    }
+    
+    self.mmViewController = [[DPMenuViewController alloc] initWithRows:rows
+                                                               columns:cols
+                                                            autoScroll:NO
+                                                             showPages:NO
+                                                       scrollDirection:scrolldir];
+    self.mmViewController.view.frame = self.mmView.bounds;
+    [self addChildViewController:self.mmViewController];
+    [self.mmView addSubview:self.mmViewController.view];
+
+//    if (self.mmView.subviews.count == 0)
+//    {
+//        self.mmViewController = [[DPMenuViewController alloc] initWithRows:rows
+//                                                                   columns:cols
+//                                                                autoScroll:NO
+//                                                                 showPages:NO
+//                                                           scrollDirection:scrolldir];
+//        
+//        [self addChildViewController:self.mmViewController];
+//        [self.mmView addSubview:self.mmViewController.view];
+//        self.mmViewController.view.frame = self.mmView.bounds;
 //    }
-//    
-//    self.mmViewController = [[DPMenuViewController alloc] initWithRows:isPortrait ? 1 : 3
-//                                                               columns:isPortrait ? 3 : 1
-//                                                            autoScroll:NO
-//                                                             showPages:NO
-//                                                       scrollDirection:isPortrait ? DPScrollDirectionHorizontal : DPScrollDirectionVertical];
-//    
-//    [self addChildViewController:self.mmViewController];
-//    [self.mmView addSubview:self.mmViewController.view];
+//    else {
+//        self.mmViewController.view.frame = self.mmView.bounds;
+//        [self.mmViewController changeRows:rows
+//                                  columns:cols
+//                          scrollDirection:scrolldir];
+//    }
 }
 
 @end

@@ -37,15 +37,15 @@
 		</array>
 		<key>Images</key>
 		<array>
-			<string>menu_v.png</string>
-			<string>Loft Houses.jpg</string>
-			<string>Finnish Houses.jpg</string>
-			<string>Greek Island Houses.jpg</string>
-			<string>Country Houses.jpg</string>
-			<string>Container Houses.jpg</string>
-			<string></string>
-			<string></string>
-			<string></string>
+			<string>exupnes.png</string>
+			<string>loft.png</string>
+			<string>finlandikes.png</string>
+			<string>nisiotikes.png</string>
+			<string>country.png</string>
+			<string>container.png</string>
+			<string>villas.png</string>
+			<string>exclusive.png</string>
+			<string>video.png</string>
 		</array>
 		<key>Videos</key>
 		<array>
@@ -76,15 +76,15 @@
 		</array>
 		<key>Images</key>
 		<array>
-			<string>Έξυπνες Κατοικίες.jpg</string>
-			<string>Κατοικίες Loft.jpg</string>
-			<string>Φιλανδικές Κατοικίες.jpg</string>
-			<string>Νησιώτικες Κατοικίες.jpg</string>
-			<string>Κατοικίες Country.jpg</string>
-			<string>Κατοικίες Container.jpg</string>
-			<string></string>
-			<string></string>
-			<string></string>
+			<string>exupnes.png</string>
+			<string>loft.png</string>
+			<string>finlandikes.png</string>
+			<string>nisiotikes.png</string>
+			<string>country.png</string>
+			<string>container.png</string>
+			<string>villas.png</string>
+			<string>exclusive.png</string>
+			<string>video.png</string>
 		</array>
 		<key>Videos</key>
 		<array>
