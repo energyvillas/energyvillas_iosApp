@@ -63,10 +63,14 @@
 - (void) doLayoutSubViews:(BOOL)fixtop {    
     CGRect vf = self.view.frame;
     
-    //BOOL fixtop = !IS_PORTRAIT;
-    int h = vf.size.height - vf.origin.y;
-    int w = vf.size.width;    
-    int top = fixtop ? vf.origin.y : 0;
+    fixtop = IS_LANDSCAPE;
+    int top = fixtop ? 12 : 0;
+    int h = vf.size.height - top;
+    int w = vf.size.width;
+
+//    int h = vf.size.height - vf.origin.y;
+//    int w = vf.size.width;
+//    int top = fixtop ? vf.origin.y : 0;
     
     // iphone sizes
     int PHONE_H_ADS = 60;

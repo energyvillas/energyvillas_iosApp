@@ -13,6 +13,7 @@
 #import "../Classes/DPImageContentViewController.h"
 #import "../Models/DPDataLoader.h"
 #import "DPConstants.h"
+#import "DPAppHelper.h"
 
 
 
@@ -48,13 +49,41 @@
     [self.view insertSubview:self.navController.view atIndex:0];
     self.navController.delegate = self;
 
+    self.tabBar.delegate = self;
+}
+
+-(void) doLocalize {
+    [super doLocalize];
+
     self.tbiMain.title = DPLocalizedString(ktbiMain_Title);
     self.tbiWho.title = DPLocalizedString(ktbiWho_Title);
     self.tbiBuy.title = DPLocalizedString(ktbiBuy_Title);
     self.tbiCall.title = DPLocalizedString(ktbiCall_Title);
     self.tbiMore.title = DPLocalizedString(ktbiMore_Title);
     
-    self.tabBar.delegate = self;
+    self.tbiMain.image = [UIImage imageNamed:[NSString
+                                              stringWithFormat:@"TabBar/bottom_menu_%@_01_%@.png",
+                                              IS_PORTRAIT ? @"v" : @"h",
+                                              CURRENT_LANG]];
+    
+//    self.tbiWho.image = [UIImage imageNamed:[NSString
+//                                             stringWithFormat:@"TabBar/bottom_menu_%@_02.png",
+//                                             IS_PORTRAIT ? @"v" : @"h"]];
+//    
+    self.tbiWho.image = [UIImage imageNamed:@"TabBar/tbiWho.png"];
+    
+    self.tbiBuy.image = [UIImage imageNamed:[NSString
+                                             stringWithFormat:@"TabBar/bottom_menu_%@_03.png",
+                                             IS_PORTRAIT ? @"v" : @"h"]];
+    
+    self.tbiCall.image = [UIImage imageNamed:[NSString
+                                             stringWithFormat:@"TabBar/bottom_menu_%@_04.png",
+                                             IS_PORTRAIT ? @"v" : @"h"]];
+    
+    self.tbiMore.image = [UIImage imageNamed:[NSString
+                                             stringWithFormat:@"TabBar/bottom_menu_%@_05.png",
+                                             IS_PORTRAIT ? @"v" : @"h"]];
+    
 }
 
 - (void) viewWillAppear:(BOOL)animated {
@@ -75,6 +104,8 @@
 
 - (void) willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
                                           duration:(NSTimeInterval)duration {
+    [super willAnimateRotationToInterfaceOrientation:toInterfaceOrientation duration:duration];
+    
     [self fixBackgroundImage];
     
     [self doFixFrames:navController.topViewController fixTop:NO];
@@ -83,7 +114,9 @@
 -(void) doFixFrames:(UIViewController *)viewController fixTop:(BOOL)fixtop {
     [self fixFrames:NO];
     if (viewController && [viewController isKindOfClass:[UINavContentViewController class]])
-        [(UINavContentViewController *)viewController doLayoutSubViews:fixtop];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [(UINavContentViewController *)viewController doLayoutSubViews:fixtop];
+        });
 }
 
 - (void) fixFrames:(BOOL)fixNavView {
@@ -106,7 +139,7 @@
             tvc_vf = CGRectMake(0, nc_nbf.size.height - tvc_svf.origin.y,
                                 tvc_svf.size.width,
                                 tvc_svf.size.height);
-            tvc.view.frame = tvc_vf;
+        //    tvc.view.frame = tvc_vf;
             //        [tvc.view setNeedsDisplay];
         }
     }

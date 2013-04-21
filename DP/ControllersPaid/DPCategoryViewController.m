@@ -127,9 +127,14 @@
 //    int w = vf.size.width;
 //    int top = fixtop ? vf.origin.y : 0;
     
-    int h = vf.size.height - vf.origin.y;
+    fixtop = IS_LANDSCAPE;
+    int top = fixtop ? 12 : 0;
+    int h = vf.size.height - top;
     int w = vf.size.width;
-    int top = fixtop ? vf.origin.y : 0;
+
+//    int h = vf.size.height - vf.origin.y;
+//    int w = vf.size.width;
+//    int top = fixtop ? vf.origin.y : 0;
     
     NSLog(@"############## DPCategoryView - h = %d, top = %d", h, top);
 

@@ -121,10 +121,14 @@
     CGRect vf = self.view.frame;
     //    CGRect svf = self.view.superview.frame;
     
-    //BOOL fixtop = NO;
-    int h = IS_PORTRAIT ? vf.size.height : vf.size.height - vf.origin.y;
+    fixtop = IS_LANDSCAPE;
+    int top = fixtop ? 12 : 0;
+    int h = vf.size.height - top;
     int w = vf.size.width;
-    int top = fixtop ? vf.origin.y : 0;
+    //BOOL fixtop = NO;
+//    int h = IS_PORTRAIT ? vf.size.height : vf.size.height - vf.origin.y;
+//    int w = vf.size.width;
+//    int top = fixtop ? vf.origin.y : 0;
     
     // iphone sizes
     //portrait
@@ -159,7 +163,7 @@
                                              w, PH_HTM);
 
             self.subCtgView.frame = CGRectMake(0, top + PH_LBL + PH_PHT + PH_HTM,
-                                               w, h - (top + PH_LBL + PH_PHT + PH_HTM));
+                                               w, h - (PH_LBL + PH_PHT + PH_HTM));
         } else {
             self.label.frame = CGRectMake(LW_PHT, top,
                                           w - LW_PHT, LH_LBL);
@@ -168,10 +172,10 @@
                                               LW_PHT, LH_PHT);
             
             self.htmlView.frame = CGRectMake(0, top + LH_PHT,
-                                             LW_PHT, h - (top + LH_PHT));
+                                             LW_PHT, h - LH_PHT);
             
             self.subCtgView.frame = CGRectMake(LW_PHT, top + LH_LBL,
-                                               w - LW_PHT, h - top + LH_LBL);
+                                               w - LW_PHT, h - LH_LBL);
         }
     } else /* IF (IS_IPAD) */{
         if (IS_PORTRAIT) {
@@ -185,7 +189,7 @@
                                              w, PAD_PH_HTM);
             
             self.subCtgView.frame = CGRectMake(0, top + PAD_PH_LBL + PAD_PH_PHT + PAD_PH_HTM,
-                                               w, h - (top + PAD_PH_LBL + PAD_PH_PHT + PAD_PH_HTM));
+                                               w, h - (PAD_PH_LBL + PAD_PH_PHT + PAD_PH_HTM));
         } else {
             self.label.frame = CGRectMake(PAD_LW_PHT, top,
                                           w - PAD_LW_PHT, PAD_LH_LBL);
@@ -194,10 +198,10 @@
                                               PAD_LW_PHT, PAD_LH_PHT);
             
             self.htmlView.frame = CGRectMake(0, top + PAD_LH_PHT,
-                                             PAD_LW_PHT, h - (top + PAD_LH_PHT));
+                                             PAD_LW_PHT, h - PAD_LH_PHT);
             
             self.subCtgView.frame = CGRectMake(PAD_LW_PHT, top + PAD_LH_LBL,
-                                               w - PAD_LW_PHT, h - top + PAD_LH_LBL);
+                                               w - PAD_LW_PHT, h - PAD_LH_LBL);
        }
     }
     
