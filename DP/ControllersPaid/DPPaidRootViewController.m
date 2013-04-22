@@ -9,11 +9,11 @@
 #import "DPPaidRootViewController.h"
 #import "DPConstants.h"
 
-#import "../Controllers/DPCtgScrollViewController.h"
 #import "Article.h"
 #import "DPAppHelper.h"
 
 #import "DPAdsViewController.h"
+#import "DPNewNextViewController.h"
 #import "DPMenuViewController.h"
 
 
@@ -21,7 +21,7 @@
 
 
 @property (strong, nonatomic) DPAdsViewController *adsViewController;
-@property (strong, nonatomic) DPCtgScrollViewController *nnViewController;
+@property (strong, nonatomic) DPNewNextViewController *nnViewController;
 @property (strong, nonatomic) DPMenuViewController *mmViewController;
 
 @end
@@ -168,61 +168,30 @@
 }
 
 - (void) loadNewNextView {
-    UIView *bcv = self.nnView;
-    
-//    NSLogFrame(@"nnView.frame", self.nnView.frame);
-//    NSLogFrame(@"nnView.bounds", self.nnView.bounds);
-//    
-//    if (self.nnView.subviews.count > 0) {
-//        [self.nnView.subviews[0] removeFromSuperview];
+//    NSLog(@"enter loadNewNextView");
+//    if (self.nnViewController != nil) {
+//        [self.nnViewController.view removeFromSuperview];
+//        [self.nnViewController removeFromParentViewController];
+//        self.nnViewController = nil;
+//        NSLog(@"cleaned new-next");
 //    }
-//    UIView *nn = [[UIView alloc] initWithFrame:CGRectInset(self.nnView.bounds, 3, 3)];
-//    nn.backgroundColor = [UIColor redColor];
-//    [self.nnView addSubview:nn];
 //    
-//    return;
-    
-    if (bcv.subviews.count == 0) {
-        NSMutableArray *content = [[NSMutableArray alloc] init];
-        DPAppHelper *apphelper = [DPAppHelper sharedInstance];
-        for (int i = 0; i < 2; i++) {
-            Article *article = [[Article alloc] initWithValues:[NSString stringWithFormat:@"%d", i]
-                                                          lang:apphelper.currentLang
-                                                      category:-1
-                                                       orderNo:0
-                                                       forFree:NO
-                                                         title:nil
-                                                      imageUrl:[NSString stringWithFormat:@"%d.jpg", i+20]
-                                                 imageThumbUrl:[NSString stringWithFormat:@"%d.jpg", i+20]
-                                                          body:nil
-                                                           url:nil
-                                                   publishDate:nil
-                                                      videoUrl:nil
-                                                   videolength:nil];
-            
-            
-            [content addObject: article];
-        }
-        
-        if (IS_PORTRAIT)
-            self.nnViewController = [[DPCtgScrollViewController alloc]
-                                     initWithContent:content rows:1 columns:2 autoScroll:NO];
-        else
-            self.nnViewController = [[DPCtgScrollViewController alloc]
-                                     initWithContent:content rows:2 columns:1 autoScroll:NO];
-        
-        content = nil;
-        self.nnViewController.view.frame = self.nnView.bounds;
+//    NSLog(@"creating new-next");
+//    self.nnViewController = [[DPNewNextViewController alloc] init];
+//    self.nnViewController.view.frame =self.nnView.bounds;
+//    [self addChildViewController: self.nnViewController];
+//    [self.nnView addSubview: self.nnViewController.view];
+//    NSLog(@"exit loadNewNextView");
+
+    if (self.nnViewController == nil) {
+        NSLog(@"creating new-next");
+        self.nnViewController = [[DPNewNextViewController alloc] init];
+        self.nnViewController.view.frame =self.nnView.bounds;
         [self addChildViewController: self.nnViewController];
-        [bcv addSubview: self.nnViewController.view];
+        [self.nnView addSubview: self.nnViewController.view];
     } else {
-        self.nnViewController.view.frame = self.nnView.bounds;
-        if (IS_PORTRAIT) {
-            [self.nnViewController changeRows:1 columns:2];
-        } else {
-            [self.nnViewController changeRows:2 columns:1];
-        }
-        
+        self.nnViewController.view.frame =self.nnView.bounds;
+        [self.nnViewController refresh];
     }
 }
 

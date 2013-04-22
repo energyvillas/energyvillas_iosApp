@@ -62,6 +62,7 @@
     
     if (self) {
         self.scrollableViewDelegate = self;
+        self.dataDelegate = self;
         self.rowCount = rows;
         self.colCount = columns;
     }
@@ -133,9 +134,12 @@
             break;
         }
             
-        case CTGID_EXCLUSIVE:
-            
+        case CTGID_EXCLUSIVE:{
+            [self showIslandMenu:self.scrollView.subviews[7]
+                      ofCategory:element.Id
+                    islandsCount:2];
             break;
+        }
             
         case CTGID_SMART:
         case CTGID_LOFT:
@@ -181,41 +185,107 @@
 
 #pragma mark - START :: DPScrollableDataSourceDelegate
 -(NSString *) resolveImageName:(DPDataElement *)elm {
-    return [self calcImageName:elm.imageUrl isHighlight:NO];
+    return [self calcImageName:elm isHighlight:NO];
+}
+-(NSString *) resolveHighlightImageName:(DPDataElement *)elm {
+    return [self calcImageName:elm isHighlight:YES];
 }
 //- (NSString *) calcImageName:(NSString *)baseName {
 //    return [self calcImageName:baseName isHighlight:NO];
 //}
-- (NSString *) calcImageName:(NSString *)baseName isHighlight:(BOOL)ishighlight {
+- (NSString *) calcImageName:(DPDataElement *)elm isHighlight:(BOOL)ishighlight {
     @try {
-        NSLog(@"Menu - calcImageName - baseName='%@'", baseName);
-        NSArray *parts = [baseName componentsSeparatedByString:@"."];
+        NSLog(@"Menu - calcImageName - baseName='%@'", elm.imageUrl);
+        NSArray *parts = [elm.imageUrl componentsSeparatedByString:@"."];
         if (parts && parts.count == 2) {
             NSString *orientation = IS_PORTRAIT ? @"v" : @"h";
-            NSString *high = ishighlight ? @"_roll" : @"";
+            NSString *lang = @"_el"/*CURRENT_LANG*/;
+            if ((elm.Id == CTGID_EXCLUSIVE) || (elm.Id == CTGID_VIDEOS))
+                lang = @"";
             
-            NSString *result = [NSString stringWithFormat:@"MainMenu/main_menu_%@_%@_%@.%@",
-                                orientation, parts[0], CURRENT_LANG, parts[1]];
+            NSString *result = [NSString stringWithFormat:@"MainMenu/main_menu_%@_%@%@.%@",
+                                orientation, parts[0], lang, parts[1]];
 
-//            NSString *result = [NSString stringWithFormat:@"MainMenu/main_menu_%@_%@_%@.%@",
-//                                orientation, parts[0], high, parts[1]];
+            if (ishighlight) {
+                NSString *high = ishighlight ? @"roll" : @"";
 
+                result = [NSString stringWithFormat:@"MainMenu/main_menu_%@_%@%@_%@.%@",
+                                    orientation, parts[0], lang, high, parts[1]];
+            }
             return result;
         }
         else
-            return baseName;
+            return elm.imageUrl;
     }
     @catch (NSException* exception) {
         NSLog(@"Uncaught exception: %@", exception.description);
         NSLog(@"Stack trace: %@", [exception callStackSymbols]);
-        return baseName;
+        return elm.imageUrl;
     }
 }
 
+- (UIView *) createViewFor:(int)contentIndex
+                     frame:(CGRect)frame {
+    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+    button.showsTouchWhenHighlighted = YES;
+    [button addTarget:self action:@selector(onTap:) forControlEvents:UIControlEventTouchUpInside];
+    
+    DPDataElement *element = self.contentList[contentIndex];
+    
+    NSString *imgname =[self resolveImageName:element];
+    UIImage *img = [UIImage imageNamed:imgname];
+    if (!img)
+        button.frame = frame;
+    else {
+        CGSize imgsize = img.size;
+        button.frame = CGRectMake((frame.size.width - imgsize.width) / 2.0,
+                                  (frame.size.height - imgsize.height) / 2.0,
+                                  imgsize.width, imgsize.height);
+        [button setImage:img forState:UIControlStateNormal];
+    }
+    
+    NSString *imghighname =[self resolveHighlightImageName:element];
+    if (imghighname) {
+        img = [UIImage imageNamed:imghighname];
+        if (img)
+            [button setImage:img forState:UIControlStateHighlighted];
+    }
+    
+    [button setTag: contentIndex];
+    
+    return button;
+}
 
-//-(UIView *) createViewFor:(int)contentIndex frame:(CGRect)frame {
-//    
-//}
+- (void) onTap:(id)sender {
+    int indx = ((UIButton *)sender).tag;
+    DPDataElement * element = self.contentList[indx];
+    NSLog(@"Clicked image at index %i named %@", indx, element.title);
+    
+    [self elementTapped:sender element:element];
+    
+    // navigation logic goes here. create and push a new view controller;
+    //        DPTestViewController *vc = [[DPTestViewController alloc] init];
+    //        [self.navigationController pushViewController: vc animated: YES];
+    
+}
+
+/**/
+- (UILabel *) createLabelFor:(int)contentIndex
+                       frame:(CGRect)frame
+                       title:(NSString *)title {
+    UIFont *fnt = nil;
+    if (IS_IPAD)
+        fnt = [UIFont fontWithName:@"TrebuchetMS-Bold" size:16]; //HelveticaNeue-CondensedBold"
+    else  if (IS_IPHONE)
+        fnt = [UIFont fontWithName:@"TrebuchetMS-Bold" size:9];
+    else
+        fnt = [UIFont fontWithName:@"TrebuchetMS-Bold" size:11];
+    UILabel *label = createLabel(frame, title, fnt);
+    label.frame = CGRectOffset(label.frame, 0, -2);
+    return label;
+}
+/**/
+
 #pragma END :: DPScrollableDataSourceDelegate
 
 #pragma mark - START :: island's and exclusive popover sbmenus
@@ -253,10 +323,20 @@
     
     UILabel *lv = [[UILabel alloc] initWithFrame: frm];
     lv.textAlignment = NSTextAlignmentCenter;
+    
+    UIFont *fnt = nil;
     if (IS_IPAD)
-        lv.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:16];
+        fnt = [UIFont fontWithName:@"TrebuchetMS-Bold" size:16]; //HelveticaNeue-CondensedBold"
+    else  if (IS_IPHONE)
+        fnt = [UIFont fontWithName:@"TrebuchetMS-Bold" size:9];
     else
-        lv.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:12];
+        fnt = [UIFont fontWithName:@"TrebuchetMS-Bold" size:11];
+
+    lv.font = fnt;
+//    if (IS_IPAD)
+//        lv.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:16];
+//    else
+//        lv.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:12];
     lv.adjustsFontSizeToFitWidth = YES;
     lv.text = element.title;
     lv.backgroundColor = [UIColor clearColor];
@@ -289,12 +369,13 @@
 }
 
 -(void) showIslandMenu:(id)fromView ofCategory:(int)ctgId islandsCount:(int)islandsCount {
+    [self clearPopups];
     CGRect mmfrm = self.view.superview.frame;
     
     island_width = mmfrm.size.width / self.colCount;
     island_height = mmfrm.size.height / self.rowCount;
     CGFloat ratio = (1.0 * island_width) / island_height;
-    island_width = island_width - 8;
+    island_width = island_width - 7;
     island_height = island_width / ratio;
     
     int width = island_width;
@@ -322,6 +403,7 @@
                           initWithViewController:self.islandPopupViewController];
     self.popController.delegate = self;
     self.popController.border = YES;
+    self.popController.tint = FPPopoverBlackTint;
     if (self.scrollDirection == DPScrollDirectionHorizontal) {
         self.popController.arrowDirection = FPPopoverArrowDirectionDown;
         self.popController.contentSize = CGSizeMake(frame.size.width + 20, frame.size.height + 40);

@@ -86,6 +86,7 @@ FOUNDATION_EXPORT NSString *const MySecondConstant;
 #define CTGID_CAROUSEL_MORE ((int)78)
 #define CTGID_GENERAL_BUY_DLG ((int)76)
 #define CTGID_WHO_WE_ARE ((int)60)
+#define CTGID_NEW_NEXT ((int)-1000)
 
 // option identifier
 UIKIT_EXTERN NSString *const USE_DATA_CACHING;

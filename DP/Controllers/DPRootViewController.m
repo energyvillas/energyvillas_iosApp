@@ -24,13 +24,16 @@
 #import "DPSocialViewController.h"
 #import "DPMailHelper.h"
 
+#import "DPSocialManager.h"
+
 
 
 @interface DPRootViewController () 
 
 @property (strong, nonatomic) NSMutableDictionary *coverFlowDict;
 @property (strong, nonatomic) DPBuyViewController *buyController;
-@property (strong, nonatomic) DPSocialViewController *socialController;
+//@property (strong, nonatomic) DPSocialViewController *socialController;
+@property (strong, nonatomic) DPSocialManager *socialManager;
 
 @end
 
@@ -154,144 +157,162 @@
     }
 }
 
-//==============================================================================
-
 - (void) showSocialsDialog {
-    AudioServicesPlaySystemSound(0x528);
-    if (IS_IPAD)
-        [self showSocialsDialog_iPads];
-    else
-        [self showSocialsDialog_iPhones];
-}
-
-- (void) showSocialsDialog_iPads {
-    self.socialController = [[DPSocialViewController alloc]
-                             initWithCompletion:^(int indx){
-                                 self.view.userInteractionEnabled = YES;
-                                 self.socialController = nil;
-                                 
-                                 if (indx == -1)
-                                     ;//[self showSocialsDialog];
-                                 else if (indx > 0)
-                                     [self launchSocialAction:indx];
-                             }];
-    
-    self.view.userInteractionEnabled = NO;
-    self.socialController.modalPresentationStyle = UIModalPresentationFormSheet;
-    self.navigationController.modalPresentationStyle = UIModalPresentationFormSheet;
-    [self.navigationController presentViewController:self.socialController animated:YES completion:nil];
-    CGRect svfrm = [self.socialController calcFrame];
-    if (IS_PORTRAIT)
-        self.socialController.view.superview.frame = svfrm;
-    else
-        self.socialController.view.superview.frame = svfrm;
-}
-
-- (void) showSocialsDialog_iPhones {
-    id del = self.navigationController.delegate;
-    DPMainViewController *main = del;
-    
-    DPSocialViewController *vc = [[DPSocialViewController alloc]
-                                  initWithCompletion:^(int indx){
-                                      self.view.userInteractionEnabled = YES;
-                                      self.socialController = nil;
-                                      
-                                      if (indx == -1)
-                                          [self showSocialsDialog];
-                                      else if (indx > 0)
-                                          [self launchSocialAction:indx];
-                                  }];
-    
-    self.view.userInteractionEnabled = NO;
-    
-    [main addChildViewController:vc];
-    [main.view addSubview:vc.view];
-}
-
--(void) launchSocialAction:(int) action {
-    switch (action) {
-        case SOCIAL_ACT_FACEBOOK: {
-            DPFacebookViewController *facebook = [[DPFacebookViewController alloc] init];
-            [self.navigationController pushViewController:facebook animated:YES];
-
-            break;
-        }
-        case SOCIAL_ACT_TWITTER:
-            [self tweet:nil url:nil];
-            break;
-            
-        case SOCIAL_ACT_LINKEDIN:
-            
-            break;
-            
-        case SOCIAL_ACT_EMAIL:
-            [self composeEmail];
-            break;
-            
-        case SOCIAL_ACT_FAVS:
-            
-            break;
-            
-        case SOCIAL_ACT_OTHER:
-            
-            break;
-            
-        default:
-            break;
+    if (self.socialManager == nil) {
+        self.socialManager = [[DPSocialManager alloc] initWithController:self
+                                                          onSocialClosed:^{
+                                                              onAfterAppear++;
+//                                                              dispatch_async(dispatch_get_main_queue(), ^{
+//                                                                  [self loadDetailView:YES];
+//                                                              });
+                                                          }];
+//        self.socialManager.socialDelegate = self;
     }
+    
+    [self.socialManager showSocialsDialog:^{
+        //self.socialManager = nil;
+    }];
 }
 
-//==============================================================================
 
--(void) composeEmail {
-    MFMailComposeViewController *composer = [DPMailHelper composeEmail];
-    composer.mailComposeDelegate = self;
-	[self.navigationController presentModalViewController:composer animated:YES];
-}
-
-#pragma mark - MFMailComposeViewControllerDelegate
-
--(void) mailComposeController:(MFMailComposeViewController *)controller
-          didFinishWithResult:(MFMailComposeResult)result
-                        error:(NSError *)error {
-	[controller dismissModalViewControllerAnimated:YES];
-
-    onAfterAppear++;
-}
-
-//==============================================================================
-
-- (void) tweet:(NSString *)imgUrl url:(NSString *)urlstr {
-//    if (![TWTweetComposeViewController canSendTweet])
-//    {
-//        UIAlertView *alertView = [[UIAlertView alloc]
-//                                  initWithTitle:@"Sorry"
-//                                  message:@"You can't send a tweet right now, make sure your device has an internet connection and you have at least one Twitter account setup"
-//                                  delegate:self
-//                                  cancelButtonTitle:@"OK"
-//                                  otherButtonTitles:nil];
-//        [alertView show];
-//        
-//        return;
+////==============================================================================
+//
+//- (void) showSocialsDialog {
+//    AudioServicesPlaySystemSound(0x528);
+//    if (IS_IPAD)
+//        [self showSocialsDialog_iPads];
+//    else
+//        [self showSocialsDialog_iPhones];
+//}
+//
+//- (void) showSocialsDialog_iPads {
+//    self.socialController = [[DPSocialViewController alloc]
+//                             initWithCompletion:^(int indx){
+//                                 self.view.userInteractionEnabled = YES;
+//                                 self.socialController = nil;
+//                                 
+//                                 if (indx == -1)
+//                                     ;//[self showSocialsDialog];
+//                                 else if (indx > 0)
+//                                     [self launchSocialAction:indx];
+//                             }];
+//    
+//    self.view.userInteractionEnabled = NO;
+//    self.socialController.modalPresentationStyle = UIModalPresentationFormSheet;
+//    self.navigationController.modalPresentationStyle = UIModalPresentationFormSheet;
+//    [self.navigationController presentViewController:self.socialController animated:YES completion:nil];
+//    CGRect svfrm = [self.socialController calcFrame];
+//    if (IS_PORTRAIT)
+//        self.socialController.view.superview.frame = svfrm;
+//    else
+//        self.socialController.view.superview.frame = svfrm;
+//}
+//
+//- (void) showSocialsDialog_iPhones {
+//    id del = self.navigationController.delegate;
+//    DPMainViewController *main = del;
+//    
+//    DPSocialViewController *vc = [[DPSocialViewController alloc]
+//                                  initWithCompletion:^(int indx){
+//                                      self.view.userInteractionEnabled = YES;
+//                                      self.socialController = nil;
+//                                      
+//                                      if (indx == -1)
+//                                          [self showSocialsDialog];
+//                                      else if (indx > 0)
+//                                          [self launchSocialAction:indx];
+//                                  }];
+//    
+//    self.view.userInteractionEnabled = NO;
+//    
+//    [main addChildViewController:vc];
+//    [main.view addSubview:vc.view];
+//}
+//
+//-(void) launchSocialAction:(int) action {
+//    switch (action) {
+//        case SOCIAL_ACT_FACEBOOK: {
+//            DPFacebookViewController *facebook = [[DPFacebookViewController alloc] init];
+//            [self.navigationController pushViewController:facebook animated:YES];
+//
+//            break;
+//        }
+//        case SOCIAL_ACT_TWITTER:
+//            [self tweet:nil url:nil];
+//            break;
+//            
+//        case SOCIAL_ACT_LINKEDIN:
+//            
+//            break;
+//            
+//        case SOCIAL_ACT_EMAIL:
+//            [self composeEmail];
+//            break;
+//            
+//        case SOCIAL_ACT_FAVS:
+//            
+//            break;
+//            
+//        case SOCIAL_ACT_OTHER:
+//            
+//            break;
+//            
+//        default:
+//            break;
 //    }
-    
-    TWTweetComposeViewController *tweetSheet = [[TWTweetComposeViewController alloc] init];
-    [tweetSheet setInitialText: @"Tweeting from energyVillas! :)"];
-    
-    if (imgUrl) {
-        UIImage *img = [UIImage imageNamed:imgUrl];
-        if (img)
-            [tweetSheet addImage:img];
-    }
-    
-    if (urlstr) {
-        NSURL *url = [NSURL URLWithString:urlstr];
-        if (url)
-            [tweetSheet addURL:url];
-    }
-    
-    [self presentModalViewController:tweetSheet animated:YES];
-}
+//}
+//
+////==============================================================================
+//
+//-(void) composeEmail {
+//    MFMailComposeViewController *composer = [DPMailHelper composeEmail];
+//    composer.mailComposeDelegate = self;
+//	[self.navigationController presentModalViewController:composer animated:YES];
+//}
+//
+//#pragma mark - MFMailComposeViewControllerDelegate
+//
+//-(void) mailComposeController:(MFMailComposeViewController *)controller
+//          didFinishWithResult:(MFMailComposeResult)result
+//                        error:(NSError *)error {
+//	[controller dismissModalViewControllerAnimated:YES];
+//
+//    onAfterAppear++;
+//}
+//
+////==============================================================================
+//
+//- (void) tweet:(NSString *)imgUrl url:(NSString *)urlstr {
+////    if (![TWTweetComposeViewController canSendTweet])
+////    {
+////        UIAlertView *alertView = [[UIAlertView alloc]
+////                                  initWithTitle:@"Sorry"
+////                                  message:@"You can't send a tweet right now, make sure your device has an internet connection and you have at least one Twitter account setup"
+////                                  delegate:self
+////                                  cancelButtonTitle:@"OK"
+////                                  otherButtonTitles:nil];
+////        [alertView show];
+////        
+////        return;
+////    }
+//    
+//    TWTweetComposeViewController *tweetSheet = [[TWTweetComposeViewController alloc] init];
+//    [tweetSheet setInitialText: @"Tweeting from energyVillas! :)"];
+//    
+//    if (imgUrl) {
+//        UIImage *img = [UIImage imageNamed:imgUrl];
+//        if (img)
+//            [tweetSheet addImage:img];
+//    }
+//    
+//    if (urlstr) {
+//        NSURL *url = [NSURL URLWithString:urlstr];
+//        if (url)
+//            [tweetSheet addURL:url];
+//    }
+//    
+//    [self presentModalViewController:tweetSheet animated:YES];
+//}
 
 //==============================================================================
 //==============================================================================
@@ -347,11 +368,16 @@
         self.buyController = nil;
         [self showBuyDialog:ctgid];
     }
-    if (IS_IPAD && self.socialController) {
-        //int ctgid = self.socialController.category;
-        [self.navigationController dismissViewControllerAnimated:NO completion:nil];
-        self.view.userInteractionEnabled = YES;
-        self.socialController = nil;
+//    if (IS_IPAD && self.socialController) {
+//        //int ctgid = self.socialController.category;
+//        [self.navigationController dismissViewControllerAnimated:NO completion:nil];
+//        self.view.userInteractionEnabled = YES;
+//        self.socialController = nil;
+//        [self showSocialsDialog];
+//    }
+    if (IS_IPAD && self.socialManager && self.socialManager.showingDialog) {
+        [self.socialManager hideSocialsDialog];
+        self.socialManager = nil;
         [self showSocialsDialog];
     }
 }
@@ -448,6 +474,7 @@
     [self setBbiBuy:nil];
     [self setTopView:nil];
     [self setBottomView:nil];
+    self.socialManager = nil;
     [super viewDidUnload];
 }
 

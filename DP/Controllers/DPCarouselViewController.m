@@ -386,22 +386,25 @@
     if (isLocalUrl(imgName)) {
         imgName = [self calcImageName:imgName];
         UIImage *img = [UIImage imageNamed:imgName];
-        CGRect frm = CGRectMake(0, 0, img.size.width, img.size.height);
-        UIImageView *imageView = [[UIImageView alloc] initWithFrame:frm];
         
-//        FXImageView *imageView = [[FXImageView alloc] initWithFrame:frm];
-//        imageView.contentMode = UIViewContentModeCenter;
-//        imageView.asynchronous = YES;
-//        imageView.reflectionScale = 0.5f;
-//        imageView.reflectionAlpha = 0.35f;
-//        imageView.reflectionGap = 10.0f;
-//        imageView.shadowOffset = CGSizeMake(0.0f, 2.0f);
-//        imageView.shadowBlur = 5.0f;
+        return [self createImageView:img];
 
-////        imageView.cornerRadius = 10.0f;
-//        imageView.layer.doubleSided = NO;
-        imageView.image = img;
-        return imageView;
+//        CGRect frm = CGRectMake(0, 0, img.size.width, img.size.height);
+//        UIImageView *imageView = [[UIImageView alloc] initWithFrame:frm];
+//        
+////        FXImageView *imageView = [[FXImageView alloc] initWithFrame:frm];
+////        imageView.contentMode = UIViewContentModeCenter;
+////        imageView.asynchronous = YES;
+////        imageView.reflectionScale = 0.5f;
+////        imageView.reflectionAlpha = 0.35f;
+////        imageView.reflectionGap = 10.0f;
+////        imageView.shadowOffset = CGSizeMake(0.0f, 2.0f);
+////        imageView.shadowBlur = 5.0f;
+//
+//////        imageView.cornerRadius = 10.0f;
+////        imageView.layer.doubleSided = NO;
+//        imageView.image = img;
+//        return imageView;
     } else {
         // Check if image already exists in cache. If yes retrieve it from there, else go to internet...
 //        AsyncImageView *aiv = [[AsyncImageView alloc] initWithFrame:CGRectInset(self.icarousel.bounds, -30, -10)];
@@ -414,19 +417,41 @@
         if(self.imageCache[index] != [NSNull null]) {
             UIImage *img = self.imageCache[index];//[UIImage imageWithData:self.imageCache[index]];
             
-            CGRect frm = CGRectMake(0, 0, img.size.width, img.size.height);
-            UIImageView *imageView = [[UIImageView alloc] initWithFrame:frm];
-            imageView.image = img;
-            return imageView;
+            return [self createImageView:img];
+//            CGRect frm = CGRectMake(0, 0, img.size.width, img.size.height);
+//            UIImageView *imageView = [[UIImageView alloc] initWithFrame:frm];
+//            imageView.image = img;
+//            return imageView;
             //[openFlowView setImage:img forIndex:index];
         }else{
             [self downloadImageUrl:imgName atIndex:index];
             return nil;
         }
     }
-
 }
 
+-(UIImageView *) createImageView:(UIImage *)image {
+    CGRect frm;
+    CGSize sz = self.icarousel.bounds.size;
+    if (sz.width > image.size.width && sz.height > image.size.height)
+        frm = CGRectMake(0, 0, image.size.width, image.size.height);
+    else {
+        CGFloat ir = image.size.width / image.size.height;
+        CGFloat cr = sz.width / sz.height;
+        if (ir < cr)  { //  image is taller than carousel
+            // we should fix image height to be equal to carousel height
+            // and calc image width according to aspect and new height
+            frm = CGRectMake(0, 0, sz.height * ir, sz.height);
+        } else { // image is wider or same aspect ratio to that of carousel
+            // we should fix image width to be equal to carousel width * 0.8
+            // and calc image height according to aspect and new width
+            frm = CGRectMake(0, 0, sz.width * 0.8, sz.width * 0.8 * ir);
+        }
+    }
+    UIImageView *imageView = [[UIImageView alloc] initWithFrame:frm];
+    imageView.image = image;
+    return imageView;    
+}
 ////==============================================================================
 //
 //- (void) loadOpenFlow {

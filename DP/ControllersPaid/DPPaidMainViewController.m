@@ -114,9 +114,9 @@
 -(void) doFixFrames:(UIViewController *)viewController fixTop:(BOOL)fixtop {
     [self fixFrames:NO];
     if (viewController && [viewController isKindOfClass:[UINavContentViewController class]])
-        dispatch_async(dispatch_get_main_queue(), ^{
+       // dispatch_async(dispatch_get_main_queue(), ^{
             [(UINavContentViewController *)viewController doLayoutSubViews:fixtop];
-        });
+       // });
 }
 
 - (void) fixFrames:(BOOL)fixNavView {

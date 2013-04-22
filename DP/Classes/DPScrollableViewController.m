@@ -457,9 +457,11 @@
     self.currentPage = pageControl.currentPage;
 	
     // load the visible page and the page on either side of it (to avoid flashes when the user starts scrolling)
+    [self loadScrollViewWithPage:self.currentPage - 2];
     [self loadScrollViewWithPage:self.currentPage - 1];
     [self loadScrollViewWithPage:self.currentPage];
     [self loadScrollViewWithPage:self.currentPage + 1];
+    [self loadScrollViewWithPage:self.currentPage + 2];
     
 	// update the scroll view to the appropriate page
     CGRect frame = self.scrollView.frame;
