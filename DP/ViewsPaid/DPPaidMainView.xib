@@ -80,6 +80,10 @@
 								<reference key="IBUITabBar" ref="1053474032"/>
 							</object>
 						</array>
+						<object class="NSColor" key="IBUITintColor" id="622160769">
+							<int key="NSColorSpace">3</int>
+							<bytes key="NSWhite">MAA</bytes>
+						</object>
 					</object>
 				</array>
 				<string key="NSFrame">{{0, 20}, {320, 460}}</string>
@@ -109,10 +113,7 @@
 					<string key="NSReuseIdentifierKey">_NS:15</string>
 					<reference key="IBUIBackgroundColor" ref="91446639"/>
 					<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
-					<object class="NSColor" key="IBUITintColor">
-						<int key="NSColorSpace">3</int>
-						<bytes key="NSWhite">MAA</bytes>
-					</object>
+					<reference key="IBUITintColor" ref="622160769"/>
 				</object>
 				<array class="NSMutableArray" key="IBUIViewControllers">
 					<object class="IBUIViewController" id="117995272">

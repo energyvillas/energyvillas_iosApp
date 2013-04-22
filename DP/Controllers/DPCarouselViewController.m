@@ -201,20 +201,26 @@
 }
 
 -(void) updateLabels {
+    if ((!self.icarousel) || (!self.datalist) || (self.datalist.count == 0))
+        return;
+    
     if ((self.currentIndex == -1) || (!self.datalist) || (self.datalist.count == 0))
         return;
     
-    self.lblCounter.text = [NSString stringWithFormat:@"%d/%d", self.currentIndex + 1, self.datalist.count];
+    self.lblCounter.text = [NSString stringWithFormat:@"%d/%d",
+                            self.icarousel.currentItemIndex + 1,
+                            self.datalist.count];
+    
     [self.lblCounter sizeToFit];
     
     CGRect counterfrm = CGRectMake(0, 0, 50, self.lblCounter.frame.size.height);
     self.lblCounter.frame = counterfrm;
     
-    if (self.currentIndex >= self.datalist.count) {
+    if (self.icarousel.currentItemIndex >= self.datalist.count) {
         self.lblTitle.text = @"";
         [self.lblTitle sizeToFit];
     } else {
-    NSString *title = [self.datalist[self.currentIndex] title];
+    NSString *title = [self.datalist[self.icarousel.currentItemIndex] title];
         self.lblTitle.text = title;
         [self.lblTitle sizeToFit];
     }

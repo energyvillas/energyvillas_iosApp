@@ -306,9 +306,14 @@
 - (void) doLayoutSubViews:(BOOL)fixtop {
     CGRect vf = self.view.frame;
     
-    int h = vf.size.height - vf.origin.y; //IS_PORTRAIT ? vf.size.height : vf.size.height - vf.origin.y;
+    fixtop = IS_LANDSCAPE;
+    int top = fixtop ? 12 : 0;
+    int h = vf.size.height - top;
     int w = vf.size.width;
-    int topOfs = fixtop ? vf.origin.y : 0;
+
+//    int h = vf.size.height - vf.origin.y; //IS_PORTRAIT ? vf.size.height : vf.size.height - vf.origin.y;
+//    int w = vf.size.width;
+//    int topOfs = fixtop ? vf.origin.y : 0;
     int toolbarHeight = self.toolbar.frame.size.height;
 
     int BOTTOM_HEIGHT;
@@ -324,12 +329,12 @@
 
     int topHeight = h - toolbarHeight - BOTTOM_HEIGHT;
     
-    self.topView.frame = CGRectMake(0, topOfs, w, topHeight);
+    self.topView.frame = CGRectMake(0, top, w, topHeight);
     
-    self.toolbar.frame = CGRectMake(0, topOfs + topHeight,
+    self.toolbar.frame = CGRectMake(0, top + topHeight,
                                     w, toolbarHeight);
     
-    self.bottomView.frame = CGRectMake(0, topOfs + topHeight + toolbarHeight,
+    self.bottomView.frame = CGRectMake(0, top + topHeight + toolbarHeight,
                                        w, BOTTOM_HEIGHT);
     
     [self loadOpenFlow];

@@ -155,11 +155,15 @@
 
 
 - (void) doLayoutSubViews:(BOOL)fixtop {
+    CGRect vf = self.view.frame;
+    fixtop = IS_LANDSCAPE;
+    int top = fixtop ? 12 : 0;
+    int h = vf.size.height - top;
+    int w = vf.size.width;
+
     UIView *innerview = self.view.subviews.count == 1 ? self.view.subviews[0] : nil;
     if (innerview) {
-        innerview.frame = CGRectMake(0, 0,
-                                     self.view.bounds.size.width,
-                                     self.view.bounds.size.height);
+        innerview.frame = CGRectMake(0, top, w, h);
     }
 }
 

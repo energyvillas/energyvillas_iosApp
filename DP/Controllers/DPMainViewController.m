@@ -63,6 +63,8 @@
 
 - (void) willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
                                           duration:(NSTimeInterval)duration {
+    [super willAnimateRotationToInterfaceOrientation:toInterfaceOrientation duration:duration];
+    
     [self fixBackgroundImage];
     
     [self doFixFrames:navController.topViewController fixTop:NO];
@@ -70,7 +72,10 @@
 
 -(void) doFixFrames:(UIViewController *)viewController fixTop:(BOOL)fixtop {
     [self fixFrames];
-    if (viewController && [viewController isKindOfClass:[UINavContentViewController class]])            [(UINavContentViewController *)viewController doLayoutSubViews:fixtop];
+    if (viewController && [viewController isKindOfClass:[UINavContentViewController class]])
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [(UINavContentViewController *)viewController doLayoutSubViews:fixtop];
+        });
 }
 
 - (void) fixFrames {
@@ -84,7 +89,7 @@
         tvc_vf = CGRectMake(0, nc_nbf.size.height - tvc_svf.origin.y,
                             tvc_svf.size.width,
                             tvc_svf.size.height);
-        tvc.view.frame = tvc_vf;
+        //    tvc.view.frame = tvc_vf;
 //        [tvc.view setNeedsDisplay];
     }
 }
