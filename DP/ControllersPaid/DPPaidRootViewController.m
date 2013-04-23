@@ -247,9 +247,9 @@
 //- (BOOL) showNavBarAddToFav {
 //    return NO;
 //}
-- (BOOL) showNavBarSocial {
-    return YES;
-}
+//- (BOOL) showNavBarSocial {
+//    return NO;
+//}
 //- (BOOL) showNavBarInfo {
 //    return YES;
 //}
