@@ -48,7 +48,6 @@
 	// Do any additional setup after loading the view.
     [self.view insertSubview:self.navController.view atIndex:0];
     self.navController.delegate = self;
-
     self.tabBar.delegate = self;
 }
 
@@ -62,27 +61,16 @@
     self.tbiMore.title = DPLocalizedString(ktbiMore_Title);
     
     self.tbiMain.image = [UIImage imageNamed:[NSString
-                                              stringWithFormat:@"TabBar/bottom_menu_%@_01_%@.png",
-                                              IS_PORTRAIT ? @"v" : @"h",
+                                              stringWithFormat:@"TabBar/bottom_menu_ev_%@.png",
                                               CURRENT_LANG]];
     
-//    self.tbiWho.image = [UIImage imageNamed:[NSString
-//                                             stringWithFormat:@"TabBar/bottom_menu_%@_02.png",
-//                                             IS_PORTRAIT ? @"v" : @"h"]];
-//    
-    self.tbiWho.image = [UIImage imageNamed:@"TabBar/tbiWho.png"];
+    self.tbiWho.image = [UIImage imageNamed:@"TabBar/bottom_menu_poioi_eimaste.png"];
     
-    self.tbiBuy.image = [UIImage imageNamed:[NSString
-                                             stringWithFormat:@"TabBar/bottom_menu_%@_03.png",
-                                             IS_PORTRAIT ? @"v" : @"h"]];
+    self.tbiBuy.image = [UIImage imageNamed:@"TabBar/bottom_menu_agora_oikopedou.png"];
     
-    self.tbiCall.image = [UIImage imageNamed:[NSString
-                                             stringWithFormat:@"TabBar/bottom_menu_%@_04.png",
-                                             IS_PORTRAIT ? @"v" : @"h"]];
+    self.tbiCall.image = [UIImage imageNamed:@"TabBar/bottom_menu_klisi.png"];
     
-    self.tbiMore.image = [UIImage imageNamed:[NSString
-                                             stringWithFormat:@"TabBar/bottom_menu_%@_05.png",
-                                             IS_PORTRAIT ? @"v" : @"h"]];
+    self.tbiMore.image = [UIImage imageNamed:@"TabBar/bottom_menu_more.png"];
     
 }
 
@@ -94,6 +82,7 @@
         framesDone = YES;
     }
     [super viewWillAppear:animated];
+    [self doLocalize];
 }
 
 - (void)navigationController:(UINavigationController *)navigationController
