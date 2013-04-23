@@ -135,7 +135,7 @@
         }
             
         case CTGID_EXCLUSIVE:{
-            [self showIslandMenu:self.scrollView.subviews[7]
+            [self showIslandMenu:self.scrollView.subviews[6]
                       ofCategory:element.Id
                     islandsCount:2];
             break;
@@ -413,7 +413,15 @@
 
     }
     
-    [self.popController presentPopoverFromView:fromView];
+    BOOL isMAIN = (self.rowCount == 3) && (self.colCount == 3);
+    
+    if (isMAIN || IS_PORTRAIT)
+        [self.popController presentPopoverFromView:fromView];
+    else
+    {
+        CGPoint p = CGPointMake(mmfrm.origin.x + 10.0, mmfrm.origin.y + island_height);
+        [self.popController presentPopoverFromPoint:p];
+    }
 }
 
 

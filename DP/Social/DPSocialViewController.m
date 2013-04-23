@@ -116,8 +116,8 @@
             [self localizeItem:itemView];
 }
 -(void) localizeItem:(UIView *)itemView {
-    UIButton *btn = itemView.subviews[0];
-    UILabel *lbl = itemView.subviews[1];
+    UILabel *lbl = itemView.subviews[0];
+    UIButton *btn = itemView.subviews[1];
     [btn setTitle:DPLocalizedString([NSString stringWithFormat:@"SOCIAL_BTN_%.2d", btn.tag])
          forState:UIControlStateNormal];
     lbl.text = DPLocalizedString([NSString stringWithFormat:@"SOCIAL_BTN_%.2d", btn.tag]);
@@ -159,8 +159,8 @@
     int IMG_WIDTH = IS_IPAD ? 72 : 57;
     int IMG_HEIGHT = IS_IPAD ? 72 : 57;
 
-    UIButton *btn = itemView.subviews[0];
-    UILabel *lbl = itemView.subviews[1];
+    UILabel *lbl = itemView.subviews[0];
+    UIButton *btn = itemView.subviews[1];
     
     btn.frame = CGRectMake(0, 0, IMG_WIDTH, IMG_HEIGHT);
     btn.contentMode = UIViewContentModeScaleAspectFit;
@@ -191,8 +191,10 @@
         cf = CGRectInset(CGRectMake(0, 0, nextViewSize.width, nextViewSize.height),
                          16, 16);
     } else if (IS_IPHONE_5) {
-        cf = CGRectMake(0, IS_PORTRAIT ? 105 : 18,
-                        nextViewSize.width, nextViewSize.height);
+        cf = CGRectInset(CGRectMake(0, 0, nextViewSize.width, nextViewSize.height),
+                         16, 16);
+        //CGRectMake(0, IS_PORTRAIT ? 105 : 18,
+        //                nextViewSize.width, nextViewSize.height);
     } else /*if (IS_IPAD)*/ {
         cf = CGRectMake(0, IS_PORTRAIT ? 165 : 180,
                         nextViewSize.width, nextViewSize.height);
@@ -264,7 +266,9 @@
     cf = CGRectOffset(frm, 0.0, nextViewSize.height - frm.size.height - OUTER_MARGIN_VERT);
 
     self.backgroundView.frame = cf;
-    self.backgroundView.center = CGPointMake(nextViewSize.width / 2.0, self.backgroundView.center.y);
+    self.backgroundView.center = CGPointMake(nextViewSize.width / 2.0,
+                                             //nextViewSize.height / 2.0);
+                                             self.backgroundView.center.y);
     //self.backgroundView.backgroundColor = [UIColor yellowColor];
 
     self.contentView.frame = self.backgroundView.frame;

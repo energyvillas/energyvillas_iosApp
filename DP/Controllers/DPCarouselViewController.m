@@ -287,18 +287,16 @@
     if (self.datalist && self.datalist.count > 0) {
         [self clearCarousel];
         
+        NSLog(@"2.carousel loaded %d articles", self.datalist.count);
+        
         CGRect frm = self.view.frame;
         frm = CGRectMake(0, 0, frm.size.width, frm.size.height);
-        iCarousel *ofv = [[iCarousel alloc] initWithFrame:frm];
-        ofv.delegate = self;
-        ofv.dataSource = self;
-        ofv.type = iCarouselTypeCoverFlow2;
+        self.icarousel = [[iCarousel alloc] initWithFrame:frm];
         
-        
-        NSLog(@"2.carousel loaded %d articles", self.datalist.count);
-//        [ofv setNumberOfImages:self.datalist.count];
-        
-        self.icarousel = ofv;
+        self.icarousel.delegate = self;
+        self.icarousel.dataSource = self;
+        self.icarousel.type = iCarouselTypeCoverFlow2;
+
         [self.view addSubview:self.icarousel];
         [self makeCurrentImageAtIndex:self.currentIndex];
         [self setupLabels];
@@ -392,14 +390,14 @@
 //        CGRect frm = CGRectMake(0, 0, img.size.width, img.size.height);
 //        UIImageView *imageView = [[UIImageView alloc] initWithFrame:frm];
 //        
-////        FXImageView *imageView = [[FXImageView alloc] initWithFrame:frm];
-////        imageView.contentMode = UIViewContentModeCenter;
-////        imageView.asynchronous = YES;
-////        imageView.reflectionScale = 0.5f;
-////        imageView.reflectionAlpha = 0.35f;
-////        imageView.reflectionGap = 10.0f;
-////        imageView.shadowOffset = CGSizeMake(0.0f, 2.0f);
-////        imageView.shadowBlur = 5.0f;
+//        FXImageView *imageView = [[FXImageView alloc] initWithFrame:frm];
+//        imageView.contentMode = UIViewContentModeCenter;
+//        imageView.asynchronous = YES;
+//        imageView.reflectionScale = 0.5f;
+//        imageView.reflectionAlpha = 0.35f;
+//        imageView.reflectionGap = 10.0f;
+//        imageView.shadowOffset = CGSizeMake(0.0f, 2.0f);
+//        imageView.shadowBlur = 5.0f;
 //
 //////        imageView.cornerRadius = 10.0f;
 ////        imageView.layer.doubleSided = NO;
@@ -432,25 +430,36 @@
 
 -(UIImageView *) createImageView:(UIImage *)image {
     CGRect frm;
-    CGSize sz = self.icarousel.bounds.size;
-    if (sz.width > image.size.width && sz.height > image.size.height)
-        frm = CGRectMake(0, 0, image.size.width, image.size.height);
+    CGSize szCarousel = self.icarousel.frame.size;
+    CGSize szImage = image.size;
+    if (szCarousel.width > szImage.width && szCarousel.height > szImage.height)
+        frm = CGRectMake(0, 0, szImage.width, szImage.height);
     else {
-        CGFloat ir = image.size.width / image.size.height;
-        CGFloat cr = sz.width / sz.height;
+        CGFloat ir = szImage.width / szImage.height;
+        CGFloat cr = szCarousel.width / szCarousel.height;
         if (ir < cr)  { //  image is taller than carousel
             // we should fix image height to be equal to carousel height
             // and calc image width according to aspect and new height
-            frm = CGRectMake(0, 0, sz.height * ir, sz.height);
+            frm = CGRectMake(0, 0, szCarousel.height * ir, szCarousel.height);
         } else { // image is wider or same aspect ratio to that of carousel
             // we should fix image width to be equal to carousel width * 0.8
             // and calc image height according to aspect and new width
-            frm = CGRectMake(0, 0, sz.width * 0.8, sz.width * 0.8 * ir);
+            frm = CGRectMake(0, 0, szCarousel.width * 0.8, szCarousel.width * 0.8 / ir);
         }
     }
-    UIImageView *imageView = [[UIImageView alloc] initWithFrame:frm];
+    
+    //UIImageView *imageView = [[UIImageView alloc] initWithFrame:frm];
+    FXImageView *imageView = [[FXImageView alloc] initWithFrame:frm];
+    imageView.contentMode = UIViewContentModeScaleAspectFit;
+    imageView.asynchronous = NO;
+    imageView.reflectionScale = 0.5f;
+    imageView.reflectionAlpha = 0.35f;
+    imageView.reflectionGap = 10.0f;
+    imageView.shadowOffset = CGSizeMake(0.0f, 2.0f);
+    imageView.shadowBlur = 5.0f;
+
     imageView.image = image;
-    return imageView;    
+    return imageView;
 }
 ////==============================================================================
 //

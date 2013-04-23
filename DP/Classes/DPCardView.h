@@ -10,8 +10,8 @@
 #import "Category.h"
 
 
-#define IPHONE_CARD_WIDTH ((int)90)
-#define IPHONE_CARD_HEIGHT ((int)90)
+#define IPHONE_CARD_WIDTH ((int)85)
+#define IPHONE_CARD_HEIGHT ((int)85)
 #define IPAD_CARD_WIDTH ((int)180)
 #define IPAD_CARD_HEIGHT ((int)180)
 

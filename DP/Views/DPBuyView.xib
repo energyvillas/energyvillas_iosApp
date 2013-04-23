@@ -40,7 +40,7 @@
 						<reference key="NSNextResponder" ref="191373211"/>
 						<int key="NSvFlags">292</int>
 						<array class="NSMutableArray" key="NSSubviews"/>
-						<string key="NSFrameSize">{341, 415}</string>
+						<string key="NSFrameSize">{541, 415}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="450109319"/>
@@ -79,7 +79,7 @@
 								<bool key="IBUIOpaque">NO</bool>
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 								<int key="IBUIContentHorizontalAlignment">0</int>
-								<int key="IBUIButtonType">1</int>
+								<bool key="IBUIShowsTouchWhenHighlighted">YES</bool>
 								<double key="IBUITitleEdgeInsets.top">3</double>
 								<double key="IBUITitleEdgeInsets.bottom">0.0</double>
 								<double key="IBUITitleEdgeInsets.left">0.0</double>
@@ -115,7 +115,8 @@
 								<bool key="IBUIOpaque">NO</bool>
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 								<int key="IBUIContentHorizontalAlignment">0</int>
-								<int key="IBUIButtonType">1</int>
+								<bool key="IBUIReversesTitleShadowWhenHighlighted">YES</bool>
+								<bool key="IBUIShowsTouchWhenHighlighted">YES</bool>
 								<double key="IBUITitleEdgeInsets.top">3</double>
 								<double key="IBUITitleEdgeInsets.bottom">0.0</double>
 								<double key="IBUITitleEdgeInsets.left">0.0</double>
@@ -204,7 +205,7 @@
 								</object>
 							</object>
 						</array>
-						<string key="NSFrame">{{15, 40}, {311, 335}}</string>
+						<string key="NSFrame">{{80, 40}, {311, 335}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="977233769"/>
@@ -216,7 +217,7 @@
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 					</object>
 				</array>
-				<string key="NSFrame">{{0, 20}, {341, 415}}</string>
+				<string key="NSFrame">{{0, 20}, {541, 415}}</string>
 				<reference key="NSSuperview"/>
 				<reference key="NSWindow"/>
 				<reference key="NSNextKeyView" ref="321073862"/>
@@ -250,11 +251,11 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchOutletConnection" key="connection">
-						<string key="label">contentView</string>
+						<string key="label">innerView</string>
 						<reference key="source" ref="372490531"/>
-						<reference key="destination" ref="450109319"/>
+						<reference key="destination" ref="173139147"/>
 					</object>
-					<int key="connectionID">14</int>
+					<int key="connectionID">52</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchOutletConnection" key="connection">
@@ -263,14 +264,6 @@
 						<reference key="destination" ref="578998956"/>
 					</object>
 					<int key="connectionID">34</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBCocoaTouchOutletConnection" key="connection">
-						<string key="label">btnBuy</string>
-						<reference key="source" ref="372490531"/>
-						<reference key="destination" ref="344750074"/>
-					</object>
-					<int key="connectionID">29</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchOutletConnection" key="connection">
@@ -290,11 +283,19 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchOutletConnection" key="connection">
-						<string key="label">innerView</string>
+						<string key="label">contentView</string>
 						<reference key="source" ref="372490531"/>
-						<reference key="destination" ref="173139147"/>
+						<reference key="destination" ref="450109319"/>
 					</object>
-					<int key="connectionID">52</int>
+					<int key="connectionID">14</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">btnBuy</string>
+						<reference key="source" ref="372490531"/>
+						<reference key="destination" ref="344750074"/>
+					</object>
+					<int key="connectionID">29</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchEventConnection" key="connection">
@@ -373,6 +374,18 @@
 						<string key="objectName">contentView</string>
 					</object>
 					<object class="IBObjectRecord">
+						<int key="objectID">18</int>
+						<reference key="object" ref="344750074"/>
+						<reference key="parent" ref="450109319"/>
+						<string key="objectName">btnBuy</string>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">38</int>
+						<reference key="object" ref="298830677"/>
+						<reference key="parent" ref="450109319"/>
+						<string key="objectName">btnClose</string>
+					</object>
+					<object class="IBObjectRecord">
 						<int key="objectID">35</int>
 						<reference key="object" ref="977233769"/>
 						<reference key="parent" ref="450109319"/>
@@ -385,23 +398,10 @@
 						<string key="objectName">btnRestore</string>
 					</object>
 					<object class="IBObjectRecord">
-						<int key="objectID">38</int>
-						<reference key="object" ref="298830677"/>
-						<reference key="parent" ref="450109319"/>
-						<string key="objectName">btnClose</string>
-					</object>
-					<object class="IBObjectRecord">
 						<int key="objectID">51</int>
 						<reference key="object" ref="173139147"/>
-						<array class="NSMutableArray" key="children"/>
 						<reference key="parent" ref="450109319"/>
 						<string key="objectName">innerView</string>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">18</int>
-						<reference key="object" ref="344750074"/>
-						<reference key="parent" ref="450109319"/>
-						<string key="objectName">btnBuy</string>
 					</object>
 				</array>
 			</object>

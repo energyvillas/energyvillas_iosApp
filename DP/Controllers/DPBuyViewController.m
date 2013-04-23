@@ -6,17 +6,19 @@
 //  Copyright (c) 2013 Γεώργιος Γράβος. All rights reserved.
 //
 
+#import <UIKit/UIKit.h>
+#import <StoreKit/StoreKit.h>
+#import <MediaPlayer/MediaPlayer.h>
+#import <QuartzCore/QuartzCore.h>
+
 #import "DPBuyViewController.h"
 #import "UIApplication+ScreenDimensions.h"
 #import "DPConstants.h"
-#import <StoreKit/StoreKit.h>
 #import "DPIAPHelper.h"
 #import "DPAppHelper.h"
 #import "DPConstants.h"
 #import "DPCtgScrollViewController.h"
-#import <UIKit/UIKit.h>
 #import "DPBuyContentViewController.h"
-#import <MediaPlayer/MediaPlayer.h>
 
 
 @interface DPBuyViewController ()
@@ -60,7 +62,7 @@
     [self.view bringSubviewToFront:self.contentView];
     
     [self doLocalize];
-    [self prepareBuyBtn];
+    [self prepareButtons];
     [self doLayoutSubViews:NO];
 }
 
@@ -80,6 +82,12 @@
     //return [NSString stringWithFormat:@"%@", @"2"];
 }
 
+-(void) prepareButtons {
+    [self prepareBuyBtn];
+    [self prepareCloseAndRestoreBtn:self.btnClose];
+    [self prepareCloseAndRestoreBtn:self.btnRestore];
+}
+
 -(void) prepareBuyBtn {
     CGFloat fntSize = IS_IPAD ? 44.0 : 28.0;
     if (self.category == CTGID_EXCLUSIVE)
@@ -93,15 +101,15 @@
     : [UIColor whiteColor];
     [self.btnBuy setTitleColor:textColor forState:UIControlStateNormal];
     [self.btnBuy setTitleColor:textColor forState:UIControlStateHighlighted];
-        
+    
     int start = IS_IPAD ? 20 : IS_IPHONE ? 6 : 6;
     int width = IS_IPAD ? 116 : IS_IPHONE ? 70 : 70;
     if (self.category == CTGID_EXCLUSIVE) {
         start = IS_IPAD ? 0 : IS_IPHONE ? 0 : 0;
         width = IS_IPAD ? 110 : IS_IPHONE ? 60 : 60;
     }
-
-    NSString *btnTitle = [self buyBtnTitle]; 
+    
+    NSString *btnTitle = [self buyBtnTitle];
     CGFloat actualFontSize;
     CGSize lblsize = [btnTitle sizeWithFont:font minFontSize:fntSize*0.5 actualFontSize:&actualFontSize forWidth:width lineBreakMode:UILineBreakModeWordWrap];
     start = start + (width - lblsize.width) / 2;
@@ -110,6 +118,21 @@
                            size:actualFontSize];
     self.btnBuy.titleLabel.font = font;
     [self.btnBuy setTitleEdgeInsets:UIEdgeInsetsMake(0, start, 0, 0)];
+}
+
+-(void) prepareCloseAndRestoreBtn:(UIButton *)btn {
+    NSString *btnTitle = btn.titleLabel.text;
+    CGSize lblsize = [btnTitle sizeWithFont:btn.titleLabel.font];
+    CGRect frm = btn.frame;
+    frm = CGRectMake(0, 0, lblsize.width + 16, lblsize.height + 4);
+    btn.frame = frm;
+
+    [btn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    //[btn setTitleColor:[UIColor blackColor] forState:UIControlStateHighlighted];
+    btn.backgroundColor = [UIColor blackColor];
+    btn.layer.borderColor = [UIColor whiteColor].CGColor;
+    btn.layer.borderWidth = 1.0f;
+    btn.layer.cornerRadius = 4.0f;
 }
 
 - (void) removeBuyContent {
@@ -187,14 +210,14 @@
         
         int BTN_HEIGHT = 22;
         // btn close
-        [self.btnClose sizeToFit];
+//        [self.btnClose sizeToFit];
         self.btnClose.frame = CGRectMake(frm.origin.x + 10,
                                          (frm.size.height - BTN_HEIGHT ) / 2,
                                          self.btnClose.bounds.size.width,
                                          BTN_HEIGHT );
         
         // btn Restore
-        [self.btnRestore sizeToFit];
+//        [self.btnRestore sizeToFit];
         self.btnRestore.frame = CGRectMake(frm.origin.x + frm.size.width -
                                            self.btnRestore.bounds.size.width - 10,
                                            (frm.size.height - BTN_HEIGHT ) / 2,

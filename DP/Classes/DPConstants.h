@@ -37,7 +37,7 @@ FOUNDATION_EXPORT NSString *const MySecondConstant;
 #define PAGE_CONTROL_HEIGHT ((int)16)
 
 // timer intervals
-#define AUTO_SCROLL_INTERVAL ((float) 5.0)
+#define AUTO_SCROLL_INTERVAL ((float) 3.0)
 #define USER_SCROLL_INTERVAL ((float) 60.0)
 
 // social button tags

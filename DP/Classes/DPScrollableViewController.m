@@ -298,7 +298,7 @@
                     [self loadPage:indx inView:v frame:CGRectMake(0, 0,
                                                                   colWidth + fixWidth,
                                                                   rowHeight + fixHeight)];
-                    
+                    v.tag = indx;
                     contentRendered[indx] = v;
                 }
                 [self.scrollView addSubview: contentRendered[indx]];

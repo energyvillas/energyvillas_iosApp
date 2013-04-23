@@ -401,7 +401,7 @@
                                                            localResource:@"free-details.plist"
                                                                     rows:2
                                                                  columns:2
-                                                              autoScroll:YES
+                                                              autoScroll:NO
                                                                   parent:self];
         else
             detvc = [[DPCategoriesViewController alloc] initWithCategory:-1
@@ -409,7 +409,7 @@
                                                            localResource:@"free-details.plist"
                                                                     rows:1
                                                                  columns:4
-                                                              autoScroll:YES
+                                                              autoScroll:NO
                                                                   parent:self];
         
         detvc.view.frame = self.bottomView.bounds;

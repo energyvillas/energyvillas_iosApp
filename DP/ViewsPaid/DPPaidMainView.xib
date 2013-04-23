@@ -80,6 +80,10 @@
 								<reference key="IBUITabBar" ref="1053474032"/>
 							</object>
 						</array>
+						<object class="NSColor" key="IBUISelectedImageTintColor">
+							<int key="NSColorSpace">1</int>
+							<bytes key="NSRGB">MCAxIDAAA</bytes>
+						</object>
 					</object>
 				</array>
 				<string key="NSFrame">{{0, 20}, {320, 460}}</string>

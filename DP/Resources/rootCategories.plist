@@ -77,18 +77,6 @@
 		<key>images</key>
 		<dict/>
 	</dict>
-	<key>57</key>
-	<dict>
-		<key>images</key>
-		<dict/>
-		<key>titles</key>
-		<dict>
-			<key>el</key>
-			<string>Βίλλες</string>
-			<key>en</key>
-			<string>Villas Houses</string>
-		</dict>
-	</dict>
 	<key>58</key>
 	<dict>
 		<key>images</key>
@@ -99,6 +87,18 @@
 			<string>Κατοικίες Exclusive</string>
 			<key>en</key>
 			<string>Exclusive Houses</string>
+		</dict>
+	</dict>
+	<key>57</key>
+	<dict>
+		<key>images</key>
+		<dict/>
+		<key>titles</key>
+		<dict>
+			<key>el</key>
+			<string>Βίλλες</string>
+			<key>en</key>
+			<string>Villas Houses</string>
 		</dict>
 	</dict>
 	<key>59</key>
