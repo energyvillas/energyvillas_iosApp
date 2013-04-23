@@ -155,7 +155,7 @@
 - (void) checkRootAndPop:(UIViewController *)tvc {
     UIViewController *rvc = self.navController.viewControllers[0];
     if (tvc != rvc) {
-        [self.navController popViewControllerAnimated:NO];
+//        [self.navController popViewControllerAnimated:NO];
         [self cleanControllers:tvc];
     }
 }
@@ -174,12 +174,24 @@
     [self.navController pushViewController:vc animated:YES];
 }
 
+-(BOOL) isTabBarPage:(UIViewController *)tvc {
+    return (tvc != nil) && (
+                            (tvc == self.whoViewController) ||
+                            (tvc == self.buyViewController) ||
+                            (tvc == self.callViewController) ||
+                            (tvc == self.moreViewController)
+                            );
+}
 - (void) showMain {
     UIViewController *tvc = [self.navController topViewController];
-    [self.navController setNavigationBarHidden:NO animated:YES];
-    [self.navController popToRootViewControllerAnimated:YES];
-    
-    [self cleanControllers:tvc];
+    if ([self isTabBarPage:tvc]){
+        [self.navController setNavigationBarHidden:NO animated:YES];
+        [self.navController popViewControllerAnimated:YES];
+        [self cleanControllers:tvc];
+    } else {    
+        [self.navController setNavigationBarHidden:NO animated:YES];
+        [self.navController popToRootViewControllerAnimated:YES];
+    }
 }
 
 - (void) showWho {
