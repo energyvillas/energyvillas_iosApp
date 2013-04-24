@@ -19,6 +19,7 @@
             columns:(int)columns
          autoScroll:(BOOL)autoscroll
           showPages:(BOOL)showpages
-    scrollDirection:(DPScrollDirection)scrolldir;
+    scrollDirection:(DPScrollDirection)scrolldir
+          menulevel:(int)level;
 
 @end

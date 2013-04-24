@@ -11,7 +11,7 @@
 #import "DPConstants.h"
 #import <Quartzcore/Quartzcore.h>
 
-#define DURATION_MOVE ((NSTimeInterval)5.0)
+#define DURATION_MOVE ((NSTimeInterval)10.0)
 
 @interface DPAnimatedCardsView () {
     int maxX;

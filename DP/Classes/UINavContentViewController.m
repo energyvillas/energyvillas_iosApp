@@ -148,8 +148,8 @@
     }
 }
 
-NSString *const NAVBAR_BACK_IMG = @"Navbar/back_arrow.png";
-NSString *const NAVBAR_BACK_SEL_IMG = @"Navbar/back_arrow_rol.png";
+NSString *const NAVBAR_BACK_IMG = @"Navbar/back.png"; //@"Navbar/back_arrow.png";
+NSString *const NAVBAR_BACK_SEL_IMG = @"Navbar/back_roll.png"; //@"Navbar/back_arrow_rol.png";
 
 NSString *const NAVBAR_LOGO_IMG_FMT = @"Navbar/logo_%@.png";
 
@@ -232,8 +232,8 @@ NSString *const NAVBAR_SHARE_SEL_IMG = @"Navbar/share_roll.png";
     self.navbarTitleItemButton.userInteractionEnabled = NO;
     
     if (ischild) {
-        UIButton *backBtn = [self createButtonWithImage:[self calcImageName:NAVBAR_BACK_IMG]
-                                       highlightedImage: [self calcImageName:NAVBAR_BACK_SEL_IMG]
+        UIButton *backBtn = [self createButtonWithImage:NAVBAR_BACK_IMG
+                                       highlightedImage:NAVBAR_BACK_SEL_IMG
                                                   frame:CGRectZero //CGRectMake(0, 7, 30, 30)
                                                     tag:TAG_NBI_BACK
                                                  action:@selector(onNavButtonTapped:)];

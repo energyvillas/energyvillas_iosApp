@@ -56,7 +56,7 @@
     if (self) {
         element = elm;
         
-        self.backgroundColor = [UIColor clearColor];
+        self.backgroundColor = [UIColor redColor];//[UIColor clearColor];
 //        self.backgroundColor = [UIColor colorWithHue: (arc4random() % 1000) / 1000.0
 //                                          saturation:1.0
 //                                          brightness:1.0
@@ -70,17 +70,15 @@
         // normal image
         if (!self.imageView) {
             self.imageView = [[UIImageView alloc] initWithFrame:self.bounds];
-            self.imageView.contentMode = UIViewContentModeScaleAspectFit;
+            self.imageView.contentMode = UIViewContentModeCenter; //ScaleAspectFit;
             
             if (isLocalUrl(element.imageUrl))
-                //TODO
-                self.imageView.image = [UIImage imageNamed:[self calcImageName: element.imageUrl]];
-            //self.imageView.image = [UIImage imageNamed:@"balloon.png"];
+                self.imageView.image = [UIImage imageNamed:[self calcImageName:element.imageUrl highlight:NO]];
             else
-                [self loadImageAsync:element inView:self.imageView];
+                [self loadImageAsync:element highlight:NO inView:self.imageView];
             
-            //TODO : this is here ONLY for testing
-            self.imageView.image = [UIImage imageNamed:@"balloon.png"];
+//            //TODO : this is here ONLY for testing
+//            self.imageView.image = [UIImage imageNamed:@"balloon.png"];
         }
         if (!self.zoomImageView) {
             int rw = IS_IPAD ? IPAD_CARD_RESIZE_WIDTH : IPHONE_CARD_RESIZE_WIDTH;
@@ -91,17 +89,15 @@
             CGRect zoomFrame = CGRectMake(0, 0, w  + 2 * rw, h + 2 * rh);
 
             self.zoomImageView = [[UIImageView alloc] initWithFrame:zoomFrame];
-            self.zoomImageView.contentMode = UIViewContentModeScaleAspectFit;
+            self.zoomImageView.contentMode = UIViewContentModeCenter; //ScaleAspectFit;
             
             if (isLocalUrl(element.imageUrl))
-                //TODO
-                self.zoomImageView.image = [UIImage imageNamed:[self calcImageName: element.imageUrl]];
-            //self.imageView.image = [UIImage imageNamed:@"balloon.png"];
+                self.zoomImageView.image = [UIImage imageNamed:[self calcImageName:element.imageUrl highlight:YES]];
             else
-                [self loadImageAsync:element inView:self.zoomImageView];
+                [self loadImageAsync:element highlight:YES inView:self.zoomImageView];
             
-            //TODO : this is here ONLY for testing
-            self.zoomImageView.image = [UIImage imageNamed:@"balloon_roll.png"];
+//            //TODO : this is here ONLY for testing
+//            self.zoomImageView.image = [UIImage imageNamed:@"balloon_roll.png"];
         }
 
         if (useLabel && !self.label) {
@@ -216,28 +212,28 @@ CGRect CGRectChangeCenter(CGRect rect, CGPoint center) {
 
     [UIView commitAnimations];
     
-    return;
-    
-    [UIView animateWithDuration:duration
-                          delay:0.0
-                        options:UIViewAnimationOptionCurveLinear | UIViewAnimationOptionBeginFromCurrentState
-                     animations:^{
-                         int rw = IS_IPAD ? IPAD_CARD_RESIZE_WIDTH : IPHONE_CARD_RESIZE_WIDTH;
-                         int rh = IS_IPAD ? IPAD_CARD_RESIZE_HEIGHT : IPHONE_CARD_RESIZE_HEIGHT;
-                         CGRect zoomFrame = CGRectInset(self.frame, -rw, -rh);
-                         self.frame = CGRectChangeCenter(zoomFrame, newCenter);
-                         self.imageView.frame = CGRectMake(0, 0,
-                                                      zoomFrame.size.width,
-                                                      zoomFrame.size.height);
-                         
-                         self.imageView.image = [UIImage imageNamed:@"balloon_roll.png"];
-                         
-                         if (useLabel) {
-                             self.label.frame = zoomLabelFrame;
-                             self.label.font = [self.label.font fontWithSize:zoomFontSize];
-                         }
-                     }
-                     completion:nil];
+//    return;
+//    
+//    [UIView animateWithDuration:duration
+//                          delay:0.0
+//                        options:UIViewAnimationOptionCurveLinear | UIViewAnimationOptionBeginFromCurrentState
+//                     animations:^{
+//                         int rw = IS_IPAD ? IPAD_CARD_RESIZE_WIDTH : IPHONE_CARD_RESIZE_WIDTH;
+//                         int rh = IS_IPAD ? IPAD_CARD_RESIZE_HEIGHT : IPHONE_CARD_RESIZE_HEIGHT;
+//                         CGRect zoomFrame = CGRectInset(self.frame, -rw, -rh);
+//                         self.frame = CGRectChangeCenter(zoomFrame, newCenter);
+//                         self.imageView.frame = CGRectMake(0, 0,
+//                                                      zoomFrame.size.width,
+//                                                      zoomFrame.size.height);
+//                         
+//                         self.imageView.image = [UIImage imageNamed:@"balloon_roll.png"];
+//                         
+//                         if (useLabel) {
+//                             self.label.frame = zoomLabelFrame;
+//                             self.label.font = [self.label.font fontWithSize:zoomFontSize];
+//                         }
+//                     }
+//                     completion:nil];
 }
 
 - (void) cancelCardZoom:(NSTimeInterval)duration {
@@ -271,29 +267,29 @@ CGRect CGRectChangeCenter(CGRect rect, CGPoint center) {
     [UIView commitAnimations];
     
     
-    return;
-    
-    [UIView animateWithDuration:duration
-                          delay:0.0
-                        options:UIViewAnimationOptionCurveLinear | UIViewAnimationOptionBeginFromCurrentState |UIViewAnimationOptionTransitionCrossDissolve
-                     animations:^{
-                         CGRect frm = [self presentationFrameOf:self];
-                         int diffX = frm.size.width - cardSize.width;
-                         int diffY = frm.size.height - cardSize.height;
-                         self.frame = CGRectInset(frm, diffX / 2, diffY / 2);
-
-                         self.imageView.frame = CGRectMake(0, 0,
-                                                      cardSize.width,
-                                                      cardSize.height);
-
-                         self.imageView.image = [UIImage imageNamed:@"balloon.png"];
-
-                         if (useLabel) {
-                             self.label.frame = baseLabelFrame;
-                             self.label.font = [self.label.font fontWithSize:baseFontSize];
-                         }
-                     }
-                     completion:nil];
+//    return;
+//    
+//    [UIView animateWithDuration:duration
+//                          delay:0.0
+//                        options:UIViewAnimationOptionCurveLinear | UIViewAnimationOptionBeginFromCurrentState |UIViewAnimationOptionTransitionCrossDissolve
+//                     animations:^{
+//                         CGRect frm = [self presentationFrameOf:self];
+//                         int diffX = frm.size.width - cardSize.width;
+//                         int diffY = frm.size.height - cardSize.height;
+//                         self.frame = CGRectInset(frm, diffX / 2, diffY / 2);
+//
+//                         self.imageView.frame = CGRectMake(0, 0,
+//                                                      cardSize.width,
+//                                                      cardSize.height);
+//
+//                         self.imageView.image = [UIImage imageNamed:@"balloon.png"];
+//
+//                         if (useLabel) {
+//                             self.label.frame = baseLabelFrame;
+//                             self.label.font = [self.label.font fontWithSize:baseFontSize];
+//                         }
+//                     }
+//                     completion:nil];
 }
 
 
@@ -355,15 +351,15 @@ CGRect CGRectChangeCenter(CGRect rect, CGPoint center) {
 
 #pragma mark - loading of image data
 
-- (NSString *) calcImageName:(NSString *)baseName {
+- (NSString *) calcImageName:(NSString *)baseName highlight:(BOOL)highlight{
     NSLog(@"**** imageUrl (base) = %@", baseName);
     
     @try {
         NSArray *parts = [baseName componentsSeparatedByString:@"."];
         if (parts && parts.count == 2) {
-            NSString *orientation = IS_PORTRAIT ? @"v" : @"h";
-            // pending also fix the format string below.... NSString *lang = [DPAppHelper sharedInstance].currentLang;
-            NSString *result = [NSString stringWithFormat:@"FreeDetails/%@_%@.%@", parts[0], orientation, parts[1]];
+            NSString *roll = highlight ? @"_roll" : @"";
+            NSString *result = [NSString stringWithFormat:@"%@%@.%@",
+                                parts[0], roll, parts[1]];
             return result;
         }
         else
@@ -412,26 +408,28 @@ CGRect CGRectChangeCenter(CGRect rect, CGPoint center) {
         [[DPAppHelper sharedInstance] saveImageToCache:imageUrl data:imgData];
 }
 
-- (void) loadImageAsync:(DPDataElement *)elm inView:(UIImageView *)imgView {
+- (void) loadImageAsync:(DPDataElement *)elm highlight:(BOOL)highlight inView:(UIImageView *)imgView {
     DPAppHelper *appHelper = [DPAppHelper sharedInstance];
-    NSData *imgData = [appHelper loadImageFromCache:[self calcImageName: elm.imageUrl]];
+    NSData *imgData = [appHelper loadImageFromCache:[self calcImageName: elm.imageUrl highlight:highlight]];
     if (imgData)
-        [self fix:elm imageView:imgView imageUrl:[self calcImageName: elm.imageUrl] data:imgData addToCache:NO];
+        [self fix:elm imageView:imgView imageUrl:[self calcImageName:elm.imageUrl
+                                                           highlight:highlight]
+             data:imgData addToCache:NO];
     else
-        [self doloadImageAsync:elm inView:imgView];
+        [self doloadImageAsync:elm highlight:highlight inView:imgView];
 }
 
-- (void) doloadImageAsync:(DPDataElement *)elm inView:(UIImageView *)imgView {
+- (void) doloadImageAsync:(DPDataElement *)elm highlight:(BOOL)highlight inView:(UIImageView *)imgView {
     if (!self.downloadQueue)
         self.downloadQueue = [[NSOperationQueue alloc] init];
     
-    ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:[NSURL URLWithString:[self calcImageName:elm.imageUrl]]];
+    ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:[NSURL URLWithString:[self calcImageName:elm.imageUrl highlight:highlight]]];
     [request setDelegate:self];
     [request setDidFinishSelector:@selector(requestDone:)];
     request.userInfo = [NSDictionary dictionaryWithObjectsAndKeys:
                         elm, @"element",
                         imgView, @"imageView",
-                        [self calcImageName:elm.imageUrl], @"imageUrl",
+                        [self calcImageName:elm.imageUrl highlight:highlight], @"imageUrl",
                         nil];
     [self.downloadQueue addOperation:request];
     

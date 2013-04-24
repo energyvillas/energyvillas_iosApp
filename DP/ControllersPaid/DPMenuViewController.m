@@ -21,6 +21,7 @@
 @end
 
 @implementation DPMenuViewController {
+    int menulevel;
     int island_width;
     int island_height;
 }
@@ -41,7 +42,8 @@
                       columns:columns
                    autoScroll:autoscroll
                     showPages:YES
-              scrollDirection:DPScrollDirectionHorizontal];
+              scrollDirection:DPScrollDirectionHorizontal
+                    menulevel:0];
     return self;
 }
 
@@ -49,8 +51,10 @@
             columns:(int)columns
          autoScroll:(BOOL)autoscroll
           showPages:(BOOL)showpages
-    scrollDirection:(DPScrollDirection)scrolldir {
+    scrollDirection:(DPScrollDirection)scrolldir
+          menulevel:(int)level{
 
+    menulevel = level;
     DPAppHelper *apphelper = [DPAppHelper sharedInstance];
     NSArray *content = [apphelper paidMenuOfCategory:-1
                                                 lang:apphelper.currentLang];
@@ -198,20 +202,12 @@
         NSLog(@"Menu - calcImageName - baseName='%@'", elm.imageUrl);
         NSArray *parts = [elm.imageUrl componentsSeparatedByString:@"."];
         if (parts && parts.count == 2) {
-            NSString *orientation = IS_PORTRAIT ? @"v" : @"h";
-            NSString *lang = @"_el"/*CURRENT_LANG*/;
-            if ((elm.Id == CTGID_EXCLUSIVE) || (elm.Id == CTGID_VIDEOS))
-                lang = @"";
-            
+            NSString *orientation = IS_PORTRAIT ? @"v" : @"h";            
+            NSString *high = ishighlight ? @"_roll" : @"";
+
             NSString *result = [NSString stringWithFormat:@"MainMenu/main_menu_%@_%@%@.%@",
-                                orientation, parts[0], lang, parts[1]];
+                                    orientation, parts[0], high, parts[1]];
 
-            if (ishighlight) {
-                NSString *high = ishighlight ? @"roll" : @"";
-
-                result = [NSString stringWithFormat:@"MainMenu/main_menu_%@_%@%@_%@.%@",
-                                    orientation, parts[0], lang, high, parts[1]];
-            }
             return result;
         }
         else

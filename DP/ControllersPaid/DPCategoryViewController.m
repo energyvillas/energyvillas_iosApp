@@ -215,10 +215,15 @@
 //        self.ctgViewController = nil;
 //    }
 //
-//    self.ctgViewController = [[DPAnimatedScrollViewController alloc] initWithCategory:category isLeaf:NO frame:self.actualCtgView.bounds];
+//    CGRect frm = self.actualCtgView.bounds;
+//    self.ctgViewController = [[DPAnimatedScrollViewController alloc] initWithCategory:category
+//                                                                               isLeaf:NO
+//                                                                                frame:frm];
 //    
 //    [self addChildViewController:self.ctgViewController];
 //    [self.actualCtgView addSubview:self.ctgViewController.view];
+//    self.ctgViewController.view.frame = frm;
+//    [self.ctgViewController changeRows:1 columns:1];
 
     if (self.actualCtgView.subviews.count == 0)
     {
@@ -251,7 +256,8 @@
                                                                columns:cols
                                                             autoScroll:NO
                                                              showPages:NO
-                                                       scrollDirection:scrolldir];
+                                                       scrollDirection:scrolldir
+                                                             menulevel:1];
     self.mmViewController.view.frame = self.mmView.bounds;
     [self addChildViewController:self.mmViewController];
     [self.mmView addSubview:self.mmViewController.view];

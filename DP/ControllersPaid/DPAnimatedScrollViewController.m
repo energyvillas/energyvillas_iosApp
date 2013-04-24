@@ -30,6 +30,7 @@
     bool isPortrait;
     int category;
     BOOL isLeafCategory;
+    CGRect initframe;
 }
 
 
@@ -46,9 +47,10 @@
     self = [super initWithContent:nil autoScroll:NO];
     
     if (self) {
-        self.view.frame = frame;
         category = ctgID;
         isLeafCategory = isLeaf;
+        //self.view.frame = frame;
+        initframe = frame;
         self.scrollableViewDelegate = self;
         self.rowCount = 0;
         self.colCount = 0;
@@ -119,6 +121,7 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
+    self.view.frame = initframe;
     [self loadData];
 }
 
@@ -148,13 +151,24 @@
       scrollDirection:self.scrollDirection];
 }
 
+-(NSArray *) generateLocalData {
+    NSMutableArray *list = [[NSMutableArray alloc] init];
+    [list addObject:[[Category alloc] initWithValues:@"10001" lang:CURRENT_LANG title:nil imageUrl:@"balloon.png" parent:@"52"]];
+    [list addObject:[[Category alloc] initWithValues:@"10002" lang:CURRENT_LANG title:nil imageUrl:@"balloon_01.png" parent:@"52"]];
+    [list addObject:[[Category alloc] initWithValues:@"10003" lang:CURRENT_LANG title:nil imageUrl:@"balloon_02.png" parent:@"52"]];
+    [list addObject:[[Category alloc] initWithValues:@"10004" lang:CURRENT_LANG title:nil imageUrl:@"balloon_01.png" parent:@"52"]];
+    [list addObject:[[Category alloc] initWithValues:@"10005" lang:CURRENT_LANG title:nil imageUrl:@"balloon_02.png" parent:@"52"]];
+    
+    return list;
+}
 - (void) loadData {
     if (self.dataLoader == nil) {
-        self.dataLoader = [[DPCategoryLoader alloc] initWithView:self.view useInternet:!isLeafCategory
+        self.dataLoader = [[DPCategoryLoader alloc] initWithView:self.view
+                                                     useInternet:NO//!isLeafCategory
                                                       useCaching:YES
                                                         category:category
                                                             lang:[DPAppHelper sharedInstance].currentLang
-                                                   localResource:nil];
+                                                   localData:[self generateLocalData]];
         self.dataLoader.delegate = self;
     }
     if (self.contentList.count == 0 || self.dataLoader.dataRefreshNeeded)
