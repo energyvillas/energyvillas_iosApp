@@ -26,7 +26,7 @@
 - (NSArray *) freeBuyContentFor:(int)ctgid lang:(NSString *)lang;
 - (NSArray *) freeCoverFlowFor:(NSString *)lang;
 - (NSArray *) paidMenuOfCategory:(int)aId lang:(NSString *)lang;
-- (NSArray *) getSubCategoriesOf:(int)parentid;
+//- (NSArray *) getSubCategoriesOf:(int)parentid;
 
 - (void) saveImageToCache:(NSString *)url data:(NSData *)imgData;
 - (NSData *) loadImageFromCache:(NSString *)url;

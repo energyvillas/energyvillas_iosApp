@@ -30,7 +30,7 @@
 @property (strong, nonatomic) UILabel *label;
 
 @property (strong, nonatomic) UIActivityIndicatorView *busyIndicator;
-@property (strong, nonatomic) NSOperationQueue *downloadQueue;
+@property (strong, nonatomic) NSOperationQueue *queue;
 
 @end
 
@@ -43,7 +43,7 @@
 
 @synthesize element;
 
-- (id)initWithFrame:(CGRect)frame dataElement:(DPDataElement *)elm {
+- (id)initWithFrame:(CGRect)frame dataElement:(Category *)elm {
     useLabel = NO;
     cardSize = IS_IPAD
                     ? CGSizeMake(IPAD_CARD_WIDTH, IPAD_CARD_HEIGHT)
@@ -63,6 +63,25 @@
 //                                               alpha:1.0];
     }
     return self;
+}
+
+-(void) cleanUp {
+    if (self.queue) {
+        [self.queue cancelAllOperations];
+        [self stopIndicator];
+        
+        for (id op in self.queue.operations)
+            if ([op isKindOfClass:[ASIHTTPRequest class]]) {
+                [((ASIHTTPRequest *)op) setDidFinishSelector:nil];
+                ((ASIHTTPRequest *)op).delegate = nil;
+            }
+    }
+    
+    self.queue = nil;
+}
+
+-(void) dealloc {
+    [self cleanUp];
 }
 
 - (void) layoutSubviews {
@@ -91,8 +110,8 @@
             self.zoomImageView = [[UIImageView alloc] initWithFrame:zoomFrame];
             self.zoomImageView.contentMode = UIViewContentModeCenter; //ScaleAspectFit;
             
-            if (isLocalUrl(element.imageUrl))
-                self.zoomImageView.image = [UIImage imageNamed:[self calcImageName:element.imageUrl highlight:YES]];
+            if (isLocalUrl(element.imageRollUrl))
+                self.zoomImageView.image = [UIImage imageNamed:[self calcImageName:element.imageRollUrl highlight:YES]];
             else
                 [self loadImageAsync:element highlight:YES inView:self.zoomImageView];
             
@@ -389,8 +408,8 @@ CGRect CGRectChangeCenter(CGRect rect, CGPoint center) {
 
 - (void) stopIndicator {
     if (self.busyIndicator &&
-        self.downloadQueue &&
-        self.downloadQueue.operationCount == 0) {
+        self.queue &&
+        self.queue.operationCount == 0) {
         [self.busyIndicator stopAnimating];
         [self.busyIndicator removeFromSuperview];
         self.busyIndicator = nil;
@@ -403,35 +422,36 @@ CGRect CGRectChangeCenter(CGRect rect, CGPoint center) {
         data:(NSData *)imgData
   addToCache:(BOOL)addToCache{
     //elm.imageData = [request responseData];
-    imgView.image = [UIImage imageWithData:imgData];
+    imgView.image = [UIImage imageWithData:imgData scale:DEVICE_SCALE];
     if (addToCache)
         [[DPAppHelper sharedInstance] saveImageToCache:imageUrl data:imgData];
 }
 
-- (void) loadImageAsync:(DPDataElement *)elm highlight:(BOOL)highlight inView:(UIImageView *)imgView {
+- (void) loadImageAsync:(Category *)elm highlight:(BOOL)highlight inView:(UIImageView *)imgView {
     DPAppHelper *appHelper = [DPAppHelper sharedInstance];
-    NSData *imgData = [appHelper loadImageFromCache:[self calcImageName: elm.imageUrl highlight:highlight]];
+    NSData *imgData = [appHelper loadImageFromCache:highlight ? elm.imageRollUrl : elm.imageUrl];
     if (imgData)
-        [self fix:elm imageView:imgView imageUrl:[self calcImageName:elm.imageUrl
-                                                           highlight:highlight]
+        [self fix:elm
+        imageView:imgView
+         imageUrl:highlight ? elm.imageRollUrl : elm.imageUrl
              data:imgData addToCache:NO];
     else
         [self doloadImageAsync:elm highlight:highlight inView:imgView];
 }
 
-- (void) doloadImageAsync:(DPDataElement *)elm highlight:(BOOL)highlight inView:(UIImageView *)imgView {
-    if (!self.downloadQueue)
-        self.downloadQueue = [[NSOperationQueue alloc] init];
+- (void) doloadImageAsync:(Category *)elm highlight:(BOOL)highlight inView:(UIImageView *)imgView {
+    if (!self.queue)
+        self.queue = [[NSOperationQueue alloc] init];
     
-    ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:[NSURL URLWithString:[self calcImageName:elm.imageUrl highlight:highlight]]];
+    ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:[NSURL URLWithString:highlight ? elm.imageRollUrl : elm.imageUrl]];
     [request setDelegate:self];
     [request setDidFinishSelector:@selector(requestDone:)];
     request.userInfo = [NSDictionary dictionaryWithObjectsAndKeys:
                         elm, @"element",
                         imgView, @"imageView",
-                        [self calcImageName:elm.imageUrl highlight:highlight], @"imageUrl",
+                        highlight ? elm.imageRollUrl : elm.imageUrl, @"imageUrl",
                         nil];
-    [self.downloadQueue addOperation:request];
+    [self.queue addOperation:request];
     
     [self startIndicator];
 }

@@ -16,6 +16,7 @@
 @interface DPCategoryLoader ()
 
 @property int ctgID;
+@property BOOL useDeviceType;
 @property (strong, nonatomic) NSString *lang;
 @property (strong, nonatomic) NSString *plistFile;
 @property (strong, nonatomic) NSArray *localData;
@@ -32,9 +33,11 @@
          useCaching:(BOOL)useCaching
            category:(int)ctgID
                lang:(NSString *)aLang
+      useDeviceType:(BOOL)usedevicetype
       localResource:(NSString *)aplistFile {
     self = [super initWithView:indicatorcontainer useInternet:useInternet useCaching:useCaching];
     if (self) {
+        self.useDeviceType = usedevicetype;
         self.ctgID = ctgID;
         self.lang = aLang;
         self.plistFile = aplistFile;
@@ -48,9 +51,11 @@
          useCaching:(BOOL)useCaching
            category:(int)ctgID
                lang:(NSString *)aLang
+      useDeviceType:(BOOL)usedevicetype
           localData:(NSArray *)localData {
     self = [super initWithView:indicatorcontainer useInternet:useInternet useCaching:useCaching];
     if (self) {
+        self.useDeviceType = usedevicetype;
         self.ctgID = ctgID;
         self.lang = aLang;
         self.localData = localData;
@@ -87,6 +92,7 @@
     NSArray *categories = [dict objectForKey:@"Categories"];
     NSArray *titles = [lfd objectForKey:@"Titles"];
     NSArray *images = [lfd objectForKey:@"Images"];
+    NSArray *imagerolls = [lfd objectForKey:@"ImageRolls"];
     
     NSMutableArray *res = [[NSMutableArray alloc] initWithCapacity:titles.count];
     for (int i=0; i<categories.count; i++) {
@@ -94,6 +100,7 @@
                                                    lang:lang
                                                   title:titles[i]
                                                imageUrl:images[i]
+                                           imageRollUrl:imagerolls == nil ? nil : imagerolls[i]
                                                  parent:pid == -1 ? nil : [NSString stringWithFormat:@"%d", pid]]];
     }
     
@@ -102,7 +109,11 @@
 
 
 - (NSString *) cacheFileName {
-    return [NSString stringWithFormat:@"categories-%@-%d.dat", self.lang, self.ctgID];
+    NSString *dvt = @"";
+    if (self.useDeviceType)
+        dvt = [NSString stringWithFormat: @"-%d", getDeviceType()];
+
+    return [NSString stringWithFormat:@"categories-%@-%d%@.dat", self.lang, self.ctgID, dvt];
 }
 
 - (DPDataCache *) createDataCache {
@@ -112,11 +123,13 @@
 - (ASIFormDataRequest *) createAndPrepareRequest {
     NSURL *ctgUrl = [NSURL URLWithString:USE_TEST_SITE ? CATEGORIES_URL_TEST : CATEGORIES_URL];
     
-    NSDictionary *ctgParams = [NSDictionary
+    NSMutableDictionary *ctgParams = [NSMutableDictionary
                                dictionaryWithObjectsAndKeys:
                                self.lang, @"lang",
                                [NSString stringWithFormat:@"%d", self.ctgID], @"parentid",
                                nil];
+    if (self.useDeviceType)
+        ctgParams[@"devicetype"] = [NSString stringWithFormat: @"%d", getDeviceType()];
     
     ASIFormDataRequest *request = [self
                                    createRequest:ctgUrl

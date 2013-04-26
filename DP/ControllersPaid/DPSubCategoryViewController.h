@@ -12,7 +12,7 @@
 
 @interface DPSubCategoryViewController : UINavContentViewController <DPDataLoaderDelegate>
 
-@property (strong, nonatomic) IBOutlet UILabel *label;
+@property (strong, nonatomic) IBOutlet UIWebView *titleView;
 @property (strong, nonatomic) IBOutlet UIView *photoView;
 @property (strong, nonatomic) IBOutlet UIView *htmlView;
 @property (strong, nonatomic) IBOutlet UIView *subCtgView;

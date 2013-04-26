@@ -43,7 +43,7 @@
     return self;
 }
 
--(void) dealloc {
+-(void) cleanUp {
     if (self.queue) {
         [self.queue cancelAllOperations];
     }
@@ -53,6 +53,10 @@
     }
     self.request = nil;
     self.queue = nil;
+}
+
+-(void) dealloc {
+    [self cleanUp];
 }
 
 +(NSString*) digestSHA1:(NSString*)input {

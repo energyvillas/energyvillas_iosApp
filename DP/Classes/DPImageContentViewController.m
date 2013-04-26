@@ -19,6 +19,7 @@
 @property (strong, nonatomic) UIImage *image;
 @property (strong, nonatomic) UIActivityIndicatorView *busyIndicator;
 @property (strong, nonatomic) NSOperationQueue *queue;
+@property (strong, nonatomic) ASIHTTPRequest *request;
 
 @end
 
@@ -74,24 +75,28 @@
     return self;
 }
 
-- (void) doInitImageView {
-//    AsyncImageView *imgView = [[AsyncImageView alloc] initWithFrame:self.view.bounds];
-//    //set image URL. AsyncImageView class will then dynamically load the image
-//    imgView.imageURL = [NSURL URLWithString:self.article.imageUrl];
+- (void) doInitImageView {    
+//    CGRect aframe = self.view.bounds;
+//    UIImageView *imgView = [[UIImageView alloc] initWithFrame:aframe];
 //    imgView.contentMode = UIViewContentModeScaleAspectFit;
 //    imgView.userInteractionEnabled = YES;
+//    imgView.image = self.image;
 //    [self addGestureRecognizersTo:imgView];
 //    [self.view addSubview:imgView];
-
     
-    
-    CGRect aframe = self.view.bounds;//CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
-    UIImageView *imgView = [[UIImageView alloc] initWithFrame:aframe];
-    imgView.contentMode = UIViewContentModeScaleAspectFit;
-    imgView.userInteractionEnabled = YES;
-    imgView.image = self.image;
-    [self addGestureRecognizersTo:imgView];
-    [self.view addSubview:imgView];
+	
+//	UIView *holderView = [[UIView alloc] initWithFrame:CGRectMake(0, 0,
+//                                                                  self.image.size.width,
+//                                                                  self.image.size.height)];
+    UIView *holderView = [[UIView alloc] initWithFrame:self.view.bounds];
+    //holderView.backgroundColor = [UIColor whiteColor];
+    UIImageView *imageview = [[UIImageView alloc] initWithFrame:[holderView frame]];
+    imageview.contentMode = UIViewContentModeScaleAspectFit;
+    //imageview.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
+	[imageview setImage:image];
+	[holderView addSubview:imageview];
+    [self addGestureRecognizersTo:holderView];
+    [self.view addSubview:holderView];
 }
 
 
@@ -99,6 +104,34 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
 }
+
+
+- (void) viewDidUnload {
+    [super viewDidUnload];
+}
+
+-(void) cleanUp {
+    if (self.queue) {
+        [self.queue cancelAllOperations];
+    }
+    if (self.request) {
+        [self.request cancel];
+        self.request.delegate = nil;
+    }
+    self.request = nil;
+    self.queue = nil;
+}
+
+-(void) dealloc {
+    [self cleanUp];
+}
+
+- (void)didReceiveMemoryWarning
+{
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
 
 - (void) viewWillAppear:(BOOL)animated {
     if (image)// && !self.article)
@@ -137,34 +170,34 @@
     [piece addGestureRecognizer:longPressGesture];
 }
 
-/*
-- (void)addGestureRecognizersTo:(UIView *)piece {
 
-    UIPinchGestureRecognizer *pinchRecognizer = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(scale:)];
-    [pinchRecognizer setDelegate:self];
-    [piece addGestureRecognizer:pinchRecognizer];
-    
-    UIRotationGestureRecognizer *rotationRecognizer = [[UIRotationGestureRecognizer alloc] initWithTarget:self action:@selector(rotate:)];
-    [rotationRecognizer setDelegate:self];
-    [piece addGestureRecognizer:rotationRecognizer];
-    
-    UIPanGestureRecognizer *panRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(move:)];
-    [panRecognizer setMinimumNumberOfTouches:1];
-    [panRecognizer setMaximumNumberOfTouches:1];
-    [panRecognizer setDelegate:self];
-    [piece addGestureRecognizer:panRecognizer];
-    
-    UITapGestureRecognizer *tapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapped:)];
-    [tapRecognizer setNumberOfTapsRequired:1];
-    [tapRecognizer setDelegate:self];
-    [piece addGestureRecognizer:tapRecognizer];
-    
-    UILongPressGestureRecognizer *longPressGesture = [[UILongPressGestureRecognizer alloc]
-                                                      initWithTarget:self action:@selector(showResetMenu:)];
-    [piece addGestureRecognizer:longPressGesture];
+//- (void)addGestureRecognizersTo:(UIView *)piece {
+//
+//    UIPinchGestureRecognizer *pinchRecognizer = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(scale:)];
+//    [pinchRecognizer setDelegate:self];
+//    [piece addGestureRecognizer:pinchRecognizer];
+//    
+//    UIRotationGestureRecognizer *rotationRecognizer = [[UIRotationGestureRecognizer alloc] initWithTarget:self action:@selector(rotate:)];
+//    [rotationRecognizer setDelegate:self];
+//    [piece addGestureRecognizer:rotationRecognizer];
+//    
+//    UIPanGestureRecognizer *panRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(move:)];
+//    [panRecognizer setMinimumNumberOfTouches:1];
+//    [panRecognizer setMaximumNumberOfTouches:1];
+//    [panRecognizer setDelegate:self];
+//    [piece addGestureRecognizer:panRecognizer];
+//    
+//    UITapGestureRecognizer *tapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapped:)];
+//    [tapRecognizer setNumberOfTapsRequired:1];
+//    [tapRecognizer setDelegate:self];
+//    [piece addGestureRecognizer:tapRecognizer];
+//    
+//    UILongPressGestureRecognizer *longPressGesture = [[UILongPressGestureRecognizer alloc]
+//                                                      initWithTarget:self action:@selector(showResetMenu:)];
+//    [piece addGestureRecognizer:longPressGesture];
+//
+//}
 
-}
- */
 #pragma mark -
 #pragma mark === Utility methods  ===
 #pragma mark
@@ -231,7 +264,7 @@
 #pragma mark -
 #pragma mark === Touch handling  ===
 
-
+///*
 // shift the piece's center by the pan amount
 // reset the gesture recognizer's translation to {0, 0} after applying so the next callback is a delta from the current position
 - (void)panPiece:(UIPanGestureRecognizer *)gestureRecognizer
@@ -244,7 +277,11 @@
         CGPoint translation = [gestureRecognizer translationInView:[piece superview]];
         
         [piece setCenter:CGPointMake([piece center].x + translation.x, [piece center].y + translation.y)];
+
         [gestureRecognizer setTranslation:CGPointZero inView:[piece superview]];
+        
+        ((UIView *)piece.subviews[0]).center = CGPointMake(piece.bounds.size.width / 2.0,
+                                                           piece.bounds.size.height / 2.0);
     }
 }
 
@@ -252,13 +289,18 @@
 // reset the gesture recognizer's rotation to 0 after applying so the next callback is a delta from the current rotation
 - (void)rotatePiece:(UIRotationGestureRecognizer *)gestureRecognizer
 {
+    UIView *piece = [gestureRecognizer view];
     [self adjustAnchorPointForGestureRecognizer:gestureRecognizer];
     
     if ([gestureRecognizer state] == UIGestureRecognizerStateBegan || [gestureRecognizer state] == UIGestureRecognizerStateChanged) {
         CGFloat rotation = [gestureRecognizer rotation];
-        [gestureRecognizer view].transform = CGAffineTransformRotate([[gestureRecognizer view] transform], rotation);
+
+        piece.transform = CGAffineTransformRotate([piece transform], rotation);
+
         NSLog(@"rotation => %f", rotation);
         [gestureRecognizer setRotation:0];
+        ((UIView *)piece.subviews[0]).center = CGPointMake(piece.bounds.size.width / 2.0,
+                                                           piece.bounds.size.height / 2.0);
     }
 }
 
@@ -266,13 +308,16 @@
 // reset the gesture recognizer's scale to 1 after applying so the next callback is a delta from the current scale
 - (void)scalePiece:(UIPinchGestureRecognizer *)gestureRecognizer
 {
+    UIView *piece = [gestureRecognizer view];
     [self adjustAnchorPointForGestureRecognizer:gestureRecognizer];
     
     if ([gestureRecognizer state] == UIGestureRecognizerStateBegan || [gestureRecognizer state] == UIGestureRecognizerStateChanged) {
         CGFloat scale = gestureRecognizer.scale;
-        [gestureRecognizer view].transform = CGAffineTransformScale([[gestureRecognizer view] transform], scale, scale);
+        piece.transform = CGAffineTransformScale([piece transform], scale, scale);
         NSLog(@"scaling => %f", scale);
         [gestureRecognizer setScale:1];
+        ((UIView *)piece.subviews[0]).center = CGPointMake(piece.bounds.size.width / 2.0,
+                                                           piece.bounds.size.height / 2.0);
     }
 }
 
@@ -280,10 +325,10 @@
 // prevent other gesture recognizers from recognizing simultaneously
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer
 {
-    UIView *imgview = self.view.subviews.count > 0 ? self.view.subviews[0] : nil;
+    UIView *piece = self.view.subviews.count > 0 ? self.view.subviews[0] : nil;
     
     // if the gesture recognizers's view isn't one of our pieces, don't allow simultaneous recognition
-    if (gestureRecognizer.view != imgview)
+    if (gestureRecognizer.view != piece)
         return NO;
     
     // if the gesture recognizers are on different views, don't allow simultaneous recognition
@@ -296,12 +341,14 @@
     
     return YES;
 }
-
+//*/
 /*
 -(void)scale:(id)sender {
 	
 	[self.view bringSubviewToFront:[(UIPinchGestureRecognizer*)sender view]];
 	
+    [self adjustAnchorPointForGestureRecognizer:sender];
+
 	if([(UIPinchGestureRecognizer*)sender state] == UIGestureRecognizerStateEnded) {
 		
 		lastScale = 1.0;
@@ -322,6 +369,8 @@
 	
 	[self.view bringSubviewToFront:[(UIRotationGestureRecognizer*)sender view]];
 	
+    [self adjustAnchorPointForGestureRecognizer:sender];
+    
 	if([(UIRotationGestureRecognizer*)sender state] == UIGestureRecognizerStateEnded) {
 		
 		lastRotation = 0.0;
@@ -343,7 +392,10 @@
 	[[[(UITapGestureRecognizer*)sender view] layer] removeAllAnimations];
 	
 	[self.view bringSubviewToFront:[(UIPanGestureRecognizer*)sender view]];
-	CGPoint translatedPoint = [(UIPanGestureRecognizer*)sender translationInView:self.view];
+
+    [self adjustAnchorPointForGestureRecognizer:sender];
+
+    CGPoint translatedPoint = [(UIPanGestureRecognizer*)sender translationInView:self.view];
 	
 	if([(UIPanGestureRecognizer*)sender state] == UIGestureRecognizerStateBegan) {
 		
@@ -403,7 +455,7 @@
     
     return YES;
 }
-*/
+//*/
 
 
 #pragma mark - === busy indication handling  ===
@@ -436,11 +488,13 @@
     if (!self.queue)
         self.queue = [[NSOperationQueue alloc] init];
 
-    ASIHTTPRequest *imageRequest = [ASIHTTPRequest requestWithURL:imageUrl];
-    [imageRequest setDelegate:self];
-    [imageRequest setDidFinishSelector:@selector(imageRequestDone:)];
-    //imageRequest.userInfo = [NSDictionary dictionaryWithObjectsAndKeys: [NSNumber numberWithInt:aIndex], @"imageIndex", nil];
-    [self.queue addOperation:imageRequest];
+    if (!self.request) {
+        self.request = [ASIHTTPRequest requestWithURL:imageUrl];
+        [self.request setDelegate:self];
+        [self.request setDidFinishSelector:@selector(imageRequestDone:)];
+        //imageRequest.userInfo = [NSDictionary dictionaryWithObjectsAndKeys: [NSNumber numberWithInt:aIndex], @"imageIndex", nil];
+        [self.queue addOperation:self.request];
+    }
     [self startIndicator];
 }
 
@@ -476,18 +530,6 @@
                                      w,
                                      h);
     }
-}
-#pragma mark -
-#pragma mark === device orientation change handling  ===
-
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
-- (void) viewDidUnload {
-    [super viewDidUnload];
 }
 
 //==============================================================================

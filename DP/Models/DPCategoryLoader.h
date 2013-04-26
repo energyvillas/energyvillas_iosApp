@@ -15,6 +15,7 @@
          useCaching:(BOOL)useCaching
            category:(int)ctgID
                lang:(NSString *)aLang
+      useDeviceType:(BOOL)usedevicetype
       localResource:(NSString *)plistFile;
 
 - (id) initWithView:(UIView *)indicatorcontainer
@@ -22,6 +23,7 @@
          useCaching:(BOOL)useCaching
            category:(int)ctgID
                lang:(NSString *)aLang
+      useDeviceType:(BOOL)usedevicetype
           localData:(NSArray *)localData;
 
 

@@ -19,6 +19,8 @@ FOUNDATION_EXPORT NSString *const MySecondConstant;
 
 #define IS_IPHONE ( ((BOOL)([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone)) && (!IS_IPHONE_5))
 
+#define DEVICE_SCALE ((CGFloat)[UIScreen mainScreen].scale)
+
 #define IS_RETINA ((BOOL)(abs([UIScreen mainScreen].scale - 2.0) < DBL_EPSILON))
 
 #define INTERFACE_ORIENTATION ( (UIInterfaceOrientation) [UIApplication sharedApplication].statusBarOrientation)
@@ -90,6 +92,14 @@ FOUNDATION_EXPORT NSString *const MySecondConstant;
 #define CTGID_WHO_WE_ARE ((int)60)
 #define CTGID_NEW_NEXT ((int)-1000)
 
+
+// DEVICE TYPE IDs
+#define DEVICE_TYPE_ID_IPHONE ((int)1)
+#define DEVICE_TYPE_ID_IPHONE_RETINA ((int)2)
+#define DEVICE_TYPE_ID_IPHONE5 ((int)3)
+#define DEVICE_TYPE_ID_IPAD ((int)4)
+#define DEVICE_TYPE_ID_IPAD_RETINA ((int)5)
+
 // option identifier
 UIKIT_EXTERN NSString *const USE_DATA_CACHING;
 
@@ -107,10 +117,12 @@ UIKIT_EXTERN NSString *const PASSWORD;
 // web service URLs
 UIKIT_EXTERN NSString *const BANNERS_URL;
 UIKIT_EXTERN NSString *const CATEGORIES_URL;
+UIKIT_EXTERN NSString *const HOUSE_OVERVIEW_URL;
 UIKIT_EXTERN NSString *const ARTICLES_URL;
 // test webservice urls
 UIKIT_EXTERN NSString *const BANNERS_URL_TEST;
 UIKIT_EXTERN NSString *const CATEGORIES_URL_TEST;
+UIKIT_EXTERN NSString *const HOUSE_OVERVIEW_URL_TEST;
 UIKIT_EXTERN NSString *const ARTICLES_URL_TEST;
 
 
@@ -152,3 +164,5 @@ void NSLogFrame(NSString *msg, CGRect frame);
 BOOL isLocalUrl(NSString *urlstr);
 
 UILabel * createLabel(CGRect frame, NSString *title, UIFont *font);
+
+int getDeviceType();

@@ -25,6 +25,7 @@
 //	[encoder encodeObject:self.title forKey:encCategoryTitle];
 //	[encoder encodeObject:self.imageUrl forKey:encCategoryImageUrl];
 	[encoder encodeObject:self.parent forKey:encCategoryParent];
+    [encoder encodeObject:self.imageRollUrl forKey:encCategoryImageRollUrl];
 }
 
 -(id)initWithCoder:(NSCoder *)aDecoder{
@@ -36,6 +37,7 @@
 //		self.title = [aDecoder decodeObjectForKey:encCategoryTitle];
 //		self.imageUrl = [aDecoder decodeObjectForKey:encCategoryImageUrl];
 		self.parent = [aDecoder decodeObjectForKey:encCategoryParent];
+        self.imageRollUrl = [aDecoder decodeObjectForKey:encCategoryImageRollUrl];
 	}
     
 	return self;
@@ -45,7 +47,8 @@
                  lang:(NSString *)aLang
                 title:(NSString *)aTitle
              imageUrl:(NSString *)aImageUrl
-                parent:(NSString *)aParent
+         imageRollUrl:(NSString *)aImageRollUrl
+               parent:(NSString *)aParent
 {
     self = [super initWithValues:aId title:aTitle imageUrl:aImageUrl];
     
@@ -55,6 +58,7 @@
 //		self.title = NullIfEmpty(aTitle);
 //		self.imageUrl = NullIfEmpty(aImageUrl);
 		self.parent = NullIfEmpty(aParent);
+        self.imageRollUrl = NullIfEmpty(aImageRollUrl);
 	}
     
 	return self;

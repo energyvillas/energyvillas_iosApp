@@ -13,14 +13,14 @@
 @implementation DPDataElement
 
 -(void)encodeWithCoder:(NSCoder *)encoder{
-	[encoder encodeObject:self.key forKey:encElementKey];
+	[super encodeWithCoder:encoder];
 	[encoder encodeObject:self.title forKey:encElementTitle];
 	[encoder encodeObject:self.imageUrl forKey:encElementImageUrl];
 }
 
 -(id)initWithCoder:(NSCoder *)aDecoder{
-	if(self = [super init]) {
-		self.key = [aDecoder decodeObjectForKey:encElementKey];
+    self = [super initWithCoder:aDecoder];
+	if (self) {
 		self.title = [aDecoder decodeObjectForKey:encElementTitle];
 		self.imageUrl = [aDecoder decodeObjectForKey:encElementImageUrl];
 	}
@@ -31,23 +31,14 @@
                 title:(NSString *)aTitle
              imageUrl:(NSString *)aImageUrl
 {
-    self = [super init];
+    self = [super initWithValues:aId];
     
 	if (self) {
-        self.key = aId;
 		self.title = NullIfEmpty(aTitle);
 		self.imageUrl = NullIfEmpty(aImageUrl);
 	}
     
 	return self;
-}
-
-
--(int) getID {
-    if (!self.key)
-        return -1;
-    
-    return self.key.intValue;
 }
 
 @end

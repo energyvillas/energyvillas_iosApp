@@ -151,24 +151,25 @@
       scrollDirection:self.scrollDirection];
 }
 
--(NSArray *) generateLocalData {
-    NSMutableArray *list = [[NSMutableArray alloc] init];
-    [list addObject:[[Category alloc] initWithValues:@"10001" lang:CURRENT_LANG title:nil imageUrl:@"balloon.png" parent:@"52"]];
-    [list addObject:[[Category alloc] initWithValues:@"10002" lang:CURRENT_LANG title:nil imageUrl:@"balloon_01.png" parent:@"52"]];
-    [list addObject:[[Category alloc] initWithValues:@"10003" lang:CURRENT_LANG title:nil imageUrl:@"balloon_02.png" parent:@"52"]];
-    [list addObject:[[Category alloc] initWithValues:@"10004" lang:CURRENT_LANG title:nil imageUrl:@"balloon_01.png" parent:@"52"]];
-    [list addObject:[[Category alloc] initWithValues:@"10005" lang:CURRENT_LANG title:nil imageUrl:@"balloon_02.png" parent:@"52"]];
-    
-    return list;
-}
+//-(NSArray *) generateLocalData {
+//    NSMutableArray *list = [[NSMutableArray alloc] init];
+//    [list addObject:[[Category alloc] initWithValues:@"10001" lang:CURRENT_LANG title:nil imageUrl:@"balloon.png" parent:@"52"]];
+//    [list addObject:[[Category alloc] initWithValues:@"10002" lang:CURRENT_LANG title:nil imageUrl:@"balloon_01.png" parent:@"52"]];
+//    [list addObject:[[Category alloc] initWithValues:@"10003" lang:CURRENT_LANG title:nil imageUrl:@"balloon_02.png" parent:@"52"]];
+//    [list addObject:[[Category alloc] initWithValues:@"10004" lang:CURRENT_LANG title:nil imageUrl:@"balloon_01.png" parent:@"52"]];
+//    [list addObject:[[Category alloc] initWithValues:@"10005" lang:CURRENT_LANG title:nil imageUrl:@"balloon_02.png" parent:@"52"]];
+//    
+//    return list;
+//}
 - (void) loadData {
     if (self.dataLoader == nil) {
         self.dataLoader = [[DPCategoryLoader alloc] initWithView:self.view
-                                                     useInternet:NO//!isLeafCategory
+                                                     useInternet:YES
                                                       useCaching:YES
                                                         category:category
                                                             lang:[DPAppHelper sharedInstance].currentLang
-                                                   localData:[self generateLocalData]];
+                                                   useDeviceType:!isLeafCategory
+                                                       localData:nil];
         self.dataLoader.delegate = self;
     }
     if (self.contentList.count == 0 || self.dataLoader.dataRefreshNeeded)

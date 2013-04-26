@@ -24,7 +24,7 @@
 @property (strong, nonatomic) NSMutableArray *landscapeRendered;
 
 @property (strong, nonatomic) UIActivityIndicatorView *busyIndicator;
-@property (strong, nonatomic) NSOperationQueue *downloadQueue;
+@property (strong, nonatomic) NSOperationQueue *queue;
 
 @end
 
@@ -100,6 +100,41 @@
     [self.view addSubview:self.pageControl];
 }
 
+
+- (void) didReceiveMemoryWarning
+{
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+- (void)viewDidUnload {
+    [self stopIndicator];
+    if (self.queue)
+        [self.queue cancelAllOperations];
+    [self setScrollView:nil];
+    [self setPageControl:nil];
+    [super viewDidUnload];
+}
+
+-(void) cleanUp {
+    if (self.queue) {
+        [self.queue cancelAllOperations];
+        [self stopIndicator];
+        
+        for (id op in self.queue.operations)
+            if ([op isKindOfClass:[ASIHTTPRequest class]]) {
+                [((ASIHTTPRequest *)op) setDidFinishSelector:nil];
+                ((ASIHTTPRequest *)op).delegate = nil;
+            }
+    }
+
+    self.queue = nil;
+}
+
+-(void) dealloc {
+    [self cleanUp];
+}
+
 - (void) viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
     [self killUserTimer];
@@ -138,20 +173,6 @@
                                         w, PAGE_CONTROL_HEIGHT);//pcf.size.height);
 }
 
-- (void) didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
-- (void)viewDidUnload {
-    [self stopIndicator];
-    if (self.downloadQueue)
-        [self.downloadQueue cancelAllOperations];
-    [self setScrollView:nil];
-    [self setPageControl:nil];
-    [super viewDidUnload];
-}
 
 - (void) changeScrollDirection:(DPScrollDirection)scrolldir {
     [self changeRows:self.rowCount columns:self.colCount scrollDirection:scrollDirection];
@@ -602,8 +623,8 @@
 
 - (void) stopIndicator {
     if (self.busyIndicator &&
-        self.downloadQueue &&
-        self.downloadQueue.operationCount == 0) {
+        self.queue &&
+        self.queue.operationCount == 0) {
         [self.busyIndicator stopAnimating];
         [self.busyIndicator removeFromSuperview];
         self.busyIndicator = nil;
@@ -633,8 +654,8 @@
 }
 
 - (void) doloadImageAsync:(DPDataElement *)elm inView:(UIImageView *)imgView cacheImage:(BOOL)cacheimage{
-    if (!self.downloadQueue)
-        self.downloadQueue = [[NSOperationQueue alloc] init];
+    if (!self.queue)
+        self.queue = [[NSOperationQueue alloc] init];
 
     ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:[NSURL URLWithString:[self calcImageName:elm.imageUrl]]];
     [request setDelegate:self];
@@ -645,7 +666,7 @@
                         [self calcImageName:elm.imageUrl], @"imageUrl",
                         [NSNumber numberWithBool:cacheimage], @"cacheimage",
                         nil];
-    [self.downloadQueue addOperation:request];
+    [self.queue addOperation:request];
 
     [self startIndicator];
 }

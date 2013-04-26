@@ -21,7 +21,7 @@
 @property (strong, nonatomic) NSDictionary *freeBuyContent;
 @property (strong, nonatomic) NSDictionary *freeCoverFlow;
 @property (strong, nonatomic) NSDictionary *paidMainMenu;
-@property (strong, nonatomic) NSArray *categories;
+//@property (strong, nonatomic) NSArray *categories;
 @property (strong, nonatomic) NSMutableDictionary *imageCache;
 
 @property (strong, nonatomic) Reachability* hostReach;
@@ -59,7 +59,7 @@
         _hostIsReachable = false;
         _isPurchased = [self calcIsPurchased];
         [self configureReachability];
-        [self loadCategories];
+//        [self loadCategories];
         [self addFreeDetails];
         [self addFreeBuyContent];
         [self addFreeCoverFlow];
@@ -243,6 +243,7 @@
     NSArray *categories = [dict objectForKey:@"Categories"];
     NSArray *titles = [lfd objectForKey:@"Titles"];
     NSArray *images = [lfd objectForKey:@"Images"];
+    NSArray *imagerolls = [lfd objectForKey:@"ImageRolls"];
     
     NSMutableArray *res = [[NSMutableArray alloc] initWithCapacity:titles.count];
     for (int i=0; i<categories.count; i++) {
@@ -251,6 +252,7 @@
                                                    lang:lang
                                                   title:titles[i]
                                                imageUrl:imgname
+                                           imageRollUrl:imagerolls == nil ? nil : imagerolls[i]
                                                  parent:pid == -1 ? nil : [NSString stringWithFormat:@"%d", pid]]];
     }
     
@@ -258,71 +260,71 @@
 }
 
 
-// i load it and keep it flat not as tree.
-- (void) loadCategories {
-    NSString *path = [[NSBundle mainBundle] bundlePath];
-    NSString *finalPath = [path stringByAppendingPathComponent:@"rootCategories.plist"];
-    NSDictionary *dict = [NSDictionary dictionaryWithContentsOfFile:finalPath];
-    
-    
-    NSMutableArray *roots = [[NSMutableArray alloc] initWithCapacity:dict.count];
-//    NSMutableArray *subs = [[NSMutableArray alloc] initWithCapacity:dict.count];
-    
-    for (NSString *key in dict.allKeys) {
-        NSDictionary *ctg = dict[key];
-        NSDictionary *titles = ctg[@"titles"];
-        NSDictionary *images = ctg[@"images"];
-
-        id prntno = ctg[@"parent"];
-        NSString *prnt = prntno == nil ? nil : [NSString
-                                                stringWithFormat:@"%@", prntno];
-        
-        Category *category = [[Category alloc] initWithValues: key
-                                                         lang:@"en"
-                                                        title:titles[@"en"]
-                                                     imageUrl:images[@"en"]
-                                                       parent:prnt];
-
-        category.titles = [NSDictionary dictionaryWithDictionary:titles];
-        category.imageUrls = [NSDictionary dictionaryWithDictionary:images];
-        
-//        if (category.parentId == -1)
-            [roots addObject: category];
-//        else
-//            [subs addObject:category];
-    }
-    
-//    while (subs.count > 0) {
-//        Category *sub = subs[0];
-//        NSUInteger indx = [roots indexOfObjectPassingTest:^BOOL(id obj, NSUInteger idx, BOOL *stop) {
-//            Category *it = obj;
-//            *stop = it.Id == sub.parentId;
-//            return it.Id == sub.parentId;
-//        }];
+//// i load it and keep it flat not as tree.
+//- (void) loadCategories {
+//    NSString *path = [[NSBundle mainBundle] bundlePath];
+//    NSString *finalPath = [path stringByAppendingPathComponent:@"rootCategories.plist"];
+//    NSDictionary *dict = [NSDictionary dictionaryWithContentsOfFile:finalPath];
+//    
+//    
+//    NSMutableArray *roots = [[NSMutableArray alloc] initWithCapacity:dict.count];
+////    NSMutableArray *subs = [[NSMutableArray alloc] initWithCapacity:dict.count];
+//    
+//    for (NSString *key in dict.allKeys) {
+//        NSDictionary *ctg = dict[key];
+//        NSDictionary *titles = ctg[@"titles"];
+//        NSDictionary *images = ctg[@"images"];
 //
-//        if (indx == NSNotFound ) {
-//            [subs removeObjectAtIndex:0];
-//            continue;
-//        }
+//        id prntno = ctg[@"parent"];
+//        NSString *prnt = prntno == nil ? nil : [NSString
+//                                                stringWithFormat:@"%@", prntno];
+//        
+//        Category *category = [[Category alloc] initWithValues: key
+//                                                         lang:@"en"
+//                                                        title:titles[@"en"]
+//                                                     imageUrl:images[@"en"]
+//                                                       parent:prnt];
 //
-//        Category *root = (Category *)roots[indx];
-//        if (!root.children )
-//            root.children = [[NSMutableArray alloc] init];
-//
-//        [root.children addObject:sub];
+//        category.titles = [NSDictionary dictionaryWithDictionary:titles];
+//        category.imageUrls = [NSDictionary dictionaryWithDictionary:images];
+//        
+////        if (category.parentId == -1)
+//            [roots addObject: category];
+////        else
+////            [subs addObject:category];
 //    }
-    
-    self.categories = roots;
-}
+//    
+////    while (subs.count > 0) {
+////        Category *sub = subs[0];
+////        NSUInteger indx = [roots indexOfObjectPassingTest:^BOOL(id obj, NSUInteger idx, BOOL *stop) {
+////            Category *it = obj;
+////            *stop = it.Id == sub.parentId;
+////            return it.Id == sub.parentId;
+////        }];
+////
+////        if (indx == NSNotFound ) {
+////            [subs removeObjectAtIndex:0];
+////            continue;
+////        }
+////
+////        Category *root = (Category *)roots[indx];
+////        if (!root.children )
+////            root.children = [[NSMutableArray alloc] init];
+////
+////        [root.children addObject:sub];
+////    }
+//    
+//    self.categories = roots;
+//}
 
-- (NSArray *) getSubCategoriesOf:(int)parentid {
-    NSMutableArray *list = [[NSMutableArray alloc] init];
-    for (Category *ctg in self.categories)
-        if (ctg.parentId == parentid)
-            [list addObject:ctg];
-    
-    return [NSArray arrayWithArray:list];
-}
+//- (NSArray *) getSubCategoriesOf:(int)parentid {
+//    NSMutableArray *list = [[NSMutableArray alloc] init];
+//    for (Category *ctg in self.categories)
+//        if (ctg.parentId == parentid)
+//            [list addObject:ctg];
+//    
+//    return [NSArray arrayWithArray:list];
+//}
 
 - (void) addPaidMainMenu{
     self.paidMainMenu = [self doGetDictionaryFrom:@"paid-MainMenu.plist"];

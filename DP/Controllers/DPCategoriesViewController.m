@@ -59,6 +59,7 @@
                                                       useCaching:NO
                                                         category:self.category
                                                             lang:self.lang
+                                                   useDeviceType:NO
                                                    localResource:self.plistFile];
         self.dataLoader.delegate = self;
         [self.dataLoader loadData];

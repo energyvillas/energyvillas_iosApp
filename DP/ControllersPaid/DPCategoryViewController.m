@@ -84,7 +84,7 @@
         [self loadAdsView];
     
     if (self.actualCtgView.subviews.count > 0)
-        [self loadCategoryView];
+        [self loadCategoryView:YES];
     
     if (self.mmView.subviews.count > 0)
         [self loadMenuView];
@@ -189,7 +189,7 @@
                                           self.ctgView.frame.size.height - self.lblTitle.frame.size.height);
     
     [self loadAdsView];
-    [self loadCategoryView];
+    [self loadCategoryView:NO];
     [self loadMenuView];
 }
 
@@ -204,7 +204,7 @@
         self.adsViewController.view.frame = self.adsView.bounds;
 }
 
-- (void) loadCategoryView {    
+- (void) loadCategoryView:(BOOL)reload {
     if (category == 0)
         return;
 
@@ -225,6 +225,15 @@
 //    self.ctgViewController.view.frame = frm;
 //    [self.ctgViewController changeRows:1 columns:1];
 
+    if (reload) {
+        if (self.ctgViewController)
+        {
+            [self.ctgViewController.view removeFromSuperview];
+            [self.ctgViewController removeFromParentViewController];
+            self.ctgViewController = nil;
+        }
+    }
+    
     if (self.actualCtgView.subviews.count == 0)
     {
         self.ctgViewController = [[DPAnimatedScrollViewController alloc] initWithCategory:category

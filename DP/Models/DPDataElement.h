@@ -7,16 +7,13 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "DPBaseDataElement.h"
 
-#define encElementKey @"ID"
 #define encElementTitle @"Title"
 #define encElementImageUrl @"Image"
 
 
-@interface DPDataElement : NSObject <NSCoding>
-
-@property (strong, nonatomic) NSString *key;
-@property (readonly, getter = getID) int Id;
+@interface DPDataElement : DPBaseDataElement
 
 @property (nonatomic, strong) NSString *title;
 @property (nonatomic, strong) NSString *imageUrl;

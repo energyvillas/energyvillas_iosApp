@@ -1,22 +1,22 @@
 //
-//  CategoryParser.m
-//  DP
+//  HouseOverviewParser.m
+//  energyVillas
 //
-//  Created by Γεώργιος Γράβος on 4/1/13.
+//  Created by Γεώργιος Γράβος on 4/26/13.
 //  Copyright (c) 2013 Γεώργιος Γράβος. All rights reserved.
 //
 
-#import "CategoryParser.h"
-#import "Category.h"
+#import "HouseOverviewParser.h"
+#import "HouseOverview.h"
 
-@implementation CategoryParser
+@implementation HouseOverviewParser
 
 /*
  to parse a XML file from path.
  */
 - (void)parseXMLFile:(NSString *)data {
 	//array for the ranking
-	self.categories = [[NSMutableArray alloc] init];
+	self.datalist = [[NSMutableArray alloc] init];
 	index = 0;
     
 	self.currentString = [NSMutableString string];
@@ -35,15 +35,17 @@
 // and is less prone to programmer error.
 static NSString *kName_response = @"response";
 static NSString *kName_responseCode = @"responseCode";
-static NSString *kName_categories = @"categories";
-static NSString *kName_category = @"category";
-static NSString *kName_categoryid = @"id";
-static NSString *kName_langcode = @"langcode";
-static NSString *kName_title = @"description";
-static NSString *kName_imageUrl = @"image";
-static NSString *kName_imageRollUrl = @"imageroll";
-static NSString *kName_parent = @"parentid";
+static NSString *kName_elements = @"houseoverviews";
+static NSString *kName_element = @"houseoverview";
 
+static NSString *kName_id = @"hovid";
+static NSString *kName_categoryid = @"categoryid";
+static NSString *kName_langcode = @"langcode";
+static NSString *kName_ismaster = @"ismaster";
+
+static NSString *kName_title = @"title";
+static NSString *kName_info = @"info";
+static NSString *kName_descr = @"description";
 /*
  Sent by a parser object to its delegate when it encounters a start tag for a given element.
  Parameters
@@ -60,9 +62,14 @@ static NSString *kName_parent = @"parentid";
 	}else if ([elementName isEqualToString:kName_responseCode]) {
 		[self.currentString setString:@""];
 		self.storingCharacters = YES;
-	}else if ([elementName isEqualToString:kName_categories]) {
+	}else if ([elementName isEqualToString:kName_elements]) {
 		
-	}else if ([elementName isEqualToString:kName_category]) {
+	}else if ([elementName isEqualToString:kName_element]) {
+		
+
+    }else if ([elementName isEqualToString:kName_id]) {
+		[self.currentString setString:@""];
+		self.storingCharacters = YES;
 		
 	}else if ([elementName isEqualToString:kName_categoryid]) {
 		[self.currentString setString:@""];
@@ -71,24 +78,24 @@ static NSString *kName_parent = @"parentid";
 	}else if ([elementName isEqualToString:kName_langcode]) {
 		[self.currentString setString:@""];
 		self.storingCharacters = YES;
-		
-	}else if ([elementName isEqualToString:kName_title]) {
-		[self.currentString setString:@""];
-		self.storingCharacters = YES;
-		
-	}else if ([elementName isEqualToString:kName_imageUrl]) {
-		[self.currentString setString:@""];
-		self.storingCharacters = YES;
-		
-	}else if ([elementName isEqualToString:kName_imageRollUrl]) {
-		[self.currentString setString:@""];
-		self.storingCharacters = YES;
-		
-	}else if ([elementName isEqualToString:kName_parent]) {
+		      
+    }else if ([elementName isEqualToString:kName_ismaster]) {
 		[self.currentString setString:@""];
 		self.storingCharacters = YES;
         
-	}
+    }else if ([elementName isEqualToString:kName_title]) {
+		[self.currentString setString:@""];
+		self.storingCharacters = YES;
+                
+	}else if ([elementName isEqualToString:kName_info]) {
+		[self.currentString setString:@""];
+		self.storingCharacters = YES;
+		
+	}else if ([elementName isEqualToString:kName_descr]) {
+		[self.currentString setString:@""];
+		self.storingCharacters = YES;
+		
+ 	}
 }
 
 /*
@@ -99,6 +106,18 @@ static NSString *kName_parent = @"parentid";
  */
 - (void)parser:(NSXMLParser *)parser foundCharacters:(NSString *)string {
 	if (self.storingCharacters) [self.currentString appendString:string];
+}
+
+-(NSString *) processHtmlField:(NSString *)data {
+    if (data) {
+        if (data.length == 0)
+            data = nil;
+        else
+            data = [[data stringByReplacingOccurrencesOfString:@"&gt;" withString:@">"]
+                        stringByReplacingOccurrencesOfString:@"&lt;" withString:@"<"];
+    }
+    
+    return data;
 }
 
 
@@ -123,38 +142,45 @@ static NSString *kName_parent = @"parentid";
 		
 	}else if ([elementName isEqualToString:kName_responseCode]) {
 		self.responseCode=[[NSString alloc] initWithString: aElementValue];
-	}else if ([elementName isEqualToString:kName_categories]) {
-		
-	}else if ([elementName isEqualToString:kName_category]) {
-		Category *category  = [[Category alloc] init];
-		category.key = self.ctgId;
-        category.lang = self.langcode;
-		category.title = self.title;
-		category.imageUrl = self.imageUrl;
-		category.imageRollUrl = self.imageRollUrl;
-		category.parent = self.parent;
-		[self.categories insertObject:category atIndex:index];
-		index=index+1;
-		category=nil;
-	
-	}else if ([elementName isEqualToString:kName_categoryid]) {
-		self.ctgId=[[NSString alloc] initWithString: aElementValue];
         
-    }else if ([elementName isEqualToString:kName_langcode]) {
+	}else if ([elementName isEqualToString:kName_elements]) {
+		
+	}else if ([elementName isEqualToString:kName_element]) {
+		HouseOverview *element  = [[HouseOverview alloc] init];
+		element.key=self.hovId;
+        element.lang=self.langcode;
+        element.ctgid = [self.categoryId intValue];
+        element.isMaster = [self.isMaster boolValue];
+		element.title = [self processHtmlField:self.title];
+		element.info = [self processHtmlField:self.info];
+		element.description = [self processHtmlField:self.description];
+        
+		[self.datalist insertObject:element atIndex:index];
+		index=index+1;
+		element=nil;
+        
+	}else if ([elementName isEqualToString:kName_id]) {
+		self.hovId=[[NSString alloc] initWithString: aElementValue];
+        
+	}else if ([elementName isEqualToString:kName_categoryid]) {
+		self.categoryId=[[NSString alloc] initWithString: aElementValue];
+        
+	}else if ([elementName isEqualToString:kName_langcode]) {
 		self.langcode=[[NSString alloc] initWithString: aElementValue];
+        
+	}else if ([elementName isEqualToString:kName_ismaster]) {
+		self.isMaster=[[NSString alloc] initWithString: aElementValue];
         
 	}else if ([elementName isEqualToString:kName_title]) {
 		self.title=[[NSString alloc] initWithString: aElementValue];
         
-	}else if ([elementName isEqualToString:kName_imageUrl]) {
-		self.imageUrl=[[NSString alloc] initWithString: aElementValue];
+	}else if ([elementName isEqualToString:kName_info]) {
+		self.info=[[NSString alloc] initWithString: aElementValue];
         
-	}else if ([elementName isEqualToString:kName_imageRollUrl]) {
-		self.imageRollUrl=[[NSString alloc] initWithString: aElementValue];
+	}else if ([elementName isEqualToString:kName_descr]) {
+		self.description=[[NSString alloc] initWithString: aElementValue];
         
-    }else if ([elementName isEqualToString:kName_parent]) {
-		self.parent=[[NSString alloc] initWithString: aElementValue];
-	}
+    }
     
 	self.storingCharacters = NO;
 	aElementValue = nil;
@@ -179,11 +205,12 @@ parseErrorOccurred:(NSError *)parseError {
 
 -(void) print{
 	NSLog(@"responseCode: %@",self.responseCode);
-	NSLog(@"lang: %@  title: %@  parent: %@", self.langcode, self.title, self.parent);
 	
-	for (Category* ctg in self.categories) {
-		NSLog(@"ROW id=%@  lang=%@  title=%@  parent=%@", ctg.key, ctg.lang, ctg.title, ctg.parent);
+	for (HouseOverview* elm in self.datalist) {
+		NSLog(@"ROW id=%@ lang=%@ ctgid=%d isMaster=%c", elm.key, elm.lang, elm.ctgid, elm.isMaster);
 	}
+	
 }
+
 
 @end

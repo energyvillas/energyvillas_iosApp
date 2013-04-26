@@ -40,7 +40,9 @@ NSString *const ARTICLES_URL = @"http://designprojectsapps.com/iphonenews.php";
 NSString *const ARTICLES_URL_TEST = @"http://192.168.1.9/designprojectsapps/iphonearticles.php";
 // http://www.mysite.com/iphonenews.php?user=<UUU>&pass=<PPP>&lang=<XXX>&cid=<YYY>&count=<WWW>&from=<ZZZ>
 
-
+NSString *const HOUSE_OVERVIEW_URL = @"http://designprojectsapps.com/iphonehouseoverview.php";
+NSString *const HOUSE_OVERVIEW_URL_TEST = @"http://192.168.1.9/designprojectsapps/iphonehouseoverview.php";
+// http://www.mysite.com/iphonehouseoverview.php?user=<UUU>&pass=<PPP>&lang=<XXX>&cid=<YYY>
 
 // localization keys
 NSString *const kbtnOK_Title = @"btnOK_Title";
@@ -149,3 +151,17 @@ UILabel * createLabel(CGRect frame, NSString *title, UIFont *font) {
 
     return lv;
 }
+
+int getDeviceType() {
+    if (IS_IPHONE)
+        return IS_RETINA ? DEVICE_TYPE_ID_IPHONE_RETINA : DEVICE_TYPE_ID_IPHONE;
+    
+    if (IS_IPHONE_5)
+        return DEVICE_TYPE_ID_IPHONE5;
+    
+    if (IS_IPAD)
+        return IS_RETINA ? DEVICE_TYPE_ID_IPAD_RETINA : DEVICE_TYPE_ID_IPAD;
+    
+    return -1;
+}
+

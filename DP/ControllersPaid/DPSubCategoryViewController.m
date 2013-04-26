@@ -15,7 +15,9 @@
 
 //#import "DPAnimatedCategoriesView.h"
 
-#import "DPArticlesLoader.h"
+#import "HouseOverview.h"
+#import "HouseOverviewLoader.h"
+#import "Category.h"
 #import "DPCategoryLoader.h"
 
 #import "DPConstants.h"
@@ -30,11 +32,11 @@
 @property (strong, nonatomic) DPAnimatedScrollViewController *subCtgsViewController;
 
 
-@property (strong, nonatomic) NSArray *articles;
-//@property (strong, nonatomic) NSArray *categories;
+@property (strong, nonatomic) HouseOverview *houseOverview;
+@property (strong, nonatomic) NSArray *categories;
 
-@property (strong, nonatomic) DPDataLoader *articlesLoader;
-//@property (strong, nonatomic) DPDataLoader *categoriesLoader;
+@property (strong, nonatomic) HouseOverviewLoader *hovLoader;
+@property (strong, nonatomic) DPCategoryLoader *ctgLoader;
 
 @end
 
@@ -65,36 +67,60 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
+    self.titleView.backgroundColor = [UIColor clearColor];
+    self.titleView.opaque = NO;
     self.photoView.backgroundColor = [UIColor orangeColor];//]clearColor];
     self.htmlView.backgroundColor = [UIColor whiteColor];//clearColor];
     self.subCtgView.backgroundColor = [UIColor clearColor];
     
-    self.label.text = self.category.title;
+//    self.label.text = self.category.title;
     
     [self loadData];
 }
 
 - (void) loadData {
-//    self.categoriesLoader = [[DPCategoryLoader alloc] initWithView:self.subCtgView
-//                                                          category:self.category.Id
-//                                                              lang:[DPAppHelper sharedInstance].currentLang
-//                                                     localResource:nil /*PENDING localresource*/];
-//    self.categoriesLoader.delegate = self;
-//    [self.categoriesLoader loadData];
+    self.ctgLoader = [[DPCategoryLoader alloc] initWithView:self.subCtgView
+                                                useInternet:YES
+                                                 useCaching:YES
+                                                   category:self.category.Id
+                                                       lang:CURRENT_LANG
+                                              useDeviceType:NO
+                                                  localData:nil];
+    self.ctgLoader.delegate = self;
+    [self.ctgLoader loadData];
     
-    self.articlesLoader = [[DPArticlesLoader alloc] initWithView:self.view
-                                                        category:self.category.Id
-                                                            lang:[DPAppHelper sharedInstance].currentLang];
-    self.articlesLoader.delegate = self;
-    [self.articlesLoader loadData];
+    self.hovLoader = [[HouseOverviewLoader alloc] initWithView:self.view
+                                                          lang:CURRENT_LANG
+                                                        category:self.category.Id];
+    self.hovLoader.delegate = self;
+    [self.hovLoader loadData];
 }
 
 #pragma mark - dataloader delegate
 
-- (void) loadFinished:(DPDataLoader *)loader {
-    if (loader == self.articlesLoader) {
-        //PENDING
+- (void) ctgLoadFinished:(DPCategoryLoader *)loader {
+}
+
+-(void) hovLoaded {
+    [self.titleView loadHTMLString:self.houseOverview.title baseURL:nil];
+}
+- (void) hovLoadFinished:(HouseOverviewLoader *)loader {
+    if (loader.datalist.count == 0)
+        showAlertMessage(nil,
+                         DPLocalizedString(kERR_TITLE_INFO),
+                         DPLocalizedString(kERR_MSG_NO_DATA_FOUND));
+    else {
+        self.houseOverview = loader.datalist[0];
+        [self hovLoaded];
     }
+}
+
+- (void) loadFinished:(DPDataLoader *)loader {
+    if (loader == self.ctgLoader) 
+        [self ctgLoadFinished:(DPCategoryLoader *)loader];
+    else if (loader == self.hovLoader)
+        [self hovLoadFinished:(HouseOverviewLoader *)loader];
+//====
 //    else  { // if (loader == self.categoriesLoader)
 //        if (loader.datalist.count == 0)
 //            showAlertMessage(nil, DPLocalizedString(kERR_TITLE_INFO), DPLocalizedString(kERR_MSG_NO_DATA_FOUND));
@@ -163,7 +189,7 @@
     
     if (IS_IPHONE) {
         if (IS_PORTRAIT) {
-            self.label.frame = CGRectMake(0, top,
+            self.titleView.frame = CGRectMake(0, top,
                                           w, PH_LBL);
             
             self.photoView.frame = CGRectMake(0, top + PH_LBL,
@@ -175,7 +201,7 @@
             self.subCtgView.frame = CGRectMake(0, top + PH_LBL + PH_PHT + PH_HTM,
                                                w, h - (PH_LBL + PH_PHT + PH_HTM));
         } else {
-            self.label.frame = CGRectMake(LW_PHT, top,
+            self.titleView.frame = CGRectMake(LW_PHT, top,
                                           w - LW_PHT, LH_LBL);
             
             self.photoView.frame = CGRectMake(0, top,
@@ -189,7 +215,7 @@
         }
     } else if (IS_IPHONE_5) {
         if (IS_PORTRAIT) {
-            self.label.frame = CGRectMake(0, top,
+            self.titleView.frame = CGRectMake(0, top,
                                           w, P5H_LBL);
             
             self.photoView.frame = CGRectMake(0, top + P5H_LBL,
@@ -201,7 +227,7 @@
             self.subCtgView.frame = CGRectMake(0, top + P5H_LBL + P5H_PHT + P5H_HTM,
                                                w, h - (P5H_LBL + P5H_PHT + P5H_HTM));
         } else {
-            self.label.frame = CGRectMake(L5W_PHT, top,
+            self.titleView.frame = CGRectMake(L5W_PHT, top,
                                           w - L5W_PHT, L5H_LBL);
             
             self.photoView.frame = CGRectMake(0, top,
@@ -215,7 +241,7 @@
         }
     } else /* IF (IS_IPAD) */{
         if (IS_PORTRAIT) {
-            self.label.frame = CGRectMake(0, top,
+            self.titleView.frame = CGRectMake(0, top,
                                           w, PAD_PH_LBL);
             
             self.photoView.frame = CGRectMake(0, top + PAD_PH_LBL,
@@ -227,7 +253,7 @@
             self.subCtgView.frame = CGRectMake(0, top + PAD_PH_LBL + PAD_PH_PHT + PAD_PH_HTM,
                                                w, h - (PAD_PH_LBL + PAD_PH_PHT + PAD_PH_HTM));
         } else {
-            self.label.frame = CGRectMake(PAD_LW_PHT, top,
+            self.titleView.frame = CGRectMake(PAD_LW_PHT, top,
                                           w - PAD_LW_PHT, PAD_LH_LBL);
             
             self.photoView.frame = CGRectMake(0, top,
@@ -259,15 +285,21 @@
         [self.subCtgsViewController changeRows:1 columns:1];
 }
 
--(void) clearDataLoader {
-    if (self.articlesLoader) {
-        self.articlesLoader.delegate = nil;
+-(void) clearDataLoaders {
+    if (self.hovLoader) {
+        self.hovLoader.delegate = nil;
     }
-    self.articlesLoader = nil;
+    self.hovLoader = nil;
+    
+    
+    if (self.ctgLoader) {
+        self.ctgLoader.delegate = nil;
+    }
+    self.ctgLoader = nil;
 }
 
 -(void) dealloc {
-    [self clearDataLoader];
+    [self clearDataLoaders];
 }
 
 - (void)didReceiveMemoryWarning
@@ -277,8 +309,8 @@
 }
 
 - (void)viewDidUnload {
-    [self clearDataLoader];
-    [self setLabel:nil];
+    [self clearDataLoaders];
+    [self setTitleView:nil];
     [self setPhotoView:nil];
     [self setHtmlView:nil];
     [self setSubCtgView:nil];

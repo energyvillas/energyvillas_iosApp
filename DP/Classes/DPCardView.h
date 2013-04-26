@@ -19,9 +19,9 @@
 
 @interface DPCardView : UIView
 
-@property (strong, nonatomic) DPDataElement *element;
+@property (strong, nonatomic) Category *element;
 
-- (id) initWithFrame:(CGRect)frame dataElement:(DPDataElement *)elm;
+- (id) initWithFrame:(CGRect)frame dataElement:(Category *)elm;
 
 - (void) zoomCard:(NSTimeInterval)duration position:(CGPoint)newCenter;
 - (void) cancelCardZoom:(NSTimeInterval)duration;
