@@ -11,6 +11,8 @@ FOUNDATION_EXPORT NSString *const MyFirstConstant;
 FOUNDATION_EXPORT NSString *const MySecondConstant;
 */
 
+#define USE_TEST_SITE ((BOOL)YES)
+
 #define IS_IPAD ((BOOL)([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad))
 
 #define IS_IPHONE_5 ( ((BOOL)([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone)) && (fabs( ( double )[ [ UIScreen mainScreen ] bounds ].size.height - ( double )568 ) < DBL_EPSILON ))
@@ -106,6 +108,10 @@ UIKIT_EXTERN NSString *const PASSWORD;
 UIKIT_EXTERN NSString *const BANNERS_URL;
 UIKIT_EXTERN NSString *const CATEGORIES_URL;
 UIKIT_EXTERN NSString *const ARTICLES_URL;
+// test webservice urls
+UIKIT_EXTERN NSString *const BANNERS_URL_TEST;
+UIKIT_EXTERN NSString *const CATEGORIES_URL_TEST;
+UIKIT_EXTERN NSString *const ARTICLES_URL_TEST;
 
 
 // localization keys

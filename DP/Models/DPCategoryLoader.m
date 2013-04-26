@@ -110,7 +110,7 @@
 }
 
 - (ASIFormDataRequest *) createAndPrepareRequest {
-    NSURL *ctgUrl = [NSURL URLWithString:CATEGORIES_URL];
+    NSURL *ctgUrl = [NSURL URLWithString:USE_TEST_SITE ? CATEGORIES_URL_TEST : CATEGORIES_URL];
     
     NSDictionary *ctgParams = [NSDictionary
                                dictionaryWithObjectsAndKeys:

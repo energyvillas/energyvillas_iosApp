@@ -138,7 +138,17 @@
     //landscape
     int LH_LBL = 24;
     int LH_PHT = 130;
-    int LW_PHT = 280;
+    int LW_PHT = 200;
+    
+    // iphone5 sizes
+    //portrait
+    int P5H_LBL = 24; // font helvetica neue bold 18
+    int P5H_PHT = 126;
+    int P5H_HTM = 80;
+    //landscape
+    int L5H_LBL = 24;
+    int L5H_PHT = 130;
+    int L5W_PHT = 230;
     
     // ipad sizes
     //portrait
@@ -151,7 +161,7 @@
     int PAD_LW_PHT = 450;
     
     
-    if (IS_IPHONE || IS_IPHONE_5) {
+    if (IS_IPHONE) {
         if (IS_PORTRAIT) {
             self.label.frame = CGRectMake(0, top,
                                           w, PH_LBL);
@@ -176,6 +186,32 @@
             
             self.subCtgView.frame = CGRectMake(LW_PHT, top + LH_LBL,
                                                w - LW_PHT, h - LH_LBL);
+        }
+    } else if (IS_IPHONE_5) {
+        if (IS_PORTRAIT) {
+            self.label.frame = CGRectMake(0, top,
+                                          w, P5H_LBL);
+            
+            self.photoView.frame = CGRectMake(0, top + P5H_LBL,
+                                              w, P5H_PHT);
+            
+            self.htmlView.frame = CGRectMake(0, top + P5H_LBL + P5H_PHT,
+                                             w, P5H_HTM);
+            
+            self.subCtgView.frame = CGRectMake(0, top + P5H_LBL + P5H_PHT + P5H_HTM,
+                                               w, h - (P5H_LBL + P5H_PHT + P5H_HTM));
+        } else {
+            self.label.frame = CGRectMake(L5W_PHT, top,
+                                          w - L5W_PHT, L5H_LBL);
+            
+            self.photoView.frame = CGRectMake(0, top,
+                                              L5W_PHT, L5H_PHT);
+            
+            self.htmlView.frame = CGRectMake(0, top + L5H_PHT,
+                                             L5W_PHT, h - L5H_PHT);
+            
+            self.subCtgView.frame = CGRectMake(L5W_PHT, top + L5H_LBL,
+                                               w - L5W_PHT, h - L5H_LBL);
         }
     } else /* IF (IS_IPAD) */{
         if (IS_PORTRAIT) {

@@ -37,7 +37,7 @@
 }
 
 - (ASIFormDataRequest *) createAndPrepareRequest {
-    NSURL *ctgUrl = [NSURL URLWithString:BANNERS_URL];
+    NSURL *ctgUrl = [NSURL URLWithString:USE_TEST_SITE ? BANNERS_URL_TEST : BANNERS_URL];
     
     NSDictionary *ctgParams = [NSDictionary
                                dictionaryWithObjectsAndKeys:

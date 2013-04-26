@@ -29,12 +29,15 @@ NSString *const PASSWORD = @"phone";
 
 // web service URLs
 NSString *const BANNERS_URL = @"http://designprojectsapps.com/iphonebanners.php";
+NSString *const BANNERS_URL_TEST = @"http://192.168.1.9/designprojectsapps/iphonebanners.php";
 // http://www.mysite.com/iphonebanners.php?user=<UUU>&pass=<PPP>&group=<XXX>
 
 NSString *const CATEGORIES_URL = @"http://designprojectsapps.com/iphonecategory.php";
-// http://www.mysite.com/iphonecategory.php?user=<UUU>&pass=<PPP>&lang=<XXX>&parentid=<YYY>
+NSString *const CATEGORIES_URL_TEST = @"http://192.168.1.9/designprojectsapps/iphonecategory.php";
+// http://www.mysite.com/iphonecategory.php?user=<UUU>&pass=<PPP>&lang=<XXX>&parentid=<YYY>&devicetype=<DDD>
 
 NSString *const ARTICLES_URL = @"http://designprojectsapps.com/iphonenews.php";
+NSString *const ARTICLES_URL_TEST = @"http://192.168.1.9/designprojectsapps/iphonearticles.php";
 // http://www.mysite.com/iphonenews.php?user=<UUU>&pass=<PPP>&lang=<XXX>&cid=<YYY>&count=<WWW>&from=<ZZZ>
 
 
