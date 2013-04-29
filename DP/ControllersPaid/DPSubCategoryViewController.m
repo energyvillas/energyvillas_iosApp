@@ -23,12 +23,14 @@
 #import "DPConstants.h"
 #import "DPAppHelper.h"
 
+#import <QuartzCore/QuartzCore.h>
+
 @interface DPSubCategoryViewController ()
 
 @property (strong, nonatomic) Category *category;
 
 @property (strong, nonatomic) DPImageContentViewController *imageContentViewController;
-@property (strong, nonatomic) DPHtmlContentViewController *htmlContentViewController;
+//@property (strong, nonatomic) DPHtmlContentViewController *htmlContentViewController;
 @property (strong, nonatomic) DPAnimatedScrollViewController *subCtgsViewController;
 
 
@@ -69,8 +71,11 @@
 	// Do any additional setup after loading the view.
     self.titleView.backgroundColor = [UIColor clearColor];
     self.titleView.opaque = NO;
+    
     self.photoView.backgroundColor = [UIColor orangeColor];//]clearColor];
-    self.htmlView.backgroundColor = [UIColor whiteColor];//clearColor];
+    
+    self.htmlView.backgroundColor = [UIColor clearColor];    
+
     self.subCtgView.backgroundColor = [UIColor clearColor];
     
 //    self.label.text = self.category.title;
@@ -78,7 +83,13 @@
     [self loadData];
 }
 
+-(void) doLocalize {
+    [super doLocalize];
+    [self loadData];
+}
 - (void) loadData {
+    [self clearDataLoaders];
+    
     self.ctgLoader = [[DPCategoryLoader alloc] initWithView:self.subCtgView
                                                 useInternet:YES
                                                  useCaching:YES
@@ -189,8 +200,8 @@
     
     if (IS_IPHONE) {
         if (IS_PORTRAIT) {
-            self.titleView.frame = CGRectMake(0, top,
-                                          w, PH_LBL);
+            self.titleView.frame = CGRectMake(0, top - 5,
+                                          w, PH_LBL + 5);
             
             self.photoView.frame = CGRectMake(0, top + PH_LBL,
                                               w, PH_PHT);
@@ -215,8 +226,8 @@
         }
     } else if (IS_IPHONE_5) {
         if (IS_PORTRAIT) {
-            self.titleView.frame = CGRectMake(0, top,
-                                          w, P5H_LBL);
+            self.titleView.frame = CGRectMake(0, top - 5,
+                                          w, P5H_LBL + 5);
             
             self.photoView.frame = CGRectMake(0, top + P5H_LBL,
                                               w, P5H_PHT);
@@ -269,9 +280,98 @@
     
 //    [self loadAdsView];
     [self loadCategoryView];
-//    [self loadMenuView];
+    [self loadInfoDescView];
 }
 
+-(void) loadInfoDescView {
+    while (self.htmlView.subviews.count > 0) {
+        [self.htmlView.subviews[self.htmlView.subviews.count - 1] removeFromSuperview];
+    }
+    
+    UIView * inner = [self loadInnerHtmlView];
+    [self loadInfoView: inner];
+    [self drawVLine:inner];
+    [self loadDescrView:inner];
+}
+
+-(UIView *) loadInnerHtmlView {
+    CGFloat grayPcnt = 70.0f / 256.0f;
+    UIView *innerHtmlView = [[UIView alloc] initWithFrame:CGRectInset(self.htmlView.bounds, 0, 2)];
+    innerHtmlView.backgroundColor = [UIColor colorWithRed:grayPcnt green:grayPcnt blue:grayPcnt alpha:0.9f];
+    innerHtmlView.layer.borderColor = [UIColor whiteColor].CGColor;
+    innerHtmlView.layer.borderWidth = 2.0f;
+    
+    [self.htmlView addSubview:innerHtmlView];
+    return innerHtmlView;
+}
+
+-(void) loadInfoView:(UIView *)container {
+    CGSize sz = container.bounds.size;
+    sz.width = sz.height; //IS_IPAD ? 55 : 25;
+    CGRect frm = CGRectMake(0, 0, sz.width, sz.height);
+    UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
+    btn.frame = frm;
+    btn.showsTouchWhenHighlighted = YES;
+    btn.contentMode = UIViewContentModeCenter;
+    [btn setImage:[UIImage imageNamed:@"HouseInfo/Info/info.png"] forState:UIControlStateNormal];
+    
+    UITapGestureRecognizer *tapper = [[UITapGestureRecognizer alloc]
+                                      initWithTarget:self action:@selector(infoTapped:)];
+    [btn addGestureRecognizer:tapper];
+    
+    [container addSubview:btn];
+}
+
+-(void) drawVLine:(UIView *)container {
+    CGSize sz = container.bounds.size;
+    sz.width = 2.0f;
+    CGRect frm = CGRectInset(CGRectMake(sz.height, 0, sz.width, sz.height), 0, 6.0f);
+    UIView *vline = [[UIView alloc] initWithFrame:frm];
+    vline.frame = frm;
+    vline.layer.borderColor = [UIColor colorWithWhite:0.7f alpha:1.0f].CGColor;
+    vline.layer.borderWidth = 1.0f;
+    [container addSubview:vline];
+}
+
+-(void) loadDescrView:(UIView *)container {
+    CGSize sz = container.bounds.size;
+    sz.width = sz.width - sz.height - 2.0f; // ( - btn.width, - vline.width )
+    CGRect frm = CGRectMake(sz.height, 0, sz.width, sz.height);
+    UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
+    btn.frame = frm;
+    //btn.showsTouchWhenHighlighted = YES;
+    btn.contentMode = UIViewContentModeCenter;
+    //[btn setImage:[UIImage imageNamed:@"HouseInfo/Info/info.png"] forState:UIControlStateNormal];
+    btn.titleLabel.font = [UIFont fontWithName:@"TrebuchetMS-Bold" size:18];
+    [btn setTitle:@"House Description" forState:UIControlStateNormal];
+    [btn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    
+    btn.reversesTitleShadowWhenHighlighted = YES;
+   // btn setBackgroundImage:<#(UIImage *)#> forState:<#(UIControlState)#>
+    
+    btn.layer.shadowColor = [UIColor whiteColor].CGColor;
+    btn.layer.shadowOffset = CGSizeMake(0.0, 0.0);
+    btn.layer.shadowRadius = 1.6f;
+    btn.layer.shadowOpacity = 0.95;
+
+    
+    UITapGestureRecognizer *tapper = [[UITapGestureRecognizer alloc]
+                                      initWithTarget:self action:@selector(descrTapped:)];
+    [btn addGestureRecognizer:tapper];
+    
+    [container addSubview:btn];
+}
+
+-(void) infoTapped:(id)sender {
+    DPHtmlContentViewController *info = [[DPHtmlContentViewController alloc]
+                                             initWithHTML:self.houseOverview.info];
+    [self.navigationController pushViewController:info animated:YES];
+}
+-(void) descrTapped:(id)sender {
+    DPHtmlContentViewController *descr = [[DPHtmlContentViewController alloc]
+                                         initWithHTML:self.houseOverview.description];
+    [self.navigationController pushViewController:descr animated:YES];
+}
 
 - (void) loadCategoryView {
     if (self.subCtgView.subviews.count == 0)

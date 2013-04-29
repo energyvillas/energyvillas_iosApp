@@ -126,6 +126,7 @@
 						<double key="IBUIContentEdgeInsets.bottom">0.0</double>
 						<double key="IBUIContentEdgeInsets.left">18</double>
 						<double key="IBUIContentEdgeInsets.right">0.0</double>
+						<string key="IBUITitleShadowOffset">{5, 4}</string>
 						<object class="NSAttributedString" key="IBUINormalAttributedTitle">
 							<string key="NSString">Button</string>
 							<dictionary key="NSAttributes">
@@ -139,7 +140,6 @@
 									<int key="NSfFlags">16</int>
 								</object>
 								<object class="NSMutableParagraphStyle" key="NSParagraphStyle">
-									<int key="NSAlignment">4</int>
 									<nil key="NSTabStops"/>
 								</object>
 							</dictionary>
@@ -289,7 +289,7 @@
 						<object class="NSPSMatrix" key="NSFrameMatrix"/>
 						<string key="NSFrame">{{82, 284}, {204, 36}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
-						<reference key="NSNextKeyView" ref="669845991"/>
+						<reference key="NSNextKeyView" ref="609463480"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="IBUIOpaque">NO</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
@@ -302,6 +302,7 @@
 						<int key="NSvFlags">292</int>
 						<string key="NSFrame">{{27, 343}, {42, 21}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
+						<reference key="NSNextKeyView" ref="669845991"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<reference key="IBUIBackgroundColor" ref="420836705"/>
 						<bool key="IBUIOpaque">NO</bool>

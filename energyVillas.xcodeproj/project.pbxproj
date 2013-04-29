@@ -130,6 +130,7 @@
 		5ED20283171EA757006AC1FC /* FXImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5ED20280171EA757006AC1FC /* FXImageView.m */; };
 		5ED20284171EA757006AC1FC /* UIImage+FX.m in Sources */ = {isa = PBXBuildFile; fileRef = 5ED20282171EA757006AC1FC /* UIImage+FX.m */; };
 		5ED20286171F096E006AC1FC /* libz.1.2.5.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 5ED20285171F096E006AC1FC /* libz.1.2.5.dylib */; };
+		5EDC4117172E629D002A3788 /* HouseInfo in Resources */ = {isa = PBXBuildFile; fileRef = 5EDC4116172E629D002A3788 /* HouseInfo */; };
 		5EDF095B170C9CBE00774682 /* Icon-72.png in Resources */ = {isa = PBXBuildFile; fileRef = 5EDF0957170C9CBE00774682 /* Icon-72.png */; };
 		5EDF095C170C9CBE00774682 /* Icon-72@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5EDF0958170C9CBE00774682 /* Icon-72@2x.png */; };
 		5EDF095D170C9CBE00774682 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 5EDF0959170C9CBE00774682 /* Icon.png */; };
@@ -356,6 +357,7 @@
 		5ED20281171EA757006AC1FC /* UIImage+FX.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+FX.h"; sourceTree = "<group>"; };
 		5ED20282171EA757006AC1FC /* UIImage+FX.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+FX.m"; sourceTree = "<group>"; };
 		5ED20285171F096E006AC1FC /* libz.1.2.5.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.1.2.5.dylib; path = usr/lib/libz.1.2.5.dylib; sourceTree = SDKROOT; };
+		5EDC4116172E629D002A3788 /* HouseInfo */ = {isa = PBXFileReference; lastKnownFileType = folder; path = HouseInfo; sourceTree = "<group>"; };
 		5EDF0957170C9CBE00774682 /* Icon-72.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-72.png"; sourceTree = "<group>"; };
 		5EDF0958170C9CBE00774682 /* Icon-72@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-72@2x.png"; sourceTree = "<group>"; };
 		5EDF0959170C9CBE00774682 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
@@ -679,6 +681,7 @@
 				5E8AB0CD17170B52004AFE76 /* FreeImages */,
 				5EDF0956170C9CBE00774682 /* Icons */,
 				5E4E8514171059AA005DAD06 /* Navbar */,
+				5EDC4116172E629D002A3788 /* HouseInfo */,
 				5E5F949E17213BF5006C9A88 /* Social */,
 				5EC573AD1727AE48000B7004 /* MainMenu */,
 				5EC573931724862A000B7004 /* NextModel */,
@@ -967,6 +970,7 @@
 				5EC573AB17273624000B7004 /* balloon_02_roll@2x.png in Resources */,
 				5EC573AC17273624000B7004 /* balloon_02_roll~ipad.png in Resources */,
 				5EC573AE1727AE49000B7004 /* MainMenu in Resources */,
+				5EDC4117172E629D002A3788 /* HouseInfo in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

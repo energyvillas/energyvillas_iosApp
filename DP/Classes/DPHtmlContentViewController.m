@@ -85,6 +85,8 @@
                                self.view.frame.size.height);
     
     UIWebView *webView = [[UIWebView alloc] initWithFrame:aframe];
+    webView.backgroundColor = [UIColor clearColor];
+    webView.opaque = NO;
     webView.contentMode = UIViewContentModeScaleAspectFit;
     webView.userInteractionEnabled = YES;
     
