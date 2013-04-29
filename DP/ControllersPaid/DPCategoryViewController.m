@@ -208,23 +208,6 @@
     if (category == 0)
         return;
 
-//    if (self.ctgViewController)
-//    {
-//        [self.ctgViewController.view removeFromSuperview];
-//        [self.ctgViewController removeFromParentViewController];
-//        self.ctgViewController = nil;
-//    }
-//
-//    CGRect frm = self.actualCtgView.bounds;
-//    self.ctgViewController = [[DPAnimatedScrollViewController alloc] initWithCategory:category
-//                                                                               isLeaf:NO
-//                                                                                frame:frm];
-//    
-//    [self addChildViewController:self.ctgViewController];
-//    [self.actualCtgView addSubview:self.ctgViewController.view];
-//    self.ctgViewController.view.frame = frm;
-//    [self.ctgViewController changeRows:1 columns:1];
-
     if (reload) {
         if (self.ctgViewController)
         {

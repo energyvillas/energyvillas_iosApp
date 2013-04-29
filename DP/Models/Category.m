@@ -22,22 +22,19 @@
     [super encodeWithCoder:encoder];
     
 	[encoder encodeObject:self.lang forKey:encCategoryLang];
-//	[encoder encodeObject:self.title forKey:encCategoryTitle];
-//	[encoder encodeObject:self.imageUrl forKey:encCategoryImageUrl];
 	[encoder encodeObject:self.parent forKey:encCategoryParent];
     [encoder encodeObject:self.imageRollUrl forKey:encCategoryImageRollUrl];
+	[encoder encodeObject:[NSNumber numberWithInt: self.hikId] forKey:encCategoryHouseInfoKind];
 }
 
 -(id)initWithCoder:(NSCoder *)aDecoder{
     self = [super initWithCoder:aDecoder];
     
 	if (self) {
-        
 		self.lang = [aDecoder decodeObjectForKey:encCategoryLang];
-//		self.title = [aDecoder decodeObjectForKey:encCategoryTitle];
-//		self.imageUrl = [aDecoder decodeObjectForKey:encCategoryImageUrl];
 		self.parent = [aDecoder decodeObjectForKey:encCategoryParent];
         self.imageRollUrl = [aDecoder decodeObjectForKey:encCategoryImageRollUrl];
+        self.hikId = [[aDecoder decodeObjectForKey:encCategoryHouseInfoKind] intValue];
 	}
     
 	return self;
@@ -59,8 +56,25 @@
 //		self.imageUrl = NullIfEmpty(aImageUrl);
 		self.parent = NullIfEmpty(aParent);
         self.imageRollUrl = NullIfEmpty(aImageRollUrl);
+        self.hikId = HIKID_UNDEFINED;
 	}
     
 	return self;
 }
+
+-(id)initWithValues:(NSString *)aId
+               lang:(NSString *)aLang
+              title:(NSString *)aTitle
+           imageUrl:(NSString *)aImageUrl
+       imageRollUrl:(NSString *)aImageRollUrl
+             parent:(NSString *)aParent
+                hik:(int)ahikid {
+    self = [self initWithValues:aId lang:aLang title:aTitle imageUrl:aImageUrl imageRollUrl:aImageRollUrl parent:aParent];
+    if (self) {
+        self.hikId = ahikid;
+    }
+    
+    return self;
+}
+
 @end

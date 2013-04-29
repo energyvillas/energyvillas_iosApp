@@ -29,16 +29,16 @@
 
 @property (strong, nonatomic) Category *category;
 
-@property (strong, nonatomic) DPImageContentViewController *imageContentViewController;
+//@property (strong, nonatomic) DPImageContentViewController *imageContentViewController;
 //@property (strong, nonatomic) DPHtmlContentViewController *htmlContentViewController;
 @property (strong, nonatomic) DPAnimatedScrollViewController *subCtgsViewController;
 
 
 @property (strong, nonatomic) HouseOverview *houseOverview;
-@property (strong, nonatomic) NSArray *categories;
+//@property (strong, nonatomic) NSArray *hikCategories;
 
 @property (strong, nonatomic) HouseOverviewLoader *hovLoader;
-@property (strong, nonatomic) DPCategoryLoader *ctgLoader;
+//@property (strong, nonatomic) DPCategoryLoader *ctgLoader;
 
 @end
 
@@ -86,19 +86,22 @@
 -(void) doLocalize {
     [super doLocalize];
     [self loadData];
+    
+    if (self.subCtgView.subviews.count > 0)
+        [self loadCategoryView:YES];
 }
 - (void) loadData {
     [self clearDataLoaders];
     
-    self.ctgLoader = [[DPCategoryLoader alloc] initWithView:self.subCtgView
-                                                useInternet:YES
-                                                 useCaching:YES
-                                                   category:self.category.Id
-                                                       lang:CURRENT_LANG
-                                              useDeviceType:NO
-                                                  localData:nil];
-    self.ctgLoader.delegate = self;
-    [self.ctgLoader loadData];
+//    self.ctgLoader = [[DPCategoryLoader alloc] initWithView:self.subCtgView
+//                                                useInternet:YES
+//                                                 useCaching:YES
+//                                                   category:self.category.Id
+//                                                       lang:CURRENT_LANG
+//                                              useDeviceType:NO
+//                                                  localData:nil];
+//    self.ctgLoader.delegate = self;
+//    [self.ctgLoader loadData];
     
     self.hovLoader = [[HouseOverviewLoader alloc] initWithView:self.view
                                                           lang:CURRENT_LANG
@@ -108,9 +111,19 @@
 }
 
 #pragma mark - dataloader delegate
-
-- (void) ctgLoadFinished:(DPCategoryLoader *)loader {
-}
+//-(void) hikCtgsLoaded {
+//    
+//}
+//- (void) ctgLoadFinished:(DPCategoryLoader *)loader {
+//    if (loader.datalist.count == 0)
+//        showAlertMessage(nil,
+//                         DPLocalizedString(kERR_TITLE_INFO),
+//                         DPLocalizedString(kERR_MSG_NO_DATA_FOUND));
+//    else {
+//        self.hikCategories = loader.datalist;
+//        [self hikCtgsLoaded];
+//    }
+//}
 
 -(void) hovLoaded {
     [self.titleView loadHTMLString:self.houseOverview.title baseURL:nil];
@@ -127,9 +140,10 @@
 }
 
 - (void) loadFinished:(DPDataLoader *)loader {
-    if (loader == self.ctgLoader) 
-        [self ctgLoadFinished:(DPCategoryLoader *)loader];
-    else if (loader == self.hovLoader)
+//    if (loader == self.ctgLoader) 
+//        [self ctgLoadFinished:(DPCategoryLoader *)loader];
+//    else
+        if (loader == self.hovLoader)
         [self hovLoadFinished:(HouseOverviewLoader *)loader];
 //====
 //    else  { // if (loader == self.categoriesLoader)
@@ -279,7 +293,7 @@
     }
     
 //    [self loadAdsView];
-    [self loadCategoryView];
+    [self loadCategoryView:NO];
     [self loadInfoDescView];
 }
 
@@ -373,17 +387,35 @@
     [self.navigationController pushViewController:descr animated:YES];
 }
 
-- (void) loadCategoryView {
+- (void) loadCategoryView:(BOOL)reload {
+    if (self.category == nil)
+        return;
+    
+    if (reload) {
+        if (self.subCtgsViewController)
+        {
+            [self.subCtgsViewController.view removeFromSuperview];
+            [self.subCtgsViewController removeFromParentViewController];
+            self.subCtgsViewController = nil;
+        }
+    }
+    
     if (self.subCtgView.subviews.count == 0)
     {
-        self.subCtgsViewController = [[DPAnimatedScrollViewController alloc] initWithCategory:self.category.Id isLeaf:YES frame:self.subCtgView.bounds];
+        self.subCtgsViewController = [[DPAnimatedScrollViewController alloc] initWithCategory:self.category.Id
+                                                                                       isLeaf:YES
+                                                                                        frame:self.subCtgView.bounds];
         
+        //[self.ctgViewController changeFrame:self.actualCtgView.bounds];
         [self addChildViewController:self.subCtgsViewController];
         [self.subCtgView addSubview:self.subCtgsViewController.view];
     }
-    else
+    else {
+        [self.subCtgsViewController changeFrame:self.subCtgView.bounds];
         [self.subCtgsViewController changeRows:1 columns:1];
+    }
 }
+
 
 -(void) clearDataLoaders {
     if (self.hovLoader) {
@@ -392,10 +424,10 @@
     self.hovLoader = nil;
     
     
-    if (self.ctgLoader) {
-        self.ctgLoader.delegate = nil;
-    }
-    self.ctgLoader = nil;
+//    if (self.ctgLoader) {
+//        self.ctgLoader.delegate = nil;
+//    }
+//    self.ctgLoader = nil;
 }
 
 -(void) dealloc {

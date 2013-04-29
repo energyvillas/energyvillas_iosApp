@@ -13,7 +13,12 @@
 
 @property (nonatomic, weak) id <DPScrollableViewDelegate> scrollableViewDelegate;
 
-- (id)initWithFrame:(CGRect)frame categories:(NSArray *)categories;
+- (id)initWithFrame:(CGRect)frame
+         categories:(NSArray *)categories
+           cardSize:(CGSize)aCardSize
+      cardInsetSize:(CGSize)aInsetSize
+       moveDuration:(NSTimeInterval)movedur
+       zoomDuration:(NSTimeInterval)zoomdur;
 
 - (void) frameChanged;
 @end

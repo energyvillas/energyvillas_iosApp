@@ -18,6 +18,36 @@
 #import "DPAppHelper.h"
 #import "DPConstants.h"
 
+// 1st level
+#define DURATION_MOVE_1st_Level ((NSTimeInterval)10.0)
+#define DURATION_ZOOM_1st_Level ((NSTimeInterval)0.35)
+
+#define IPHONE_CARD_RESIZE_WIDTH_1st_Level ((int)15)
+#define IPHONE_CARD_RESIZE_HEIGHT_1st_Level ((int)15)
+#define IPAD_CARD_RESIZE_WIDTH_1st_Level ((int)30)
+#define IPAD_CARD_RESIZE_HEIGHT_1st_Level ((int)30)
+
+#define IPHONE_CARD_WIDTH_1st_Level ((int)95)
+#define IPHONE_CARD_HEIGHT_1st_Level ((int)95)
+#define IPAD_CARD_WIDTH_1st_Level ((int)180)
+#define IPAD_CARD_HEIGHT_1st_Level ((int)180)
+
+// 2nd level
+#define DURATION_MOVE_2nd_Level ((NSTimeInterval)10.0)
+#define DURATION_ZOOM_2nd_Level ((NSTimeInterval)0.35)
+
+#define IPHONE_CARD_RESIZE_WIDTH_2nd_Level ((int)15)
+#define IPHONE_CARD_RESIZE_HEIGHT_2nd_Level ((int)15)
+#define IPAD_CARD_RESIZE_WIDTH_2nd_Level ((int)30)
+#define IPAD_CARD_RESIZE_HEIGHT_2nd_Level ((int)30)
+
+#define IPHONE_CARD_WIDTH_2nd_Level ((int)70)
+#define IPHONE_CARD_HEIGHT_2nd_Level ((int)70)
+#define IPAD_CARD_WIDTH_2nd_Level ((int)150)
+#define IPAD_CARD_HEIGHT_2nd_Level ((int)150)
+
+
+
 @interface DPAnimatedScrollViewController ()
 
 //@property (strong, nonatomic) DPSubCategoryViewController *subctgViewController;
@@ -72,27 +102,6 @@
     }
 }
 
-//- (NSString *) calcImageName:(NSString *)baseName {
-//    @try {
-//        NSArray *parts = [baseName componentsSeparatedByString:@"."];
-//        if (parts && parts.count == 2) {
-//            NSString *orientation = IS_PORTRAIT ? @"h" : @"h";  //PENDING
-//            // pending also fix the format string below.... NSString *lang = [DPAppHelper sharedInstance].currentLang;
-//            NSString *result = [NSString stringWithFormat:/*PENDING*/@"FreeDetails/%@_%@.%@", parts[0], orientation, parts[1]];
-//            return result;
-//        }
-//        else
-//            return baseName;
-//    }
-//    @catch (NSException* exception) {
-//        NSLog(@"Uncaught exception: %@", exception.description);
-//        NSLog(@"Stack trace: %@", [exception callStackSymbols]);
-//        return baseName;
-//    }
-//}
-//
-
-
 #pragma mark -
 #pragma mark scrollabledatasource methods
 
@@ -102,9 +111,30 @@
     //CGRect frm = CGRectMake(0, 0, size.width, size.height);
     if (CGRectIsEmpty(frm)) return;
     
-    DPAnimatedCardsView *acv = [[DPAnimatedCardsView alloc]
-                                     initWithFrame:frm
-                                     categories:self.contentList[contentIndex]];
+    CGSize sz, szInset;
+    if (!isLeafCategory) {
+        sz = IS_IPAD
+                ? CGSizeMake(IPAD_CARD_WIDTH_1st_Level, IPAD_CARD_HEIGHT_1st_Level)
+                : CGSizeMake(IPHONE_CARD_WIDTH_1st_Level, IPHONE_CARD_HEIGHT_1st_Level);
+        
+        szInset = IS_IPAD
+                ? CGSizeMake(IPAD_CARD_RESIZE_WIDTH_1st_Level, IPAD_CARD_RESIZE_HEIGHT_1st_Level)
+                : CGSizeMake(IPHONE_CARD_RESIZE_WIDTH_1st_Level, IPHONE_CARD_RESIZE_HEIGHT_1st_Level);
+    } else {
+        sz = IS_IPAD
+                ? CGSizeMake(IPAD_CARD_WIDTH_2nd_Level, IPAD_CARD_HEIGHT_2nd_Level)
+                : CGSizeMake(IPHONE_CARD_WIDTH_2nd_Level, IPHONE_CARD_HEIGHT_2nd_Level);
+        szInset = IS_IPAD
+                ? CGSizeMake(IPAD_CARD_RESIZE_WIDTH_2nd_Level, IPAD_CARD_RESIZE_HEIGHT_2nd_Level)
+                : CGSizeMake(IPHONE_CARD_RESIZE_WIDTH_2nd_Level, IPHONE_CARD_RESIZE_HEIGHT_2nd_Level);
+    }
+
+    DPAnimatedCardsView *acv = [[DPAnimatedCardsView alloc] initWithFrame:frm
+                                                               categories:self.contentList[contentIndex]
+                                                                 cardSize:sz
+                                                            cardInsetSize:szInset
+                                                             moveDuration:isLeafCategory ?  DURATION_MOVE_2nd_Level : DURATION_MOVE_1st_Level
+                                                             zoomDuration:isLeafCategory ? DURATION_ZOOM_2nd_Level : DURATION_ZOOM_1st_Level];
     acv.scrollableViewDelegate = self;
     [container addSubview:acv];
 }
@@ -203,6 +233,27 @@
 #pragma mark -
 #pragma mark dataloaderdelegate methods
 
+- (NSString *) calcLeafImageName:(NSString *)baseName highlight:(BOOL)highlight{
+    @try {
+        NSArray *parts = [baseName componentsSeparatedByString:@"."];
+        if (parts && parts.count == 2) {
+            NSString *roll = highlight ? @"_roll" : @"";
+            NSString *result = [NSString stringWithFormat:@"HouseInfo/HIKIcons/level-2_icons%@_%@_%@.%@",
+                                roll, parts[0], CURRENT_LANG, parts[1]];
+            return result;
+        }
+        else
+            return baseName;
+    }
+    @catch (NSException* exception) {
+        NSLog(@"Uncaught exception: %@", exception.description);
+        NSLog(@"Stack trace: %@", [exception callStackSymbols]);
+        return baseName;
+    }
+}
+
+
+
 - (void)loadFinished:(DPDataLoader *)loader {
     if (loader.datalist.count == 0)
         showAlertMessage(nil,
@@ -211,9 +262,24 @@
     else {
         // keep only children of category
         NSMutableArray *children = [[NSMutableArray alloc] init];
+        
+        NSDictionary *hikdict = nil;
+        if (isLeafCategory) {
+            NSString *path = [[NSBundle mainBundle] bundlePath];
+            NSString *finalPath = [path stringByAppendingPathComponent:@"HIK_ImageNames.plist"];
+            hikdict = [NSDictionary dictionaryWithContentsOfFile:finalPath];
+        }
+        
         for (Category *ctg in loader.datalist)
-            if (ctg.parentId == category)
+            if (ctg.parentId == category) {
+                if (isLeafCategory && (ctg.hikId != HIKID_CUSTOM)) {
+                    NSString *imgbase = [hikdict valueForKey:[NSString stringWithFormat:@"%d", ctg.hikId]];
+                    ctg.imageUrl = [self calcLeafImageName:imgbase highlight:NO];
+                    ctg.imageRollUrl = [self calcLeafImageName:imgbase highlight:YES];
+                }
+                
                 [children addObject:ctg];
+            }
 
         // and split in batches of 5
         NSMutableArray *datalists = [[NSMutableArray alloc] init];

@@ -22,6 +22,7 @@
 @property (nonatomic, strong) NSString *imageUrl;
 @property (nonatomic, strong) NSString *imageRollUrl;
 @property (nonatomic, strong) NSString *parent;
+@property (nonatomic, strong) NSString *hikind;
 
 - (void)parseXMLFile:(NSString *)pathToFile;
 - (void)print;

@@ -11,7 +11,6 @@
 #import "DPConstants.h"
 #import <Quartzcore/Quartzcore.h>
 
-#define DURATION_MOVE ((NSTimeInterval)10.0)
 
 @interface DPAnimatedCardsView () {
     int maxX;
@@ -29,6 +28,7 @@
 //@property (nonatomic, setter = setCurrentCard:) int currentCard;
 @property (strong, nonatomic) DPCardView *currentCard;
 @property (nonatomic) CGSize cardSize;
+@property (nonatomic) CGSize cardInsetSize;
 
 @end 
 
@@ -40,16 +40,21 @@
 ////    NSLog(@"*** currentCard = %i", value);
 //}
 
-- (id)initWithFrame:(CGRect)frame categories:(NSArray *)aCategories {
+- (id)initWithFrame:(CGRect)frame
+         categories:(NSArray *)aCategories
+           cardSize:(CGSize)aCardSize
+      cardInsetSize:(CGSize)aInsetSize
+       moveDuration:(NSTimeInterval)movedur
+       zoomDuration:(NSTimeInterval)zoomdur
+{
     self = [self initWithFrame:frame];
     if (self) {
         self.currentCard = nil; // -1
-        self.cardSize = IS_IPAD
-                ? CGSizeMake(IPAD_CARD_WIDTH, IPAD_CARD_HEIGHT)
-                : CGSizeMake(IPHONE_CARD_WIDTH, IPHONE_CARD_HEIGHT);
+        self.cardSize = aCardSize;
+        self.cardInsetSize = aInsetSize;
         
-        moveDuration = DURATION_MOVE;
-        zoomDuration = DURATION_ZOOM;
+        moveDuration = movedur;
+        zoomDuration = zoomdur;
         self.categories = aCategories;
     }
     return self;
@@ -368,9 +373,12 @@
     for (int i = 0; i < self.categories.count; i++) {
         NSInteger rx = (arc4random() % maxX);// + ofsX;
         NSInteger ry = (arc4random() % maxY);// + ofsY;
-        DPCardView *card = [[DPCardView alloc]
-                               initWithFrame:CGRectMake(rx, ry, self.cardSize.width, self.cardSize.height)
-                                    dataElement:self.categories[i]];
+        DPCardView *card = [[DPCardView alloc] initWithFrame:CGRectMake(rx, ry,
+                                                                        self.cardSize.width,
+                                                                        self.cardSize.height)
+                                                 dataElement:self.categories[i]
+                                                    cardSize:self.cardSize
+                                               cardInsetSize:self.cardInsetSize];
         card.center = [self calcNewCenter:card];        
         [mcards addObject:card];
     }

@@ -15,11 +15,6 @@
 #define IPHONE_LABEL_MARGIN_VERT ((int)2)
 #define IPAD_LABEL_MARGIN_VERT ((int)2)
 
-#define IPHONE_CARD_RESIZE_WIDTH ((int)15)
-#define IPHONE_CARD_RESIZE_HEIGHT ((int)15)
-#define IPAD_CARD_RESIZE_WIDTH ((int)30)
-#define IPAD_CARD_RESIZE_HEIGHT ((int)30)
-
 #define IPHONE_LABEL_HEIGHT ((int)18)
 #define IPAD_LABEL_HEIGHT ((int)22)
 
@@ -35,7 +30,7 @@
 @end
 
 @implementation DPCardView {
-    CGSize cardSize;
+    CGSize cardSize, insetSize;
     CGFloat baseFontSize, zoomFontSize;
     CGRect baseLabelFrame, zoomLabelFrame;
     BOOL useLabel;
@@ -43,11 +38,13 @@
 
 @synthesize element;
 
-- (id)initWithFrame:(CGRect)frame dataElement:(Category *)elm {
+- (id)initWithFrame:(CGRect)frame
+        dataElement:(Category *)elm
+           cardSize:(CGSize)aCardSize
+      cardInsetSize:(CGSize)aInsetSize {
     useLabel = NO;
-    cardSize = IS_IPAD
-                    ? CGSizeMake(IPAD_CARD_WIDTH, IPAD_CARD_HEIGHT)
-                    : CGSizeMake(IPHONE_CARD_WIDTH, IPHONE_CARD_HEIGHT);
+    cardSize = aCardSize;
+    insetSize = aInsetSize;
     
     frame.size.width = cardSize.width;
     frame.size.height =cardSize.height;
@@ -92,31 +89,24 @@
             self.imageView.contentMode = UIViewContentModeCenter; //ScaleAspectFit;
             
             if (isLocalUrl(element.imageUrl))
-                self.imageView.image = [UIImage imageNamed:[self calcImageName:element.imageUrl highlight:NO]];
+                self.imageView.image = [UIImage imageNamed:element.imageUrl];
+//            self.imageView.image = [UIImage imageNamed:[self calcImageName:element.imageUrl highlight:NO]];
             else
                 [self loadImageAsync:element highlight:NO inView:self.imageView];
-            
-//            //TODO : this is here ONLY for testing
-//            self.imageView.image = [UIImage imageNamed:@"balloon.png"];
         }
-        if (!self.zoomImageView) {
-            int rw = IS_IPAD ? IPAD_CARD_RESIZE_WIDTH : IPHONE_CARD_RESIZE_WIDTH;
-            int rh = IS_IPAD ? IPAD_CARD_RESIZE_HEIGHT : IPHONE_CARD_RESIZE_HEIGHT;
-            int w = IS_IPAD ? IPAD_CARD_WIDTH : IPHONE_CARD_WIDTH;
-            int h = IS_IPAD ? IPAD_CARD_HEIGHT : IPHONE_CARD_HEIGHT;
-            
-            CGRect zoomFrame = CGRectMake(0, 0, w  + 2 * rw, h + 2 * rh);
+        if (!self.zoomImageView) {            
+            CGRect zoomFrame = CGRectMake(0, 0,
+                                          cardSize.width  + 2 * insetSize.width,
+                                          cardSize.height + 2 * insetSize.height);
 
             self.zoomImageView = [[UIImageView alloc] initWithFrame:zoomFrame];
             self.zoomImageView.contentMode = UIViewContentModeCenter; //ScaleAspectFit;
             
             if (isLocalUrl(element.imageRollUrl))
-                self.zoomImageView.image = [UIImage imageNamed:[self calcImageName:element.imageRollUrl highlight:YES]];
+                self.zoomImageView.image = [UIImage imageNamed:element.imageRollUrl];
+//            self.zoomImageView.image = [UIImage imageNamed:[self calcImageName:element.imageRollUrl highlight:YES]];
             else
                 [self loadImageAsync:element highlight:YES inView:self.zoomImageView];
-            
-//            //TODO : this is here ONLY for testing
-//            self.zoomImageView.image = [UIImage imageNamed:@"balloon_roll.png"];
         }
 
         if (useLabel && !self.label) {
@@ -210,12 +200,8 @@ CGRect CGRectChangeCenter(CGRect rect, CGPoint center) {
 //
 //    return;
     
-    int rw = IS_IPAD ? IPAD_CARD_RESIZE_WIDTH : IPHONE_CARD_RESIZE_WIDTH;
-    int rh = IS_IPAD ? IPAD_CARD_RESIZE_HEIGHT : IPHONE_CARD_RESIZE_HEIGHT;
-    int w = IS_IPAD ? IPAD_CARD_WIDTH : IPHONE_CARD_WIDTH;
-    int h = IS_IPAD ? IPAD_CARD_HEIGHT : IPHONE_CARD_HEIGHT;
-    
-    CGRect zoomFrame = CGRectInset(CGRectMake(0, 0, w, h), -rw, -rh);
+    CGRect zoomFrame = CGRectInset(CGRectMake(0, 0, cardSize.width, cardSize.height),
+                                   -insetSize.width, -insetSize.height);
     zoomFrame = CGRectChangeCenter(zoomFrame, newCenter);
 
     [UIView beginAnimations:nil context:nil];
@@ -265,12 +251,12 @@ CGRect CGRectChangeCenter(CGRect rect, CGPoint center) {
 //                                      cardSize.width,
 //                                      cardSize.height);
     
-    int rw = IS_IPAD ? IPAD_CARD_RESIZE_WIDTH : IPHONE_CARD_RESIZE_WIDTH;
-    int rh = IS_IPAD ? IPAD_CARD_RESIZE_HEIGHT : IPHONE_CARD_RESIZE_HEIGHT;
+//    int rw = IS_IPAD ? IPAD_CARD_RESIZE_WIDTH : IPHONE_CARD_RESIZE_WIDTH;
+//    int rh = IS_IPAD ? IPAD_CARD_RESIZE_HEIGHT : IPHONE_CARD_RESIZE_HEIGHT;
 //    int w = IS_IPAD ? IPAD_CARD_WIDTH : IPHONE_CARD_WIDTH;
 //    int h = IS_IPAD ? IPAD_CARD_HEIGHT : IPHONE_CARD_HEIGHT;
     
-    CGRect unZoomFrame = CGRectInset(self.frame, rw, rh);
+    CGRect unZoomFrame = CGRectInset(self.frame, insetSize.width, insetSize.height);
     
     [UIView beginAnimations:nil context:nil];
     [UIView setAnimationBeginsFromCurrentState:YES];
@@ -338,8 +324,8 @@ CGRect CGRectChangeCenter(CGRect rect, CGPoint center) {
     int lblheight = IS_IPAD ? IPAD_LABEL_HEIGHT : IPHONE_LABEL_HEIGHT;
     int offsetfix = IS_IPAD ? IPAD_LABEL_MARGIN_VERT : IPHONE_LABEL_MARGIN_VERT;
     CGRect frm = self.frame;
-    int fw = frm.size.width + (!zoomed ? 0 : 2 * (IS_IPAD ? IPAD_CARD_RESIZE_WIDTH : IPHONE_CARD_RESIZE_WIDTH));
-    int fh = frm.size.height + (!zoomed ? 0 : 2 * (IS_IPAD ? IPAD_CARD_RESIZE_HEIGHT : IPHONE_CARD_RESIZE_HEIGHT));
+    int fw = frm.size.width + (!zoomed ? 0 : 2 * insetSize.width);
+    int fh = frm.size.height + (!zoomed ? 0 : 2 * insetSize.height);
     
     frm = CGRectMake(0, fh - offsetfix - lblheight, fw, lblheight);
     
@@ -370,26 +356,26 @@ CGRect CGRectChangeCenter(CGRect rect, CGPoint center) {
 
 #pragma mark - loading of image data
 
-- (NSString *) calcImageName:(NSString *)baseName highlight:(BOOL)highlight{
-    NSLog(@"**** imageUrl (base) = %@", baseName);
-    
-    @try {
-        NSArray *parts = [baseName componentsSeparatedByString:@"."];
-        if (parts && parts.count == 2) {
-            NSString *roll = highlight ? @"_roll" : @"";
-            NSString *result = [NSString stringWithFormat:@"%@%@.%@",
-                                parts[0], roll, parts[1]];
-            return result;
-        }
-        else
-            return baseName;
-    }
-    @catch (NSException* exception) {
-        NSLog(@"Uncaught exception: %@", exception.description);
-        NSLog(@"Stack trace: %@", [exception callStackSymbols]);
-        return baseName;
-    }
-}
+//- (NSString *) calcImageName:(NSString *)baseName highlight:(BOOL)highlight{
+//    NSLog(@"**** imageUrl (base) = %@", baseName);
+//    
+//    @try {
+//        NSArray *parts = [baseName componentsSeparatedByString:@"."];
+//        if (parts && parts.count == 2) {
+//            NSString *roll = highlight ? @"_roll" : @"";
+//            NSString *result = [NSString stringWithFormat:@"%@%@.%@",
+//                                parts[0], roll, parts[1]];
+//            return result;
+//        }
+//        else
+//            return baseName;
+//    }
+//    @catch (NSException* exception) {
+//        NSLog(@"Uncaught exception: %@", exception.description);
+//        NSLog(@"Stack trace: %@", [exception callStackSymbols]);
+//        return baseName;
+//    }
+//}
 
 - (void) startIndicator {
     if(!self.busyIndicator) {

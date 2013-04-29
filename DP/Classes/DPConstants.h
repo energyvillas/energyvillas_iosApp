@@ -92,6 +92,45 @@ FOUNDATION_EXPORT NSString *const MySecondConstant;
 #define CTGID_WHO_WE_ARE ((int)60)
 #define CTGID_NEW_NEXT ((int)-1000)
 
+// HOUSE INFO KIND IDs
+#define HIKID_UNDEFINED ((int)-1) //	UNDEFINED
+#define HIKID_FLOOR_PLAN ((int)1)	 // ΚΑΤΟΨΕΙΣ
+//#define HIKID_FACES ((int)2)	 // ΟΨΕΙΣ
+#define HIKID_SECTIONS ((int)3)	 // ΤΟΜΕΣ
+#define HIKID_INTERIOR ((int)4)  // 	ΕΣΩΤΕΡΙΚΟΙ ΧΩΡΟΙ
+#define HIKID_EXTERIOR ((int)5)	 // ΕΞΩΤΕΡΙΚΟΙ ΧΩΡΟΙ
+#define HIKID_GROUND_FLOOR ((int)6)	 // ΙΣΟΓΕΙΟ
+#define HIKID_1ST_FLOOR ((int)7)	 // ΟΡΟΦΟΣ
+#define HIKID_ATTIC ((int)8)	 // ΠΑΤΑΡΙ
+#define HIKID_HEATING_COOLING ((int)9)	 // ΘΕΡΜΑΝΣΗ - ΔΡΟΣΙΣΜΟΣ
+#define HIKID_ENERGY_SAVING ((int)10)	// ΕΞΟΙΚΟΝΟΜΗΣΗ ΕΝΕΡΓΕΙΑΣ
+#define HIKID_GARDEN_ARCHITECTURE ((int)14)	// ΑΡΧΙΤΕΚΤΟΝΙΚΗ ΚΗΠΟΥ
+#define HIKID_LIGHTING ((int)15)	// ΜΕΛΕΤΗ ΦΩΤΙΣΜΟΥ
+#define HIKID_LUMINAIRES ((int)16)	// ΦΩΤΙΣΤΙΚΑ ΣΩΜΑΤΑ
+#define HIKID_COMING_SOON_COMMON ((int)17)	// COMING SOON - COMMON
+#define HIKID_COMING_SOON_DESIGNER ((int)18)	// COMING SOON - DESIGNER SERIES
+#define HIKID_COMING_SOON_ART ((int)19)	// COMING SOON - ART SERIES
+#define HIKID_CUSTOM ((int)20)	// CUSTOM
+
+//// HOUSE INFO KIND IMGs
+//UIKIT_EXTERN NSString *const HIK_IMG_UNDEFINED; //	UNDEFINED
+//UIKIT_EXTERN NSString *const HIK_IMG_FLOOR_PLAN;	 // ΚΑΤΟΨΕΙΣ
+//UIKIT_EXTERN NSString *const HIK_IMG_FACES;	 // ΟΨΕΙΣ
+//UIKIT_EXTERN NSString *const HIK_IMG_SECTIONS;	 // ΤΟΜΕΣ
+//UIKIT_EXTERN NSString *const HIK_IMG_INTERIOR;  // 	ΕΣΩΤΕΡΙΚΟΙ ΧΩΡΟΙ
+//UIKIT_EXTERN NSString *const HIK_IMG_EXTERIOR;	 // ΕΞΩΤΕΡΙΚΟΙ ΧΩΡΟΙ
+//UIKIT_EXTERN NSString *const HIK_IMG_GROUND_FLOOR;	 // ΙΣΟΓΕΙΟ
+//UIKIT_EXTERN NSString *const HIK_IMG_1ST_FLOOR;	 // ΟΡΟΦΟΣ
+//UIKIT_EXTERN NSString *const HIK_IMG_ATTIC;	 // ΠΑΤΑΡΙ
+//UIKIT_EXTERN NSString *const HIK_IMG_HEATING_COOLING;	 // ΘΕΡΜΑΝΣΗ - ΔΡΟΣΙΣΜΟΣ
+//UIKIT_EXTERN NSString *const HIK_IMG_ENERGY_SAVING;	// ΕΞΟΙΚΟΝΟΜΗΣΗ ΕΝΕΡΓΕΙΑΣ
+//UIKIT_EXTERN NSString *const HIK_IMG_GARDEN_ARCHITECTURE;	// ΑΡΧΙΤΕΚΤΟΝΙΚΗ ΚΗΠΟΥ
+//UIKIT_EXTERN NSString *const HIK_IMG_LIGHTING;	// ΜΕΛΕΤΗ ΦΩΤΙΣΜΟΥ
+//UIKIT_EXTERN NSString *const HIK_IMG_LUMINAIRES;	// ΦΩΤΙΣΤΙΚΑ ΣΩΜΑΤΑ
+//UIKIT_EXTERN NSString *const HIK_IMG_COMING_SOON_COMMON;	// COMING SOON - COMMON
+//UIKIT_EXTERN NSString *const HIK_IMG_COMING_SOON_DESIGNER;	// COMING SOON - DESIGNER SERIES
+//UIKIT_EXTERN NSString *const HIK_IMG_COMING_SOON_ART;	// COMING SOON - ART SERIES
+//UIKIT_EXTERN NSString *const HIK_IMG_CUSTOM;	// CUSTOM
 
 // DEVICE TYPE IDs
 #define DEVICE_TYPE_ID_IPHONE ((int)1)

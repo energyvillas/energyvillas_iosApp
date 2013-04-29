@@ -43,6 +43,7 @@ static NSString *kName_title = @"description";
 static NSString *kName_imageUrl = @"image";
 static NSString *kName_imageRollUrl = @"imageroll";
 static NSString *kName_parent = @"parentid";
+static NSString *kName_kind = @"kind";
 
 /*
  Sent by a parser object to its delegate when it encounters a start tag for a given element.
@@ -85,6 +86,10 @@ static NSString *kName_parent = @"parentid";
 		self.storingCharacters = YES;
 		
 	}else if ([elementName isEqualToString:kName_parent]) {
+		[self.currentString setString:@""];
+		self.storingCharacters = YES;
+        
+	}else if ([elementName isEqualToString:kName_kind]) {
 		[self.currentString setString:@""];
 		self.storingCharacters = YES;
         
@@ -133,6 +138,7 @@ static NSString *kName_parent = @"parentid";
 		category.imageUrl = self.imageUrl;
 		category.imageRollUrl = self.imageRollUrl;
 		category.parent = self.parent;
+        category.hikId = [self.hikind intValue];
 		[self.categories insertObject:category atIndex:index];
 		index=index+1;
 		category=nil;
@@ -154,6 +160,9 @@ static NSString *kName_parent = @"parentid";
         
     }else if ([elementName isEqualToString:kName_parent]) {
 		self.parent=[[NSString alloc] initWithString: aElementValue];
+        
+    }else if ([elementName isEqualToString:kName_kind]) {
+		self.hikind=[[NSString alloc] initWithString: aElementValue];
 	}
     
 	self.storingCharacters = NO;
