@@ -78,7 +78,7 @@
 }
 
 - (void) showBuyDialog:(int)ctgId {
-    AudioServicesPlaySystemSound(0x528);
+    //AudioServicesPlaySystemSound(1320);
     if (IS_IPAD)
         [self showBuyDialog_iPads:ctgId];
     else
@@ -149,7 +149,7 @@
 //            break;
 //            
         case TAG_NBI_SHARE: {
-            [self showSocialsDialog];            
+            [self showSocialsDialog];
             break;
         }
         default:

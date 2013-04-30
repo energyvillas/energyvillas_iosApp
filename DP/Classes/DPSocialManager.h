@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "MessageUI/MessageUI.h"
+#import <MessageUI/MessageUI.h>
 
 //@protocol DPSocialManagerDelegate <NSObject>
 //

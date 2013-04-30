@@ -7,7 +7,8 @@
 //
 
 #import "UIImage+Retina4.h"
-#import <objc/objc-runtime.h>
+//#import <objc/objc-runtime.h> // this works on simulator but NOT on device...
+#import <objc/runtime.h> // this works on both the simulator and the device
 
 //static Method origImageNamedMethod = nil;
 

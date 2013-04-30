@@ -149,15 +149,33 @@
 #pragma mark - eMail
 
 -(void) composeEmail {
+    if (![MFMailComposeViewController canSendMail]){
+        showAlertMessage(nil, kERR_TITLE_INFO, kERR_MSG_TRY_LATER); // pending::new message for missing mail setup
+        return;
+    }
+    
+    /*
+     {
+     MFMailComposeViewController *controller = [[MFMailComposeViewController alloc] init];
+     controller.mailComposeDelegate = self;
+     [controller setToRecipients:[NSArray arrayWithObject:eMail]];
+     [self presentViewController:controller animated:YES completion:nil];
+     }
+     else
+     */
+    
     MFMailComposeViewController *composer = [DPMailHelper composeEmail];
     composer.mailComposeDelegate = self;
     if (!IS_IPAD)
         [self.controller.navigationController presentModalViewController:composer
                                                                 animated:YES];
-    else
-        [self.controller.navigationController presentViewController:composer
-                                                           animated:YES
-                                                         completion:nil];
+    else {
+//        composer.modalPresentationStyle = UIModalPresentationPageSheet;
+//        self.controller.navigationController.modalPresentationStyle = UIModalPresentationPageSheet;
+        [self.controller presentModalViewController:composer
+                                                                          animated:YES];
+//                                                         completion:nil];
+    }
 }
 
 #pragma mark - MFMailComposeViewControllerDelegate
@@ -178,6 +196,10 @@
 #pragma mark - Twitter
 
 - (void) tweet:(NSString *)imgUrl url:(NSString *)urlstr {
+    if (![TWTweetComposeViewController canSendTweet]) {
+        showAlertMessage(nil, kERR_TITLE_INFO, kERR_MSG_TRY_LATER); // pending::new message for missing twitter setup
+        return;
+    }
     //    if (![TWTweetComposeViewController canSendTweet])
     //    {
     //        UIAlertView *alertView = [[UIAlertView alloc]

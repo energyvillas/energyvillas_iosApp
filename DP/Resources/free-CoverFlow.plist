@@ -8,170 +8,25 @@
 		<array>
 			<string></string>
 			<string>Κάτοψη</string>
-			<string>Κάτοψη χώρου 1</string>
-			<string>Κάτοψη χώρου 2</string>
-			<string>Κάτοψη χώρου 3</string>
-			<string>Κάτοψη χώρου 4</string>
-			<string>Κάτοψη χώρου 5</string>
-			<string>Κάτοψη χώρου 6</string>
-			<string>Κάτοψη χώρου 7</string>
-			<string>Κάτοψη χώρου 8</string>
-			<string>Κάτοψη χώρου 9</string>
-			<string>Κάτοψη χώρου 10</string>
-			<string>Κάτοψη χώρου 11</string>
-			<string>Κάτοψη χώρου 12</string>
-			<string>Εσωτερικό</string>
-			<string>Εσωτερικό 1</string>
-			<string>Εσωτερικό 2</string>
-			<string>Εσωτερικό 3</string>
-			<string>Εσωτερικό 4</string>
-			<string>Εσωτερικό 5</string>
-			<string>Εσωτερικό 6</string>
-			<string>Εσωτερικό 7</string>
-			<string>Εσωτερικό 8</string>
-			<string>Εσωτερικό 9</string>
-			<string>Εσωτερικό 10</string>
-			<string>Εσωτερικό 11</string>
-			<string>Εσωτερικό 12</string>
-			<string>Εσωτερικό 13</string>
-			<string>Εσωτερικό 14</string>
-			<string>Εσωτερικό 15</string>
-			<string>Εσωτερικό 16</string>
 		</array>
 		<key>en</key>
 		<array>
 			<string></string>
 			<string>Floor Plan</string>
-			<string>Floor Plan 1</string>
-			<string>Floor Plan 2</string>
-			<string>Floor Plan 3</string>
-			<string>Floor Plan 4</string>
-			<string>Floor Plan 5</string>
-			<string>Floor Plan 6</string>
-			<string>Floor Plan 7</string>
-			<string>Floor Plan 8</string>
-			<string>Floor Plan 9</string>
-			<string>Floor Plan 10</string>
-			<string>Floor Plan 11</string>
-			<string>Floor Plan 12</string>
-			<string>Interior</string>
-			<string>Interior 1</string>
-			<string>Interior 2</string>
-			<string>Interior 3</string>
-			<string>Interior 4</string>
-			<string>Interior 5</string>
-			<string>Interior 6</string>
-			<string>Interior 7</string>
-			<string>Interior 8</string>
-			<string>Interior 9</string>
-			<string>Interior 10</string>
-			<string>Interior 11</string>
-			<string>Interior 12</string>
-			<string>Interior 13</string>
-			<string>Interior 14</string>
-			<string>Interior 15</string>
-			<string>Interior 16</string>
 		</array>
 	</dict>
 	<key>Images</key>
 	<array>
 		<string></string>
 		<string>01_katopsi_01.png</string>
-		<string>01_katopsi_02.png</string>
-		<string>02_katopsi_xorou_01.png</string>
-		<string>02_katopsi_xorou_02.png</string>
-		<string>02_katopsi_xorou_03.png</string>
-		<string>02_katopsi_xorou_04.png</string>
-		<string>02_katopsi_xorou_05.png</string>
-		<string>02_katopsi_xorou_06.png</string>
-		<string>02_katopsi_xorou_07.png</string>
-		<string>02_katopsi_xorou_08.png</string>
-		<string>02_katopsi_xorou_09.png</string>
-		<string>02_katopsi_xorou_10.png</string>
-		<string>02_katopsi_xorou_11.png</string>
-		<string>02_katopsi_xorou_12.png</string>
-		<string>03_esoterikes_01.png</string>
-		<string>03_esoterikes_02.png</string>
-		<string>03_esoterikes_03.png</string>
-		<string>03_esoterikes_04.png</string>
-		<string>03_esoterikes_05.png</string>
-		<string>03_esoterikes_06.png</string>
-		<string>03_esoterikes_07.png</string>
-		<string>03_esoterikes_08.png</string>
-		<string>03_esoterikes_09.png</string>
-		<string>03_esoterikes_10.png</string>
-		<string>03_esoterikes_11.png</string>
-		<string>03_esoterikes_12.png</string>
-		<string>03_esoterikes_13.png</string>
-		<string>03_esoterikes_14.png</string>
-		<string>03_esoterikes_15.png</string>
-		<string>03_esoterikes_16.png</string>
 	</array>
 	<key>Thumbs</key>
 	<array>
 		<string>00_video_frame_01.png</string>
 		<string>01_katopsi_01.png</string>
-		<string>01_katopsi_02.png</string>
-		<string>02_katopsi_xorou_01.png</string>
-		<string>02_katopsi_xorou_02.png</string>
-		<string>02_katopsi_xorou_03.png</string>
-		<string>02_katopsi_xorou_04.png</string>
-		<string>02_katopsi_xorou_05.png</string>
-		<string>02_katopsi_xorou_06.png</string>
-		<string>02_katopsi_xorou_07.png</string>
-		<string>02_katopsi_xorou_08.png</string>
-		<string>02_katopsi_xorou_09.png</string>
-		<string>02_katopsi_xorou_10.png</string>
-		<string>02_katopsi_xorou_11.png</string>
-		<string>02_katopsi_xorou_12.png</string>
-		<string>03_esoterikes_01.png</string>
-		<string>03_esoterikes_02.png</string>
-		<string>03_esoterikes_03.png</string>
-		<string>03_esoterikes_04.png</string>
-		<string>03_esoterikes_05.png</string>
-		<string>03_esoterikes_06.png</string>
-		<string>03_esoterikes_07.png</string>
-		<string>03_esoterikes_08.png</string>
-		<string>03_esoterikes_09.png</string>
-		<string>03_esoterikes_10.png</string>
-		<string>03_esoterikes_11.png</string>
-		<string>03_esoterikes_12.png</string>
-		<string>03_esoterikes_13.png</string>
-		<string>03_esoterikes_14.png</string>
-		<string>03_esoterikes_15.png</string>
-		<string>03_esoterikes_16.png</string>
 	</array>
 	<key>Videos</key>
 	<array>
-		<string></string>
-		<string></string>
-		<string></string>
-		<string></string>
-		<string></string>
-		<string></string>
-		<string></string>
-		<string></string>
-		<string></string>
-		<string></string>
-		<string></string>
-		<string></string>
-		<string></string>
-		<string></string>
-		<string></string>
-		<string></string>
-		<string></string>
-		<string></string>
-		<string></string>
-		<string></string>
-		<string></string>
-		<string></string>
-		<string></string>
-		<string></string>
-		<string></string>
-		<string></string>
-		<string></string>
-		<string></string>
-		<string></string>
 		<string></string>
 		<string></string>
 	</array>

@@ -114,12 +114,6 @@
 		5EC5739C1725978E000B7004 /* DPNewNextViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EC5739B1725978D000B7004 /* DPNewNextViewController.m */; };
 		5EC5739E172597A5000B7004 /* DPNewNextView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5EC5739D172597A5000B7004 /* DPNewNextView.xib */; };
 		5EC573A017265B44000B7004 /* TabBar in Resources */ = {isa = PBXBuildFile; fileRef = 5EC5739F17265B43000B7004 /* TabBar */; };
-		5EC573A717273624000B7004 /* balloon_01@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5EC573A117273621000B7004 /* balloon_01@2x.png */; };
-		5EC573A817273624000B7004 /* balloon_01~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 5EC573A217273621000B7004 /* balloon_01~ipad.png */; };
-		5EC573A917273624000B7004 /* balloon_02@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5EC573A317273622000B7004 /* balloon_02@2x.png */; };
-		5EC573AA17273624000B7004 /* balloon_02~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 5EC573A417273622000B7004 /* balloon_02~ipad.png */; };
-		5EC573AB17273624000B7004 /* balloon_02_roll@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5EC573A517273623000B7004 /* balloon_02_roll@2x.png */; };
-		5EC573AC17273624000B7004 /* balloon_02_roll~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 5EC573A617273623000B7004 /* balloon_02_roll~ipad.png */; };
 		5EC573AE1727AE49000B7004 /* MainMenu in Resources */ = {isa = PBXBuildFile; fileRef = 5EC573AD1727AE48000B7004 /* MainMenu */; };
 		5EC573B1172ADEAD000B7004 /* HouseOverview.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EC573B0172ADEAB000B7004 /* HouseOverview.m */; };
 		5EC573B4172ADEF5000B7004 /* HouseOverviewParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EC573B3172ADEF3000B7004 /* HouseOverviewParser.m */; };
@@ -334,12 +328,6 @@
 		5EC5739B1725978D000B7004 /* DPNewNextViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPNewNextViewController.m; sourceTree = "<group>"; };
 		5EC5739D172597A5000B7004 /* DPNewNextView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DPNewNextView.xib; sourceTree = "<group>"; };
 		5EC5739F17265B43000B7004 /* TabBar */ = {isa = PBXFileReference; lastKnownFileType = folder; path = TabBar; sourceTree = "<group>"; };
-		5EC573A117273621000B7004 /* balloon_01@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "balloon_01@2x.png"; sourceTree = "<group>"; };
-		5EC573A217273621000B7004 /* balloon_01~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "balloon_01~ipad.png"; sourceTree = "<group>"; };
-		5EC573A317273622000B7004 /* balloon_02@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "balloon_02@2x.png"; sourceTree = "<group>"; };
-		5EC573A417273622000B7004 /* balloon_02~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "balloon_02~ipad.png"; sourceTree = "<group>"; };
-		5EC573A517273623000B7004 /* balloon_02_roll@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "balloon_02_roll@2x.png"; sourceTree = "<group>"; };
-		5EC573A617273623000B7004 /* balloon_02_roll~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "balloon_02_roll~ipad.png"; sourceTree = "<group>"; };
 		5EC573AD1727AE48000B7004 /* MainMenu */ = {isa = PBXFileReference; lastKnownFileType = folder; path = MainMenu; sourceTree = "<group>"; };
 		5EC573AF172ADEAA000B7004 /* HouseOverview.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HouseOverview.h; sourceTree = "<group>"; };
 		5EC573B0172ADEAB000B7004 /* HouseOverview.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HouseOverview.m; sourceTree = "<group>"; };
@@ -690,12 +678,6 @@
 				5EC5739F17265B43000B7004 /* TabBar */,
 				5E36051F1708438F00DB7B20 /* close.png */,
 				5E3605201708438F00DB7B20 /* close@2x.png */,
-				5EC573A117273621000B7004 /* balloon_01@2x.png */,
-				5EC573A217273621000B7004 /* balloon_01~ipad.png */,
-				5EC573A317273622000B7004 /* balloon_02@2x.png */,
-				5EC573A417273622000B7004 /* balloon_02~ipad.png */,
-				5EC573A517273623000B7004 /* balloon_02_roll@2x.png */,
-				5EC573A617273623000B7004 /* balloon_02_roll~ipad.png */,
 				5EFCCD1A170ADF0E00C1FE88 /* free-details.plist */,
 				5EFCCD34170B18BC00C1FE88 /* free-Buy.plist */,
 				5EFCCD36170B26D200C1FE88 /* free-CoverFlow.plist */,
@@ -966,12 +948,6 @@
 				5EC573941724862A000B7004 /* NextModel in Resources */,
 				5EC5739E172597A5000B7004 /* DPNewNextView.xib in Resources */,
 				5EC573A017265B44000B7004 /* TabBar in Resources */,
-				5EC573A717273624000B7004 /* balloon_01@2x.png in Resources */,
-				5EC573A817273624000B7004 /* balloon_01~ipad.png in Resources */,
-				5EC573A917273624000B7004 /* balloon_02@2x.png in Resources */,
-				5EC573AA17273624000B7004 /* balloon_02~ipad.png in Resources */,
-				5EC573AB17273624000B7004 /* balloon_02_roll@2x.png in Resources */,
-				5EC573AC17273624000B7004 /* balloon_02_roll~ipad.png in Resources */,
 				5EC573AE1727AE49000B7004 /* MainMenu in Resources */,
 				5EDC4119172E8265002A3788 /* HIK_ImageNames.plist in Resources */,
 				5EDC411B172EA04A002A3788 /* HouseInfo in Resources */,

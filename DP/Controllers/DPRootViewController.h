@@ -8,7 +8,7 @@
 
 #import "UINavContentViewController.h"
 //#import "AFOpenFlowView.h"
-#import "MessageUI/MessageUI.h"
+#import <MessageUI/MessageUI.h>
 
 @protocol DPBuyAppProtocol <NSObject>
 
