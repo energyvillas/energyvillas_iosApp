@@ -171,6 +171,7 @@
                      frame:(CGRect)frame {
     UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
     button.showsTouchWhenHighlighted = YES;
+    button.contentMode = UIViewContentModeScaleAspectFit;
     [button addTarget:self action:@selector(onTap:) forControlEvents:UIControlEventTouchUpInside];
     
     DPDataElement *element = self.contentList[contentIndex];
@@ -178,9 +179,10 @@
     NSString *imgname =[self resolveImageName:element];
     UIImage *img = [UIImage imageNamed:imgname];
     CGSize imgsize = img.size;
-    button.frame = CGRectMake((frame.size.width - imgsize.width) / 2.0,
-                              (frame.size.height - imgsize.height) / 2.0,
-                              imgsize.width, imgsize.height);
+    button.frame = frame;
+//    button.frame = CGRectMake((frame.size.width - imgsize.width) / 2.0,
+//                              (frame.size.height - imgsize.height) / 2.0,
+//                              imgsize.width, imgsize.height);
     [button setImage:img forState:UIControlStateNormal];
     
     NSString *imghighname =[self resolveHighlightImageName:element];

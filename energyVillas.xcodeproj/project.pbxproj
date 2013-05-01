@@ -69,8 +69,8 @@
 		5E71A3F916F99C9500E7AFF9 /* DPMainView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5E71A3F816F99C9500E7AFF9 /* DPMainView.xib */; };
 		5E71A3FC16F99DC400E7AFF9 /* DPRootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E71A3FB16F99DC400E7AFF9 /* DPRootViewController.m */; };
 		5E71A3FE16F99DD900E7AFF9 /* DPRootView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5E71A3FD16F99DD900E7AFF9 /* DPRootView.xib */; };
+		5E869E0D173010EA00516D2D /* FreeImages in Resources */ = {isa = PBXBuildFile; fileRef = 5E869E0C173010EA00516D2D /* FreeImages */; };
 		5E8AB0CC171706D1004AFE76 /* UIImage+Retina4.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E8AB0CB171706D1004AFE76 /* UIImage+Retina4.m */; };
-		5E8AB0CE17170B52004AFE76 /* FreeImages in Resources */ = {isa = PBXBuildFile; fileRef = 5E8AB0CD17170B52004AFE76 /* FreeImages */; };
 		5E9ABBDE16F9F3CA000EAB46 /* DPTestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E9ABBDD16F9F3CA000EAB46 /* DPTestViewController.m */; };
 		5E9ABBE016F9F3E2000EAB46 /* DPTestView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5E9ABBDF16F9F3E2000EAB46 /* DPTestView.xib */; };
 		5EC20D07171D3594006E03B7 /* BuyDialogImages in Resources */ = {isa = PBXBuildFile; fileRef = 5EC20D06171D3594006E03B7 /* BuyDialogImages */; };
@@ -248,9 +248,9 @@
 		5E71A3FA16F99DC400E7AFF9 /* DPRootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPRootViewController.h; sourceTree = "<group>"; };
 		5E71A3FB16F99DC400E7AFF9 /* DPRootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPRootViewController.m; sourceTree = "<group>"; };
 		5E71A3FD16F99DD900E7AFF9 /* DPRootView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DPRootView.xib; sourceTree = "<group>"; };
+		5E869E0C173010EA00516D2D /* FreeImages */ = {isa = PBXFileReference; lastKnownFileType = folder; path = FreeImages; sourceTree = "<group>"; };
 		5E8AB0CA171706D1004AFE76 /* UIImage+Retina4.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Retina4.h"; sourceTree = "<group>"; };
 		5E8AB0CB171706D1004AFE76 /* UIImage+Retina4.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Retina4.m"; sourceTree = "<group>"; };
-		5E8AB0CD17170B52004AFE76 /* FreeImages */ = {isa = PBXFileReference; lastKnownFileType = folder; path = FreeImages; sourceTree = "<group>"; };
 		5E9ABBDC16F9F3CA000EAB46 /* DPTestViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPTestViewController.h; sourceTree = "<group>"; };
 		5E9ABBDD16F9F3CA000EAB46 /* DPTestViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPTestViewController.m; sourceTree = "<group>"; };
 		5E9ABBDF16F9F3E2000EAB46 /* DPTestView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DPTestView.xib; sourceTree = "<group>"; };
@@ -663,12 +663,12 @@
 		5E71A3FF16F9B5F900E7AFF9 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				5E869E0C173010EA00516D2D /* FreeImages */,
 				5EC20D0A171D56D6006E03B7 /* Videos */,
 				5EC20D06171D3594006E03B7 /* BuyDialogImages */,
 				5EE16DFE171C47D10006E1CE /* Carousel */,
 				5E4E85121710356A005DAD06 /* Background */,
 				5E03E922171578FB00F0C6F3 /* BuyDialog */,
-				5E8AB0CD17170B52004AFE76 /* FreeImages */,
 				5EDF0956170C9CBE00774682 /* Icons */,
 				5EDC411A172EA04A002A3788 /* HouseInfo */,
 				5E4E8514171059AA005DAD06 /* Navbar */,
@@ -936,7 +936,6 @@
 				5E4E851F1711E542005DAD06 /* DPSubCategoryView.xib in Resources */,
 				5EC48CDB1714B7CF00A9566E /* testView.xib in Resources */,
 				5E03E923171578FB00F0C6F3 /* BuyDialog in Resources */,
-				5E8AB0CE17170B52004AFE76 /* FreeImages in Resources */,
 				5EE16DFF171C47D10006E1CE /* Carousel in Resources */,
 				5EC20D07171D3594006E03B7 /* BuyDialogImages in Resources */,
 				5EC20D0B171D56D6006E03B7 /* Videos in Resources */,
@@ -951,6 +950,7 @@
 				5EC573AE1727AE49000B7004 /* MainMenu in Resources */,
 				5EDC4119172E8265002A3788 /* HIK_ImageNames.plist in Resources */,
 				5EDC411B172EA04A002A3788 /* HouseInfo in Resources */,
+				5E869E0D173010EA00516D2D /* FreeImages in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
