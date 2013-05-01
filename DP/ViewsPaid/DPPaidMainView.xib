@@ -46,6 +46,7 @@
 						<string key="NSFrame">{{0, 411}, {320, 49}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
+						<reference key="NSNextKeyView"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 						<array class="NSMutableArray" key="IBUIItems">
@@ -82,7 +83,7 @@
 						</array>
 						<object class="NSColor" key="IBUISelectedImageTintColor">
 							<int key="NSColorSpace">1</int>
-							<bytes key="NSRGB">MCAxIDAAA</bytes>
+							<bytes key="NSRGB">MC4zOTIxNTY4NjI3IDAuNzUyOTQxMTc2NSAwLjA0MzEzNzI1NDkAA</bytes>
 						</object>
 					</object>
 				</array>
