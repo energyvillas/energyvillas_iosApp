@@ -7,27 +7,22 @@
 		<key>el</key>
 		<array>
 			<string></string>
-			<string>Κάτοψη</string>
 		</array>
 		<key>en</key>
 		<array>
 			<string></string>
-			<string>Floor Plan</string>
 		</array>
 	</dict>
 	<key>Images</key>
 	<array>
 		<string></string>
-		<string>01_katopsi_01.png</string>
 	</array>
 	<key>Thumbs</key>
 	<array>
 		<string>00_video_frame_01.png</string>
-		<string>01_katopsi_01.png</string>
 	</array>
 	<key>Videos</key>
 	<array>
-		<string></string>
 		<string></string>
 	</array>
 </dict>

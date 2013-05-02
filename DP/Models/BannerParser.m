@@ -127,13 +127,18 @@ static NSString *kName_publishDate = @"publishDate";
 	}else if ([elementName isEqualToString:kName_banners]) {
 		
 	}else if ([elementName isEqualToString:kName_banner]) {
-		Banner *banner  = [[Banner alloc] init];
-		banner.key=self.bannerId;
-		banner.title = self.title;
-		banner.body = self.body;
-		banner.imageUrl = self.image;
-		banner.url = self.url;
-		banner.publishDate = self.publishDate;
+		Banner *banner  = [[Banner alloc] initWithValues:self.bannerId
+                                                   title:self.title
+                                                imageUrl:self.image
+                                                    body:self.body
+                                                     url:self.url
+                                             publishDate:self.publishDate];
+//		banner.key=self.bannerId;
+//		banner.title = self.title;
+//		banner.body = self.body;
+//		banner.imageUrl = self.image;
+//		banner.url = self.url;
+//		banner.publishDate = self.publishDate;
 		[self.banners insertObject:banner atIndex:index];
 		index=index+1;
 		banner=nil;

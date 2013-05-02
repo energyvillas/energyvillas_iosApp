@@ -73,8 +73,6 @@
 		5E8AB0CC171706D1004AFE76 /* UIImage+Retina4.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E8AB0CB171706D1004AFE76 /* UIImage+Retina4.m */; };
 		5E9ABBDE16F9F3CA000EAB46 /* DPTestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E9ABBDD16F9F3CA000EAB46 /* DPTestViewController.m */; };
 		5E9ABBE016F9F3E2000EAB46 /* DPTestView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5E9ABBDF16F9F3E2000EAB46 /* DPTestView.xib */; };
-		5EC20D07171D3594006E03B7 /* BuyDialogImages in Resources */ = {isa = PBXBuildFile; fileRef = 5EC20D06171D3594006E03B7 /* BuyDialogImages */; };
-		5EC20D0B171D56D6006E03B7 /* Videos in Resources */ = {isa = PBXBuildFile; fileRef = 5EC20D0A171D56D6006E03B7 /* Videos */; };
 		5EC20D0D171D5D81006E03B7 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5EC20D0C171D5D81006E03B7 /* AudioToolbox.framework */; };
 		5EC20D10171DAD0F006E03B7 /* DPCarouselViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EC20D0F171DAD0F006E03B7 /* DPCarouselViewController.m */; };
 		5EC2557D16FC64400045AB99 /* DPImageInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EC2557C16FC64400045AB99 /* DPImageInfo.m */; };
@@ -125,7 +123,6 @@
 		5ED20284171EA757006AC1FC /* UIImage+FX.m in Sources */ = {isa = PBXBuildFile; fileRef = 5ED20282171EA757006AC1FC /* UIImage+FX.m */; };
 		5ED20286171F096E006AC1FC /* libz.1.2.5.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 5ED20285171F096E006AC1FC /* libz.1.2.5.dylib */; };
 		5EDC4119172E8265002A3788 /* HIK_ImageNames.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5EDC4118172E8265002A3788 /* HIK_ImageNames.plist */; };
-		5EDC411B172EA04A002A3788 /* HouseInfo in Resources */ = {isa = PBXBuildFile; fileRef = 5EDC411A172EA04A002A3788 /* HouseInfo */; };
 		5EDF095B170C9CBE00774682 /* Icon-72.png in Resources */ = {isa = PBXBuildFile; fileRef = 5EDF0957170C9CBE00774682 /* Icon-72.png */; };
 		5EDF095C170C9CBE00774682 /* Icon-72@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5EDF0958170C9CBE00774682 /* Icon-72@2x.png */; };
 		5EDF095D170C9CBE00774682 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 5EDF0959170C9CBE00774682 /* Icon.png */; };
@@ -254,8 +251,6 @@
 		5E9ABBDC16F9F3CA000EAB46 /* DPTestViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPTestViewController.h; sourceTree = "<group>"; };
 		5E9ABBDD16F9F3CA000EAB46 /* DPTestViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPTestViewController.m; sourceTree = "<group>"; };
 		5E9ABBDF16F9F3E2000EAB46 /* DPTestView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DPTestView.xib; sourceTree = "<group>"; };
-		5EC20D06171D3594006E03B7 /* BuyDialogImages */ = {isa = PBXFileReference; lastKnownFileType = folder; path = BuyDialogImages; sourceTree = "<group>"; };
-		5EC20D0A171D56D6006E03B7 /* Videos */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Videos; sourceTree = "<group>"; };
 		5EC20D0C171D5D81006E03B7 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		5EC20D0E171DAD0E006E03B7 /* DPCarouselViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPCarouselViewController.h; sourceTree = "<group>"; };
 		5EC20D0F171DAD0F006E03B7 /* DPCarouselViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPCarouselViewController.m; sourceTree = "<group>"; };
@@ -347,7 +342,6 @@
 		5ED20282171EA757006AC1FC /* UIImage+FX.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+FX.m"; sourceTree = "<group>"; };
 		5ED20285171F096E006AC1FC /* libz.1.2.5.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.1.2.5.dylib; path = usr/lib/libz.1.2.5.dylib; sourceTree = SDKROOT; };
 		5EDC4118172E8265002A3788 /* HIK_ImageNames.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = HIK_ImageNames.plist; sourceTree = "<group>"; };
-		5EDC411A172EA04A002A3788 /* HouseInfo */ = {isa = PBXFileReference; lastKnownFileType = folder; path = HouseInfo; sourceTree = "<group>"; };
 		5EDF0957170C9CBE00774682 /* Icon-72.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-72.png"; sourceTree = "<group>"; };
 		5EDF0958170C9CBE00774682 /* Icon-72@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-72@2x.png"; sourceTree = "<group>"; };
 		5EDF0959170C9CBE00774682 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
@@ -664,13 +658,10 @@
 			isa = PBXGroup;
 			children = (
 				5E869E0C173010EA00516D2D /* FreeImages */,
-				5EC20D0A171D56D6006E03B7 /* Videos */,
-				5EC20D06171D3594006E03B7 /* BuyDialogImages */,
 				5EE16DFE171C47D10006E1CE /* Carousel */,
 				5E4E85121710356A005DAD06 /* Background */,
 				5E03E922171578FB00F0C6F3 /* BuyDialog */,
 				5EDF0956170C9CBE00774682 /* Icons */,
-				5EDC411A172EA04A002A3788 /* HouseInfo */,
 				5E4E8514171059AA005DAD06 /* Navbar */,
 				5E5F949E17213BF5006C9A88 /* Social */,
 				5EC573AD1727AE48000B7004 /* MainMenu */,
@@ -937,8 +928,6 @@
 				5EC48CDB1714B7CF00A9566E /* testView.xib in Resources */,
 				5E03E923171578FB00F0C6F3 /* BuyDialog in Resources */,
 				5EE16DFF171C47D10006E1CE /* Carousel in Resources */,
-				5EC20D07171D3594006E03B7 /* BuyDialogImages in Resources */,
-				5EC20D0B171D56D6006E03B7 /* Videos in Resources */,
 				5E31F028171FFD54008B15F0 /* FacebookSDKResources.bundle in Resources */,
 				5E31F03717201073008B15F0 /* DPFBLoginView.xib in Resources */,
 				5E31F03C172021DB008B15F0 /* DPFacebookView.xib in Resources */,
@@ -949,7 +938,6 @@
 				5EC573A017265B44000B7004 /* TabBar in Resources */,
 				5EC573AE1727AE49000B7004 /* MainMenu in Resources */,
 				5EDC4119172E8265002A3788 /* HIK_ImageNames.plist in Resources */,
-				5EDC411B172EA04A002A3788 /* HouseInfo in Resources */,
 				5E869E0D173010EA00516D2D /* FreeImages in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1126,6 +1114,7 @@
 		5E71A3D216F9973500E7AFF9 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Distribution: DESIGN PROJECTS LTD (7U2CGA4753)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/../../FacebookSDK\"",
@@ -1139,6 +1128,7 @@
 					"-ObjC",
 				);
 				PRODUCT_NAME = energyVillas;
+				PROVISIONING_PROFILE = "E6FA228D-6C91-471A-9946-20F31E153E9E";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -1146,6 +1136,7 @@
 		5E71A3D316F9973500E7AFF9 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Distribution: DESIGN PROJECTS LTD (7U2CGA4753)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/../../FacebookSDK\"",
@@ -1159,6 +1150,7 @@
 					"-ObjC",
 				);
 				PRODUCT_NAME = energyVillas;
+				PROVISIONING_PROFILE = "E6FA228D-6C91-471A-9946-20F31E153E9E";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

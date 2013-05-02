@@ -367,7 +367,7 @@
     [[NSNotificationCenter defaultCenter] addObserver: self selector: @selector(reachabilityChanged:) name: kReachabilityChangedNotification object: nil];
     
     //Change the host name here to change the server your monitoring
-	self.hostReach = [Reachability reachabilityWithHostName: @"www.designprojectsapps.com"];
+	self.hostReach = [Reachability reachabilityWithHostName: USE_TEST_SITE ? BASE_HOST_NAME_TEST : BASE_HOST_NAME];
 	[self.hostReach startNotifier];
 	[self updateWithReachability: self.hostReach];
 	

@@ -430,7 +430,7 @@
 
 -(UIImageView *) createImageView:(UIImage *)image {
     CGRect frm;
-    CGSize szCarousel = self.icarousel.frame.size;
+    CGSize szCarousel = self.icarousel.frame.size; szCarousel.width = 0.8f * szCarousel.width;
     CGSize szImage = image.size;
     if (szCarousel.width > szImage.width && szCarousel.height > szImage.height)
         frm = CGRectMake(0, 0, szImage.width, szImage.height);
@@ -444,7 +444,7 @@
         } else { // image is wider or same aspect ratio to that of carousel
             // we should fix image width to be equal to carousel width * 0.8
             // and calc image height according to aspect and new width
-            frm = CGRectMake(0, 0, szCarousel.width * 0.8, szCarousel.width * 0.8 / ir);
+            frm = CGRectMake(0, 0, szCarousel.width, szCarousel.width / ir);
         }
     }
     

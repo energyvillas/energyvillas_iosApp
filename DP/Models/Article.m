@@ -42,12 +42,12 @@
 
         self.forFree = [[aDecoder decodeObjectForKey:encArticleForFree] boolValue];
         self.orderNo = [[aDecoder decodeObjectForKey:encArticleOrder] intValue];
-		self.imageThumbUrl = [aDecoder decodeObjectForKey:encArticleImageThumb];
+		self.imageThumbUrl = NullIfEmpty([aDecoder decodeObjectForKey:encArticleImageThumb]);
 
-		self.body = [aDecoder decodeObjectForKey:encArticleBody];
-		self.url = [aDecoder decodeObjectForKey:encArticleURL];
-		self.publishDate = [aDecoder decodeObjectForKey:encArticlePublishDate];
-		self.videoUrl = [aDecoder decodeObjectForKey:encArticleVideoFile];
+		self.body = NullIfEmpty([aDecoder decodeObjectForKey:encArticleBody]);
+		self.url = NullIfEmpty([aDecoder decodeObjectForKey:encArticleURL]);
+		self.publishDate = NullIfEmpty([aDecoder decodeObjectForKey:encArticlePublishDate]);
+		self.videoUrl = NullIfEmpty([aDecoder decodeObjectForKey:encArticleVideoFile]);
 		self.videolength = [aDecoder decodeObjectForKey:encArticleVideoLength];
 //		self.imageData = [aDecoder decodeObjectForKey:encArticleImageData];
 	}

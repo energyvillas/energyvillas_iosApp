@@ -108,15 +108,17 @@
 }
 
 - (void)viewDidUnload {
-    [self stopIndicator];
-    if (self.queue)
-        [self.queue cancelAllOperations];
-    [self setScrollView:nil];
-    [self setPageControl:nil];
+    [self cleanUp];
     [super viewDidUnload];
 }
 
 -(void) cleanUp {
+    [self killUserTimer];
+    [self killTimer];
+
+    [self setScrollView:nil];
+    [self setPageControl:nil];
+
     if (self.queue) {
         [self.queue cancelAllOperations];
         [self stopIndicator];

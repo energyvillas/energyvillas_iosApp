@@ -170,29 +170,44 @@ static NSString *kName_videolength = @"videolength";
 	}else if ([elementName isEqualToString:kName_articles]) {
 		
 	}else if ([elementName isEqualToString:kName_article]) {
-		Article *article  = [[Article alloc] init];
-		article.key=self.articleId;
-        article.lang=self.langcode;
-        article.category = [self.categoryId intValue];
-        article.forFree = [self.forFree boolValue];
-        article.orderNo = [self.orderNo intValue];
-        article.imageThumbUrl = self.imageThumbUrl;
-        
-		article.title = self.title;
-        
-        if (self.body && self.body.length > 0) {
-            NSString *clearedbody = [[self.body stringByReplacingOccurrencesOfString:@"&gt;" withString:@">"]
+        NSString *clearedbody = nil;
+        if (self.body && self.body.length > 0) 
+            clearedbody = [[self.body stringByReplacingOccurrencesOfString:@"&gt;" withString:@">"]
                                      stringByReplacingOccurrencesOfString:@"&lt;" withString:@"<"];
             
-            article.body = clearedbody;
-        }
 
-		article.imageUrl = self.image;
-		article.url = self.url;
-		article.publishDate = self.publishDate;
-		article.videoUrl = self.articlevideo;
-		article.videolength = self.articlevideolength;
-		[self.articles insertObject:article atIndex:index];
+        Article *article  = [[Article alloc] initWithValues:self.articleId
+                                                       lang:self.langcode
+                                                   category:[self.categoryId intValue]
+                                                    orderNo:[self.orderNo intValue]
+                                                    forFree:[self.forFree boolValue]
+                                                      title:self.title
+                                                   imageUrl:self.image
+                                              imageThumbUrl:self.imageThumbUrl
+                                                       body:clearedbody
+                                                        url:self.url
+                                                publishDate:self.publishDate
+                                                   videoUrl:self.articlevideo
+                                                videolength:self.articlevideolength];
+        
+//		Article *article  = [[Article alloc] init];
+//		article.key=self.articleId;
+//        article.lang=self.langcode;
+//        article.category = [self.categoryId intValue];
+//        article.forFree = [self.forFree boolValue];
+//        article.orderNo = [self.orderNo intValue];
+//        article.imageThumbUrl = self.imageThumbUrl;
+//        
+//		article.title = self.title;
+//        article.body = clearedbody;
+//
+//		article.imageUrl = self.image;
+//		article.url = self.url;
+//		article.publishDate = self.publishDate;
+//		article.videoUrl = self.articlevideo;
+//		article.videolength = self.articlevideolength;
+		
+        [self.articles insertObject:article atIndex:index];
 		index=index+1;
 		article=nil;
         

@@ -141,6 +141,9 @@
 }
 
 -(void) loadLocalData {
+    showAlertMessage(nil, @"Info", @"No data found!");
+    return;
+    
     NSArray *list = [[DPAppHelper sharedInstance]
                      freeBuyContentFor:category
                      lang:[DPAppHelper sharedInstance].currentLang];
@@ -186,18 +189,31 @@
     Article *article = self.contentList[contentIndex];
     UILabel *label = [self createLabelFor:contentIndex frame:frame title:article.title];
     int fixBy = 0;
+//    if (label !=nil) {
+//        if (IS_IPHONE) {
+//            if (IS_RETINA)
+//                fixBy = label.bounds.size.height - 10;
+//            else
+//                fixBy = label.bounds.size.height + 2;
+//        } else if (IS_IPHONE_5)
+//            fixBy = label.bounds.size.height;
+//        else if (IS_IPAD)
+//            fixBy = label.bounds.size.height - 10;
+//    }
+//    frame = CGRectInset(CGRectOffset(frame, 0, fixBy), 2, 2);
+    
     if (label !=nil) {
         if (IS_IPHONE) {
             if (IS_RETINA)
-                fixBy = label.bounds.size.height - 10;
+                fixBy = 8;
             else
-                fixBy = label.bounds.size.height + 2;
+                fixBy = 8;
         } else if (IS_IPHONE_5)
-            fixBy = label.bounds.size.height;
+            fixBy = 8;
         else if (IS_IPAD)
-            fixBy = label.bounds.size.height - 10;
+            fixBy = 8;
     }
-    frame = CGRectInset(CGRectOffset(frame, 0, fixBy), 2, 2);
+    frame = CGRectInset(CGRectOffset(frame, 0, fixBy), 2, 0);
 
     UIView *result = nil;
     if (article.videoUrl) {
@@ -205,7 +221,7 @@
     } else {
         UIImageView *imgView = [[UIImageView alloc] initWithFrame: frame];
         imgView.backgroundColor = [UIColor clearColor];
-        imgView.contentMode = UIViewContentModeCenter; //ScaleAspectFit;//Center;//ScaleAspectFit;
+        imgView.contentMode = UIViewContentModeScaleAspectFit;//Center;//ScaleAspectFit;
         imgView.clipsToBounds = YES;
         result = imgView;
     }
@@ -215,13 +231,18 @@
 
 - (UIView *) createAndConfigMoviePlayer2:(CGRect)frame videoUrl:(NSString *)vidurl {
     if (!self.playerController) {
-        NSBundle *bundle = [NSBundle mainBundle];
-        NSString *moviePath = moviePath = [bundle pathForResource:vidurl ofType:nil];
-        
-        if (moviePath == nil)
-            return [[UIView alloc] initWithFrame:frame];
-
-        NSURL *movieURL = [NSURL fileURLWithPath:moviePath];
+        NSURL *movieURL = nil;
+        if (!isLocalUrl(vidurl))
+            movieURL = [NSURL URLWithString: vidurl];
+        else {
+            NSBundle *bundle = [NSBundle mainBundle];
+            NSString *moviePath = moviePath = [bundle pathForResource:vidurl ofType:nil];
+            
+            if (moviePath == nil)
+                return [[UIView alloc] initWithFrame:frame];
+            
+            movieURL = [NSURL fileURLWithPath:moviePath];
+        }
         
         self.playerController= [[MPMoviePlayerController alloc] initWithContentURL: movieURL];
         self.playerController.view.frame = frame; //CGRectInset(containerView.bounds, 2, 2);

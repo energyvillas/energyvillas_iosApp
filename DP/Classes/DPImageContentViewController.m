@@ -519,7 +519,7 @@
     CGRect vf = self.view.frame;
 //    int h = vf.size.height - vf.origin.y; //IS_PORTRAIT ? vf.size.height : vf.size.height - vf.origin.y;
 //    int w = vf.size.width;
-    fixtop = IS_LANDSCAPE;
+    fixtop = IS_LANDSCAPE && !IS_IPAD;
     int top = fixtop ? 12 : 0;
     int h = vf.size.height - top;
     int w = vf.size.width;

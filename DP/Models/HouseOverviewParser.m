@@ -146,14 +146,20 @@ static NSString *kName_descr = @"description";
 	}else if ([elementName isEqualToString:kName_elements]) {
 		
 	}else if ([elementName isEqualToString:kName_element]) {
-		HouseOverview *element  = [[HouseOverview alloc] init];
-		element.key=self.hovId;
-        element.lang=self.langcode;
-        element.ctgid = [self.categoryId intValue];
-        element.isMaster = [self.isMaster boolValue];
-		element.title = [self processHtmlField:self.title];
-		element.info = [self processHtmlField:self.info];
-		element.description = [self processHtmlField:self.description];
+		HouseOverview *element  = [[HouseOverview alloc] initWithValues:self.hovId
+                                                                   lang:self.langcode
+                                                               category:[self.categoryId intValue]
+                                                               isMaster:[self.isMaster boolValue]
+                                                                  title:[self processHtmlField:self.title]
+                                                                   info:[self processHtmlField:self.info]
+                                                            description:[self processHtmlField:self.description]];
+//		element.key=self.hovId;
+//        element.lang=self.langcode;
+//        element.ctgid = [self.categoryId intValue];
+//        element.isMaster = [self.isMaster boolValue];
+//		element.title = [self processHtmlField:self.title];
+//		element.info = [self processHtmlField:self.info];
+//		element.description = [self processHtmlField:self.description];
         
 		[self.datalist insertObject:element atIndex:index];
 		index=index+1;

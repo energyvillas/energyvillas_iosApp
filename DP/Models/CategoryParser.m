@@ -131,14 +131,20 @@ static NSString *kName_kind = @"kind";
 	}else if ([elementName isEqualToString:kName_categories]) {
 		
 	}else if ([elementName isEqualToString:kName_category]) {
-		Category *category  = [[Category alloc] init];
-		category.key = self.ctgId;
-        category.lang = self.langcode;
-		category.title = self.title;
-		category.imageUrl = self.imageUrl;
-		category.imageRollUrl = self.imageRollUrl;
-		category.parent = self.parent;
-        category.hikId = [self.hikind intValue];
+		Category *category  = [[Category alloc] initWithValues:self.ctgId
+                                                          lang:self.langcode
+                                                         title:self.title
+                                                      imageUrl:self.imageUrl
+                                                  imageRollUrl:self.imageRollUrl
+                                                        parent:self.parent
+                                                           hik:[self.hikind intValue]];
+//		category.key = self.ctgId;
+//        category.lang = self.langcode;
+//		category.title = self.title;
+//		category.imageUrl = self.imageUrl;
+//		category.imageRollUrl = self.imageRollUrl;
+//		category.parent = self.parent;
+//        category.hikId = [self.hikind intValue];
 		[self.categories insertObject:category atIndex:index];
 		index=index+1;
 		category=nil;

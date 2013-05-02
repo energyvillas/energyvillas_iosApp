@@ -27,21 +27,25 @@ NSString *const PRODUCT_IDENTIFIER = @"gr.DesignProjects.DP";
 NSString *const USER_NAME = @"phone";
 NSString *const PASSWORD = @"phone";
 
+
+NSString *const BASE_HOST_NAME = @"www.designprojectsapps.com";
+NSString *const BASE_HOST_NAME_TEST = @"192.168.16.2/designprojectsapps";
+
 // web service URLs
 NSString *const BANNERS_URL = @"http://designprojectsapps.com/iphonebanners.php";
-NSString *const BANNERS_URL_TEST = @"http://192.168.1.9/designprojectsapps/iphonebanners.php";
+NSString *const BANNERS_URL_TEST = @"http://192.168.16.2/designprojectsapps/iphonebanners.php";
 // http://www.mysite.com/iphonebanners.php?user=<UUU>&pass=<PPP>&group=<XXX>
 
 NSString *const CATEGORIES_URL = @"http://designprojectsapps.com/iphonecategory.php";
-NSString *const CATEGORIES_URL_TEST = @"http://192.168.1.9/designprojectsapps/iphonecategory.php";
+NSString *const CATEGORIES_URL_TEST = @"http://192.168.16.2/designprojectsapps/iphonecategory.php";
 // http://www.mysite.com/iphonecategory.php?user=<UUU>&pass=<PPP>&lang=<XXX>&parentid=<YYY>&devicetype=<DDD>
 
 NSString *const ARTICLES_URL = @"http://designprojectsapps.com/iphonenews.php";
-NSString *const ARTICLES_URL_TEST = @"http://192.168.1.9/designprojectsapps/iphonearticles.php";
+NSString *const ARTICLES_URL_TEST = @"http://192.168.16.2/designprojectsapps/iphonearticles.php";
 // http://www.mysite.com/iphonenews.php?user=<UUU>&pass=<PPP>&lang=<XXX>&cid=<YYY>&count=<WWW>&from=<ZZZ>
 
 NSString *const HOUSE_OVERVIEW_URL = @"http://designprojectsapps.com/iphonehouseoverview.php";
-NSString *const HOUSE_OVERVIEW_URL_TEST = @"http://192.168.1.9/designprojectsapps/iphonehouseoverview.php";
+NSString *const HOUSE_OVERVIEW_URL_TEST = @"http://192.168.16.2/designprojectsapps/iphonehouseoverview.php";
 // http://www.mysite.com/iphonehouseoverview.php?user=<UUU>&pass=<PPP>&lang=<XXX>&cid=<YYY>
 
 // localization keys
