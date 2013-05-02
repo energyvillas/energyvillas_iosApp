@@ -11,7 +11,7 @@ FOUNDATION_EXPORT NSString *const MyFirstConstant;
 FOUNDATION_EXPORT NSString *const MySecondConstant;
 */
 
-#define USE_TEST_SITE ((BOOL)YES)
+#define USE_TEST_SITE ((BOOL)NO)
 
 #define IS_IPAD ((BOOL)([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad))
 

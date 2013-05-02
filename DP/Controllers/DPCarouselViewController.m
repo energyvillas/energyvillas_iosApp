@@ -412,7 +412,7 @@
 //        aiv.imageURL = [NSURL URLWithString:imgName];
 //        return aiv;
 
-        if(self.imageCache[index] != [NSNull null]) {
+        if (self.imageCache && self.imageCache.count > index && self.imageCache[index] != [NSNull null]) {
             UIImage *img = self.imageCache[index];//[UIImage imageWithData:self.imageCache[index]];
             
             return [self createImageView:img];
