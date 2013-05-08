@@ -308,6 +308,7 @@
     v.clipsToBounds = YES;
     
     frm = CGRectMake(0, 0, island_width, island_height);
+    NSLogFrame(@"***** ISLANDS", frm);
     UIImageView *iv = [[UIImageView alloc] initWithFrame: frm];
     iv.image = [UIImage imageNamed: element.imageUrl];
     iv.contentMode = UIViewContentModeScaleAspectFit; 

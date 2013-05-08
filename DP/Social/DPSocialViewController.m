@@ -269,7 +269,14 @@
     self.backgroundView.center = CGPointMake(nextViewSize.width / 2.0,
                                              //nextViewSize.height / 2.0);
                                              self.backgroundView.center.y);
-    //self.backgroundView.backgroundColor = [UIColor yellowColor];
+    
+    if (IS_IPAD)
+        self.backgroundView.backgroundColor = [UIColor blackColor];
+    else
+        self.backgroundView.backgroundColor = [UIColor colorWithRed:0.0f
+                                                              green:0.0f
+                                                               blue:0.0f
+                                                              alpha:0.8f];
 
     self.contentView.frame = self.backgroundView.frame;
 

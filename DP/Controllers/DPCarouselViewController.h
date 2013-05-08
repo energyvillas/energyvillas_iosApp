@@ -16,6 +16,8 @@
 
 @property (nonatomic, readonly) int currentIndex;
 
+-(id) initWithCtg:(int)ctgid;
+
 -(void) makeCurrentImageAtIndex:(int)indx;
 
 @end

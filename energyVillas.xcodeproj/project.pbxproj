@@ -1114,7 +1114,7 @@
 		5E71A3D216F9973500E7AFF9 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Distribution: DESIGN PROJECTS LTD (7U2CGA4753)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/../../FacebookSDK\"",
@@ -1128,7 +1128,7 @@
 					"-ObjC",
 				);
 				PRODUCT_NAME = energyVillas;
-				PROVISIONING_PROFILE = "E6FA228D-6C91-471A-9946-20F31E153E9E";
+				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -1136,7 +1136,7 @@
 		5E71A3D316F9973500E7AFF9 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Distribution: DESIGN PROJECTS LTD (7U2CGA4753)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/../../FacebookSDK\"",
@@ -1150,7 +1150,7 @@
 					"-ObjC",
 				);
 				PRODUCT_NAME = energyVillas;
-				PROVISIONING_PROFILE = "E6FA228D-6C91-471A-9946-20F31E153E9E";
+				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

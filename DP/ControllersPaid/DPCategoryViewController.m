@@ -127,7 +127,7 @@
 //    int w = vf.size.width;
 //    int top = fixtop ? vf.origin.y : 0;
     
-    fixtop = IS_LANDSCAPE;
+    fixtop = IS_LANDSCAPE && !IS_IPAD;
     int top = fixtop ? 12 : 0;
     int h = vf.size.height - top;
     int w = vf.size.width;

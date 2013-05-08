@@ -51,11 +51,18 @@
     return self;
 }
 
+-(id) initWithCtg:(int)ctgid {
+    self = [super init];
+    if (self)
+        self.carouselCategoryID = ctgid;
+    
+    return self;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     [self hookToNotifications];
-    self.carouselCategoryID = CTGID_CAROUSEL;
     [self loadData];
 }
 

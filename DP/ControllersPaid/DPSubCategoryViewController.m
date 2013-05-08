@@ -172,7 +172,7 @@
     CGRect vf = self.view.frame;
     //    CGRect svf = self.view.superview.frame;
     
-    fixtop = IS_LANDSCAPE;
+    fixtop = IS_LANDSCAPE && !IS_IPAD;
     int top = fixtop ? 12 : 0;
     int h = vf.size.height - top;
     int w = vf.size.width;

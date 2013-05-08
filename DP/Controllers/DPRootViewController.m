@@ -432,6 +432,10 @@
     }
 }
 
+-(int) carouselCategory {
+    return CTGID_CAROUSEL;
+}
+
 - (void) loadOpenFlow {
     //self.topView.backgroundColor = [UIColor yellowColor];
     
@@ -449,7 +453,7 @@
     
     [self.topView setNeedsDisplay];
     
-    carousel = [[DPCarouselViewController alloc] init];
+    carousel = [[DPCarouselViewController alloc] initWithCtg:[self carouselCategory]];
     CGRect frm = self.topView.bounds;
     carousel.view.frame = frm;
     [self addChildViewController:carousel];
