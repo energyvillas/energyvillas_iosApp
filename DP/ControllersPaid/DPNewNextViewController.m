@@ -385,7 +385,7 @@
 - (void) imageRequestDone:(ASIHTTPRequest *)request{
     [self stopIndicator];
 	int aIndex = [[request.userInfo objectForKey:@"imageIndex"] intValue];
-	UIImage *aImage = [UIImage imageWithData:[request responseData]];
+	UIImage *aImage = [UIImage imageWithData:[request responseData] scale:DEVICE_SCALE];
     
 	if(aImage){
 		[self.imageCache replaceObjectAtIndex:aIndex withObject:aImage];

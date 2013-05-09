@@ -179,6 +179,7 @@ UIKIT_EXTERN NSString *const ktbiCall_Title;
 UIKIT_EXTERN NSString *const ktbiMore_Title;
 
 UIKIT_EXTERN NSString *const kbbiMore_Title;
+UIKIT_EXTERN NSString *const kbbiMoreBack_Title;
 UIKIT_EXTERN NSString *const kbbiBuy_Title;
 
 UIKIT_EXTERN NSString *const kMENU_TITLE_Fmt;

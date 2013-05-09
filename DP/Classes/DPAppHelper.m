@@ -23,6 +23,7 @@
 @property (strong, nonatomic) NSDictionary *paidMainMenu;
 //@property (strong, nonatomic) NSArray *categories;
 @property (strong, nonatomic) NSMutableDictionary *imageCache;
+@property (strong, nonatomic) NSMutableDictionary *imageDataCache;
 
 @property (strong, nonatomic) Reachability* hostReach;
 //@property (strong, nonatomic) Reachability* internetReach;
@@ -349,9 +350,13 @@
 - (void) saveImageToCache:(NSString *)url data:(NSData *)imgData {
     if (!self.imageCache)
         self.imageCache = [[NSMutableDictionary alloc] init];
+    if (!self.imageDataCache)
+        self.imageDataCache = [[NSMutableDictionary alloc] init];
     
-    self.imageCache[url] = imgData;
+    self.imageDataCache[url] = imgData;
+    self.imageCache[url] = [UIImage imageWithData:imgData scale:DEVICE_SCALE];
 }
+
 - (NSData *) loadImageFromCache:(NSString *)url {
     NSData *result = nil;
     if (self.imageCache) {
@@ -359,6 +364,26 @@
     }
     return result;
 }
+- (UIImage *) loadUIImageFromCache:(NSString *)url {
+    UIImage *result = nil;
+    if (self.imageCache) {
+        result = self.imageCache[url];
+    }
+    return result;
+}
+//- (void) loadUIImageFromCache:(NSString *)url
+//                    completed:(void (^)(NSString *url, UIImage *img))onCompleted {
+//    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+//        UIImage *result = nil;
+//        if (self.imageCache) {
+//            result = self.imageCache[url];
+//        }
+//
+//        dispatch_async(dispatch_get_main_queue(), ^{
+//            onCompleted(url, result);
+//        });
+//    });
+//}
 
 #pragma mark -
 #pragma mark reachability handling

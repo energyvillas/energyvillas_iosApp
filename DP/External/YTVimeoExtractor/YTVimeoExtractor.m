@@ -122,7 +122,7 @@
     if (![scanner isAtEnd]) {
         [scanner scanUpToString:@"data-src=\"" intoString:nil];
         NSUInteger loc = [scanner scanLocation];
-        [scanner setScanLocation: loc + 10]; // skip -data-src"-
+        [scanner setScanLocation: loc + 10]; // skip -data-src="-
         [scanner scanUpToString:@"\"" intoString:&url];
     }
     return url;

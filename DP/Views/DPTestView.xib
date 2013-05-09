@@ -161,7 +161,7 @@
 					<object class="IBUIButton" id="996729030">
 						<reference key="NSNextResponder" ref="191373211"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{58, 290}, {73, 44}}</string>
+						<string key="NSFrame">{{51, 271}, {18, 19}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSNextKeyView" ref="549865074"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
@@ -169,8 +169,8 @@
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 						<int key="IBUIContentHorizontalAlignment">0</int>
 						<int key="IBUIContentVerticalAlignment">0</int>
-						<int key="IBUIButtonType">1</int>
-						<string key="IBUINormalTitle">Button</string>
+						<int key="IBUIButtonType">3</int>
+						<bool key="IBUIShowsTouchWhenHighlighted">YES</bool>
 						<reference key="IBUIHighlightedTitleColor" ref="420836705"/>
 						<object class="NSColor" key="IBUINormalTitleColor">
 							<int key="NSColorSpace">1</int>
@@ -287,7 +287,7 @@
 						<reference key="NSNextResponder" ref="191373211"/>
 						<int key="NSvFlags">1316</int>
 						<object class="NSPSMatrix" key="NSFrameMatrix"/>
-						<string key="NSFrame">{{82, 284}, {204, 36}}</string>
+						<string key="NSFrame">{{76, 263}, {204, 36}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSNextKeyView" ref="609463480"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
@@ -371,15 +371,15 @@
 						<reference key="object" ref="191373211"/>
 						<array class="NSMutableArray" key="children">
 							<reference ref="25192250"/>
-							<reference ref="996729030"/>
 							<reference ref="116987499"/>
 							<reference ref="260205838"/>
 							<reference ref="495962518"/>
 							<reference ref="669845991"/>
-							<reference ref="549865074"/>
 							<reference ref="1005766017"/>
 							<reference ref="759410610"/>
 							<reference ref="609463480"/>
+							<reference ref="549865074"/>
+							<reference ref="996729030"/>
 						</array>
 						<reference key="parent" ref="0"/>
 					</object>

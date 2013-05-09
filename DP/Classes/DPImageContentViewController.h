@@ -6,10 +6,11 @@
 //  Copyright (c) 2013 Γεώργιος Γράβος. All rights reserved.
 //
 
+#import <UIKit/UIKit.h>
 #import "UINavContentViewController.h"
 #import "Article.h"
 
-@interface DPImageContentViewController : UINavContentViewController <UIGestureRecognizerDelegate>
+@interface DPImageContentViewController : UINavContentViewController <UIScrollViewDelegate> 
 
 - (id) initWithArticle:(Article *)aArticle;
 - (id) initWithImage:(UIImage *)aImage;

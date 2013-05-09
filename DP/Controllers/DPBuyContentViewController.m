@@ -23,7 +23,8 @@
 
 @property (strong, nonatomic) DPDataLoader *dataLoader;
 @property (strong, nonatomic) MPMoviePlayerController *playerController;
-
+@property (strong, nonatomic) YTVimeoExtractor *extractor;
+@property (strong, nonatomic) UIView *videoContainerView;
 @end
 
 @implementation DPBuyContentViewController {
@@ -217,7 +218,8 @@
 
     UIView *result = nil;
     if (article.videoUrl) {
-        result = [self createAndConfigMoviePlayer2:frame videoUrl:[self calcImageName:article.videoUrl]];
+        result = [self createAndConfigMoviePlayer:frame videoUrl:[self calcImageName:article.videoUrl]];
+//        result = [self playVideo:article.videoUrl frame:frame];
     } else {
         UIImageView *imgView = [[UIImageView alloc] initWithFrame: frame];
         imgView.backgroundColor = [UIColor clearColor];
@@ -229,7 +231,65 @@
     return result;
 }
 
-- (UIView *) createAndConfigMoviePlayer2:(CGRect)frame videoUrl:(NSString *)vidurl {
+- (UIView *) playVideo:(NSString *)videoUrl frame:(CGRect)frame {
+    UIView *result = [[UIView alloc] initWithFrame:frame];
+    
+    self.extractor = [[YTVimeoExtractor alloc] initWithURL:videoUrl
+                                                   quality:YTVimeoVideoQualityHigh];
+    self.extractor.delegate = self;
+    [_extractor start];
+    
+    self.videoContainerView = result;
+    
+    return result;
+}
+
+#pragma mark - YTVimeoExtractorDelegate
+
+- (void)vimeoExtractor:(YTVimeoExtractor *)extractor didSuccessfullyExtractVimeoURL:(NSURL *)videoURL
+{
+    NSLog(@"Extracted url : %@", [videoURL absoluteString]);
+    extractor = nil;
+    if (!self.playerController)
+        [self createAndConfigMoviePlayer:videoURL];
+}
+
+- (void)vimeoExtractor:(YTVimeoExtractor *)extractor failedExtractingVimeoURLWithError:(NSError *)error;
+{
+    NSLog(@"ERROR: %@", [error localizedDescription]);
+    showAlertMessage(self,
+                     DPLocalizedString(kERR_TITLE_CONNECTION_FAILED),
+                     DPLocalizedString(kERR_MSG_TRY_LATER));
+}
+
+- (void) createAndConfigMoviePlayer:(NSURL *)movieURL {
+    if (!self.playerController) {
+        self.playerController= [[MPMoviePlayerController alloc] initWithContentURL: movieURL];
+        self.playerController.view.frame = self.videoContainerView.bounds;
+        
+        self.playerController.controlStyle = MPMovieControlStyleNone;
+        
+        [self.playerController prepareToPlay];
+        self.playerController.scalingMode = MPMovieScalingModeAspectFit;
+        self.playerController.repeatMode = MPMovieRepeatModeNone;
+        
+        [self.videoContainerView addSubview:self.playerController.view];
+        [self.playerController play];
+        
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(moviePlayBackDidFinished:)
+                                                     name:MPMoviePlayerPlaybackDidFinishNotification
+                                                   object:self.playerController];
+    }
+//    else {
+//        NSTimeInterval pos = self.playerController.currentPlaybackTime;
+//        [self.playerController pause];
+//        self.playerController.view.frame = frame;//CGRectInset(containerView.bounds, 2, 2);
+//        self.playerController.currentPlaybackTime = pos;
+//    }
+}
+
+- (UIView *) createAndConfigMoviePlayer:(CGRect)frame videoUrl:(NSString *)vidurl {
     if (!self.playerController) {
         NSURL *movieURL = nil;
         if (!isLocalUrl(vidurl))

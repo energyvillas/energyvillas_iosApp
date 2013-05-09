@@ -9,6 +9,7 @@
 #import "DPScrollableViewController.h"
 #import "DPDataLoader.h"
 #import "DPScrollableViewDelegate.h"
+#import "YTVimeoExtractor.h"
 
 
 @interface DPBuyContentViewController : DPScrollableViewController //DPCtgScrollViewController
@@ -16,6 +17,7 @@
     DPDataLoaderDelegate
     , DPScrollableViewDelegate
     , DPScrollableDataSourceDelegate
+    , YTVimeoExtractorDelegate
     >
 
 - (id) initWithCategory:(int)ctgID;

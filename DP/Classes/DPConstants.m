@@ -58,6 +58,8 @@ NSString *const ktbiCall_Title = @"tbiCall_Title";
 NSString *const ktbiMore_Title = @"tbiMore_Title";
 
 NSString *const kbbiMore_Title = @"bbiMore_Title";
+NSString *const kbbiMoreBack_Title = @"bbiMoreBack_Title";
+
 NSString *const kbbiBuy_Title = @"bbiBuy_Title";
 
 NSString *const kMENU_TITLE_Fmt = @"MENU_TITLE_%i";

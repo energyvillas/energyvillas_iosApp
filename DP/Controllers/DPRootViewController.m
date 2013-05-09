@@ -39,6 +39,7 @@
 
 @implementation DPRootViewController {
     int onAfterAppear;
+    BOOL showingMore;
 }
 
 
@@ -68,7 +69,7 @@
 
 - (void) doLocalize {
     [super doLocalize];
-    self.bbiMore.title = DPLocalizedString(kbbiMore_Title);
+    self.bbiMore.title = showingMore ? DPLocalizedString(kbbiMoreBack_Title) : DPLocalizedString(kbbiMore_Title);
     self.bbiBuy.title = DPLocalizedString(kbbiBuy_Title);
     
     if (self.bottomView.subviews.count > 0) {
@@ -127,6 +128,11 @@
 
 - (void) doMore:(id) sender {
     // do the more stuff here
+    showingMore = !showingMore;
+        
+    self.bbiMore.title = showingMore ? DPLocalizedString(kbbiMoreBack_Title) : DPLocalizedString(kbbiMore_Title);
+
+    [self loadOpenFlow];
 }
 
 #pragma mark - DPActionDelegate
@@ -433,7 +439,7 @@
 }
 
 -(int) carouselCategory {
-    return CTGID_CAROUSEL;
+    return showingMore ? CTGID_CAROUSEL_MORE : CTGID_CAROUSEL;
 }
 
 - (void) loadOpenFlow {

@@ -250,7 +250,8 @@
                                                              showPages:NO
                                                        scrollDirection:scrolldir
                                                              menulevel:1];
-    self.mmViewController.view.frame = self.mmView.bounds;
+    CGRect mmfrm = self.mmView.bounds;
+    self.mmViewController.view.frame = mmfrm;
     [self addChildViewController:self.mmViewController];
     [self.mmView addSubview:self.mmViewController.view];
 

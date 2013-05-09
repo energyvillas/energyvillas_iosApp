@@ -254,8 +254,10 @@
 }
 
 -(void) loadLocalData {
-    NSArray *list = [[DPAppHelper sharedInstance] freeCoverFlowFor:CURRENT_LANG];
-    self.datalist = list;
+    if (self.carouselCategoryID == CTGID_CAROUSEL) {
+        NSArray *list = [[DPAppHelper sharedInstance] freeCoverFlowFor:CURRENT_LANG];
+        self.datalist = list;
+    }
     [self dataLoaded];
 }
 
@@ -393,46 +395,41 @@
         UIImage *img = [UIImage imageNamed:imgName];
         
         return [self createImageView:img];
-
-//        CGRect frm = CGRectMake(0, 0, img.size.width, img.size.height);
-//        UIImageView *imageView = [[UIImageView alloc] initWithFrame:frm];
-//        
-//        FXImageView *imageView = [[FXImageView alloc] initWithFrame:frm];
-//        imageView.contentMode = UIViewContentModeCenter;
-//        imageView.asynchronous = YES;
-//        imageView.reflectionScale = 0.5f;
-//        imageView.reflectionAlpha = 0.35f;
-//        imageView.reflectionGap = 10.0f;
-//        imageView.shadowOffset = CGSizeMake(0.0f, 2.0f);
-//        imageView.shadowBlur = 5.0f;
-//
-//////        imageView.cornerRadius = 10.0f;
-////        imageView.layer.doubleSided = NO;
-//        imageView.image = img;
-//        return imageView;
     } else {
         // Check if image already exists in cache. If yes retrieve it from there, else go to internet...
-//        AsyncImageView *aiv = [[AsyncImageView alloc] initWithFrame:CGRectInset(self.icarousel.bounds, -30, -10)];
-//        aiv.contentMode = UIViewContentModeCenter;
-//
-//        //set image URL. AsyncImageView class will then dynamically load the image
-//        aiv.imageURL = [NSURL URLWithString:imgName];
-//        return aiv;
-
         if (self.imageCache && self.imageCache.count > index && self.imageCache[index] != [NSNull null]) {
             UIImage *img = self.imageCache[index];//[UIImage imageWithData:self.imageCache[index]];
             
             return [self createImageView:img];
-//            CGRect frm = CGRectMake(0, 0, img.size.width, img.size.height);
-//            UIImageView *imageView = [[UIImageView alloc] initWithFrame:frm];
-//            imageView.image = img;
-//            return imageView;
-            //[openFlowView setImage:img forIndex:index];
-        }else{
-            [self downloadImageUrl:imgName atIndex:index];
-            return nil;
+        } else {
+            UIImage *img = [[DPAppHelper sharedInstance] loadUIImageFromCache:imgName];
+            if (img != nil) {
+                return  [self createImageView:img];
+            } else {
+                [self downloadImageUrl:imgName atIndex:index];
+                return [self createImageViewLoading];
+            }
         }
     }
+}
+
+-(UIView *) createImageViewLoading  {
+    UIImageView *iv = [self createImageView:[UIImage imageNamed:@"Carousel/loading.png"]];
+    UIView *v = [[UIView alloc] initWithFrame:iv.frame];
+    
+    CGRect frm = v.bounds;
+    UIActivityIndicatorView *bi = [[UIActivityIndicatorView alloc]
+                                   initWithActivityIndicatorStyle: IS_IPAD ? UIActivityIndicatorViewStyleWhiteLarge: UIActivityIndicatorViewStyleWhite];
+    bi.frame = CGRectOffset(CGRectMake((frm.size.width-25)/2,
+                                       (frm.size.height-25)/2,
+                                       25, 25),
+                            0, IS_IPAD ? 90 : 40);
+    bi.hidesWhenStopped = TRUE;
+    [v addSubview:iv];
+    [v addSubview:bi];
+    [bi startAnimating];
+
+    return v;
 }
 
 -(UIImageView *) createImageView:(UIImage *)image {
@@ -468,39 +465,6 @@
     imageView.image = image;
     return imageView;
 }
-////==============================================================================
-//
-//- (void) loadOpenFlow {
-//    if (self.datalist && self.datalist.count > 0) {
-//        if (self.carousel) {
-//            [self.carousel removeFromSuperview];
-//            self.carousel = nil;
-//        }
-//        
-//        CGRect frm = self.view.frame;
-//        frm = CGRectMake(0, 0, frm.size.width, frm.size.height);
-//        AFOpenFlowView *ofv = [[AFOpenFlowView alloc] initWithFrame:frm];
-//        ofv.viewDelegate = self;
-//        ofv.dataSource = self;
-//        
-//        
-//        NSLog(@"2.carousel loaded %d articles", self.datalist.count);
-//        [ofv setNumberOfImages:self.datalist.count];
-//        
-//        self.carousel = ofv;
-//        [self.view addSubview:self.carousel];
-//        [self makeCurrentImageAtIndex:self.currentIndex];
-//    }
-//}
-//
-////==============================================================================
-//
-//#pragma mark START AFOpenFlowViewDelegate
-//
-//- (void) openFlowView:(AFOpenFlowView *)openFlowView
-//                click:(int)index {
-//    [self articleAtIndexTapped:index];
-//}
 
 -(void) articleAtIndexTapped:(int)index {
     Article *article = self.datalist[index];
@@ -524,35 +488,6 @@
     }
 }
 
-//- (void) openFlowView:(AFOpenFlowView *)openFlowView selectionDidChange:(int)index {
-//    _currentIndex = index;
-//}
-//
-////==============================================================================
-//
-//#pragma mark START AFOpenFlowViewDatasource
-//
-//- (void) openFlowView:(AFOpenFlowView *)openFlowView
-// requestImageForIndex:(int)index {
-//    NSLog(@"3.carousel requested article at index %d", index);
-//
-//    Article *article = self.datalist[index];
-//    NSString *imgName = article.imageThumbUrl ? article.imageThumbUrl : article.imageUrl;
-//    if (isLocalUrl(imgName)) {
-//        imgName = [self calcImageName:imgName];
-//        UIImage *img = [UIImage imageNamed:imgName];
-//        [openFlowView setImage:img forIndex:index];
-//    } else {
-//        // Check if image already exists in cache. If yes retrieve it from there, else go to internet...
-//        if(self.imageCache[index] != [NSNull null]) {
-//            UIImage *img = [UIImage imageWithData:self.imageCache[index]];
-//            [openFlowView setImage:img forIndex:index];
-//        }else{
-//            [self downloadImageUrl:imgName atIndex:index];
-//        }
-//    }
-//}
-
 - (NSString *) calcImageName:(NSString *)baseName {
         @try {
             NSArray *parts = [baseName componentsSeparatedByString:@"."];
@@ -574,13 +509,10 @@
         }
 }
 
-//- (UIImage *) defaultImage {
-//    return nil; // this should return the missing image replacement
-//}
-//
 #pragma mark - === busy indication handling  ===
 
 - (void) startIndicator {
+    return;
     if(!self.busyIndicator) {
 		self.busyIndicator = [[UIActivityIndicatorView alloc]
                               initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
@@ -594,6 +526,7 @@
 }
 
 - (void) stopIndicator {
+    return;
     if(self.busyIndicator) {
         [self.busyIndicator stopAnimating];
         [self.busyIndicator removeFromSuperview];
@@ -611,12 +544,17 @@
     if ([self.imageRequests objectForKey:imageUrl])
         return;
 
+    NSLog(@"will request image from url : ####'%@'####", imageUrl);
+    
     [self.imageRequests setObject:imageUrl forKey:imageUrl];
     
     ASIHTTPRequest *imageRequest = [ASIHTTPRequest requestWithURL:[NSURL URLWithString:imageUrl]];
     [imageRequest setDelegate:self];
     [imageRequest setDidFinishSelector:@selector(imageRequestDone:)];
-    imageRequest.userInfo = [NSDictionary dictionaryWithObjectsAndKeys: [NSNumber numberWithInt:aIndex], @"imageIndex", nil];
+    imageRequest.userInfo = [NSDictionary dictionaryWithObjectsAndKeys:
+                             [NSNumber numberWithInt:aIndex], @"imageIndex",
+                             imageUrl, @"imageName",
+                             nil];
     [self.queue addOperation:imageRequest];
     [self startIndicator];
 }
@@ -624,10 +562,13 @@
 - (void) imageRequestDone:(ASIHTTPRequest *)request{
     [self stopIndicator];
 	int aIndex = [[request.userInfo objectForKey:@"imageIndex"] intValue];
-	UIImage *aImage = [UIImage imageWithData:[request responseData]];
+    NSString *imgName = [request.userInfo objectForKey:@"imageName"];
+    NSData *imgData = [request responseData];
+	UIImage *aImage = [UIImage imageWithData:imgData scale:DEVICE_SCALE];
     
 	if(aImage){
 		[self.imageCache replaceObjectAtIndex:aIndex withObject:aImage];
+        [[DPAppHelper sharedInstance] saveImageToCache:imgName data:imgData];
         //[self.carousel setImage:aImage forIndex:aIndex];
         [self.icarousel reloadItemAtIndex:aIndex animated:YES];
 	}

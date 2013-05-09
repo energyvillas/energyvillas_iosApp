@@ -490,7 +490,11 @@
     CGRect frame = self.scrollView.frame;
     frame.origin.x = frame.size.width * self.currentPage;
     frame.origin.y = 0;
-    [self.scrollView scrollRectToVisible:frame animated:YES];
+
+    if (timerUsed && (self.currentPage == 0))
+        [self.scrollView scrollRectToVisible:frame animated:NO];
+    else
+        [self.scrollView scrollRectToVisible:frame animated:YES];
     
 	// Set the boolean used when scrolls originate from the UIPageControl. See scrollViewDidScroll: above.
     pageControlUsed = YES;
@@ -639,7 +643,7 @@
         data:(NSData *)imgData
   addToCache:(BOOL)addToCache{
     //elm.imageData = [request responseData];
-    imgView.image = [UIImage imageWithData:imgData];
+    imgView.image = [UIImage imageWithData:imgData scale:DEVICE_SCALE];
     if (addToCache)
         [[DPAppHelper sharedInstance] saveImageToCache:imageUrl data:imgData];
 }

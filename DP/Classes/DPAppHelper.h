@@ -30,4 +30,5 @@
 
 - (void) saveImageToCache:(NSString *)url data:(NSData *)imgData;
 - (NSData *) loadImageFromCache:(NSString *)url;
+- (UIImage *) loadUIImageFromCache:(NSString *)url;
 @end
