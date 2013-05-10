@@ -58,13 +58,13 @@
     return self;
 }
 
-- (id) initWithImageUrl:(NSURL *)imageUrl {
-    if (self = [super init]) {
-        [self downloadImageUrl:imageUrl];
-    }
-    
-    return self;
-}
+//- (id) initWithImageUrl:(NSURL *)imageUrl {
+//    if (self = [super init]) {
+//        [self downloadImageUrl:imageUrl];
+//    }
+//    
+//    return self;
+//}
 
 - (id) initWithImageName:(NSString *)imageName {
     if (self = [super init]) {
@@ -127,7 +127,7 @@
                 self.image = img;
                 [self doInitImageView];
             } else {
-                [self downloadImageUrl:[NSURL URLWithString:self.article.imageUrl]];
+                [self downloadImageUrl:self.article.imageUrl];
             }
         }
     }
@@ -254,12 +254,12 @@
 //==============================================================================
 #pragma mark - === image downloading handling  ===
 
-- (void) downloadImageUrl:(NSURL *)imageUrl {
+- (void) downloadImageUrl:(NSString *)imageUrl {
     if (!self.queue)
         self.queue = [[NSOperationQueue alloc] init];
 
     if (!self.request) {
-        self.request = [ASIHTTPRequest requestWithURL:imageUrl];
+        self.request = [ASIHTTPRequest requestWithURL:[NSURL URLWithString:imageUrl]];
         [self.request setDelegate:self];
         [self.request setDidFinishSelector:@selector(imageRequestDone:)];
         self.request.userInfo = [NSDictionary dictionaryWithObjectsAndKeys:

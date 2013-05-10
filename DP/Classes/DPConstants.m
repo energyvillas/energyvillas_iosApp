@@ -9,6 +9,7 @@
 #import "DPConstants.h"
 #import "DPAppHelper.h"
 #import <QuartzCore/QuartzCore.h>
+#import <CommonCrypto/CommonDigest.h>
 /*
 NSString *const MyFirstConstant = @"FirstConstant";
 NSString *const MySecondConstant = @"SecondConstant";
@@ -169,5 +170,30 @@ int getDeviceType() {
         return IS_RETINA ? DEVICE_TYPE_ID_IPAD_RETINA : DEVICE_TYPE_ID_IPAD;
     
     return -1;
+}
+
+NSString* SHA1Digest(NSString* input)
+{
+    const char *cstr = [input cStringUsingEncoding:NSUTF8StringEncoding];
+    NSData *data = [NSData dataWithBytes:cstr length:input.length];
+    
+    uint8_t digest[CC_SHA1_DIGEST_LENGTH];
+    
+    CC_SHA1(data.bytes, data.length, digest);
+    
+    NSMutableString* output = [NSMutableString stringWithCapacity:CC_SHA1_DIGEST_LENGTH * 2];
+    
+    for(int i = 0; i < CC_SHA1_DIGEST_LENGTH; i++)
+        [output appendFormat:@"%02x", digest[i]];
+    
+    return output;
+    
+}
+
+NSString* getDocumentsFilePath(NSString* filename) {
+    NSString *docDir = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+    NSString *filePath = [docDir stringByAppendingPathComponent:filename];
+    
+    return filePath;
 }
 

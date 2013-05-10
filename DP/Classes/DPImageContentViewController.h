@@ -14,7 +14,7 @@
 
 - (id) initWithArticle:(Article *)aArticle;
 - (id) initWithImage:(UIImage *)aImage;
-- (id) initWithImageUrl:(NSURL *)imageUrl;
+//- (id) initWithImageUrl:(NSURL *)imageUrl;
 - (id) initWithImageName:(NSString *)imageName;
 
 @end

@@ -348,26 +348,48 @@
 #pragma mark transient image cache handling
 
 - (void) saveImageToCache:(NSString *)url data:(NSData *)imgData {
-    if (!self.imageCache)
-        self.imageCache = [[NSMutableDictionary alloc] init];
-    if (!self.imageDataCache)
-        self.imageDataCache = [[NSMutableDictionary alloc] init];
+//    if (!self.imageCache)
+//        self.imageCache = [[NSMutableDictionary alloc] init];
+//    if (!self.imageDataCache)
+//        self.imageDataCache = [[NSMutableDictionary alloc] init];
+//    
+//    self.imageDataCache[url] = imgData;
+//    UIImage *img = [UIImage imageWithData:imgData scale:DEVICE_SCALE];
+//    self.imageCache[url] = img;
     
-    self.imageDataCache[url] = imgData;
-    self.imageCache[url] = [UIImage imageWithData:imgData scale:DEVICE_SCALE];
+    NSString *sha1 = SHA1Digest(url);
+    NSLog(@"SHA1 = '%@'", sha1);
+    NSString *ext = [url pathExtension];
+    NSString *filename = [NSString stringWithFormat:@"%@.%@", sha1, ext];
+    NSString *filepath = getDocumentsFilePath(filename);
+    [imgData writeToFile:filepath atomically:YES];
 }
 
 - (NSData *) loadImageFromCache:(NSString *)url {
     NSData *result = nil;
-    if (self.imageCache) {
-        result = self.imageCache[url];
-    }
+//    if (self.imageDataCache) {
+//        result = self.imageDataCache[url];
+//    }
+
+    NSString *sha1 = SHA1Digest(url);
+    NSLog(@"SHA1 = '%@'", sha1);
+    NSString *ext = [url pathExtension];
+    NSString *filename = [NSString stringWithFormat:@"%@.%@", sha1, ext];
+    NSString *filepath = getDocumentsFilePath(filename);
+    
+    result = [NSData dataWithContentsOfFile:filepath];
+    
     return result;
 }
 - (UIImage *) loadUIImageFromCache:(NSString *)url {
     UIImage *result = nil;
-    if (self.imageCache) {
-        result = self.imageCache[url];
+//    if (self.imageCache) {
+//        result = self.imageCache[url];
+//    }
+    if (!result) {
+        NSData *data = [self loadImageFromCache:url];
+        if (data)
+            result = [UIImage imageWithData:data scale:DEVICE_SCALE];
     }
     return result;
 }

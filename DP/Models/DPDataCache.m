@@ -8,6 +8,7 @@
 
 #import "DPDataCache.h"
 #import "DPDataElement.h"
+#import "DPConstants.h"
 
 
 @interface DPDataCache () 
@@ -71,8 +72,7 @@
 
 -(NSString *) getFilePath {
     if (!_filePath) {
-        NSString *docDir = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
-        _filePath = [docDir stringByAppendingPathComponent:self.fileName];
+        _filePath = getDocumentsFilePath(self.fileName);
     }
     
     return _filePath;

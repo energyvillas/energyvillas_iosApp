@@ -304,7 +304,8 @@
         
         self.icarousel.delegate = self;
         self.icarousel.dataSource = self;
-        self.icarousel.type = iCarouselTypeCoverFlow2;
+        self.icarousel.type = (self.carouselCategoryID == CTGID_CAROUSEL) ? iCarouselTypeCoverFlow2 : iCarouselTypeLinear;
+        self.icarousel.scrollSpeed = 0.2f;
 
         [self.view addSubview:self.icarousel];
         [self makeCurrentImageAtIndex:self.currentIndex];
@@ -336,7 +337,7 @@
         case iCarouselOptionSpacing:
         {
             //add a bit of spacing between the item views
-            return value * 1.973f;//1.05f;
+            return (self.carouselCategoryID == CTGID_CAROUSEL) ? value * 1.973f : value * 1.1f;//1.05f;
         }
         case iCarouselOptionFadeMax:
         {

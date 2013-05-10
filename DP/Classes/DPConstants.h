@@ -210,3 +210,9 @@ BOOL isLocalUrl(NSString *urlstr);
 UILabel * createLabel(CGRect frame, NSString *title, UIFont *font);
 
 int getDeviceType();
+
+NSString* SHA1Digest(NSString* input);
+
+NSString* getDocumentsFilePath(NSString* filename);
+
+
