@@ -178,7 +178,7 @@
     
     NSString *imgname =[self resolveImageName:element];
     UIImage *img = [UIImage imageNamed:imgname];
-    CGSize imgsize = img.size;
+//    CGSize imgsize = img.size;
     button.frame = frame;
 //    button.frame = CGRectMake((frame.size.width - imgsize.width) / 2.0,
 //                              (frame.size.height - imgsize.height) / 2.0,
