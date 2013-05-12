@@ -17,6 +17,7 @@
 #import "DPHtmlContentViewController.h"
 #import "AsyncImageView.h"
 #import "FXImageView.h"
+#import "UIImage+FX.h"
 
 @interface DPCarouselViewController ()
 
@@ -24,7 +25,7 @@
 @property (strong, nonatomic) NSOperationQueue *queue;
 @property (strong, nonatomic) DPDataLoader *dataLoader;
 @property (strong, nonatomic) NSArray *datalist;
-@property (strong, nonatomic) NSMutableArray *imageCache;
+//@property (strong, nonatomic) NSMutableArray *imageCache;
 @property (strong, nonatomic) NSMutableDictionary *imageRequests;
 //@property (strong, nonatomic) AFOpenFlowView *carousel;
 
@@ -262,13 +263,14 @@
 }
 
 -(void) setupImageCache {
-    if (self.imageCache == nil) {
-        self.imageCache = [[NSMutableArray alloc] init];
-        for (int i = 0; i < self.datalist.count; i ++)
-            self.imageCache[i] = [NSNull null];
-        
-        self.imageRequests = [[NSMutableDictionary alloc] init];
-    }
+//    if (self.imageCache == nil) {
+//        self.imageCache = [[NSMutableArray alloc] init];
+//        for (int i = 0; i < self.datalist.count; i ++)
+//            self.imageCache[i] = [NSNull null];
+//    }
+    
+     if (self.imageRequests == nil) 
+         self.imageRequests = [[NSMutableDictionary alloc] init];
 }
 
 - (void) dataLoaded {
@@ -398,11 +400,11 @@
         return [self createImageView:img];
     } else {
         // Check if image already exists in cache. If yes retrieve it from there, else go to internet...
-        if (self.imageCache && self.imageCache.count > index && self.imageCache[index] != [NSNull null]) {
-            UIImage *img = self.imageCache[index];//[UIImage imageWithData:self.imageCache[index]];
-            
-            return [self createImageView:img];
-        } else {
+//        if (self.imageCache && self.imageCache.count > index && self.imageCache[index] != [NSNull null]) {
+//            UIImage *img = self.imageCache[index];//[UIImage imageWithData:self.imageCache[index]];
+//            
+//            return [self createImageView:img];
+//        } else {
             UIImage *img = [[DPAppHelper sharedInstance] loadUIImageFromCache:imgName];
             if (img != nil) {
                 return  [self createImageView:img];
@@ -410,21 +412,39 @@
                 [self downloadImageUrl:imgName atIndex:index];
                 return [self createImageViewLoading];
             }
-        }
+//        }
     }
 }
 
 -(UIView *) createImageViewLoading  {
-    UIImageView *iv = [self createImageView:[UIImage imageNamed:@"Carousel/loading.png"]];
-    UIView *v = [[UIView alloc] initWithFrame:iv.frame];
+    CGSize szCarousel = self.icarousel.frame.size;
+    szCarousel.width = 0.8f * szCarousel.width;
+    szCarousel.height = szCarousel.height * 0.4f;
     
-    CGRect frm = v.bounds;
+    UIImage *img = [UIImage imageNamed:[NSString stringWithFormat:@"loading_%@.png", CURRENT_LANG]];
+    CGSize imgSize = img.size;
+    img = [img imageScaledToFitSize:szCarousel];
+    imgSize = img.size;
+    
+    CGRect frm = [self calcFittingFrame:self.icarousel.frame.size];
+    
+    UIImageView *iv = [[UIImageView alloc] initWithFrame:CGRectOffset(frm, 0.0f, -10.0f)];
+    iv.contentMode = UIViewContentModeCenter;
+    iv.image = img;
+    
+    UIView *v = [[UIView alloc] initWithFrame:frm];
+    v.backgroundColor = [UIColor colorWithWhite:0.0f alpha:0.7f]; //[UIColor colorWithRed:0.0f green:0.0f blue:0.0f alpha:0.6f];
+    v.layer.cornerRadius = IS_IPAD ? 8.0f : 4.0f;
+    v.layer.borderWidth = IS_IPAD ? 4.0f : 2.0;
+    v.layer.borderColor = [UIColor colorWithWhite:1.0f alpha:0.75f].CGColor;
+    
+    frm = v.bounds;
     UIActivityIndicatorView *bi = [[UIActivityIndicatorView alloc]
                                    initWithActivityIndicatorStyle: IS_IPAD ? UIActivityIndicatorViewStyleWhiteLarge: UIActivityIndicatorViewStyleWhite];
     bi.frame = CGRectOffset(CGRectMake((frm.size.width-25)/2,
                                        (frm.size.height-25)/2,
                                        25, 25),
-                            0, IS_IPAD ? 90 : 40);
+                            0, IS_IPAD ? 110 : IS_IPHONE ? 40 : 55);
     bi.hidesWhenStopped = TRUE;
     [v addSubview:iv];
     [v addSubview:bi];
@@ -433,10 +453,9 @@
     return v;
 }
 
--(UIImageView *) createImageView:(UIImage *)image {
+-(CGRect) calcFittingFrame:(CGSize)szImage {
     CGRect frm;
     CGSize szCarousel = self.icarousel.frame.size; szCarousel.width = 0.8f * szCarousel.width;
-    CGSize szImage = image.size;
     if (szCarousel.width > szImage.width && szCarousel.height > szImage.height)
         frm = CGRectMake(0, 0, szImage.width, szImage.height);
     else {
@@ -453,9 +472,21 @@
         }
     }
     
-    //UIImageView *imageView = [[UIImageView alloc] initWithFrame:frm];
-    FXImageView *imageView = [[FXImageView alloc] initWithFrame:frm];
-    imageView.contentMode = UIViewContentModeScaleAspectFit;
+    return frm;
+}
+
+-(UIImageView *) createImageView:(UIImage *)image {
+    CGRect frm = [self calcFittingFrame:image.size];
+    return [self doCreateImageView:image frame:frm];
+}
+
+
+-(UIImageView *) doCreateImageView:(UIImage *)image frame:(CGRect)frame{
+    return [self doCreateImageView:image frame:frame contentMode:UIViewContentModeScaleAspectFit];
+}
+-(UIImageView *) doCreateImageView:(UIImage *)image frame:(CGRect)frame contentMode:(UIViewContentMode)aContentMode{
+    FXImageView *imageView = [[FXImageView alloc] initWithFrame:frame];
+    imageView.contentMode = aContentMode;
     imageView.asynchronous = NO;
     imageView.reflectionScale = 0.5f;
     imageView.reflectionAlpha = 0.35f;
@@ -568,7 +599,7 @@
 	UIImage *aImage = [UIImage imageWithData:imgData scale:DEVICE_SCALE];
     
 	if(aImage){
-		[self.imageCache replaceObjectAtIndex:aIndex withObject:aImage];
+//		[self.imageCache replaceObjectAtIndex:aIndex withObject:aImage];
         [[DPAppHelper sharedInstance] saveImageToCache:imgName data:imgData];
         //[self.carousel setImage:aImage forIndex:aIndex];
         [self.icarousel reloadItemAtIndex:aIndex animated:YES];
