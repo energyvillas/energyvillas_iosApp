@@ -82,7 +82,7 @@ FOUNDATION_EXPORT NSString *const MySecondConstant;
 #define CTGID_ISLAND_CYCLADIC ((int)63)
 #define CTGID_ISLAND_IONIAN ((int)64)
 
-#define CTGID_EXCLUSIVE_EXCLUSIVE ((int)74)
+#define CTGID_EXCLUSIVE_DESIGNER ((int)74)
 #define CTGID_EXCLUSIVE_ART ((int)75)
 
 // predefined categories IDs

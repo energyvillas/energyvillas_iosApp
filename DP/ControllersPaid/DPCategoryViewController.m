@@ -29,10 +29,9 @@
 
 @end
 
-@implementation DPCategoryViewController {
-    int category;
-}
+@implementation DPCategoryViewController
 
+@synthesize category = _category;
 ////////////////////////
 
 //- (void) fixlabel {
@@ -47,7 +46,7 @@
 
 - (id) initWithCategory:(int)ctgID {
     if (self = [super init]) {
-        category = ctgID;
+        _category = ctgID;
     }
     
     return self;
@@ -76,7 +75,7 @@
 
 - (void) doLocalize {
     [super doLocalize];
-    NSString *ctgTitleKey = [NSString stringWithFormat:kMENU_TITLE_Fmt, category];
+    NSString *ctgTitleKey = [NSString stringWithFormat:kMENU_TITLE_Fmt, self.category];
     self.lblTitle.text = DPLocalizedString(ctgTitleKey);
     //[self fixlabel];
     
@@ -205,7 +204,7 @@
 }
 
 - (void) loadCategoryView:(BOOL)reload {
-    if (category == 0)
+    if (self.category == 0)
         return;
 
     if (reload) {
@@ -219,7 +218,7 @@
     
     if (self.actualCtgView.subviews.count == 0)
     {
-        self.ctgViewController = [[DPAnimatedScrollViewController alloc] initWithCategory:category
+        self.ctgViewController = [[DPAnimatedScrollViewController alloc] initWithCategory:self.category
                                                                                    isLeaf:NO
                                                                                     frame:self.actualCtgView.bounds];
         

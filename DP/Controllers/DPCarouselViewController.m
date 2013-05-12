@@ -525,9 +525,12 @@
             NSArray *parts = [baseName componentsSeparatedByString:@"."];
             if (parts && parts.count == 2) {
                 NSString *lang = [DPAppHelper sharedInstance].currentLang;
-                NSString *orientation = IS_PORTRAIT ? @"v" : @"h";
-                NSString *result = [NSString stringWithFormat:@"Carousel/%@_%@_%@.%@",
-                                    parts[0], lang, orientation, parts[1]];
+//                NSString *orientation = IS_PORTRAIT ? @"v" : @"h";
+//                NSString *result = [NSString stringWithFormat:@"Carousel/%@_%@_%@.%@",
+//                                    parts[0], lang, orientation, parts[1]];
+                
+                NSString *result = [NSString stringWithFormat:@"Carousel/%@_%@.%@",
+                                    parts[0], lang, parts[1]];
                 NSLog(@"4.carousel calimageName base='%@' => calc='%@'", baseName, result);
                 return result;
             }

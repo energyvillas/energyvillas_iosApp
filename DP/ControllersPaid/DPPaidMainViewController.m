@@ -156,7 +156,7 @@
 - (void) checkRootAndPop:(UIViewController *)tvc {
     UIViewController *rvc = self.navController.viewControllers[0];
     if (tvc != rvc) {
-//        [self.navController popViewControllerAnimated:NO];
+        [self.navController popViewControllerAnimated:NO];
         [self cleanControllers:tvc];
     }
 }
@@ -183,6 +183,7 @@
                             (tvc == self.moreViewController)
                             );
 }
+
 - (void) showMain {
     UIViewController *tvc = [self.navController topViewController];
     if ([self isTabBarPage:tvc]){
@@ -199,7 +200,7 @@
     if ([self checkTop:self.whoViewController]) return;
     
     self.whoViewController = [[DPHtmlContentViewController alloc]
-                              initWithCategory:CTGID_WHO_WE_ARE lang:@"en"];
+                              initWithCategory:CTGID_WHO_WE_ARE lang:CURRENT_LANG];
     
     [self showViewController:self.whoViewController];
 }

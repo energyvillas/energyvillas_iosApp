@@ -10,6 +10,8 @@
 
 @interface DPCategoryViewController : UINavContentViewController 
 
+@property (nonatomic, readonly) int category;
+
 @property (strong, nonatomic) IBOutlet UIView *ctgView;
 @property (strong, nonatomic) IBOutlet UIView *adsView;
 @property (strong, nonatomic) IBOutlet UIView *mmView;

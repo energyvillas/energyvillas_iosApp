@@ -150,35 +150,47 @@
         case CTGID_FINLAND:
         case CTGID_COUNTRY:
         case CTGID_CONTAINER:
-        case CTGID_VILLAS: {
-            DPCategoryViewController *ctgVC = [[DPCategoryViewController alloc]
-                                               initWithCategory:element.Id];
-            [self.navigationController pushViewController:ctgVC animated:YES];
+        case CTGID_VILLAS:
+
+        case CTGID_ISLAND_AEGEAN:
+        case CTGID_ISLAND_CYCLADIC:
+        case CTGID_ISLAND_IONIAN:
+        
+        case CTGID_EXCLUSIVE_DESIGNER:
+        case CTGID_EXCLUSIVE_ART:
+        {
+            UINavigationController *navcontroller = self.navigationController;
+            BOOL showCtg = NO, removeTop = NO;
+            int ctgToShow = element.Id;
             
+            if (menulevel == 0) {
+                showCtg = YES;
+            } else {
+                UIViewController *top = [self.navigationController topViewController];
+                if ([top isKindOfClass:[DPCategoryViewController class]]){
+                    int ctgshowing = ((DPCategoryViewController *)top).category;
+                    if (ctgshowing != element.Id) {
+                        removeTop = YES;
+                        showCtg = YES;
+                    }
+                } else { // is this ever possible???
+                    showCtg = YES; 
+                }
+            }
+            
+            if (removeTop) {
+                [navcontroller popViewControllerAnimated:NO];
+            }
+            
+            if (showCtg) {
+                DPCategoryViewController *ctgVC = [[DPCategoryViewController alloc]
+                                                   initWithCategory:ctgToShow];
+                [navcontroller pushViewController:ctgVC animated:YES];
+            }
             break;
         }
             
         case CTGID_VIDEOS:
-            
-            break;
-            
-        case CTGID_ISLAND_AEGEAN:
-            
-            break;
-            
-        case CTGID_ISLAND_CYCLADIC:
-            
-            break;
-            
-        case CTGID_ISLAND_IONIAN:
-            
-            break;
-            
-        case CTGID_EXCLUSIVE_EXCLUSIVE:
-            
-            break;
-            
-        case CTGID_EXCLUSIVE_ART:
             
             break;
             
@@ -202,11 +214,16 @@
         NSLog(@"Menu - calcImageName - baseName='%@'", elm.imageUrl);
         NSArray *parts = [elm.imageUrl componentsSeparatedByString:@"."];
         if (parts && parts.count == 2) {
+            NSString *result = elm.imageUrl;
             NSString *orientation = IS_PORTRAIT ? @"v" : @"h";            
             NSString *high = ishighlight ? @"_roll" : @"";
 
-            NSString *result = [NSString stringWithFormat:@"MainMenu/main_menu_%@_%@%@.%@",
+            if (menulevel == 0)
+                result = [NSString stringWithFormat:@"MainMenu/main_menu_%@_%@%@.%@",
                                     orientation, parts[0], high, parts[1]];
+            else
+                result = [NSString stringWithFormat:@"MenuLevel1/menu_level-1_%@_%@%@.%@",
+                          orientation, parts[0], high, parts[1]];
 
             return result;
         }
@@ -230,15 +247,20 @@
     
     NSString *imgname =[self resolveImageName:element];
     UIImage *img = [UIImage imageNamed:imgname];
-    if (!img)
-        button.frame = frame;
-    else {
-        CGSize imgsize = img.size;
-        button.frame = CGRectMake((frame.size.width - imgsize.width) / 2.0,
-                                  (frame.size.height - imgsize.height) / 2.0,
-                                  imgsize.width, imgsize.height);
-        [button setImage:img forState:UIControlStateNormal];
-    }
+
+    button.contentMode = UIViewContentModeScaleAspectFit;
+    button.frame = frame;
+    [button setImage:img forState:UIControlStateNormal];
+
+//    if (!img)
+//        button.frame = frame;
+//    else {
+//        CGSize imgsize = img.size;
+//        button.frame = CGRectMake((frame.size.width - imgsize.width) / 2.0,
+//                                  (frame.size.height - imgsize.height) / 2.0,
+//                                  imgsize.width, imgsize.height);
+//        [button setImage:img forState:UIControlStateNormal];
+//    }
     
     NSString *imghighname =[self resolveHighlightImageName:element];
     if (imghighname) {
@@ -310,7 +332,9 @@
     frm = CGRectMake(0, 0, island_width, island_height);
     NSLogFrame(@"***** ISLANDS", frm);
     UIImageView *iv = [[UIImageView alloc] initWithFrame: frm];
-    iv.image = [UIImage imageNamed: element.imageUrl];
+
+    NSString *imgname =[self resolveImageName:element];
+    iv.image = [UIImage imageNamed:imgname];
     iv.contentMode = UIViewContentModeScaleAspectFit; 
     iv.tag = indx;
     UITapGestureRecognizer *tapper = [[UITapGestureRecognizer alloc]
@@ -406,13 +430,11 @@
         self.popController.contentSize = CGSizeMake(frame.size.width + 20, frame.size.height + 40);
     } else {
         self.popController.arrowDirection = FPPopoverArrowDirectionRight;
-        self.popController.contentSize = CGSizeMake(frame.size.width + 40, frame.size.height + 80);
-
+        self.popController.contentSize = CGSizeMake(frame.size.width + 40,
+                                                    frame.size.height + (islandsCount == 3 ? 80 : 20));
     }
     
-    BOOL isMAIN = (self.rowCount == 3) && (self.colCount == 3);
-    
-    if (isMAIN || IS_PORTRAIT)
+    if ((menulevel == 0) || IS_PORTRAIT)
         [self.popController presentPopoverFromView:fromView];
     else
     {

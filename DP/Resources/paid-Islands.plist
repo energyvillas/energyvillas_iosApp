@@ -18,9 +18,9 @@
 		</array>
 		<key>Images</key>
 		<array>
-			<string>Cycladic house 90τ.μ. .jpg</string>
-			<string>Aegean house 82 τ.μ..jpg</string>
-			<string>Ionian house 90 τ.μ.</string>
+			<string>kukladitikes.png</string>
+			<string>aigaiopelagitikes.png</string>
+			<string>ionion.png</string>
 		</array>
 		<key>Videos</key>
 		<array>
@@ -39,9 +39,9 @@
 		</array>
 		<key>Images</key>
 		<array>
-			<string>Κυκλαδίτικη κατοικία 90 τ.μ..jpg</string>
-			<string>Αγαιοπελαγίτικη κατοικία 82 τ.μ..jpg</string>
-			<string>Κατοικία Ιονίων νήσων  90τ.μ..jpg</string>
+			<string>kukladitikes.png</string>
+			<string>aigaiopelagitikes.png</string>
+			<string>ionion.png</string>
 		</array>
 		<key>Videos</key>
 		<array>
