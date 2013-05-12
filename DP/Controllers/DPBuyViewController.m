@@ -131,7 +131,7 @@
     //[btn setTitleColor:[UIColor blackColor] forState:UIControlStateHighlighted];
     btn.backgroundColor = [UIColor blackColor];
     btn.layer.borderColor = [UIColor whiteColor].CGColor;
-    btn.layer.borderWidth = 1.0f;
+    btn.layer.borderWidth = 1.5f;
     btn.layer.cornerRadius = 4.0f;
 }
 
@@ -256,7 +256,10 @@
                             frm.origin.y + frm.size.height);
         
         self.contentView.frame = cf;
-        
+    self.contentView.layer.cornerRadius = 4.0f;
+    self.contentView.layer.borderColor = [UIColor colorWithWhite:1.0f alpha:0.8f].CGColor;
+    self.contentView.layer.borderWidth = IS_IPAD ? 3.0f : 1.5f;
+    
         if (IS_IPAD) {
             actualFrame = CGRectMake((nextViewSize.width - frm.size.width) / 2,
                                      cf.origin.y,
