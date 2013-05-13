@@ -374,33 +374,68 @@
 - (UIView *)carousel:(iCarousel *)carousel viewForItemAtIndex:(NSUInteger)index reusingView:(UIView *)view
 {
     //create new view if no view is available for recycling
-    if (view == nil)
-    {
-        view = [self doCreateImageViewWithFrame:[self calcFittingFrame:self.icarousel.frame.size]
-                                    contentMode:UIViewContentModeScaleAspectFit
-                                 withReflection:YES];
-    }
+//    if (view == nil)
+//    {
+//        view = [self doCreateImageViewWithFrame:[self calcFittingFrame:self.icarousel.frame.size]
+//                                    contentMode:UIViewContentModeScaleAspectFit
+//                                 withReflection:YES];
+//    }
+//    
+//    UIImageView *imgView = nil;
+//    if ([view isKindOfClass:[UIImageView class]])
+//        imgView = (UIImageView *)view;
+//    
+//    Article *article = self.datalist[index];
+//    NSString *imgName = article.imageThumbUrl ? article.imageThumbUrl : article.imageUrl;
+//    if (isLocalUrl(imgName)) {
+//        imgName = [self calcImageName:imgName];
+//        UIImage *img = [UIImage imageNamed:imgName];
+//        if (imgView)
+//            imgView.image = img;
+//        else
+//            return [self createImageView:img];
+//    } else {
+//        // Check if image already exists in cache. If yes retrieve it from there, else go to internet...
+//        
+//        UIImage *img = article.imageThumbUrl ? article.imageThumb : article.image;
+//        if (img == nil) {
+//            img = [[DPAppHelper sharedInstance] loadUIImageFromCache:imgName];
+//            if (img) {
+//                if (article.imageThumbUrl)
+//                    article.imageThumb = img;
+//                else
+//                    article.image = img;
+//            }
+//        }
+//        if (img != nil) {
+//            if (imgView)
+//                imgView.image = img;
+//            else
+//                return [self createImageView:img];
+//        } else {
+//            [self downloadImageUrl:imgName atIndex:index];
+//            return [self createImageViewLoading];
+//        }
+//    }
+//    
+//    return view;
     
-    UIImageView *imgView = nil;
-    if ([view isKindOfClass:[UIImageView class]])
-        imgView = (UIImageView *)view;
+    //=======
+    NSLog(@"3.carousel requested article at index %d", index);
     
     Article *article = self.datalist[index];
     NSString *imgName = article.imageThumbUrl ? article.imageThumbUrl : article.imageUrl;
     if (isLocalUrl(imgName)) {
         imgName = [self calcImageName:imgName];
         UIImage *img = [UIImage imageNamed:imgName];
-        if (imgView)
-            imgView.image = img;
-        else
-            return [self createImageView:img];
+        
+        return [self createImageView:img];
     } else {
         // Check if image already exists in cache. If yes retrieve it from there, else go to internet...
-        
         UIImage *img = article.imageThumbUrl ? article.imageThumb : article.image;
         if (img == nil) {
             img = [[DPAppHelper sharedInstance] loadUIImageFromCache:imgName];
-            if (img) {
+            if (img != nil) {
                 if (article.imageThumbUrl)
                     article.imageThumb = img;
                 else
@@ -408,38 +443,12 @@
             }
         }
         if (img != nil) {
-            if (imgView)
-                imgView.image = img;
-            else
-                return [self createImageView:img];
+            return  [self createImageView:img];
         } else {
             [self downloadImageUrl:imgName atIndex:index];
             return [self createImageViewLoading];
         }
     }
-    
-    return view;
-    
-    //=======
-//    NSLog(@"3.carousel requested article at index %d", index);
-//    
-//    Article *article = self.datalist[index];
-//    NSString *imgName = article.imageThumbUrl ? article.imageThumbUrl : article.imageUrl;
-//    if (isLocalUrl(imgName)) {
-//        imgName = [self calcImageName:imgName];
-//        UIImage *img = [UIImage imageNamed:imgName];
-//        
-//        return [self createImageView:img];
-//    } else {
-//        // Check if image already exists in cache. If yes retrieve it from there, else go to internet...
-//        UIImage *img = [[DPAppHelper sharedInstance] loadUIImageFromCache:imgName];
-//        if (img != nil) {
-//            return  [self createImageView:img];
-//        } else {
-//            [self downloadImageUrl:imgName atIndex:index];
-//            return [self createImageViewLoading];
-//        }
-//    }
 }
 
 -(UIView *) createImageViewLoading  {
