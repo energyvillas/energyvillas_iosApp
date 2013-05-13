@@ -7,8 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "UINavContentViewController.h"
 
-@interface DPSocialViewController : UIViewController
+@interface DPSocialViewController : UINavContentViewController
 
 @property (strong, nonatomic) IBOutlet UIView *backView;
 @property (strong, nonatomic) IBOutlet UIView *backgroundView;

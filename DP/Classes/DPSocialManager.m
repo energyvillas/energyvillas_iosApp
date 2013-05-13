@@ -91,7 +91,7 @@
     id del = self.controller.navigationController.delegate;
     UIViewController *main = del;
     
-    DPSocialViewController *vc = [[DPSocialViewController alloc]
+    self.socialController = [[DPSocialViewController alloc]
                                   initWithCompletion:^(int indx){
                                       self.controller.view.userInteractionEnabled = YES;
                                       self.socialController = nil;
@@ -104,8 +104,8 @@
     
     self.controller.view.userInteractionEnabled = NO;
     
-    [main addChildViewController:vc];
-    [main.view addSubview:vc.view];
+    [main addChildViewController:self.socialController];
+    [main.view addSubview:self.socialController.view];
 }
 
 //==============================================================================

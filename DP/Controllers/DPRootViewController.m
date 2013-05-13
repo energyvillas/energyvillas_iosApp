@@ -374,13 +374,6 @@
         self.buyController = nil;
         [self showBuyDialog:ctgid];
     }
-//    if (IS_IPAD && self.socialController) {
-//        //int ctgid = self.socialController.category;
-//        [self.navigationController dismissViewControllerAnimated:NO completion:nil];
-//        self.view.userInteractionEnabled = YES;
-//        self.socialController = nil;
-//        [self showSocialsDialog];
-//    }
     if (IS_IPAD && self.socialManager && self.socialManager.showingDialog) {
         [self.socialManager hideSocialsDialog];
         self.socialManager = nil;
