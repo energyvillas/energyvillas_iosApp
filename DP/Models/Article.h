@@ -37,6 +37,10 @@
 @property (nonatomic, strong) NSString *videoUrl;
 @property (nonatomic, strong) NSString *videolength;
 
+@property (nonatomic, strong) UIImage *image;
+@property (nonatomic, strong) UIImage *imageThumb;
+
+
 -(void)encodeWithCoder:(NSCoder *)encoder;
 
 -(id)initWithValues:(NSString *)aId

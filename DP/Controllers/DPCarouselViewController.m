@@ -373,47 +373,73 @@
 }
 - (UIView *)carousel:(iCarousel *)carousel viewForItemAtIndex:(NSUInteger)index reusingView:(UIView *)view
 {
-//    //create new view if no view is available for recycling
-//    if (view == nil)
-//    {
-//        view = [[[AsyncImageView alloc] initWithFrame:CGRectMake(0, 0, 200.0f, 200.0f)] autorelease];
-//        view.contentMode = UIViewContentModeScaleAspectFit;
-//    }
-//    
-//    //cancel any previously loading images for this view
-//    [[AsyncImageLoader sharedLoader] cancelLoadingImagesForTarget:view];
-//    
-//    //set image URL. AsyncImageView class will then dynamically load the image
-//    ((AsyncImageView *)view).imageURL = [items objectAtIndex:index];
-//
-//    return view;
+    //create new view if no view is available for recycling
+    if (view == nil)
+    {
+        view = [self doCreateImageViewWithFrame:[self calcFittingFrame:self.icarousel.frame.size]
+                                    contentMode:UIViewContentModeScaleAspectFit
+                                 withReflection:YES];
+    }
     
-    //=======
-    NSLog(@"3.carousel requested article at index %d", index);
+    UIImageView *imgView = nil;
+    if ([view isKindOfClass:[UIImageView class]])
+        imgView = (UIImageView *)view;
     
     Article *article = self.datalist[index];
     NSString *imgName = article.imageThumbUrl ? article.imageThumbUrl : article.imageUrl;
     if (isLocalUrl(imgName)) {
         imgName = [self calcImageName:imgName];
         UIImage *img = [UIImage imageNamed:imgName];
-        
-        return [self createImageView:img];
+        if (imgView)
+            imgView.image = img;
+        else
+            return [self createImageView:img];
     } else {
         // Check if image already exists in cache. If yes retrieve it from there, else go to internet...
-//        if (self.imageCache && self.imageCache.count > index && self.imageCache[index] != [NSNull null]) {
-//            UIImage *img = self.imageCache[index];//[UIImage imageWithData:self.imageCache[index]];
-//            
-//            return [self createImageView:img];
-//        } else {
-            UIImage *img = [[DPAppHelper sharedInstance] loadUIImageFromCache:imgName];
-            if (img != nil) {
-                return  [self createImageView:img];
-            } else {
-                [self downloadImageUrl:imgName atIndex:index];
-                return [self createImageViewLoading];
+        
+        UIImage *img = article.imageThumbUrl ? article.imageThumb : article.image;
+        if (img == nil) {
+            img = [[DPAppHelper sharedInstance] loadUIImageFromCache:imgName];
+            if (img) {
+                if (article.imageThumbUrl)
+                    article.imageThumb = img;
+                else
+                    article.image = img;
             }
-//        }
+        }
+        if (img != nil) {
+            if (imgView)
+                imgView.image = img;
+            else
+                return [self createImageView:img];
+        } else {
+            [self downloadImageUrl:imgName atIndex:index];
+            return [self createImageViewLoading];
+        }
     }
+    
+    return view;
+    
+    //=======
+//    NSLog(@"3.carousel requested article at index %d", index);
+//    
+//    Article *article = self.datalist[index];
+//    NSString *imgName = article.imageThumbUrl ? article.imageThumbUrl : article.imageUrl;
+//    if (isLocalUrl(imgName)) {
+//        imgName = [self calcImageName:imgName];
+//        UIImage *img = [UIImage imageNamed:imgName];
+//        
+//        return [self createImageView:img];
+//    } else {
+//        // Check if image already exists in cache. If yes retrieve it from there, else go to internet...
+//        UIImage *img = [[DPAppHelper sharedInstance] loadUIImageFromCache:imgName];
+//        if (img != nil) {
+//            return  [self createImageView:img];
+//        } else {
+//            [self downloadImageUrl:imgName atIndex:index];
+//            return [self createImageViewLoading];
+//        }
+//    }
 }
 
 -(UIView *) createImageViewLoading  {
@@ -485,16 +511,21 @@
     return [self doCreateImageView:image frame:frame contentMode:UIViewContentModeScaleAspectFit];
 }
 -(UIImageView *) doCreateImageView:(UIImage *)image frame:(CGRect)frame contentMode:(UIViewContentMode)aContentMode{
+    UIImageView *result = [self doCreateImageViewWithFrame:frame contentMode:aContentMode withReflection:YES];
+    result.image = image;
+    return result;
+}
+-(UIImageView *) doCreateImageViewWithFrame:(CGRect)frame contentMode:(UIViewContentMode)aContentMode withReflection:(BOOL)addrefrection {
     FXImageView *imageView = [[FXImageView alloc] initWithFrame:frame];
     imageView.contentMode = aContentMode;
     imageView.asynchronous = NO;
-    imageView.reflectionScale = 0.5f;
-    imageView.reflectionAlpha = 0.35f;
-    imageView.reflectionGap = 10.0f;
-    imageView.shadowOffset = CGSizeMake(0.0f, 2.0f);
-    imageView.shadowBlur = 5.0f;
-
-    imageView.image = image;
+    if (addrefrection) {
+        imageView.reflectionScale = 0.5f;
+        imageView.reflectionAlpha = 0.35f;
+        imageView.reflectionGap = 10.0f;
+        imageView.shadowOffset = CGSizeMake(0.0f, 2.0f);
+        imageView.shadowBlur = 5.0f;
+    }
     return imageView;
 }
 
