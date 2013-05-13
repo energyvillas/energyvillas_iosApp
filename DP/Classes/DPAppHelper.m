@@ -72,7 +72,7 @@
 
 - (void) createDefaults {
     NSDictionary *defaults = [NSDictionary dictionaryWithObjectsAndKeys:
-            [NSNumber numberWithBool:NO], USE_DATA_CACHING,
+            [NSNumber numberWithBool:CACHING_ENABLED], USE_DATA_CACHING,
             nil];
     
     NSUserDefaults *usrDefaults = [NSUserDefaults standardUserDefaults];

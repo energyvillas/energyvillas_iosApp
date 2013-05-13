@@ -12,6 +12,8 @@ FOUNDATION_EXPORT NSString *const MySecondConstant;
 */
 
 #define USE_TEST_SITE ((BOOL)NO)
+#define CACHING_ENABLED ((BOOL)YES)
+
 
 #define IS_IPAD ((BOOL)([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad))
 
