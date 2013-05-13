@@ -12,3 +12,8 @@
     #import <UIKit/UIKit.h>
     #import <Foundation/Foundation.h>
 #endif
+
+
+//#if !defined(DEBUG) || !(TARGET_IPHONE_SIMULATOR)
+#define NSLog(...)
+//#endif
