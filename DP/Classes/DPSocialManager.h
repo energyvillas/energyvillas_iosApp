@@ -8,13 +8,9 @@
 
 #import <Foundation/Foundation.h>
 #import <MessageUI/MessageUI.h>
+//#import "DPSocialDelegate.h"
 
-//@protocol DPSocialManagerDelegate <NSObject>
-//
-//@optional
-//-(void) onSocialClosed;
-//
-//@end
+
 
 @interface DPSocialManager : NSObject <MFMailComposeViewControllerDelegate>
 
@@ -25,7 +21,7 @@
 -(id) initWithController:(UIViewController *)controller
           onSocialClosed:(void(^)(void))onSocialClosed;
 
-- (void) showSocialsDialog:(void(^)(void))completed;
+- (void) showSocialsDialog:(void(^)(int socialAction))completed;
 - (void) hideSocialsDialog;
 
 @end

@@ -35,6 +35,9 @@
 //@property (strong, nonatomic) DPSocialViewController *socialController;
 @property (strong, nonatomic) DPSocialManager *socialManager;
 
+
+//@property (strong, nonatomic) FPPopoverController *popController;
+
 @end
 
 @implementation DPRootViewController {
@@ -74,7 +77,7 @@
     
     if (self.bottomView.subviews.count > 0) {
         [self loadDetailView:YES];
-        [self loadOpenFlow];
+        [self loadOpenFlow:YES];
     }
 }
 
@@ -98,7 +101,9 @@
     self.buyController.modalPresentationStyle = UIModalPresentationFormSheet;
     self.navigationController.modalPresentationStyle = UIModalPresentationFormSheet;
     [self.navigationController presentViewController:self.buyController animated:YES completion:nil];
+    
     CGRect svfrm = [self.buyController calcFrame];
+    self.buyController.view.superview.backgroundColor = [UIColor clearColor];
     if (IS_PORTRAIT)
         self.buyController.view.superview.frame = CGRectOffset(svfrm, 0, 170);
     else
@@ -132,7 +137,7 @@
         
     self.bbiMore.title = showingMore ? DPLocalizedString(kbbiMoreBack_Title) : DPLocalizedString(kbbiMore_Title);
 
-    [self loadOpenFlow];
+    [self loadOpenFlow:YES];
 }
 
 #pragma mark - DPActionDelegate
@@ -155,6 +160,10 @@
 //            break;
 //            
         case TAG_NBI_SHARE: {
+//            dispatch_async(dispatch_get_main_queue(), ^{
+//                [self sendMail];
+//            });
+
             [self showSocialsDialog];
             break;
         }
@@ -175,9 +184,10 @@
 //        self.socialManager.socialDelegate = self;
     }
     
-    [self.socialManager showSocialsDialog:^{
+    [self.socialManager showSocialsDialog:^(int socialAction){
         //self.socialManager = nil;
-    }];
+//        [self sendMail];
+     }];
 }
 
 
@@ -270,10 +280,22 @@
 //
 ////==============================================================================
 //
-//-(void) composeEmail {
+
+//-(void) doSendMail {
+//    dispatch_async(dispatch_get_main_queue(), ^{
+//        [self sendMail];
+//    });
+//}
+//
+//-(void) sendMail {
+//    if (![MFMailComposeViewController canSendMail]) {
+//        showAlertMessage(nil, @"Warning", @"Cannot send mail!!!");
+//    } else {
 //    MFMailComposeViewController *composer = [DPMailHelper composeEmail];
 //    composer.mailComposeDelegate = self;
+//    composer.modalPresentationStyle = UIModalPresentationPageSheet;
 //	[self.navigationController presentModalViewController:composer animated:YES];
+//    }
 //}
 //
 //#pragma mark - MFMailComposeViewControllerDelegate
@@ -283,6 +305,26 @@
 //                        error:(NSError *)error {
 //	[controller dismissModalViewControllerAnimated:YES];
 //
+////    switch (result) {
+////        case MFMailComposeResultCancelled:
+////            showAlertMessage(nil, @"Warning", @"Cannot send mail!!!");
+////            break;
+////            
+////        case MFMailComposeResultFailed:
+////            <#statements#>
+////            break;
+////            
+////        case MFMailComposeResultSaved:
+////            <#statements#>
+////            break;
+////            
+////        case MFMailComposeResultSent:
+////            <#statements#>
+////            break;
+////            
+////        default:
+////            break;
+////    }
 //    onAfterAppear++;
 //}
 //
@@ -364,35 +406,56 @@
     self.bottomView.frame = CGRectMake(0, top + topHeight + toolbarHeight,
                                        w, BOTTOM_HEIGHT);
     
-    [self loadOpenFlow];
+    [self loadOpenFlow:NO];
     [self loadDetailView:NO];
     
-    if (/*IS_IPAD && */self.buyController) {
-        int ctgid = self.buyController.category;
-        [self.navigationController dismissViewControllerAnimated:NO completion:nil];
-        self.view.userInteractionEnabled = YES;
-        self.buyController = nil;
-        [self showBuyDialog:ctgid];
-    }
-    if (IS_IPAD && self.socialManager && self.socialManager.showingDialog) {
-        [self.socialManager hideSocialsDialog];
-        self.socialManager = nil;
-        [self showSocialsDialog];
-    }
+//    if (/*IS_IPAD && */self.buyController) {
+//        int ctgid = self.buyController.category;
+//        [self.navigationController dismissViewControllerAnimated:NO completion:nil];
+//        self.view.userInteractionEnabled = YES;
+//        self.buyController = nil;
+//        [self showBuyDialog:ctgid];
+//    }
+    
+//    if (self.buyController) {
+//        CGRect svfrm = [self.buyController calcFrame];
+//        svfrm.origin = CGPointMake((w - svfrm.size.width - 2.0f) / 2.0f, svfrm.origin.y);
+//                                   //(h - svfrm.size.height) / 2.0f);
+//        self.buyController.view.superview.backgroundColor = [UIColor clearColor];
+//        svfrm = IS_PORTRAIT ? CGRectOffset(svfrm, 0, 170) : CGRectOffset(svfrm, 0, 180);
+//        NSLogFrame(@"BUY FRM:", svfrm);
+//        
+//        dispatch_async(dispatch_get_main_queue(), ^{
+//            NSLogFrame(@"BUY FRM CONTAINER", self.view.frame);
+////            self.buyController.view.superview.center = self.view.center;
+//        });
+//    }
+    
+//    if (IS_IPAD && self.socialManager && self.socialManager.showingDialog) {
+//        [self.socialManager hideSocialsDialog];
+//        self.socialManager = nil;
+//        [self showSocialsDialog];
+//    }
 }
 
 - (void) loadDetailView:(BOOL)reload{
     UIView *bcv = self.bottomView;
 
     DPCategoriesViewController *detvc;
-    if (reload && bcv.subviews.count > 0) {
-        detvc = (DPCategoriesViewController *)self.childViewControllers[0];
-        [detvc.view removeFromSuperview];
-        [detvc removeFromParentViewController];
-        detvc = nil;
-    }        
+    for (int i = 0; i < self.childViewControllers.count; i++)
+        if ([self.childViewControllers[i] isKindOfClass:[DPCategoriesViewController class]]) {
+            detvc = (DPCategoriesViewController *)self.childViewControllers[i];
+            if (reload) {
+                [detvc.view removeFromSuperview];
+                [detvc removeFromParentViewController];
+                detvc = nil;
+            }
+            break;
+        }
     
-    if (bcv.subviews.count == 0) {
+    [self.bottomView setNeedsDisplay];
+
+    if (detvc == nil) {
         DPAppHelper *apphelper = [DPAppHelper sharedInstance];
         if (IS_PORTRAIT)
             detvc = [[DPCategoriesViewController alloc] initWithCategory:-1
@@ -414,28 +477,22 @@
         detvc.view.frame = self.bottomView.bounds;
         [self addChildViewController: detvc];
         [bcv addSubview: detvc.view];
-        
-        detvc = nil;
     } else {
-        for (int i = 0; i < self.childViewControllers.count; i++)
-            if ([self.childViewControllers[0] isKindOfClass:[DPCategoriesViewController class]]) {
-                detvc = (DPCategoriesViewController *)self.childViewControllers[i];
-                detvc.view.frame = self.bottomView.bounds;
-                if (IS_PORTRAIT)
-                    [detvc changeRows:2 columns:2];
-                else
-                    [detvc changeRows:1 columns:4];
-                
-                break;
-            }
+        detvc.view.frame = self.bottomView.bounds;
+        if (IS_PORTRAIT)
+            [detvc changeRows:2 columns:2];
+        else
+            [detvc changeRows:1 columns:4];
     }
+    
+    detvc = nil;
 }
 
 -(int) carouselCategory {
     return showingMore ? CTGID_CAROUSEL_MORE : CTGID_CAROUSEL;
 }
 
-- (void) loadOpenFlow {
+- (void) loadOpenFlow:(BOOL)reload {
     //self.topView.backgroundColor = [UIColor yellowColor];
     
     DPCarouselViewController *carousel = nil;
@@ -444,19 +501,33 @@
         if ([self.childViewControllers[i] isKindOfClass:[DPCarouselViewController class]]) {
             carousel = (DPCarouselViewController *)self.childViewControllers[i];
             currImgIndex = carousel.currentIndex;
-            [carousel.view removeFromSuperview];
-            [carousel removeFromParentViewController];
-            carousel = nil;
+            if (reload) {
+                [carousel.view removeFromSuperview];
+                [carousel removeFromParentViewController];
+                carousel = nil;
+            }
             break;
         }
     
     [self.topView setNeedsDisplay];
+
+//    if (carousel != nil && carousel.carouselCategoryID != [self carouselCategory]) {
+//        [carousel.view removeFromSuperview];
+//        [carousel removeFromParentViewController];
+//        carousel = nil;
+//        currImgIndex = 0;
+//    }
     
-    carousel = [[DPCarouselViewController alloc] initWithCtg:[self carouselCategory]];
-    CGRect frm = self.topView.bounds;
-    carousel.view.frame = frm;
-    [self addChildViewController:carousel];
-    [self.topView addSubview:carousel.view];
+    if (carousel == nil) {
+        carousel = [[DPCarouselViewController alloc] initWithCtg:[self carouselCategory]];
+        CGRect frm = self.topView.bounds;
+        carousel.view.frame = frm;
+        [self addChildViewController:carousel];
+        [self.topView addSubview:carousel.view];
+    } else {
+        CGRect frm = self.topView.bounds;
+        carousel.view.frame = frm;
+    }
     [carousel makeCurrentImageAtIndex:currImgIndex];
 }
 

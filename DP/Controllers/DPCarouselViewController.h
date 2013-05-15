@@ -15,6 +15,8 @@
 @interface DPCarouselViewController : UIViewController </*AFOpenFlowViewDataSource, AFOpenFlowViewDelegate, */DPDataLoaderDelegate, iCarouselDataSource, iCarouselDelegate>
 
 @property (nonatomic, readonly) int currentIndex;
+@property (nonatomic, readonly) int carouselCategoryID;
+
 
 -(id) initWithCtg:(int)ctgid;
 

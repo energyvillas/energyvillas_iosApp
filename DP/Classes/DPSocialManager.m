@@ -19,7 +19,7 @@
 @property (strong, nonatomic) DPSocialViewController *socialController;
 @property (weak, nonatomic) UIViewController *controller;
 @property (strong) void (^onSocialClosed)(void);
-@property (strong) void (^onCompleted)(void);
+@property (strong) void (^onCompleted)(int socialAction);
 
 @end
 
@@ -51,7 +51,7 @@
 }
 
 
-- (void) showSocialsDialog:(void(^)(void))completed {
+- (void) showSocialsDialog:(void(^)(int socialAction))completed {
     AudioServicesPlaySystemSound(0x528);
     self.onCompleted = completed;
     if (IS_IPAD)
@@ -68,17 +68,21 @@
                                  self.controller.view.userInteractionEnabled = YES;
                                  self.socialController = nil;
                                  
+//                                 if (self.onCompleted)
+//                                     self.onCompleted(indx);
                                  if (indx == -1)
                                      ;//[self showSocialsDialog];
                                  else if (indx > 0)
-                                     [self launchSocialAction:indx];
+                                    [self launchSocialAction:indx];
                              }];
     
     self.controller.view.userInteractionEnabled = NO;
     self.socialController.modalPresentationStyle = UIModalPresentationFormSheet;
     self.controller.navigationController.modalPresentationStyle = UIModalPresentationFormSheet;
     [self.controller.navigationController presentViewController:self.socialController animated:YES completion:nil];
+    
     CGRect svfrm = [self.socialController calcFrame];
+    self.socialController.view.superview.backgroundColor = [UIColor clearColor];
     if (IS_PORTRAIT)
         self.socialController.view.superview.frame = svfrm;
     else
@@ -96,8 +100,10 @@
                                       self.controller.view.userInteractionEnabled = YES;
                                       self.socialController = nil;
                                       
+//                                      if (self.onCompleted)
+//                                          self.onCompleted(indx);
                                       if (indx == -1)
-                                          [self showSocialsDialog:self.onCompleted];
+                                          ;//[self showSocialsDialog:self.onCompleted];
                                       else if (indx > 0)
                                           [self launchSocialAction:indx];
                                   }];
@@ -115,8 +121,8 @@
     
     switch (action) {
         case SOCIAL_ACT_FACEBOOK: {
-            DPFacebookViewController *facebook = [[DPFacebookViewController alloc] init];
-            [self.controller.navigationController pushViewController:facebook animated:YES];
+//            DPFacebookViewController *facebook = [[DPFacebookViewController alloc] init];
+//            [self.controller.navigationController pushViewController:facebook animated:YES];
             
             break;
         }
@@ -129,6 +135,7 @@
             break;
             
         case SOCIAL_ACT_EMAIL:
+            
             [self composeEmail];
             break;
             
@@ -171,11 +178,12 @@
                                                                 animated:YES];
     else {
 //        composer.modalPresentationStyle = UIModalPresentationPageSheet;
-//        self.controller.navigationController.modalPresentationStyle = UIModalPresentationPageSheet;
-        [self.controller presentModalViewController:composer
+        self.controller.navigationController.modalPresentationStyle = UIModalPresentationPageSheet;
+        [self.controller.navigationController presentModalViewController:composer
                                                                           animated:YES];
 //                                                         completion:nil];
     }
+    
 }
 
 #pragma mark - MFMailComposeViewControllerDelegate

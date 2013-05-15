@@ -348,6 +348,7 @@
 		5ED20282171EA757006AC1FC /* UIImage+FX.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+FX.m"; sourceTree = "<group>"; };
 		5ED20285171F096E006AC1FC /* libz.1.2.5.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.1.2.5.dylib; path = usr/lib/libz.1.2.5.dylib; sourceTree = SDKROOT; };
 		5EDC4118172E8265002A3788 /* HIK_ImageNames.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = HIK_ImageNames.plist; sourceTree = "<group>"; };
+		5EDE1F761743F84D00A84BDA /* DPSocialDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DPSocialDelegate.h; path = DP/Social/DPSocialDelegate.h; sourceTree = SOURCE_ROOT; };
 		5EDF0957170C9CBE00774682 /* Icon-72.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-72.png"; sourceTree = "<group>"; };
 		5EDF0958170C9CBE00774682 /* Icon-72@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-72@2x.png"; sourceTree = "<group>"; };
 		5EDF0959170C9CBE00774682 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
@@ -420,6 +421,9 @@
 				5E31F039172021C3008B15F0 /* DPFacebookViewController.m */,
 				5E31F04717205AC0008B15F0 /* DPSocialViewController.h */,
 				5E31F04817205AC0008B15F0 /* DPSocialViewController.m */,
+				5EDE1F761743F84D00A84BDA /* DPSocialDelegate.h */,
+				5EC5739717255527000B7004 /* DPSocialManager.h */,
+				5EC5739817255527000B7004 /* DPSocialManager.m */,
 			);
 			path = Social;
 			sourceTree = "<group>";
@@ -430,8 +434,6 @@
 				5E31F03617201073008B15F0 /* DPFBLoginView.xib */,
 				5E31F03B172021DB008B15F0 /* DPFacebookView.xib */,
 				5E31F04A17205AD8008B15F0 /* DPSocialView.xib */,
-				5EC5739717255527000B7004 /* DPSocialManager.h */,
-				5EC5739817255527000B7004 /* DPSocialManager.m */,
 			);
 			path = SocialViews;
 			sourceTree = "<group>";
@@ -1077,7 +1079,7 @@
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: DESIGN PROJECTS LTD (7U2CGA4753)";
+				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -1093,7 +1095,6 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
 				ONLY_ACTIVE_ARCH = YES;
-				PROVISIONING_PROFILE = "28FB85AF-2BC5-4CE4-B6DA-FF4E419D8692";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -1111,7 +1112,7 @@
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: DESIGN PROJECTS LTD (7U2CGA4753)";
+				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -1120,7 +1121,6 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
-				PROVISIONING_PROFILE = "28FB85AF-2BC5-4CE4-B6DA-FF4E419D8692";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;

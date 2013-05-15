@@ -324,8 +324,11 @@
     else {
         NSTimeInterval pos = self.playerController.currentPlaybackTime;
         [self.playerController pause];
-        self.playerController.view.frame = frame;//CGRectInset(containerView.bounds, 2, 2);
+//        self.playerController.view.frame = frame;//CGRectInset(containerView.bounds, 2, 2);
         self.playerController.currentPlaybackTime = pos;
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.playerController play];
+        });
     }
     
     return self.playerController.view;

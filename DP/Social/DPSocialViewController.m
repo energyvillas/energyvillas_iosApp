@@ -75,10 +75,10 @@
 }
 
 - (void) willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
-    if (!IS_IPAD)
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [self doOnBtnTap:-1];
-        });
+//    if (!IS_IPAD)
+//        dispatch_async(dispatch_get_main_queue(), ^{
+//            [self doOnBtnTap:-1];
+//        });
 }
 
 - (void)didReceiveMemoryWarning
@@ -94,13 +94,16 @@
 
 -(void) doOnBtnTap:(int)indx {
     if (IS_IPAD) {
-        [self dismissViewControllerAnimated:YES completion:nil];
+        [self dismissViewControllerAnimated:YES completion:^{
+            if (self.onClose != nil)
+                self.onClose(indx);
+        }];
     } else {
         [self.view removeFromSuperview];
         [self removeFromParentViewController];
+        if (self.onClose != nil)
+            self.onClose(indx);
     }
-    if (self.onClose != nil)
-        self.onClose(indx);
 }
 
 -(CGRect) calcFrame {

@@ -33,7 +33,6 @@
 @property (strong, nonatomic) UILabel *lblCounter;
 @property (strong, nonatomic) UILabel *lblTitle;
 
-@property int carouselCategoryID;
 
 @property (strong, nonatomic) iCarousel *icarousel;
 
@@ -42,6 +41,7 @@
 @implementation DPCarouselViewController
 
 @synthesize currentIndex = _currentIndex;
+@synthesize carouselCategoryID = _carouselCategoryID;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -55,7 +55,7 @@
 -(id) initWithCtg:(int)ctgid {
     self = [super init];
     if (self)
-        self.carouselCategoryID = ctgid;
+        _carouselCategoryID = ctgid;
     
     return self;
 }
@@ -307,7 +307,11 @@
         self.icarousel.delegate = self;
         self.icarousel.dataSource = self;
         self.icarousel.type = (self.carouselCategoryID == CTGID_CAROUSEL) ? iCarouselTypeCoverFlow2 : iCarouselTypeLinear;
-        self.icarousel.scrollSpeed = 0.2f;
+        if (self.carouselCategoryID == CTGID_CAROUSEL) {
+            self.icarousel.scrollSpeed = IS_IPAD ? 0.35f : 0.25f;
+        } else {
+            self.icarousel.scrollSpeed = 0.35f;
+        }
 
         [self.view addSubview:self.icarousel];
         [self makeCurrentImageAtIndex:self.currentIndex];
@@ -461,7 +465,8 @@
     img = [img imageScaledToFitSize:szCarousel];
     imgSize = img.size;
     
-    CGRect frm = [self calcFittingFrame:self.icarousel.frame.size];
+    CGSize loadingImgSize = CGSizeMake(1800.0f, 1200.0f);
+    CGRect frm = [self calcFittingFrame:loadingImgSize];//]self.icarousel.frame.size];
     
     UIImageView *iv = [[UIImageView alloc] initWithFrame:CGRectOffset(frm, 0.0f, -10.0f)];
     iv.contentMode = UIViewContentModeCenter;

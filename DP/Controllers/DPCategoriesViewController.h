@@ -9,7 +9,7 @@
 #import "DPCtgScrollViewController.h"
 #import "DPDataLoader.h"
 
-@interface DPCategoriesViewController : DPCtgScrollViewController
+@interface DPCategoriesViewController : DPScrollableViewController //DPCtgScrollViewController
         <DPScrollableViewDelegate,
         DPScrollableDataSourceDelegate,
         DPDataLoaderDelegate>
