@@ -13,6 +13,8 @@
 #import "DPFacebookViewController.h"
 #import <Twitter/Twitter.h>
 #import "DPMailHelper.h"
+#import <FacebookSDK/FacebookSDK.h>
+#import "DPAppDelegate.h"
 
 @interface DPSocialManager ()
 
@@ -121,9 +123,7 @@
     
     switch (action) {
         case SOCIAL_ACT_FACEBOOK: {
-//            DPFacebookViewController *facebook = [[DPFacebookViewController alloc] init];
-//            [self.controller.navigationController pushViewController:facebook animated:YES];
-            
+            [self showFB];            
             break;
         }
         case SOCIAL_ACT_TWITTER:
@@ -149,6 +149,18 @@
             
         default:
             break;
+    }
+}
+
+//==============================================================================
+#pragma mark - Facebook
+- (void) showFB {
+    DPAppDelegate *appdel = [UIApplication sharedApplication].delegate;
+
+    if (FBSession.activeSession.state == FBSessionStateCreatedTokenLoaded) {
+        [appdel showFBView];
+    } else {
+        [appdel showFBLogin];
     }
 }
 

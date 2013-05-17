@@ -8,32 +8,13 @@
 
 #import "UINavContentViewController.h"
 
-@protocol DPFBLoginDialogDelegate
-- (void)accessTokenFound:(NSString *)accessToken;
-- (void)displayRequired;
-- (void)closeTapped;
-@end
 
+@interface DPFBLoginViewController : UINavContentViewController
 
+@property (strong, nonatomic) IBOutlet UIActivityIndicatorView *busyIndicator;
 
-@interface DPFBLoginViewController : UINavContentViewController <UIWebViewDelegate>
+- (IBAction)btnTouchUpInside:(id)sender;
 
-@property (strong, nonatomic) IBOutlet UIWebView *webView;
-@property (strong, nonatomic) IBOutlet UIButton *btnClose;
-
-
-- (id)initWithAppId:(NSString *)apiKey
-requestedPermissions:(NSString *)requestedPermissions
-           delegate:(id<DPFBLoginDialogDelegate>)delegate;
-
-
-- (void)login;
-- (void)logout;
-
-
--(void)checkForAccessToken:(NSString *)urlString;
--(void)checkLoginRequired:(NSString *)urlString;
-
-- (IBAction)onCloseTapped:(id)sender;
+- (void) loginFailed;
 
 @end

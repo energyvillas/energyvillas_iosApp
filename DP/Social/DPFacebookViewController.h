@@ -7,22 +7,22 @@
 //
 
 #import "UINavContentViewController.h"
-#import "DPFBLoginViewController.h"
+//#import "DPFBLoginViewController.h"
 
 
-typedef enum {
-    LoginStateStartup,
-    LoginStateLoggingIn,
-    LoginStateLoggedIn,
-    LoginStateLoggedOut
-} LoginState;
+//typedef enum {
+//    LoginStateStartup,
+//    LoginStateLoggingIn,
+//    LoginStateLoggedIn,
+//    LoginStateLoggedOut
+//} LoginState;
+//
 
+@interface DPFacebookViewController : UINavContentViewController
 
-@interface DPFacebookViewController : UINavContentViewController <DPFBLoginDialogDelegate>
-
-@property (strong, nonatomic) IBOutlet UILabel *lblLoginStatus;
-@property (strong, nonatomic) IBOutlet UIButton *btnLogin;
-
-- (IBAction)btnLoginTapped:(id)sender;
-
+//@property (strong, nonatomic) IBOutlet UILabel *lblLoginStatus;
+//@property (strong, nonatomic) IBOutlet UIButton *btnLogin;
+//
+//- (IBAction)btnLoginTapped:(id)sender;
+//
 @end

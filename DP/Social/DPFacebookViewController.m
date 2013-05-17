@@ -11,11 +11,11 @@
 
 @interface DPFacebookViewController ()
 
-@property (strong, nonatomic) DPFBLoginViewController *loginDialog;
+//@property (strong, nonatomic) DPFBLoginViewController *loginDialog;
 @end
 
 @implementation DPFacebookViewController {
-    LoginState loginState;
+//    LoginState loginState;
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -40,68 +40,69 @@
 }
 
 - (void)viewDidUnload {
-    [self setLblLoginStatus:nil];
-    [self setBtnLogin:nil];
+//    [self setLblLoginStatus:nil];
+//    [self setBtnLogin:nil];
     [super viewDidUnload];
 }
-- (IBAction)btnLoginTapped:(id)sender {
-    NSString *appId = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"FacebookAppID"];
-    NSString *permissions = @"publish_stream";
-    
-    if (self.loginDialog == nil) {
-        self.loginDialog = [[DPFBLoginViewController alloc] initWithAppId:appId
-                                               requestedPermissions:permissions
-                                                                 delegate:self];
-       // UIView *v = self.loginDialog.view;
-    }
-    
-    if (loginState == LoginStateStartup || loginState == LoginStateLoggedOut) {
-        loginState = LoginStateLoggingIn;
-        [self.loginDialog login];
-    } else if (loginState == LoginStateLoggedIn) {
-        loginState = LoginStateLoggedOut;
-        [self.loginDialog logout];
-    }
-    
-    [self refresh];
-}
-
-- (void)refresh {
-    if (loginState == LoginStateStartup || loginState == LoginStateLoggedOut) {
-        self.lblLoginStatus.text = @"Not connected to Facebook";
-        [self.btnLogin setTitle:@"Login" forState:UIControlStateNormal];
-        self.btnLogin.hidden = NO;
-    } else if (loginState == LoginStateLoggingIn) {
-        self.lblLoginStatus.text = @"Connecting to Facebook...";
-        self.btnLogin.hidden = YES;
-    } else if (loginState == LoginStateLoggedIn) {
-        self.lblLoginStatus.text = @"Connected to Facebook";
-        [self.btnLogin setTitle:@"Logout" forState:UIControlStateNormal];
-        self.btnLogin.hidden = NO;
-    }
-}
+//- (IBAction)btnLoginTapped:(id)sender {
+//    NSString *appId = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"FacebookAppID"];
+//    NSString *permissions = @"publish_stream";
+//    
+//    if (self.loginDialog == nil) {
+//        self.loginDialog = [[DPFBLoginViewController alloc] initWithAppId:appId
+//                                               requestedPermissions:permissions
+//                                                                 delegate:self];
+//       // UIView *v = self.loginDialog.view;
+//    }
+//    
+//    if (loginState == LoginStateStartup || loginState == LoginStateLoggedOut) {
+//        loginState = LoginStateLoggingIn;
+//        [self.loginDialog login];
+//    } else if (loginState == LoginStateLoggedIn) {
+//        loginState = LoginStateLoggedOut;
+//        [self.loginDialog logout];
+//    }
+//    
+//    [self refresh];
+//}
+//
+//- (void)refresh {
+//    if (loginState == LoginStateStartup || loginState == LoginStateLoggedOut) {
+//        self.lblLoginStatus.text = @"Not connected to Facebook";
+//        [self.btnLogin setTitle:@"Login" forState:UIControlStateNormal];
+//        self.btnLogin.hidden = NO;
+//    } else if (loginState == LoginStateLoggingIn) {
+//        self.lblLoginStatus.text = @"Connecting to Facebook...";
+//        self.btnLogin.hidden = YES;
+//    } else if (loginState == LoginStateLoggedIn) {
+//        self.lblLoginStatus.text = @"Connected to Facebook";
+//        [self.btnLogin setTitle:@"Logout" forState:UIControlStateNormal];
+//        self.btnLogin.hidden = NO;
+//    }
+//}
 
 - (void)viewWillAppear:(BOOL)animated {
-    [self refresh];
+    [super viewWillAppear:animated];
+//    [self refresh];
 }
 
-- (void)accessTokenFound:(NSString *)accessToken {
-    NSLog(@"Access token found: %@", accessToken);
-    loginState = LoginStateLoggedIn;
-    [self dismissModalViewControllerAnimated:YES];
-    [self refresh];
-}
-
-- (void)displayRequired {
-    [self presentModalViewController:self.loginDialog animated:YES];
-}
-
-- (void)closeTapped {
-    [self dismissModalViewControllerAnimated:YES];
-    loginState = LoginStateLoggedOut;
-    [self.loginDialog logout];
-    [self refresh];
-}
+//- (void)accessTokenFound:(NSString *)accessToken {
+//    NSLog(@"Access token found: %@", accessToken);
+//    loginState = LoginStateLoggedIn;
+//    [self dismissModalViewControllerAnimated:YES];
+//    [self refresh];
+//}
+//
+//- (void)displayRequired {
+//    [self presentModalViewController:self.loginDialog animated:YES];
+//}
+//
+//- (void)closeTapped {
+//    [self dismissModalViewControllerAnimated:YES];
+//    loginState = LoginStateLoggedOut;
+//    [self.loginDialog logout];
+//    [self refresh];
+//}
 
 //==============================================================================
 #pragma mark - nav bar button selection

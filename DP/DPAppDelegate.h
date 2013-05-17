@@ -15,4 +15,9 @@
 @property (strong, nonatomic) UIWindow *window;
 @property (strong, nonatomic) UIViewController *controller;
 
+
+- (void) openFBSession;
+- (void) showFBLogin;
+- (void) showFBView;
+
 @end

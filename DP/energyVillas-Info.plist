@@ -38,8 +38,6 @@
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>
-			<key>CFBundleTypeRole</key>
-			<string>Editor</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
 				<string>fb469022669833090</string>
@@ -50,6 +48,8 @@
 	<string>14.0</string>
 	<key>FacebookAppID</key>
 	<string>469022669833090</string>
+	<key>FacebookDisplayName</key>
+	<string>Energy Villas</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>UIPrerenderedIcon</key>

@@ -16,6 +16,8 @@
 #import "UIImage+Retina4.h"
 #import <FacebookSDK/FacebookSDK.h>
 #import "Reachability.h"
+#import "DPFBLoginViewController.h"
+#import "DPFacebookViewController.h"
 
 @implementation DPAppDelegate
 
@@ -127,6 +129,70 @@ void myExceptionHandler (NSException *exception)
     [[FBSession activeSession] close];
 }
 
+- (void) fbSessionStateChanged:(FBSession *)session
+                         state:(FBSessionState)state
+                         error:(NSError *)error {
+    switch (state) {
+        case FBSessionStateOpen: {
+            UIViewController *topVC = [[self findNavController] topViewController];
+            if ([topVC.modalViewController isKindOfClass:[DPFBLoginViewController class]]) {
+                [topVC dismissModalViewControllerAnimated:YES];
+            }
+            
+            DPFacebookViewController *facebook = [[DPFacebookViewController alloc] init];
+            [[self findNavController] pushViewController:facebook animated:YES];
+        }
+            break;
+            
+        case FBSessionStateClosed:
+        case FBSessionStateClosedLoginFailed: {
+            [FBSession.activeSession closeAndClearTokenInformation];
+            [self showFBLogin];
+        }
+            break;
+            
+        default:
+            break;
+    }
+    
+    if (error) {
+        showAlertMessage(nil, @"Error", error.localizedDescription);
+    }
+}
 
+- (void) openFBSession {
+    [FBSession openActiveSessionWithReadPermissions:nil
+                                       allowLoginUI:YES
+                                  completionHandler:^(FBSession *session, FBSessionState status, NSError *error) {
+                                      [self fbSessionStateChanged:session state:status error:error];
+                                  }];
+}
+
+- (void) showFBLogin {
+    
+    UIViewController *topVC = [[self findNavController] topViewController];
+    UIViewController *modalVC = topVC.modalViewController;
+    
+    DPFBLoginViewController *fbloginVC = nil;
+    if (![modalVC isKindOfClass:[DPFBLoginViewController class]]) {
+        fbloginVC = [[DPFBLoginViewController alloc] init];
+        [topVC presentModalViewController:fbloginVC animated:NO];
+    } else {
+        fbloginVC = (DPFBLoginViewController *)modalVC;
+        [fbloginVC loginFailed];
+    }
+}
+
+- (void) showFBView {
+    DPFacebookViewController *facebook = [[DPFacebookViewController alloc] init];
+    [[self findNavController] pushViewController:facebook animated:YES];
+}
+
+
+- (UINavigationController *) findNavController {
+    id contr = self.controller;
+    UINavigationController *result = [contr navController];
+    return result;
+}
 
 @end
