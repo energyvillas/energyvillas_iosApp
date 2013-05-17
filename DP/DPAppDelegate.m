@@ -15,12 +15,13 @@
 #import "DPAppHelper.h"
 #import "UIImage+Retina4.h"
 #import <FacebookSDK/FacebookSDK.h>
+#import "Reachability.h"
 
 @implementation DPAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    [DPIAPHelper sharedInstance];
+    [DPIAPHelper sharedInstance];//loadStore];
     
     [DPAppHelper sharedInstance].currentLang = @"en"; //[[NSLocale preferredLanguages] objectAtIndex:0];//@"el";
     
@@ -39,6 +40,11 @@
 
     NSSetUncaughtExceptionHandler (&myExceptionHandler);
 
+    [self hookToNotifications];
+    
+    if ([DPAppHelper sharedInstance].hostIsReachable)
+        [DPIAPHelper loadStore];
+
     return YES;
 }
 
@@ -46,6 +52,37 @@ void myExceptionHandler (NSException *exception)
 {
     NSArray *stack = [exception callStackReturnAddresses];
     NSLog(@"Stack trace: %@", stack);
+}
+
+- (void) hookToNotifications {
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(onNotified:)
+                                                 name:IAPHelperProductPurchasedNotification
+                                               object:nil];
+
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(onNotified:)
+                                                 name:kReachabilityChangedNotification
+                                               object:nil];
+}
+
+- (void) onNotified:(NSNotification *) notification
+{
+    if ([[notification name] isEqualToString:IAPHelperProductPurchasedNotification]) {
+        NSLog (@"Successfully received the ==IAPHelperProductPurchasedNotification== notification!");
+        if (IS_APP_PURCHASED) {
+            NSLog(@"=====##### SWITCHING INTERFACES #####=====");
+            self.controller = [[DPPaidMainViewController alloc] init];
+            self.window.rootViewController = self.controller;
+        }
+    }
+    
+    if ([[notification name] isEqualToString:kReachabilityChangedNotification]) {
+        NSLog (@"Successfully received the ==kReachabilityChangedNotification== notification!");
+        
+        if ([DPAppHelper sharedInstance].hostIsReachable)
+            [DPIAPHelper loadStore];
+    }
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application
@@ -86,6 +123,7 @@ void myExceptionHandler (NSException *exception)
 // FBSample logic
 // It is important to close any FBSession object that is no longer useful
 - (void)applicationWillTerminate:(UIApplication *)application {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
     [[FBSession activeSession] close];
 }
 

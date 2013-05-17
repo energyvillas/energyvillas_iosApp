@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <StoreKit/StoreKit.h>
 #import "UINavContentViewController.h"
 
 @interface DPBuyViewController : UINavContentViewController 
@@ -25,7 +26,9 @@
 
 
 
-- (id) initWithCategoryId:(int)ctgid completion:(void (^)(void))completion;
+- (id) initWithCategoryId:(int)ctgid
+                  product:(SKProduct *)aProduct
+               completion:(void (^)(void))completion;
 
 -(CGRect) calcFrame;
 

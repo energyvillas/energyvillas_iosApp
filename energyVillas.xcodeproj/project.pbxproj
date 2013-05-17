@@ -73,6 +73,7 @@
 		5E8AB0CC171706D1004AFE76 /* UIImage+Retina4.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E8AB0CB171706D1004AFE76 /* UIImage+Retina4.m */; };
 		5E9ABBDE16F9F3CA000EAB46 /* DPTestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E9ABBDD16F9F3CA000EAB46 /* DPTestViewController.m */; };
 		5E9ABBE016F9F3E2000EAB46 /* DPTestView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5E9ABBDF16F9F3E2000EAB46 /* DPTestView.xib */; };
+		5EB72C751744DE2D00392D6E /* SKProduct+LocalizedPrice.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EB72C741744DE2D00392D6E /* SKProduct+LocalizedPrice.m */; };
 		5EC20D0D171D5D81006E03B7 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5EC20D0C171D5D81006E03B7 /* AudioToolbox.framework */; };
 		5EC20D10171DAD0F006E03B7 /* DPCarouselViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EC20D0F171DAD0F006E03B7 /* DPCarouselViewController.m */; };
 		5EC2557D16FC64400045AB99 /* DPImageInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EC2557C16FC64400045AB99 /* DPImageInfo.m */; };
@@ -254,6 +255,8 @@
 		5E9ABBDC16F9F3CA000EAB46 /* DPTestViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPTestViewController.h; sourceTree = "<group>"; };
 		5E9ABBDD16F9F3CA000EAB46 /* DPTestViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPTestViewController.m; sourceTree = "<group>"; };
 		5E9ABBDF16F9F3E2000EAB46 /* DPTestView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DPTestView.xib; sourceTree = "<group>"; };
+		5EB72C731744DE2D00392D6E /* SKProduct+LocalizedPrice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SKProduct+LocalizedPrice.h"; sourceTree = "<group>"; };
+		5EB72C741744DE2D00392D6E /* SKProduct+LocalizedPrice.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "SKProduct+LocalizedPrice.m"; sourceTree = "<group>"; };
 		5EC20D0C171D5D81006E03B7 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		5EC20D0E171DAD0E006E03B7 /* DPCarouselViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPCarouselViewController.h; sourceTree = "<group>"; };
 		5EC20D0F171DAD0F006E03B7 /* DPCarouselViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPCarouselViewController.m; sourceTree = "<group>"; };
@@ -695,6 +698,8 @@
 			children = (
 				5EC2558216FC71BD0045AB99 /* IAPHelper.h */,
 				5EC2558316FC71BD0045AB99 /* IAPHelper.m */,
+				5EB72C731744DE2D00392D6E /* SKProduct+LocalizedPrice.h */,
+				5EB72C741744DE2D00392D6E /* SKProduct+LocalizedPrice.m */,
 			);
 			path = IAPHelper;
 			sourceTree = "<group>";
@@ -1038,6 +1043,7 @@
 				5EC573B4172ADEF5000B7004 /* HouseOverviewParser.m in Sources */,
 				5EC573B7172ADF15000B7004 /* HouseOverviewLoader.m in Sources */,
 				5EC573BA172AE278000B7004 /* DPBaseDataElement.m in Sources */,
+				5EB72C751744DE2D00392D6E /* SKProduct+LocalizedPrice.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -12,6 +12,8 @@
 
 @implementation DPIAPHelper
 
+@synthesize product = _product;
+
 + (DPIAPHelper *)sharedInstance {
     static dispatch_once_t once;
     static DPIAPHelper * sharedInstance;
@@ -24,6 +26,29 @@
     });
     
     return sharedInstance;
+}
+
++(void) loadStore {
+    DPIAPHelper *iap = [DPIAPHelper sharedInstance];
+    if (![iap isPurchased])
+        [iap doLoadStore];
+}
+
+- (BOOL) isPurchased {
+    return [self productPurchased:PRODUCT_IDENTIFIER];
+}
+
+-(void) doLoadStore {
+    if (self.product == nil)
+        [self requestProductsWithCompletionHandler:^(NSArray * products, NSError *error) {
+            if (products != nil) {
+                _product = (SKProduct *)products[0];
+            }
+        }];
+}
+
+-(void) buy {
+    [self buyProduct:self.product];
 }
 
 @end

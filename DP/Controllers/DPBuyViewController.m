@@ -25,6 +25,7 @@
 
 @property (strong, nonatomic) DPBuyContentViewController *buyContentController;
 @property (strong) void (^onClose)(void);
+@property (strong, nonatomic) SKProduct *product;
 
 @end
 
@@ -44,10 +45,13 @@
     return self;
 }
 
-- (id) initWithCategoryId:(int)ctgid completion:(void (^)(void))completion {
+- (id) initWithCategoryId:(int)ctgid
+                  product:(SKProduct *)aProduct
+               completion:(void (^)(void))completion {
     self = [super init];
     if (self) {
         _category = ctgid;
+        self.product = aProduct;
         self.onClose = completion;
     }
     return self;
@@ -78,7 +82,7 @@
 }
 
 - (NSString *) buyBtnTitle {
-    return [NSString stringWithFormat:@"€%.2f", 2.99];
+    return [NSString stringWithFormat:@"%@", self.product.localizedPrice];
     //return [NSString stringWithFormat:@"%@", @"2"];
 }
 
@@ -299,26 +303,46 @@
 }
 
 - (IBAction)onTouchUpInside:(id)sender forEvent:(UIEvent *)event {
-    if (sender == self.btnClose) {
-        if (IS_IPAD) {
-            [self dismissViewControllerAnimated:YES completion:nil];
-        } else {
-            [self.view removeFromSuperview];
-            [self removeFromParentViewController];
-        }
-        if (self.onClose != nil)
-            self.onClose();
-    } else if (sender == self.btnBuy) {
+//    if (sender == self.btnClose) {
+//        if (IS_IPAD) {
+//            [self dismissViewControllerAnimated:YES completion:nil];
+//        } else {
+//            [self.view removeFromSuperview];
+//            [self removeFromParentViewController];
+//        }
+//        if (self.onClose != nil)
+//            self.onClose();
+//    } else
+    if (sender == self.btnBuy) {
         NSLog(@"buy tapped");
-//        SKProduct *product = [[SKProduct alloc] init];
-//        //product.
-//        [[DPIAPHelper sharedInstance] buyProduct:product];
+        
+        DPIAPHelper *iap = [DPIAPHelper sharedInstance];
+        
+        if (![iap canMakePurchases])
+            showAlertMessage(nil, @"Info", @"Cannot make purchase at the moment. Please try later!");
+        else
+            [iap buy];
+//        [iap requestProductsWithCompletionHandler:^(BOOL success, NSArray *products) {
+//            NSLog(@"Finished products request!");
+//        }];
     } else if (sender == self.btnRestore) {
         NSLog(@"restore tapped");
-//        SKProduct *product = [[SKProduct alloc] init];
-//        //product.
-//        [[DPIAPHelper sharedInstance] buyProduct:product];
+        DPIAPHelper *iap = [DPIAPHelper sharedInstance];
+        if (![iap canMakePurchases])
+            showAlertMessage(nil, @"Info", @"Cannot restore purchase at the moment. Please try later!");
+        else
+            [iap restoreCompletedTransactions];
     }
+    
+    if (IS_IPAD) {
+        [self dismissViewControllerAnimated:YES completion:nil];
+    } else {
+        [self.view removeFromSuperview];
+        [self removeFromParentViewController];
+    }
+    
+    if (self.onClose != nil)
+        self.onClose();
 }
 
 - (void)viewDidUnload {

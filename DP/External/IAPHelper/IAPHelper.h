@@ -7,15 +7,17 @@
 //
 
 #import <StoreKit/StoreKit.h>
+#import "SKProduct+LocalizedPrice.h"
 
 UIKIT_EXTERN NSString *const IAPHelperProductPurchasedNotification;
 
-typedef void (^RequestProductsCompletionHandler)(BOOL success, NSArray * products);
+typedef void (^RequestProductsCompletionHandler)(NSArray * products, NSError *error);
 
 @interface IAPHelper : NSObject
 
 - (id)initWithProductIdentifiers:(NSSet *)productIdentifiers;
 - (void)requestProductsWithCompletionHandler:(RequestProductsCompletionHandler)completionHandler;
+- (BOOL)canMakePurchases;
 - (void)buyProduct:(SKProduct *)product;
 - (BOOL)productPurchased:(NSString *)productIdentifier;
 - (void)restoreCompletedTransactions;

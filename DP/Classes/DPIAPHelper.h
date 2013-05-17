@@ -10,6 +10,9 @@
 
 @interface DPIAPHelper : IAPHelper
 
-+ (DPIAPHelper *)sharedInstance;
+@property (strong, nonatomic, readonly) SKProduct *product;
 
++ (DPIAPHelper *)sharedInstance;
++ (void) loadStore;
+- (void) buy;
 @end

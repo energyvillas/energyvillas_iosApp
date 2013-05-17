@@ -38,7 +38,7 @@
 @synthesize connectionRequired = _connectionRequired;
 @synthesize hostIsReachable = _hostIsReachable;
 @synthesize currentLang = _currentLang;
-@synthesize isPurchased = _isPurchased;
+//@synthesize isPurchased = _isPurchased;
 @synthesize useCache = _useCache;
 
 + (DPAppHelper *)sharedInstance {
@@ -58,7 +58,7 @@
         [self createDefaults];
         _connectionRequired = true;
         _hostIsReachable = false;
-        _isPurchased = [self calcIsPurchased];
+//        _isPurchased = [self calcIsPurchased];
         [self configureReachability];
 //        [self loadCategories];
         [self addFreeDetails];

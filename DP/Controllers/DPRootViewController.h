@@ -8,6 +8,8 @@
 
 #import "UINavContentViewController.h"
 #import <MessageUI/MessageUI.h>
+#import <StoreKit/StoreKit.h>
+
 
 @protocol DPBuyAppProtocol <NSObject>
 

@@ -25,6 +25,7 @@
 #import "DPMailHelper.h"
 
 #import "DPSocialManager.h"
+#import "DPIAPHelper.h"
 
 
 
@@ -82,20 +83,32 @@
 }
 
 - (void) showBuyDialog:(int)ctgId {
-    //AudioServicesPlaySystemSound(1320);
-    if (IS_IPAD)
-        [self showBuyDialog_iPads:ctgId];
-    else
-        [self showBuyDialog_iPhones:ctgId];
+    DPIAPHelper *iap = [DPIAPHelper sharedInstance];
+    if (![iap canMakePurchases])
+        showAlertMessage(nil, @"Info", @"Cannot make purchase at the moment. Please try later!");
+    else {
+        if (iap.product == nil)
+            showAlertMessage(nil, @"Info", @"No product found!Try again later!");
+        else
+            [self showBuyDialog:ctgId product:iap.product];
+    }
 }
 
-- (void) showBuyDialog_iPads:(int)ctgId {    
-    self.buyController = [[DPBuyViewController alloc]
-                                  initWithCategoryId:ctgId
-                                  completion:^{
-                                      self.view.userInteractionEnabled = YES;
-                                      self.buyController = nil;
-                                  }];
+- (void) showBuyDialog:(int)ctgId product:(SKProduct *)aProduct {
+    //AudioServicesPlaySystemSound(1320);
+    if (IS_IPAD)
+        [self showBuyDialog_iPads:ctgId product:aProduct];
+    else
+        [self showBuyDialog_iPhones:ctgId product:aProduct];
+}
+
+- (void) showBuyDialog_iPads:(int)ctgId product:(SKProduct *)aProduct {    
+    self.buyController = [[DPBuyViewController alloc] initWithCategoryId:ctgId
+                                                                 product:aProduct
+                                                              completion:^{
+                                                                  self.view.userInteractionEnabled = YES;
+                                                                  self.buyController = nil;
+                                                              }];
     
     self.view.userInteractionEnabled = NO;
     self.buyController.modalPresentationStyle = UIModalPresentationFormSheet;
@@ -110,16 +123,16 @@
         self.buyController.view.superview.frame = CGRectOffset(svfrm, 0, 180);
 }
 
-- (void) showBuyDialog_iPhones:(int)ctgId {
+- (void) showBuyDialog_iPhones:(int)ctgId product:(SKProduct *)aProduct {
     id del = self.navigationController.delegate;
     DPMainViewController *main = del;
     
-    DPBuyViewController *buyVC = [[DPBuyViewController alloc]
-                                  initWithCategoryId:ctgId
-                                  completion:^{
-                                      self.view.userInteractionEnabled = YES;
-                                      self.buyController = nil;
-                                  }];
+    DPBuyViewController *buyVC = [[DPBuyViewController alloc] initWithCategoryId:ctgId
+                                                                         product:aProduct
+                                                                      completion:^{
+                                                                          self.view.userInteractionEnabled = YES;
+                                                                          self.buyController = nil;
+                                                                      }];
 
     self.view.userInteractionEnabled = NO;
 

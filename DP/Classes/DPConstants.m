@@ -22,7 +22,7 @@ NSString *const USE_DATA_CACHING = @"USE_DATA_CACHING";
 NSString *const DPN_currentLangChanged = @"DPN_currentLangChanged";
 
 // bundle id
-NSString *const PRODUCT_IDENTIFIER = @"gr.DesignProjects.DP";
+NSString *const PRODUCT_IDENTIFIER = @"com.energyvillas.energyvillas.ev01";
 
 // web service credentials
 NSString *const USER_NAME = @"phone";
