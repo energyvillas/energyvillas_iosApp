@@ -186,11 +186,81 @@ void myExceptionHandler (NSException *exception)
 }
 
 - (void) showFBView {
+    [self showFBFeedDlg];
+//    [self doShowFBView];
+}
+- (void) doShowFBView {
     UINavigationController *nvc = [self findNavController];
     DPFacebookViewController *facebook = [[DPFacebookViewController alloc] init];
     [nvc pushViewController:facebook animated:YES];
 }
 
+/**
+ * A function for parsing URL parameters.
+ */
+- (NSDictionary*)parseURLParams:(NSString *)query {
+    NSArray *pairs = [query componentsSeparatedByString:@"&"];
+    NSMutableDictionary *params = [[NSMutableDictionary alloc] init];
+    for (NSString *pair in pairs) {
+        NSArray *kv = [pair componentsSeparatedByString:@"="];
+        NSString *val =
+        [[kv objectAtIndex:1]
+         stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+        
+        [params setObject:val forKey:[kv objectAtIndex:0]];
+    }
+    return params;
+}
+
+- (void) showFBFeedDlg {
+    // Put together the dialog parameters
+    NSMutableDictionary *params =
+    [NSMutableDictionary dictionaryWithObjectsAndKeys:
+     @"Energy Villas", @"name",
+     @"http://www.energyvillas.com", @"link",
+     
+     [DPAppHelper sharedInstance].imageUrl2Share, @"picture",
+     [DPAppHelper sharedInstance].imageTitle2Share, @"caption",
+     
+     @"Energy villas makes it possible to actually get the house you always wanted.", @"description",
+     nil];
+    
+    // Invoke the dialog
+    [FBWebDialogs presentFeedDialogModallyWithSession:nil
+                                           parameters:params
+                                              handler:
+     ^(FBWebDialogResult result, NSURL *resultURL, NSError *error) {
+         if (error) {
+             // Error launching the dialog or publishing a story.
+             NSLog(@"Error publishing story.");
+         } else {
+             if (result == FBWebDialogResultDialogNotCompleted) {
+                 // User clicked the "x" icon
+                 NSLog(@"User canceled story publishing.");
+             } else {
+                 // Handle the publish feed callback
+                 NSDictionary *urlParams = [self parseURLParams:[resultURL query]];
+                 if (![urlParams valueForKey:@"post_id"]) {
+                     // User clicked the Cancel button
+                     NSLog(@"User canceled story publishing.");
+                 } else {
+                     // User clicked the Share button
+                     NSString *msg = [NSString stringWithFormat:
+                                      @"Posted story, id: %@",
+                                      [urlParams valueForKey:@"post_id"]];
+                     NSLog(@"%@", msg);
+                     // Show the result in an alert
+                     [[[UIAlertView alloc] initWithTitle:@"Result"
+                                                 message:msg
+                                                delegate:nil
+                                       cancelButtonTitle:@"OK!"
+                                       otherButtonTitles:nil]
+                      show];
+                 }
+             }
+         }
+     }];
+}
 
 - (UINavigationController *) findNavController {
     id contr = self.controller;

@@ -208,10 +208,10 @@
 - (void) showBuy {
     if ([self checkTop:self.buyViewController]) return;
     
-    self.buyViewController = [[DPImageContentViewController alloc]
-                              initWithImageName:[NSString stringWithFormat:@"%d.jpg", 22]];
-    
-    [self showViewController:self.buyViewController];
+//    self.buyViewController = [[DPImageContentViewController alloc]
+//                              initWithImageName:[NSString stringWithFormat:@"%d.jpg", 22]];
+//    
+//    [self showViewController:self.buyViewController];
 }
 
 - (void) showCall {

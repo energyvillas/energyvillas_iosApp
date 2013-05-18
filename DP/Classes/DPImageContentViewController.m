@@ -50,13 +50,13 @@
     return self;
 }
 
-- (id) initWithImage:(UIImage *)aImage {
-    if (self = [super init]) {
-        self.image = aImage;
-    }
-    
-    return self;
-}
+//- (id) initWithImage:(UIImage *)aImage {
+//    if (self = [super init]) {
+//        self.image = aImage;
+//    }
+//    
+//    return self;
+//}
 
 //- (id) initWithImageUrl:(NSURL *)imageUrl {
 //    if (self = [super init]) {
@@ -311,5 +311,22 @@
 //    return YES;
 //}
 //==============================================================================
+
+
+- (NSString *) aquireImageTitleToShare {
+    if ([self aquireImageUrlToShare] != nil)
+        return  self.article.title;
+    
+    return nil;
+}
+
+- (NSString *) aquireImageUrlToShare {
+    if (self.article &&
+        self.article.imageUrl &&
+        (!isLocalUrl(self.article.imageUrl)))
+        return self.article.imageUrl;
+    
+    return nil;
+}
 
 @end

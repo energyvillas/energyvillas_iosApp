@@ -19,7 +19,7 @@
 
 
 @interface DPRootViewController : UINavContentViewController
-    <DPBuyAppProtocol, DPActionDelegate>// , FPPopoverControllerDelegate, MFMailComposeViewControllerDelegate >
+    <DPBuyAppProtocol> //, DPActionDelegate , FPPopoverControllerDelegate, MFMailComposeViewControllerDelegate >
 
 @property (strong, nonatomic) IBOutlet UIView *topView;
 @property (strong, nonatomic) IBOutlet UIToolbar *toolbar;

@@ -11,6 +11,7 @@
 #import "Reachability.h"
 #import "DPConstants.h"
 #import "DPAppHelper.h"
+#import "DPSocialManager.h"
 
 
 @interface UINavContentViewController ()
@@ -18,6 +19,7 @@
 @property (strong, nonatomic) UIButton *navbarTitleItemButton;
 @property (strong, nonatomic) UIButton *navbarLang_EN;
 @property (strong, nonatomic) UIButton *navbarLang_EL;
+@property (strong, nonatomic) DPSocialManager *socialManager;
 
 @end
 
@@ -385,7 +387,8 @@ NSString *const NAVBAR_SHARE_SEL_IMG = @"Navbar/share_roll.png";
             
         case TAG_NBI_SHARE:
             // do stuff
-            [self doOnTapped:sender];
+            [self showSocialsDialog];
+//            [self doOnTapped:sender];
             break;
             
         default:
@@ -398,6 +401,25 @@ NSString *const NAVBAR_SHARE_SEL_IMG = @"Navbar/share_roll.png";
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (NSString *) aquireImageTitleToShare {
+    return nil;
+}
+
+- (NSString *) aquireImageUrlToShare {
+    return nil;
+}
+
+- (void) showSocialsDialog {
+    if (!self.socialManager)
+        self.socialManager = [[DPSocialManager alloc] initWithController:self
+                                                          onSocialClosed:nil];
+
+    [DPAppHelper sharedInstance].imageTitle2Share = [self aquireImageTitleToShare];
+    [DPAppHelper sharedInstance].imageUrl2Share = [self aquireImageUrlToShare];
+   
+    [self.socialManager showSocialsDialog:nil];
 }
 
 @end

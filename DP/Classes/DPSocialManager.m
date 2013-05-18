@@ -15,6 +15,7 @@
 #import "DPMailHelper.h"
 #import <FacebookSDK/FacebookSDK.h>
 #import "DPAppDelegate.h"
+#import "DPAppHelper.h"
 
 @interface DPSocialManager ()
 
@@ -123,11 +124,11 @@
     
     switch (action) {
         case SOCIAL_ACT_FACEBOOK: {
-            [self showFB];            
+            [self showFB];
             break;
         }
         case SOCIAL_ACT_TWITTER:
-            [self tweet:nil url:nil];
+            [self tweet:[DPAppHelper sharedInstance].imageUrl2Share url:[DPAppHelper sharedInstance].imageUrl2Share];
             break;
             
         case SOCIAL_ACT_LINKEDIN:
@@ -209,9 +210,6 @@
                         error:(NSError *)error {
 	[controller dismissModalViewControllerAnimated:YES];
     
-//    onAfterAppear++;
-//    if (self.socialDelegate && [self.socialDelegate respondsToSelector:@selector(onSocialClosed)])
-//        [self.socialDelegate onSocialClosed];
     if (self.onSocialClosed)
         self.onSocialClosed();
 }
@@ -220,10 +218,10 @@
 #pragma mark - Twitter
 
 - (void) tweet:(NSString *)imgUrl url:(NSString *)urlstr {
-//    if (![TWTweetComposeViewController canSendTweet]) {
-//        showAlertMessage(nil, kERR_TITLE_INFO, kERR_MSG_TRY_LATER); // pending::new message for missing twitter setup
-//        return;
-//    }
+    if (![TWTweetComposeViewController canSendTweet]) {
+        showAlertMessage(nil, kERR_TITLE_INFO, @"You can't send a tweet right now, make sure your device has an internet connection and you have at least one Twitter account setup"); // pending::new message for missing twitter setup
+        return;
+    }
     //    if (![TWTweetComposeViewController canSendTweet])
     //    {
     //        UIAlertView *alertView = [[UIAlertView alloc]
@@ -239,17 +237,17 @@
     
     TWTweetComposeViewController *tweetSheet = [[TWTweetComposeViewController alloc] init];
     [tweetSheet setInitialText: @"Tweeting from energyVillas! :)"];
-    
-    if (imgUrl) {
-        UIImage *img = [UIImage imageNamed:imgUrl];
-        if (img)
-            [tweetSheet addImage:img];
-    }
+    BOOL added = NO;
+//    if (imgUrl) {
+//        UIImage *img = [UIImage imageNamed:imgUrl];
+//        if (img)
+//            added = [tweetSheet addImage:img];
+//    }
     
     if (urlstr) {
         NSURL *url = [NSURL URLWithString:urlstr];
         if (url)
-            [tweetSheet addURL:url];
+            added = [tweetSheet addURL:url];
     }
     
     [self.controller presentModalViewController:tweetSheet animated:YES];

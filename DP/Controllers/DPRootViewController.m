@@ -21,10 +21,6 @@
 #import "DPCarouselViewController.h"
 #import "DPFacebookViewController.h"
 #import <Twitter/Twitter.h>
-#import "DPSocialViewController.h"
-#import "DPMailHelper.h"
-
-#import "DPSocialManager.h"
 #import "DPIAPHelper.h"
 
 
@@ -33,19 +29,14 @@
 
 @property (strong, nonatomic) NSMutableDictionary *coverFlowDict;
 @property (strong, nonatomic) DPBuyViewController *buyController;
-//@property (strong, nonatomic) DPSocialViewController *socialController;
-@property (strong, nonatomic) DPSocialManager *socialManager;
-
-
-//@property (strong, nonatomic) FPPopoverController *popController;
 
 @end
 
+
+
 @implementation DPRootViewController {
-    int onAfterAppear;
     BOOL showingMore;
 }
-
 
 - (id) init {
     self = [super init];
@@ -63,7 +54,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
-    self.actionDelegate = self;
     [self doLocalize];
     [self.bbiMore setAction:@selector(doMore:)];
     [self.bbiBuy setAction:@selector(doBuy:)];
@@ -151,56 +141,6 @@
     [self loadOpenFlow:YES];
 }
 
-#pragma mark - DPActionDelegate
-
--(void) onTapped:(id)sender {
-    UIBarButtonItem *bbi = (UIBarButtonItem *)sender;
-    if (bbi == nil) return;
-    
-    switch (bbi.tag) {
-//        case TAG_NBI_LANG_EN:
-//        case TAG_NBI_LANG_EL:
-//            [self langSelControlPressed:sender];
-//            break;
-//            
-//        case TAG_NBI_BACK:
-//            [self.navigationController popViewControllerAnimated:YES];
-//            break;
-//        case TAG_NBI_ADD_FAV:
-//            // do stuff
-//            break;
-//            
-        case TAG_NBI_SHARE: {
-//            dispatch_async(dispatch_get_main_queue(), ^{
-//                [self sendMail];
-//            });
-
-            [self showSocialsDialog];
-            break;
-        }
-        default:
-            break;
-    }
-}
-
-- (void) showSocialsDialog {
-    if (self.socialManager == nil) {
-        self.socialManager = [[DPSocialManager alloc] initWithController:self
-                                                          onSocialClosed:^{
-                                                              onAfterAppear++;
-//                                                              dispatch_async(dispatch_get_main_queue(), ^{
-//                                                                  [self loadDetailView:YES];
-//                                                              });
-                                                          }];
-//        self.socialManager.socialDelegate = self;
-    }
-    
-    [self.socialManager showSocialsDialog:^(int socialAction){
-        //self.socialManager = nil;
-//        [self sendMail];
-     }];
-}
-
 //==============================================================================
 //==============================================================================
 //==============================================================================
@@ -218,9 +158,6 @@
     int h = vf.size.height - top;
     int w = vf.size.width;
 
-//    int h = vf.size.height - vf.origin.y; //IS_PORTRAIT ? vf.size.height : vf.size.height - vf.origin.y;
-//    int w = vf.size.width;
-//    int topOfs = fixtop ? vf.origin.y : 0;
     int toolbarHeight = self.toolbar.frame.size.height;
 
     int BOTTOM_HEIGHT;
@@ -246,34 +183,6 @@
     
     [self loadOpenFlow:NO];
     [self loadDetailView:NO];
-    
-//    if (/*IS_IPAD && */self.buyController) {
-//        int ctgid = self.buyController.category;
-//        [self.navigationController dismissViewControllerAnimated:NO completion:nil];
-//        self.view.userInteractionEnabled = YES;
-//        self.buyController = nil;
-//        [self showBuyDialog:ctgid];
-//    }
-    
-//    if (self.buyController) {
-//        CGRect svfrm = [self.buyController calcFrame];
-//        svfrm.origin = CGPointMake((w - svfrm.size.width - 2.0f) / 2.0f, svfrm.origin.y);
-//                                   //(h - svfrm.size.height) / 2.0f);
-//        self.buyController.view.superview.backgroundColor = [UIColor clearColor];
-//        svfrm = IS_PORTRAIT ? CGRectOffset(svfrm, 0, 170) : CGRectOffset(svfrm, 0, 180);
-//        NSLogFrame(@"BUY FRM:", svfrm);
-//        
-//        dispatch_async(dispatch_get_main_queue(), ^{
-//            NSLogFrame(@"BUY FRM CONTAINER", self.view.frame);
-////            self.buyController.view.superview.center = self.view.center;
-//        });
-//    }
-    
-//    if (IS_IPAD && self.socialManager && self.socialManager.showingDialog) {
-//        [self.socialManager hideSocialsDialog];
-//        self.socialManager = nil;
-//        [self showSocialsDialog];
-//    }
 }
 
 - (void) loadDetailView:(BOOL)reload{
@@ -370,14 +279,7 @@
 }
 
 -(void) viewDidAppear:(BOOL)animated {
-    [super viewDidAppear:animated];
-    
-    if (onAfterAppear>0) {
-        onAfterAppear--;
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [self loadDetailView:YES];
-        });
-    }
+    [super viewDidAppear:animated];    
 }
 
 - (void)viewDidUnload {
@@ -386,7 +288,6 @@
     [self setBbiBuy:nil];
     [self setTopView:nil];
     [self setBottomView:nil];
-    self.socialManager = nil;
     [super viewDidUnload];
 }
 

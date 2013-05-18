@@ -18,7 +18,8 @@
 @property (nonatomic, readonly, getter = calcIsPurchased) BOOL isPurchased;
 @property (strong, nonatomic) NSString *currentLang;
 
-@property (strong, nonatomic) DPDataElement *element2Share;
+@property (strong, nonatomic) NSString *imageTitle2Share;
+@property (strong, nonatomic) NSString *imageUrl2Share;
 
 //===========
 
