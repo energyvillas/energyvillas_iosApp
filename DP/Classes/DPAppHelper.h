@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "DPDataElement.h"
 
 @interface DPAppHelper : NSObject
 
@@ -17,6 +18,7 @@
 @property (nonatomic, readonly, getter = calcIsPurchased) BOOL isPurchased;
 @property (strong, nonatomic) NSString *currentLang;
 
+@property (strong, nonatomic) DPDataElement *element2Share;
 
 //===========
 

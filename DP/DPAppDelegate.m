@@ -66,6 +66,11 @@ void myExceptionHandler (NSException *exception)
                                              selector:@selector(onNotified:)
                                                  name:kReachabilityChangedNotification
                                                object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(onNotified:)
+                                                 name:kShowFacebookViewNotification
+                                               object:nil];
 }
 
 - (void) onNotified:(NSNotification *) notification
@@ -118,11 +123,6 @@ void myExceptionHandler (NSException *exception)
     return [[FBSession activeSession] handleOpenURL:url];
 }
 
-//- (void)applicationWillTerminate:(UIApplication *)application
-//{
-//    // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
-//}
-// FBSample logic
 // It is important to close any FBSession object that is no longer useful
 - (void)applicationWillTerminate:(UIApplication *)application {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
@@ -136,18 +136,17 @@ void myExceptionHandler (NSException *exception)
         case FBSessionStateOpen: {
             UIViewController *topVC = [[self findNavController] topViewController];
             if ([topVC.modalViewController isKindOfClass:[DPFBLoginViewController class]]) {
-                [topVC dismissModalViewControllerAnimated:YES];
+                [topVC dismissModalViewControllerAnimated:NO];
             }
-            
-            DPFacebookViewController *facebook = [[DPFacebookViewController alloc] init];
-            [[self findNavController] pushViewController:facebook animated:YES];
+
+            [self showFBView];
         }
             break;
             
         case FBSessionStateClosed:
         case FBSessionStateClosedLoginFailed: {
             [FBSession.activeSession closeAndClearTokenInformation];
-            [self showFBLogin];
+//            [self showFBLogin];
         }
             break;
             
@@ -161,7 +160,10 @@ void myExceptionHandler (NSException *exception)
 }
 
 - (void) openFBSession {
-    [FBSession openActiveSessionWithReadPermissions:nil
+    NSArray *permissions = [NSArray arrayWithObjects:@"user_photos",
+                            nil];
+    
+    [FBSession openActiveSessionWithReadPermissions:permissions
                                        allowLoginUI:YES
                                   completionHandler:^(FBSession *session, FBSessionState status, NSError *error) {
                                       [self fbSessionStateChanged:session state:status error:error];
@@ -169,8 +171,8 @@ void myExceptionHandler (NSException *exception)
 }
 
 - (void) showFBLogin {
-    
-    UIViewController *topVC = [[self findNavController] topViewController];
+    UINavigationController *nvc = [self findNavController];
+    UIViewController *topVC = [nvc topViewController];
     UIViewController *modalVC = topVC.modalViewController;
     
     DPFBLoginViewController *fbloginVC = nil;
@@ -184,8 +186,9 @@ void myExceptionHandler (NSException *exception)
 }
 
 - (void) showFBView {
+    UINavigationController *nvc = [self findNavController];
     DPFacebookViewController *facebook = [[DPFacebookViewController alloc] init];
-    [[self findNavController] pushViewController:facebook animated:YES];
+    [nvc pushViewController:facebook animated:YES];
 }
 
 

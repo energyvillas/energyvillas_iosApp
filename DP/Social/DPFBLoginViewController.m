@@ -8,28 +8,15 @@
 
 #import "DPFBLoginViewController.h"
 #import "DPAppDelegate.h"
+#import "DPAppHelper.h"
+#import "DPConstants.h"
 
 
 @interface DPFBLoginViewController ()
 
-@property (strong) NSString *apiKey;
-@property (strong) NSString *requestedPermissions;
-
 @end
 
 @implementation DPFBLoginViewController
-
-
-//- (id)initWithAppId:(NSString *)apiKey
-//requestedPermissions:(NSString *)requestedPermissions
-//           delegate:(id<DPFBLoginDialogDelegate>)delegate {
-//    if ((self = [self initWithNibName:nil bundle:nil])) {
-//        self.apiKey = apiKey;
-//        self.requestedPermissions = requestedPermissions;
-//        self.delegate = delegate;
-//    }
-//    return self;    
-//}
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -44,8 +31,18 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
+    self.view.backgroundColor = [UIColor colorWithRed:0.0f
+                                                green:51.0f / 256.0f
+                                                 blue:102.0f / 256.0f
+                                                alpha:1.0f];
+    
+    self.logoImgView.image = [UIImage imageNamed:[NSString stringWithFormat: @"NavBar/logo_%@.png", CURRENT_LANG]];
 }
 
+- (void) doLocalize {
+    [super doLocalize];
+    self.logoImgView.image = [UIImage imageNamed:[NSString stringWithFormat: @"NavBar/logo_%@.png", CURRENT_LANG]];
+}
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -54,14 +51,31 @@
 
 - (void)viewDidUnload {
     [self setBusyIndicator:nil];
+    [self setLogoImgView:nil];
+    [self setBtnLogin:nil];
+    [self setBtnClose:nil];
     [super viewDidUnload];
 }
 
-- (IBAction)btnTouchUpInside:(id)sender {
-    [self.busyIndicator startAnimating];
+- (void) doLayoutSubViews:(BOOL)fixtop {
+    CGRect vf = self.view.frame;
     
-    DPAppDelegate *appdel = [UIApplication sharedApplication].delegate;
-    [appdel openFBSession];
+    fixtop = IS_LANDSCAPE && !IS_IPAD;
+    int top = fixtop ? 12 : 0;
+    int h = vf.size.height - top;
+    int w = vf.size.width;
+    
+}
+
+- (IBAction)btnTouchUpInside:(id)sender {
+    if (sender == self.btnLogin) {
+        [self.busyIndicator startAnimating];
+        
+        DPAppDelegate *appdel = [UIApplication sharedApplication].delegate;
+        [appdel openFBSession];
+    } else {
+        [self dismissModalViewControllerAnimated:YES];
+    }
 }
 
 - (void) loginFailed {

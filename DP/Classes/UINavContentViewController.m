@@ -216,7 +216,7 @@ NSString *const NAVBAR_SHARE_SEL_IMG = @"Navbar/share_roll.png";
     if (![self showNavBar]) return;
     
     self.navigationItem.title = nil;
-    self.navigationItem.leftItemsSupplementBackButton = YES;
+    self.navigationItem.leftItemsSupplementBackButton = NO;
     self.navigationItem.hidesBackButton = YES;
 
     bool ischild = self.navigationController.viewControllers[0] != self &&

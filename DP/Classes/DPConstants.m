@@ -20,6 +20,7 @@ NSString *const USE_DATA_CACHING = @"USE_DATA_CACHING";
 
 //notifications
 NSString *const DPN_currentLangChanged = @"DPN_currentLangChanged";
+NSString *const kShowFacebookViewNotification = @"ShowFacebookViewNotification";
 
 // bundle id
 NSString *const PRODUCT_IDENTIFIER = @"com.energyvillas.energyvillas.ev01";

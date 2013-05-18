@@ -7,22 +7,13 @@
 //
 
 #import "UINavContentViewController.h"
-//#import "DPFBLoginViewController.h"
+#import <FacebookSDK/FacebookSDK.h>
 
+@interface DPFacebookViewController : UINavContentViewController <UITextViewDelegate, UIAlertViewDelegate>
 
-//typedef enum {
-//    LoginStateStartup,
-//    LoginStateLoggingIn,
-//    LoginStateLoggedIn,
-//    LoginStateLoggedOut
-//} LoginState;
-//
+@property (strong, nonatomic) IBOutlet FBProfilePictureView *userProfilePicture;
+@property (strong, nonatomic) IBOutlet UILabel *userName;
+@property (strong, nonatomic) IBOutlet UITextView *postMessageTextView;
 
-@interface DPFacebookViewController : UINavContentViewController
-
-//@property (strong, nonatomic) IBOutlet UILabel *lblLoginStatus;
-//@property (strong, nonatomic) IBOutlet UIButton *btnLogin;
-//
-//- (IBAction)btnLoginTapped:(id)sender;
-//
+- (IBAction)toolBarItemTapped:(UIBarButtonItem *)sender;
 @end

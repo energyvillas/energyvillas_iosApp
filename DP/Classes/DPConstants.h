@@ -146,6 +146,7 @@ UIKIT_EXTERN NSString *const USE_DATA_CACHING;
 
 // notifications
 UIKIT_EXTERN NSString *const DPN_currentLangChanged;
+UIKIT_EXTERN NSString *const kShowFacebookViewNotification;
 
 
 // bundle id

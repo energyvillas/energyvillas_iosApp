@@ -11,8 +11,11 @@
 
 @interface DPFBLoginViewController : UINavContentViewController
 
+@property (strong, nonatomic) IBOutlet UIButton *btnLogin;
+@property (strong, nonatomic) IBOutlet UIButton *btnClose;
 @property (strong, nonatomic) IBOutlet UIActivityIndicatorView *busyIndicator;
 
+@property (strong, nonatomic) IBOutlet UIImageView *logoImgView;
 - (IBAction)btnTouchUpInside:(id)sender;
 
 - (void) loginFailed;

@@ -157,10 +157,14 @@
 - (void) showFB {
     DPAppDelegate *appdel = [UIApplication sharedApplication].delegate;
 
-    if (FBSession.activeSession.state == FBSessionStateCreatedTokenLoaded) {
+//    FBSessionState status = FBSession.activeSession.state;
+//    if (/*status == FBSessionStateCreated || */status == FBSessionStateCreatedTokenLoaded) {
+    if (FBSession.activeSession.isOpen) {
         [appdel showFBView];
     } else {
-        [appdel showFBLogin];
+        DPAppDelegate *appdel = [UIApplication sharedApplication].delegate;
+        [appdel openFBSession];
+//        [appdel showFBLogin];
     }
 }
 
@@ -216,10 +220,10 @@
 #pragma mark - Twitter
 
 - (void) tweet:(NSString *)imgUrl url:(NSString *)urlstr {
-    if (![TWTweetComposeViewController canSendTweet]) {
-        showAlertMessage(nil, kERR_TITLE_INFO, kERR_MSG_TRY_LATER); // pending::new message for missing twitter setup
-        return;
-    }
+//    if (![TWTweetComposeViewController canSendTweet]) {
+//        showAlertMessage(nil, kERR_TITLE_INFO, kERR_MSG_TRY_LATER); // pending::new message for missing twitter setup
+//        return;
+//    }
     //    if (![TWTweetComposeViewController canSendTweet])
     //    {
     //        UIAlertView *alertView = [[UIAlertView alloc]
