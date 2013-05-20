@@ -158,7 +158,8 @@
         
         case CTGID_EXCLUSIVE_DESIGNER:
         case CTGID_EXCLUSIVE_ART:
-        {
+
+        case CTGID_VIDEOS:{
             UINavigationController *navcontroller = self.navigationController;
             BOOL showCtg = NO, removeTop = NO;
             int ctgToShow = element.Id;
@@ -189,10 +190,6 @@
             }
             break;
         }
-            
-        case CTGID_VIDEOS:
-            
-            break;
             
         default:
             break;
