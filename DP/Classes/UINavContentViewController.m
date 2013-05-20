@@ -307,6 +307,7 @@
         aFrame = CGRectMake(0, (44 - img.size.height) / 2 , img.size.width, img.size.height);
 
     button.frame = aFrame;
+    button.contentMode = UIViewContentModeCenter;
     
     [button setImage: img forState:UIControlStateNormal];
     [button setTag: index];
