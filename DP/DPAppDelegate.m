@@ -126,6 +126,7 @@ void myExceptionHandler (NSException *exception)
 {
     // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later. 
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+    [[DPAppHelper sharedInstance] saveFavorites];
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application
@@ -149,6 +150,7 @@ void myExceptionHandler (NSException *exception)
 
 // It is important to close any FBSession object that is no longer useful
 - (void)applicationWillTerminate:(UIApplication *)application {
+    [[DPAppHelper sharedInstance] saveFavorites];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     [[FBSession activeSession] close];
 }

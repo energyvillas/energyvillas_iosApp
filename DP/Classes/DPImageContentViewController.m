@@ -302,15 +302,30 @@
     return NO;
 }
 - (BOOL) showNavBarAddToFav {
-    return YES;
+    return (self.article != nil);
 }
 - (BOOL) showNavBarSocial {
-    return YES;
+    return (self.article != nil);
 }
 //- (BOOL) showNavBarInfo {
 //    return YES;
 //}
 //==============================================================================
+
+- (BOOL) isInFavorites {
+    DPAppHelper *apphelper = [DPAppHelper sharedInstance];
+    BOOL infavs = [apphelper isArticleInFavorites:self.article];
+    return infavs;
+}
+
+- (void) toggleInFavorites {
+    DPAppHelper *apphelper = [DPAppHelper sharedInstance];
+    BOOL infavs = [self isInFavorites];
+    if (infavs)
+        [apphelper removeFromFavorites:self.article];
+    else
+        [apphelper addToFavorites:self.article];
+}
 
 
 - (NSString *) aquireImageTitleToShare {

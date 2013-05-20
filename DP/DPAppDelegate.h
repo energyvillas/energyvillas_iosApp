@@ -19,5 +19,5 @@
 - (void) openFBSession;
 - (void) showFBLogin;
 - (void) showFBView;
-
+- (UINavigationController *) findNavController;
 @end

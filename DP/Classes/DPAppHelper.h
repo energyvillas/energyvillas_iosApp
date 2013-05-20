@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "DPDataElement.h"
+#import "Article.h"
 
 @interface DPAppHelper : NSObject
 
@@ -20,6 +20,7 @@
 
 @property (strong, nonatomic) NSString *imageTitle2Share;
 @property (strong, nonatomic) NSString *imageUrl2Share;
+
 
 //===========
 
@@ -34,4 +35,12 @@
 - (void) saveImageToCache:(NSString *)url data:(NSData *)imgData;
 - (NSData *) loadImageFromCache:(NSString *)url;
 - (UIImage *) loadUIImageFromCache:(NSString *)url;
+
+#pragma mark - favorites handling
+- (BOOL) isArticleInFavorites:(Article *)article;
+- (void) addToFavorites:(Article *)article;
+- (void) removeFromFavorites:(Article *)article;
+
+- (void) saveFavorites;
+- (NSDictionary *) favoriteArticles;
 @end

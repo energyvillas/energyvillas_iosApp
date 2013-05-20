@@ -22,6 +22,7 @@
 #import "DPFacebookViewController.h"
 #import <Twitter/Twitter.h>
 #import "DPIAPHelper.h"
+#import "DPFavoritesViewController.h"
 
 
 
@@ -55,6 +56,8 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     [self doLocalize];
+    [self.bbiFavs setAction:@selector(doFavs:)];
+    [self.bbiInfo setAction:@selector(doInfo:)];
     [self.bbiMore setAction:@selector(doMore:)];
     [self.bbiBuy setAction:@selector(doBuy:)];
 }
@@ -128,6 +131,17 @@
     [main.view addSubview:buyVC.view];
 }
 
+- (void) doFavs:(id) sender {
+    if ([[[DPAppHelper sharedInstance] favoriteArticles] count] > 0) {
+        DPFavoritesViewController *favs = [[DPFavoritesViewController alloc] init];
+        [self.navigationController pushViewController:favs animated:YES];
+    }
+}
+
+- (void) doInfo:(id) sender {
+    // PENDING : GGSE
+}
+
 - (void) doBuy:(id) sender {
     [self showBuyDialog:CTGID_GENERAL_BUY_DLG];
 }
@@ -138,6 +152,8 @@
         
     self.bbiMore.title = showingMore ? DPLocalizedString(kbbiMoreBack_Title) : DPLocalizedString(kbbiMore_Title);
 
+    self.bbiMore.tintColor = showingMore ? [UIColor redColor] : [UIColor blackColor];
+    
     [self loadOpenFlow:YES];
 }
 
@@ -288,6 +304,8 @@
     [self setBbiBuy:nil];
     [self setTopView:nil];
     [self setBottomView:nil];
+    [self setBbiFavs:nil];
+    [self setBbiInfo:nil];
     [super viewDidUnload];
 }
 

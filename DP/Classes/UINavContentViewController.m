@@ -19,6 +19,7 @@
 @property (strong, nonatomic) UIButton *navbarTitleItemButton;
 @property (strong, nonatomic) UIButton *navbarLang_EN;
 @property (strong, nonatomic) UIButton *navbarLang_EL;
+@property (strong, nonatomic) UIButton *navbarFavorite;
 @property (strong, nonatomic) DPSocialManager *socialManager;
 
 @end
@@ -150,23 +151,6 @@
     }
 }
 
-NSString *const NAVBAR_BACK_IMG = @"Navbar/back.png"; //@"Navbar/back_arrow.png";
-NSString *const NAVBAR_BACK_SEL_IMG = @"Navbar/back_roll.png"; //@"Navbar/back_arrow_rol.png";
-
-NSString *const NAVBAR_LOGO_IMG_FMT = @"Navbar/logo_%@.png";
-
-NSString *const NAVBAR_LANG_EN_IMG = @"Navbar/lang_en.png";
-NSString *const NAVBAR_LANG_EN_SEL_IMG = @"Navbar/lang_en_roll.png";
-
-NSString *const NAVBAR_LANG_EL_IMG = @"Navbar/lang_el.png";
-NSString *const NAVBAR_LANG_EL_SEL_IMG = @"Navbar/lang_el_roll.png";
-
-NSString *const NAVBAR_FAV_IMG = @"Navbar/fav.png";
-NSString *const NAVBAR_FAV_SEL_IMG = @"Navbar/fav_roll.png";
-
-NSString *const NAVBAR_SHARE_IMG = @"Navbar/share.png";
-NSString *const NAVBAR_SHARE_SEL_IMG = @"Navbar/share_roll.png";
-
 - (NSString *) calcTitleImageName {
     NSString *lang = [DPAppHelper sharedInstance].currentLang;
     NSString *imgName = [NSString stringWithFormat: NAVBAR_LOGO_IMG_FMT, lang];
@@ -280,12 +264,13 @@ NSString *const NAVBAR_SHARE_SEL_IMG = @"Navbar/share_roll.png";
     }
     
     if ([self showNavBarAddToFav]) {
-        [rightButtons addSubview:[self
-                                  createButtonWithImage:NAVBAR_FAV_IMG
-                                  highlightedImage:NAVBAR_FAV_SEL_IMG
-                                  frame:CGRectMake(pos, 7, 30, 30)
-                                  tag:TAG_NBI_ADD_FAV
-                                  action:@selector(onNavButtonTapped:)]];
+        BOOL inFavs = [self isInFavorites];
+        NSString *favImgName = inFavs ? NAVBAR_FAV_SEL_IMG : NAVBAR_FAV_IMG;
+        self.navbarFavorite = [self createButtonWithImage:favImgName
+                                                    frame:CGRectMake(pos, 7, 30, 30)
+                                                      tag:TAG_NBI_ADD_FAV
+                                                   action:@selector(onNavButtonTapped:)];
+        [rightButtons addSubview:self.navbarFavorite];
         pos += 30;
     }
     
@@ -367,7 +352,7 @@ NSString *const NAVBAR_SHARE_SEL_IMG = @"Navbar/share_roll.png";
     return NO;
 }
 
-// PENDING use a delegate protocol form handling clicks
+// PENDING use a delegate protocol for handling clicks
 - (void) onNavButtonTapped: (id) sender {
     UIBarButtonItem *bbi = (UIBarButtonItem *)sender;
     if (bbi == nil) return;
@@ -382,7 +367,8 @@ NSString *const NAVBAR_SHARE_SEL_IMG = @"Navbar/share_roll.png";
             [self.navigationController popViewControllerAnimated:YES];
             break;
         case TAG_NBI_ADD_FAV:
-            // do stuff
+            [self toggleInFavorites];
+            [self fixFavsButton];
             break;
             
         case TAG_NBI_SHARE:
@@ -396,6 +382,18 @@ NSString *const NAVBAR_SHARE_SEL_IMG = @"Navbar/share_roll.png";
     }
 }
 
+- (BOOL) isInFavorites {
+    return NO;
+}
+
+- (void) toggleInFavorites {
+}
+
+- (void) fixFavsButton {
+    NSString *favImgName = [self isInFavorites] ? NAVBAR_FAV_SEL_IMG : NAVBAR_FAV_IMG;
+    [self.navbarFavorite setImage:[UIImage imageNamed:favImgName]
+                         forState:UIControlStateNormal];
+}
 
 - (void)didReceiveMemoryWarning
 {

@@ -77,4 +77,16 @@
     return self;
 }
 
+#pragma mark - NSCopying protocol implementation
+
+- (id)copyWithZone:(NSZone *)zone {
+    Category *copy = [super copyWithZone:zone];
+    copy.lang = [self.lang copy];
+    copy.parent = [self.parent copy];
+    copy.imageRollUrl = [self.imageRollUrl copy];
+    copy.hikId = self.hikId;
+    
+    return copy;
+}
+
 @end

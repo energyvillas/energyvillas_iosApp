@@ -41,4 +41,12 @@
 	return self;
 }
 
+#pragma mark - NSCopying protocol implementation
+
+- (id)copyWithZone:(NSZone *)zone {
+    DPDataElement *copy = [super copyWithZone:zone];
+    copy.title = [self.title copy];
+    copy.imageUrl = [self.imageUrl copy];
+    return copy;
+}
 @end

@@ -50,6 +50,26 @@ NSString *const HOUSE_OVERVIEW_URL = @"http://designprojectsapps.com/iphonehouse
 NSString *const HOUSE_OVERVIEW_URL_TEST = @"http://192.168.16.2/designprojectsapps/iphonehouseoverview.php";
 // http://www.mysite.com/iphonehouseoverview.php?user=<UUU>&pass=<PPP>&lang=<XXX>&cid=<YYY>
 
+
+// nav bar buttons and items
+NSString *const NAVBAR_BACK_IMG = @"Navbar/back.png"; //@"Navbar/back_arrow.png";
+NSString *const NAVBAR_BACK_SEL_IMG = @"Navbar/back_roll.png"; //@"Navbar/back_arrow_rol.png";
+
+NSString *const NAVBAR_LOGO_IMG_FMT = @"Navbar/logo_%@.png";
+
+NSString *const NAVBAR_LANG_EN_IMG = @"Navbar/lang_en.png";
+NSString *const NAVBAR_LANG_EN_SEL_IMG = @"Navbar/lang_en_roll.png";
+
+NSString *const NAVBAR_LANG_EL_IMG = @"Navbar/lang_el.png";
+NSString *const NAVBAR_LANG_EL_SEL_IMG = @"Navbar/lang_el_roll.png";
+
+NSString *const NAVBAR_FAV_IMG = @"Navbar/fav.png";
+NSString *const NAVBAR_FAV_SEL_IMG = @"Navbar/fav_roll.png";
+
+NSString *const NAVBAR_SHARE_IMG = @"Navbar/share.png";
+NSString *const NAVBAR_SHARE_SEL_IMG = @"Navbar/share_roll.png";
+
+
 // localization keys
 NSString *const kbtnOK_Title = @"btnOK_Title";
 

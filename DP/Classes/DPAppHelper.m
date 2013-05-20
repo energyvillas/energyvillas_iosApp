@@ -29,17 +29,23 @@
 //@property (strong, nonatomic) Reachability* internetReach;
 //@property (strong, nonatomic) Reachability* wifiReach;
 
+@property (strong, nonatomic, readonly, getter = getFavorites) NSMutableDictionary *favorites;
+
 @end
 
 @implementation DPAppHelper {
 
 }
 
+
+
 @synthesize connectionRequired = _connectionRequired;
 @synthesize hostIsReachable = _hostIsReachable;
 @synthesize currentLang = _currentLang;
 //@synthesize isPurchased = _isPurchased;
 @synthesize useCache = _useCache;
+@synthesize favorites = _favorites;
+
 
 + (DPAppHelper *)sharedInstance {
     static dispatch_once_t once;
@@ -94,7 +100,7 @@
 }
 
 - (BOOL) calcIsPurchased {
-    return YES;
+    //return YES;
     
     NSUserDefaults *usrDefaults = [NSUserDefaults standardUserDefaults];
     BOOL productPurchased = [usrDefaults boolForKey:PRODUCT_IDENTIFIER];
@@ -449,6 +455,59 @@
 //	{
 //		[self configureTextField: localWiFiConnectionStatusField imageView: localWiFiConnectionIcon reachability: curReach];
 //	}
+}
+
+#pragma mark - favorites handling
+
+- (NSMutableDictionary *) getFavorites {
+    if (!_favorites)
+        _favorites = [self doLoadFavorites];
+    
+    if (!_favorites)
+        _favorites = [[NSMutableDictionary alloc] init];
+    
+    return _favorites;
+}
+
+- (NSString *) favoritesFileName {
+    return getDocumentsFilePath(@"ev-favorites.dict");
+}
+
+- (BOOL) isKeyInFavorites:(NSString *)key {
+    return self.favorites[key] != nil;
+}
+
+- (BOOL) isArticleInFavorites:(Article *)article {
+    return [self isKeyInFavorites:article.key];
+}
+
+- (void) addToFavorites:(Article *)article {
+    if (![self isArticleInFavorites:article]) {
+        Article *element = [article copy];
+        self.favorites[element.key] = element;
+    }
+}
+- (void) removeFromFavorites:(Article *)article {
+    [self.favorites removeObjectForKey:article.key];
+    [self doSaveFavorites:NO];
+}
+
+- (NSMutableDictionary *) doLoadFavorites {
+    return [NSKeyedUnarchiver unarchiveObjectWithFile:[self favoritesFileName]];
+}
+
+- (void) saveFavorites {
+    [self doSaveFavorites:YES];
+}
+- (void) doSaveFavorites:(BOOL)clear {
+    [NSKeyedArchiver archiveRootObject:self.favorites toFile:[self favoritesFileName]];
+//    [self.favorites writeToFile:[self favoritesFileName] atomically:YES];
+    if (clear)
+        _favorites = nil;
+}
+
+- (NSDictionary *) favoriteArticles {
+    return [NSDictionary dictionaryWithDictionary:self.favorites];
 }
 
 

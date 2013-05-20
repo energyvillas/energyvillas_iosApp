@@ -68,6 +68,15 @@
     [self fixBackgroundImage];
     
     [self doFixFrames:navController.topViewController fixTop:NO];
+    
+    if (self.modalViewController)
+        [self doFixFrames:self.modalViewController fixTop:NO];
+
+    if (navController.modalViewController)
+        [self doFixFrames:navController.modalViewController fixTop:NO];
+
+    if (navController.topViewController.modalViewController)
+        [self doFixFrames:navController.topViewController.modalViewController fixTop:NO];
 }
 
 -(void) doFixFrames:(UIViewController *)viewController fixTop:(BOOL)fixtop {

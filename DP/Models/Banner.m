@@ -47,7 +47,7 @@
     self = [super initWithValues:aId title:aTitle imageUrl:aImageUrl];
     
 	if (self) {
-		self.key = aId;
+//		self.key = aId;
 //		self.title = NullIfEmpty(aTitle);
 //		self.image = NullIfEmpty(aImage);
 		self.body = NullIfEmpty(aBody);
@@ -56,6 +56,17 @@
 	}
     
 	return self;
+}
+
+#pragma mark - NSCopying protocol implementation
+
+- (id)copyWithZone:(NSZone *)zone {
+    Banner *copy = [super copyWithZone:zone];
+    copy.body = [self.body copy];
+    copy.publishDate = [self.publishDate copy];
+    copy.url = [self.url copy];
+    
+    return copy;
 }
 
 @end

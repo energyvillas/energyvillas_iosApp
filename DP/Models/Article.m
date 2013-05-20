@@ -90,5 +90,23 @@
 	return self;
 }
 
+#pragma mark - NSCopying protocol implementation
+
+- (id)copyWithZone:(NSZone *)zone {
+    Article *copy = [super copyWithZone:zone];
+    copy.lang = [self.lang copy];
+    copy.category = self.category;
+    copy.orderNo = self.orderNo;
+    copy.forFree = self.forFree;
+    copy.imageThumbUrl = [self.imageThumbUrl copy];
+    copy.body = [self.body copy];
+    copy.publishDate = [self.publishDate copy];
+    copy.url = [self.url copy];
+    copy.videoUrl = [self.videoUrl copy];
+    copy.videolength = [self.videolength copy];
+
+    return copy;
+}
+
 @end
 

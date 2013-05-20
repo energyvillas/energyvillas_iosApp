@@ -30,6 +30,7 @@
 //@property (strong, nonatomic) AFOpenFlowView *carousel;
 
 @property (strong, nonatomic) UIView *lblContainer;
+@property (strong, nonatomic) UIButton *btnAdd2Favs;
 @property (strong, nonatomic) UILabel *lblCounter;
 @property (strong, nonatomic) UILabel *lblTitle;
 
@@ -98,6 +99,10 @@
 
 - (void) viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    if (self.datalist && self.datalist.count > 0) {
+        [self setupLabels];
+        [self updateLabels];
+    }
 }
 
 - (void) viewWillDisappear:(BOOL)animated {
@@ -183,29 +188,85 @@
 
 -(void) clearLabels {
     if (self.lblContainer!=nil) {
+        [self.btnAdd2Favs removeFromSuperview];
+        [self.btnAdd2Favs removeTarget:self
+                                action:@selector(addToFavs:)
+                      forControlEvents:UIControlEventTouchUpInside];
         [self.lblCounter removeFromSuperview];
         [self.lblTitle removeFromSuperview];
         [self.lblContainer removeFromSuperview];
         self.lblCounter = nil;
         self.lblTitle = nil;
+        self.btnAdd2Favs = nil;
         self.lblContainer = nil;
     }
 }
 -(void) setupLabels {
     [self clearLabels];
-    CGRect frm = CGRectMake(0, 0, 50, 20);
-    self.lblCounter = [[UILabel alloc] initWithFrame:frm];
+    CGRect frmbtn = CGRectMake(0, 0, 24, 20);
+    
+    self.btnAdd2Favs = [UIButton buttonWithType:UIButtonTypeCustom];
+    self.btnAdd2Favs.frame = frmbtn;
+    self.btnAdd2Favs.contentMode = UIViewContentModeCenter;
+    self.btnAdd2Favs.backgroundColor = [UIColor whiteColor];
+    [self.btnAdd2Favs addTarget:self
+                         action:@selector(addToFavs:)
+               forControlEvents:UIControlEventTouchUpInside];
+    
+    CGRect frmcntr = CGRectOffset(frmbtn, frmbtn.size.width + 2, 0);
+    self.lblCounter = [[UILabel alloc] initWithFrame: frmcntr];
     self.lblCounter.backgroundColor = [UIColor whiteColor];
     self.lblCounter.textAlignment = UITextAlignmentRight;
     
-    self.lblTitle = [[UILabel alloc] initWithFrame:CGRectOffset(frm, 52, 0)];
+    CGRect frmtitle = CGRectOffset(frmcntr, frmcntr.origin.x + frmcntr.size.width + 2, 0);
+    self.lblTitle = [[UILabel alloc] initWithFrame:frmtitle];
     self.lblTitle.backgroundColor = [UIColor whiteColor];
     self.lblTitle.textAlignment = UITextAlignmentCenter;
     
-    self.lblContainer = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 200, 20)];
-    [self.view addSubview:self.lblContainer];
+    CGRect frm = CGRectUnion(frmbtn, frmtitle);
+    self.lblContainer = [[UIView alloc] initWithFrame:frm];
+    self.lblContainer.backgroundColor = [UIColor blackColor];
+    
+    [self.lblContainer addSubview:self.btnAdd2Favs];
     [self.lblContainer addSubview:self.lblCounter];
     [self.lblContainer addSubview:self.lblTitle];
+    
+    [self.view addSubview:self.lblContainer];
+}
+
+- (void) addToFavs:(id)sender {
+    if ((!self.icarousel) || (!self.datalist) || (self.datalist.count == 0))
+        return;
+    
+    if ((self.currentIndex == -1) || (!self.datalist) || (self.datalist.count == 0))
+        return;
+ 
+    Article *article = self.datalist[self.icarousel.currentItemIndex];
+    if (article) {
+        [self toggleInFavorites:article];
+        [self fixFavsButton:article];
+    }
+}
+
+- (BOOL) isInFavorites:(Article *)article {
+    DPAppHelper *apphelper = [DPAppHelper sharedInstance];
+    BOOL infavs = [apphelper isArticleInFavorites:article];
+    return infavs;
+}
+
+- (void) toggleInFavorites:(Article *)article {
+    DPAppHelper *apphelper = [DPAppHelper sharedInstance];
+    BOOL infavs = [self isInFavorites:article];
+    if (infavs)
+        [apphelper removeFromFavorites:article];
+    else
+        [apphelper addToFavorites:article];
+}
+
+- (void) fixFavsButton:(Article *)article {
+    NSString *favImgName = [self isInFavorites:article] ? NAVBAR_FAV_SEL_IMG : NAVBAR_FAV_IMG;
+    [self.btnAdd2Favs setImage:[UIImage imageNamed:favImgName]
+                      forState:UIControlStateNormal];
 }
 
 -(void) updateLabels {
@@ -215,6 +276,11 @@
     if ((self.currentIndex == -1) || (!self.datalist) || (self.datalist.count == 0))
         return;
     
+    
+    Article *article = self.datalist[self.icarousel.currentItemIndex];
+    
+    [self fixFavsButton:article];
+    
     self.lblCounter.text = [NSString stringWithFormat:@"%d/%d",
                             self.icarousel.currentItemIndex + 1,
                             self.datalist.count];
@@ -222,20 +288,27 @@
     [self.lblCounter sizeToFit];
     
     CGRect counterfrm = CGRectMake(0, 0, 50, self.lblCounter.frame.size.height);
+    counterfrm = CGRectOffset(counterfrm, self.btnAdd2Favs.frame.size.width + 2, 0);
     self.lblCounter.frame = counterfrm;
     
     if (self.icarousel.currentItemIndex >= self.datalist.count) {
         self.lblTitle.text = @"";
         [self.lblTitle sizeToFit];
     } else {
-    NSString *title = [self.datalist[self.icarousel.currentItemIndex] title];
+        NSString *title = [article title];
         self.lblTitle.text = title;
         [self.lblTitle sizeToFit];
     }
-    CGRect titlefrm = CGRectMake(counterfrm.size.width + 1, 0,
+    CGRect titlefrm = CGRectMake(0, 0,
                                  self.lblTitle.frame.size.width + 6,
-                                 self.lblTitle.frame.size.height);     
+                                 self.lblTitle.frame.size.height);
+    
+    CGRect r = self.btnAdd2Favs.frame;
+    self.btnAdd2Favs.frame = CGRectMake(r.origin.x, r.origin.y, r.size.width, counterfrm.size.height);
+    
+    titlefrm = CGRectOffset(titlefrm, counterfrm.origin.x + counterfrm.size.width + 2, 0);
     self.lblTitle.frame = titlefrm;
+    self.lblContainer.frame = CGRectUnion(self.btnAdd2Favs.frame, titlefrm);
 }
 //==============================================================================
 

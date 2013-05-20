@@ -60,4 +60,19 @@
 	return self;
 }
 
+#pragma mark - NSCopying protocol implementation
+
+- (id)copyWithZone:(NSZone *)zone {
+    HouseOverview *copy = [super copyWithZone:zone];
+    copy.lang = [self.lang copy];
+    copy.ctgid = self.ctgid;
+    copy.isMaster = self.isMaster;
+    copy.title = [self.title copy];
+    copy.info = [self.info copy];
+    copy.description = [self.description copy];
+    
+    return copy;
+}
+
+
 @end

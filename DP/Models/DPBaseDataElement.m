@@ -41,4 +41,13 @@
     return self.key.intValue;
 }
 
+#pragma mark - NSCopying protocol implementation
+
+- (id)copyWithZone:(NSZone *)zone {
+    DPBaseDataElement *copy = [[[self class] alloc] init];
+    copy.key = [self.key copy];
+    
+    return copy;
+}
+
 @end

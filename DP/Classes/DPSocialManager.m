@@ -16,6 +16,7 @@
 #import <FacebookSDK/FacebookSDK.h>
 #import "DPAppDelegate.h"
 #import "DPAppHelper.h"
+#import "DPFavoritesViewController.h"
 
 @interface DPSocialManager ()
 
@@ -140,10 +141,15 @@
             [self composeEmail];
             break;
             
-        case SOCIAL_ACT_FAVS:
-            
+        case SOCIAL_ACT_FAVS: {
+            if ([[[DPAppHelper sharedInstance] favoriteArticles] count] > 0) {
+                DPAppDelegate *appdel = [UIApplication sharedApplication].delegate;
+                UINavigationController *nvc = [appdel findNavController];
+                DPFavoritesViewController *favs = [[DPFavoritesViewController alloc] init];
+                [nvc pushViewController:favs animated:YES];
+            }
             break;
-            
+        }
         case SOCIAL_ACT_OTHER:
             
             break;

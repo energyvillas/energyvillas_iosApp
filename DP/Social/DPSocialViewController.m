@@ -12,7 +12,16 @@
 #import <QuartzCore/QuartzCore.h>
 
 
-#define SOCIAL_ITEMS_CNT ((int)6)
+#define SOCIAL_ITEMS_CNT ((int)4)
+#define COL_COUNT ((int)2) // 3
+#define ROW_COUNT ((int)2) // 2
+
+#define MARGIN_HORZ ((CGFloat)32.0f)
+#define MARGIN_VERT ((CGFloat)16.0f)
+#define SPACER_HORZ ((CGFloat)(2.0f * MARGIN_HORZ))
+#define SPACER_VERT ((CGFloat)MARGIN_VERT)
+
+
 
 @interface DPSocialViewController ()
 
@@ -223,21 +232,18 @@
             ROW_HEIGHT = MAX(ROW_HEIGHT, sz.height);
         }
     
-    int COLS = 3;
-    int ROWS = 2;
-//    CGFloat HORZ_MARGIN = (frm.size.width - COLS * COL_WIDTH) / (2 * COLS) ;
-//    CGFloat VERT_MARGIN = HORZ_MARGIN;
-//    CGFloat HORZ_SPACER = 2 * HORZ_MARGIN;
-//    CGFloat VERT_SPACER = VERT_MARGIN;  
-    CGFloat HORZ_MARGIN = 16;
-    CGFloat VERT_MARGIN = 16;
-    CGFloat HORZ_SPACER = 2 * HORZ_MARGIN; //(frm.size.width - 2 * HORZ_MARGIN - COLS * COL_WIDTH) / (COLS - 1);
-    CGFloat VERT_SPACER = VERT_MARGIN;
+    int COLS = COL_COUNT;
+    int ROWS = ROW_COUNT;
+    
+    CGFloat HORZ_MARGIN = MARGIN_HORZ;
+    CGFloat VERT_MARGIN = MARGIN_VERT;
+    CGFloat HORZ_SPACER = SPACER_HORZ;
+    CGFloat VERT_SPACER = SPACER_VERT;
     
     for (UIView *itemView in self.contentView.subviews)
         if (itemView.tag != 0) {
             int row = (itemView.tag - 1) / COLS;
-            int col = (itemView.tag -1) % COLS;
+            int col = (itemView.tag - 1) % COLS;
             
             itemView.backgroundColor = [UIColor clearColor];
             itemView.frame = CGRectMake(HORZ_MARGIN + col * (HORZ_SPACER + COL_WIDTH),

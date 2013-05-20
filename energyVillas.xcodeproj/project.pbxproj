@@ -74,6 +74,8 @@
 		5E9ABBDE16F9F3CA000EAB46 /* DPTestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E9ABBDD16F9F3CA000EAB46 /* DPTestViewController.m */; };
 		5E9ABBE016F9F3E2000EAB46 /* DPTestView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5E9ABBDF16F9F3E2000EAB46 /* DPTestView.xib */; };
 		5EB72C751744DE2D00392D6E /* SKProduct+LocalizedPrice.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EB72C741744DE2D00392D6E /* SKProduct+LocalizedPrice.m */; };
+		5EB72CB8174A324C00392D6E /* DPFavoritesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EB72CB7174A324B00392D6E /* DPFavoritesViewController.m */; };
+		5EB72CBA174A326B00392D6E /* DPFavoritesView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5EB72CB9174A326B00392D6E /* DPFavoritesView.xib */; };
 		5EC20D0D171D5D81006E03B7 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5EC20D0C171D5D81006E03B7 /* AudioToolbox.framework */; };
 		5EC20D10171DAD0F006E03B7 /* DPCarouselViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EC20D0F171DAD0F006E03B7 /* DPCarouselViewController.m */; };
 		5EC2557D16FC64400045AB99 /* DPImageInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EC2557C16FC64400045AB99 /* DPImageInfo.m */; };
@@ -257,6 +259,9 @@
 		5E9ABBDF16F9F3E2000EAB46 /* DPTestView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DPTestView.xib; sourceTree = "<group>"; };
 		5EB72C731744DE2D00392D6E /* SKProduct+LocalizedPrice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SKProduct+LocalizedPrice.h"; sourceTree = "<group>"; };
 		5EB72C741744DE2D00392D6E /* SKProduct+LocalizedPrice.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "SKProduct+LocalizedPrice.m"; sourceTree = "<group>"; };
+		5EB72CB6174A324B00392D6E /* DPFavoritesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPFavoritesViewController.h; sourceTree = "<group>"; };
+		5EB72CB7174A324B00392D6E /* DPFavoritesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPFavoritesViewController.m; sourceTree = "<group>"; };
+		5EB72CB9174A326B00392D6E /* DPFavoritesView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DPFavoritesView.xib; sourceTree = "<group>"; };
 		5EC20D0C171D5D81006E03B7 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		5EC20D0E171DAD0E006E03B7 /* DPCarouselViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPCarouselViewController.h; sourceTree = "<group>"; };
 		5EC20D0F171DAD0F006E03B7 /* DPCarouselViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPCarouselViewController.m; sourceTree = "<group>"; };
@@ -425,6 +430,8 @@
 				5E31F04817205AC0008B15F0 /* DPSocialViewController.m */,
 				5EC5739717255527000B7004 /* DPSocialManager.h */,
 				5EC5739817255527000B7004 /* DPSocialManager.m */,
+				5EB72CB6174A324B00392D6E /* DPFavoritesViewController.h */,
+				5EB72CB7174A324B00392D6E /* DPFavoritesViewController.m */,
 			);
 			path = Social;
 			sourceTree = "<group>";
@@ -435,6 +442,7 @@
 				5E31F03617201073008B15F0 /* DPFBLoginView.xib */,
 				5E31F03B172021DB008B15F0 /* DPFacebookView.xib */,
 				5E31F04A17205AD8008B15F0 /* DPSocialView.xib */,
+				5EB72CB9174A326B00392D6E /* DPFavoritesView.xib */,
 			);
 			path = SocialViews;
 			sourceTree = "<group>";
@@ -956,6 +964,7 @@
 				5EDE1F7E17442ED000A84BDA /* Icon@2x.png in Resources */,
 				5EDE1F8017442EDD00A84BDA /* Icon-72.png in Resources */,
 				5EDE1F8217442EE300A84BDA /* Icon-72@2x.png in Resources */,
+				5EB72CBA174A326B00392D6E /* DPFavoritesView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1044,6 +1053,7 @@
 				5EC573B7172ADF15000B7004 /* HouseOverviewLoader.m in Sources */,
 				5EC573BA172AE278000B7004 /* DPBaseDataElement.m in Sources */,
 				5EB72C751744DE2D00392D6E /* SKProduct+LocalizedPrice.m in Sources */,
+				5EB72CB8174A324C00392D6E /* DPFavoritesViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
