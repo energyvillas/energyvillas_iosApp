@@ -86,10 +86,10 @@
     return nil;
 }
 
-//- (void) postProcessView:(UIView *)aView contentIndex:(int)contentIndex frame:(CGRect)frame {
-//    aView.frame = CGRectInset(aView.frame, 3, 3);
-//    aView.contentMode = UIViewContentModeScaleToFill;
-//}
+- (void) postProcessView:(UIView *)aView contentIndex:(int)contentIndex frame:(CGRect)frame {
+    aView.frame = CGRectInset(aView.frame, 1, 1);
+    aView.contentMode = UIViewContentModeScaleAspectFit;
+}
 
 #pragma mark -
 

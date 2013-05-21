@@ -23,6 +23,9 @@
 @property (strong, nonatomic) NSMutableArray *imageCache;
 @property (strong, nonatomic) NSMutableDictionary *imageRequests;
 
+@property (strong, nonatomic) UIView *houseNew;
+@property (strong, nonatomic) UIView *houseNext;
+
 @end
 
 @implementation DPNewNextViewController
@@ -143,40 +146,40 @@
 #pragma mark - layout
 
 - (void) cleanSubViews {
-    for (int i = self.view.subviews.count - 1; i >= 0 ; i--)
-        [self.view.subviews[i] removeFromSuperview];
+    UIView *newhouse = self.houseNew; self.houseNew = nil;
+    UIView *nexthouse = self.houseNext; self.houseNext = nil;
+
+    [newhouse removeFromSuperview];
+    [nexthouse removeFromSuperview];
 }
--(void) doLayoutSubViews {
+-(void) doLayoutSubViews:(BOOL)fixtop {
     CGRect vf = self.view.frame;
     
-    [self cleanSubViews];
+    CGFloat w = IS_PORTRAIT ? vf.size.width / 2.0f : vf.size.width;
+    CGFloat h = IS_PORTRAIT ? vf.size.height : vf.size.height / 2.0f;
     
-    UIView *newHouse;
-    UIView *nextHouse;
-    if (IS_PORTRAIT) {
-        newHouse = [[UIView alloc] initWithFrame:CGRectMake(0,
-                                                                              0,
-                                                                              vf.size.width / 2.0,
-                                                                              vf.size.height)];
-        
-        nextHouse = [[UIView alloc] initWithFrame:CGRectMake(vf.size.width / 2.0,
-                                                                               0,
-                                                                               vf.size.width / 2.0,
-                                                                               vf.size.height)];
+    CGFloat x = IS_PORTRAIT ? w : 0;
+    CGFloat y = IS_PORTRAIT ? 0 : h;
+//    [self cleanSubViews];
+    if (self.houseNew == nil) {
+        self.houseNew = [[UIView alloc] initWithFrame:CGRectMake(0, 0, w, h)];
+        //self.houseNew.backgroundColor = [UIColor orangeColor];
+        [self.view addSubview:self.houseNew];
     } else {
-        newHouse = [[UIView alloc] initWithFrame:CGRectMake(0,
-                                                                              0,
-                                                                              vf.size.width,
-                                                                              vf.size.height / 2.0)];
-        
-        nextHouse = [[UIView alloc] initWithFrame:CGRectMake(0,
-                                                                               vf.size.height / 2.0,
-                                                                               vf.size.width,
-                                                                               vf.size.height / 2.0)];
+        self.houseNew.frame = CGRectMake(0, 0, w, h);
+        for (UIView *v in self.houseNew.subviews)
+            v.frame = self.houseNew.bounds;
     }
     
-    [self.view addSubview:newHouse];
-    [self.view addSubview:nextHouse];
+    if (self.houseNext == nil) {
+        self.houseNext = [[UIView alloc] initWithFrame:CGRectMake(x, y, w, h)];
+        //self.houseNext.backgroundColor = [UIColor magentaColor];
+        [self.view addSubview:self.houseNext];
+    } else {
+        self.houseNext.frame = CGRectMake(x, y, w, h);
+        for (UIView *v in self.houseNext.subviews)
+            v.frame = self.houseNext.bounds;
+    }
 }
 
 //==============================================================================
@@ -274,22 +277,28 @@
 }
 
 - (void) loadImages {
-    [self doLayoutSubViews];
+    [self doLayoutSubViews:NO];
     
     for (int i = 0; i < self.datalist.count; i++) {
         Article *article = self.datalist[i];
         if (isLocalUrl(article.imageUrl)) {
             UIView *v = self.view.subviews[i];
+            
+            for (UIView *sv in v.subviews)
+                [sv removeFromSuperview];
+            
             v.contentMode = UIViewContentModeTopRight;
             
-            UIImageView *bottom = [[UIImageView alloc] initWithFrame:v.bounds];
+            CGRect frm = v.bounds;
+            UIImageView *bottom = [[UIImageView alloc] initWithFrame:frm];
+            bottom.contentMode = UIViewContentModeScaleAspectFit;
             UIImage *img = [UIImage imageNamed:[self calcImageName:article.imageUrl isHighlight:NO]];
             if (img) {
                 [bottom setImage:img];
                 [v addSubview:bottom];
             }
             
-            UIImageView *top = [[UIImageView alloc] initWithFrame:v.bounds];
+            UIImageView *top = [[UIImageView alloc] initWithFrame:frm];
             UIImage *overlay = [UIImage imageNamed:@"NextModel/overlay_top.png"];
             if (overlay) {
                 [top setImage:overlay];

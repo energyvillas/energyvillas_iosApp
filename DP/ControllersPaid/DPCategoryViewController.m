@@ -73,11 +73,14 @@
     [self doLocalize];
 }
 
-- (void) doLocalize {
-    [super doLocalize];
+- (void) fixTitleLabel {
     NSString *ctgTitleKey = [NSString stringWithFormat:kMENU_TITLE_Fmt, self.category];
     self.lblTitle.text = DPLocalizedString(ctgTitleKey);
-    //[self fixlabel];
+}
+- (void) doLocalize {
+    [super doLocalize];
+
+    [self fixTitleLabel];
     
     if (self.adsView.subviews.count > 0)
         [self loadAdsView];
@@ -201,6 +204,14 @@
         [self.adsView addSubview:self.adsViewController.view];
     } else
         self.adsViewController.view.frame = self.adsView.bounds;
+}
+
+- (void) showCategory:(int)ctgID {
+    if (_category != ctgID) {
+        _category = ctgID;
+        [self fixTitleLabel];
+        [self loadCategoryView:YES];
+    }
 }
 
 - (void) loadCategoryView:(BOOL)reload {

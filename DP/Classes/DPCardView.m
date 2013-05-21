@@ -53,11 +53,7 @@
     if (self) {
         element = elm;
         
-        self.backgroundColor = [UIColor redColor];//[UIColor clearColor];
-//        self.backgroundColor = [UIColor colorWithHue: (arc4random() % 1000) / 1000.0
-//                                          saturation:1.0
-//                                          brightness:1.0
-//                                               alpha:1.0];
+        self.backgroundColor = [UIColor clearColor];//[UIColor redColor];//
     }
     return self;
 }
@@ -380,7 +376,7 @@ CGRect CGRectChangeCenter(CGRect rect, CGPoint center) {
 - (void) startIndicator {
     if(!self.busyIndicator) {
 		self.busyIndicator = [[UIActivityIndicatorView alloc]
-                              initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+                              initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
 		self.busyIndicator.frame = CGRectMake((self.frame.size.width-25)/2,
                                               (self.frame.size.height-25)/2,
                                               25, 25);

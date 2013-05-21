@@ -50,15 +50,14 @@
 //    self.bbiBuy.title = DPLocalizedString(kbbiBuy_Title);
     
     if (self.adsView.subviews.count > 0)
-        [self loadAdsView];
+        [self loadAdsView:YES];
  
     if (self.nnView.subviews.count > 0)
-        [self loadNewNextView];
+        [self loadNewNextView:YES];
     
     if (self.mmView.subviews.count > 0)
-        [self loadMenuView];
+        [self loadMenuView:YES];
 }
-
 
 - (void) doLayoutSubViews:(BOOL)fixtop {    
     CGRect vf = self.view.frame;
@@ -149,25 +148,31 @@
         }
     }
     
-    [self loadAdsView];
-    [self loadNewNextView];
-    [self loadMenuView];
+    [self loadAdsView:NO];
+    [self loadNewNextView:NO];
+    [self loadMenuView:NO];
 }
 
-- (void) loadAdsView {
-    if (self.adsView.subviews.count == 0)
+- (void) loadAdsView:(BOOL)reload {
+    if (reload && self.adsViewController != nil) {
+        [self.adsViewController.view removeFromSuperview];
+        [self.adsViewController removeFromParentViewController];
+        self.adsViewController = nil;
+    }
+    
+    if (self.adsViewController == nil)
     {
         self.adsViewController = [[DPAdsViewController alloc] initWithGroup:1];
-        //self.adsViewController.view.frame = self.adsView.bounds;
+        self.adsViewController.view.frame = self.adsView.bounds;
         [self addChildViewController:self.adsViewController];
         [self.adsView addSubview:self.adsViewController.view];
+    } else {
+        self.adsViewController.view.frame = self.adsView.bounds;
+        [self.adsViewController.view setNeedsDisplay];
     }
-    NSLogFrame(@"adsView.frame", self.adsView.frame);
-    NSLogFrame(@"adsView.bounds", self.adsView.bounds);
-    self.adsViewController.view.frame = self.adsView.bounds;
 }
 
-- (void) loadNewNextView {
+- (void) loadNewNextView:(BOOL)reload {
 //    NSLog(@"enter loadNewNextView");
 //    if (self.nnViewController != nil) {
 //        [self.nnViewController.view removeFromSuperview];
@@ -183,6 +188,12 @@
 //    [self.nnView addSubview: self.nnViewController.view];
 //    NSLog(@"exit loadNewNextView");
 
+    if (reload && self.nnViewController != nil) {
+        [self.nnViewController.view removeFromSuperview];
+        [self.nnViewController removeFromParentViewController];
+        self.nnViewController = nil;
+    }
+
     if (self.nnViewController == nil) {
         NSLog(@"creating new-next");
         self.nnViewController = [[DPNewNextViewController alloc] init];
@@ -191,24 +202,30 @@
         [self.nnView addSubview: self.nnViewController.view];
     } else {
         self.nnViewController.view.frame =self.nnView.bounds;
-        [self.nnViewController refresh];
+        //[self.nnViewController refresh];
+        [self.nnViewController.view setNeedsDisplay];
     }
 }
 
-- (void) loadMenuView {
+- (void) loadMenuView:(BOOL)reload {
     NSLogFrame(@"mmView.frame", self.mmView.frame);
     NSLogFrame(@"mmView.bounds", self.mmView.bounds);
     
-    if (self.mmViewController != nil) {
+    if (reload && self.mmViewController != nil) {
         [self.mmViewController.view removeFromSuperview];
         [self.mmViewController removeFromParentViewController];
         self.mmViewController = nil;
     }
     
-    self.mmViewController = [[DPMenuViewController alloc] initWithRows:3 columns:3 autoScroll:NO];
-    self.mmViewController.view.frame = self.mmView.bounds;
-    [self addChildViewController:self.mmViewController];
-    [self.mmView addSubview:self.mmViewController.view];
+    if (self.mmViewController == nil) {
+        self.mmViewController = [[DPMenuViewController alloc] initWithRows:3 columns:3 autoScroll:NO];
+        self.mmViewController.view.frame = self.mmView.bounds;
+        [self addChildViewController:self.mmViewController];
+        [self.mmView addSubview:self.mmViewController.view];
+    } else {
+        self.mmViewController.view.frame = self.mmView.bounds;
+       [self.mmViewController.view setNeedsDisplay];
+    }
 }
 
 //- (UIImage *) imageForIndex:(int) indx withFrame:(CGRect *) targetFrame {

@@ -168,12 +168,14 @@
                 showCtg = YES;
             } else {
                 UIViewController *top = [self.navigationController topViewController];
-                if ([top isKindOfClass:[DPCategoryViewController class]]){
-                    int ctgshowing = ((DPCategoryViewController *)top).category;
-                    if (ctgshowing != element.Id) {
-                        removeTop = YES;
-                        showCtg = YES;
-                    }
+                if ([top isKindOfClass:[DPCategoryViewController class]])
+                {
+                    [((DPCategoryViewController *)top) showCategory:element.Id];
+//                    int ctgshowing = ((DPCategoryViewController *)top).category;
+//                    if (ctgshowing != element.Id) {
+//                        removeTop = YES;
+//                        showCtg = YES;
+//                    }
                 } else { // is this ever possible???
                     showCtg = YES; 
                 }

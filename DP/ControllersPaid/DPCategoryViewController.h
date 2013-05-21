@@ -8,6 +8,8 @@
 
 #import "UINavContentViewController.h"
 
+
+
 @interface DPCategoryViewController : UINavContentViewController 
 
 @property (nonatomic, readonly) int category;
@@ -20,5 +22,7 @@
 @property (strong, nonatomic) IBOutlet UIView *actualCtgView;
 
 - (id) initWithCategory:(int)ctgID;
+
+- (void) showCategory:(int)ctgID;
 
 @end

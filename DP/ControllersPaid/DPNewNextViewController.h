@@ -7,9 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "UINavContentViewController.h"
 #import "DPDataLoader.h"
 
-@interface DPNewNextViewController : UIViewController <DPDataLoaderDelegate>
+@interface DPNewNextViewController : UINavContentViewController <DPDataLoaderDelegate>
 
 -(void) refresh;
 @end
