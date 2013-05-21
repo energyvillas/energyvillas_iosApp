@@ -90,8 +90,7 @@
     return self;
 }
 
-#pragma mark -
-#pragma mark scrollableview delegate methods
+#pragma mark - scrollableview delegate methods
 
 - (void) elementTapped:(id)sender element:(id)element {
     if (!isLeafCategory) {
@@ -102,8 +101,7 @@
     }
 }
 
-#pragma mark -
-#pragma mark scrollabledatasource methods
+#pragma mark - scrollabledatasource methods
 
 - (void) loadPage:(int)contentIndex inView:(UIView *)container frame:(CGRect)frm {
     if (!self.contentList || self.contentList.count == 0) return;
@@ -139,8 +137,7 @@
     [container addSubview:acv];
 }
 
-#pragma mark -
-#pragma mark data loading methods
+#pragma mark - data loading methods
 
 - (void) reachabilityChanged {
     [super reachabilityChanged];
@@ -152,6 +149,7 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     self.view.frame = initframe;
+
     [self loadData];
 }
 
@@ -180,6 +178,11 @@
               columns:self.colCount
       scrollDirection:self.scrollDirection];
 }
+
+- (BOOL) overlapPageControl {
+    return IS_LANDSCAPE && (!IS_IPAD);
+}
+
 
 //-(NSArray *) generateLocalData {
 //    NSMutableArray *list = [[NSMutableArray alloc] init];

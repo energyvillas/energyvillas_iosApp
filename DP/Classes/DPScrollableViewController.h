@@ -56,6 +56,6 @@ typedef NS_ENUM(NSInteger, DPScrollDirection) {
 - (void) loadImageAsync:(DPDataElement *)elm inView:(UIImageView *)imgView cacheImage:(BOOL)cacheimage;
 - (BOOL) isLocalUrl:(NSString *)urlstr;
 
-
+- (BOOL) overlapPageControl;
 @end
 

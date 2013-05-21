@@ -154,6 +154,10 @@
     [self changeRows:self.rowCount columns:self.colCount];
 }
 
+- (BOOL) overlapPageControl {
+    return NO;
+}
+
 - (void) calcFrames {
     CGRect vf = self.view.frame;
     if (CGRectIsEmpty(vf)) return;
@@ -162,7 +166,7 @@
     int w = vf.size.width;
     
     int pgCount = [self calcPageCount];
-    if (showPages && pgCount > 1)
+    if (showPages && pgCount > 1 && ![self overlapPageControl])
         self.scrollView.frame = CGRectMake(0, 0, w, h - PAGE_CONTROL_HEIGHT);
     else
         self.scrollView.frame = CGRectMake(0, 0, w, h);
