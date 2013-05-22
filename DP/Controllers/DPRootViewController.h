@@ -24,8 +24,12 @@
 @property (strong, nonatomic) IBOutlet UIView *topView;
 @property (strong, nonatomic) IBOutlet UIToolbar *toolbar;
 
+@property (strong, nonatomic) IBOutlet UIBarButtonItem *spacingLeft;
+
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *bbiFavs;
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *bbiInfo;
+
+@property (strong, nonatomic) IBOutlet UIBarButtonItem *spacingInfoMore;
 
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *bbiMore;
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *bbiBuy;

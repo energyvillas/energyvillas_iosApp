@@ -62,6 +62,15 @@
     [self.bbiBuy setAction:@selector(doBuy:)];
 }
 
+-(void) viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [self fixToolbarSpacing];
+}
+
+-(void) fixToolbarSpacing {
+    self.spacingLeft.width = IS_PORTRAIT ? (IS_IPAD ? 70 : 2) : (IS_IPAD ? 75 : 2);// (IS_IPHONE ? 8 : 8));
+    self.spacingInfoMore.width = IS_PORTRAIT ? (IS_IPAD ? 160 : (IS_IPHONE ? 10 : 12)) : (IS_IPAD ? 285 : (IS_IPHONE ? 90 : 134));
+}
 - (void) doLocalize {
     [super doLocalize];
     self.bbiMore.title = showingMore ? DPLocalizedString(kbbiMoreBack_Title) : DPLocalizedString(kbbiMore_Title);
@@ -199,6 +208,8 @@
     
     [self loadOpenFlow:NO];
     [self loadDetailView:NO];
+    
+    [self fixToolbarSpacing];
 }
 
 - (void) loadDetailView:(BOOL)reload{
@@ -306,6 +317,8 @@
     [self setBottomView:nil];
     [self setBbiFavs:nil];
     [self setBbiInfo:nil];
+    [self setSpacingInfoMore:nil];
+    [self setSpacingLeft:nil];
     [super viewDidUnload];
 }
 

@@ -67,6 +67,12 @@
 						<bool key="IBUIClearsContextBeforeDrawing">NO</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 						<array class="NSMutableArray" key="IBUIItems">
+							<object class="IBUIBarButtonItem" id="803013525">
+								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
+								<float key="IBUIWidth">8</float>
+								<reference key="IBUIToolbar" ref="739807633"/>
+								<int key="IBUISystemItemIdentifier">6</int>
+							</object>
 							<object class="IBUIBarButtonItem" id="662027388">
 								<object class="NSCustomResource" key="IBUIImage">
 									<string key="NSClassName">NSImage</string>
@@ -91,8 +97,9 @@
 							</object>
 							<object class="IBUIBarButtonItem" id="202815167">
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
+								<float key="IBUIWidth">32</float>
 								<reference key="IBUIToolbar" ref="739807633"/>
-								<int key="IBUISystemItemIdentifier">5</int>
+								<int key="IBUISystemItemIdentifier">6</int>
 							</object>
 							<object class="IBUIBarButtonItem" id="1012134213">
 								<string key="IBUITitle">more</string>
@@ -213,6 +220,22 @@
 					</object>
 					<int key="connectionID">64</int>
 				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">spacingInfoMore</string>
+						<reference key="source" ref="372490531"/>
+						<reference key="destination" ref="202815167"/>
+					</object>
+					<int key="connectionID">66</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">spacingLeft</string>
+						<reference key="source" ref="372490531"/>
+						<reference key="destination" ref="803013525"/>
+					</object>
+					<int key="connectionID">67</int>
+				</object>
 			</array>
 			<object class="IBMutableOrderedSet" key="objectRecords">
 				<array key="orderedObjects">
@@ -271,6 +294,7 @@
 							<reference ref="651416092"/>
 							<reference ref="465742199"/>
 							<reference ref="662027388"/>
+							<reference ref="803013525"/>
 						</array>
 						<reference key="parent" ref="191373211"/>
 					</object>
@@ -305,6 +329,7 @@
 						<int key="objectID">56</int>
 						<reference key="object" ref="202815167"/>
 						<reference key="parent" ref="739807633"/>
+						<string key="objectName">spacing</string>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">57</int>
@@ -323,6 +348,12 @@
 						<reference key="object" ref="662027388"/>
 						<reference key="parent" ref="739807633"/>
 						<string key="objectName">bbiFavs</string>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">65</int>
+						<reference key="object" ref="803013525"/>
+						<reference key="parent" ref="739807633"/>
+						<string key="objectName">spacingLeft</string>
 					</object>
 				</array>
 			</object>
@@ -343,13 +374,14 @@
 				<string key="57.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="59.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="62.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
+				<string key="65.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="7.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 			</dictionary>
 			<dictionary class="NSMutableDictionary" key="unlocalizedProperties"/>
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">64</int>
+			<int key="maxID">67</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes"/>
 		<int key="IBDocument.localizationMode">0</int>

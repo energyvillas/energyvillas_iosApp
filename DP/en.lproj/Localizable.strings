@@ -73,8 +73,9 @@
 "MENU_TITLE_63"="Aegean Ηouses";
 "MENU_TITLE_64"="Ionian Ηouses";
 
-"MENU_TITLE_74"="Exclusive";
+"MENU_TITLE_74"="Designer";
 "MENU_TITLE_75"="Art";
 
 
-
+// HouseInfo page 
+"HIK_HouseDescription"="Description";

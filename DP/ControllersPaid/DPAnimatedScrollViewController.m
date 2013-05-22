@@ -18,6 +18,8 @@
 #import "DPAppHelper.h"
 #import "DPConstants.h"
 
+#import "DPArticleViewController.h"
+
 // 1st level
 #define DURATION_MOVE_1st_Level ((NSTimeInterval)10.0)
 #define DURATION_ZOOM_1st_Level ((NSTimeInterval)0.35)
@@ -93,11 +95,15 @@
 #pragma mark - scrollableview delegate methods
 
 - (void) elementTapped:(id)sender element:(id)element {
+    Category *elm = element;
+    
     if (!isLeafCategory) {
-        Category *elm = element;
         DPSubCategoryViewController *ctrlr = [[DPSubCategoryViewController alloc] initWithCategory:elm];
         
         [self.navigationController pushViewController:ctrlr animated:YES];
+    } else {
+        DPArticleViewController *avc = [[DPArticleViewController alloc] initWithCategory:elm.Id];
+        [self.navigationController pushViewController:avc animated:YES];
     }
 }
 
@@ -131,7 +137,7 @@
                                                                categories:self.contentList[contentIndex]
                                                                  cardSize:sz
                                                             cardInsetSize:szInset
-                                                             moveDuration:isLeafCategory ?  DURATION_MOVE_2nd_Level : DURATION_MOVE_1st_Level
+                                                             moveDuration:isLeafCategory ? DURATION_MOVE_2nd_Level : DURATION_MOVE_1st_Level
                                                              zoomDuration:isLeafCategory ? DURATION_ZOOM_2nd_Level : DURATION_ZOOM_1st_Level];
     acv.scrollableViewDelegate = self;
     [container addSubview:acv];

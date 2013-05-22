@@ -9,6 +9,7 @@
 /* ======= common ====== */
 "btnOK_Title"="ΟΚ";
 
+
 "ERR_TITLE_URL_NOT_FOUND"="Αποτυχία Σύνδεσης";
 "ERR_MSG_DATA_LOAD_FAILED"="Η διαδικασία ανάκτησης νέων απέτυχε! Παρακαλούμε δοκιμάστε αργότερα...";
 
@@ -28,6 +29,7 @@
 "SOCIAL_BTN_05"="Αγαπημένα";
 "SOCIAL_BTN_06"="Άλλο";
 "SOCIAL_BTN_Close"="Κλείσιμο";
+
 
 /* ======= FREE ====== */
 "bbiMore_Title"="περισσότερα";
@@ -71,8 +73,9 @@
 "MENU_TITLE_63"="Αιγαιοπελαγίτικες Κατοικίες";
 "MENU_TITLE_64"="Κατοικίες Ιονίων Νήσων";
 
-"MENU_TITLE_74"="Exclusive";
+"MENU_TITLE_74"="Designer";
 "MENU_TITLE_75"="Τέχνης";
 
 
-
+// HouseInfo page
+"HIK_HouseDescription"="Περιγραφή";

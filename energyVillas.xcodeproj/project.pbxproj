@@ -73,6 +73,8 @@
 		5E756E36174AB197001AA085 /* favorites-small_03@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5E756E32174AB197001AA085 /* favorites-small_03@2x.png */; };
 		5E756E37174AB197001AA085 /* info-small_01.png in Resources */ = {isa = PBXBuildFile; fileRef = 5E756E33174AB197001AA085 /* info-small_01.png */; };
 		5E756E38174AB197001AA085 /* info-small_01@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5E756E34174AB197001AA085 /* info-small_01@2x.png */; };
+		5E756E3A174BDC41001AA085 /* HouseInfo in Resources */ = {isa = PBXBuildFile; fileRef = 5E756E39174BDC41001AA085 /* HouseInfo */; };
+		5E756E3D174C2630001AA085 /* DPArticleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E756E3C174C262F001AA085 /* DPArticleViewController.m */; };
 		5E869E0D173010EA00516D2D /* FreeImages in Resources */ = {isa = PBXBuildFile; fileRef = 5E869E0C173010EA00516D2D /* FreeImages */; };
 		5E8AB0CC171706D1004AFE76 /* UIImage+Retina4.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E8AB0CB171706D1004AFE76 /* UIImage+Retina4.m */; };
 		5E9ABBDE16F9F3CA000EAB46 /* DPTestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E9ABBDD16F9F3CA000EAB46 /* DPTestViewController.m */; };
@@ -259,6 +261,9 @@
 		5E756E32174AB197001AA085 /* favorites-small_03@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "favorites-small_03@2x.png"; sourceTree = "<group>"; };
 		5E756E33174AB197001AA085 /* info-small_01.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "info-small_01.png"; sourceTree = "<group>"; };
 		5E756E34174AB197001AA085 /* info-small_01@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "info-small_01@2x.png"; sourceTree = "<group>"; };
+		5E756E39174BDC41001AA085 /* HouseInfo */ = {isa = PBXFileReference; lastKnownFileType = folder; path = HouseInfo; sourceTree = "<group>"; };
+		5E756E3B174C262F001AA085 /* DPArticleViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPArticleViewController.h; sourceTree = "<group>"; };
+		5E756E3C174C262F001AA085 /* DPArticleViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPArticleViewController.m; sourceTree = "<group>"; };
 		5E869E0C173010EA00516D2D /* FreeImages */ = {isa = PBXFileReference; lastKnownFileType = folder; path = FreeImages; sourceTree = "<group>"; };
 		5E8AB0CA171706D1004AFE76 /* UIImage+Retina4.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Retina4.h"; sourceTree = "<group>"; };
 		5E8AB0CB171706D1004AFE76 /* UIImage+Retina4.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Retina4.m"; sourceTree = "<group>"; };
@@ -687,6 +692,7 @@
 				5EE16DFE171C47D10006E1CE /* Carousel */,
 				5E4E85121710356A005DAD06 /* Background */,
 				5E03E922171578FB00F0C6F3 /* BuyDialog */,
+				5E756E39174BDC41001AA085 /* HouseInfo */,
 				5E4E8514171059AA005DAD06 /* Navbar */,
 				5E5F949E17213BF5006C9A88 /* Social */,
 				5EC573AD1727AE48000B7004 /* MainMenu */,
@@ -753,6 +759,8 @@
 				5E4E85211711F947005DAD06 /* DPAnimatedScrollViewController.m */,
 				5EC5739A1725978C000B7004 /* DPNewNextViewController.h */,
 				5EC5739B1725978D000B7004 /* DPNewNextViewController.m */,
+				5E756E3B174C262F001AA085 /* DPArticleViewController.h */,
+				5E756E3C174C262F001AA085 /* DPArticleViewController.m */,
 			);
 			path = ControllersPaid;
 			sourceTree = "<group>";
@@ -989,6 +997,7 @@
 				5E756E36174AB197001AA085 /* favorites-small_03@2x.png in Resources */,
 				5E756E37174AB197001AA085 /* info-small_01.png in Resources */,
 				5E756E38174AB197001AA085 /* info-small_01@2x.png in Resources */,
+				5E756E3A174BDC41001AA085 /* HouseInfo in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1078,6 +1087,7 @@
 				5EC573BA172AE278000B7004 /* DPBaseDataElement.m in Sources */,
 				5EB72C751744DE2D00392D6E /* SKProduct+LocalizedPrice.m in Sources */,
 				5EB72CB8174A324C00392D6E /* DPFavoritesViewController.m in Sources */,
+				5E756E3D174C2630001AA085 /* DPArticleViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

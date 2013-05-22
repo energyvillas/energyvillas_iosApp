@@ -201,9 +201,23 @@
         self.lblContainer = nil;
     }
 }
+
+#define IPHONES_FONT_SIZE ((CGFloat) 17.0f)
+#define IPHONES_FAV_SIZE_WIDTH ((CGFloat) 30.0f)
+#define IPHONES_FAV_SIZE_HEIGHT ((CGFloat) 20.0f)
+#define IPHONES_COUNTER_WIDTH ((CGFloat) 48.0f)
+
+#define IPADS_FONT_SIZE ((CGFloat) 32.0f)
+#define IPADS_FAV_SIZE_WIDTH ((CGFloat) 48.0f)
+#define IPADS_FAV_SIZE_HEIGHT ((CGFloat) 34.0f)
+#define IPADS_COUNTER_WIDTH ((CGFloat) 86.0f)
+
+
 -(void) setupLabels {
     [self clearLabels];
-    CGRect frmbtn = CGRectMake(0, 0, 24, 20);
+    CGSize favSize = CGSizeMake(IS_IPAD ? IPADS_FAV_SIZE_WIDTH : IPHONES_FAV_SIZE_WIDTH,
+                                IS_IPAD ? IPADS_FAV_SIZE_HEIGHT : IPHONES_FAV_SIZE_HEIGHT);
+    CGRect frmbtn = CGRectMake(0, 0, favSize.width, favSize.height);
     
     self.btnAdd2Favs = [UIButton buttonWithType:UIButtonTypeCustom];
     self.btnAdd2Favs.frame = frmbtn;
@@ -215,11 +229,13 @@
     
     CGRect frmcntr = CGRectOffset(frmbtn, frmbtn.size.width + 2, 0);
     self.lblCounter = [[UILabel alloc] initWithFrame: frmcntr];
+    self.lblCounter.font = [UIFont systemFontOfSize: IS_IPAD ? IPADS_FONT_SIZE : IPHONES_FONT_SIZE];
     self.lblCounter.backgroundColor = [UIColor whiteColor];
     self.lblCounter.textAlignment = UITextAlignmentRight;
     
     CGRect frmtitle = CGRectOffset(frmcntr, frmcntr.origin.x + frmcntr.size.width + 2, 0);
     self.lblTitle = [[UILabel alloc] initWithFrame:frmtitle];
+    self.lblTitle.font = [UIFont systemFontOfSize:IS_IPAD ? IPADS_FONT_SIZE : IPHONES_FONT_SIZE];
     self.lblTitle.backgroundColor = [UIColor whiteColor];
     self.lblTitle.textAlignment = UITextAlignmentCenter;
     
@@ -287,7 +303,9 @@
     
     [self.lblCounter sizeToFit];
     
-    CGRect counterfrm = CGRectMake(0, 0, 50, self.lblCounter.frame.size.height);
+    CGRect counterfrm = CGRectMake(0, 0,
+                                   IS_IPAD ? IPADS_COUNTER_WIDTH : IPHONES_COUNTER_WIDTH,
+                                   self.lblCounter.frame.size.height);
     counterfrm = CGRectOffset(counterfrm, self.btnAdd2Favs.frame.size.width + 2, 0);
     self.lblCounter.frame = counterfrm;
     

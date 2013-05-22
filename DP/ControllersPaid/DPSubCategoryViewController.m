@@ -83,13 +83,29 @@
     [self loadData];
 }
 
+- (void) viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    if (self.subCtgsViewController)
+        [self.subCtgsViewController changeRows:self.subCtgsViewController.rowCount
+                                       columns:self.subCtgsViewController.colCount
+                               scrollDirection:self.subCtgsViewController.scrollDirection];
+}
+
+- (void) viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+}
+
+
 -(void) doLocalize {
     [super doLocalize];
     [self loadData];
     
     if (self.subCtgView.subviews.count > 0)
         [self loadCategoryView:YES];
+    
+    [self loadInfoDescView];
 }
+
 - (void) loadData {
     [self clearDataLoaders];
     
@@ -126,7 +142,8 @@
 //}
 
 -(void) hovLoaded {
-    [self.titleView loadHTMLString:self.houseOverview.title baseURL:nil];
+    if (self.houseOverview)
+        [self.titleView loadHTMLString:self.houseOverview.title baseURL:nil];
 }
 - (void) hovLoadFinished:(HouseOverviewLoader *)loader {
     if (loader.datalist.count == 0)
@@ -293,6 +310,7 @@
     }
     
 //    [self loadAdsView];
+    [self hovLoaded];
     [self loadCategoryView:NO];
     [self loadInfoDescView];
 }
@@ -311,7 +329,8 @@
 -(UIView *) loadInnerHtmlView {
     CGFloat grayPcnt = 70.0f / 256.0f;
     UIView *innerHtmlView = [[UIView alloc] initWithFrame:CGRectInset(self.htmlView.bounds, 0, 2)];
-    innerHtmlView.backgroundColor = [UIColor colorWithRed:grayPcnt green:grayPcnt blue:grayPcnt alpha:0.9f];
+//    innerHtmlView.backgroundColor = [UIColor colorWithRed:grayPcnt green:grayPcnt blue:grayPcnt alpha:0.9f];
+    innerHtmlView.backgroundColor = [UIColor colorWithWhite:grayPcnt alpha:0.9f];
     innerHtmlView.layer.borderColor = [UIColor whiteColor].CGColor;
     innerHtmlView.layer.borderWidth = 2.0f;
     
@@ -339,7 +358,7 @@
 -(void) drawVLine:(UIView *)container {
     CGSize sz = container.bounds.size;
     sz.width = 2.0f;
-    CGRect frm = CGRectInset(CGRectMake(sz.height, 0, sz.width, sz.height), 0, 6.0f);
+    CGRect frm = CGRectInset(CGRectMake(sz.height, 0, sz.width, sz.height), 0, 12.0f);
     UIView *vline = [[UIView alloc] initWithFrame:frm];
     vline.frame = frm;
     vline.layer.borderColor = [UIColor colorWithWhite:0.7f alpha:1.0f].CGColor;
@@ -353,15 +372,14 @@
     CGRect frm = CGRectMake(sz.height, 0, sz.width, sz.height);
     UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
     btn.frame = frm;
-    //btn.showsTouchWhenHighlighted = YES;
+    btn.showsTouchWhenHighlighted = YES;
     btn.contentMode = UIViewContentModeCenter;
     //[btn setImage:[UIImage imageNamed:@"HouseInfo/Info/info.png"] forState:UIControlStateNormal];
     btn.titleLabel.font = [UIFont fontWithName:@"TrebuchetMS-Bold" size:18];
-    [btn setTitle:@"House Description" forState:UIControlStateNormal];
+    [btn setTitle:DPLocalizedString(@"HIK_HouseDescription") forState:UIControlStateNormal];
     [btn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     
     btn.reversesTitleShadowWhenHighlighted = YES;
-   // btn setBackgroundImage:<#(UIImage *)#> forState:<#(UIControlState)#>
     
     btn.layer.shadowColor = [UIColor whiteColor].CGColor;
     btn.layer.shadowOffset = CGSizeMake(0.0, 0.0);
