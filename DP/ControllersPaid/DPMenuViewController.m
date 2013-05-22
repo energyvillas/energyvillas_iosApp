@@ -321,8 +321,15 @@
 }
 
 - (UIView *) doCreateItem:(DPDataElement *)element tag:(int)indx{
-    int posX = self.scrollDirection == DPScrollDirectionHorizontal ? island_width * indx : 0;
-    int posY = self.scrollDirection == DPScrollDirectionVertical ? island_height * indx : 0;
+    int posX = 0, posY = 0;
+    if (menulevel == 0 && IS_LANDSCAPE) {
+        posX = 0;
+        posY = island_height * indx;
+    } else {
+        posX = self.scrollDirection == DPScrollDirectionHorizontal ? island_width * indx : 0;
+        posY = self.scrollDirection == DPScrollDirectionVertical ? island_height * indx : 0;
+    }
+    
     CGRect frm = CGRectMake(posX, posY, island_width,  island_height);
     
     UIView *v = [[UIView alloc] initWithFrame: frm];
@@ -400,10 +407,15 @@
     
     int width = island_width;
     int height = island_height;
-    if (self.scrollDirection == DPScrollDirectionHorizontal)
-        width = width * islandsCount;
-    else
-        height = height * islandsCount;
+    if (menulevel == 0) {
+        width = IS_PORTRAIT ? width * islandsCount : width;
+        height = IS_PORTRAIT ? height : height * islandsCount;
+    } else {
+        if (self.scrollDirection == DPScrollDirectionHorizontal)
+            width = width * islandsCount;
+        else
+            height = height * islandsCount;
+    }
     
     CGRect frame = CGRectMake(0, //island_width * islandsCount,
                               0,
@@ -424,19 +436,42 @@
     self.popController.delegate = self;
     self.popController.border = YES;
     self.popController.tint = FPPopoverBlackTint;
-    if (self.scrollDirection == DPScrollDirectionHorizontal) {
-        self.popController.arrowDirection = FPPopoverArrowDirectionDown;
-        self.popController.contentSize = CGSizeMake(frame.size.width + 20, frame.size.height + 40);
+    if (menulevel == 0) {
+        if (IS_PORTRAIT) {
+            self.popController.arrowDirection = FPPopoverArrowDirectionDown;
+            self.popController.contentSize = CGSizeMake(frame.size.width + 20, frame.size.height + 40);
+        } else {
+            self.popController.arrowDirection = FPPopoverArrowDirectionLeft;
+            self.popController.contentSize = CGSizeMake(frame.size.width + 40,
+                                                        frame.size.height + (islandsCount == 3 ? 20 : 20));
+        }
     } else {
-        self.popController.arrowDirection = FPPopoverArrowDirectionRight;
-        self.popController.contentSize = CGSizeMake(frame.size.width + 40,
-                                                    frame.size.height + (islandsCount == 3 ? 80 : 20));
+        if (self.scrollDirection == DPScrollDirectionHorizontal) {
+            self.popController.arrowDirection = FPPopoverArrowDirectionDown;
+            self.popController.contentSize = CGSizeMake(frame.size.width + 20, frame.size.height + 40);
+        } else {
+            self.popController.arrowDirection = FPPopoverArrowDirectionRight;
+            self.popController.contentSize = CGSizeMake(frame.size.width + 40,
+                                                        frame.size.height + (islandsCount == 3 ? 80 : 20));
+        }
     }
     
-    if ((menulevel == 0) || IS_PORTRAIT)
-        [self.popController presentPopoverFromView:fromView];
-    else
-    {
+    if (menulevel == 0) {
+        if (IS_PORTRAIT)
+            [self.popController presentPopoverFromView:fromView];
+        else {
+            CGPoint p = CGPointZero;
+            
+            if (!IS_IPAD)
+                p = CGPointMake(mmfrm.origin.x + island_width,
+                                mmfrm.origin.y + island_height * (islandsCount == 3 ? 2.3 : 3.3));
+            else
+                p = CGPointMake(mmfrm.origin.x + island_width,
+                                mmfrm.origin.y + island_height * (islandsCount == 3 ? 1.9 : 2.4));
+            
+            [self.popController presentPopoverFromPoint:p];
+        }
+    } else {
         CGPoint p = CGPointMake(mmfrm.origin.x + 10.0, mmfrm.origin.y + island_height);
         [self.popController presentPopoverFromPoint:p];
     }

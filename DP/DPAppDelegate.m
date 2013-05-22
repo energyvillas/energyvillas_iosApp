@@ -21,25 +21,7 @@
 
 @implementation DPAppDelegate
 
-- (UITabBarController *) preparePaidInterface {
-    UITabBarController * tabBarController = [[UITabBarController alloc] init];
-    
-    UIViewController* vc1 = [[UIViewController alloc] init];
-    UIViewController* vc2 = [[UIViewController alloc] init];
-    UIViewController* vc3 = [[UIViewController alloc] init];
-    UIViewController* vc4 = [[UIViewController alloc] init];
-    UIViewController* vc5 = [[UIViewController alloc] init];
-    UIViewController* vc6 = [[UIViewController alloc] init];
-    UIViewController* vc7 = [[UIViewController alloc] init];
-    UINavigationController* navController = [[UINavigationController alloc]
-                                             initWithRootViewController:vc7];
-    
-    NSArray* controllers = [NSArray arrayWithObjects:vc1, vc2, vc3, vc4, vc5, vc6, navController, nil];
-    tabBarController.viewControllers = controllers;
-    
-    [tabBarController setCustomizableViewControllers:[[NSArray alloc] init]];
-    return  tabBarController;
-}
+
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
@@ -55,7 +37,7 @@
     // Override point for customization after application launch.
     
     if (IS_APP_PURCHASED)
-        self.controller = [[DPPaidMainViewController alloc] init]; // [self preparePaidInterface]; //
+        self.controller =  [[DPPaidMainViewController alloc] init]; 
     else
         self.controller = [[DPMainViewController alloc] init];
     
