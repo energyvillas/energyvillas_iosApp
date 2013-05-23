@@ -160,36 +160,23 @@
         case CTGID_EXCLUSIVE_ART:
 
         case CTGID_VIDEOS:{
-            UINavigationController *navcontroller = self.navigationController;
-            BOOL showCtg = NO, removeTop = NO;
-            int ctgToShow = element.Id;
-            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [[NSNotificationCenter defaultCenter] postNotificationName:kPAID_SelectedCategoryChanged_Notification
+                                                                    object:self
+                                                                  userInfo:[NSDictionary dictionaryWithObject:[NSNumber numberWithInt:element.Id]
+                                                                                                       forKey:@"menuCategory"]];
+            });
+
             if (menulevel == 0) {
-                showCtg = YES;
+                DPCategoryViewController *ctgVC = [[DPCategoryViewController alloc]
+                                                   initWithCategory:element.Id];
+                [self.navigationController pushViewController:ctgVC animated:YES];
             } else {
                 UIViewController *top = [self.navigationController topViewController];
                 if ([top isKindOfClass:[DPCategoryViewController class]])
-                {
                     [((DPCategoryViewController *)top) showCategory:element.Id];
-//                    int ctgshowing = ((DPCategoryViewController *)top).category;
-//                    if (ctgshowing != element.Id) {
-//                        removeTop = YES;
-//                        showCtg = YES;
-//                    }
-                } else { // is this ever possible???
-                    showCtg = YES; 
-                }
             }
             
-            if (removeTop) {
-                [navcontroller popViewControllerAnimated:NO];
-            }
-            
-            if (showCtg) {
-                DPCategoryViewController *ctgVC = [[DPCategoryViewController alloc]
-                                                   initWithCategory:ctgToShow];
-                [navcontroller pushViewController:ctgVC animated:YES];
-            }
             break;
         }
             

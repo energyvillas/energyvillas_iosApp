@@ -17,9 +17,12 @@
 @property (nonatomic, strong) NSMutableArray *banners;
 @property (nonatomic)  BOOL storingCharacters;
 @property (nonatomic, strong) NSString *bannerId;
+@property (nonatomic, strong) NSString *lang;
+@property (nonatomic, strong) NSString *orderNo;
 @property (nonatomic, strong) NSString *title;
 @property (nonatomic, strong) NSString *image;
-@property (nonatomic, strong) NSString *body;
+@property (nonatomic, strong) NSString *imageLandscape;
+//@property (nonatomic, strong) NSString *body;
 @property (nonatomic, strong) NSString *url;
 @property (nonatomic, strong) NSString *publishDate;
 

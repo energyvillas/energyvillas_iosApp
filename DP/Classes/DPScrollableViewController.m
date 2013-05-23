@@ -357,9 +357,13 @@
     return nil;
 }
 
+- (NSString *) getBaseImageUrlToLoadFor:(DPDataElement *)elm {
+    return elm.imageUrl;
+}
 - (void) loadImageFor:(DPDataElement *)element inView:(UIImageView *)imgView {
-    NSLog(@"ImageUrl:: '%@'", element.imageUrl);
-    if ([self isLocalUrl:element.imageUrl]) {
+    NSString *imgUrl = [self getBaseImageUrlToLoadFor:element];
+    
+    if ([self isLocalUrl:imgUrl]) {
         NSString *imgname =[self resolveImageName:element];
         imgView.image = [UIImage imageNamed:imgname];
         
@@ -367,7 +371,7 @@
         if (imghighname)
             imgView.highlightedImage = [UIImage imageNamed:imghighname];
     } else
-        [self loadImageAsync:element inView:imgView cacheImage:YES];
+        [self loadImageAsync:element imageUrl:imgUrl inView:imgView cacheImage:YES];
 }
 
 - (UIView *) internalCreateViewFor:(int)contentIndex frame:(CGRect)frame {
@@ -654,26 +658,26 @@
 
 //PENDING : i think i must pass just the elm.imageUrl not the calced name!!!!
 // in the whole async process!!!!
-- (void) loadImageAsync:(DPDataElement *)elm inView:(UIImageView *)imgView cacheImage:(BOOL)cacheimage{
+- (void) loadImageAsync:(DPDataElement *)elm imageUrl:(NSString *)imgUrl inView:(UIImageView *)imgView cacheImage:(BOOL)cacheimage{
     DPAppHelper *appHelper = [DPAppHelper sharedInstance];
-    NSData *imgData = [appHelper loadImageFromCache:[self calcImageName: elm.imageUrl]];
+    NSData *imgData = [appHelper loadImageFromCache:imgUrl];
     if (imgData) 
-        [self fix:elm imageView:imgView imageUrl:[self calcImageName: elm.imageUrl] data:imgData addToCache:NO];
+        [self fix:elm imageView:imgView imageUrl:imgUrl data:imgData addToCache:NO];
     else
-        [self doloadImageAsync:elm inView:imgView cacheImage:cacheimage];
+        [self doloadImageAsync:elm imageUrl:imgUrl inView:imgView cacheImage:cacheimage];
 }
 
-- (void) doloadImageAsync:(DPDataElement *)elm inView:(UIImageView *)imgView cacheImage:(BOOL)cacheimage{
+- (void) doloadImageAsync:(DPDataElement *)elm imageUrl:(NSString *)imgUrl inView:(UIImageView *)imgView cacheImage:(BOOL)cacheimage{
     if (!self.queue)
         self.queue = [[NSOperationQueue alloc] init];
 
-    ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:[NSURL URLWithString:[self calcImageName:elm.imageUrl]]];
+    ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:[NSURL URLWithString:imgUrl]];
     [request setDelegate:self];
     [request setDidFinishSelector:@selector(requestDone:)];
     request.userInfo = [NSDictionary dictionaryWithObjectsAndKeys:
                         elm, @"element",
                         imgView, @"imageView",
-                        [self calcImageName:elm.imageUrl], @"imageUrl",
+                        imgUrl, @"imageUrl",
                         [NSNumber numberWithBool:cacheimage], @"cacheimage",
                         nil];
     [self.queue addOperation:request];

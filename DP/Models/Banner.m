@@ -14,11 +14,16 @@
 
 -(void)encodeWithCoder:(NSCoder *)encoder{
     [super encodeWithCoder:encoder];
-    
+
+    [encoder encodeObject:self.lang forKey:encBannerLang];
+    [encoder encodeObject:[NSNumber numberWithInt: self.orderNo] forKey:encBannerOrderNo];
+
 //	[encoder encodeObject:self.title forKey:encBannerTitle];
 //	[encoder encodeObject:self.image forKey:encBannerImage];
-	[encoder encodeObject:self.body forKey:encBannerBody];
-	[encoder encodeObject:self.url forKey:encBannerURL];
+//	[encoder encodeObject:self.body forKey:encBannerBody];
+
+    [encoder encodeObject:self.imageUrlLandsape forKey:encBannerImageLandscape];
+    [encoder encodeObject:self.url forKey:encBannerURL];
 	[encoder encodeObject:self.publishDate forKey:encBannerPublishDate];
 }
 
@@ -27,10 +32,15 @@
     
 	if (self) {
         
+        self.lang = [aDecoder decodeObjectForKey:encBannerLang];
+        self.orderNo = [[aDecoder decodeObjectForKey:encBannerOrderNo] intValue];
+        
 //		self.title = [aDecoder decodeObjectForKey:encBannerTitle];
 //		self.image = [aDecoder decodeObjectForKey:encBannerImage];
-		self.body = [aDecoder decodeObjectForKey:encBannerBody];
-		self.url = [aDecoder decodeObjectForKey:encBannerURL];
+//		self.body = [aDecoder decodeObjectForKey:encBannerBody];
+
+        self.imageUrlLandsape = [aDecoder decodeObjectForKey:encBannerImageLandscape];
+        self.url = [aDecoder decodeObjectForKey:encBannerURL];
 		self.publishDate = [aDecoder decodeObjectForKey:encBannerPublishDate];
 	}
     
@@ -38,9 +48,12 @@
 }
 
 - (id) initWithValues:(NSString *)aId
+                 lang:(NSString *)aLang
+              orderNo:(int)aOrderNo
                 title:(NSString *)aTitle
              imageUrl:(NSString *)aImageUrl
-                 body:(NSString *)aBody
+    imageUrlLandscape:(NSString *)aImageUrlLandscape
+//                 body:(NSString *)aBody
                   url:(NSString *)aURL
           publishDate:(NSString *)aPublishDate
 {
@@ -50,7 +63,10 @@
 //		self.key = aId;
 //		self.title = NullIfEmpty(aTitle);
 //		self.image = NullIfEmpty(aImage);
-		self.body = NullIfEmpty(aBody);
+		self.lang = NullIfEmpty(aLang);
+        self.orderNo = aOrderNo;
+        self.imageUrlLandsape = NullIfEmpty(aImageUrlLandscape);
+//		self.body = NullIfEmpty(aBody);
 		self.publishDate = NullIfEmpty(aPublishDate);
 		self.url = NullIfEmpty(aURL);
 	}
@@ -62,7 +78,10 @@
 
 - (id)copyWithZone:(NSZone *)zone {
     Banner *copy = [super copyWithZone:zone];
-    copy.body = [self.body copy];
+    copy.lang = [self.lang copy];
+
+//    copy.body = [self.body copy];
+    copy.imageUrlLandsape = [self.imageUrlLandsape copy];
     copy.publishDate = [self.publishDate copy];
     copy.url = [self.url copy];
     

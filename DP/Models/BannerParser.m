@@ -36,13 +36,16 @@
 // and is less prone to programmer error.
 static NSString *kName_response = @"response";
 static NSString *kName_responseCode = @"responseCode";
-static NSString *kName_banners = @"articles";
-static NSString *kName_banner = @"article";
-static NSString *kName_bannerid = @"articleid";
+static NSString *kName_banners = @"banners";
+static NSString *kName_banner = @"banner";
+static NSString *kName_bannerid = @"bannerid";
+static NSString *kName_lang = @"lang";
+static NSString *kName_orderno = @"orderno";
 static NSString *kName_title = @"title";
 static NSString *kName_url = @"url";
 static NSString *kName_image = @"image";
-static NSString *kName_body = @"body";
+static NSString *kName_imagelandscape = @"imagelandscape";
+//static NSString *kName_body = @"body";
 static NSString *kName_publishDate = @"publishDate";
 
 /*
@@ -65,15 +68,19 @@ static NSString *kName_publishDate = @"publishDate";
 		
 	}else if ([elementName isEqualToString:kName_banner]) {
 		
-	}else if ([elementName isEqualToString:kName_title]) {
-		[self.currentString setString:@""];
-		self.storingCharacters = YES;
-		
-	}else if ([elementName isEqualToString:kName_url]) {
-		[self.currentString setString:@""];
-		self.storingCharacters = YES;
-		
 	}else if ([elementName isEqualToString:kName_bannerid]) {
+		[self.currentString setString:@""];
+		self.storingCharacters = YES;
+		
+	}else if ([elementName isEqualToString:kName_lang]) {
+		[self.currentString setString:@""];
+		self.storingCharacters = YES;
+		
+	}else if ([elementName isEqualToString:kName_orderno]) {
+		[self.currentString setString:@""];
+		self.storingCharacters = YES;
+		
+	}else if ([elementName isEqualToString:kName_title]) {
 		[self.currentString setString:@""];
 		self.storingCharacters = YES;
 		
@@ -81,14 +88,22 @@ static NSString *kName_publishDate = @"publishDate";
 		[self.currentString setString:@""];
 		self.storingCharacters = YES;
         
+	}else if ([elementName isEqualToString:kName_imagelandscape]) {
+		[self.currentString setString:@""];
+		self.storingCharacters = YES;
+        
+//	}else if ([elementName isEqualToString:kName_body]) {
+//		[self.currentString setString:@""];
+//		self.storingCharacters = YES;
+//		
+	}else if ([elementName isEqualToString:kName_url]) {
+		[self.currentString setString:@""];
+		self.storingCharacters = YES;
+		
 	}else if ([elementName isEqualToString:kName_publishDate]) {
 		[self.currentString setString:@""];
 		self.storingCharacters = YES;
         
-	}else if ([elementName isEqualToString:kName_body]) {
-		[self.currentString setString:@""];
-		self.storingCharacters = YES;
-		
 	}
 }
 
@@ -128,32 +143,46 @@ static NSString *kName_publishDate = @"publishDate";
 		
 	}else if ([elementName isEqualToString:kName_banner]) {
 		Banner *banner  = [[Banner alloc] initWithValues:self.bannerId
+                                                    lang:self.lang
+                                                 orderNo:[self.orderNo intValue]
                                                    title:self.title
                                                 imageUrl:self.image
-                                                    body:self.body
+                                       imageUrlLandscape:self.imageLandscape
+//                                                    body:self.body
                                                      url:self.url
                                              publishDate:self.publishDate];
-//		banner.key=self.bannerId;
-//		banner.title = self.title;
-//		banner.body = self.body;
-//		banner.imageUrl = self.image;
-//		banner.url = self.url;
-//		banner.publishDate = self.publishDate;
+
 		[self.banners insertObject:banner atIndex:index];
 		index=index+1;
 		banner=nil;
+
+    }else if ([elementName isEqualToString:kName_bannerid]) {
+		self.bannerId=[[NSString alloc] initWithString: aElementValue];
+        
+    }else if ([elementName isEqualToString:kName_lang]) {
+		self.lang=[[NSString alloc] initWithString: aElementValue];
+        
+    }else if ([elementName isEqualToString:kName_orderno]) {
+		self.orderNo=[[NSString alloc] initWithString: aElementValue];
+        
 	}else if ([elementName isEqualToString:kName_title]) {
 		self.title=[[NSString alloc] initWithString: aElementValue];
+        
 	}else if ([elementName isEqualToString:kName_image]) {
 		self.image=[[NSString alloc] initWithString: aElementValue];
+        
+	}else if ([elementName isEqualToString:kName_imagelandscape]) {
+		self.imageLandscape=[[NSString alloc] initWithString: aElementValue];
+        
 	}else if ([elementName isEqualToString:kName_url]) {
 		self.url=[[NSString alloc] initWithString: aElementValue];
-	}else if ([elementName isEqualToString:kName_body]) {
-		self.body=[[NSString alloc] initWithString: aElementValue];
+        
+//	}else if ([elementName isEqualToString:kName_body]) {
+//		self.body=[[NSString alloc] initWithString: aElementValue];
+        
 	}else if ([elementName isEqualToString:kName_publishDate]) {
 		self.publishDate=[[NSString alloc] initWithString: aElementValue];
-	}else if ([elementName isEqualToString:kName_bannerid]) {
-		self.bannerId=[[NSString alloc] initWithString: aElementValue];
+        
 	}
     
 	self.storingCharacters = NO;

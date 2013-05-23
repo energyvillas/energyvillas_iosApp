@@ -10,6 +10,8 @@
 
 @interface DPBannersLoader : DPDataLoader
 
-- (id) initWithView:(UIView *)indicatorcontainer group:(int)grpID;
+- (id) initWithView:(UIView *)indicatorcontainer
+              group:(int)grpID
+               lang:(NSString *)aLang;
 
 @end

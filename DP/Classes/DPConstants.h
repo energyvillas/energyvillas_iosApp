@@ -114,25 +114,6 @@ FOUNDATION_EXPORT NSString *const MySecondConstant;
 #define HIKID_COMING_SOON_ART ((int)19)	// COMING SOON - ART SERIES
 #define HIKID_CUSTOM ((int)20)	// CUSTOM
 
-//// HOUSE INFO KIND IMGs
-//UIKIT_EXTERN NSString *const HIK_IMG_UNDEFINED; //	UNDEFINED
-//UIKIT_EXTERN NSString *const HIK_IMG_FLOOR_PLAN;	 // ΚΑΤΟΨΕΙΣ
-//UIKIT_EXTERN NSString *const HIK_IMG_FACES;	 // ΟΨΕΙΣ
-//UIKIT_EXTERN NSString *const HIK_IMG_SECTIONS;	 // ΤΟΜΕΣ
-//UIKIT_EXTERN NSString *const HIK_IMG_INTERIOR;  // 	ΕΣΩΤΕΡΙΚΟΙ ΧΩΡΟΙ
-//UIKIT_EXTERN NSString *const HIK_IMG_EXTERIOR;	 // ΕΞΩΤΕΡΙΚΟΙ ΧΩΡΟΙ
-//UIKIT_EXTERN NSString *const HIK_IMG_GROUND_FLOOR;	 // ΙΣΟΓΕΙΟ
-//UIKIT_EXTERN NSString *const HIK_IMG_1ST_FLOOR;	 // ΟΡΟΦΟΣ
-//UIKIT_EXTERN NSString *const HIK_IMG_ATTIC;	 // ΠΑΤΑΡΙ
-//UIKIT_EXTERN NSString *const HIK_IMG_HEATING_COOLING;	 // ΘΕΡΜΑΝΣΗ - ΔΡΟΣΙΣΜΟΣ
-//UIKIT_EXTERN NSString *const HIK_IMG_ENERGY_SAVING;	// ΕΞΟΙΚΟΝΟΜΗΣΗ ΕΝΕΡΓΕΙΑΣ
-//UIKIT_EXTERN NSString *const HIK_IMG_GARDEN_ARCHITECTURE;	// ΑΡΧΙΤΕΚΤΟΝΙΚΗ ΚΗΠΟΥ
-//UIKIT_EXTERN NSString *const HIK_IMG_LIGHTING;	// ΜΕΛΕΤΗ ΦΩΤΙΣΜΟΥ
-//UIKIT_EXTERN NSString *const HIK_IMG_LUMINAIRES;	// ΦΩΤΙΣΤΙΚΑ ΣΩΜΑΤΑ
-//UIKIT_EXTERN NSString *const HIK_IMG_COMING_SOON_COMMON;	// COMING SOON - COMMON
-//UIKIT_EXTERN NSString *const HIK_IMG_COMING_SOON_DESIGNER;	// COMING SOON - DESIGNER SERIES
-//UIKIT_EXTERN NSString *const HIK_IMG_COMING_SOON_ART;	// COMING SOON - ART SERIES
-//UIKIT_EXTERN NSString *const HIK_IMG_CUSTOM;	// CUSTOM
 
 // DEVICE TYPE IDs
 #define DEVICE_TYPE_ID_IPHONE ((int)1)
@@ -147,7 +128,7 @@ UIKIT_EXTERN NSString *const USE_DATA_CACHING;
 // notifications
 UIKIT_EXTERN NSString *const DPN_currentLangChanged;
 UIKIT_EXTERN NSString *const kShowFacebookViewNotification;
-
+UIKIT_EXTERN NSString *const kPAID_SelectedCategoryChanged_Notification;
 
 // bundle id
 UIKIT_EXTERN NSString *const PRODUCT_IDENTIFIER;

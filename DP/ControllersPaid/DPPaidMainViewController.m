@@ -27,6 +27,7 @@
 @implementation DPPaidMainViewController {
     bool framesDone;
     bool isPortrait;
+    int currentBackgroundCategory;
 }
 
 @synthesize navController, tabBar;
@@ -45,6 +46,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [self addNotificationObservers];
 	// Do any additional setup after loading the view.
     [self.view insertSubview:self.navController.view atIndex:0];
     self.navController.delegate = self;
@@ -135,13 +137,41 @@
     }
 }
 
+- (void) addNotificationObservers {
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(onNotified:)
+                                                 name:kPAID_SelectedCategoryChanged_Notification
+                                               object:nil];
+
+}
+- (void) removeNotificationObservers {
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:kPAID_SelectedCategoryChanged_Notification
+                                                  object:nil];
+}
+-(void) onNotified:(NSNotification *)notification {
+    if ([notification.name isEqualToString:kPAID_SelectedCategoryChanged_Notification]) {
+        int ctg = [notification.userInfo[@"menuCategory"] intValue];
+        currentBackgroundCategory = ctg;
+        [self fixBackgroundImage];
+    }
+}
+
 - (void) fixBackgroundImage {
     NSString *imgName;
-    if (IS_PORTRAIT)
-        imgName = @"Background/bg_v.jpg";
-    else
-        imgName = @"Background/bg_h.jpg";
-    
+    switch (currentBackgroundCategory) {
+        case CTGID_EXCLUSIVE_DESIGNER:
+            imgName = IS_PORTRAIT ? @"BackgroundExclusive/bg_exclusive_designer_v.png" : @"BackgroundExclusive/bg_exclusive_designer_h.png";
+            break;
+            
+        case CTGID_EXCLUSIVE_ART:
+            imgName = IS_PORTRAIT ? @"BackgroundExclusive/bg_exclusive_art_v.png" : @"BackgroundExclusive/bg_exclusive_art_h.png";
+            break;
+            
+        default:
+            imgName = IS_PORTRAIT ? @"Background/bg_v.jpg" : @"Background/bg_h.jpg";
+            break;
+    }    
     
     self.view.layer.contents = (id)[[UIImage imageNamed:imgName] CGImage];
 }
@@ -252,6 +282,8 @@
 
 // PENDING
 - (void)viewDidUnload {
+    [self removeNotificationObservers];
+    
     [self setNavController:nil];
     [self setTabBar:nil];
     [self setTbiMain:nil];
@@ -265,20 +297,20 @@
     }
 
     if (self.buyViewController) {
-        [self.buyViewController.view removeFromSuperview];
-        [self.buyViewController removeFromParentViewController];
+//        [self.buyViewController.view removeFromSuperview];
+//        [self.buyViewController removeFromParentViewController];
         self.buyViewController=nil;
     }
 
     if (self.callViewController) {
-        [self.callViewController.view removeFromSuperview];
-        [self.callViewController removeFromParentViewController];
+//        [self.callViewController.view removeFromSuperview];
+//        [self.callViewController removeFromParentViewController];
         self.callViewController=nil;
     }
 
     if (self.moreViewController) {
-        [self.moreViewController.view removeFromSuperview];
-        [self.moreViewController removeFromParentViewController];
+//        [self.moreViewController.view removeFromSuperview];
+//        [self.moreViewController removeFromParentViewController];
         self.moreViewController=nil;
     }
     

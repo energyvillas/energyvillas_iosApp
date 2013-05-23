@@ -21,6 +21,7 @@ NSString *const USE_DATA_CACHING = @"USE_DATA_CACHING";
 //notifications
 NSString *const DPN_currentLangChanged = @"DPN_currentLangChanged";
 NSString *const kShowFacebookViewNotification = @"ShowFacebookViewNotification";
+NSString *const kPAID_SelectedCategoryChanged_Notification = @"PAID_SelectedCategoryChanged_Notification";
 
 // bundle id
 NSString *const PRODUCT_IDENTIFIER = @"com.energyvillas.energyvillas.ev01";
@@ -31,23 +32,23 @@ NSString *const PASSWORD = @"phone";
 
 
 NSString *const BASE_HOST_NAME = @"www.designprojectsapps.com";
-NSString *const BASE_HOST_NAME_TEST = @"192.168.16.2/designprojectsapps";
+NSString *const BASE_HOST_NAME_TEST = @"192.168.1.4/designprojectsapps";
 
 // web service URLs
 NSString *const BANNERS_URL = @"http://designprojectsapps.com/iphonebanners.php";
-NSString *const BANNERS_URL_TEST = @"http://192.168.16.2/designprojectsapps/iphonebanners.php";
+NSString *const BANNERS_URL_TEST = @"http://192.168.1.4/designprojectsapps/iphonebanners.php";
 // http://www.mysite.com/iphonebanners.php?user=<UUU>&pass=<PPP>&group=<XXX>
 
 NSString *const CATEGORIES_URL = @"http://designprojectsapps.com/iphonecategory.php";
-NSString *const CATEGORIES_URL_TEST = @"http://192.168.16.2/designprojectsapps/iphonecategory.php";
+NSString *const CATEGORIES_URL_TEST = @"http://192.168.1.4/designprojectsapps/iphonecategory.php";
 // http://www.mysite.com/iphonecategory.php?user=<UUU>&pass=<PPP>&lang=<XXX>&parentid=<YYY>&devicetype=<DDD>
 
 NSString *const ARTICLES_URL = @"http://designprojectsapps.com/iphonenews.php";
-NSString *const ARTICLES_URL_TEST = @"http://192.168.16.2/designprojectsapps/iphonearticles.php";
+NSString *const ARTICLES_URL_TEST = @"http://192.168.1.4/designprojectsapps/iphonearticles.php";
 // http://www.mysite.com/iphonenews.php?user=<UUU>&pass=<PPP>&lang=<XXX>&cid=<YYY>&count=<WWW>&from=<ZZZ>
 
 NSString *const HOUSE_OVERVIEW_URL = @"http://designprojectsapps.com/iphonehouseoverview.php";
-NSString *const HOUSE_OVERVIEW_URL_TEST = @"http://192.168.16.2/designprojectsapps/iphonehouseoverview.php";
+NSString *const HOUSE_OVERVIEW_URL_TEST = @"http://192.168.1.4/designprojectsapps/iphonehouseoverview.php";
 // http://www.mysite.com/iphonehouseoverview.php?user=<UUU>&pass=<PPP>&lang=<XXX>&cid=<YYY>
 
 

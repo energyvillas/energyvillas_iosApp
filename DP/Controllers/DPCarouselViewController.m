@@ -397,11 +397,23 @@
         
         self.icarousel.delegate = self;
         self.icarousel.dataSource = self;
-        self.icarousel.type = (self.carouselCategoryID == CTGID_CAROUSEL) ? iCarouselTypeCoverFlow2 : iCarouselTypeLinear;
-        if (self.carouselCategoryID == CTGID_CAROUSEL) {
-            self.icarousel.scrollSpeed = IS_IPAD ? 0.35f : 0.25f;
-        } else {
-            self.icarousel.scrollSpeed = 0.35f;
+        
+        switch (self.carouselCategoryID) {
+            case CTGID_CAROUSEL: {
+                self.icarousel.type = iCarouselTypeCoverFlow2;
+                self.icarousel.scrollSpeed = IS_IPAD ? 0.35f : 0.25f;
+                break;
+            }
+            case CTGID_CAROUSEL_MORE: {
+                self.icarousel.type = iCarouselTypeLinear;
+                self.icarousel.scrollSpeed = 0.35f;
+                break;
+            }
+            default: {
+                self.icarousel.type = iCarouselTypeCoverFlow2;
+                self.icarousel.scrollSpeed = 0.35f;
+                break;
+            }
         }
 
         [self.view addSubview:self.icarousel];
@@ -434,7 +446,11 @@
         case iCarouselOptionSpacing:
         {
             //add a bit of spacing between the item views
-            return (self.carouselCategoryID == CTGID_CAROUSEL) ? value * 1.973f : value * 1.1f;//1.05f;
+            switch (self.carouselCategoryID) {
+                case CTGID_CAROUSEL: return value * 1.973f;
+                case CTGID_CAROUSEL_MORE: return value * 1.1f;
+                default: return value * 1.973f;
+            }
         }
         case iCarouselOptionFadeMax:
         {
@@ -556,7 +572,7 @@
     img = [img imageScaledToFitSize:szCarousel];
     imgSize = img.size;
     
-    CGSize loadingImgSize = CGSizeMake(1800.0f, 1200.0f);
+    CGSize loadingImgSize = CGSizeMake(3600.0f, 2400.0f);
     CGRect frm = [self calcFittingFrame:loadingImgSize];//]self.icarousel.frame.size];
     
     UIImageView *iv = [[UIImageView alloc] initWithFrame:CGRectOffset(frm, 0.0f, -10.0f)];

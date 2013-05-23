@@ -82,14 +82,11 @@
 
     [self fixTitleLabel];
     
-    if (self.adsView.subviews.count > 0)
-        [self loadAdsView];
+    [self loadAdsView:YES];
     
-    if (self.actualCtgView.subviews.count > 0)
-        [self loadCategoryView:YES];
+    [self loadCategoryView:YES];
     
-    if (self.mmView.subviews.count > 0)
-        [self loadMenuView];
+    [self loadMenuView:YES];
 }
 
 
@@ -190,20 +187,33 @@
                                           self.ctgView.frame.size.width,
                                           self.ctgView.frame.size.height - self.lblTitle.frame.size.height);
     
-    [self loadAdsView];
+    [self loadAdsView:NO];
     [self loadCategoryView:NO];
-    [self loadMenuView];
+    [self loadMenuView:NO];
 }
 
-- (void) loadAdsView {
-    if (self.adsView.subviews.count == 0)
-    {
-        self.adsViewController = [[DPAdsViewController alloc] initWithGroup:1];
+- (void) loadAdsView:(BOOL)reload {
+    int groupNo = 1;
+    BOOL grpChanged = self.adsViewController != nil && self.adsViewController.group != groupNo;
+
+    if (reload || grpChanged) {
+        if (self.adsViewController)
+        {
+            [self.adsViewController.view removeFromSuperview];
+            [self.adsViewController removeFromParentViewController];
+            self.adsViewController = nil;
+        }
+    }
+
+    if (self.adsViewController == nil) {
+        self.adsViewController = [[DPAdsViewController alloc] initWithGroup:groupNo];
         self.adsViewController.view.frame = self.adsView.bounds;
         [self addChildViewController:self.adsViewController];
         [self.adsView addSubview:self.adsViewController.view];
-    } else
+    } else {
         self.adsViewController.view.frame = self.adsView.bounds;
+        [self.adsViewController.view setNeedsDisplay];
+    }
 }
 
 - (void) showCategory:(int)ctgID {
@@ -218,7 +228,8 @@
     if (self.category == 0)
         return;
 
-    if (reload) {
+//    if (reload)
+    {
         if (self.ctgViewController)
         {
             [self.ctgViewController.view removeFromSuperview];
@@ -227,23 +238,20 @@
         }
     }
     
-    if (self.actualCtgView.subviews.count == 0)
-    {
+    if (self.ctgViewController == nil) {
         self.ctgViewController = [[DPAnimatedScrollViewController alloc] initWithCategory:self.category
                                                                                    isLeaf:NO
                                                                                     frame:self.actualCtgView.bounds];
         
-        //[self.ctgViewController changeFrame:self.actualCtgView.bounds];
         [self addChildViewController:self.ctgViewController];
         [self.actualCtgView addSubview:self.ctgViewController.view];
-    }
-    else {
+    } else {
         [self.ctgViewController changeFrame:self.actualCtgView.bounds];
         [self.ctgViewController changeRows:1 columns:1];
     }
 }
 
-- (void) loadMenuView {
+- (void) loadMenuView:(BOOL)reload {
     int rows = IS_PORTRAIT ? 1 : 3;
     int cols = IS_PORTRAIT ? 3 : 1;
     DPScrollDirection scrolldir = IS_PORTRAIT ? DPScrollDirectionHorizontal : DPScrollDirectionVertical;

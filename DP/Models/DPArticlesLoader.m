@@ -72,7 +72,8 @@
 }
 
 - (NSString *) cacheFileName {
-    return [NSString stringWithFormat:@"articles-%@-%d.dat", self.lang, self.categoryID];
+    NSString *freepaid = IS_APP_FREE ? @"free" : @"paid";
+    return [NSString stringWithFormat:@"articles-%@-%@-%d.dat", freepaid, self.lang, self.categoryID];
 }
 
 - (ASIFormDataRequest *) createAndPrepareRequest {

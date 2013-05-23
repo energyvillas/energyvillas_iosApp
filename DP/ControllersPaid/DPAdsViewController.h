@@ -11,6 +11,8 @@
 
 @interface DPAdsViewController : DPScrollableViewController <DPDataLoaderDelegate, DPScrollableDataSourceDelegate>
 
+@property (nonatomic, readonly) int group;
+
 - (id) initWithGroup:(int)aGroup;
 
 @end

@@ -18,7 +18,7 @@
 #import "DPAppHelper.h"
 #import "DPConstants.h"
 
-#import "DPArticleViewController.h"
+#import "DPArticlesViewController.h"
 
 // 1st level
 #define DURATION_MOVE_1st_Level ((NSTimeInterval)10.0)
@@ -102,7 +102,7 @@
         
         [self.navigationController pushViewController:ctrlr animated:YES];
     } else {
-        DPArticleViewController *avc = [[DPArticleViewController alloc] initWithCategory:elm.Id];
+        DPArticlesViewController *avc = [[DPArticlesViewController alloc] initWithCategory:elm.Id];
         [self.navigationController pushViewController:avc animated:YES];
     }
 }
