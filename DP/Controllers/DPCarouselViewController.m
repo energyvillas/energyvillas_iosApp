@@ -434,7 +434,7 @@
             return NO;
         }
         case iCarouselOptionVisibleItems: {
-            return value;
+            return 9.0f;//value;
         }
         case iCarouselOptionShowBackfaces: {
             return NO;
