@@ -71,20 +71,23 @@ NSString *const IAPHelperProductPurchasedNotification = @"IAPHelperProductPurcha
     _productsRequest = nil;
     
     NSArray * skProducts = response.products;
-    for (SKProduct * skProduct in skProducts) {
-        NSLog(@"Found product: ID:'%@' Title:'%@' Descr:'%@' Price:'%@' LocPrice:'%@' Value:'%0.2f'",
-              skProduct.productIdentifier,
-              skProduct.localizedTitle,
-              skProduct.localizedDescription,
-              skProduct.price,
-              skProduct.localizedPrice,
-              skProduct.price.floatValue);
-    }
+    if (skProducts && skProducts.count > 0)
+        for (SKProduct * skProduct in skProducts) {
+            NSLog(@"Found product: ID:'%@' Title:'%@' Descr:'%@' Price:'%@' LocPrice:'%@' Value:'%0.2f'",
+                  skProduct.productIdentifier,
+                  skProduct.localizedTitle,
+                  skProduct.localizedDescription,
+                  skProduct.price,
+                  skProduct.localizedPrice,
+                  skProduct.price.floatValue);
+        }
     
-    for (NSString *invalidProductId in response.invalidProductIdentifiers)
-    {
-        NSLog(@"Invalid product id: '%@'" , invalidProductId);
-    }
+    NSArray *invalidProductIDs = response.invalidProductIdentifiers;
+    if (invalidProductIDs && invalidProductIDs.count > 0)
+        for (NSString *invalidProductId in invalidProductIDs)
+        {
+            NSLog(@"Invalid product id: '%@'" , invalidProductId);
+        }
 
 //    dispatch_async(dispatch_get_main_queue(), ^{
 //        _completionHandler(skProducts, nil);

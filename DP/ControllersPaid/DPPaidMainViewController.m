@@ -30,8 +30,8 @@
     int currentBackgroundCategory;
 }
 
-@synthesize navController, tabBar;
-@synthesize whoViewController, buyViewController, callViewController, moreViewController;
+//@synthesize navController, tabBar;
+//@synthesize whoViewController, buyViewController, callViewController, moreViewController;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -99,7 +99,7 @@
     
     [self fixBackgroundImage];
     
-    [self doFixFrames:navController.topViewController fixTop:NO];
+    [self doFixFrames:self.navController.topViewController fixTop:NO];
 }
 
 -(void) doFixFrames:(UIViewController *)viewController fixTop:(BOOL)fixtop {
@@ -121,7 +121,7 @@
                                                    sf.size.width,
                                                    sf.size.height - tbf.size.height);
     } else {
-        UIViewController *tvc = navController.topViewController;
+        UIViewController *tvc = self.navController.topViewController;
         
         CGRect nc_nbf = self.navController.navigationBar.frame;
         CGRect tvc_svf = tvc.view.superview.frame;
@@ -185,7 +185,7 @@
 
 - (void) checkRootAndPop:(UIViewController *)tvc {
     UIViewController *rvc = self.navController.viewControllers[0];
-    if (tvc != rvc) {
+    if (tvc != rvc && [self isTabBarPage:tvc]) {
         [self.navController popViewControllerAnimated:NO];
         [self cleanControllers:tvc];
     }
@@ -217,11 +217,11 @@
 - (void) showMain {
     UIViewController *tvc = [self.navController topViewController];
     if ([self isTabBarPage:tvc]){
-        [self.navController setNavigationBarHidden:NO animated:YES];
+        [self.navController setNavigationBarHidden:NO animated:NO];
         [self.navController popViewControllerAnimated:YES];
         [self cleanControllers:tvc];
     } else {    
-        [self.navController setNavigationBarHidden:NO animated:YES];
+        [self.navController setNavigationBarHidden:NO animated:NO];
         [self.navController popToRootViewControllerAnimated:YES];
     }
 }
@@ -238,14 +238,21 @@
 - (void) showBuy {
     if ([self checkTop:self.buyViewController]) return;
     
-//    self.buyViewController = [[DPImageContentViewController alloc]
-//                              initWithImageName:[NSString stringWithFormat:@"%d.jpg", 22]];
-//    
-//    [self showViewController:self.buyViewController];
+    self.buyViewController = [[DPHtmlContentViewController alloc]
+                               initWithCategory:CTGID_PURCHASE_LAND lang:CURRENT_LANG];
+
+    [self showViewController:self.buyViewController];
 }
 
 - (void) showCall {
+    if ([self checkTop:self.callViewController]) return;
+    
+    self.callViewController = [[DPHtmlContentViewController alloc]
+                              initWithCategory:CTGID_CALL_US lang:CURRENT_LANG];
+    
+    [self showViewController:self.callViewController];
 }
+
 - (void) showMore {
 }
 

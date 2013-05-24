@@ -94,6 +94,9 @@ FOUNDATION_EXPORT NSString *const MySecondConstant;
 #define CTGID_CAROUSEL_MORE ((int)78)
 #define CTGID_GENERAL_BUY_DLG ((int)76)
 #define CTGID_WHO_WE_ARE ((int)60)
+#define CTGID_PURCHASE_LAND  ((int)173)
+#define CTGID_CALL_US  ((int)174)
+
 #define CTGID_NEW_NEXT ((int)-1000)
 
 // HOUSE INFO KIND IDs

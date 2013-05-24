@@ -49,14 +49,15 @@
 }
 
 - (void) productsRequestCompleted:(NSArray *)products error:(NSError *)error {
-    if (products != nil) {
+    if (products != nil && products.count == 1) {
         _product = (SKProduct *)products[0];
     }
     [super productsRequestCompleted:products error:error];
 }
 
 -(void) buy {
-    [self buyProduct:self.product];
+    if (self.product)
+        [self buyProduct:self.product];
 }
 
 @end

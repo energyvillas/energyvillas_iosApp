@@ -46,7 +46,6 @@
 						<string key="NSFrame">{{0, 411}, {320, 49}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 						<array class="NSMutableArray" key="IBUIItems">
@@ -62,15 +61,15 @@
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 								<reference key="IBUITabBar" ref="1053474032"/>
 							</object>
-							<object class="IBUITabBarItem" id="36703138">
-								<int key="IBUITag">1003</int>
-								<string key="IBUITitle">buy property</string>
-								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
-								<reference key="IBUITabBar" ref="1053474032"/>
-							</object>
 							<object class="IBUITabBarItem" id="413064883">
 								<int key="IBUITag">1004</int>
 								<string key="IBUITitle">Call</string>
+								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
+								<reference key="IBUITabBar" ref="1053474032"/>
+							</object>
+							<object class="IBUITabBarItem" id="36703138">
+								<int key="IBUITag">1003</int>
+								<string key="IBUITitle">buy property</string>
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 								<reference key="IBUITabBar" ref="1053474032"/>
 							</object>
@@ -270,9 +269,9 @@
 						<reference key="object" ref="1053474032"/>
 						<array class="NSMutableArray" key="children">
 							<reference ref="36703138"/>
-							<reference ref="413064883"/>
 							<reference ref="527731000"/>
 							<reference ref="748112246"/>
+							<reference ref="413064883"/>
 							<reference ref="862657687"/>
 						</array>
 						<reference key="parent" ref="191373211"/>
