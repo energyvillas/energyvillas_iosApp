@@ -60,6 +60,8 @@ FOUNDATION_EXPORT NSString *const MySecondConstant;
 #define TAG_NBI_BACK ((int)103)
 #define TAG_NBI_ADD_FAV ((int)104)
 #define TAG_NBI_SHARE ((int)105)
+#define TAG_NBI_PREV ((int)106)
+#define TAG_NBI_NEXT ((int)107)
 
 // tabBar buttons
 #define TAG_TBI_MAIN ((int)1001)
@@ -127,8 +129,9 @@ UIKIT_EXTERN NSString *const USE_DATA_CACHING;
 
 // notifications
 UIKIT_EXTERN NSString *const DPN_currentLangChanged;
-UIKIT_EXTERN NSString *const kShowFacebookViewNotification;
-UIKIT_EXTERN NSString *const kPAID_SelectedCategoryChanged_Notification;
+UIKIT_EXTERN NSString *const DPN_ShowFacebookViewNotification;
+UIKIT_EXTERN NSString *const DPN_PAID_SelectedCategoryChanged_Notification;
+UIKIT_EXTERN NSString *const DPN_FavoritesChangedNotification;
 
 // bundle id
 UIKIT_EXTERN NSString *const PRODUCT_IDENTIFIER;
@@ -171,7 +174,13 @@ UIKIT_EXTERN NSString *const NAVBAR_FAV_SEL_IMG;
 UIKIT_EXTERN NSString *const NAVBAR_SHARE_IMG;
 UIKIT_EXTERN NSString *const NAVBAR_SHARE_SEL_IMG;
 
+UIKIT_EXTERN NSString *const NAVBAR_NEXT_IMG;
+UIKIT_EXTERN NSString *const NAVBAR_NEXT_SEL_IMG;
 
+UIKIT_EXTERN NSString *const NAVBAR_PREV_IMG;
+UIKIT_EXTERN NSString *const NAVBAR_PREV_SEL_IMG;
+
+UIKIT_EXTERN NSString *const NAVBAR_PREVNEXT_BORDER_IMG;
 
 // localization keys
 UIKIT_EXTERN NSString *const kbtnOK_Title;

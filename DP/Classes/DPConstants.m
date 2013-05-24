@@ -20,9 +20,9 @@ NSString *const USE_DATA_CACHING = @"USE_DATA_CACHING";
 
 //notifications
 NSString *const DPN_currentLangChanged = @"DPN_currentLangChanged";
-NSString *const kShowFacebookViewNotification = @"ShowFacebookViewNotification";
-NSString *const kPAID_SelectedCategoryChanged_Notification = @"PAID_SelectedCategoryChanged_Notification";
-
+NSString *const DPN_ShowFacebookViewNotification = @"DPN_ShowFacebookViewNotification";
+NSString *const DPN_PAID_SelectedCategoryChanged_Notification = @"DPN_PAID_SelectedCategoryChanged_Notification";
+NSString *const DPN_FavoritesChangedNotification = @"DPN_FavoritesChangedNotification";
 // bundle id
 NSString *const PRODUCT_IDENTIFIER = @"com.energyvillas.energyvillas.ev01";
 
@@ -69,6 +69,14 @@ NSString *const NAVBAR_FAV_SEL_IMG = @"Navbar/fav_roll.png";
 
 NSString *const NAVBAR_SHARE_IMG = @"Navbar/share.png";
 NSString *const NAVBAR_SHARE_SEL_IMG = @"Navbar/share_roll.png";
+
+NSString *const NAVBAR_NEXT_IMG = @"Navbar/arrow_next.png";
+NSString *const NAVBAR_NEXT_SEL_IMG = @"Navbar/arrow_next_roll.png";
+
+NSString *const NAVBAR_PREV_IMG = @"Navbar/arrow_prev.png";
+NSString *const NAVBAR_PREV_SEL_IMG = @"Navbar/arrow_prev_roll.png";
+
+NSString *const NAVBAR_PREVNEXT_BORDER_IMG = @"Navbar/prev_next_border.png";
 
 
 // localization keys

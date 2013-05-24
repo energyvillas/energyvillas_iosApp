@@ -14,13 +14,25 @@
 
 @end
 
+@protocol DPNavigatorDelegate <NSObject>
+
+- (void) next;
+- (void) prev;
+- (int) currentItemIndex;
+- (int) itemsCount;
+
+@end
+
+
 
 @interface UINavContentViewController : UIViewController
 
+@property (weak, nonatomic) id<DPNavigatorDelegate> navigatorDelegate;
 @property (weak, nonatomic) id <DPActionDelegate> actionDelegate;
 
 - (void) doLayoutSubViews:(BOOL)fixtop;
 - (void) doLocalize;
 - (void) reachabilityChanged;
+- (void) fixFavsButton;
 
 @end

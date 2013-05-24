@@ -12,7 +12,7 @@
 //#import "AFOpenFlowView.h"
 #import "iCarousel.h"
 
-@interface DPCarouselViewController : UIViewController </*AFOpenFlowViewDataSource, AFOpenFlowViewDelegate, */DPDataLoaderDelegate, iCarouselDataSource, iCarouselDelegate>
+@interface DPCarouselViewController : UIViewController <DPNavigatorDelegate, DPDataLoaderDelegate, iCarouselDataSource, iCarouselDelegate>
 
 @property (nonatomic, readonly) int currentIndex;
 @property (nonatomic, readonly) int carouselCategoryID;

@@ -486,10 +486,16 @@
         Article *element = [article copy];
         self.favorites[element.key] = element;
     }
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:DPN_FavoritesChangedNotification
+                                                        object:nil];
 }
 - (void) removeFromFavorites:(Article *)article {
     [self.favorites removeObjectForKey:article.key];
     [self doSaveFavorites:NO];
+
+    [[NSNotificationCenter defaultCenter] postNotificationName:DPN_FavoritesChangedNotification
+                                                        object:nil];
 }
 
 - (NSMutableDictionary *) doLoadFavorites {

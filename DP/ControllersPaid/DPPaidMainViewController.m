@@ -140,17 +140,17 @@
 - (void) addNotificationObservers {
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(onNotified:)
-                                                 name:kPAID_SelectedCategoryChanged_Notification
+                                                 name:DPN_PAID_SelectedCategoryChanged_Notification
                                                object:nil];
 
 }
 - (void) removeNotificationObservers {
     [[NSNotificationCenter defaultCenter] removeObserver:self
-                                                    name:kPAID_SelectedCategoryChanged_Notification
+                                                    name:DPN_PAID_SelectedCategoryChanged_Notification
                                                   object:nil];
 }
 -(void) onNotified:(NSNotification *)notification {
-    if ([notification.name isEqualToString:kPAID_SelectedCategoryChanged_Notification]) {
+    if ([notification.name isEqualToString:DPN_PAID_SelectedCategoryChanged_Notification]) {
         int ctg = [notification.userInfo[@"menuCategory"] intValue];
         currentBackgroundCategory = ctg;
         [self fixBackgroundImage];

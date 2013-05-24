@@ -402,7 +402,7 @@
         switch (self.carouselCategoryID) {
             case CTGID_CAROUSEL: {
                 self.icarousel.type = iCarouselTypeCoverFlow2;
-                self.icarousel.scrollSpeed = IS_IPAD ? 0.35f : 0.25f;
+                self.icarousel.scrollSpeed = IS_IPAD ? 0.7f : 0.7f;
                 break;
             }
             case CTGID_CAROUSEL_MORE: {
@@ -652,16 +652,22 @@
 }
 
 -(void) articleAtIndexTapped:(int)index {
+    [self showArticleAtIndex:index animated:YES];
+}
+
+-(void) showArticleAtIndex:(int)index animated:(BOOL)animated{
     Article *article = self.datalist[index];
     
     if (article.body != nil) {
         DPHtmlContentViewController *vc = [[DPHtmlContentViewController alloc] initWithHTML:article.body];
-        [self.navigationController pushViewController:vc animated:YES];
+        vc.navigatorDelegate = self;
+        [self.navigationController pushViewController:vc animated:animated];
     } else if (article.videoUrl != nil && article.videoUrl.length > 0) {
         NSString *videourl = article.videoUrl;
-        DPVimeoPlayerViewController *vimeo = [[DPVimeoPlayerViewController alloc]
+        DPVimeoPlayerViewController *vc = [[DPVimeoPlayerViewController alloc]
                                               initWithUrl:videourl];
-        [self.navigationController pushViewController:vimeo animated:YES];
+        vc.navigatorDelegate = self;
+        [self.navigationController pushViewController:vc animated:animated];
     } else if (article.imageUrl != nil) {
         DPImageContentViewController *vc = nil;
         if (isLocalUrl(article.imageUrl))
@@ -669,7 +675,8 @@
         else
             vc = [[DPImageContentViewController alloc] initWithArticle:article];
         
-        [self.navigationController pushViewController:vc animated:YES];
+        vc.navigatorDelegate = self;
+        [self.navigationController pushViewController:vc animated:animated];
     }
 }
 
@@ -768,6 +775,36 @@
 	//[self stopIndicator];
 }
 
+#pragma mark - DPNavigatorDelegate methods
+-(void) next {
+    int nxt = self.icarousel.currentItemIndex + 1;
+    if (nxt < self.datalist.count) {
+        [self.navigationController popViewControllerAnimated:NO];
+        [self makeCurrentImageAtIndex:nxt];
+        [self showArticleAtIndex:nxt animated:NO];
+    }
+}
+-(void) prev {
+    int prv = self.icarousel.currentItemIndex - 1;
+    if (prv >= 0) {
+        [self.navigationController popViewControllerAnimated:NO];
+        [self makeCurrentImageAtIndex:prv];
+        [self showArticleAtIndex:prv animated:NO];
+    }
+}
 
+- (int) currentItemIndex {
+    if (self.icarousel && [self itemsCount] > 0)
+        return self.icarousel.currentItemIndex;
+    
+    return -1;
+}
+
+- (int) itemsCount {
+    if (self.datalist)
+        return self.datalist.count;
+    
+    return 0;
+}
 
 @end

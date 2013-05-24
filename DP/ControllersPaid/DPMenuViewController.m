@@ -178,7 +178,7 @@
 
         case CTGID_VIDEOS:{
 //            dispatch_async(dispatch_get_main_queue(), ^{
-                [[NSNotificationCenter defaultCenter] postNotificationName:kPAID_SelectedCategoryChanged_Notification
+                [[NSNotificationCenter defaultCenter] postNotificationName:DPN_PAID_SelectedCategoryChanged_Notification
                                                                     object:self
                                                                   userInfo:[NSDictionary dictionaryWithObject:[NSNumber numberWithInt:element.Id]
                                                                                                        forKey:@"menuCategory"]];

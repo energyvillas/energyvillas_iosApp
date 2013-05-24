@@ -36,6 +36,11 @@
                                              selector:@selector(onNotified:)
                                                  name:kReachabilityChangedNotification
                                                object:nil];
+
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(onNotified:)
+                                                 name:DPN_FavoritesChangedNotification
+                                               object:nil];
 }
 
 - (void) onNotified:(NSNotification *) notification
@@ -51,6 +56,12 @@
         NSLog (@"Successfully received the ==kReachabilityChangedNotification== notification!");
         
         [self reachabilityChanged];
+    }
+    
+    if ([[notification name] isEqualToString:DPN_FavoritesChangedNotification]) {
+        NSLog (@"Successfully received the ==kReachabilityChangedNotification== notification!");
+        
+        [self fixFavsButton];
     }
 }
 
@@ -194,6 +205,9 @@
 - (BOOL) showNavBarInfo {
     return YES;
 }
+- (BOOL) showNavBarNavigator {
+    return self.navigatorDelegate != nil;
+}
 //==============================================================================
 
 #pragma mark -
@@ -284,6 +298,34 @@
         pos += 30;
     }
     
+    if ([self showNavBarNavigator]) {
+        UIView *container = [[UIView alloc] initWithFrame:CGRectMake(pos, 7, 60, 30)];
+        container.contentMode = UIViewContentModeCenter;
+        container.backgroundColor = [UIColor clearColor];
+        UIImageView *borderView = [[UIImageView alloc] initWithFrame:container.bounds];
+        borderView.contentMode = UIViewContentModeCenter;
+        borderView.image = [UIImage imageNamed:NAVBAR_PREVNEXT_BORDER_IMG];
+        pos += 60;
+        
+        [container addSubview:borderView];
+        
+        [container addSubview:[self
+                                  createButtonWithImage:NAVBAR_PREV_IMG
+                                  highlightedImage:NAVBAR_PREV_SEL_IMG
+                                  frame:CGRectMake(4, 0, 30, 30)
+                                  tag:TAG_NBI_PREV
+                                  action:@selector(onNavButtonTapped:)]];
+        
+        [container addSubview:[self
+                                  createButtonWithImage:NAVBAR_NEXT_IMG
+                                  highlightedImage:NAVBAR_NEXT_SEL_IMG
+                                  frame:CGRectMake(26, 0, 30, 30)
+                                  tag:TAG_NBI_NEXT
+                                  action:@selector(onNavButtonTapped:)]];
+        
+        [rightButtons addSubview:container];
+    }
+    
     if (pos > 0) {
         rightButtons.frame = CGRectMake(0, 0, pos, 44);
         self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]
@@ -353,6 +395,15 @@
     return NO;
 }
 
+- (void) doNavigate:(BOOL)next {
+    if (self.navigatorDelegate) {
+        if (next)
+            [self.navigatorDelegate next];
+        else
+            [self.navigatorDelegate prev];
+    }
+}
+
 // PENDING use a delegate protocol for handling clicks
 - (void) onNavButtonTapped: (id) sender {
     UIBarButtonItem *bbi = (UIBarButtonItem *)sender;
@@ -373,9 +424,15 @@
             break;
             
         case TAG_NBI_SHARE:
-            // do stuff
             [self showSocialsDialog];
-//            [self doOnTapped:sender];
+            break;
+            
+        case TAG_NBI_PREV:
+            [self doNavigate:NO];
+            break;
+            
+        case TAG_NBI_NEXT:
+            [self doNavigate:YES];
             break;
             
         default:

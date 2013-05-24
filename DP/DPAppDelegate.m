@@ -75,7 +75,7 @@ void myExceptionHandler (NSException *exception)
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(onNotified:)
-                                                 name:kShowFacebookViewNotification
+                                                 name:DPN_ShowFacebookViewNotification
                                                object:nil];
 }
 

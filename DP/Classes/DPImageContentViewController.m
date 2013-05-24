@@ -27,6 +27,13 @@
 @property (strong, nonatomic) UIScrollView *scrollView;
 @property (strong, nonatomic) UIImageView *imageView;
 
+
+@property (strong, nonatomic) UIView *lblContainer;
+@property (strong, nonatomic) UIButton *btnAdd2Favs;
+@property (strong, nonatomic) UILabel *lblCounter;
+@property (strong, nonatomic) UILabel *lblTitle;
+
+
 @end
 
 @implementation DPImageContentViewController
@@ -118,6 +125,9 @@
     if (self.image)// && !self.article)
         [self doInitImageView];
     else if (self.article) {
+        [self setupLabel];
+        [self updateLabels];
+        
         if (isLocalUrl(self.article.imageUrl)) {
             self.image = [UIImage imageNamed:self.article.imageUrl];
             [self doInitImageView];
@@ -327,7 +337,6 @@
         [apphelper addToFavorites:self.article];
 }
 
-
 - (NSString *) aquireImageTitleToShare {
     if ([self aquireImageUrlToShare] != nil)
         return  self.article.title;
@@ -342,6 +351,138 @@
         return self.article.imageUrl;
     
     return nil;
+}
+
+//==============================================================================
+
+-(void) clearLabels {
+    if (self.lblContainer!=nil) {
+        [self.btnAdd2Favs removeFromSuperview];
+        [self.btnAdd2Favs removeTarget:self
+                                action:@selector(addToFavs:)
+                      forControlEvents:UIControlEventTouchUpInside];
+        [self.lblCounter removeFromSuperview];
+        [self.lblTitle removeFromSuperview];
+        [self.lblContainer removeFromSuperview];
+        self.lblCounter = nil;
+        self.lblTitle = nil;
+        self.btnAdd2Favs = nil;
+        self.lblContainer = nil;
+    }
+}
+
+#define IPHONES_FONT_SIZE ((CGFloat) 17.0f)
+#define IPHONES_FAV_SIZE_WIDTH ((CGFloat) 30.0f)
+#define IPHONES_FAV_SIZE_HEIGHT ((CGFloat) 20.0f)
+#define IPHONES_COUNTER_WIDTH ((CGFloat) 48.0f)
+
+#define IPADS_FONT_SIZE ((CGFloat) 32.0f)
+#define IPADS_FAV_SIZE_WIDTH ((CGFloat) 48.0f)
+#define IPADS_FAV_SIZE_HEIGHT ((CGFloat) 34.0f)
+#define IPADS_COUNTER_WIDTH ((CGFloat) 86.0f)
+
+
+-(void) setupLabel {
+    [self clearLabels];
+    if (!self.article) return;
+    
+    CGSize favSize = CGSizeMake(IS_IPAD ? IPADS_FAV_SIZE_WIDTH : IPHONES_FAV_SIZE_WIDTH,
+                                IS_IPAD ? IPADS_FAV_SIZE_HEIGHT : IPHONES_FAV_SIZE_HEIGHT);
+    CGRect frmbtn = CGRectMake(0, 0, favSize.width, favSize.height);
+    
+    self.btnAdd2Favs = [UIButton buttonWithType:UIButtonTypeCustom];
+    self.btnAdd2Favs.frame = frmbtn;
+    self.btnAdd2Favs.contentMode = UIViewContentModeCenter;
+    self.btnAdd2Favs.backgroundColor = [UIColor whiteColor];
+    [self.btnAdd2Favs addTarget:self
+                         action:@selector(addToFavs:)
+               forControlEvents:UIControlEventTouchUpInside];
+    
+    CGRect frmcntr = CGRectOffset(frmbtn, frmbtn.size.width + 2, 0);
+    self.lblCounter = [[UILabel alloc] initWithFrame: frmcntr];
+    self.lblCounter.font = [UIFont systemFontOfSize: IS_IPAD ? IPADS_FONT_SIZE : IPHONES_FONT_SIZE];
+    self.lblCounter.backgroundColor = [UIColor whiteColor];
+    self.lblCounter.textAlignment = UITextAlignmentRight;
+    
+    CGRect frmtitle = CGRectOffset(frmcntr, frmcntr.origin.x + frmcntr.size.width + 2, 0);
+    self.lblTitle = [[UILabel alloc] initWithFrame:frmtitle];
+    self.lblTitle.font = [UIFont systemFontOfSize:IS_IPAD ? IPADS_FONT_SIZE : IPHONES_FONT_SIZE];
+    self.lblTitle.backgroundColor = [UIColor whiteColor];
+    self.lblTitle.textAlignment = UITextAlignmentCenter;
+    
+    CGRect frm = CGRectUnion(frmbtn, frmtitle);
+    self.lblContainer = [[UIView alloc] initWithFrame:frm];
+    self.lblContainer.backgroundColor = [UIColor blackColor];
+    
+    [self.lblContainer addSubview:self.btnAdd2Favs];
+    [self.lblContainer addSubview:self.lblCounter];
+    [self.lblContainer addSubview:self.lblTitle];
+    
+    [self.view addSubview:self.lblContainer];
+}
+
+- (void) addToFavs:(id)sender {
+    if (self.article) {
+        [self toggleInFavorites];
+        [self fixFavsButton];
+    }
+}
+
+- (void) fixFavsButton {
+    [super fixFavsButton];
+    
+    NSString *favImgName = [self isInFavorites] ? NAVBAR_FAV_SEL_IMG : NAVBAR_FAV_IMG;
+    [self.btnAdd2Favs setImage:[UIImage imageNamed:favImgName]
+                      forState:UIControlStateNormal];
+}
+
+- (int) currentIndex {
+    if (self.navigatorDelegate)
+        return [self.navigatorDelegate currentItemIndex] + 1;
+    return 0;
+}
+- (int) itemsCount {
+    if (self.navigatorDelegate)
+        return [self.navigatorDelegate itemsCount];
+    return 0;
+}
+-(void) updateLabels {
+    if (!self.article)
+        return;
+        
+    [self fixFavsButton];
+    
+    int currIndex = [self currentIndex];
+    int itmsCount = [self itemsCount];
+    
+    self.lblCounter.text = [NSString stringWithFormat:@"%d/%d", currIndex, itmsCount];
+    
+    [self.lblCounter sizeToFit];
+    
+    CGRect counterfrm = CGRectMake(0, 0,
+                                   IS_IPAD ? IPADS_COUNTER_WIDTH : IPHONES_COUNTER_WIDTH,
+                                   self.lblCounter.frame.size.height);
+    counterfrm = CGRectOffset(counterfrm, self.btnAdd2Favs.frame.size.width + 2, 0);
+    self.lblCounter.frame = counterfrm;
+    
+    if (currIndex == 0) {
+        self.lblTitle.text = @"";
+        [self.lblTitle sizeToFit];
+    } else {
+        NSString *title = [self.article title];
+        self.lblTitle.text = title;
+        [self.lblTitle sizeToFit];
+    }
+    CGRect titlefrm = CGRectMake(0, 0,
+                                 self.lblTitle.frame.size.width + 6,
+                                 self.lblTitle.frame.size.height);
+    
+    CGRect r = self.btnAdd2Favs.frame;
+    self.btnAdd2Favs.frame = CGRectMake(r.origin.x, r.origin.y, r.size.width, counterfrm.size.height);
+    
+    titlefrm = CGRectOffset(titlefrm, counterfrm.origin.x + counterfrm.size.width + 2, 0);
+    self.lblTitle.frame = titlefrm;
+    self.lblContainer.frame = CGRectUnion(self.btnAdd2Favs.frame, titlefrm);
 }
 
 @end
