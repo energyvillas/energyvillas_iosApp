@@ -200,6 +200,11 @@
 }
 
 - (void) showViewController:(UIViewController *) vc {
+    [[NSNotificationCenter defaultCenter] postNotificationName:DPN_PAID_SelectedCategoryChanged_Notification
+                                                        object:nil
+                                                      userInfo:[NSDictionary dictionaryWithObject:[NSNumber numberWithInt:0]
+                                                                                           forKey:@"menuCategory"]];
+    
     if (!self.navController.navigationBarHidden)
         [self.navController setNavigationBarHidden:YES animated:YES];
     [self.navController pushViewController:vc animated:YES];

@@ -120,9 +120,9 @@ FOUNDATION_EXPORT NSString *const MySecondConstant;
 #define HIKID_CUSTOM ((int)20)	// CUSTOM
 
 // BANNER GROUPS
-#define BANNER_GROUP_LEVEL_0 ((int)1)
+#define BANNER_GROUP_LEVEL_0 ((int)3)
 #define BANNER_GROUP_LEVEL_1_NORMAL ((int)2)
-#define BANNER_GROUP_LEVEL_1_EXCLUSIVE ((int)3)
+#define BANNER_GROUP_LEVEL_1_EXCLUSIVE ((int)1)
 
 // DEVICE TYPE IDs
 #define DEVICE_TYPE_ID_IPHONE ((int)1)

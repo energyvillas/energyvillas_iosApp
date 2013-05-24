@@ -111,6 +111,12 @@
         [self.ctgViewController changeRows:self.ctgViewController.rowCount
                                    columns:self.ctgViewController.colCount
                            scrollDirection:self.ctgViewController.scrollDirection];
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:DPN_PAID_SelectedCategoryChanged_Notification
+                                                        object:self
+                                                      userInfo:[NSDictionary dictionaryWithObject:[NSNumber numberWithInt:_category]
+                                                                                           forKey:@"menuCategory"]];
+
 }
 
 - (void) viewWillDisappear:(BOOL)animated {
