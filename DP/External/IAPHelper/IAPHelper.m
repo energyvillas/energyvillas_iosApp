@@ -18,7 +18,7 @@ NSString *const IAPHelperProductPurchasedNotification = @"IAPHelperProductPurcha
 // 3
 @implementation IAPHelper {
     SKProductsRequest * _productsRequest;
-    RequestProductsCompletionHandler _completionHandler;
+//    RequestProductsCompletionHandler _completionHandler;
     
     NSSet * _productIdentifiers;
     NSMutableSet * _purchasedProductIdentifiers;
@@ -51,8 +51,9 @@ NSString *const IAPHelperProductPurchasedNotification = @"IAPHelperProductPurcha
     
 }
 
-- (void)requestProductsWithCompletionHandler:(RequestProductsCompletionHandler)completionHandler {
-    _completionHandler = [completionHandler copy];
+//- (void)requestProductsWithCompletionHandler:(RequestProductsCompletionHandler)completionHandler {
+- (void)requestProducts {
+//    _completionHandler = [completionHandler copy];
     
     _productsRequest = [[SKProductsRequest alloc] initWithProductIdentifiers:_productIdentifiers];
     _productsRequest.delegate = self;
@@ -85,10 +86,17 @@ NSString *const IAPHelperProductPurchasedNotification = @"IAPHelperProductPurcha
         NSLog(@"Invalid product id: '%@'" , invalidProductId);
     }
 
+//    dispatch_async(dispatch_get_main_queue(), ^{
+//        _completionHandler(skProducts, nil);
+//        _completionHandler = nil;
+//    });
     dispatch_async(dispatch_get_main_queue(), ^{
-        _completionHandler(skProducts, nil);
-        _completionHandler = nil;
+        [self productsRequestCompleted:skProducts error:nil];
     });
+}
+
+- (void) productsRequestCompleted:(NSArray *)products error:(NSError *)error {
+    
 }
 
 - (void)request:(SKRequest *)request didFailWithError:(NSError *)error {
@@ -96,9 +104,13 @@ NSString *const IAPHelperProductPurchasedNotification = @"IAPHelperProductPurcha
     NSLog(@"Failed to load list of products.");
     _productsRequest = nil;
     
-    _completionHandler(nil, error);
-    _completionHandler = nil;
-    
+    //    dispatch_async(dispatch_get_main_queue(), ^{
+    //        _completionHandler(nil, error);
+    //        _completionHandler = nil;
+    //    });
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self productsRequestCompleted:nil error:error];
+    });    
 }
 
 #pragma mark - information methods

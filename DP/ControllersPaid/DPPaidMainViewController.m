@@ -161,11 +161,11 @@
     NSString *imgName;
     switch (currentBackgroundCategory) {
         case CTGID_EXCLUSIVE_DESIGNER:
-            imgName = IS_PORTRAIT ? @"BackgroundExclusive/bg_exclusive_designer_v.png" : @"BackgroundExclusive/bg_exclusive_designer_h.png";
+            imgName = IS_PORTRAIT ? @"Background/bg_exclusive_designer_v.jpg" : @"Background/bg_exclusive_designer_h.jpg";
             break;
             
         case CTGID_EXCLUSIVE_ART:
-            imgName = IS_PORTRAIT ? @"BackgroundExclusive/bg_exclusive_art_v.png" : @"BackgroundExclusive/bg_exclusive_art_h.png";
+            imgName = IS_PORTRAIT ? @"Background/bg_exclusive_art_v.jpg" : @"Background/bg_exclusive_art_h.jpg";
             break;
             
         default:

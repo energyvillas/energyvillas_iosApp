@@ -24,7 +24,7 @@
 
     [encoder encodeObject:self.imageUrlLandsape forKey:encBannerImageLandscape];
     [encoder encodeObject:self.url forKey:encBannerURL];
-	[encoder encodeObject:self.publishDate forKey:encBannerPublishDate];
+//	[encoder encodeObject:self.publishDate forKey:encBannerPublishDate];
 }
 
 -(id)initWithCoder:(NSCoder *)aDecoder{
@@ -41,7 +41,7 @@
 
         self.imageUrlLandsape = [aDecoder decodeObjectForKey:encBannerImageLandscape];
         self.url = [aDecoder decodeObjectForKey:encBannerURL];
-		self.publishDate = [aDecoder decodeObjectForKey:encBannerPublishDate];
+//		self.publishDate = [aDecoder decodeObjectForKey:encBannerPublishDate];
 	}
     
 	return self;
@@ -55,7 +55,7 @@
     imageUrlLandscape:(NSString *)aImageUrlLandscape
 //                 body:(NSString *)aBody
                   url:(NSString *)aURL
-          publishDate:(NSString *)aPublishDate
+//          publishDate:(NSString *)aPublishDate
 {
     self = [super initWithValues:aId title:aTitle imageUrl:aImageUrl];
     
@@ -67,7 +67,7 @@
         self.orderNo = aOrderNo;
         self.imageUrlLandsape = NullIfEmpty(aImageUrlLandscape);
 //		self.body = NullIfEmpty(aBody);
-		self.publishDate = NullIfEmpty(aPublishDate);
+//		self.publishDate = NullIfEmpty(aPublishDate);
 		self.url = NullIfEmpty(aURL);
 	}
     
@@ -82,7 +82,7 @@
 
 //    copy.body = [self.body copy];
     copy.imageUrlLandsape = [self.imageUrlLandsape copy];
-    copy.publishDate = [self.publishDate copy];
+//    copy.publishDate = [self.publishDate copy];
     copy.url = [self.url copy];
     
     return copy;

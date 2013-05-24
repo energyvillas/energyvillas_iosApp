@@ -48,7 +48,6 @@
 		5E4E85221711F948005DAD06 /* DPAnimatedScrollViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E4E85211711F947005DAD06 /* DPAnimatedScrollViewController.m */; };
 		5E4E8527171227C2005DAD06 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E4E8526171227BF005DAD06 /* CoreText.framework */; };
 		5E5F949F17213BF5006C9A88 /* Social in Resources */ = {isa = PBXBuildFile; fileRef = 5E5F949E17213BF5006C9A88 /* Social */; };
-		5E63DF2E174E67A40086ACF5 /* BackgroundExclusive in Resources */ = {isa = PBXBuildFile; fileRef = 5E63DF2D174E67A40086ACF5 /* BackgroundExclusive */; };
 		5E63DF31174EAA2B0086ACF5 /* DPArticlesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E63DF30174EAA2A0086ACF5 /* DPArticlesViewController.m */; };
 		5E71A3B816F9973500E7AFF9 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E71A3B716F9973500E7AFF9 /* UIKit.framework */; };
 		5E71A3BA16F9973500E7AFF9 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E71A3B916F9973500E7AFF9 /* Foundation.framework */; };
@@ -224,7 +223,6 @@
 		5E4E85211711F947005DAD06 /* DPAnimatedScrollViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPAnimatedScrollViewController.m; sourceTree = "<group>"; };
 		5E4E8526171227BF005DAD06 /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
 		5E5F949E17213BF5006C9A88 /* Social */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Social; sourceTree = "<group>"; };
-		5E63DF2D174E67A40086ACF5 /* BackgroundExclusive */ = {isa = PBXFileReference; lastKnownFileType = folder; path = BackgroundExclusive; sourceTree = "<group>"; };
 		5E63DF2F174EAA2A0086ACF5 /* DPArticlesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPArticlesViewController.h; sourceTree = "<group>"; };
 		5E63DF30174EAA2A0086ACF5 /* DPArticlesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPArticlesViewController.m; sourceTree = "<group>"; };
 		5E71A3B416F9973500E7AFF9 /* energyVillas.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = energyVillas.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -696,7 +694,6 @@
 				5E869E0C173010EA00516D2D /* FreeImages */,
 				5EE16DFE171C47D10006E1CE /* Carousel */,
 				5E4E85121710356A005DAD06 /* Background */,
-				5E63DF2D174E67A40086ACF5 /* BackgroundExclusive */,
 				5E03E922171578FB00F0C6F3 /* BuyDialog */,
 				5E756E39174BDC41001AA085 /* HouseInfo */,
 				5E4E8514171059AA005DAD06 /* Navbar */,
@@ -1006,7 +1003,6 @@
 				5E756E37174AB197001AA085 /* info-small_01.png in Resources */,
 				5E756E38174AB197001AA085 /* info-small_01@2x.png in Resources */,
 				5E756E3A174BDC41001AA085 /* HouseInfo in Resources */,
-				5E63DF2E174E67A40086ACF5 /* BackgroundExclusive in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

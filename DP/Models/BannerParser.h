@@ -24,7 +24,7 @@
 @property (nonatomic, strong) NSString *imageLandscape;
 //@property (nonatomic, strong) NSString *body;
 @property (nonatomic, strong) NSString *url;
-@property (nonatomic, strong) NSString *publishDate;
+//@property (nonatomic, strong) NSString *publishDate;
 
 - (void)parseXMLFile:(NSString *)pathToFile;
 - (void)print;

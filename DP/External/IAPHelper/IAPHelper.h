@@ -11,15 +11,17 @@
 
 UIKIT_EXTERN NSString *const IAPHelperProductPurchasedNotification;
 
-typedef void (^RequestProductsCompletionHandler)(NSArray * products, NSError *error);
+//typedef void (^RequestProductsCompletionHandler)(NSArray * products, NSError *error);
 
 @interface IAPHelper : NSObject
 
 - (id)initWithProductIdentifiers:(NSSet *)productIdentifiers;
-- (void)requestProductsWithCompletionHandler:(RequestProductsCompletionHandler)completionHandler;
+//- (void)requestProductsWithCompletionHandler:(RequestProductsCompletionHandler)completionHandler;
+- (void)requestProducts;
 - (BOOL)canMakePurchases;
 - (void)buyProduct:(SKProduct *)product;
 - (BOOL)productPurchased:(NSString *)productIdentifier;
 - (void)restoreCompletedTransactions;
 
+- (void) productsRequestCompleted:(NSArray *)products error:(NSError *)error;
 @end

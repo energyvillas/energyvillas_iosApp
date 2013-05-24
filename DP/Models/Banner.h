@@ -29,7 +29,7 @@
 //@property (nonatomic, strong) NSString *body;
 @property (nonatomic, strong) NSString *imageUrlLandsape;
 @property (nonatomic, strong) NSString *url;
-@property (nonatomic, strong) NSString *publishDate;
+//@property (nonatomic, strong) NSString *publishDate;
 
 -(void)encodeWithCoder:(NSCoder *)encoder;
 
@@ -41,6 +41,7 @@
   imageUrlLandscape:(NSString *)aImageUrlLandscape
 //               body:(NSString *)Body
                 url:(NSString *)aURL
-        publishDate:(NSString *)aPublishDate;
+//        publishDate:(NSString *)aPublishDate
+;
 
 @end

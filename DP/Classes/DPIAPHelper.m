@@ -40,11 +40,19 @@
 
 -(void) doLoadStore {
     if (self.product == nil)
-        [self requestProductsWithCompletionHandler:^(NSArray * products, NSError *error) {
-            if (products != nil) {
-                _product = (SKProduct *)products[0];
-            }
-        }];
+//        [self requestProductsWithCompletionHandler:^(NSArray * products, NSError *error) {
+//            if (products != nil) {
+//                _product = (SKProduct *)products[0];
+//            }
+//        }];
+        [self requestProducts];
+}
+
+- (void) productsRequestCompleted:(NSArray *)products error:(NSError *)error {
+    if (products != nil) {
+        _product = (SKProduct *)products[0];
+    }
+    [super productsRequestCompleted:products error:error];
 }
 
 -(void) buy {

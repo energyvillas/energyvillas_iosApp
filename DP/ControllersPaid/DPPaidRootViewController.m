@@ -44,6 +44,17 @@
     [self doLocalize];
 }
 
+-(void) viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
+//    dispatch_async(dispatch_get_main_queue(), ^{
+        [[NSNotificationCenter defaultCenter] postNotificationName:kPAID_SelectedCategoryChanged_Notification
+                                                            object:self
+                                                          userInfo:[NSDictionary dictionaryWithObject:[NSNumber numberWithInt:0]
+                                                                                               forKey:@"menuCategory"]];
+//    });
+}
+
 - (void) doLocalize {
     [super doLocalize];
 //    self.bbiMore.title = DPLocalizedString(kbbiMore_Title);

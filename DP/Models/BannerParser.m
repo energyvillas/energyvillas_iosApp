@@ -46,7 +46,7 @@ static NSString *kName_url = @"url";
 static NSString *kName_image = @"image";
 static NSString *kName_imagelandscape = @"imagelandscape";
 //static NSString *kName_body = @"body";
-static NSString *kName_publishDate = @"publishDate";
+//static NSString *kName_publishDate = @"publishDate";
 
 /*
  Sent by a parser object to its delegate when it encounters a start tag for a given element.
@@ -100,10 +100,10 @@ static NSString *kName_publishDate = @"publishDate";
 		[self.currentString setString:@""];
 		self.storingCharacters = YES;
 		
-	}else if ([elementName isEqualToString:kName_publishDate]) {
-		[self.currentString setString:@""];
-		self.storingCharacters = YES;
-        
+//	}else if ([elementName isEqualToString:kName_publishDate]) {
+//		[self.currentString setString:@""];
+//		self.storingCharacters = YES;
+//        
 	}
 }
 
@@ -150,7 +150,8 @@ static NSString *kName_publishDate = @"publishDate";
                                        imageUrlLandscape:self.imageLandscape
 //                                                    body:self.body
                                                      url:self.url
-                                             publishDate:self.publishDate];
+//                                             publishDate:self.publishDate
+                           ];
 
 		[self.banners insertObject:banner atIndex:index];
 		index=index+1;
@@ -179,10 +180,10 @@ static NSString *kName_publishDate = @"publishDate";
         
 //	}else if ([elementName isEqualToString:kName_body]) {
 //		self.body=[[NSString alloc] initWithString: aElementValue];
-        
-	}else if ([elementName isEqualToString:kName_publishDate]) {
-		self.publishDate=[[NSString alloc] initWithString: aElementValue];
-        
+//        
+//	}else if ([elementName isEqualToString:kName_publishDate]) {
+//		self.publishDate=[[NSString alloc] initWithString: aElementValue];
+//        
 	}
     
 	self.storingCharacters = NO;

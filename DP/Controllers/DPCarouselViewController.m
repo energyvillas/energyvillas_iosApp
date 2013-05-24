@@ -398,6 +398,7 @@
         self.icarousel.delegate = self;
         self.icarousel.dataSource = self;
         
+        CGFloat scrspeed = self.icarousel.scrollSpeed;
         switch (self.carouselCategoryID) {
             case CTGID_CAROUSEL: {
                 self.icarousel.type = iCarouselTypeCoverFlow2;
@@ -411,7 +412,7 @@
             }
             default: {
                 self.icarousel.type = iCarouselTypeCoverFlow2;
-                self.icarousel.scrollSpeed = 0.35f;
+                self.icarousel.scrollSpeed = scrspeed * 0.7f;//0.35f;
                 break;
             }
         }
@@ -434,7 +435,7 @@
             return NO;
         }
         case iCarouselOptionVisibleItems: {
-            return 9.0f;//value;
+            return value;
         }
         case iCarouselOptionShowBackfaces: {
             return NO;

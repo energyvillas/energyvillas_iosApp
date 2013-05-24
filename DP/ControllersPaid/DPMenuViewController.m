@@ -80,9 +80,26 @@
 	// Do any additional setup after loading the view.
 }
 
+-(void) viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
+//    dispatch_async(dispatch_get_main_queue(), ^{
+//        [[NSNotificationCenter defaultCenter] postNotificationName:kPAID_SelectedCategoryChanged_Notification
+//                                                            object:self
+//                                                          userInfo:[NSDictionary dictionaryWithObject:[NSNumber numberWithInt:0]
+//                                                                                               forKey:@"menuCategory"]];
+//    });
+}
+
 -(void) viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     [self clearPopups];
+    
+//    if (menulevel == 1)
+//        [[NSNotificationCenter defaultCenter] postNotificationName:kPAID_SelectedCategoryChanged_Notification
+//                                                            object:self
+//                                                          userInfo:[NSDictionary dictionaryWithObject:[NSNumber numberWithInt:0]
+//                                                                                               forKey:@"menuCategory"]];
 }
 
 -(void) viewWillLayoutSubviews {
@@ -160,12 +177,12 @@
         case CTGID_EXCLUSIVE_ART:
 
         case CTGID_VIDEOS:{
-            dispatch_async(dispatch_get_main_queue(), ^{
+//            dispatch_async(dispatch_get_main_queue(), ^{
                 [[NSNotificationCenter defaultCenter] postNotificationName:kPAID_SelectedCategoryChanged_Notification
                                                                     object:self
                                                                   userInfo:[NSDictionary dictionaryWithObject:[NSNumber numberWithInt:element.Id]
                                                                                                        forKey:@"menuCategory"]];
-            });
+//            });
 
             if (menulevel == 0) {
                 DPCategoryViewController *ctgVC = [[DPCategoryViewController alloc]
