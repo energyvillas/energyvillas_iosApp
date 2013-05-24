@@ -212,6 +212,10 @@
 
 #pragma mark -
 
+#define NAVBAR_BTN_WIDTH ((int)34)
+#define NAVBAR_BTN_HEIGTH ((int)34)
+#define NAVBAR_BTN_TOP ((int)5)
+
 - (void) setupNavBar {
     if (![self showNavBar]) return;
     
@@ -226,7 +230,7 @@
     
     self.navbarTitleItemButton = [self createButtonWithImage: [self calcTitleImageName]
                                             highlightedImage: [self calcTitleImageName]
-                                                       frame:CGRectZero//CGRectMake(30, 7, 30, 30)
+                                                       frame:CGRectZero
                                                          tag:0
                                                       action:nil];
     self.navbarTitleItemButton.userInteractionEnabled = NO;
@@ -234,12 +238,12 @@
     if (ischild) {
         UIButton *backBtn = [self createButtonWithImage:NAVBAR_BACK_IMG
                                        highlightedImage:NAVBAR_BACK_SEL_IMG
-                                                  frame:CGRectZero //CGRectMake(0, 7, 30, 30)
+                                                  frame:CGRectZero 
                                                     tag:TAG_NBI_BACK
                                                  action:@selector(onNavButtonTapped:)];
         
         CGRect frm = CGRectMake(backBtn.frame.origin.x + backBtn.frame.size.width - 10,
-                                7,
+                                NAVBAR_BTN_TOP,
                                 self.navbarTitleItemButton.frame.size.width,
                                 self.navbarTitleItemButton.frame.size.height);
         self.navbarTitleItemButton.frame = frm;
@@ -261,65 +265,65 @@
         self.navbarLang_EL = [self
                               createButtonWithImage:NAVBAR_LANG_EL_IMG
                               highlightedImage:NAVBAR_LANG_EL_SEL_IMG
-                              frame:CGRectMake(pos, 7, 30, 30)
+                              frame:CGRectMake(pos, NAVBAR_BTN_TOP, NAVBAR_BTN_WIDTH, NAVBAR_BTN_HEIGTH)
                               tag:TAG_NBI_LANG_EL
                               action:@selector(onNavButtonTapped:)];
         [rightButtons addSubview: self.navbarLang_EL];
-        pos += 30;
+        pos += NAVBAR_BTN_WIDTH;
         
         self.navbarLang_EN = [self
                               createButtonWithImage:NAVBAR_LANG_EN_IMG
                               highlightedImage:NAVBAR_LANG_EN_SEL_IMG
-                              frame:CGRectMake(pos, 7, 30, 30)
+                              frame:CGRectMake(pos, NAVBAR_BTN_TOP, NAVBAR_BTN_WIDTH, NAVBAR_BTN_HEIGTH)
                               tag:TAG_NBI_LANG_EN
                               action:@selector(onNavButtonTapped:)];
         [rightButtons addSubview: self.navbarLang_EN];
-        pos += 30;
+        pos += NAVBAR_BTN_WIDTH;
     }
     
     if ([self showNavBarAddToFav]) {
         BOOL inFavs = [self isInFavorites];
         NSString *favImgName = inFavs ? NAVBAR_FAV_SEL_IMG : NAVBAR_FAV_IMG;
         self.navbarFavorite = [self createButtonWithImage:favImgName
-                                                    frame:CGRectMake(pos, 7, 30, 30)
+                                                    frame:CGRectMake(pos, NAVBAR_BTN_TOP, NAVBAR_BTN_WIDTH, NAVBAR_BTN_HEIGTH)
                                                       tag:TAG_NBI_ADD_FAV
                                                    action:@selector(onNavButtonTapped:)];
         [rightButtons addSubview:self.navbarFavorite];
-        pos += 30;
+        pos += NAVBAR_BTN_WIDTH;
     }
     
     if ([self showNavBarSocial]) {
         [rightButtons addSubview:[self
                                   createButtonWithImage:NAVBAR_SHARE_IMG
                                   highlightedImage:NAVBAR_SHARE_SEL_IMG
-                                  frame:CGRectMake(pos, 7, 30, 30)
+                                  frame:CGRectMake(pos, NAVBAR_BTN_TOP, NAVBAR_BTN_WIDTH, NAVBAR_BTN_HEIGTH)
                                   tag:TAG_NBI_SHARE
                                   action:@selector(onNavButtonTapped:)]];
-        pos += 30;
+        pos += NAVBAR_BTN_WIDTH;
     }
     
     if ([self showNavBarNavigator]) {
-        UIView *container = [[UIView alloc] initWithFrame:CGRectMake(pos, 7, 60, 30)];
+        UIView *container = [[UIView alloc] initWithFrame:CGRectMake(pos, NAVBAR_BTN_TOP, 2 * NAVBAR_BTN_WIDTH, NAVBAR_BTN_HEIGTH)];
         container.contentMode = UIViewContentModeCenter;
         container.backgroundColor = [UIColor clearColor];
         UIImageView *borderView = [[UIImageView alloc] initWithFrame:container.bounds];
         borderView.contentMode = UIViewContentModeCenter;
         borderView.image = [UIImage imageNamed:NAVBAR_PREVNEXT_BORDER_IMG];
-        pos += 60;
+        pos += 2 * NAVBAR_BTN_WIDTH;
         
         [container addSubview:borderView];
         
         [container addSubview:[self
                                   createButtonWithImage:NAVBAR_PREV_IMG
                                   highlightedImage:NAVBAR_PREV_SEL_IMG
-                                  frame:CGRectMake(4, 0, 30, 30)
+                                  frame:CGRectMake(4, 0, NAVBAR_BTN_WIDTH, NAVBAR_BTN_HEIGTH)
                                   tag:TAG_NBI_PREV
                                   action:@selector(onNavButtonTapped:)]];
         
         [container addSubview:[self
                                   createButtonWithImage:NAVBAR_NEXT_IMG
                                   highlightedImage:NAVBAR_NEXT_SEL_IMG
-                                  frame:CGRectMake(26, 0, 30, 30)
+                                  frame:CGRectMake(26, 0, NAVBAR_BTN_WIDTH, NAVBAR_BTN_HEIGTH)
                                   tag:TAG_NBI_NEXT
                                   action:@selector(onNavButtonTapped:)]];
         

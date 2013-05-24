@@ -203,12 +203,12 @@
 }
 
 #define IPHONES_FONT_SIZE ((CGFloat) 17.0f)
-#define IPHONES_FAV_SIZE_WIDTH ((CGFloat) 30.0f)
-#define IPHONES_FAV_SIZE_HEIGHT ((CGFloat) 20.0f)
+#define IPHONES_FAV_SIZE_WIDTH ((CGFloat) 31.0f)//30.0f)
+#define IPHONES_FAV_SIZE_HEIGHT ((CGFloat) 21.0f)
 #define IPHONES_COUNTER_WIDTH ((CGFloat) 48.0f)
 
 #define IPADS_FONT_SIZE ((CGFloat) 32.0f)
-#define IPADS_FAV_SIZE_WIDTH ((CGFloat) 48.0f)
+#define IPADS_FAV_SIZE_WIDTH ((CGFloat) 44.0f)//48.0f)
 #define IPADS_FAV_SIZE_HEIGHT ((CGFloat) 34.0f)
 #define IPADS_COUNTER_WIDTH ((CGFloat) 86.0f)
 
@@ -222,7 +222,13 @@
     self.btnAdd2Favs = [UIButton buttonWithType:UIButtonTypeCustom];
     self.btnAdd2Favs.frame = frmbtn;
     self.btnAdd2Favs.contentMode = UIViewContentModeCenter;
+    [self.btnAdd2Favs setImageEdgeInsets:UIEdgeInsetsMake(0, 4, 0, 4)];
     self.btnAdd2Favs.backgroundColor = [UIColor whiteColor];
+    [self.btnAdd2Favs setImage:[UIImage imageNamed:NAVBAR_FAV_IMG]
+                      forState:UIControlStateNormal];
+    [self.btnAdd2Favs setImage:[UIImage imageNamed:NAVBAR_FAV_SEL_IMG]
+                      forState:UIControlStateSelected];
+
     [self.btnAdd2Favs addTarget:self
                          action:@selector(addToFavs:)
                forControlEvents:UIControlEventTouchUpInside];
@@ -280,9 +286,10 @@
 }
 
 - (void) fixFavsButton:(Article *)article {
-    NSString *favImgName = [self isInFavorites:article] ? NAVBAR_FAV_SEL_IMG : NAVBAR_FAV_IMG;
-    [self.btnAdd2Favs setImage:[UIImage imageNamed:favImgName]
-                      forState:UIControlStateNormal];
+//    NSString *favImgName = [self isInFavorites:article] ? NAVBAR_FAV_SEL_IMG : NAVBAR_FAV_IMG;
+//    [self.btnAdd2Favs setImage:[UIImage imageNamed:favImgName]
+//                      forState:UIControlStateNormal];
+    [self.btnAdd2Favs setSelected:[self isInFavorites:article]];
 }
 
 -(void) updateLabels {

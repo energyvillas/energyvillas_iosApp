@@ -312,7 +312,7 @@
     return NO;
 }
 - (BOOL) showNavBarAddToFav {
-    return (self.article != nil);
+    return NO;//(self.article != nil);
 }
 - (BOOL) showNavBarSocial {
     return (self.article != nil);
@@ -372,12 +372,12 @@
 }
 
 #define IPHONES_FONT_SIZE ((CGFloat) 17.0f)
-#define IPHONES_FAV_SIZE_WIDTH ((CGFloat) 30.0f)
-#define IPHONES_FAV_SIZE_HEIGHT ((CGFloat) 20.0f)
+#define IPHONES_FAV_SIZE_WIDTH ((CGFloat) 31.0f)
+#define IPHONES_FAV_SIZE_HEIGHT ((CGFloat) 21.0f)
 #define IPHONES_COUNTER_WIDTH ((CGFloat) 48.0f)
 
 #define IPADS_FONT_SIZE ((CGFloat) 32.0f)
-#define IPADS_FAV_SIZE_WIDTH ((CGFloat) 48.0f)
+#define IPADS_FAV_SIZE_WIDTH ((CGFloat) 44.0f)
 #define IPADS_FAV_SIZE_HEIGHT ((CGFloat) 34.0f)
 #define IPADS_COUNTER_WIDTH ((CGFloat) 86.0f)
 
@@ -393,6 +393,7 @@
     self.btnAdd2Favs = [UIButton buttonWithType:UIButtonTypeCustom];
     self.btnAdd2Favs.frame = frmbtn;
     self.btnAdd2Favs.contentMode = UIViewContentModeCenter;
+    [self.btnAdd2Favs setImageEdgeInsets:UIEdgeInsetsMake(0, 4, 0, 4)];
     self.btnAdd2Favs.backgroundColor = [UIColor whiteColor];
     [self.btnAdd2Favs addTarget:self
                          action:@selector(addToFavs:)
