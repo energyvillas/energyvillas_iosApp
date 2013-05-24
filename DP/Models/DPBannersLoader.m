@@ -47,6 +47,7 @@
                                dictionaryWithObjectsAndKeys:
                                self.lang, @"lang",
                                [NSString stringWithFormat:@"%d", self.groupID], @"group",
+                               [NSString stringWithFormat: @"%d", getDeviceType()], @"devicetype",
                                nil];
     
     ASIFormDataRequest *request = [self

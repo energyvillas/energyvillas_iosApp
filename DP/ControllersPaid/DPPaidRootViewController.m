@@ -173,7 +173,7 @@
     
     if (self.adsViewController == nil)
     {
-        self.adsViewController = [[DPAdsViewController alloc] initWithGroup:1];
+        self.adsViewController = [[DPAdsViewController alloc] initWithGroup:BANNER_GROUP_LEVEL_0];
         self.adsViewController.view.frame = self.adsView.bounds;
         [self addChildViewController:self.adsViewController];
         [self.adsView addSubview:self.adsViewController.view];

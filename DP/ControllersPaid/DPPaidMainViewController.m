@@ -220,7 +220,7 @@
         [self.navController setNavigationBarHidden:NO animated:NO];
         [self.navController popViewControllerAnimated:YES];
         [self cleanControllers:tvc];
-    } else {    
+    } else {
         [self.navController setNavigationBarHidden:NO animated:NO];
         [self.navController popToRootViewControllerAnimated:YES];
     }

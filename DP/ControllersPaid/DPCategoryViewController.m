@@ -193,7 +193,8 @@
 }
 
 - (void) loadAdsView:(BOOL)reload {
-    int groupNo = 1;
+    int groupNo = (_category == CTGID_EXCLUSIVE_ART || _category == CTGID_EXCLUSIVE_DESIGNER)
+        ? BANNER_GROUP_LEVEL_1_EXCLUSIVE : BANNER_GROUP_LEVEL_1_NORMAL;
     BOOL grpChanged = self.adsViewController != nil && self.adsViewController.group != groupNo;
 
     if (reload || grpChanged) {
@@ -220,6 +221,7 @@
     if (_category != ctgID) {
         _category = ctgID;
         [self fixTitleLabel];
+        [self loadAdsView:NO];
         [self loadCategoryView:YES];
     }
 }
