@@ -17,6 +17,7 @@
     int maxY;
     int ofsX;
     int ofsY;
+    CGFloat maxDistance;
     NSTimeInterval moveDuration, zoomDuration;
 }
 
@@ -238,9 +239,23 @@
     self.currentCard = nil/*-1*/;
 }
 
+- (CGFloat) distance:(CGPoint)p1 from:(CGPoint)p2 {
+    CGFloat result = sqrt((p1.x - p2.x)*(p1.x - p2.x) + (p1.y - p2.y)*(p1.y - p2.y));
+    return result;
+}
+
+- (NSTimeInterval) duration:(NSTimeInterval)duration forDistance:(CGFloat)distance {
+    NSTimeInterval result = (distance * duration)/ maxDistance;
+    return result;
+}
+
 - (void) animateCard:(DPCardView *)card to:(CGPoint)newCenter
               duration:(NSTimeInterval)duration {
-    [UIView animateWithDuration:duration
+    NSTimeInterval newDuration = [self duration:duration
+                                    forDistance:[self distance:newCenter
+                                                          from:[self presentationCenterOf:card]]];
+
+    [UIView animateWithDuration:newDuration
                           delay:0.0
                         options:UIViewAnimationCurveLinear | UIViewAnimationOptionBeginFromCurrentState
                      animations:^{
@@ -312,21 +327,21 @@
     NSLogFrame(@"CARDS CONTAINER FRAME", self.frame);
     NSLogFrame(@"CARDS CONTAINER BOUNDS", self.bounds);
 
-    CGPoint c = target.center;
+    CGPoint c = [self presentationCenterOf:target]; //target.center;
     BOOL atLeft = c.x < (maxX / 2);
     BOOL atTop = c.y < (maxY / 2);
     
     BOOL flipHorz = (arc4random() % 2) == 0;
     BOOL toLeft = flipHorz ? !atLeft : atLeft;
-    BOOL flipVert = flipHorz || (arc4random() % 2) == 0;
+    BOOL flipVert = /*flipHorz ||*/ (arc4random() % 2) == 0;
     BOOL toTop = flipVert ? !atTop : atTop;
     
     CGFloat x = (arc4random() % (maxX / 2)) + (toLeft ? 0 : (maxX / 2));
     CGFloat y = (arc4random() % (maxY / 2)) + (toTop ? 0 : (maxY / 2));
     NSLog(@"random (X, Y) = (%.0f, %.0f)", x, y);
     
-    int edge = (arc4random() % 3) == 0;
-    if (edge == 0) {
+    int edge = arc4random() % 2; //(arc4random() % 3) == 0;
+    if (edge == 0) /* top or bottom */{
         if (toLeft)
             x = x < ofsX ? ofsX : x;
         else
@@ -338,7 +353,9 @@
             y = y < ofsY ? ofsY : y;
         else
             y = y > (maxY - ofsY) ? maxY - ofsY : y;
-    } else {
+    }
+/*
+    else {
         if (toLeft)
             x = x < ofsX ? ofsX : x;
         else
@@ -349,7 +366,7 @@
         else
             y = y > (maxY - ofsY) ? maxY - ofsY : y;
     }
-    
+*/    
     NSLog(@"NEW CENTER : (%.0f, %.0f)", x, y);
     return CGPointMake(x, y);
 }
@@ -361,6 +378,7 @@
     maxY = containerSize.height;// - self.cardSize.height;
     ofsX = self.cardSize.width / 2;
     ofsY = self.cardSize.height / 2;
+    maxDistance = sqrt((maxX - ofsX) * (maxX - ofsX) + (maxY - ofsY) * (maxY - ofsY));
     NSLogFrame(@"ANIM frame", self.frame);
 }
 
