@@ -456,7 +456,8 @@
         } else {
             self.popController.arrowDirection = FPPopoverArrowDirectionRight;
             self.popController.contentSize = CGSizeMake(frame.size.width + 40,
-                                                        frame.size.height + (islandsCount == 3 ? 80 : 20));
+                                                        frame.size.height +
+                                                        (islandsCount == 3 ? (IS_IPAD ? 250 : 80): (IS_IPAD ? 40 : 20)));
         }
     }
     
@@ -476,8 +477,14 @@
             [self.popController presentPopoverFromPoint:p];
         }
     } else {
-        CGPoint p = CGPointMake(mmfrm.origin.x + 10.0, mmfrm.origin.y + island_height);
-        [self.popController presentPopoverFromPoint:p];
+        if (IS_PORTRAIT) {
+            CGPoint p = CGPointMake(mmfrm.origin.x + (island_width / 2.0),
+                                    mmfrm.origin.y + (island_height / 2.0) + (IS_IPAD ? -45.0: 10.0));
+            [self.popController presentPopoverFromPoint:p];
+        } else {
+            CGPoint p = CGPointMake(mmfrm.origin.x + 10.0, mmfrm.origin.y + island_height);
+            [self.popController presentPopoverFromPoint:p];
+        }
     }
 }
 
