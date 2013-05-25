@@ -529,10 +529,12 @@
     pageControl.currentPage = self.currentPage;
              
     // load the visible page and the page on either side of it (to avoid flashes when the user starts scrolling)
+    [self loadScrollViewWithPage:self.currentPage - 2];
     [self loadScrollViewWithPage:self.currentPage - 1];
     [self loadScrollViewWithPage:self.currentPage];
     [self loadScrollViewWithPage:self.currentPage + 1];
-            
+    [self loadScrollViewWithPage:self.currentPage + 2];
+    
     // A possible optimization would be to unload the views+controllers which are no longer visible
 }
 

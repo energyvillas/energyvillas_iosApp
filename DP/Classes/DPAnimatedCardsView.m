@@ -137,9 +137,15 @@
     [self bringSubviewToFront:self.tapView];
 }
 
-//- (BOOL) gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer {
-//    
-//}
+- (BOOL) gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer {
+    if (gestureRecognizer == self.panGesture) {
+        CGPoint panPoint = [self.panGesture locationInView:self.tapView];
+        BOOL onCard = [self findCardUnderPoint:panPoint] != nil;
+        return onCard;
+    }
+    
+    return YES;
+}
 
 - (BOOL) gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer
 {
@@ -150,6 +156,10 @@
     if (gestureRecognizer.view != otherGestureRecognizer.view)
         return NO;
     
+    if (gestureRecognizer == self.panGesture && otherGestureRecognizer == self.tapGesture)
+        return NO;
+    
+    // so that the pagecontrol's gesture to go back and forth between pages works...
     return YES;
 }
 

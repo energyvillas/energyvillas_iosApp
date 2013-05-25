@@ -143,6 +143,11 @@
     [container addSubview:acv];
 }
 
+//- (void) scrollViewDidScroll:(UIScrollView *)sender {
+//    [super scrollViewDidScroll:sender];
+//    
+//}
+
 #pragma mark - data loading methods
 
 - (void) reachabilityChanged {
