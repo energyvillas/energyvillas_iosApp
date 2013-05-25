@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "DPScrollableViewDelegate.h"
 
-@interface DPAnimatedCardsView : UIView <DPScrollableViewDelegate>
+@interface DPAnimatedCardsView : UIView <DPScrollableViewDelegate, UIGestureRecognizerDelegate>
 
 @property (nonatomic, weak) id <DPScrollableViewDelegate> scrollableViewDelegate;
 

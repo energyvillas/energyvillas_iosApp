@@ -21,7 +21,7 @@
 #import "DPArticlesViewController.h"
 
 // 1st level
-#define DURATION_MOVE_1st_Level ((NSTimeInterval)16.0)
+#define DURATION_MOVE_1st_Level ((NSTimeInterval)10.0)
 #define DURATION_ZOOM_1st_Level ((NSTimeInterval)0.35)
 
 #define IPHONE_CARD_RESIZE_WIDTH_1st_Level ((int)15)
@@ -35,7 +35,7 @@
 #define IPAD_CARD_HEIGHT_1st_Level ((int)180)
 
 // 2nd level
-#define DURATION_MOVE_2nd_Level ((NSTimeInterval)16.0)
+#define DURATION_MOVE_2nd_Level ((NSTimeInterval)10.0)
 #define DURATION_ZOOM_2nd_Level ((NSTimeInterval)0.35)
 
 #define IPHONE_CARD_RESIZE_WIDTH_2nd_Level ((int)15)

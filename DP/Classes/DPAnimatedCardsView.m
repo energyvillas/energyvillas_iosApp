@@ -19,15 +19,16 @@
     int ofsY;
     CGFloat maxDistance;
     NSTimeInterval moveDuration, zoomDuration;
+    CGRect confinementRect;
 }
 
 @property (strong, nonatomic) NSMutableArray *cards;
 @property (strong, nonatomic) NSArray *categories;
 @property (strong, nonatomic) UIView *tapView;
 @property (strong, nonatomic) UITapGestureRecognizer *tapGesture;
-//@property (strong, nonatomic) UILongPressGestureRecognizer *longPressGesture;
-//@property (nonatomic, setter = setCurrentCard:) int currentCard;
+@property (strong, nonatomic) UIPanGestureRecognizer *panGesture;
 @property (strong, nonatomic) DPCardView *currentCard;
+@property (strong, nonatomic) DPCardView *panningCard;
 @property (nonatomic) CGSize cardSize;
 @property (nonatomic) CGSize cardInsetSize;
 
@@ -102,38 +103,110 @@
 }
 
 - (void) setupTapView {
+    if (!self.tapView) {
+        self.tapView = [[UIView alloc] initWithFrame:CGRectMake(0, 0,
+                                                                self.bounds.size.width,
+                                                                self.bounds.size.height)];
+        self.tapView.backgroundColor = [UIColor clearColor];
+        [self addSubview:self.tapView];
+    }
+
     if (!self.tapGesture) {
         self.tapGesture = [[UITapGestureRecognizer alloc]
                            initWithTarget:self
                            action:@selector(handleTapGesture:)];
+        self.tapGesture.delegate = self;
         self.tapGesture.numberOfTapsRequired = 1;
     }
-//    if (!self.longPressGesture) {
-//        self.longPressGesture = [[UILongPressGestureRecognizer alloc]
-//                           initWithTarget:self
-//                           action:@selector(handleLongPressGesture:)];
-////        self.longPressGesture.numberOfTapsRequired = 1;
-//    }
-    
-    if (!self.tapView) {
-        self.tapView = [[UIView alloc] initWithFrame:CGRectMake(0, 0,
-                                                           self.bounds.size.width,
-                                                           self.bounds.size.height)];
-        self.tapView.backgroundColor = [UIColor clearColor];
-        [self addSubview:self.tapView];
+
+    if (!self.panGesture) {
+        self.panGesture = [[UIPanGestureRecognizer alloc]
+                           initWithTarget:self
+                           action:@selector(hanldePanGesture:)];
+        self.panGesture.minimumNumberOfTouches = 1;
+        self.panGesture.maximumNumberOfTouches = 1;
+        self.panGesture.delegate = self;
     }
-    
+
     [self.tapView removeGestureRecognizer:self.tapGesture];
     [self.tapView addGestureRecognizer:self.tapGesture];
-//    [self.tapView removeGestureRecognizer:self.longPressGesture];
-//    [self.tapView addGestureRecognizer:self.longPressGesture];
-    
+
+    [self.tapView removeGestureRecognizer:self.panGesture];
+    [self.tapView addGestureRecognizer:self.panGesture];
+
     [self bringSubviewToFront:self.tapView];
 }
 
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer
+{
+    if (gestureRecognizer.view != self.tapView)
+        return NO;
+    
+    // if the gesture recognizers are on different views, don't allow simultaneous recognition
+    if (gestureRecognizer.view != otherGestureRecognizer.view)
+        return NO;
+    
+    return YES;
+}
 
 -(void) handleLongPressGesture:(UIGestureRecognizer *) sender {
     [self frameChanged];
+}
+
+-(DPCardView *) findCardUnderPoint:(CGPoint)pnt {
+    DPCardView *result = nil;
+    int cnt = self.cards.count - 1;
+    // for loop downwards cause views are in stack fashion - i>j => v[i] in front/on top of v[j]
+    for (int i = cnt; i >= 0 ; i--) {
+        UIView *card = (UIView *)self.cards[i];
+        if ( [self point:pnt inPresentationFrame:card] ) {
+            result = self.cards[i];
+            break;
+        }
+    };
+    return result;
+}
+
+- (void) hanldePanGesture:(UIGestureRecognizer *) sender {
+    if (sender != self.panGesture) return;
+    
+    CGPoint panPoint = [self.panGesture locationInView:self.tapView];
+    if (self.panningCard == nil) {
+        self.panningCard = [self findCardUnderPoint:panPoint];
+        if (!self.panningCard) return;
+    }
+    
+    [self.panningCard.layer removeAllAnimations];
+    
+    if (self.panGesture.state == UIGestureRecognizerStateBegan ||
+        self.panGesture.state == UIGestureRecognizerStateChanged) {
+        CGPoint translation = [self.panGesture translationInView:self.tapView];
+        
+        CGPoint newCenter = [self presentationCenterOf:self.panningCard];
+        newCenter = CGPointMake(newCenter.x + translation.x,
+                                newCenter.y + translation.y);
+        if (!CGRectContainsPoint(confinementRect, newCenter)) {
+            if (newCenter.x < CGRectGetMinX(confinementRect))
+                newCenter.x = CGRectGetMinX(confinementRect);
+            else if (newCenter.x > CGRectGetMaxX(confinementRect))
+                newCenter.x = CGRectGetMaxX(confinementRect);
+
+            if (newCenter.y < CGRectGetMinY(confinementRect))
+                newCenter.y = CGRectGetMinY(confinementRect);
+            else if (newCenter.y > CGRectGetMaxY(confinementRect))
+                newCenter.y = CGRectGetMaxY(confinementRect);
+        }
+        self.panningCard.center = newCenter;
+        [self.panGesture setTranslation:CGPointZero inView:self.tapView];
+    }
+
+    if (self.panGesture.state == UIGestureRecognizerStateCancelled ||
+        self.panGesture.state == UIGestureRecognizerStateEnded) {
+        [self animateCard:self.panningCard
+                       to:[self calcNewCenter:self.panningCard]
+                 duration:moveDuration];
+        self.panningCard = nil;
+    }
 }
 
 -(void) handleTapGesture:(UIGestureRecognizer *) sender {
@@ -143,18 +216,8 @@
 //    NSLog(@"TAPPED X:%d Y:%d", tapX, tapY);
 
     DPCardView *oldCurrent = self.currentCard;
-    int cnt = self.cards.count - 1;
-    self.currentCard = nil;//-1;
+    self.currentCard = [self findCardUnderPoint:tapPoint];
     
-    // for loop downwards cause views are in stack fashion - i>j => v[i] in front/on top of v[j]
-    for (int i = cnt; i >= 0 ; i--) { 
-        UIView *card = (UIView *)self.cards[i];
-        if ( [self point:tapPoint inPresentationFrame:card] ) {
-            self.currentCard = self.cards[i];//i;
-            break;
-        }
-    };
-   
     if (oldCurrent == nil/*-1*/) {
         if (self.currentCard != nil/*-1*/) {
             // handle tap
@@ -378,7 +441,9 @@
     maxY = containerSize.height;// - self.cardSize.height;
     ofsX = self.cardSize.width / 2;
     ofsY = self.cardSize.height / 2;
-    maxDistance = sqrt((maxX - ofsX) * (maxX - ofsX) + (maxY - ofsY) * (maxY - ofsY));
+    maxDistance = sqrt((maxX - 2 * ofsX) * (maxX - 2 * ofsX) +
+                       (maxY - 2 * ofsY) * (maxY - 2 * ofsY));
+    confinementRect = CGRectMake(ofsX, ofsY, maxX - 2 * ofsX, maxY - 2 * ofsY);
     NSLogFrame(@"ANIM frame", self.frame);
 }
 
