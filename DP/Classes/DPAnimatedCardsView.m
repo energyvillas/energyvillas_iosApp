@@ -137,7 +137,11 @@
     [self bringSubviewToFront:self.tapView];
 }
 
-- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer
+//- (BOOL) gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer {
+//    
+//}
+
+- (BOOL) gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer
 {
     if (gestureRecognizer.view != self.tapView)
         return NO;
@@ -147,10 +151,6 @@
         return NO;
     
     return YES;
-}
-
--(void) handleLongPressGesture:(UIGestureRecognizer *) sender {
-    [self frameChanged];
 }
 
 -(DPCardView *) findCardUnderPoint:(CGPoint)pnt {
@@ -167,45 +167,87 @@
     return result;
 }
 
+- (CGPoint) confinePoint:(CGPoint)point inRect:(CGRect)rect {
+    if (!CGRectContainsPoint(rect, point)) {
+        if (point.x < CGRectGetMinX(rect))
+            point.x = CGRectGetMinX(rect);
+        else if (point.x > CGRectGetMaxX(rect))
+            point.x = CGRectGetMaxX(rect);
+        
+        if (point.y < CGRectGetMinY(rect))
+            point.y = CGRectGetMinY(rect);
+        else if (point.y > CGRectGetMaxY(rect))
+            point.y = CGRectGetMaxY(rect);
+    }
+    
+    return point;
+}
+
 - (void) hanldePanGesture:(UIGestureRecognizer *) sender {
     if (sender != self.panGesture) return;
-    
-    CGPoint panPoint = [self.panGesture locationInView:self.tapView];
-    if (self.panningCard == nil) {
+        
+    if (self.panGesture.state == UIGestureRecognizerStateBegan) {
+        CGPoint panPoint = [self.panGesture locationInView:self.tapView];
         self.panningCard = [self findCardUnderPoint:panPoint];
+        if (!self.panningCard) return;
+        if (self.panningCard == self.currentCard)
+            self.panningCard = nil;
         if (!self.panningCard) return;
     }
     
+    if (!self.panningCard) return;
+    
     [self.panningCard.layer removeAllAnimations];
+    
+    CGPoint translation = [self.panGesture translationInView:self.tapView];
     
     if (self.panGesture.state == UIGestureRecognizerStateBegan ||
         self.panGesture.state == UIGestureRecognizerStateChanged) {
-        CGPoint translation = [self.panGesture translationInView:self.tapView];
         
         CGPoint newCenter = [self presentationCenterOf:self.panningCard];
         newCenter = CGPointMake(newCenter.x + translation.x,
                                 newCenter.y + translation.y);
-        if (!CGRectContainsPoint(confinementRect, newCenter)) {
-            if (newCenter.x < CGRectGetMinX(confinementRect))
-                newCenter.x = CGRectGetMinX(confinementRect);
-            else if (newCenter.x > CGRectGetMaxX(confinementRect))
-                newCenter.x = CGRectGetMaxX(confinementRect);
-
-            if (newCenter.y < CGRectGetMinY(confinementRect))
-                newCenter.y = CGRectGetMinY(confinementRect);
-            else if (newCenter.y > CGRectGetMaxY(confinementRect))
-                newCenter.y = CGRectGetMaxY(confinementRect);
-        }
+        newCenter = [self confinePoint:newCenter inRect:confinementRect];
         self.panningCard.center = newCenter;
         [self.panGesture setTranslation:CGPointZero inView:self.tapView];
     }
 
-    if (self.panGesture.state == UIGestureRecognizerStateCancelled ||
-        self.panGesture.state == UIGestureRecognizerStateEnded) {
-        [self animateCard:self.panningCard
-                       to:[self calcNewCenter:self.panningCard]
-                 duration:moveDuration];
+    if (self.panGesture.state == UIGestureRecognizerStateCancelled) {
+        DPCardView *card = self.panningCard;        
         self.panningCard = nil;
+        
+        [self animateCard:card
+                       to:[self calcNewCenter:card]
+                 duration:moveDuration];
+    } else if (self.panGesture.state == UIGestureRecognizerStateEnded) {
+        CGPoint velocity = [self.panGesture velocityInView:self.tapView];
+        CGPoint newCenter = [self presentationCenterOf:self.panningCard];
+        newCenter = CGPointMake(newCenter.x + translation.x,
+                                newCenter.y + translation.y);
+        newCenter = CGPointMake(newCenter.x + 0.35f * velocity.x,
+                                newCenter.y + 0.35f * velocity.y);
+        newCenter = [self confinePoint:newCenter inRect:confinementRect];
+        
+        DPCardView *card = self.panningCard;
+        self.panningCard = nil;
+        
+        [UIView animateWithDuration:0.35f
+                              delay:0.0
+                            options:UIViewAnimationCurveEaseOut | UIViewAnimationOptionBeginFromCurrentState
+                         animations:^{
+                              card.center = newCenter;
+                         }
+                         completion:^(BOOL finished){
+                             if (!finished)
+                                 return;
+                             
+                             dispatch_async(dispatch_get_main_queue(), ^{
+                                 [self animateCard:card
+                                                to:[self calcNewCenter:card]
+                                          duration:moveDuration];
+                             });
+                         }
+         ];
     }
 }
 
