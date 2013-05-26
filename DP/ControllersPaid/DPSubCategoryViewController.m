@@ -346,7 +346,10 @@
     btn.frame = frm;
     btn.showsTouchWhenHighlighted = YES;
     btn.contentMode = UIViewContentModeCenter;
-    [btn setImage:[UIImage imageNamed:@"HouseInfo/Info/info.png"] forState:UIControlStateNormal];
+    if (self.category.parentId == CTGID_EXCLUSIVE_ART || self.category.parentId == CTGID_EXCLUSIVE_DESIGNER)
+        [btn setImage:[UIImage imageNamed:@"HouseInfo/Info/info_exclusive.png"] forState:UIControlStateNormal];
+    else
+        [btn setImage:[UIImage imageNamed:@"HouseInfo/Info/info.png"] forState:UIControlStateNormal];
     
     UITapGestureRecognizer *tapper = [[UITapGestureRecognizer alloc]
                                       initWithTarget:self action:@selector(infoTapped:)];

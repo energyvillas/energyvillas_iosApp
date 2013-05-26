@@ -194,17 +194,6 @@
     return IS_LANDSCAPE && (!IS_IPAD);
 }
 
-
-//-(NSArray *) generateLocalData {
-//    NSMutableArray *list = [[NSMutableArray alloc] init];
-//    [list addObject:[[Category alloc] initWithValues:@"10001" lang:CURRENT_LANG title:nil imageUrl:@"balloon.png" parent:@"52"]];
-//    [list addObject:[[Category alloc] initWithValues:@"10002" lang:CURRENT_LANG title:nil imageUrl:@"balloon_01.png" parent:@"52"]];
-//    [list addObject:[[Category alloc] initWithValues:@"10003" lang:CURRENT_LANG title:nil imageUrl:@"balloon_02.png" parent:@"52"]];
-//    [list addObject:[[Category alloc] initWithValues:@"10004" lang:CURRENT_LANG title:nil imageUrl:@"balloon_01.png" parent:@"52"]];
-//    [list addObject:[[Category alloc] initWithValues:@"10005" lang:CURRENT_LANG title:nil imageUrl:@"balloon_02.png" parent:@"52"]];
-//    
-//    return list;
-//}
 - (void) loadData {
     if (self.dataLoader == nil) {
         self.dataLoader = [[DPCategoryLoader alloc] initWithView:self.view
@@ -247,13 +236,16 @@
 #pragma mark -
 #pragma mark dataloaderdelegate methods
 
-- (NSString *) calcLeafImageName:(NSString *)baseName highlight:(BOOL)highlight{
+- (NSString *) calcLeafImageName:(NSString *)baseName
+                       highlight:(BOOL)highlight
+                    translatable:(BOOL)isPerLang{
     @try {
         NSArray *parts = [baseName componentsSeparatedByString:@"."];
         if (parts && parts.count == 2) {
             NSString *roll = highlight ? @"_roll" : @"";
-            NSString *result = [NSString stringWithFormat:@"HouseInfo/HIKIcons/level-2_icons%@_%@_%@.%@",
-                                roll, parts[0], CURRENT_LANG, parts[1]];
+            NSString *lang = isPerLang ? [NSString stringWithFormat:@"_%@", CURRENT_LANG] : @"";
+            NSString *result = [NSString stringWithFormat:@"HouseInfo/HIKIcons/level-2_icons%@_%@%@.%@",
+                                roll, parts[0], lang, parts[1]];
             return result;
         }
         else
@@ -288,8 +280,9 @@
             if (ctg.parentId == category) {
                 if (isLeafCategory && (ctg.hikId != HIKID_CUSTOM)) {
                     NSString *imgbase = [hikdict valueForKey:[NSString stringWithFormat:@"%d", ctg.hikId]];
-                    ctg.imageUrl = [self calcLeafImageName:imgbase highlight:NO];
-                    ctg.imageRollUrl = [self calcLeafImageName:imgbase highlight:YES];
+                    BOOL isPerLang = ctg.hikId != HIKID_COMING_SOON_COMMON && ctg.hikId != HIKID_COMING_SOON_ART && ctg.hikId != HIKID_COMING_SOON_DESIGNER;
+                    ctg.imageUrl = [self calcLeafImageName:imgbase highlight:NO translatable:isPerLang];
+                    ctg.imageRollUrl = [self calcLeafImageName:imgbase highlight:YES translatable:isPerLang];
                 }
                 
                 [children addObject:ctg];
