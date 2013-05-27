@@ -237,12 +237,17 @@
 }
 
 - (void) notifySuccess {
-    if ([self.delegate respondsToSelector:@selector(loadFinished:)])
-        [self.delegate loadFinished:self];
+//    dispatch_async(dispatch_get_main_queue(), ^{
+        if ([self.delegate respondsToSelector:@selector(loadFinished:)])
+            [self.delegate loadFinished:self];
+//    });
 }
+
 - (void) notifyFailure {
-    if ([self.delegate respondsToSelector:@selector(loadFailed:)])
-        [self.delegate loadFailed:self];
+//    dispatch_async(dispatch_get_main_queue(), ^{
+        if ([self.delegate respondsToSelector:@selector(loadFailed:)])
+            [self.delegate loadFailed:self];
+//    });
 }
 
 @end

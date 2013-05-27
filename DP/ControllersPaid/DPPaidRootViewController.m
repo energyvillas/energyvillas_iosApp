@@ -206,22 +206,17 @@
     }
 
     if (self.nnViewController == nil) {
-        NSLog(@"creating new-next");
         self.nnViewController = [[DPNewNextViewController alloc] init];
         self.nnViewController.view.frame =self.nnView.bounds;
         [self addChildViewController: self.nnViewController];
         [self.nnView addSubview: self.nnViewController.view];
     } else {
         self.nnViewController.view.frame =self.nnView.bounds;
-        //[self.nnViewController refresh];
         [self.nnViewController.view setNeedsDisplay];
     }
 }
 
-- (void) loadMenuView:(BOOL)reload {
-    NSLogFrame(@"mmView.frame", self.mmView.frame);
-    NSLogFrame(@"mmView.bounds", self.mmView.bounds);
-    
+- (void) loadMenuView:(BOOL)reload {    
     if (reload && self.mmViewController != nil) {
         [self.mmViewController.view removeFromSuperview];
         [self.mmViewController removeFromParentViewController];

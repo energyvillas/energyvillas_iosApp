@@ -13,6 +13,7 @@
 #import "../Models/ArticleParser.h"
 #import "../Models/DPDataLoader.h"
 #import "DPConstants.h"
+#import "DPAppHelper.h"
 #import "DPArticlesLoader.h"
 
 
@@ -23,6 +24,7 @@
 @property (strong, nonatomic) NSString *mimetype;
 @property (strong, nonatomic) NSData *mimeData;
 @property (strong, nonatomic) DPArticlesLoader *articlesLoader;
+@property (strong, nonatomic) Article *article;
 @property int categoryID;
 @property (strong, nonatomic) NSString *lang;
 @end
@@ -71,18 +73,16 @@
 //        [self downloadUrl:aUrl];
         self.categoryID = ctgid;
         self.lang = aLang;
-        self.articlesLoader = [[DPArticlesLoader alloc] initWithView:self.view category:ctgid lang:aLang];
-        self.articlesLoader.delegate = self;
-        [self.articlesLoader loadData];
     }
     
     return self;
 }
 
-- (void) doInitWebView {    
-    CGRect aframe = CGRectMake(0, 0,
-                               self.view.frame.size.width,
-                               self.view.frame.size.height);
+- (void) doInitWebView {
+    while (self.view.subviews.count > 0)
+        [self.view.subviews[0] removeFromSuperview];
+    
+    CGRect aframe = self.view.bounds;
     
     UIWebView *webView = [[UIWebView alloc] initWithFrame:aframe];
     webView.backgroundColor = [UIColor clearColor];
@@ -117,18 +117,26 @@
                          DPLocalizedString(kERR_TITLE_INFO),
                          DPLocalizedString(kERR_MSG_NO_DATA_FOUND));
     else {
-        NSString *body = ((Article *)articles[0]).body;
-//        body = [[body stringByReplacingOccurrencesOfString:@"&gt;" withString:@">"]
-//                stringByReplacingOccurrencesOfString:@"&lt;" withString:@"<"];
-        self.htmlData = body;
+        self.article = articles[0];
+        self.htmlData = self.article.body;
         [self doInitWebView];
-    }    
+    }
+    
+    [self fixFavsButton];
+    
+    if (self.dataloaderDelegate)
+        [self.dataloaderDelegate loadFinished:loader];
 }
 
 - (void)loadFailed:(DPDataLoader *)loader {
     showAlertMessage(nil,
                      DPLocalizedString(kERR_TITLE_URL_NOT_FOUND),
                      DPLocalizedString(kERR_MSG_DATA_LOAD_FAILED));
+
+    [self fixFavsButton];
+
+    if (self.dataloaderDelegate)
+        [self.dataloaderDelegate loadFailed:loader];
 }
 
 #pragma
@@ -137,11 +145,13 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
-    CGRect aframe = CGRectMake(0, 0,
-                               self.view.superview.frame.size.width,
-                               self.view.superview.frame.size.height);
-    self.view.frame = aframe;
-
+    if (self.categoryID != 0) {
+        self.articlesLoader = [[DPArticlesLoader alloc] initWithView:self.view
+                                                            category:self.categoryID
+                                                                lang:self.lang];
+        self.articlesLoader.delegate = self;
+        [self.articlesLoader loadData];
+    }
 }
 
 - (void) viewWillAppear:(BOOL)animated {
@@ -158,7 +168,7 @@
 
 - (void) doLayoutSubViews:(BOOL)fixtop {
     CGRect vf = self.view.frame;
-    fixtop = IS_LANDSCAPE && !IS_IPAD;
+    fixtop = (!self.isInner) && IS_LANDSCAPE && !IS_IPAD;
     int top = fixtop ? 12 : 0;
     int h = vf.size.height - top;
     int w = vf.size.width;
@@ -166,6 +176,7 @@
     UIView *innerview = self.view.subviews.count == 1 ? self.view.subviews[0] : nil;
     if (innerview) {
         innerview.frame = CGRectMake(0, top, w, h);
+        [innerview setNeedsDisplay];
     }
 }
 
@@ -183,6 +194,30 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+//==============================================================================
+#pragma mark - favorites handling
+- (BOOL) isInFavorites {
+    DPAppHelper *apphelper = [DPAppHelper sharedInstance];
+    BOOL infavs = [apphelper isArticleInFavorites:self.article];
+    return infavs;
+}
+
+- (void) toggleInFavorites {
+    DPAppHelper *apphelper = [DPAppHelper sharedInstance];
+    BOOL infavs = [self isInFavorites];
+    if (infavs)
+        [apphelper removeFromFavorites:self.article];
+    else
+        [apphelper addToFavorites:self.article];
+}
+
+- (NSString *) aquireImageTitleToShare {
+    if (self.article != nil)
+        return  self.article.title;
+    
+    return nil;
 }
 
 //==============================================================================

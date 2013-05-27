@@ -12,5 +12,4 @@
 
 @interface DPNewNextViewController : UINavContentViewController <DPDataLoaderDelegate>
 
--(void) refresh;
 @end

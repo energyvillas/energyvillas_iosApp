@@ -69,6 +69,12 @@ FOUNDATION_EXPORT NSString *const MySecondConstant;
 #define TAG_TBI_BUY ((int)1003)
 #define TAG_TBI_CALL ((int)1004)
 #define TAG_TBI_MORE ((int)1005)
+#define TAG_TBIX_COST ((int)1101)
+#define TAG_TBIX_FRANCHISE ((int)1102)
+#define TAG_TBIX_IDEA ((int)1103)
+#define TAG_TBIX_MATERIALS ((int)1104)
+#define TAG_TBIX_PLANET ((int)1105)
+#define TAG_TBIX_PROFIT ((int)1106)
 
 // main menu buttons
 #define CTGID_SMART ((int)52) //100)
@@ -97,7 +103,8 @@ FOUNDATION_EXPORT NSString *const MySecondConstant;
 #define CTGID_PURCHASE_LAND  ((int)173)
 #define CTGID_CALL_US  ((int)174)
 
-#define CTGID_NEW_NEXT ((int)-1000)
+#define CTGID_NEW ((int)175)
+#define CTGID_NEXT ((int)177)
 
 // HOUSE INFO KIND IDs
 #define HIKID_UNDEFINED ((int)-1) //	UNDEFINED

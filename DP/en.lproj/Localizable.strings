@@ -79,3 +79,8 @@
 
 // HouseInfo page 
 "HIK_HouseDescription"="Description";
+
+"COUNTDOWN_DAY"="day";
+"COUNTDOWN_DAYS"="days";
+"COUNTDOWN_HOUR"="hour";
+"COUNTDOWN_HOURS"="hours";

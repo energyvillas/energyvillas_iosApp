@@ -11,6 +11,10 @@
 
 @interface DPHtmlContentViewController : UINavContentViewController <DPDataLoaderDelegate>
 
+@property (weak, nonatomic) id<DPDataLoaderDelegate> dataloaderDelegate;
+
+@property (nonatomic) BOOL isInner;
+
 - (id) initWithUrl:(NSURL *)aUrl;
 - (id) initWithData:(NSData *)aData mimetype:(NSString *)aMimeType;
 - (id) initWithHTML:(NSString *)aHtml;

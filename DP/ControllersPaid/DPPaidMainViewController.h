@@ -7,8 +7,12 @@
 //
 
 #import "UINavContentViewController.h"
+#import "FPPopoverController.h"
+#import "DPMoreMenuViewController.h"
 
-@interface DPPaidMainViewController : UINavContentViewController <UITabBarDelegate, UINavigationControllerDelegate>
+
+
+@interface DPPaidMainViewController : UINavContentViewController <UITabBarDelegate, UINavigationControllerDelegate, FPPopoverControllerDelegate, DPMoreMenuHandlerDelegate>
 
 @property (strong, nonatomic) IBOutlet UINavigationController *navController;
 

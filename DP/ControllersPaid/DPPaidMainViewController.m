@@ -22,6 +22,9 @@
 @property (strong, nonatomic) UIViewController *buyViewController;
 @property (strong, nonatomic) UIViewController *callViewController;
 @property (strong, nonatomic) UIViewController *moreViewController;
+
+@property (strong, nonatomic) FPPopoverController *popupController;
+@property (strong, nonatomic) DPMoreMenuViewController *popupContentViewController;
 @end
 
 @implementation DPPaidMainViewController {
@@ -87,6 +90,16 @@
     [self doLocalize];
 }
 
+- (void) viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    [self clearPopups];
+}
+
+- (void) viewWillLayoutSubviews {
+    [super viewWillLayoutSubviews];
+//    [self clearPopups];
+}
+
 - (void)navigationController:(UINavigationController *)navigationController
       willShowViewController:(UIViewController *)viewController
                     animated:(BOOL)animated {
@@ -103,6 +116,8 @@
 }
 
 -(void) doFixFrames:(UIViewController *)viewController fixTop:(BOOL)fixtop {
+    [self clearPopups];
+
     [self fixFrames:NO];
     if (viewController && [viewController isKindOfClass:[UINavContentViewController class]])
        // dispatch_async(dispatch_get_main_queue(), ^{
@@ -259,6 +274,11 @@
 }
 
 - (void) showMore {
+    double delayInSeconds = 0.4f;
+    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+        [self showMoreMenu];
+    });
 }
 
 // called when a new view is selected by the user (but not programatically)
@@ -280,11 +300,111 @@
             
         case TAG_TBI_MORE: [self showMore];
             break;
+    }
+}
+
+#pragma mark - START :: "more" popover submenus
+
+- (void) menuItemSelected:(int)menuTag {
+    [self.popupController dismissPopoverAnimated:YES];
+    self.popupController = nil;
+
+    switch (menuTag) {
+        case TAG_TBIX_COST: 
+            break;
             
-        default:
+        case TAG_TBIX_FRANCHISE:
+            break;
+            
+        case TAG_TBIX_IDEA:
+            break;
+            
+        case TAG_TBIX_MATERIALS:
+            break;
+            
+        case TAG_TBIX_PLANET:
+            break;
+            
+        case TAG_TBIX_PROFIT:
             break;
     }
 }
+- (void)handleIslandTap:(UITapGestureRecognizer *)sender {
+//    [self.popupController dismissPopoverAnimated:YES];
+//    self.popupController = nil;
+//
+//    if (sender.state == UIGestureRecognizerStateEnded) {
+//        // handling code
+//        int indx = sender.view.tag;
+//        DPDataElement *element = self.islandsContent[indx];
+//        NSLog(@"Clicked island image at index %i named %@ ", indx, element.title);
+//        
+//        [self elementTapped:nil element:element];
+//    }
+}
+
+-(id) doCreatePopupContentViewController {
+    DPMoreMenuViewController *vc = [[DPMoreMenuViewController alloc] init];
+    vc.menuDelegate = self;
+    
+//    DPAppHelper *appHelper = [DPAppHelper sharedInstance];
+//    self.islandsContent = [appHelper paidMenuOfCategory:ctgId lang:appHelper.currentLang];
+//    
+//    for (int i = 0; i < self.islandsContent.count; i++) {
+//        DPDataElement *element = self.islandsContent[i];
+//        [vc.view addSubview:[self doCreateItem:element tag:i]];
+//    }
+    
+    return vc;
+}
+
+- (void) clearPopups {
+    if (self.popupController) {
+        [self.popupController dismissPopoverAnimated:YES];
+        self.popupController = nil;
+    }
+    if (self.popupContentViewController)
+        self.popupContentViewController.menuDelegate = nil;
+    self.popupContentViewController = nil;
+}
+
+-(void) showMoreMenu {
+    [self clearPopups];
+    CGRect frm = self.view.bounds;
+    
+    
+    //the view controller you want to present as popover
+    if (!self.popupContentViewController)
+        self.popupContentViewController = [self doCreatePopupContentViewController];
+    
+    self.popupContentViewController.title = nil;
+    
+    //our popover
+    self.popupController = [[FPPopoverController alloc]
+                          initWithViewController:self.popupContentViewController];
+    self.popupController.delegate = self;
+    self.popupController.border = NO;
+    self.popupController.tint = FPPopoverBlackTint;
+    self.popupController.arrowDirection = FPPopoverNoArrow;
+    CGSize sz = self.popupContentViewController.view.bounds.size;
+    sz.width += 20; sz.height += 40;
+    self.popupController.contentSize = sz;
+    CGPoint pnt = CGPointMake(frm.size.width, frm.size.height - 49);
+    [self.popupController presentPopoverFromPoint:pnt];
+}
+
+
+- (void)presentedNewPopoverController:(FPPopoverController *)newPopoverController
+          shouldDismissVisiblePopover:(FPPopoverController*)visiblePopoverController
+{
+    [visiblePopoverController dismissPopoverAnimated:YES];
+}
+
+- (void)popoverControllerDidDismissPopover:(FPPopoverController *)popoverController {
+    self.tabBar.selectedItem = nil;
+}
+#pragma END :: islands and exclusive popover sbmenus
+
 
 - (void)didReceiveMemoryWarning
 {
@@ -328,5 +448,6 @@
     
     [super viewDidUnload];
 }
+
 
 @end

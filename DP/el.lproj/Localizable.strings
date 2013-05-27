@@ -79,3 +79,8 @@
 
 // HouseInfo page
 "HIK_HouseDescription"="Περιγραφή";
+
+"COUNTDOWN_DAY"="ημέρα";
+"COUNTDOWN_DAYS"="ημέρες";
+"COUNTDOWN_HOUR"="ώρα";
+"COUNTDOWN_HOURS"="ώρες";

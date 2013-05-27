@@ -78,6 +78,10 @@
 		5E756E3D174C2630001AA085 /* DPArticleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E756E3C174C262F001AA085 /* DPArticleViewController.m */; };
 		5E869E0D173010EA00516D2D /* FreeImages in Resources */ = {isa = PBXBuildFile; fileRef = 5E869E0C173010EA00516D2D /* FreeImages */; };
 		5E8AB0CC171706D1004AFE76 /* UIImage+Retina4.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E8AB0CB171706D1004AFE76 /* UIImage+Retina4.m */; };
+		5E956E9D17534B4600B86DAC /* DPMoreMenuView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5E956E9C17534B4600B86DAC /* DPMoreMenuView.xib */; };
+		5E956EA017534E1600B86DAC /* DPMoreMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E956E9F17534E1600B86DAC /* DPMoreMenuViewController.m */; };
+		5E956EA317538C5500B86DAC /* DPNextHouseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E956EA217538C5500B86DAC /* DPNextHouseViewController.m */; };
+		5E956EA517538C7900B86DAC /* DPNextHouseView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5E956EA417538C7900B86DAC /* DPNextHouseView.xib */; };
 		5E9ABBDE16F9F3CA000EAB46 /* DPTestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E9ABBDD16F9F3CA000EAB46 /* DPTestViewController.m */; };
 		5E9ABBE016F9F3E2000EAB46 /* DPTestView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5E9ABBDF16F9F3E2000EAB46 /* DPTestView.xib */; };
 		5EB72C751744DE2D00392D6E /* SKProduct+LocalizedPrice.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EB72C741744DE2D00392D6E /* SKProduct+LocalizedPrice.m */; };
@@ -270,6 +274,12 @@
 		5E869E0C173010EA00516D2D /* FreeImages */ = {isa = PBXFileReference; lastKnownFileType = folder; path = FreeImages; sourceTree = "<group>"; };
 		5E8AB0CA171706D1004AFE76 /* UIImage+Retina4.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Retina4.h"; sourceTree = "<group>"; };
 		5E8AB0CB171706D1004AFE76 /* UIImage+Retina4.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Retina4.m"; sourceTree = "<group>"; };
+		5E956E9C17534B4600B86DAC /* DPMoreMenuView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DPMoreMenuView.xib; sourceTree = "<group>"; };
+		5E956E9E17534E1600B86DAC /* DPMoreMenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPMoreMenuViewController.h; sourceTree = "<group>"; };
+		5E956E9F17534E1600B86DAC /* DPMoreMenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPMoreMenuViewController.m; sourceTree = "<group>"; };
+		5E956EA117538C5500B86DAC /* DPNextHouseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPNextHouseViewController.h; sourceTree = "<group>"; };
+		5E956EA217538C5500B86DAC /* DPNextHouseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPNextHouseViewController.m; sourceTree = "<group>"; };
+		5E956EA417538C7900B86DAC /* DPNextHouseView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DPNextHouseView.xib; sourceTree = "<group>"; };
 		5E9ABBDC16F9F3CA000EAB46 /* DPTestViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPTestViewController.h; sourceTree = "<group>"; };
 		5E9ABBDD16F9F3CA000EAB46 /* DPTestViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPTestViewController.m; sourceTree = "<group>"; };
 		5E9ABBDF16F9F3E2000EAB46 /* DPTestView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DPTestView.xib; sourceTree = "<group>"; };
@@ -766,6 +776,10 @@
 				5E756E3C174C262F001AA085 /* DPArticleViewController.m */,
 				5E63DF2F174EAA2A0086ACF5 /* DPArticlesViewController.h */,
 				5E63DF30174EAA2A0086ACF5 /* DPArticlesViewController.m */,
+				5E956E9E17534E1600B86DAC /* DPMoreMenuViewController.h */,
+				5E956E9F17534E1600B86DAC /* DPMoreMenuViewController.m */,
+				5E956EA117538C5500B86DAC /* DPNextHouseViewController.h */,
+				5E956EA217538C5500B86DAC /* DPNextHouseViewController.m */,
 			);
 			path = ControllersPaid;
 			sourceTree = "<group>";
@@ -854,6 +868,8 @@
 				5E36052A1708B5E300DB7B20 /* DPFloatingView.xib */,
 				5E4E851E1711E542005DAD06 /* DPSubCategoryView.xib */,
 				5EC5739D172597A5000B7004 /* DPNewNextView.xib */,
+				5E956E9C17534B4600B86DAC /* DPMoreMenuView.xib */,
+				5E956EA417538C7900B86DAC /* DPNextHouseView.xib */,
 			);
 			path = ViewsPaid;
 			sourceTree = "<group>";
@@ -1003,6 +1019,8 @@
 				5E756E37174AB197001AA085 /* info-small_01.png in Resources */,
 				5E756E38174AB197001AA085 /* info-small_01@2x.png in Resources */,
 				5E756E3A174BDC41001AA085 /* HouseInfo in Resources */,
+				5E956E9D17534B4600B86DAC /* DPMoreMenuView.xib in Resources */,
+				5E956EA517538C7900B86DAC /* DPNextHouseView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1094,6 +1112,8 @@
 				5EB72CB8174A324C00392D6E /* DPFavoritesViewController.m in Sources */,
 				5E756E3D174C2630001AA085 /* DPArticleViewController.m in Sources */,
 				5E63DF31174EAA2B0086ACF5 /* DPArticlesViewController.m in Sources */,
+				5E956EA017534E1600B86DAC /* DPMoreMenuViewController.m in Sources */,
+				5E956EA317538C5500B86DAC /* DPNextHouseViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1149,7 +1169,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
 				ONLY_ACTIVE_ARCH = YES;
-				PROVISIONING_PROFILE = "28FB85AF-2BC5-4CE4-B6DA-FF4E419D8692";
+				PROVISIONING_PROFILE = "93FB3469-BFC3-41C3-8C83-64B52D80927C";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -1176,7 +1196,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
-				PROVISIONING_PROFILE = "28FB85AF-2BC5-4CE4-B6DA-FF4E419D8692";
+				PROVISIONING_PROFILE = "93FB3469-BFC3-41C3-8C83-64B52D80927C";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
@@ -1186,7 +1206,8 @@
 		5E71A3D216F9973500E7AFF9 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/../../FacebookSDK\"",
@@ -1201,6 +1222,7 @@
 				);
 				PRODUCT_NAME = energyVillas;
 				PROVISIONING_PROFILE = "";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -1208,7 +1230,8 @@
 		5E71A3D316F9973500E7AFF9 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/../../FacebookSDK\"",
@@ -1223,6 +1246,7 @@
 				);
 				PRODUCT_NAME = energyVillas;
 				PROVISIONING_PROFILE = "";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

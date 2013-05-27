@@ -118,16 +118,7 @@
                                       initWithTarget:self action:@selector(handleTap:)];
     [result addGestureRecognizer:tapper];
     result.userInteractionEnabled = YES;
-    
-//    Banner *banner = self.contentList[contentIndex];
-//    NSString *imgName = NullIfEmpty( IS_PORTRAIT ? banner.imageUrl : banner.imageUrlLandsape );
-//    if (imgName != nil) {
-//        if (isLocalUrl(imgName))
-//            result.image = [UIImage imageNamed:imgName];
-//        else
-//            [self loadImageAsync:banner imageUrl:imgName inView:result cacheImage:YES];
-//    }
-    
+        
     return result;
 }
 

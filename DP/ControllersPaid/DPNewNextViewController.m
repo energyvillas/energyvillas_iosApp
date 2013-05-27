@@ -7,24 +7,31 @@
 //
 
 #import "DPNewNextViewController.h"
-#import "Article.h"
-#import "DPArticlesLoader.h"
+#import "Category.h"
+#import "DPCategoryLoader.h"
 #import "DPAppHelper.h"
 #import "DPConstants.h"
 #import "Reachability.h"
+#import "DPHtmlContentViewController.h"
+#import "DPAppDelegate.h"
+#import "DPNextHouseViewController.h"
 
 @interface DPNewNextViewController ()
 
-@property (strong, nonatomic) DPDataLoader *dataloader;
+@property (strong, nonatomic) DPCategoryLoader *loaderNew;
+@property (strong, nonatomic) DPCategoryLoader *loaderNext;
 
 @property (strong, nonatomic) UIActivityIndicatorView *busyIndicator;
 @property (strong, nonatomic) NSOperationQueue *queue;
-@property (strong, nonatomic) NSArray *datalist;
-@property (strong, nonatomic) NSMutableArray *imageCache;
+//@property (strong, nonatomic) NSArray *datalist;
+//@property (strong, nonatomic) NSMutableArray *imageCache;
 @property (strong, nonatomic) NSMutableDictionary *imageRequests;
 
-@property (strong, nonatomic) UIView *houseNew;
-@property (strong, nonatomic) UIView *houseNext;
+@property (strong, nonatomic) UIImageView *houseNew;
+@property (strong, nonatomic) UIImageView *houseNext;
+
+@property (strong, nonatomic) Category *ctgNew;
+@property (strong, nonatomic) Category *ctgNext;
 
 @end
 
@@ -40,45 +47,33 @@
 }
 
 - (void)viewDidLoad {
-    NSLog(@"NEW-NEXT viewDidLoad");
     [super viewDidLoad];
-	// Do any additional setup after loading the view.
-    [self hookToNotifications];
 }
+
 -(void) viewDidUnload {
-    NSLog(@"NEW-NEXT viewDidUnload");
     [super viewDidUnload];
     [self cleanup];
 }
 
 - (void) viewWillAppear:(BOOL)animated {
-    NSLog(@"NEW-NEXT viewWillAppear");
     [super viewWillAppear:animated];
     [self loadData];
 }
 
 - (void) viewWillDisappear:(BOOL)animated {
-    NSLog(@"NEW-NEXT viewWillDisappear");
    [super viewWillDisappear:animated];
 }
 
-- (void)viewWillLayoutSubviews {
-    [super viewWillLayoutSubviews];
-//    [self doLayoutSubViews];
-}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
 
 -(void)dealloc {
-    NSLog(@"NEW-NEXT dealloc");
     [self cleanup];
 }
 
 -(void) cleanup {
-    NSLog(@"NEW-NEXT cleanup");
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
     if (self.queue) {
         [self.queue cancelAllOperations];
         [self stopIndicator];
@@ -91,54 +86,27 @@
     }
     
     self.queue = nil;
-    [self clearDataLoader];
+    [self clearDataLoaders];
 }
 
 //==============================================================================
 #pragma mark - notifications
 
-- (void) hookToNotifications {
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(onNotified:)
-                                                 name:DPN_currentLangChanged
-                                               object:nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(onNotified:)
-                                                 name:kReachabilityChangedNotification
-                                               object:nil];
-}
-
-- (void) onNotified:(NSNotification *) notification
-{
-    if ([[notification name] isEqualToString:DPN_currentLangChanged]) {
-        NSLog (@"Successfully received the ==DPN_currentLangChanged== notification!");
-        
-        [self doLocalize];
-    }
-    
-    if ([[notification name] isEqualToString:kReachabilityChangedNotification]) {
-        NSLog (@"Successfully received the ==kReachabilityChangedNotification== notification!");
-        
-        [self reachabilityChanged];
-    }
-}
-
 - (void) reachabilityChanged {
-    NSLog(@"NEW-NEXT reachabilityChanged");
+    [super reachabilityChanged];
     [self loadData];
 }
 
 //==============================================================================
 #pragma mark - localization
 - (void) doLocalize {
+    [super doLocalize];
     [self refresh];
 }
 
 -(void) refresh {
     [self cleanup];
     [self cleanSubViews];
-    [self hookToNotifications];
     [self loadData];
 }
 
@@ -152,6 +120,7 @@
     [newhouse removeFromSuperview];
     [nexthouse removeFromSuperview];
 }
+
 -(void) doLayoutSubViews:(BOOL)fixtop {
     CGRect vf = self.view.frame;
     
@@ -161,196 +130,193 @@
     CGFloat x = IS_PORTRAIT ? w : 0;
     CGFloat y = IS_PORTRAIT ? 0 : h;
 //    [self cleanSubViews];
+    
     if (self.houseNew == nil) {
-        self.houseNew = [[UIView alloc] initWithFrame:CGRectMake(0, 0, w, h)];
-        //self.houseNew.backgroundColor = [UIColor orangeColor];
+        self.houseNew = [self createViewWithFrame:CGRectMake(0, 0, w, h)];
         [self.view addSubview:self.houseNew];
     } else {
         self.houseNew.frame = CGRectMake(0, 0, w, h);
-        for (UIView *v in self.houseNew.subviews)
-            v.frame = self.houseNew.bounds;
+//        for (UIView *v in self.houseNew.subviews)
+//            v.frame = self.houseNew.bounds;
     }
     
     if (self.houseNext == nil) {
-        self.houseNext = [[UIView alloc] initWithFrame:CGRectMake(x, y, w, h)];
-        //self.houseNext.backgroundColor = [UIColor magentaColor];
+        self.houseNext = [self createViewWithFrame:CGRectMake(x, y, w, h)];
         [self.view addSubview:self.houseNext];
     } else {
         self.houseNext.frame = CGRectMake(x, y, w, h);
-        for (UIView *v in self.houseNext.subviews)
-            v.frame = self.houseNext.bounds;
+//        for (UIView *v in self.houseNext.subviews)
+//            v.frame = self.houseNext.bounds;
+    }
+}
+
+- (UIImageView *) createViewWithFrame:(CGRect)frame {
+    UIImageView *result = [[UIImageView alloc] initWithFrame:frame];
+    result.contentMode = UIViewContentModeScaleAspectFit;
+    result.backgroundColor = [UIColor clearColor];
+    
+    //result.tag = contentIndex;
+    UITapGestureRecognizer *tapper = [[UITapGestureRecognizer alloc]
+                                      initWithTarget:self action:@selector(handleTap:)];
+    [result addGestureRecognizer:tapper];
+    result.userInteractionEnabled = YES;
+    
+    return result;
+}
+
+- (void)handleTap:(UITapGestureRecognizer *)sender {
+    if (sender == nil) return;
+    if (sender.state == UIGestureRecognizerStateEnded) {
+        // handling code
+        
+        DPDataElement * element = nil;
+        UIViewController *vc = nil;
+        if (sender.view == self.houseNew) {
+            element = self.ctgNew;
+            vc = [[DPHtmlContentViewController alloc] initWithCategory:element.Id lang:CURRENT_LANG];
+        } else if (sender.view == self.houseNext) {
+            element = self.ctgNext;
+            vc = [[DPNextHouseViewController alloc] initWithCategory:element.Id];
+        }
+        
+        if (vc) {
+            DPAppDelegate *appdel = [UIApplication sharedApplication].delegate;
+            UINavigationController *nvc = [appdel findNavController];
+            [nvc pushViewController: vc animated: YES];
+        }
     }
 }
 
 //==============================================================================
 #pragma mark - data handling
 
--(void) clearDataLoader {
-    if (self.dataloader) {
-        self.dataloader.delegate = nil;
-    }
-    self.dataloader = nil;
+-(void) clearDataLoaders {
+    if (self.loaderNew) 
+        self.loaderNew.delegate = nil;
+    
+    if (self.loaderNext)
+        self.loaderNext.delegate = nil;
+    
+    self.loaderNew = nil;    
+    self.loaderNext = nil;
 }
 
 -(void) loadData {
-    if (!self.dataloader) {
-        self.dataloader = [[DPArticlesLoader alloc] initWithView:self.view
-                                                     useInternet:YES
-                                                      useCaching:YES
-                                                        category:CTGID_NEW_NEXT
-                                                            lang:CURRENT_LANG];
-        self.dataloader.delegate = self;
+    if (!self.loaderNew) {
+        self.loaderNew = [[DPCategoryLoader alloc] initWithView:self.view
+                                                    useInternet:YES
+                                                     useCaching:YES
+                                                       category:CTGID_NEW
+                                                           lang:CURRENT_LANG
+                                                  useDeviceType:YES
+                                                      localData:nil];
+        self.loaderNew.delegate = self;
     }
     
-    NSLog(@"NEW-NEXT loadData");
-    [self.dataloader loadData];
+    if (!self.loaderNext) {
+        self.loaderNext = [[DPCategoryLoader alloc] initWithView:self.view
+                                                    useInternet:YES
+                                                     useCaching:YES
+                                                       category:CTGID_NEXT
+                                                           lang:CURRENT_LANG
+                                                  useDeviceType:YES
+                                                      localData:nil];
+        self.loaderNext.delegate = self;
+    }
+    
+    [self.loaderNew loadData];
+    [self.loaderNext loadData];
 }
 
 //==============================================================================
 #pragma mark - START DPDataLoaderDelegate
 
 - (void)loadFinished:(DPDataLoader *)loader {
-    NSLog(@"NEW-NEXT loadFinished");
     if (loader.datalist == nil || loader.datalist.count == 0) {
-        [self loadLocalData];
+        // no data found...ok! //[self loadLocalData];
     } else {
-        self.datalist = self.dataloader.datalist;
-        [self dataLoaded];
+        if (loader == self.loaderNew) {
+            self.ctgNew = loader.datalist[0];
+            [self dataLoaded:self.ctgNew];
+        } else if (loader == self.loaderNext) {
+            self.ctgNext = loader.datalist[0];
+            [self dataLoaded:self.ctgNext];
+        }
     }
 }
 
 - (void)loadFailed:(DPDataLoader *)loader {
-    NSLog(@"NEW-NEXT loadFailed");
-    [self loadLocalData];
-}
-
--(void) loadLocalData {
-    NSLog(@"NEW-NEXT loadLocalData");
-    Article *newArticle = [[Article alloc] initWithValues:@"-1002"
-                                                     lang:CURRENT_LANG
-                                                 category:CTGID_NEW_NEXT
-                                                  orderNo:1
-                                                  forFree:NO
-                                                    title:@"new"
-                                                 imageUrl:@"NextModel/new_model.png"
-                                            imageThumbUrl:nil
-                                                     body:nil
-                                                      url:nil
-                                              publishDate:nil
-                                                 videoUrl:nil
-                                              videolength:nil];
-    Article *nextArticle = [[Article alloc] initWithValues:@"-1001"
-                                                     lang:CURRENT_LANG
-                                                 category:CTGID_NEW_NEXT
-                                                  orderNo:2
-                                                  forFree:NO
-                                                    title:@"next"
-                                                 imageUrl:@"NextModel/next_model.png"
-                                            imageThumbUrl:nil
-                                                     body:nil
-                                                      url:nil
-                                              publishDate:nil
-                                                 videoUrl:nil
-                                              videolength:nil];
-    NSArray *list = [NSArray arrayWithObjects:newArticle, nextArticle, nil];
-    self.datalist = list;
-    [self dataLoaded];
+    // ok .. no data found???//[self loadLocalData];
 }
 
 -(void) setupImageCache {
-    if (self.imageCache == nil) {
-        self.imageCache = [[NSMutableArray alloc] init];
-        for (int i = 0; i < self.datalist.count; i ++)
-            self.imageCache[i] = [NSNull null];
-        
+    if (self.imageRequests == nil) 
         self.imageRequests = [[NSMutableDictionary alloc] init];
-    }
 }
 
-- (void) dataLoaded {
-    NSLog(@"NEW-NEXT loaded %d articles", self.datalist.count);
-    [self setupImageCache];
-    
+- (void) dataLoaded:(Category *)ctg {
     dispatch_async(dispatch_get_main_queue(), ^{
-        [self loadImages];
+        [self loadImage:ctg];
     });
 }
 
-- (void) loadImages {
+- (void) loadImage:(Category *)element {
     [self doLayoutSubViews:NO];
     
-    for (int i = 0; i < self.datalist.count; i++) {
-        Article *article = self.datalist[i];
-        if (isLocalUrl(article.imageUrl)) {
-            UIView *v = self.view.subviews[i];
-            
-            for (UIView *sv in v.subviews)
-                [sv removeFromSuperview];
-            
-            v.contentMode = UIViewContentModeTopRight;
-            
-            CGRect frm = v.bounds;
-            UIImageView *bottom = [[UIImageView alloc] initWithFrame:frm];
-            bottom.contentMode = UIViewContentModeScaleAspectFit;
-            UIImage *img = [UIImage imageNamed:[self calcImageName:article.imageUrl isHighlight:NO]];
-            if (img) {
-                [bottom setImage:img];
-                [v addSubview:bottom];
-            }
-            
-            UIImageView *top = [[UIImageView alloc] initWithFrame:frm];
-            UIImage *overlay = [UIImage imageNamed:@"NextModel/overlay_top.png"];
-            if (overlay) {
-                [top setImage:overlay];
-                [v addSubview:top];
-            }            
-        } else
-            [self downloadImageUrl:article.imageUrl atIndex:i];
-    }
+    int indx = -1;
+    if (element == self.ctgNew)
+        indx = 0;
+    else if (element == self.ctgNext)
+        indx = 1;
+    if (indx != -1)
+        [self downloadImageUrl:element.imageUrl atIndex:indx];
 }
 
-- (NSString *) calcImageName:(NSString *)imgUrl isHighlight:(BOOL)ishighlight {
-    @try {
-        NSLog(@"NEW-NEXT - calcImageName - baseName='%@'", imgUrl);
-        NSArray *parts = [imgUrl componentsSeparatedByString:@"."];
-        if (parts && parts.count == 2) {
-            NSString *orientation = IS_PORTRAIT ? @"v" : @"h";
-            NSString *lang = CURRENT_LANG;
-            NSString *fmt = @"%@_%@_%@.%@";
-            
-            NSString *result = [NSString stringWithFormat:fmt,
-                                parts[0], orientation, lang, parts[1]];
-            
-//            if (ishighlight) {
-//                NSString *high = ishighlight ? @"roll" : @"";
-//                
-//                result = [NSString stringWithFormat:@"MainMenu/main_menu_%@_%@%@_%@.%@",
-//                          parts[0], orientation, lang, parts[1]];
-//            }
-            return result;
-        }
-        else
-            return imgUrl;
-    }
-    @catch (NSException* exception) {
-        NSLog(@"Uncaught exception: %@", exception.description);
-        NSLog(@"Stack trace: %@", [exception callStackSymbols]);
-        return imgUrl;
-    }
-}
+//- (NSString *) calcImageName:(NSString *)imgUrl isHighlight:(BOOL)ishighlight {
+//    @try {
+//        NSLog(@"NEW-NEXT - calcImageName - baseName='%@'", imgUrl);
+//        NSArray *parts = [imgUrl componentsSeparatedByString:@"."];
+//        if (parts && parts.count == 2) {
+//            NSString *orientation = IS_PORTRAIT ? @"v" : @"h";
+//            NSString *lang = CURRENT_LANG;
+//            NSString *fmt = @"%@_%@_%@.%@";
+//            
+//            NSString *result = [NSString stringWithFormat:fmt,
+//                                parts[0], orientation, lang, parts[1]];
+//            
+////            if (ishighlight) {
+////                NSString *high = ishighlight ? @"roll" : @"";
+////                
+////                result = [NSString stringWithFormat:@"MainMenu/main_menu_%@_%@%@_%@.%@",
+////                          parts[0], orientation, lang, parts[1]];
+////            }
+//            return result;
+//        }
+//        else
+//            return imgUrl;
+//    }
+//    @catch (NSException* exception) {
+//        NSLog(@"Uncaught exception: %@", exception.description);
+//        NSLog(@"Stack trace: %@", [exception callStackSymbols]);
+//        return imgUrl;
+//    }
+//}
 
-- (void) loadCachedImage:(int)aIndex{
+- (void) loadCachedImage:(NSString *)imgName atIndex:(int)aIndex{
     if (aIndex >= self.view.subviews.count) return;
-    if (self.imageCache[aIndex] == [NSNull null]) return;
     
-    UIImageView *iv = self.view.subviews[aIndex];
-    [iv setImage:self.imageCache[aIndex]];
+    UIImage *img = [[DPAppHelper sharedInstance] loadUIImageFromCache:imgName];
+    if (img != nil) {
+        UIImageView *iv = aIndex == 0 ? self.houseNew : (aIndex == 1 ? self.houseNext : nil);
+        [iv setImage:img];
+    }
 }
 
 //==============================================================================
 #pragma mark - === busy indication handling  ===
 
 - (void) startIndicator {
+    return;
     if(!self.busyIndicator) {
 		self.busyIndicator = [[UIActivityIndicatorView alloc]
                               initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
@@ -364,6 +330,7 @@
 }
 
 - (void) stopIndicator {
+    return;
     if(self.busyIndicator) {
         [self.busyIndicator stopAnimating];
         [self.busyIndicator removeFromSuperview];
@@ -386,20 +353,25 @@
     ASIHTTPRequest *imageRequest = [ASIHTTPRequest requestWithURL:[NSURL URLWithString:imageUrl]];
     [imageRequest setDelegate:self];
     [imageRequest setDidFinishSelector:@selector(imageRequestDone:)];
-    imageRequest.userInfo = [NSDictionary dictionaryWithObjectsAndKeys: [NSNumber numberWithInt:aIndex], @"imageIndex", nil];
+    imageRequest.userInfo = [NSDictionary dictionaryWithObjectsAndKeys:
+                             [NSNumber numberWithInt:aIndex], @"imageIndex",
+                             imageUrl, @"imageName",
+                             nil];
     [self.queue addOperation:imageRequest];
     [self startIndicator];
 }
 
 - (void) imageRequestDone:(ASIHTTPRequest *)request{
     [self stopIndicator];
+
 	int aIndex = [[request.userInfo objectForKey:@"imageIndex"] intValue];
-	UIImage *aImage = [UIImage imageWithData:[request responseData] scale:DEVICE_SCALE];
+    NSString *imgName = [request.userInfo objectForKey:@"imageName"];
+    NSData *imgData = [request responseData];
+	UIImage *aImage = [UIImage imageWithData:imgData scale:DEVICE_SCALE];
     
 	if(aImage){
-		[self.imageCache replaceObjectAtIndex:aIndex withObject:aImage];
-        //[self.carousel setImage:aImage forIndex:aIndex];
-        [self loadCachedImage:aIndex];
+        [[DPAppHelper sharedInstance] saveImageToCache:imgName data:imgData];
+        [self loadCachedImage:imgName atIndex:aIndex];
 	}
 }
 
