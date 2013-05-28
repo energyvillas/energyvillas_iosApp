@@ -82,6 +82,8 @@
 		5E956EA017534E1600B86DAC /* DPMoreMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E956E9F17534E1600B86DAC /* DPMoreMenuViewController.m */; };
 		5E956EA317538C5500B86DAC /* DPNextHouseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E956EA217538C5500B86DAC /* DPNextHouseViewController.m */; };
 		5E956EA517538C7900B86DAC /* DPNextHouseView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5E956EA417538C7900B86DAC /* DPNextHouseView.xib */; };
+		5E956EA71754C37300B86DAC /* MainMenu in Resources */ = {isa = PBXBuildFile; fileRef = 5E956EA61754C37300B86DAC /* MainMenu */; };
+		5E956EA91754CFF200B86DAC /* MenuLevel1 in Resources */ = {isa = PBXBuildFile; fileRef = 5E956EA81754CFF200B86DAC /* MenuLevel1 */; };
 		5E9ABBDE16F9F3CA000EAB46 /* DPTestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E9ABBDD16F9F3CA000EAB46 /* DPTestViewController.m */; };
 		5E9ABBE016F9F3E2000EAB46 /* DPTestView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5E9ABBDF16F9F3E2000EAB46 /* DPTestView.xib */; };
 		5EB72C751744DE2D00392D6E /* SKProduct+LocalizedPrice.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EB72C741744DE2D00392D6E /* SKProduct+LocalizedPrice.m */; };
@@ -125,14 +127,12 @@
 		5EC5739C1725978E000B7004 /* DPNewNextViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EC5739B1725978D000B7004 /* DPNewNextViewController.m */; };
 		5EC5739E172597A5000B7004 /* DPNewNextView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5EC5739D172597A5000B7004 /* DPNewNextView.xib */; };
 		5EC573A017265B44000B7004 /* TabBar in Resources */ = {isa = PBXBuildFile; fileRef = 5EC5739F17265B43000B7004 /* TabBar */; };
-		5EC573AE1727AE49000B7004 /* MainMenu in Resources */ = {isa = PBXBuildFile; fileRef = 5EC573AD1727AE48000B7004 /* MainMenu */; };
 		5EC573B1172ADEAD000B7004 /* HouseOverview.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EC573B0172ADEAB000B7004 /* HouseOverview.m */; };
 		5EC573B4172ADEF5000B7004 /* HouseOverviewParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EC573B3172ADEF3000B7004 /* HouseOverviewParser.m */; };
 		5EC573B7172ADF15000B7004 /* HouseOverviewLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EC573B6172ADF14000B7004 /* HouseOverviewLoader.m */; };
 		5EC573BA172AE278000B7004 /* DPBaseDataElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EC573B9172AE277000B7004 /* DPBaseDataElement.m */; };
 		5ECD1548173FA6C200C0327F /* loading_el.png in Resources */ = {isa = PBXBuildFile; fileRef = 5ECD1546173FA6C200C0327F /* loading_el.png */; };
 		5ECD1549173FA6C200C0327F /* loading_en.png in Resources */ = {isa = PBXBuildFile; fileRef = 5ECD1547173FA6C200C0327F /* loading_en.png */; };
-		5ECD154B173FC1A500C0327F /* MenuLevel1 in Resources */ = {isa = PBXBuildFile; fileRef = 5ECD154A173FC1A400C0327F /* MenuLevel1 */; };
 		5ED20279171E9624006AC1FC /* iCarousel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5ED20278171E9624006AC1FC /* iCarousel.m */; };
 		5ED2027D171E99F7006AC1FC /* AsyncImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5ED2027C171E99F7006AC1FC /* AsyncImageView.m */; };
 		5ED20283171EA757006AC1FC /* FXImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5ED20280171EA757006AC1FC /* FXImageView.m */; };
@@ -279,6 +279,8 @@
 		5E956EA117538C5500B86DAC /* DPNextHouseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPNextHouseViewController.h; sourceTree = "<group>"; };
 		5E956EA217538C5500B86DAC /* DPNextHouseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPNextHouseViewController.m; sourceTree = "<group>"; };
 		5E956EA417538C7900B86DAC /* DPNextHouseView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DPNextHouseView.xib; sourceTree = "<group>"; };
+		5E956EA61754C37300B86DAC /* MainMenu */ = {isa = PBXFileReference; lastKnownFileType = folder; path = MainMenu; sourceTree = "<group>"; };
+		5E956EA81754CFF200B86DAC /* MenuLevel1 */ = {isa = PBXFileReference; lastKnownFileType = folder; path = MenuLevel1; sourceTree = "<group>"; };
 		5E9ABBDC16F9F3CA000EAB46 /* DPTestViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPTestViewController.h; sourceTree = "<group>"; };
 		5E9ABBDD16F9F3CA000EAB46 /* DPTestViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPTestViewController.m; sourceTree = "<group>"; };
 		5E9ABBDF16F9F3E2000EAB46 /* DPTestView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DPTestView.xib; sourceTree = "<group>"; };
@@ -358,7 +360,6 @@
 		5EC5739B1725978D000B7004 /* DPNewNextViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPNewNextViewController.m; sourceTree = "<group>"; };
 		5EC5739D172597A5000B7004 /* DPNewNextView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DPNewNextView.xib; sourceTree = "<group>"; };
 		5EC5739F17265B43000B7004 /* TabBar */ = {isa = PBXFileReference; lastKnownFileType = folder; path = TabBar; sourceTree = "<group>"; };
-		5EC573AD1727AE48000B7004 /* MainMenu */ = {isa = PBXFileReference; lastKnownFileType = folder; path = MainMenu; sourceTree = "<group>"; };
 		5EC573AF172ADEAA000B7004 /* HouseOverview.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HouseOverview.h; sourceTree = "<group>"; };
 		5EC573B0172ADEAB000B7004 /* HouseOverview.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HouseOverview.m; sourceTree = "<group>"; };
 		5EC573B2172ADEF2000B7004 /* HouseOverviewParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HouseOverviewParser.h; sourceTree = "<group>"; };
@@ -369,7 +370,6 @@
 		5EC573B9172AE277000B7004 /* DPBaseDataElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPBaseDataElement.m; sourceTree = "<group>"; };
 		5ECD1546173FA6C200C0327F /* loading_el.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = loading_el.png; sourceTree = "<group>"; };
 		5ECD1547173FA6C200C0327F /* loading_en.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = loading_en.png; sourceTree = "<group>"; };
-		5ECD154A173FC1A400C0327F /* MenuLevel1 */ = {isa = PBXFileReference; lastKnownFileType = folder; path = MenuLevel1; sourceTree = "<group>"; };
 		5ED20277171E9624006AC1FC /* iCarousel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iCarousel.h; sourceTree = "<group>"; };
 		5ED20278171E9624006AC1FC /* iCarousel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iCarousel.m; sourceTree = "<group>"; };
 		5ED2027B171E99F7006AC1FC /* AsyncImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AsyncImageView.h; sourceTree = "<group>"; };
@@ -704,10 +704,10 @@
 				5E4E85121710356A005DAD06 /* Background */,
 				5E03E922171578FB00F0C6F3 /* BuyDialog */,
 				5E756E39174BDC41001AA085 /* HouseInfo */,
+				5E956EA61754C37300B86DAC /* MainMenu */,
+				5E956EA81754CFF200B86DAC /* MenuLevel1 */,
 				5E4E8514171059AA005DAD06 /* Navbar */,
 				5E5F949E17213BF5006C9A88 /* Social */,
-				5EC573AD1727AE48000B7004 /* MainMenu */,
-				5ECD154A173FC1A400C0327F /* MenuLevel1 */,
 				5EC5739F17265B43000B7004 /* TabBar */,
 				5E756E30174AB197001AA085 /* Toolbar_Free */,
 				5ECD1546173FA6C200C0327F /* loading_el.png */,
@@ -999,12 +999,10 @@
 				5E5F949F17213BF5006C9A88 /* Social in Resources */,
 				5EC5739E172597A5000B7004 /* DPNewNextView.xib in Resources */,
 				5EC573A017265B44000B7004 /* TabBar in Resources */,
-				5EC573AE1727AE49000B7004 /* MainMenu in Resources */,
 				5EDC4119172E8265002A3788 /* HIK_ImageNames.plist in Resources */,
 				5E869E0D173010EA00516D2D /* FreeImages in Resources */,
 				5ECD1548173FA6C200C0327F /* loading_el.png in Resources */,
 				5ECD1549173FA6C200C0327F /* loading_en.png in Resources */,
-				5ECD154B173FC1A500C0327F /* MenuLevel1 in Resources */,
 				5EDE1F7C17442EC800A84BDA /* Icon.png in Resources */,
 				5EDE1F7E17442ED000A84BDA /* Icon@2x.png in Resources */,
 				5EDE1F8017442EDD00A84BDA /* Icon-72.png in Resources */,
@@ -1017,6 +1015,8 @@
 				5E756E3A174BDC41001AA085 /* HouseInfo in Resources */,
 				5E956E9D17534B4600B86DAC /* DPMoreMenuView.xib in Resources */,
 				5E956EA517538C7900B86DAC /* DPNextHouseView.xib in Resources */,
+				5E956EA71754C37300B86DAC /* MainMenu in Resources */,
+				5E956EA91754CFF200B86DAC /* MenuLevel1 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
