@@ -18,7 +18,7 @@
 @interface DPAppHelper ()
 
 @property (strong, nonatomic) NSDictionary *freeDetails;
-@property (strong, nonatomic) NSDictionary *freeBuyContent;
+//@property (strong, nonatomic) NSDictionary *freeBuyContent;
 @property (strong, nonatomic) NSDictionary *freeCoverFlow;
 @property (strong, nonatomic) NSDictionary *paidMainMenu;
 //@property (strong, nonatomic) NSArray *categories;
@@ -68,7 +68,7 @@
         [self configureReachability];
 //        [self loadCategories];
         [self addFreeDetails];
-        [self addFreeBuyContent];
+//        [self addFreeBuyContent];
         [self addFreeCoverFlow];
         [self addPaidMainMenu];
     }
@@ -221,13 +221,13 @@
     return [self doGetArticlesFrom:self.freeDetails lang:lang];
 }
 
-- (void) addFreeBuyContent{    
-    self.freeBuyContent = [self doGetDictionaryFrom:@"free-Buy.plist"];
-}
+//- (void) addFreeBuyContent{    
+//    self.freeBuyContent = [self doGetDictionaryFrom:@"free-Buy.plist"];
+//}
 
-- (NSArray *) freeBuyContentFor:(int)ctgid lang:(NSString *)lang {
-    return [self doGetBuyArticlesFrom:self.freeBuyContent category:ctgid lang:lang];
-}
+//- (NSArray *) freeBuyContentFor:(int)ctgid lang:(NSString *)lang {
+//    return [self doGetBuyArticlesFrom:self.freeBuyContent category:ctgid lang:lang];
+//}
 
 - (void) addFreeCoverFlow{    
     self.freeCoverFlow = [self doGetDictionaryFrom:@"free-CoverFlow.plist"];

@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		5E03E923171578FB00F0C6F3 /* BuyDialog in Resources */ = {isa = PBXBuildFile; fileRef = 5E03E922171578FB00F0C6F3 /* BuyDialog */; };
 		5E0C7653170F32E300F572A0 /* DPMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E0C7652170F32E200F572A0 /* DPMenuViewController.m */; };
 		5E31F026171FFCBB008B15F0 /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E31F025171FFCBB008B15F0 /* FacebookSDK.framework */; };
 		5E31F028171FFD54008B15F0 /* FacebookSDKResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 5E31F027171FFD54008B15F0 /* FacebookSDKResources.bundle */; };
@@ -84,6 +83,7 @@
 		5E956EA517538C7900B86DAC /* DPNextHouseView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5E956EA417538C7900B86DAC /* DPNextHouseView.xib */; };
 		5E956EA71754C37300B86DAC /* MainMenu in Resources */ = {isa = PBXBuildFile; fileRef = 5E956EA61754C37300B86DAC /* MainMenu */; };
 		5E956EA91754CFF200B86DAC /* MenuLevel1 in Resources */ = {isa = PBXBuildFile; fileRef = 5E956EA81754CFF200B86DAC /* MenuLevel1 */; };
+		5E956EAB1754E73C00B86DAC /* BuyDialog in Resources */ = {isa = PBXBuildFile; fileRef = 5E956EAA1754E73C00B86DAC /* BuyDialog */; };
 		5E9ABBDE16F9F3CA000EAB46 /* DPTestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E9ABBDD16F9F3CA000EAB46 /* DPTestViewController.m */; };
 		5E9ABBE016F9F3E2000EAB46 /* DPTestView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5E9ABBDF16F9F3E2000EAB46 /* DPTestView.xib */; };
 		5EB72C751744DE2D00392D6E /* SKProduct+LocalizedPrice.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EB72C741744DE2D00392D6E /* SKProduct+LocalizedPrice.m */; };
@@ -155,7 +155,6 @@
 		5EFCCD0C1709F2EE00C1FE88 /* CategoryParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EFCCD0B1709F2ED00C1FE88 /* CategoryParser.m */; };
 		5EFCCD0F1709F30700C1FE88 /* DPCategoryLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EFCCD0E1709F30700C1FE88 /* DPCategoryLoader.m */; };
 		5EFCCD1B170ADF0E00C1FE88 /* free-details.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5EFCCD1A170ADF0E00C1FE88 /* free-details.plist */; };
-		5EFCCD35170B18BC00C1FE88 /* free-Buy.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5EFCCD34170B18BC00C1FE88 /* free-Buy.plist */; };
 		5EFCCD37170B26D300C1FE88 /* free-CoverFlow.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5EFCCD36170B26D200C1FE88 /* free-CoverFlow.plist */; };
 		5EFCCD39170B469900C1FE88 /* paid-MainMenu.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5EFCCD38170B469900C1FE88 /* paid-MainMenu.plist */; };
 		5EFCCD3B170B48DC00C1FE88 /* paid-Islands.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5EFCCD3A170B48DC00C1FE88 /* paid-Islands.plist */; };
@@ -164,7 +163,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		5E03E922171578FB00F0C6F3 /* BuyDialog */ = {isa = PBXFileReference; lastKnownFileType = folder; path = BuyDialog; sourceTree = "<group>"; };
 		5E0C7651170F32E200F572A0 /* DPMenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPMenuViewController.h; sourceTree = "<group>"; };
 		5E0C7652170F32E200F572A0 /* DPMenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPMenuViewController.m; sourceTree = "<group>"; };
 		5E31F025171FFCBB008B15F0 /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FacebookSDK.framework; path = ../../FacebookSDK/FacebookSDK.framework; sourceTree = "<group>"; };
@@ -281,6 +279,7 @@
 		5E956EA417538C7900B86DAC /* DPNextHouseView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DPNextHouseView.xib; sourceTree = "<group>"; };
 		5E956EA61754C37300B86DAC /* MainMenu */ = {isa = PBXFileReference; lastKnownFileType = folder; path = MainMenu; sourceTree = "<group>"; };
 		5E956EA81754CFF200B86DAC /* MenuLevel1 */ = {isa = PBXFileReference; lastKnownFileType = folder; path = MenuLevel1; sourceTree = "<group>"; };
+		5E956EAA1754E73C00B86DAC /* BuyDialog */ = {isa = PBXFileReference; lastKnownFileType = folder; path = BuyDialog; sourceTree = "<group>"; };
 		5E9ABBDC16F9F3CA000EAB46 /* DPTestViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPTestViewController.h; sourceTree = "<group>"; };
 		5E9ABBDD16F9F3CA000EAB46 /* DPTestViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPTestViewController.m; sourceTree = "<group>"; };
 		5E9ABBDF16F9F3E2000EAB46 /* DPTestView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DPTestView.xib; sourceTree = "<group>"; };
@@ -406,7 +405,6 @@
 		5EFCCD0D1709F30600C1FE88 /* DPCategoryLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPCategoryLoader.h; sourceTree = "<group>"; };
 		5EFCCD0E1709F30700C1FE88 /* DPCategoryLoader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPCategoryLoader.m; sourceTree = "<group>"; };
 		5EFCCD1A170ADF0E00C1FE88 /* free-details.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "free-details.plist"; sourceTree = "<group>"; };
-		5EFCCD34170B18BC00C1FE88 /* free-Buy.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "free-Buy.plist"; sourceTree = "<group>"; };
 		5EFCCD36170B26D200C1FE88 /* free-CoverFlow.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "free-CoverFlow.plist"; sourceTree = "<group>"; };
 		5EFCCD38170B469900C1FE88 /* paid-MainMenu.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "paid-MainMenu.plist"; sourceTree = "<group>"; };
 		5EFCCD3A170B48DC00C1FE88 /* paid-Islands.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "paid-Islands.plist"; sourceTree = "<group>"; };
@@ -700,9 +698,9 @@
 			children = (
 				5EDE1F8317442F9500A84BDA /* Icons */,
 				5E869E0C173010EA00516D2D /* FreeImages */,
+				5E956EAA1754E73C00B86DAC /* BuyDialog */,
 				5EE16DFE171C47D10006E1CE /* Carousel */,
 				5E4E85121710356A005DAD06 /* Background */,
-				5E03E922171578FB00F0C6F3 /* BuyDialog */,
 				5E756E39174BDC41001AA085 /* HouseInfo */,
 				5E956EA61754C37300B86DAC /* MainMenu */,
 				5E956EA81754CFF200B86DAC /* MenuLevel1 */,
@@ -715,7 +713,6 @@
 				5E36051F1708438F00DB7B20 /* close.png */,
 				5E3605201708438F00DB7B20 /* close@2x.png */,
 				5EFCCD1A170ADF0E00C1FE88 /* free-details.plist */,
-				5EFCCD34170B18BC00C1FE88 /* free-Buy.plist */,
 				5EFCCD36170B26D200C1FE88 /* free-CoverFlow.plist */,
 				5EFCCD38170B469900C1FE88 /* paid-MainMenu.plist */,
 				5EFCCD3A170B48DC00C1FE88 /* paid-Islands.plist */,
@@ -980,7 +977,6 @@
 				5E3605221708438F00DB7B20 /* close@2x.png in Resources */,
 				5E36052B1708B5E300DB7B20 /* DPFloatingView.xib in Resources */,
 				5EFCCD1B170ADF0E00C1FE88 /* free-details.plist in Resources */,
-				5EFCCD35170B18BC00C1FE88 /* free-Buy.plist in Resources */,
 				5EFCCD37170B26D300C1FE88 /* free-CoverFlow.plist in Resources */,
 				5EFCCD39170B469900C1FE88 /* paid-MainMenu.plist in Resources */,
 				5EFCCD3B170B48DC00C1FE88 /* paid-Islands.plist in Resources */,
@@ -990,7 +986,6 @@
 				5E4E8515171059AA005DAD06 /* Navbar in Resources */,
 				5E4E851F1711E542005DAD06 /* DPSubCategoryView.xib in Resources */,
 				5EC48CDB1714B7CF00A9566E /* testView.xib in Resources */,
-				5E03E923171578FB00F0C6F3 /* BuyDialog in Resources */,
 				5EE16DFF171C47D10006E1CE /* Carousel in Resources */,
 				5E31F028171FFD54008B15F0 /* FacebookSDKResources.bundle in Resources */,
 				5E31F03717201073008B15F0 /* DPFBLoginView.xib in Resources */,
@@ -1017,6 +1012,7 @@
 				5E956EA517538C7900B86DAC /* DPNextHouseView.xib in Resources */,
 				5E956EA71754C37300B86DAC /* MainMenu in Resources */,
 				5E956EA91754CFF200B86DAC /* MenuLevel1 in Resources */,
+				5E956EAB1754E73C00B86DAC /* BuyDialog in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

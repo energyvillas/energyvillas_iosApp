@@ -205,7 +205,7 @@
         self.contentView.frame = cf;
         
         // toolbar
-        NSString *dlgImgName = self.category == CTGID_EXCLUSIVE ? @"BuyDialog/Buy_our_app_exclusive_01.png" : @"BuyDialog/Buy_our_app_01.png";
+        NSString *dlgImgName = self.category == CTGID_EXCLUSIVE ? @"BuyDialog/Buy_our_app_exclusive_01.jpg" : @"BuyDialog/Buy_our_app_01.jpg";
         UIImage *img = [UIImage imageNamed:dlgImgName];
         CGRect frm = CGRectMake(0, 0,
                                 img.size.width, img.size.height);
@@ -229,7 +229,7 @@
                                            BTN_HEIGHT );
         
         // center
-        dlgImgName = self.category == CTGID_EXCLUSIVE ? @"BuyDialog/Buy_our_app_exclusive_02.png" : @"BuyDialog/Buy_our_app_02.png";
+        dlgImgName = self.category == CTGID_EXCLUSIVE ? @"BuyDialog/Buy_our_app_exclusive_02.jpg" : @"BuyDialog/Buy_our_app_02.jpg";
         img = [UIImage imageNamed:dlgImgName];
         frm = CGRectMake(0, frm.origin.y + frm.size.height,
                          img.size.width, img.size.height);
@@ -237,7 +237,7 @@
         self.innerView.backgroundColor = [UIColor colorWithPatternImage:img];
         
         // buy btn
-        dlgImgName = self.category == CTGID_EXCLUSIVE ? @"BuyDialog/Buy_our_app_exclusive_03.png" : @"BuyDialog/Buy_our_app_03.png";
+        dlgImgName = self.category == CTGID_EXCLUSIVE ? @"BuyDialog/Buy_our_app_exclusive_03.jpg" : @"BuyDialog/Buy_our_app_03.jpg";
         img = [UIImage imageNamed:[self calcImageName:dlgImgName
                                           isHighlight:NO ]];
         frm = CGRectMake(0, frm.origin.y + frm.size.height,
