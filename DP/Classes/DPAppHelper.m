@@ -478,11 +478,11 @@
 }
 
 - (BOOL) isArticleInFavorites:(Article *)article {
-    return [self isKeyInFavorites:article.key];
+    return article && [self isKeyInFavorites:article.key];
 }
 
 - (void) addToFavorites:(Article *)article {
-    if (![self isArticleInFavorites:article]) {
+    if (article && ![self isArticleInFavorites:article]) {
         Article *element = [article copy];
         self.favorites[element.key] = element;
     }
@@ -491,9 +491,11 @@
                                                         object:nil];
 }
 - (void) removeFromFavorites:(Article *)article {
-    [self.favorites removeObjectForKey:article.key];
-    [self doSaveFavorites:NO];
-
+    if (article) {
+        [self.favorites removeObjectForKey:article.key];
+        [self doSaveFavorites:NO];
+    }
+    
     [[NSNotificationCenter defaultCenter] postNotificationName:DPN_FavoritesChangedNotification
                                                         object:nil];
 }

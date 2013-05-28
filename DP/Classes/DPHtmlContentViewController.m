@@ -229,7 +229,7 @@
     return NO;
 }
 - (BOOL) showNavBarAddToFav {
-    return YES;
+    return self.categoryID != 0;
 }
 - (BOOL) showNavBarSocial {
     return YES;

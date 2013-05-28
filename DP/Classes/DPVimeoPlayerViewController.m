@@ -64,7 +64,7 @@
     self.playerView = nil;
     if (self.navigationController) {
         [self.navigationController setNavigationBarHidden:NO];    // it shows
-        [self.navigationController popToRootViewControllerAnimated:YES];
+        [self.navigationController popViewControllerAnimated:YES];
     }else
         [self dismissViewControllerAnimated:YES completion:^{ }];
 }

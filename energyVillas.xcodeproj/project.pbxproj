@@ -121,7 +121,6 @@
 		5EC255F81701054A0045AB99 /* DPCategoryView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5EC255F71701054A0045AB99 /* DPCategoryView.xib */; };
 		5EC48CDB1714B7CF00A9566E /* testView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5EC48CDA1714B7CF00A9566E /* testView.xib */; };
 		5EC48CDE1714BF7E00A9566E /* DPBuyContentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EC48CDD1714BF7E00A9566E /* DPBuyContentViewController.m */; };
-		5EC573941724862A000B7004 /* NextModel in Resources */ = {isa = PBXBuildFile; fileRef = 5EC573931724862A000B7004 /* NextModel */; };
 		5EC5739917255527000B7004 /* DPSocialManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EC5739817255527000B7004 /* DPSocialManager.m */; };
 		5EC5739C1725978E000B7004 /* DPNewNextViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EC5739B1725978D000B7004 /* DPNewNextViewController.m */; };
 		5EC5739E172597A5000B7004 /* DPNewNextView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5EC5739D172597A5000B7004 /* DPNewNextView.xib */; };
@@ -353,7 +352,6 @@
 		5EC48CDA1714B7CF00A9566E /* testView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = testView.xib; sourceTree = "<group>"; };
 		5EC48CDC1714BF7E00A9566E /* DPBuyContentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPBuyContentViewController.h; sourceTree = "<group>"; };
 		5EC48CDD1714BF7E00A9566E /* DPBuyContentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPBuyContentViewController.m; sourceTree = "<group>"; };
-		5EC573931724862A000B7004 /* NextModel */ = {isa = PBXFileReference; lastKnownFileType = folder; path = NextModel; sourceTree = "<group>"; };
 		5EC5739717255527000B7004 /* DPSocialManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DPSocialManager.h; path = DP/Classes/DPSocialManager.h; sourceTree = SOURCE_ROOT; };
 		5EC5739817255527000B7004 /* DPSocialManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DPSocialManager.m; path = DP/Classes/DPSocialManager.m; sourceTree = SOURCE_ROOT; };
 		5EC5739A1725978C000B7004 /* DPNewNextViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPNewNextViewController.h; sourceTree = "<group>"; };
@@ -710,7 +708,6 @@
 				5E5F949E17213BF5006C9A88 /* Social */,
 				5EC573AD1727AE48000B7004 /* MainMenu */,
 				5ECD154A173FC1A400C0327F /* MenuLevel1 */,
-				5EC573931724862A000B7004 /* NextModel */,
 				5EC5739F17265B43000B7004 /* TabBar */,
 				5E756E30174AB197001AA085 /* Toolbar_Free */,
 				5ECD1546173FA6C200C0327F /* loading_el.png */,
@@ -1000,7 +997,6 @@
 				5E31F03C172021DB008B15F0 /* DPFacebookView.xib in Resources */,
 				5E31F04B17205AD8008B15F0 /* DPSocialView.xib in Resources */,
 				5E5F949F17213BF5006C9A88 /* Social in Resources */,
-				5EC573941724862A000B7004 /* NextModel in Resources */,
 				5EC5739E172597A5000B7004 /* DPNewNextView.xib in Resources */,
 				5EC573A017265B44000B7004 /* TabBar in Resources */,
 				5EC573AE1727AE49000B7004 /* MainMenu in Resources */,
