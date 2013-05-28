@@ -12,12 +12,6 @@
 #import "DPConstants.h"
 #import "DPAppHelper.h"
 
-#define PICKER_COMP_DAYS ((int)0)
-#define PICKER_COMP_HOURS ((int)1)
-#define PICKER_COMP_MINUTES ((int)2)
-#define PICKER_COMP_SECONDS ((int)3)
-
-
 @interface DPNextHouseViewController ()
 
 @property (nonatomic) int ctgID;
@@ -54,8 +48,30 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     self.htmlView.clipsToBounds = YES;
-    self.countDownLabel.text = nil;
-    [self glowLabel:self.countDownLabel glowColor:[UIColor whiteColor] glowRadius:5.0f];
+    [self resetCountDownLabels];
+}
+
+- (void) resetCountDownLabels {
+    UIFont *font = [UIFont fontWithName:@"TrebuchetMS-Bold" size:IS_IPAD ? 20.0f : 16.0f];
+    [self resetLabel:self.topLabel font:font];
+    
+    font = [UIFont fontWithName:@"TrebuchetMS-Bold" size:IS_IPAD ? 36.0f : 28.0f];
+    [self resetLabel:self.daysCounter font:font];
+    [self resetLabel:self.hoursCounter font:font];
+    [self resetLabel:self.minutesCounter font:font];
+    [self resetLabel:self.secondsCounter font:font];
+    
+    font = [UIFont fontWithName:@"TrebuchetMS-Bold" size:IS_IPAD ? 14.0f : 10.0f];
+    [self resetLabel:self.daysLabel font:font];
+    [self resetLabel:self.hoursLabel font:font];
+    [self resetLabel:self.minutesLabel font:font];
+    [self resetLabel:self.secondsLabel font:font];
+}
+
+- (void) resetLabel:(UILabel *)lbl font:(UIFont *)font{
+    lbl.text = nil;
+    lbl.font = font;
+    [self glowLabel:lbl glowColor:[UIColor whiteColor] glowRadius:5.0f];
 }
 
 - (void) glowLabel:(UILabel *)label glowColor:(UIColor *)glowcolor glowRadius:(CGFloat)glowradius {
@@ -65,6 +81,34 @@
     label.layer.shadowOpacity = 1;
     label.layer.shadowRadius = glowradius; // tried 1-10
     label.layer.masksToBounds = NO;
+}
+
+- (void) layoutCounterLabels {
+    int TOP_Height = [self topLabelHeight];
+    int CNT_Height = [self counterLabelHeight];
+    int LBL_Height = [self lblLabelHeight];
+
+    CGFloat width = self.countDownContainerView.bounds.size.width;
+    CGFloat widthInner = width / 4.0f;
+    
+    CGRect frm = CGRectMake(0, 0, width, TOP_Height);
+    self.topLabel.frame = frm; 
+    
+    frm = CGRectMake(0, TOP_Height, width, CNT_Height);
+    self.countersView.frame = frm;
+    frm = CGRectMake(0, 0, widthInner, CNT_Height);
+    self.daysCounter.frame = frm; frm = CGRectOffset(frm, widthInner, 0);
+    self.hoursCounter.frame = frm; frm = CGRectOffset(frm, widthInner, 0);
+    self.minutesCounter.frame = frm; frm = CGRectOffset(frm, widthInner, 0);
+    self.secondsCounter.frame = frm; frm = CGRectOffset(frm, widthInner, 0);
+    
+    frm = CGRectMake(0, TOP_Height + CNT_Height, width, LBL_Height);
+    self.labelsView.frame = frm;
+    frm = CGRectMake(0, 0, widthInner, LBL_Height);
+    self.daysLabel.frame = frm; frm = CGRectOffset(frm, widthInner, 0);
+    self.hoursLabel.frame = frm; frm = CGRectOffset(frm, widthInner, 0);
+    self.minutesLabel.frame = frm; frm = CGRectOffset(frm, widthInner, 0);
+    self.secondsLabel.frame = frm; frm = CGRectOffset(frm, widthInner, 0);
 }
 
 - (void)didReceiveMemoryWarning
@@ -82,9 +126,30 @@
     }
 
     [self setHtmlView:nil];
-    [self setCountDownPicker:nil];
-    [self setCountDownLabel:nil];
+    [self setCountDownContainerView:nil];
+    [self setTopLabel:nil];
+    [self setCountersView:nil];
+    [self setLabelsView:nil];
+    [self setDaysCounter:nil];
+    [self setHoursCounter:nil];
+    [self setMinutesCounter:nil];
+    [self setSecondsCounter:nil];
+    [self setDaysLabel:nil];
+    [self setHoursLabel:nil];
+    [self setMinutesLabel:nil];
+    [self setSecondsLabel:nil];
+    [self setCountDownContainerView:nil];
     [super viewDidUnload];
+}
+
+- (int) topLabelHeight {
+    return IS_IPAD ? 28 : 24;
+}
+- (int) counterLabelHeight {
+    return IS_IPAD ? 40 : 32;
+}
+- (int) lblLabelHeight {
+    return IS_IPAD ? 20 : 16;
 }
 
 - (void) doLayoutSubViews:(BOOL)fixtop {
@@ -95,20 +160,25 @@
     int h = frm.size.height - top;
     int w = frm.size.width;
     
-    CGFloat counterHeight = 80;
-//    CGFloat counterHeight = self.countDownPicker.bounds.size.height;
+    int TOP_Height = [self topLabelHeight];
+    int CNT_Height = [self counterLabelHeight];
+    int LBL_Height = [self lblLabelHeight];
     
-    self.htmlView.frame = CGRectMake(0, top, w, h - counterHeight);
-//    self.countDownPicker.frame = CGRectMake(0, top + h - counterHeight, w, counterHeight);
+    int containerHeight = TOP_Height + CNT_Height + LBL_Height;
+    
+    self.htmlView.frame = CGRectMake(0, top, w, h - containerHeight);
 
-    self.countDownLabel.frame = CGRectMake(0, top + h - counterHeight, w, counterHeight);
+    self.countDownContainerView.frame = CGRectMake(0, top + h - containerHeight,
+                                                   w, containerHeight);
     [self loadHtmlView:YES];
+    [self layoutCounterLabels];
 }
 
 - (void) doLocalize {
     [super doLocalize];
-    //[self killTimer];
-    
+    [self killTimer];
+    [self resetCountDownLabels];
+    [self initCountDown];
     [self loadHtmlView:YES];
 }
 
@@ -160,8 +230,8 @@
     NSLog(@"ARTICLE PUBLISH DATETIME is :'%@'", self.article.publishDate);
     self.targetDate = [self lclTimeFromUTCString:self.article.publishDate];
     self.calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
-//    self.countDownPicker.dataSource = self;
-//    self.countDownPicker.delegate = self;
+    self.topLabel.text = DPLocalizedString(@"COUNTDOWN_COMING_IN");
+
     if (self.timer == nil) {
         self.timer = [NSTimer scheduledTimerWithTimeInterval:1.0f
                                                       target:self
@@ -183,19 +253,16 @@
 }
 - (void) onTimer {
     NSDateComponents *components = [self calcDiffFromNow];
-    NSLog(@"%i days %.2d:%.2d:%.2d", components.day, components.hour, components.minute, components.second);
-//    [self.countDownPicker selectRow:components.second inComponent:PICKER_COMP_SECONDS animated:YES];
-//    [self.countDownPicker selectRow:components.minute inComponent:PICKER_COMP_MINUTES animated:YES];
-//    [self.countDownPicker selectRow:components.hour inComponent:PICKER_COMP_HOURS animated:YES];
-//    [self.countDownPicker selectRow:components.day inComponent:PICKER_COMP_DAYS animated:YES];
-    
-    NSString *counterfmt = @"%d %@ %d %@ %d' %d\"";
-    NSString *daystr = components.day == 1 ? DPLocalizedString(@"COUNTDOWN_DAY") : DPLocalizedString(@"COUNTDOWN_DAYS");
-    NSString *hourstr = components.hour == 1 ? DPLocalizedString(@"COUNTDOWN_HOUR") : DPLocalizedString(@"COUNTDOWN_HOURS");
-    self.countDownLabel.text = [NSString stringWithFormat:counterfmt,
-                                components.day, daystr,
-                                components.hour, hourstr,
-                                components.minute, components.second];
+        
+    self.daysCounter.text = [NSString stringWithFormat:@"%d", components.day];
+    self.hoursCounter.text = [NSString stringWithFormat:@"%.2d", components.hour];
+    self.minutesCounter.text = [NSString stringWithFormat:@"%.2d'", components.minute];
+    self.secondsCounter.text = [NSString stringWithFormat:@"%.2d\"", components.second];
+
+    self.daysLabel.text = components.day == 1 ? DPLocalizedString(@"COUNTDOWN_DAY") : DPLocalizedString(@"COUNTDOWN_DAYS");
+    self.hoursLabel.text = components.hour == 1 ? DPLocalizedString(@"COUNTDOWN_HOUR") : DPLocalizedString(@"COUNTDOWN_HOURS");
+    self.minutesLabel.text = components.minute == 1 ? DPLocalizedString(@"COUNTDOWN_MINUTE") : DPLocalizedString(@"COUNTDOWN_MINUTES");
+    self.secondsLabel.text = components.second == 1 ? DPLocalizedString(@"COUNTDOWN_SECOND") : DPLocalizedString(@"COUNTDOWN_SECONDS");
 }
 
 - (void) killTimer {
@@ -203,53 +270,5 @@
     self.timer = nil;
 }
 
-//==============================================================================
-#pragma  mark - UIPickerViewDataSource<NSObject>
-
-// returns the number of 'columns' to display.
-- (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView {
-    return self.article ? 4 : 0;
-}
-
-// returns the # of rows in each component..
-- (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component {
-    NSDateComponents *components = [self calcDiffFromNow];
-
-    switch (component) {
-        case PICKER_COMP_DAYS: return components.day + 1;
-        case PICKER_COMP_HOURS: return 24;
-        case PICKER_COMP_MINUTES: return 60;
-        case PICKER_COMP_SECONDS: return 60;
-    }
-    
-    return 0;
-}
-
-//==============================================================================
-#pragma  mark - UIPickerViewDelegate<NSObject>
-
-//// returns width of column and height of row for each component.
-//- (CGFloat)pickerView:(UIPickerView *)pickerView widthForComponent:(NSInteger)component;
-//- (CGFloat)pickerView:(UIPickerView *)pickerView rowHeightForComponent:(NSInteger)component;
-
-// these methods return either a plain NSString, a NSAttributedString, or a view (e.g UILabel) to display the row for the component.
-// for the view versions, we cache any hidden and thus unused views and pass them back for reuse.
-// If you return back a different object, the old one will be released. the view will be centered in the row rect
-- (NSString *)pickerView:(UIPickerView *)pickerView
-             titleForRow:(NSInteger)row
-            forComponent:(NSInteger)component {
-    switch (component) {
-        case PICKER_COMP_DAYS    : return [NSString stringWithFormat:@"%i", row];
-        case PICKER_COMP_HOURS   : return [NSString stringWithFormat:@"%i", row];
-        case PICKER_COMP_MINUTES :  return [NSString stringWithFormat:@"%i", row];
-        case PICKER_COMP_SECONDS :  return [NSString stringWithFormat:@"%i", row];
-    }
-    
-    return nil;
-}
-//- (NSAttributedString *)pickerView:(UIPickerView *)pickerView attributedTitleForRow:(NSInteger)row forComponent:(NSInteger)component NS_AVAILABLE_IOS(6_0); // attributed title is favored if both methods are implemented
-//- (UIView *)pickerView:(UIPickerView *)pickerView viewForRow:(NSInteger)row forComponent:(NSInteger)component reusingView:(UIView *)view;
-
-//- (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component;
 
 @end

@@ -80,7 +80,15 @@
 // HouseInfo page
 "HIK_HouseDescription"="Περιγραφή";
 
-"COUNTDOWN_DAY"="ημέρα";
-"COUNTDOWN_DAYS"="ημέρες";
-"COUNTDOWN_HOUR"="ώρα";
-"COUNTDOWN_HOURS"="ώρες";
+"COUNTDOWN_COMING_IN"="ΕΡΧΕΤΑΙ ΣΕ....";
+"COUNTDOWN_DAY"="ΗΜΕΡΑ";
+"COUNTDOWN_DAYS"="ΗΜΕΡΕΣ";
+"COUNTDOWN_HOUR"="ΩΡΑ";
+"COUNTDOWN_HOURS"="ΩΡΕΣ";
+"COUNTDOWN_MINUTE"="ΛΕΠΤΟ";
+"COUNTDOWN_MINUTES"="ΛΕΠΤΑ";
+"COUNTDOWN_SECOND"="ΔΕΥΤΕΡΟΛΕΠΤΟ";
+"COUNTDOWN_SECONDS"="ΔΕΥΤΕΡΟΛΕΠΤΑ";
+
+
+
