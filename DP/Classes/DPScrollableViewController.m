@@ -14,6 +14,8 @@
 #import <Quartzcore/Quartzcore.h>
 #import "ASIHTTPRequest.h"
 #import "DPAppHelper.h"
+#import "UIImage+FX.h"
+
 
 
 @interface DPScrollableViewController ()
@@ -116,9 +118,6 @@
     [self killUserTimer];
     [self killTimer];
 
-    [self setScrollView:nil];
-    [self setPageControl:nil];
-
     if (self.queue) {
         [self.queue cancelAllOperations];
         [self stopIndicator];
@@ -131,6 +130,9 @@
     }
 
     self.queue = nil;
+    
+    [self setScrollView:nil];
+    [self setPageControl:nil];
 }
 
 -(void) dealloc {
@@ -370,8 +372,75 @@
         NSString *imghighname =[self resolveHighlightImageName:element];
         if (imghighname)
             imgView.highlightedImage = [UIImage imageNamed:imghighname];
-    } else
+    } else {
         [self loadImageAsync:element imageUrl:imgUrl inView:imgView cacheImage:YES];
+    }
+}
+
+-(CGRect) calcFittingFrame:(CGSize)szImage frame:(CGRect)containerframe{
+    CGRect frm;
+    CGSize sz = containerframe.size; sz.width = 0.8f * sz.width;
+    if (sz.width > szImage.width && sz.height > szImage.height)
+        frm = CGRectMake(0, 0, szImage.width, szImage.height);
+    else {
+        CGFloat ir = szImage.width / szImage.height;
+        CGFloat cr = sz.width / sz.height;
+        if (ir < cr)  { //  image is taller than carousel
+            // we should fix image height to be equal to carousel height
+            // and calc image width according to aspect and new height
+            frm = CGRectMake(0, 0, sz.height * ir, sz.height);
+        } else { // image is wider or same aspect ratio to that of carousel
+            // we should fix image width to be equal to carousel width * 0.8
+            // and calc image height according to aspect and new width
+            frm = CGRectMake(0, 0, sz.width, sz.width / ir);
+        }
+    }
+    frm = CGRectOffset(frm,
+                       (containerframe.size.width - frm.size.width) / 2.0f,
+                       (containerframe.size.height - frm.size.height) / 2.0f);
+    return frm;
+}
+
+-(UIView *) createImageViewLoading:(UIView *)container  {
+    CGRect vFrame = container.bounds;
+    vFrame = CGRectInset(vFrame, 20.0f, 20.0f);
+    
+    UIImage *img = [UIImage imageNamed:[NSString stringWithFormat:@"loading_%@.png", CURRENT_LANG]];
+    img = [img imageScaledToFitSize:CGSizeMake(vFrame.size.width / 2.0f,
+                                               vFrame.size.height / 2.0f)];
+    
+    //CGRect frm = CGRectInset(vFrame, vFrame.size.width / 4.0f, vFrame.size.height / 4.0f);
+    CGRect frm = CGRectMake(0.0f, 0.0f,
+                            vFrame.size.width / 2.0f,
+                            vFrame.size.height / 2.0f);
+    frm = CGRectOffset(frm,
+                       vFrame.size.width / 4.0f,
+                       vFrame.size.height / 4.0f);
+    
+    UIImageView *iv = [[UIImageView alloc] initWithFrame:frm];
+    iv.contentMode = UIViewContentModeCenter;
+    iv.image = img;
+    
+    UIView *v = [[UIView alloc] initWithFrame:vFrame];
+    v.backgroundColor = [UIColor colorWithWhite:0.0f alpha:0.7f];
+    v.layer.cornerRadius = IS_IPAD ? 8.0f : 4.0f;
+    v.layer.borderWidth = IS_IPAD ? 4.0f : 2.0;
+    v.layer.borderColor = [UIColor colorWithWhite:1.0f alpha:0.75f].CGColor;
+    
+    [v addSubview:iv];
+    
+//    frm = v.bounds;
+//    UIActivityIndicatorView *bi = [[UIActivityIndicatorView alloc]
+//                                   initWithActivityIndicatorStyle: IS_IPAD ? UIActivityIndicatorViewStyleWhiteLarge: UIActivityIndicatorViewStyleWhite];
+//    bi.frame = CGRectOffset(CGRectMake((frm.size.width-25)/2,
+//                                       (frm.size.height-25)/2,
+//                                       25, 25),
+//                            0, IS_IPAD ? 110 : IS_IPHONE ? 40 : 55);
+//    bi.hidesWhenStopped = YES;
+//    [v addSubview:bi];
+//    [bi startAnimating];
+    
+    return v;
 }
 
 - (UIView *) internalCreateViewFor:(int)contentIndex frame:(CGRect)frame {
@@ -623,9 +692,10 @@
 }
 
 - (void) startIndicator {
+//    return;
     if(!self.busyIndicator) {
 		self.busyIndicator = [[UIActivityIndicatorView alloc]
-                              initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+                              initWithActivityIndicatorStyle:(IS_IPAD ? UIActivityIndicatorViewStyleWhiteLarge :  UIActivityIndicatorViewStyleWhite)];
 		self.busyIndicator.frame = CGRectMake((self.view.frame.size.width-25)/2,
                                               (self.view.frame.size.height-25)/2,
                                               25, 25);
@@ -638,6 +708,7 @@
 }
 
 - (void) stopIndicator {
+//    return;
     if (self.busyIndicator &&
         self.queue &&
         self.queue.operationCount == 0) {
@@ -647,12 +718,23 @@
     }
 }
 
+- (void) releaseSubViews:(UIView *)v {
+    for (UIView *sv in v.subviews) {
+        [self releaseSubViews:sv];
+        if ([sv isKindOfClass:[UIActivityIndicatorView class]])
+            [((UIActivityIndicatorView *)sv) stopAnimating];
+//        [sv setHidden:YES];
+        [sv removeFromSuperview];
+    }
+}
 - (void) fix:(DPDataElement *)elm
    imageView:(UIImageView *)imgView
-   imageUrl:(NSString *)imageUrl
+    imageUrl:(NSString *)imageUrl
         data:(NSData *)imgData
   addToCache:(BOOL)addToCache{
-    //elm.imageData = [request responseData];
+    
+    [self releaseSubViews:imgView];
+
     imgView.image = [UIImage imageWithData:imgData scale:DEVICE_SCALE];
     if (addToCache)
         [[DPAppHelper sharedInstance] saveImageToCache:imageUrl data:imgData];
@@ -665,8 +747,11 @@
     NSData *imgData = [appHelper loadImageFromCache:imgUrl];
     if (imgData) 
         [self fix:elm imageView:imgView imageUrl:imgUrl data:imgData addToCache:NO];
-    else
+    else {
+        [imgView addSubview:[self createImageViewLoading:imgView]];
+
         [self doloadImageAsync:elm imageUrl:imgUrl inView:imgView cacheImage:cacheimage];
+    }
 }
 
 - (void) doloadImageAsync:(DPDataElement *)elm imageUrl:(NSString *)imgUrl inView:(UIImageView *)imgView cacheImage:(BOOL)cacheimage{

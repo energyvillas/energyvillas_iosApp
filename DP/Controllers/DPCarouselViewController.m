@@ -573,11 +573,11 @@
 -(UIView *) createImageViewLoading  {
     CGSize szCarousel = self.icarousel.frame.size;
     szCarousel.width = 0.8f * szCarousel.width;
-    szCarousel.height = szCarousel.height * 0.4f;
+    szCarousel.height = szCarousel.height * 0.8f;
     
     UIImage *img = [UIImage imageNamed:[NSString stringWithFormat:@"loading_%@.png", CURRENT_LANG]];
     CGSize imgSize = img.size;
-    img = [img imageScaledToFitSize:szCarousel];
+    img = [img imageScaledToFitSize:CGSizeMake(szCarousel.width / 2.0f, szCarousel.height / 2.0f)];
     imgSize = img.size;
     
     CGSize loadingImgSize = CGSizeMake(3600.0f, 2400.0f);
@@ -599,7 +599,7 @@
     bi.frame = CGRectOffset(CGRectMake((frm.size.width-25)/2,
                                        (frm.size.height-25)/2,
                                        25, 25),
-                            0, IS_IPAD ? 110 : IS_IPHONE ? 40 : 55);
+                            0, IS_IPAD ? 110 : IS_IPHONE ? 40 : (IS_PORTRAIT ? 55 : 40));
     bi.hidesWhenStopped = TRUE;
     [v addSubview:iv];
     [v addSubview:bi];
