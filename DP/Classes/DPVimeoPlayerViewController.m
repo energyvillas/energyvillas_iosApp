@@ -84,28 +84,7 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-/*
-- (BOOL) shouldAutorotate {
-    return NO;
-}
 
-- (NSUInteger) supportedInterfaceOrientations {
-    return UIInterfaceOrientationPortrait;
-}
-
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
-    // Return YES for supported orientations
-    //return YES;
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
-}
-*/
-
-- (void) willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
-    [super willAnimateRotationToInterfaceOrientation:toInterfaceOrientation duration:duration];
-
-    CGSize nextViewSize = [UIApplication sizeInOrientation:toInterfaceOrientation];
-    self.view.frame = CGRectMake(0, 0, nextViewSize.width, nextViewSize.height);
-}
 - (void) doLayoutSubViews:(BOOL)fixtop {
     CGRect vf = self.view.frame;
     fixtop = IS_LANDSCAPE && !IS_IPAD;

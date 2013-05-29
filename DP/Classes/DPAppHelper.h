@@ -27,7 +27,7 @@
 + (DPAppHelper *)sharedInstance;
 
 - (NSArray *) freeDetailsFor:(NSString *)lang;
-- (NSArray *) freeBuyContentFor:(int)ctgid lang:(NSString *)lang;
+//- (NSArray *) freeBuyContentFor:(int)ctgid lang:(NSString *)lang;
 - (NSArray *) freeCoverFlowFor:(NSString *)lang;
 - (NSArray *) paidMenuOfCategory:(int)aId lang:(NSString *)lang;
 //- (NSArray *) getSubCategoriesOf:(int)parentid;

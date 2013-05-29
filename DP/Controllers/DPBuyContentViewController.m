@@ -130,27 +130,15 @@
 
 - (void)loadFinished:(DPDataLoader *)loader {
     if (loader.datalist == nil || loader.datalist.count == 0) {
-        [self loadLocalData];        
-    } else {        
+        showAlertMessage(nil, @"Info", @"No data found!");
+    } else {
         [self contentLoaded:self.dataLoader.datalist];
         [self changeRows:1 columns:1];
     }
 }
 
 - (void)loadFailed:(DPDataLoader *)loader {
-    [self loadLocalData];
-}
-
--(void) loadLocalData {
-    showAlertMessage(nil, @"Info", @"No data found!");
-    return;
-    
-    NSArray *list = [[DPAppHelper sharedInstance]
-                     freeBuyContentFor:category
-                     lang:[DPAppHelper sharedInstance].currentLang];
-    
-    [self contentLoaded:list];
-    [self changeRows:1 columns:1];
+    showAlertMessage(nil, @"Info", @"failed to find video!");
 }
 
 #pragma mark END DPDataLoaderDelegate
@@ -218,8 +206,8 @@
 
     UIView *result = nil;
     if (article.videoUrl) {
-        result = [self createAndConfigMoviePlayer:frame videoUrl:[self calcImageName:article.videoUrl]];
-//        result = [self playVideo:article.videoUrl frame:frame];
+//        result = [self createAndConfigMoviePlayer:frame videoUrl:[self calcImageName:article.videoUrl]];
+        result = [self playVideo:article.videoUrl frame:frame];
     } else {
         UIImageView *imgView = [[UIImageView alloc] initWithFrame: frame];
         imgView.backgroundColor = [UIColor clearColor];

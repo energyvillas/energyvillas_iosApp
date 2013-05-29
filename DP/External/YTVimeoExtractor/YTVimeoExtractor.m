@@ -115,16 +115,23 @@
 }
 
 - (NSString *)playerURLFromHTML:(NSString *)html {
-    NSString *url;
-    NSScanner *scanner = [[NSScanner alloc] initWithString:html];
+    __block NSString *url;
     
-    [scanner scanUpToString:@"<video " intoString:nil];
-    if (![scanner isAtEnd]) {
-        [scanner scanUpToString:@"data-src=\"" intoString:nil];
-        NSUInteger loc = [scanner scanLocation];
-        [scanner setScanLocation: loc + 10]; // skip -data-src="-
-        [scanner scanUpToString:@"\"" intoString:&url];
-    }
+    NSError *error;
+    NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:@"\"//.*?\""
+                                                                           options:NSRegularExpressionCaseInsensitive
+                                                                             error:&error];
+    [regex enumerateMatchesInString:html
+                            options:0
+                              range:NSMakeRange(0, html.length)
+                         usingBlock:^(NSTextCheckingResult *result, NSMatchingFlags flags, BOOL *stop) {
+                           NSRange removedQuotesRange = NSMakeRange(result.range.location + 1, result.range.length - 2);
+                           NSString *string = [html substringWithRange: removedQuotesRange];
+                           
+                           if ([string rangeOfString:@"redirect"].location != NSNotFound) {
+                             url = string;
+                           }
+                         }];
     return url;
 }
 
@@ -156,39 +163,33 @@
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection {
     // handle first request
     if (!self.playerURL && ([self.buffer length] > 0)) {
-        NSString *responseHTML = [[NSString alloc] initWithData:self.buffer encoding:NSUTF8StringEncoding];
+        NSString *responseHTML = [[NSString alloc] initWithData:self.buffer encoding:NSUTF8StringEncoding];        
         if ([responseHTML length] <= 0) {
             [self extractorFailedWithMessage:@"Found Invalide HTML" errorCode:YTVimeoExtractorErrorCodeInvalidHTML];
             return;
         }
-        NSLog(@"%@", responseHTML);
-        
         self.playerURL = [self playerURLFromHTML:responseHTML];
-        NSLog(@"%@", self.playerURL);
+      
+        if (!self.playerURL || self.playerURL.length <= 20) {
+          [self extractorFailedWithMessage:@"Found Invalid stream URL" errorCode:YTVimeoExtractorErrorCodeNotInitialized];
+          return;
+        }
+        self.playerURL = [NSString stringWithFormat:@"https:%@", [self.playerURL substringWithRange:NSMakeRange(0, [self.playerURL length] - 20)]];
         
         // setup quality
-        BOOL failed = NO;
-        NSRange range = NSMakeRange(0, [self.playerURL length] - 20);
-        @try {
-            self.playerURL = [self.playerURL substringWithRange:range];
-        }
-        @catch (NSException * e) {
-            failed = YES;
-            [self connection:connection didFailWithError:nil];
-        }
-        if (!failed) {
-            if (self.quality == YTVimeoVideoQualityLow)
-                self.playerURL = [self.playerURL stringByAppendingString:@"iphone"];
-            else if (self.quality == YTVimeoVideoQualityMedium)
-                self.playerURL = [self.playerURL stringByAppendingString:@"standard"];
-            else if (self.quality == YTVimeoVideoQualityHigh)
-                self.playerURL = [self.playerURL stringByAppendingString:@"high"];
-            
-            // run second request
-            NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:self.playerURL]];
-            [self setupRequest:&request];
-            self.connection = [[NSURLConnection alloc] initWithRequest:request delegate:self startImmediately:YES];
-        }
+        self.playerURL = [self.playerURL substringWithRange:NSMakeRange(0, [self.playerURL length] - 20)];
+        
+        if (self.quality == YTVimeoVideoQualityLow)
+            self.playerURL = [self.playerURL stringByAppendingString:@"iphone"];
+        else if (self.quality == YTVimeoVideoQualityMedium)
+            self.playerURL = [self.playerURL stringByAppendingString:@"standard"];
+        else if (self.quality == YTVimeoVideoQualityHigh)
+            self.playerURL = [self.playerURL stringByAppendingString:@"high"];
+        
+        // run second request
+        NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:self.playerURL]];
+        [self setupRequest:&request];
+        self.connection = [[NSURLConnection alloc] initWithRequest:request delegate:self startImmediately:YES];
     }
     // handle second request
     else if (self.streamURL && ([self.buffer length] == 0)) {
