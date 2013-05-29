@@ -6,6 +6,7 @@
 //  Copyright (c) 2013 Γεώργιος Γράβος. All rights reserved.
 //
 
+#import <AudioToolbox/AudioToolbox.h>
 #import "DPConstants.h"
 #import "DPAppHelper.h"
 #import "DPImageInfo.h"
@@ -34,6 +35,7 @@
 @end
 
 @implementation DPAppHelper {
+    SystemSoundID wooshSound;
 
 }
 
@@ -71,6 +73,7 @@
 //        [self addFreeBuyContent];
         [self addFreeCoverFlow];
         [self addPaidMainMenu];
+        [self createSysSounds];
     }
     
     return self;
@@ -518,5 +521,16 @@
     return [NSDictionary dictionaryWithDictionary:self.favorites];
 }
 
+- (void) createSysSounds {
+    NSURL *audioPath = [[NSBundle mainBundle] URLForResource:@"woosh" withExtension:@"mp3"];
+    AudioServicesCreateSystemSoundID((__bridge CFURLRef)audioPath, &wooshSound);
+}
 
+- (void) playSoundWoosh {
+    AudioServicesPlaySystemSound(wooshSound);
+}
+
+- (void) dealloc {
+    AudioServicesDisposeSystemSoundID(wooshSound);
+}
 @end

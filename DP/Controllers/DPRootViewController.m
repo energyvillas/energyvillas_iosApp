@@ -23,6 +23,7 @@
 #import <Twitter/Twitter.h>
 #import "DPIAPHelper.h"
 #import "DPFavoritesViewController.h"
+#import "DPHtmlContentViewController.h"
 
 
 
@@ -95,7 +96,7 @@
 }
 
 - (void) showBuyDialog:(int)ctgId product:(SKProduct *)aProduct {
-    //AudioServicesPlaySystemSound(1320);
+    [[DPAppHelper sharedInstance] playSoundWoosh];
     if (IS_IPAD)
         [self showBuyDialog_iPads:ctgId product:aProduct];
     else
@@ -148,7 +149,9 @@
 }
 
 - (void) doInfo:(id) sender {
-    // PENDING : GGSE
+    DPHtmlContentViewController *vc = [[DPHtmlContentViewController alloc] initWithCategory:CTGID_INFO
+                                                                                       lang:CURRENT_LANG];
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 - (void) doBuy:(id) sender {

@@ -43,4 +43,8 @@
 
 - (void) saveFavorites;
 - (NSDictionary *) favoriteArticles;
+
+// sounds
+- (void) playSoundWoosh;
+
 @end

@@ -84,6 +84,7 @@
 		5E956EA71754C37300B86DAC /* MainMenu in Resources */ = {isa = PBXBuildFile; fileRef = 5E956EA61754C37300B86DAC /* MainMenu */; };
 		5E956EA91754CFF200B86DAC /* MenuLevel1 in Resources */ = {isa = PBXBuildFile; fileRef = 5E956EA81754CFF200B86DAC /* MenuLevel1 */; };
 		5E956EAB1754E73C00B86DAC /* BuyDialog in Resources */ = {isa = PBXBuildFile; fileRef = 5E956EAA1754E73C00B86DAC /* BuyDialog */; };
+		5E956EAD17569E1600B86DAC /* woosh.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 5E956EAC17569E1600B86DAC /* woosh.mp3 */; };
 		5E9ABBDE16F9F3CA000EAB46 /* DPTestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E9ABBDD16F9F3CA000EAB46 /* DPTestViewController.m */; };
 		5E9ABBE016F9F3E2000EAB46 /* DPTestView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5E9ABBDF16F9F3E2000EAB46 /* DPTestView.xib */; };
 		5EB72C751744DE2D00392D6E /* SKProduct+LocalizedPrice.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EB72C741744DE2D00392D6E /* SKProduct+LocalizedPrice.m */; };
@@ -280,6 +281,7 @@
 		5E956EA61754C37300B86DAC /* MainMenu */ = {isa = PBXFileReference; lastKnownFileType = folder; path = MainMenu; sourceTree = "<group>"; };
 		5E956EA81754CFF200B86DAC /* MenuLevel1 */ = {isa = PBXFileReference; lastKnownFileType = folder; path = MenuLevel1; sourceTree = "<group>"; };
 		5E956EAA1754E73C00B86DAC /* BuyDialog */ = {isa = PBXFileReference; lastKnownFileType = folder; path = BuyDialog; sourceTree = "<group>"; };
+		5E956EAC17569E1600B86DAC /* woosh.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = woosh.mp3; sourceTree = "<group>"; };
 		5E9ABBDC16F9F3CA000EAB46 /* DPTestViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPTestViewController.h; sourceTree = "<group>"; };
 		5E9ABBDD16F9F3CA000EAB46 /* DPTestViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPTestViewController.m; sourceTree = "<group>"; };
 		5E9ABBDF16F9F3E2000EAB46 /* DPTestView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DPTestView.xib; sourceTree = "<group>"; };
@@ -708,6 +710,7 @@
 				5E5F949E17213BF5006C9A88 /* Social */,
 				5EC5739F17265B43000B7004 /* TabBar */,
 				5E756E30174AB197001AA085 /* Toolbar_Free */,
+				5E956EAC17569E1600B86DAC /* woosh.mp3 */,
 				5ECD1546173FA6C200C0327F /* loading_el.png */,
 				5ECD1547173FA6C200C0327F /* loading_en.png */,
 				5E36051F1708438F00DB7B20 /* close.png */,
@@ -1013,6 +1016,7 @@
 				5E956EA71754C37300B86DAC /* MainMenu in Resources */,
 				5E956EA91754CFF200B86DAC /* MenuLevel1 in Resources */,
 				5E956EAB1754E73C00B86DAC /* BuyDialog in Resources */,
+				5E956EAD17569E1600B86DAC /* woosh.mp3 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1198,7 +1202,7 @@
 		5E71A3D216F9973500E7AFF9 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: DESIGN PROJECTS LTD (7U2CGA4753)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1213,7 +1217,7 @@
 					"-ObjC",
 				);
 				PRODUCT_NAME = energyVillas;
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "93FB3469-BFC3-41C3-8C83-64B52D80927C";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				WRAPPER_EXTENSION = app;
 			};
@@ -1222,7 +1226,7 @@
 		5E71A3D316F9973500E7AFF9 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: DESIGN PROJECTS LTD (7U2CGA4753)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1237,7 +1241,7 @@
 					"-ObjC",
 				);
 				PRODUCT_NAME = energyVillas;
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "93FB3469-BFC3-41C3-8C83-64B52D80927C";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				WRAPPER_EXTENSION = app;
 			};

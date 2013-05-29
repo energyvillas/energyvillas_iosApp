@@ -56,7 +56,7 @@
 
 
 - (void) showSocialsDialog:(void(^)(int socialAction))completed {
-    AudioServicesPlaySystemSound(0x528);
+    [[DPAppHelper sharedInstance] playSoundWoosh];
     self.onCompleted = completed;
     if (IS_IPAD)
         [self showSocialsDialog_iPads];

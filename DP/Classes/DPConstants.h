@@ -102,6 +102,7 @@ FOUNDATION_EXPORT NSString *const MySecondConstant;
 #define CTGID_WHO_WE_ARE ((int)60)
 #define CTGID_PURCHASE_LAND  ((int)173)
 #define CTGID_CALL_US  ((int)174)
+#define CTGID_INFO ((int)179)
 
 #define CTGID_NEW ((int)175)
 #define CTGID_NEXT ((int)177)
