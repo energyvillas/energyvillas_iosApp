@@ -158,7 +158,7 @@
         [self.innerView addSubview: self.buyContentController.view];        
     } else {
         self.buyContentController.view.frame = self.innerView.bounds;
-        [self.buyContentController changeRows:1 columns:1];
+//        [self.buyContentController changeRows:1 columns:1];
     }
 }
 
