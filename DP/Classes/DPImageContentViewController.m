@@ -125,8 +125,6 @@
     if (self.image)// && !self.article)
         [self doInitImageView];
     else if (self.article) {
-        [self setupLabel];
-        [self updateLabels];
         
         if (isLocalUrl(self.article.imageUrl)) {
             self.image = [UIImage imageNamed:self.article.imageUrl];
@@ -157,18 +155,44 @@
     int h = vf.size.height - top;
     int w = vf.size.width;
 
+//    CGFloat zs = self.scrollView.zoomScale;
     self.scrollView.frame = CGRectMake(0, top, w, h);
+    self.imageView.frame = self.scrollView.bounds;
 
+    [self doInitImageView];
+//    self.scrollView.zoomScale = zs;
+//    if (self.imageView.image) { // && (fabs(zs - 1.0f) > DBL_EPSILON)) {
+////        self.scrollView.zoomScale = 1.0f;
+//        [self setupScrollZoom];
+////        self.imageView.frame = CGRectMake(0, 0,
+////                                          self.image.size.width,
+////                                          self.image.size.height);
+////        self.scrollView.zoomScale = zs;
+//    }
+    
     CGPoint centerPoint = CGPointMake(CGRectGetMidX(self.scrollView.bounds),
                                       CGRectGetMidY(self.scrollView.bounds));
     [self view:self.imageView setCenter:centerPoint];
+    
+    [self setupLabel];
+    [self updateLabels];
+
+    if (self.lblContainer) {
+        CGRect lcf = self.lblContainer.frame;
+        lcf.origin.y = top;
+        self.lblContainer.frame = lcf;
+    }
 }
 
 - (void) doInitImageView {
     self.imageView.image = self.image;
     //[self.imageView sizeToFit];
     self.imageView.contentMode = UIViewContentModeScaleAspectFit;
-    
+    [self setupScrollZoom];
+}
+
+-(void) setupScrollZoom {
+    self.scrollView.zoomScale = 1.0f;
     self.scrollView.contentSize = self.image.size;
     self.scrollView.delegate = self;
     //    self.scrollView.minimumZoomScale = 1.0;
@@ -447,6 +471,7 @@
         return [self.navigatorDelegate itemsCount];
     return 0;
 }
+
 -(void) updateLabels {
     if (!self.article)
         return;

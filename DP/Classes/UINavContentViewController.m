@@ -303,31 +303,60 @@
     }
     
     if ([self showNavBarNavigator]) {
-        UIView *container = [[UIView alloc] initWithFrame:CGRectMake(pos, NAVBAR_BTN_TOP, 2 * NAVBAR_BTN_WIDTH, NAVBAR_BTN_HEIGTH)];
+        CGFloat topOfs = 5.0f, vlineGap = 2.0f;
+        UIColor *bordersColor = [UIColor whiteColor];
+        UIView *container = [[UIView alloc] initWithFrame:CGRectMake(pos,
+                                                                     NAVBAR_BTN_TOP + topOfs,
+                                                                     2 * NAVBAR_BTN_WIDTH + 1.0f, // for vLine
+                                                                     NAVBAR_BTN_HEIGTH - 2 * topOfs)];
         container.contentMode = UIViewContentModeCenter;
         container.backgroundColor = [UIColor clearColor];
-        UIImageView *borderView = [[UIImageView alloc] initWithFrame:container.bounds];
-        borderView.contentMode = UIViewContentModeCenter;
-        borderView.image = [UIImage imageNamed:NAVBAR_PREVNEXT_BORDER_IMG];
-        pos += 2 * NAVBAR_BTN_WIDTH;
         
-        [container addSubview:borderView];
+        UIView *vLine = [[UIView alloc] initWithFrame:CGRectMake(NAVBAR_BTN_WIDTH,
+                                                                 vlineGap,
+                                                                 1.0f,
+                                                                 NAVBAR_BTN_HEIGTH - 2 * (topOfs + vlineGap))];
+        vLine.layer.borderWidth = 1.0f;
+        vLine.layer.borderColor = bordersColor.CGColor;
+        [container addSubview:vLine];
+//        UIImageView *borderView = [[UIImageView alloc] initWithFrame:container.bounds];
+//        borderView.contentMode = UIViewContentModeCenter;
+//        borderView.image = [UIImage imageNamed:NAVBAR_PREVNEXT_BORDER_IMG];
+//        [container addSubview:borderView];
         
-        [container addSubview:[self
-                                  createButtonWithImage:NAVBAR_PREV_IMG
-                                  highlightedImage:NAVBAR_PREV_SEL_IMG
-                                  frame:CGRectMake(4, 0, NAVBAR_BTN_WIDTH, NAVBAR_BTN_HEIGTH)
-                                  tag:TAG_NBI_PREV
-                                  action:@selector(onNavButtonTapped:)]];
+        UIButton *prevBtn = [self
+                             createButtonWithImage:NAVBAR_PREV_IMG
+                             highlightedImage:NAVBAR_PREV_SEL_IMG
+                             frame:CGRectMake(0, 0,
+                                              NAVBAR_BTN_WIDTH, NAVBAR_BTN_HEIGTH - 2 * topOfs)
+                             tag:TAG_NBI_PREV
+                             action:@selector(onNavButtonTapped:)];
+        [container addSubview:prevBtn];
         
-        [container addSubview:[self
-                                  createButtonWithImage:NAVBAR_NEXT_IMG
-                                  highlightedImage:NAVBAR_NEXT_SEL_IMG
-                                  frame:CGRectMake(26, 0, NAVBAR_BTN_WIDTH, NAVBAR_BTN_HEIGTH)
-                                  tag:TAG_NBI_NEXT
-                                  action:@selector(onNavButtonTapped:)]];
+        UIButton *nextBtn = [self
+                             createButtonWithImage:NAVBAR_NEXT_IMG
+                             highlightedImage:NAVBAR_NEXT_SEL_IMG
+                             frame:CGRectMake(NAVBAR_BTN_WIDTH + 1.0f, // for vLine
+                                              0,
+                                              NAVBAR_BTN_WIDTH,
+                                              NAVBAR_BTN_HEIGTH - 2 * topOfs)
+                             tag:TAG_NBI_NEXT
+                             action:@selector(onNavButtonTapped:)];
+        [container addSubview:nextBtn];
+        
+//        prevBtn.layer.cornerRadius = 6.0f;
+//        prevBtn.layer.borderWidth = 1.0f;
+//        prevBtn.layer.borderColor = bordersColor.CGColor;
+//        nextBtn.layer.cornerRadius = 6.0f;
+//        nextBtn.layer.borderWidth = 1.0f;
+//        nextBtn.layer.borderColor = bordersColor.CGColor;
+        container.layer.cornerRadius = 6.0f;
+        container.layer.borderWidth = 1.0f;
+        container.layer.borderColor = bordersColor.CGColor;
         
         [rightButtons addSubview:container];
+        
+        pos += 2 * NAVBAR_BTN_WIDTH;
     }
     
     if (pos > 0) {
