@@ -85,6 +85,7 @@
 
 - (void) layoutCounterLabels {
     int TOP_Height = [self topLabelHeight];
+    int TOP_CNT_Spacing = [self top2CounterLabelSpacing];
     int CNT_Height = [self counterLabelHeight];
     int LBL_Height = [self lblLabelHeight];
 
@@ -94,7 +95,7 @@
     CGRect frm = CGRectMake(0, 0, width, TOP_Height);
     self.topLabel.frame = frm; 
     
-    frm = CGRectMake(0, TOP_Height, width, CNT_Height);
+    frm = CGRectMake(0, TOP_Height + TOP_CNT_Spacing, width, CNT_Height);
     self.countersView.frame = frm;
     frm = CGRectMake(0, 0, widthInner, CNT_Height);
     self.daysCounter.frame = frm; frm = CGRectOffset(frm, widthInner, 0);
@@ -102,7 +103,7 @@
     self.minutesCounter.frame = frm; frm = CGRectOffset(frm, widthInner, 0);
     self.secondsCounter.frame = frm; frm = CGRectOffset(frm, widthInner, 0);
     
-    frm = CGRectMake(0, TOP_Height + CNT_Height, width, LBL_Height);
+    frm = CGRectMake(0, TOP_Height + TOP_CNT_Spacing + CNT_Height, width, LBL_Height);
     self.labelsView.frame = frm;
     frm = CGRectMake(0, 0, widthInner, LBL_Height);
     self.daysLabel.frame = frm; frm = CGRectOffset(frm, widthInner, 0);
@@ -145,8 +146,11 @@
 - (int) topLabelHeight {
     return IS_IPAD ? 28 : 24;
 }
+- (int) top2CounterLabelSpacing {
+    return IS_IPAD ? 20 : 10;
+}
 - (int) counterLabelHeight {
-    return IS_IPAD ? 40 : 32;
+    return IS_IPAD ? 44 : 36;
 }
 - (int) lblLabelHeight {
     return IS_IPAD ? 20 : 16;
@@ -161,10 +165,11 @@
     int w = frm.size.width;
     
     int TOP_Height = [self topLabelHeight];
+    int TOP_CNT_Spacing = [self top2CounterLabelSpacing];
     int CNT_Height = [self counterLabelHeight];
     int LBL_Height = [self lblLabelHeight];
     
-    int containerHeight = TOP_Height + CNT_Height + LBL_Height;
+    int containerHeight = TOP_Height + TOP_CNT_Spacing + CNT_Height + LBL_Height + (IS_IPAD ? 40 : 20);
     
     self.htmlView.frame = CGRectMake(0, top, w, h - containerHeight);
 
