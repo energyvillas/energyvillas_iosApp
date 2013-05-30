@@ -69,6 +69,12 @@
     self.adsView.backgroundColor = [UIColor clearColor];
     self.ctgView.backgroundColor = [UIColor clearColor];
     self.mmView.backgroundColor = [UIColor clearColor];
+    
+    CGRect lblframe = self.lblTitle.frame;
+    lblframe.size.height = IS_IPAD ? 32 : 20;
+    self.lblTitle.frame = lblframe;
+
+    self.lblTitle.font = [UIFont systemFontOfSize: IS_IPAD ? 28.0f : 14.0f];
 
     [self doLocalize];
 }
