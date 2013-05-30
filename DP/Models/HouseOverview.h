@@ -11,6 +11,7 @@
 #define encHOVLang @"Lang"
 #define encHOVCategoryId @"CtgId"
 #define encHOVIsMaster @"IsMaster"
+#define encHOVVideoUrl @"VideoUrl"
 #define encHOVTitle @"Title"
 #define encHOVInfo @"Info"
 #define encHOVDescription @"Description"
@@ -21,6 +22,7 @@
 @property (nonatomic, strong) NSString *lang;
 @property (nonatomic) int ctgid;
 @property (nonatomic) BOOL isMaster;
+@property (nonatomic, strong) NSString *videoUrl;
 @property (nonatomic, strong) NSString *title;
 @property (nonatomic, strong) NSString *info;
 @property (nonatomic, strong) NSString *description;
@@ -31,6 +33,7 @@
                lang:(NSString *)aLang
            category:(int)cid
            isMaster:(BOOL)aIsMaster
+           videoUrl:(NSString *)aVideoUrl
               title:(NSString *)aTitle
                info:(NSString *)aInfo
         description:(NSString *)aDescr;

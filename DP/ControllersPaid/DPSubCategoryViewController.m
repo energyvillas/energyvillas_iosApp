@@ -13,7 +13,7 @@
 #import "DPHtmlContentViewController.h"
 #import "DPAnimatedScrollViewController.h"
 
-//#import "DPAnimatedCategoriesView.h"
+#import "DPArticlesViewController.h"
 
 #import "HouseOverview.h"
 #import "HouseOverviewLoader.h"
@@ -39,6 +39,8 @@
 
 @property (strong, nonatomic) HouseOverviewLoader *hovLoader;
 //@property (strong, nonatomic) DPCategoryLoader *ctgLoader;
+
+@property (strong, nonatomic) UIView *titleLine;
 
 @end
 
@@ -72,7 +74,7 @@
     self.titleView.backgroundColor = [UIColor clearColor];
     self.titleView.opaque = NO;
     
-    self.photoView.backgroundColor = [UIColor orangeColor];//]clearColor];
+    self.photoView.backgroundColor = [UIColor clearColor];
     
     self.htmlView.backgroundColor = [UIColor clearColor];    
 
@@ -142,8 +144,10 @@
 //}
 
 -(void) hovLoaded {
-    if (self.houseOverview)
+    if (self.houseOverview) {
         [self.titleView loadHTMLString:self.houseOverview.title baseURL:nil];
+        [self loadPhotoView];
+    }
 }
 - (void) hovLoadFinished:(HouseOverviewLoader *)loader {
     if (loader.datalist.count == 0)
@@ -200,31 +204,31 @@
     
     // iphone sizes
     //portrait
-    int PH_LBL = 24; // font helvetica neue bold 18
+    int PH_LBL = 26; //24; // font helvetica neue bold 18
     int PH_PHT = 126;
-    int PH_HTM = 80;
+    int PH_HTM = 60; //80;
     //landscape
-    int LH_LBL = 24;
+    int LH_LBL = 26; //24;
     int LH_PHT = 130;
     int LW_PHT = 200;
     
     // iphone5 sizes
     //portrait
-    int P5H_LBL = 24; // font helvetica neue bold 18
-    int P5H_PHT = 126;
-    int P5H_HTM = 80;
+    int P5H_LBL = 26; //24; // font helvetica neue bold 18
+    int P5H_PHT = 170;//126;
+    int P5H_HTM = 60;//80;
     //landscape
-    int L5H_LBL = 24;
+    int L5H_LBL = 26; //24;
     int L5H_PHT = 130;
     int L5W_PHT = 230;
     
     // ipad sizes
     //portrait
-    int PAD_PH_LBL = 30; // // font helvetica neue bold 24
+    int PAD_PH_LBL = 32; //30; // // font helvetica neue bold 24
     int PAD_PH_PHT = 320;//80;
-    int PAD_PH_HTM = 184;
+    int PAD_PH_HTM = 110; //184;
     //landscape
-    int PAD_LH_LBL = 30;
+    int PAD_LH_LBL = 32; //30;
     int PAD_LH_PHT = 350;
     int PAD_LW_PHT = 450;
     
@@ -243,14 +247,14 @@
             self.subCtgView.frame = CGRectMake(0, top + PH_LBL + PH_PHT + PH_HTM,
                                                w, h - (PH_LBL + PH_PHT + PH_HTM));
         } else {
-            self.titleView.frame = CGRectMake(LW_PHT, top - 5,
-                                          w - LW_PHT, LH_LBL + 5);
+            self.titleView.frame = CGRectMake(0, top - 5, //LW_PHT, top - 5,
+                                              w, LH_LBL + 5); //w - LW_PHT, LH_LBL + 5);
             
-            self.photoView.frame = CGRectMake(0, top,
-                                              LW_PHT, LH_PHT);
+            self.photoView.frame = CGRectMake(0, top + LH_LBL, //0, top,
+                                              LW_PHT, LH_PHT);//LW_PHT, LH_PHT);
             
-            self.htmlView.frame = CGRectMake(0, top + LH_PHT,
-                                             LW_PHT, h - LH_PHT);
+            self.htmlView.frame = CGRectMake(0, top + LH_LBL + LH_PHT, //0, top + LH_PHT,
+                                             LW_PHT, h - LH_LBL - LH_PHT); // LW_PHT, h - LH_PHT);
             
             self.subCtgView.frame = CGRectMake(LW_PHT, top + LH_LBL,
                                                w - LW_PHT, h - LH_LBL);
@@ -269,14 +273,14 @@
             self.subCtgView.frame = CGRectMake(0, top + P5H_LBL + P5H_PHT + P5H_HTM,
                                                w, h - (P5H_LBL + P5H_PHT + P5H_HTM));
         } else {
-            self.titleView.frame = CGRectMake(L5W_PHT, top - 5,
-                                          w - L5W_PHT, L5H_LBL + 5);
+            self.titleView.frame = CGRectMake(0, top - 5, // L5W_PHT, top - 5,
+                                              w, L5H_LBL + 5);//w - L5W_PHT, L5H_LBL + 5);
             
-            self.photoView.frame = CGRectMake(0, top,
+            self.photoView.frame = CGRectMake(0, top + L5H_LBL, //0, top,
                                               L5W_PHT, L5H_PHT);
             
-            self.htmlView.frame = CGRectMake(0, top + L5H_PHT,
-                                             L5W_PHT, h - L5H_PHT);
+            self.htmlView.frame = CGRectMake(0, top + L5H_LBL + L5H_PHT, // 0, top + L5H_PHT,
+                                             L5W_PHT, h - L5H_LBL - L5H_PHT);//L5W_PHT, h - L5H_PHT);
             
             self.subCtgView.frame = CGRectMake(L5W_PHT, top + L5H_LBL,
                                                w - L5W_PHT, h - L5H_LBL);
@@ -295,24 +299,65 @@
             self.subCtgView.frame = CGRectMake(0, top + PAD_PH_LBL + PAD_PH_PHT + PAD_PH_HTM,
                                                w, h - (PAD_PH_LBL + PAD_PH_PHT + PAD_PH_HTM));
         } else {
-            self.titleView.frame = CGRectMake(PAD_LW_PHT, top,
-                                          w - PAD_LW_PHT, PAD_LH_LBL);
+            self.titleView.frame = CGRectMake(0, top - 5, //PAD_LW_PHT, top,
+                                              w, PAD_LH_LBL + 5); //w - PAD_LW_PHT, PAD_LH_LBL);
             
-            self.photoView.frame = CGRectMake(0, top,
-                                              PAD_LW_PHT, PAD_LH_PHT);
+            self.photoView.frame = CGRectMake(0, top + PAD_LH_LBL, //0, top,
+                                              PAD_LW_PHT, PAD_LH_PHT); //PAD_LW_PHT, PAD_LH_PHT);
             
-            self.htmlView.frame = CGRectMake(0, top + PAD_LH_PHT,
-                                             PAD_LW_PHT, h - PAD_LH_PHT);
+            self.htmlView.frame = CGRectMake(0, top + PAD_LH_LBL + PAD_LH_PHT, //0, top + PAD_LH_PHT,
+                                             PAD_LW_PHT, h - PAD_LH_LBL - PAD_LH_PHT); //PAD_LW_PHT, h - PAD_LH_PHT);
             
             self.subCtgView.frame = CGRectMake(PAD_LW_PHT, top + PAD_LH_LBL,
                                                w - PAD_LW_PHT, h - PAD_LH_LBL);
        }
     }
     
-//    [self loadAdsView];
+    // this is a fix for when returning from vimeo player in landscape
+    CGRect nbf = self.navigationController.navigationBar.frame;
+    nbf.size.height = 44;
+    self.navigationController.navigationBar.frame = nbf;
+    //
+
     [self hovLoaded];
+    [self drawTitleLine];
     [self loadCategoryView:NO];
     [self loadInfoDescView];
+}
+
+- (void) drawTitleLine {
+    if (self.titleLine)
+        [self.titleLine removeFromSuperview];
+    self.titleLine = nil;
+    
+    if (IS_LANDSCAPE) {
+        self.titleLine = [[UIView alloc] initWithFrame:CGRectMake(0,
+                                                                  CGRectGetMaxY(self.titleView.frame),
+                                                                  self.titleView.frame.size.width,
+                                                                  1.0f)];
+        self.titleLine.layer.borderColor = [UIColor colorWithWhite:0.7f alpha:1.0f].CGColor;
+        self.titleLine.layer.borderWidth = 1.0f;
+        [self.view addSubview:self.titleLine];
+    }
+}
+
+-(void) loadPhotoView {
+    for (UIView *v in self.photoView.subviews) {
+        [v removeFromSuperview];
+    }
+    
+    UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
+    btn.frame = CGRectInset(self.photoView.bounds, 0, 0);
+    btn.showsTouchWhenHighlighted = YES;
+    btn.contentMode = UIViewContentModeCenter;
+    NSString *imgName = (self.houseOverview.isMaster)
+                            ? @"HouseInfo/Posters/poster_frame_play_%@_%@.png"
+                            : @"HouseInfo/Posters/poster_frame_gallery_%@_%@.png";
+    imgName = [NSString stringWithFormat:imgName, IS_PORTRAIT ? @"v" : @"h", CURRENT_LANG];
+    [btn setImage:[UIImage imageNamed:imgName] forState:UIControlStateNormal];
+    [btn addTarget:self action:@selector(photoTapped:) forControlEvents:UIControlEventTouchUpInside];
+    
+    [self.photoView addSubview:btn];
 }
 
 -(void) loadInfoDescView {
@@ -321,9 +366,10 @@
     }
     
     UIView * inner = [self loadInnerHtmlView];
-    [self loadInfoView: inner];
-    [self drawVLine:inner];
-    [self loadDescrView:inner];
+    BOOL sideBySide = !(IS_IPAD && IS_LANDSCAPE);
+    [self loadInfoView: inner sideBySide:sideBySide];
+    [self drawLine:inner sideBySide:sideBySide];
+    [self loadDescrView:inner sideBySide:sideBySide];
 }
 
 -(UIView *) loadInnerHtmlView {
@@ -331,17 +377,25 @@
     UIView *innerHtmlView = [[UIView alloc] initWithFrame:CGRectInset(self.htmlView.bounds, 0, 2)];
 //    innerHtmlView.backgroundColor = [UIColor colorWithRed:grayPcnt green:grayPcnt blue:grayPcnt alpha:0.9f];
     innerHtmlView.backgroundColor = [UIColor colorWithWhite:grayPcnt alpha:0.9f];
-    innerHtmlView.layer.borderColor = [UIColor whiteColor].CGColor;
+    innerHtmlView.layer.borderColor = [UIColor colorWithWhite:0.6f alpha:1.0f].CGColor;
     innerHtmlView.layer.borderWidth = 2.0f;
     
     [self.htmlView addSubview:innerHtmlView];
     return innerHtmlView;
 }
 
--(void) loadInfoView:(UIView *)container {
-    CGSize sz = container.bounds.size;
-    sz.width = sz.height; //IS_IPAD ? 55 : 25;
-    CGRect frm = CGRectMake(0, 0, sz.width, sz.height);
+#define IPAD_LANDSCAPE_INFO_HEIGHT ((int)110)
+
+-(void) loadInfoView:(UIView *)container sideBySide:(BOOL)sidebyside {
+    CGRect frm;
+    if (sidebyside) {
+        CGSize sz = container.bounds.size;
+        frm = CGRectMake(0, 0, sz.height, sz.height);
+    } else {
+        CGSize sz = container.bounds.size;
+        frm = CGRectMake(0, 0, sz.width, IPAD_LANDSCAPE_INFO_HEIGHT);
+    }
+    
     UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
     btn.frame = frm;
     btn.showsTouchWhenHighlighted = YES;
@@ -351,34 +405,42 @@
     else
         [btn setImage:[UIImage imageNamed:@"HouseInfo/Info/info.png"] forState:UIControlStateNormal];
     
-    UITapGestureRecognizer *tapper = [[UITapGestureRecognizer alloc]
-                                      initWithTarget:self action:@selector(infoTapped:)];
-    [btn addGestureRecognizer:tapper];
+    [btn addTarget:self action:@selector(infoTapped:) forControlEvents:UIControlEventTouchUpInside];
     
     [container addSubview:btn];
 }
 
--(void) drawVLine:(UIView *)container {
+-(void) drawLine:(UIView *)container sideBySide:(BOOL)sidebyside {
+    CGRect frm;
     CGSize sz = container.bounds.size;
-    sz.width = 2.0f;
-    CGRect frm = CGRectInset(CGRectMake(sz.height, 0, sz.width, sz.height), 0, 12.0f);
-    UIView *vline = [[UIView alloc] initWithFrame:frm];
-    vline.frame = frm;
-    vline.layer.borderColor = [UIColor colorWithWhite:0.7f alpha:1.0f].CGColor;
-    vline.layer.borderWidth = 1.0f;
-    [container addSubview:vline];
+    if (sidebyside) {
+        frm = CGRectInset(CGRectMake(sz.height, 0, 1.0f, sz.height), 0, 6.0f);
+    } else {
+        frm = CGRectInset(CGRectMake(0, IPAD_LANDSCAPE_INFO_HEIGHT, sz.width, 1.0f), 6.0f, 0);
+    }
+    UIView *line = [[UIView alloc] initWithFrame:frm];
+    line.frame = frm;
+    line.layer.borderColor = [UIColor colorWithWhite:0.7f alpha:1.0f].CGColor;
+    line.layer.borderWidth = 1.0f;
+    [container addSubview:line];
 }
 
--(void) loadDescrView:(UIView *)container {
+-(void) loadDescrView:(UIView *)container sideBySide:(BOOL)sidebyside {
+    CGRect frm;
     CGSize sz = container.bounds.size;
-    sz.width = sz.width - sz.height - 2.0f; // ( - btn.width, - vline.width )
-    CGRect frm = CGRectMake(sz.height, 0, sz.width, sz.height);
+    if (sidebyside) {
+        frm = CGRectMake(sz.height, 0, sz.width - sz.height, sz.height);
+    } else {
+        frm = CGRectMake(0, IPAD_LANDSCAPE_INFO_HEIGHT,
+                         sz.width, sz.height - IPAD_LANDSCAPE_INFO_HEIGHT);
+    }
+    
     UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
     btn.frame = frm;
     btn.showsTouchWhenHighlighted = YES;
     btn.contentMode = UIViewContentModeCenter;
     //[btn setImage:[UIImage imageNamed:@"HouseInfo/Info/info.png"] forState:UIControlStateNormal];
-    btn.titleLabel.font = [UIFont fontWithName:@"TrebuchetMS-Bold" size:18];
+    btn.titleLabel.font = [UIFont fontWithName:@"TrebuchetMS-Bold" size:IS_IPAD ? 24.0f : 18.0f];
     [btn setTitle:DPLocalizedString(@"HIK_HouseDescription") forState:UIControlStateNormal];
     [btn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     
@@ -390,11 +452,23 @@
     btn.layer.shadowOpacity = 0.95;
 
     
-    UITapGestureRecognizer *tapper = [[UITapGestureRecognizer alloc]
-                                      initWithTarget:self action:@selector(descrTapped:)];
-    [btn addGestureRecognizer:tapper];
+    [btn addTarget:self action:@selector(descrTapped:) forControlEvents:UIControlEventTouchUpInside];
     
     [container addSubview:btn];
+}
+
+-(void) photoTapped:(id)sender {
+    if (self.houseOverview.isMaster) {
+        // play video
+        NSString *videourl = self.houseOverview.videoUrl;
+        DPVimeoPlayerViewController *vc = [[DPVimeoPlayerViewController alloc]
+                                           initWithUrl:videourl];
+        [self.navigationController pushViewController:vc animated:YES];
+    } else {
+        // show images
+        DPArticlesViewController *avc = [[DPArticlesViewController alloc] initWithCategory:self.houseOverview.ctgid];
+        [self.navigationController pushViewController:avc animated:YES];
+    }
 }
 
 -(void) infoTapped:(id)sender {
@@ -421,18 +495,19 @@
         }
     }
     
+    CGRect frm = self.subCtgView.bounds;
     if (self.subCtgView.subviews.count == 0)
     {
         self.subCtgsViewController = [[DPAnimatedScrollViewController alloc] initWithCategory:self.category.Id
                                                                                        isLeaf:YES
-                                                                                        frame:self.subCtgView.bounds];
+                                                                                        frame:frm];
         
         //[self.ctgViewController changeFrame:self.actualCtgView.bounds];
         [self addChildViewController:self.subCtgsViewController];
         [self.subCtgView addSubview:self.subCtgsViewController.view];
     }
     else {
-        [self.subCtgsViewController changeFrame:self.subCtgView.bounds];
+        [self.subCtgsViewController changeFrame:frm];
         [self.subCtgsViewController changeRows:1 columns:1];
     }
 }

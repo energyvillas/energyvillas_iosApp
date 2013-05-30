@@ -18,6 +18,7 @@
 	[encoder encodeObject:self.lang forKey:encHOVLang];
 	[encoder encodeObject:[NSNumber numberWithInt:self.ctgid] forKey:encHOVCategoryId];
 	[encoder encodeObject:[NSNumber numberWithBool:self.isMaster] forKey:encHOVIsMaster];
+	[encoder encodeObject:self.videoUrl forKey:encHOVVideoUrl];
 	[encoder encodeObject:self.title forKey:encHOVTitle];
 	[encoder encodeObject:self.info forKey:encHOVInfo];
 	[encoder encodeObject:self.description forKey:encHOVDescription];
@@ -30,6 +31,7 @@
 		self.lang = [aDecoder decodeObjectForKey:encHOVLang];
 		self.ctgid = [[aDecoder decodeObjectForKey:encHOVCategoryId] intValue];
 		self.isMaster = [[aDecoder decodeObjectForKey:encHOVIsMaster] boolValue];
+		self.videoUrl = [aDecoder decodeObjectForKey:encHOVVideoUrl];
 		self.title = [aDecoder decodeObjectForKey:encHOVTitle];
 		self.info = [aDecoder decodeObjectForKey:encHOVInfo];
 		self.description = [aDecoder decodeObjectForKey:encHOVDescription];
@@ -42,6 +44,7 @@
                lang:(NSString *)aLang
            category:(int)cid
            isMaster:(BOOL)aIsMaster
+           videoUrl:(NSString *)aVideoUrl
               title:(NSString *)aTitle
                info:(NSString *)aInfo
         description:(NSString *)aDescr
@@ -52,6 +55,7 @@
 		self.lang = NullIfEmpty(aLang);
 		self.ctgid = cid;
 		self.isMaster = aIsMaster;
+        self.videoUrl = NullIfEmpty(aVideoUrl);
 		self.title = NullIfEmpty(aTitle);
 		self.info = NullIfEmpty(aInfo);
 		self.description = NullIfEmpty(aDescr);

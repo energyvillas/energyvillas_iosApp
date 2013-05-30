@@ -43,6 +43,7 @@ static NSString *kName_categoryid = @"categoryid";
 static NSString *kName_langcode = @"langcode";
 static NSString *kName_ismaster = @"ismaster";
 
+static NSString *kName_videourl = @"videourl";
 static NSString *kName_title = @"title";
 static NSString *kName_info = @"info";
 static NSString *kName_descr = @"description";
@@ -83,10 +84,14 @@ static NSString *kName_descr = @"description";
 		[self.currentString setString:@""];
 		self.storingCharacters = YES;
         
+    }else if ([elementName isEqualToString:kName_videourl]) {
+		[self.currentString setString:@""];
+		self.storingCharacters = YES;
+        
     }else if ([elementName isEqualToString:kName_title]) {
 		[self.currentString setString:@""];
 		self.storingCharacters = YES;
-                
+        
 	}else if ([elementName isEqualToString:kName_info]) {
 		[self.currentString setString:@""];
 		self.storingCharacters = YES;
@@ -150,6 +155,7 @@ static NSString *kName_descr = @"description";
                                                                    lang:self.langcode
                                                                category:[self.categoryId intValue]
                                                                isMaster:[self.isMaster boolValue]
+                                                               videoUrl:self.videourl
                                                                   title:[self processHtmlField:self.title]
                                                                    info:[self processHtmlField:self.info]
                                                             description:[self processHtmlField:self.description]];
@@ -176,6 +182,9 @@ static NSString *kName_descr = @"description";
         
 	}else if ([elementName isEqualToString:kName_ismaster]) {
 		self.isMaster=[[NSString alloc] initWithString: aElementValue];
+        
+	}else if ([elementName isEqualToString:kName_videourl]) {
+		self.videourl=[[NSString alloc] initWithString: aElementValue];
         
 	}else if ([elementName isEqualToString:kName_title]) {
 		self.title=[[NSString alloc] initWithString: aElementValue];

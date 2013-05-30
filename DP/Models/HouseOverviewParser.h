@@ -22,6 +22,7 @@
 @property (nonatomic, strong) NSString *categoryId;
 @property (nonatomic, strong) NSString *isMaster;
 
+@property (nonatomic, strong) NSString *videourl;
 @property (nonatomic, strong) NSString *title;
 @property (nonatomic, strong) NSString *info;
 @property (nonatomic, strong) NSString *description;

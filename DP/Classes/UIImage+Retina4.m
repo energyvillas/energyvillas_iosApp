@@ -62,7 +62,7 @@
 }
 
 + (UIImage *)imageNamedH568:(NSString *)imageName {
-    NSLog(@"Loading image named => %@", imageName);
+    NSLog(@"=568h=Loading image named => %@", imageName);
     NSMutableString *imageNameMutable = [imageName mutableCopy];
     NSRange retinaAtSymbol = [imageName rangeOfString:@"@"];
     if (retinaAtSymbol.location != NSNotFound) {
