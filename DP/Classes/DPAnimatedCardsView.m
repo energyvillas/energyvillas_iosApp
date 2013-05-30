@@ -20,6 +20,7 @@
     CGFloat maxDistance;
     NSTimeInterval moveDuration, zoomDuration;
     CGRect confinementRect;
+    int level;
 }
 
 @property (strong, nonatomic) NSMutableArray *cards;
@@ -48,9 +49,11 @@
       cardInsetSize:(CGSize)aInsetSize
        moveDuration:(NSTimeInterval)movedur
        zoomDuration:(NSTimeInterval)zoomdur
+              level:(int)alevel
 {
     self = [self initWithFrame:frame];
     if (self) {
+        level = alevel;
         self.currentCard = nil; // -1
         self.cardSize = aCardSize;
         self.cardInsetSize = aInsetSize;
@@ -413,8 +416,14 @@
 - (void) zoomCard:(DPCardView *)card duration:(NSTimeInterval)duration {
     [self bringCardForward:card];
 
-    [card zoomCard:duration position:CGPointMake(self.bounds.size.width / 2.0,
-                                                 self.bounds.size.height / 2.0)];
+    CGFloat xCenter = (IS_IPAD || IS_PORTRAIT || level == 1)
+                        ? self.bounds.size.width / 2.0
+                        : 20.0 + ((self.cardSize.width + self.cardInsetSize.width) / 2.0);
+    
+    CGPoint where = CGPointMake(xCenter,
+                                self.bounds.size.height / 2.0);
+    
+    [card zoomCard:duration position:where];
 }
 
 - (void) cancelCardZoom:(DPCardView *)card duration:(NSTimeInterval)duration {

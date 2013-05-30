@@ -220,9 +220,9 @@
 - (BOOL) showNavBarSocial {
     return NO;
 }
-- (BOOL) showNavBarInfo {
-    return NO;
-}
+//- (BOOL) showNavBarInfo {
+//    return NO;
+//}
 //==============================================================================
 
 @end

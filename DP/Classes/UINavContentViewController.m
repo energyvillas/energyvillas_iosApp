@@ -12,6 +12,7 @@
 #import "DPConstants.h"
 #import "DPAppHelper.h"
 #import "DPSocialManager.h"
+#import "DPHtmlContentViewController.h"
 
 
 @interface UINavContentViewController ()
@@ -203,7 +204,7 @@
     return NO;
 }
 - (BOOL) showNavBarInfo {
-    return YES;
+    return [DPAppHelper sharedInstance].isPurchased;
 }
 - (BOOL) showNavBarNavigator {
     return self.navigatorDelegate != nil;
@@ -261,6 +262,16 @@
     
     UIView *rightButtons = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 120, 44)];
     int pos = 0;
+    
+    if ([self showNavBarInfo]) {
+        UIButton *navbarInfo = [self createButtonWithImage:NAVBAR_INFO_IMG
+                                                    frame:CGRectMake(pos, NAVBAR_BTN_TOP, NAVBAR_BTN_WIDTH, NAVBAR_BTN_HEIGTH)
+                                                      tag:TAG_NBI_INFO
+                                                   action:@selector(onNavButtonTapped:)];
+        [rightButtons addSubview:navbarInfo];
+        pos += NAVBAR_BTN_WIDTH;
+    }
+    
     if ([self showNavBarLanguages]) {
         self.navbarLang_EL = [self
                               createButtonWithImage:NAVBAR_LANG_EL_IMG
@@ -386,6 +397,7 @@
     
     [button setImage: img forState:UIControlStateNormal];
     [button setTag: index];
+    button.showsTouchWhenHighlighted = YES;
     
     return button;
 }
@@ -468,6 +480,10 @@
             [self doNavigate:YES];
             break;
             
+        case TAG_NBI_INFO:
+            [self showInfo];
+            break;
+            
         default:
             break;
     }
@@ -509,6 +525,12 @@
     [DPAppHelper sharedInstance].imageUrl2Share = [self aquireImageUrlToShare];
    
     [self.socialManager showSocialsDialog:nil];
+}
+
+- (void) showInfo {
+    DPHtmlContentViewController *vc = [[DPHtmlContentViewController alloc] initWithCategory:CTGID_INFO
+                                                                                       lang:CURRENT_LANG];
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 @end

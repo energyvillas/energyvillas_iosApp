@@ -62,6 +62,7 @@ FOUNDATION_EXPORT NSString *const MySecondConstant;
 #define TAG_NBI_SHARE ((int)105)
 #define TAG_NBI_PREV ((int)106)
 #define TAG_NBI_NEXT ((int)107)
+#define TAG_NBI_INFO ((int)108)
 
 // tabBar buttons
 #define TAG_TBI_MAIN ((int)1001)
@@ -195,7 +196,8 @@ UIKIT_EXTERN NSString *const NAVBAR_NEXT_SEL_IMG;
 UIKIT_EXTERN NSString *const NAVBAR_PREV_IMG;
 UIKIT_EXTERN NSString *const NAVBAR_PREV_SEL_IMG;
 
-UIKIT_EXTERN NSString *const NAVBAR_PREVNEXT_BORDER_IMG;
+//UIKIT_EXTERN NSString *const UIKIT_EXTERN NSString *const NAVBAR_PREVNEXT_BORDER_IMG;
+UIKIT_EXTERN NSString *const NAVBAR_INFO_IMG;
 
 // localization keys
 UIKIT_EXTERN NSString *const kbtnOK_Title;

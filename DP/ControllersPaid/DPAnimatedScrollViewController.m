@@ -138,7 +138,8 @@
                                                                  cardSize:sz
                                                             cardInsetSize:szInset
                                                              moveDuration:isLeafCategory ? DURATION_MOVE_2nd_Level : DURATION_MOVE_1st_Level
-                                                             zoomDuration:isLeafCategory ? DURATION_ZOOM_2nd_Level : DURATION_ZOOM_1st_Level];
+                                                             zoomDuration:isLeafCategory ? DURATION_ZOOM_2nd_Level : DURATION_ZOOM_1st_Level
+                                                                    level:isLeafCategory ? 1 : 0];
     acv.scrollableViewDelegate = self;
     [container addSubview:acv];
 }

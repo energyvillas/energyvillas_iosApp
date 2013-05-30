@@ -18,7 +18,8 @@
            cardSize:(CGSize)aCardSize
       cardInsetSize:(CGSize)aInsetSize
        moveDuration:(NSTimeInterval)movedur
-       zoomDuration:(NSTimeInterval)zoomdur;
+       zoomDuration:(NSTimeInterval)zoomdur
+              level:(int)alevel;
 
 - (void) frameChanged;
 @end

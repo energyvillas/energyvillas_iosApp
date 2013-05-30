@@ -76,7 +76,9 @@ NSString *const NAVBAR_NEXT_SEL_IMG = @"Navbar/arrow_next_roll.png";
 NSString *const NAVBAR_PREV_IMG = @"Navbar/arrow_prev.png";
 NSString *const NAVBAR_PREV_SEL_IMG = @"Navbar/arrow_prev_roll.png";
 
-NSString *const NAVBAR_PREVNEXT_BORDER_IMG = @"Navbar/prev_next_border.png";
+//NSString *const NAVBAR_PREVNEXT_BORDER_IMG = @"Navbar/prev_next_border.png";
+
+NSString *const NAVBAR_INFO_IMG = @"Navbar/info-big_03.png";
 
 
 // localization keys

@@ -243,8 +243,8 @@
             self.subCtgView.frame = CGRectMake(0, top + PH_LBL + PH_PHT + PH_HTM,
                                                w, h - (PH_LBL + PH_PHT + PH_HTM));
         } else {
-            self.titleView.frame = CGRectMake(LW_PHT, top,
-                                          w - LW_PHT, LH_LBL);
+            self.titleView.frame = CGRectMake(LW_PHT, top - 5,
+                                          w - LW_PHT, LH_LBL + 5);
             
             self.photoView.frame = CGRectMake(0, top,
                                               LW_PHT, LH_PHT);
@@ -269,8 +269,8 @@
             self.subCtgView.frame = CGRectMake(0, top + P5H_LBL + P5H_PHT + P5H_HTM,
                                                w, h - (P5H_LBL + P5H_PHT + P5H_HTM));
         } else {
-            self.titleView.frame = CGRectMake(L5W_PHT, top,
-                                          w - L5W_PHT, L5H_LBL);
+            self.titleView.frame = CGRectMake(L5W_PHT, top - 5,
+                                          w - L5W_PHT, L5H_LBL + 5);
             
             self.photoView.frame = CGRectMake(0, top,
                                               L5W_PHT, L5H_PHT);
