@@ -142,11 +142,13 @@
             break;
             
         case SOCIAL_ACT_FAVS: {
-            if ([[[DPAppHelper sharedInstance] favoriteArticles] count] > 0) {
+            DPAppHelper *apphelper = [DPAppHelper sharedInstance];
+            if ([[apphelper favoriteArticles] count] > 0) {
                 DPAppDelegate *appdel = [UIApplication sharedApplication].delegate;
                 UINavigationController *nvc = [appdel findNavController];
                 DPFavoritesViewController *favs = [[DPFavoritesViewController alloc] init];
                 [nvc pushViewController:favs animated:YES];
+                [apphelper playSoundWoosh];
             }
             break;
         }

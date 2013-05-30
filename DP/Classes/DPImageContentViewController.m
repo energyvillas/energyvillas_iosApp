@@ -197,6 +197,7 @@
     self.scrollView.delegate = self;
     //    self.scrollView.minimumZoomScale = 1.0;
     self.scrollView.maximumZoomScale = 10.0;
+    self.scrollView.zoomScale = 1.01f;
 }
 
 //==============================================================================

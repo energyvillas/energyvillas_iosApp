@@ -142,9 +142,11 @@
 }
 
 - (void) doFavs:(id) sender {
-    if ([[[DPAppHelper sharedInstance] favoriteArticles] count] > 0) {
+    DPAppHelper *apphelper = [DPAppHelper sharedInstance];
+    if ([[apphelper favoriteArticles] count] > 0) {
         DPFavoritesViewController *favs = [[DPFavoritesViewController alloc] init];
         [self.navigationController pushViewController:favs animated:YES];
+        [apphelper playSoundWoosh];
     }
 }
 
