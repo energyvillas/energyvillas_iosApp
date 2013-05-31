@@ -28,6 +28,8 @@
 @implementation UINavContentViewController 
 
 - (void) hookToNotifications {
+    [self unHookFromNotifications];
+    
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(onNotified:)
                                                  name:DPN_currentLangChanged
@@ -84,9 +86,15 @@
 
 
 - (void) viewDidUnload {
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
-
     [super viewDidUnload];
+    [self unHookFromNotifications];
+}
+
+- (void) unHookFromNotifications {
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:DPN_FavoritesChangedNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kReachabilityChangedNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:DPN_currentLangChanged object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (void)viewDidLoad
@@ -101,6 +109,12 @@
 
 - (void) viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    [self hookToNotifications];
+}
+
+- (void) viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    [self unHookFromNotifications];    
 }
 
 - (void) viewDidAppear:(BOOL)animated {
@@ -461,7 +475,7 @@
             break;
             
         case TAG_NBI_BACK:
-            [self.navigationController popViewControllerAnimated:YES];
+            [self.navigationController popViewControllerAnimated:NO];
             break;
         case TAG_NBI_ADD_FAV:
             [self toggleInFavorites];

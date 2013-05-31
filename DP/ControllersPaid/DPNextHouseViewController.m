@@ -118,7 +118,14 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (void) dealloc {
+    [self cleanUp];
+}
 - (void)viewDidUnload {
+    [super viewDidUnload];
+    [self cleanUp];
+}
+- (void) cleanUp {
     [self killTimer];
     
     if (self.htmlVC) {
@@ -140,7 +147,16 @@
     [self setMinutesLabel:nil];
     [self setSecondsLabel:nil];
     [self setCountDownContainerView:nil];
-    [super viewDidUnload];
+}
+
+-(void) viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [self initCountDown];    
+}
+
+-(void) viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    [self killTimer];
 }
 
 - (int) topLabelHeight {
@@ -232,17 +248,19 @@
 }
 
 - (void) initCountDown {
-    NSLog(@"ARTICLE PUBLISH DATETIME is :'%@'", self.article.publishDate);
-    self.targetDate = [self lclTimeFromUTCString:self.article.publishDate];
-    self.calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
-    self.topLabel.text = DPLocalizedString(@"COUNTDOWN_COMING_IN");
-
-    if (self.timer == nil) {
-        self.timer = [NSTimer scheduledTimerWithTimeInterval:1.0f
-                                                      target:self
-                                                    selector:@selector(onTimer)
-                                                    userInfo:nil
-                                                     repeats:YES];
+    if (self.article) {
+        NSLog(@"ARTICLE PUBLISH DATETIME is :'%@'", self.article.publishDate);
+        self.targetDate = [self lclTimeFromUTCString:self.article.publishDate];
+        self.calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+        self.topLabel.text = DPLocalizedString(@"COUNTDOWN_COMING_IN");
+        
+        if (self.timer == nil) {
+            self.timer = [NSTimer scheduledTimerWithTimeInterval:1.0f
+                                                          target:self
+                                                        selector:@selector(onTimer)
+                                                        userInfo:nil
+                                                         repeats:YES];
+        }
     }
 }
 
@@ -271,8 +289,10 @@
 }
 
 - (void) killTimer {
-    [self.timer invalidate];
-    self.timer = nil;
+    if (self.timer) {
+        [self.timer invalidate];
+        self.timer = nil;
+    }
 }
 
 

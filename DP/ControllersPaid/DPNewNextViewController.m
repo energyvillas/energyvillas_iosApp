@@ -182,8 +182,13 @@
         }
         
         if (vc) {
-            DPAppDelegate *appdel = [UIApplication sharedApplication].delegate;
-            UINavigationController *nvc = [appdel findNavController];
+            UINavigationController *nvc = nil;
+            if (self.parentViewController)
+                nvc = self.parentViewController.navigationController;
+            if (!nvc) {
+                DPAppDelegate *appdel = [UIApplication sharedApplication].delegate;
+                nvc = [appdel findNavController];
+            }
             [nvc pushViewController: vc animated: YES];
         }
     }

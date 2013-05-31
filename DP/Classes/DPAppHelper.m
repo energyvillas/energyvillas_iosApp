@@ -97,8 +97,10 @@
         else
             _currentLang = @"en";
 
-        [[NSNotificationCenter defaultCenter]
-         postNotificationName:DPN_currentLangChanged object:nil];        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [[NSNotificationCenter defaultCenter]
+             postNotificationName:DPN_currentLangChanged object:nil];
+        });
     }
 }
 
@@ -490,8 +492,10 @@
         self.favorites[element.key] = element;
     }
     
-    [[NSNotificationCenter defaultCenter] postNotificationName:DPN_FavoritesChangedNotification
-                                                        object:nil];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [[NSNotificationCenter defaultCenter] postNotificationName:DPN_FavoritesChangedNotification
+                                                            object:nil];
+    });
 }
 - (void) removeFromFavorites:(Article *)article {
     if (article) {
@@ -499,8 +503,10 @@
         [self doSaveFavorites:NO];
     }
     
-    [[NSNotificationCenter defaultCenter] postNotificationName:DPN_FavoritesChangedNotification
-                                                        object:nil];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [[NSNotificationCenter defaultCenter] postNotificationName:DPN_FavoritesChangedNotification
+                                                            object:nil];
+    });
 }
 
 - (NSMutableDictionary *) doLoadFavorites {
