@@ -53,6 +53,7 @@
                                                           userInfo:[NSDictionary dictionaryWithObject:[NSNumber numberWithInt:0]
                                                                                                forKey:@"menuCategory"]];
 //    });
+    [self doLocalize];
 }
 
 - (void) doLocalize {
@@ -173,13 +174,14 @@
     
     if (self.adsViewController == nil)
     {
-        self.adsViewController = [[DPAdsViewController alloc] initWithGroup:BANNER_GROUP_LEVEL_0];
+        self.adsViewController = [[DPAdsViewController alloc] initWithGroup:BANNER_GROUP_COMMON_MAIN];
         self.adsViewController.view.frame = self.adsView.bounds;
         [self addChildViewController:self.adsViewController];
         [self.adsView addSubview:self.adsViewController.view];
     } else {
         self.adsViewController.view.frame = self.adsView.bounds;
         [self.adsViewController.view setNeedsDisplay];
+//        [self.adsViewController changeRows:1 columns:1];
     }
 }
 

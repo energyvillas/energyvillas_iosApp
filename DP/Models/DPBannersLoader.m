@@ -18,6 +18,7 @@
 
 @property int groupID;
 @property (strong, nonatomic) NSString *lang;
+@property (strong, nonatomic) NSArray *localData;
 
 @end
 
@@ -26,14 +27,21 @@
 
 - (id) initWithView:(UIView *)indicatorcontainer
               group:(int)grpID
-               lang:(NSString *)aLang {
-    self = [super initWithView:indicatorcontainer useInternet:YES useCaching:YES];
+               lang:(NSString *)aLang
+          localData:(NSArray *)localData {
+    self = [super initWithView:indicatorcontainer useInternet:YES useCaching:YES ];
     if (self) {
         self.groupID = grpID;
         self.lang = aLang;
+        self.localData = localData;
     }
     
     return self;
+}
+
+- (void) loadFromPlist {
+    if (self.localData)
+        self.datalist = self.localData;
 }
 
 - (NSString *) cacheFileName {

@@ -47,6 +47,7 @@
 		5E4E85221711F948005DAD06 /* DPAnimatedScrollViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E4E85211711F947005DAD06 /* DPAnimatedScrollViewController.m */; };
 		5E4E8527171227C2005DAD06 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E4E8526171227BF005DAD06 /* CoreText.framework */; };
 		5E5F949F17213BF5006C9A88 /* Social in Resources */ = {isa = PBXBuildFile; fileRef = 5E5F949E17213BF5006C9A88 /* Social */; };
+		5E6290D717591FEB00A7D3E1 /* Banners in Resources */ = {isa = PBXBuildFile; fileRef = 5E6290D617591FEB00A7D3E1 /* Banners */; };
 		5E63DF31174EAA2B0086ACF5 /* DPArticlesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E63DF30174EAA2A0086ACF5 /* DPArticlesViewController.m */; };
 		5E71A3B816F9973500E7AFF9 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E71A3B716F9973500E7AFF9 /* UIKit.framework */; };
 		5E71A3BA16F9973500E7AFF9 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E71A3B916F9973500E7AFF9 /* Foundation.framework */; };
@@ -230,6 +231,7 @@
 		5E4E85211711F947005DAD06 /* DPAnimatedScrollViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPAnimatedScrollViewController.m; sourceTree = "<group>"; };
 		5E4E8526171227BF005DAD06 /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
 		5E5F949E17213BF5006C9A88 /* Social */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Social; sourceTree = "<group>"; };
+		5E6290D617591FEB00A7D3E1 /* Banners */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Banners; sourceTree = "<group>"; };
 		5E63DF2F174EAA2A0086ACF5 /* DPArticlesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPArticlesViewController.h; sourceTree = "<group>"; };
 		5E63DF30174EAA2A0086ACF5 /* DPArticlesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPArticlesViewController.m; sourceTree = "<group>"; };
 		5E71A3B416F9973500E7AFF9 /* energyVillas.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = energyVillas.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -721,6 +723,7 @@
 				5E756E39174BDC41001AA085 /* HouseInfo */,
 				5E956EA61754C37300B86DAC /* MainMenu */,
 				5E956EA81754CFF200B86DAC /* MenuLevel1 */,
+				5E6290D617591FEB00A7D3E1 /* Banners */,
 				5E4E8514171059AA005DAD06 /* Navbar */,
 				5E5F949E17213BF5006C9A88 /* Social */,
 				5EC5739F17265B43000B7004 /* TabBar */,
@@ -1047,6 +1050,7 @@
 				5E956EB21757BFBC00B86DAC /* DPCallUsView.xib in Resources */,
 				5E956EBD1757C23F00B86DAC /* call_us_el.jpg in Resources */,
 				5E956EBE1757C23F00B86DAC /* call_us_en.jpg in Resources */,
+				5E6290D717591FEB00A7D3E1 /* Banners in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -223,7 +223,7 @@
 
 - (void) loadAdsView:(BOOL)reload {
     int groupNo = (_category == CTGID_EXCLUSIVE_ART || _category == CTGID_EXCLUSIVE_DESIGNER)
-        ? BANNER_GROUP_LEVEL_1_EXCLUSIVE : BANNER_GROUP_LEVEL_1_NORMAL;
+        ? BANNER_GROUP_EXCLUSIVE : BANNER_GROUP_COMMON_LVL1;
     BOOL grpChanged = self.adsViewController != nil && self.adsViewController.group != groupNo;
 
     if (reload || grpChanged) {

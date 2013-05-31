@@ -56,10 +56,50 @@
     [self loadData];
 }
 
+- (NSArray *) createLocalData {
+    NSString *bannername = nil;
+
+    switch (self.group) {
+        case BANNER_GROUP_COMMON_MAIN: {
+            bannername = @"Banners/Banner_CMN_MAIN_%@_%@.jpg";
+            bannername = [NSString stringWithFormat:bannername, CURRENT_LANG, @"%@"];
+            break;
+        }
+
+        case BANNER_GROUP_COMMON_LVL1: {
+            bannername = @"Banners/Banner_CMN_LVL1_%@_%@.jpg";
+            bannername = [NSString stringWithFormat:bannername, CURRENT_LANG,  @"%@"];
+            break;
+        }
+
+        case BANNER_GROUP_EXCLUSIVE: {
+            bannername = @"Banners/Banner_EXCL_%@.jpg";
+            break;
+        }
+
+    }
+
+    NSString *bannernameP = [NSString stringWithFormat:bannername, @"v"];
+    NSString *bannernameL = [NSString stringWithFormat:bannername, @"h"];
+
+    Banner *bnr = [[Banner alloc] initWithValues:[NSString stringWithFormat:@"%d", (-100 - self.group)]
+                                            lang:CURRENT_LANG
+                                         orderNo:1
+                                           title:nil
+                                        imageUrl:bannernameP
+                               imageUrlLandscape:bannernameL
+                                             url:nil];
+    
+    NSArray *list = [NSArray arrayWithObject:bnr];
+    
+    return list;
+}
+
 - (void) loadData {
     self.dataLoader = [[DPBannersLoader alloc] initWithView:self.view
                                                       group:self.group
-                                                       lang:CURRENT_LANG];
+                                                       lang:CURRENT_LANG
+                                                  localData:[self createLocalData]];
     self.dataLoader.delegate = self;
     [self.dataLoader loadData];
 }
@@ -120,6 +160,10 @@
     result.userInteractionEnabled = YES;
         
     return result;
+}
+
+- (NSString *) resolveImageName:(DPDataElement *)elm {
+    return [self getBaseImageUrlToLoadFor:elm];
 }
 
 #pragma mark -

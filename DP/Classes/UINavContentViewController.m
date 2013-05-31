@@ -110,6 +110,7 @@
 - (void) viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [self hookToNotifications];
+//    [self reachabilityChanged];
 }
 
 - (void) viewWillDisappear:(BOOL)animated {

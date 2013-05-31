@@ -12,6 +12,7 @@
 
 - (id) initWithView:(UIView *)indicatorcontainer
               group:(int)grpID
-               lang:(NSString *)aLang;
+               lang:(NSString *)aLang
+          localData:(NSArray *)localData;
 
 @end
