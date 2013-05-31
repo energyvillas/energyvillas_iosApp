@@ -12,11 +12,11 @@
 #import <QuartzCore/QuartzCore.h>
 
 
-#define SOCIAL_ITEMS_CNT ((int)4)
-#define COL_COUNT ((int)2) // 3
-#define ROW_COUNT ((int)2) // 2
+#define SOCIAL_ITEMS_CNT ((int)3) // 6
+#define COL_COUNT ((int)3) // 3
+#define ROW_COUNT ((int)1) // 2
 
-#define MARGIN_HORZ ((CGFloat)32.0f)
+#define MARGIN_HORZ ((CGFloat)20.0f)
 #define MARGIN_VERT ((CGFloat)16.0f)
 #define SPACER_HORZ ((CGFloat)(2.0f * MARGIN_HORZ))
 #define SPACER_VERT ((CGFloat)MARGIN_VERT)
@@ -103,7 +103,7 @@
 
 -(void) doOnBtnTap:(int)indx {
     if (IS_IPAD) {
-        [self dismissViewControllerAnimated:YES completion:^{
+        [self dismissViewControllerAnimated:NO completion:^{
             if (self.onClose != nil)
                 self.onClose(indx);
         }];

@@ -60,10 +60,11 @@
 
 @implementation DPAnimatedScrollViewController {
     bool isPortrait;
-    int category;
     BOOL isLeafCategory;
     CGRect initframe;
 }
+
+@synthesize category = _category;
 
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -79,7 +80,7 @@
     self = [super initWithContent:nil autoScroll:NO];
     
     if (self) {
-        category = ctgID;
+        _category = ctgID;
         isLeafCategory = isLeaf;
         //self.view.frame = frame;
         initframe = frame;
@@ -200,7 +201,7 @@
         self.dataLoader = [[DPCategoryLoader alloc] initWithView:self.view
                                                      useInternet:YES
                                                       useCaching:YES
-                                                        category:category
+                                                        category:_category
                                                             lang:[DPAppHelper sharedInstance].currentLang
                                                    useDeviceType:!isLeafCategory
                                                        localData:nil];
@@ -278,7 +279,7 @@
         }
         
         for (Category *ctg in loader.datalist)
-            if (ctg.parentId == category) {
+            if (ctg.parentId == _category) {
                 if (isLeafCategory && (ctg.hikId != HIKID_CUSTOM)) {
                     NSString *imgbase = [hikdict valueForKey:[NSString stringWithFormat:@"%d", ctg.hikId]];
                     BOOL isPerLang = ctg.hikId != HIKID_COMING_SOON_COMMON && ctg.hikId != HIKID_COMING_SOON_ART && ctg.hikId != HIKID_COMING_SOON_DESIGNER;

@@ -85,6 +85,11 @@
 		5E956EA91754CFF200B86DAC /* MenuLevel1 in Resources */ = {isa = PBXBuildFile; fileRef = 5E956EA81754CFF200B86DAC /* MenuLevel1 */; };
 		5E956EAB1754E73C00B86DAC /* BuyDialog in Resources */ = {isa = PBXBuildFile; fileRef = 5E956EAA1754E73C00B86DAC /* BuyDialog */; };
 		5E956EAD17569E1600B86DAC /* woosh.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 5E956EAC17569E1600B86DAC /* woosh.mp3 */; };
+		5E956EB01757B72E00B86DAC /* DPModalDialogManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E956EAF1757B72D00B86DAC /* DPModalDialogManager.m */; };
+		5E956EB21757BFBC00B86DAC /* DPCallUsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5E956EB11757BFBB00B86DAC /* DPCallUsView.xib */; };
+		5E956EB51757BFDD00B86DAC /* DPCallUsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E956EB41757BFDC00B86DAC /* DPCallUsViewController.m */; };
+		5E956EBD1757C23F00B86DAC /* call_us_el.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 5E956EBB1757C23F00B86DAC /* call_us_el.jpg */; };
+		5E956EBE1757C23F00B86DAC /* call_us_en.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 5E956EBC1757C23F00B86DAC /* call_us_en.jpg */; };
 		5E9ABBDE16F9F3CA000EAB46 /* DPTestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E9ABBDD16F9F3CA000EAB46 /* DPTestViewController.m */; };
 		5E9ABBE016F9F3E2000EAB46 /* DPTestView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5E9ABBDF16F9F3E2000EAB46 /* DPTestView.xib */; };
 		5EB72C751744DE2D00392D6E /* SKProduct+LocalizedPrice.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EB72C741744DE2D00392D6E /* SKProduct+LocalizedPrice.m */; };
@@ -282,6 +287,13 @@
 		5E956EA81754CFF200B86DAC /* MenuLevel1 */ = {isa = PBXFileReference; lastKnownFileType = folder; path = MenuLevel1; sourceTree = "<group>"; };
 		5E956EAA1754E73C00B86DAC /* BuyDialog */ = {isa = PBXFileReference; lastKnownFileType = folder; path = BuyDialog; sourceTree = "<group>"; };
 		5E956EAC17569E1600B86DAC /* woosh.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = woosh.mp3; sourceTree = "<group>"; };
+		5E956EAE1757B72B00B86DAC /* DPModalDialogManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPModalDialogManager.h; sourceTree = "<group>"; };
+		5E956EAF1757B72D00B86DAC /* DPModalDialogManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPModalDialogManager.m; sourceTree = "<group>"; };
+		5E956EB11757BFBB00B86DAC /* DPCallUsView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DPCallUsView.xib; sourceTree = "<group>"; };
+		5E956EB31757BFDA00B86DAC /* DPCallUsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPCallUsViewController.h; sourceTree = "<group>"; };
+		5E956EB41757BFDC00B86DAC /* DPCallUsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPCallUsViewController.m; sourceTree = "<group>"; };
+		5E956EBB1757C23F00B86DAC /* call_us_el.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = call_us_el.jpg; sourceTree = "<group>"; };
+		5E956EBC1757C23F00B86DAC /* call_us_en.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = call_us_en.jpg; sourceTree = "<group>"; };
 		5E9ABBDC16F9F3CA000EAB46 /* DPTestViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPTestViewController.h; sourceTree = "<group>"; };
 		5E9ABBDD16F9F3CA000EAB46 /* DPTestViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPTestViewController.m; sourceTree = "<group>"; };
 		5E9ABBDF16F9F3E2000EAB46 /* DPTestView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DPTestView.xib; sourceTree = "<group>"; };
@@ -604,6 +616,8 @@
 				5E8AB0CB171706D1004AFE76 /* UIImage+Retina4.m */,
 				5E31F03D17203B40008B15F0 /* DPMailHelper.h */,
 				5E31F03E17203B40008B15F0 /* DPMailHelper.m */,
+				5E956EAE1757B72B00B86DAC /* DPModalDialogManager.h */,
+				5E956EAF1757B72D00B86DAC /* DPModalDialogManager.m */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -698,6 +712,7 @@
 		5E71A3FF16F9B5F900E7AFF9 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				5E956EB61757C19000B86DAC /* CallUs */,
 				5EDE1F8317442F9500A84BDA /* Icons */,
 				5E869E0C173010EA00516D2D /* FreeImages */,
 				5E956EAA1754E73C00B86DAC /* BuyDialog */,
@@ -735,6 +750,15 @@
 				5E756E34174AB197001AA085 /* info-small_01@2x.png */,
 			);
 			path = Toolbar_Free;
+			sourceTree = "<group>";
+		};
+		5E956EB61757C19000B86DAC /* CallUs */ = {
+			isa = PBXGroup;
+			children = (
+				5E956EBB1757C23F00B86DAC /* call_us_el.jpg */,
+				5E956EBC1757C23F00B86DAC /* call_us_en.jpg */,
+			);
+			name = CallUs;
 			sourceTree = "<group>";
 		};
 		5EC2558116FC71BD0045AB99 /* IAPHelper */ = {
@@ -777,6 +801,8 @@
 				5E956E9F17534E1600B86DAC /* DPMoreMenuViewController.m */,
 				5E956EA117538C5500B86DAC /* DPNextHouseViewController.h */,
 				5E956EA217538C5500B86DAC /* DPNextHouseViewController.m */,
+				5E956EB31757BFDA00B86DAC /* DPCallUsViewController.h */,
+				5E956EB41757BFDC00B86DAC /* DPCallUsViewController.m */,
 			);
 			path = ControllersPaid;
 			sourceTree = "<group>";
@@ -867,6 +893,7 @@
 				5EC5739D172597A5000B7004 /* DPNewNextView.xib */,
 				5E956E9C17534B4600B86DAC /* DPMoreMenuView.xib */,
 				5E956EA417538C7900B86DAC /* DPNextHouseView.xib */,
+				5E956EB11757BFBB00B86DAC /* DPCallUsView.xib */,
 			);
 			path = ViewsPaid;
 			sourceTree = "<group>";
@@ -1017,6 +1044,9 @@
 				5E956EA91754CFF200B86DAC /* MenuLevel1 in Resources */,
 				5E956EAB1754E73C00B86DAC /* BuyDialog in Resources */,
 				5E956EAD17569E1600B86DAC /* woosh.mp3 in Resources */,
+				5E956EB21757BFBC00B86DAC /* DPCallUsView.xib in Resources */,
+				5E956EBD1757C23F00B86DAC /* call_us_el.jpg in Resources */,
+				5E956EBE1757C23F00B86DAC /* call_us_en.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1110,6 +1140,8 @@
 				5E63DF31174EAA2B0086ACF5 /* DPArticlesViewController.m in Sources */,
 				5E956EA017534E1600B86DAC /* DPMoreMenuViewController.m in Sources */,
 				5E956EA317538C5500B86DAC /* DPNextHouseViewController.m in Sources */,
+				5E956EB01757B72E00B86DAC /* DPModalDialogManager.m in Sources */,
+				5E956EB51757BFDD00B86DAC /* DPCallUsViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

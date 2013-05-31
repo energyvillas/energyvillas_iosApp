@@ -14,7 +14,9 @@
 #import "../Models/DPDataLoader.h"
 #import "DPConstants.h"
 #import "DPAppHelper.h"
-
+#import "DPModalDialogManager.h"
+#import "DPCallUsViewController.h"
+#import "DPSocialManager.h"
 
 
 @interface DPPaidMainViewController ()
@@ -25,12 +27,16 @@
 
 @property (strong, nonatomic) FPPopoverController *popupController;
 @property (strong, nonatomic) DPMoreMenuViewController *popupContentViewController;
+
+@property (strong, nonatomic) DPModalDialogManager *dlgManager;
+@property (strong, nonatomic) DPSocialManager *socialManager;
 @end
 
 @implementation DPPaidMainViewController {
     bool framesDone;
     bool isPortrait;
     int currentBackgroundCategory;
+    int tbSelItem;
 }
 
 //@synthesize navController, tabBar;
@@ -84,6 +90,7 @@
     if (!framesDone) {
         [self fixFrames:YES];
         self.tabBar.selectedItem = self.tbiMain;
+        tbSelItem = TAG_TBI_MAIN;
         framesDone = YES;
     }
     [super viewWillAppear:animated];
@@ -265,12 +272,41 @@
 }
 
 - (void) showCall {
-    if ([self checkTop:self.callViewController]) return;
+    return;
+    UIViewController *contr = [self.navController topViewController];
+    DPCallUsViewController *callusVC = [[DPCallUsViewController alloc] init];
+    [callusVC setCompletion:^(int tag) {
+        self.dlgManager.modalController = nil;
+        contr.view.userInteractionEnabled = YES;
+        
+        switch (tag) {
+            case 100:
+                // cancelled... ok go on...
+                break;
+                
+            case 101:
+                // make the call
+                break;
+        }
+        
+        switch (tbSelItem) {
+            case TAG_TBI_MAIN: self.tabBar.selectedItem = self.tbiMain;
+                break;
+            case TAG_TBI_WHO: self.tabBar.selectedItem = self.tbiWho;
+                break;
+            case TAG_TBI_BUY: self.tabBar.selectedItem = self.tbiBuy;
+                break;
+                
+            default:
+                break;
+        }
+        
+        self.dlgManager = nil;
+    }];
     
-    self.callViewController = [[DPHtmlContentViewController alloc]
-                              initWithCategory:CTGID_CALL_US lang:CURRENT_LANG];
-    
-    [self showViewController:self.callViewController];
+    if (!self.dlgManager)
+        self.dlgManager = [[DPModalDialogManager alloc] initWithController:contr];
+    [self.dlgManager showDialog:callusVC];
 }
 
 - (void) showMore {
@@ -286,15 +322,21 @@
     NSLog(@"tapped on tbi => %d", item.tag);
     
     switch (item.tag) {
-        case TAG_TBI_MAIN: [self showMain];
+        case TAG_TBI_MAIN: {
+            [self showMain];
+            tbSelItem = item.tag;
             break;
-            
-        case TAG_TBI_WHO: [self showWho];
+        }
+        case TAG_TBI_WHO: {
+            [self showWho];
+            tbSelItem = item.tag;
             break;
-            
-        case TAG_TBI_BUY: [self showBuy];
+        }
+        case TAG_TBI_BUY: {
+            [self showBuy];
+            tbSelItem = item.tag;
              break;
-            
+        }
         case TAG_TBI_CALL: [self showCall];
             break;
             

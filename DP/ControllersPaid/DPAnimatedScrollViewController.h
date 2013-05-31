@@ -12,6 +12,8 @@
 
 @interface DPAnimatedScrollViewController : DPScrollableViewController <DPDataLoaderDelegate, DPScrollableViewDelegate, DPScrollableDataSourceDelegate>
 
+@property (nonatomic, readonly) int category;
+
 - (id) initWithCategory:(int)ctgID isLeaf:(BOOL)isLeaf frame:(CGRect)frame;
 
 - (void) changeFrame:(CGRect)newFrame;

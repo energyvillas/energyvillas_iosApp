@@ -145,6 +145,8 @@
         [self.view addSubview:self.houseNext];
     } else {
         self.houseNext.frame = CGRectMake(x, y, w, h);
+        if (self.ctgNew) [self internalLoadImage:self.ctgNew];
+        if (self.ctgNext) [self internalLoadImage:self.ctgNext];
 //        for (UIView *v in self.houseNext.subviews)
 //            v.frame = self.houseNext.bounds;
     }
@@ -262,14 +264,20 @@
 
 - (void) loadImage:(Category *)element {
     [self doLayoutSubViews:NO];
-    
+    [self internalLoadImage:element];
+}
+
+- (void) internalLoadImage:(Category *)element {
     int indx = -1;
     if (element == self.ctgNew)
         indx = 0;
     else if (element == self.ctgNext)
         indx = 1;
-    if (indx != -1)
-        [self downloadImageUrl:element.imageUrl atIndex:indx];
+    if (indx != -1) {
+        NSString *imgName = IS_PORTRAIT ? element.imageUrl : element.imageRollUrl;
+        if (![self loadCachedImage:imgName atIndex:indx])
+            [self downloadImageUrl:imgName atIndex:indx];
+    }
 }
 
 //- (NSString *) calcImageName:(NSString *)imgUrl isHighlight:(BOOL)ishighlight {
@@ -302,14 +310,17 @@
 //    }
 //}
 
-- (void) loadCachedImage:(NSString *)imgName atIndex:(int)aIndex{
-    if (aIndex >= self.view.subviews.count) return;
+- (BOOL) loadCachedImage:(NSString *)imgName atIndex:(int)aIndex{
+    if (aIndex >= self.view.subviews.count) return NO;
     
     UIImage *img = [[DPAppHelper sharedInstance] loadUIImageFromCache:imgName];
     if (img != nil) {
         UIImageView *iv = aIndex == 0 ? self.houseNew : (aIndex == 1 ? self.houseNext : nil);
         [iv setImage:img];
+        return YES;
     }
+    
+    return NO;
 }
 
 //==============================================================================

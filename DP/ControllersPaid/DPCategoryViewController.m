@@ -70,19 +70,28 @@
     self.ctgView.backgroundColor = [UIColor clearColor];
     self.mmView.backgroundColor = [UIColor clearColor];
     
-    CGRect lblframe = self.lblTitle.frame;
-    lblframe.size.height = IS_IPAD ? 32 : 20;
-    self.lblTitle.frame = lblframe;
-
-    self.lblTitle.font = [UIFont systemFontOfSize: IS_IPAD ? 28.0f : 14.0f];
-
+    if (self.category == CTGID_EXCLUSIVE_DESIGNER || self.category == CTGID_EXCLUSIVE_ART) {
+        // ok do not touch it... we will show an image...
+    } else {
+        CGRect lblframe = self.lblTitle.frame;
+        lblframe.size.height = IS_IPAD ? 32 : 20;
+        self.lblTitle.frame = lblframe;
+        
+        self.lblTitle.font = [UIFont systemFontOfSize: IS_IPAD ? 28.0f : 14.0f];
+    }
+    
     [self doLocalize];
 }
 
 - (void) fixTitleLabel {
-    NSString *ctgTitleKey = [NSString stringWithFormat:kMENU_TITLE_Fmt, self.category];
-    self.lblTitle.text = DPLocalizedString(ctgTitleKey);
+    if (self.category == CTGID_EXCLUSIVE_DESIGNER || self.category == CTGID_EXCLUSIVE_ART) {
+        self.lblTitle.text = nil;
+    } else {
+        NSString *ctgTitleKey = [NSString stringWithFormat:kMENU_TITLE_Fmt, self.category];
+        self.lblTitle.text = DPLocalizedString(ctgTitleKey);
+    }
 }
+
 - (void) doLocalize {
     [super doLocalize];
 
@@ -131,22 +140,20 @@
 
 
 - (void) doLayoutSubViews:(BOOL)fixtop {
-    CGRect vf = self.view.frame;
-//    CGRect svf = self.view.superview.frame;
-//    fixtop = NO;
-//    int h = IS_PORTRAIT ? vf.size.height : vf.size.height - vf.origin.y;
-//    int w = vf.size.width;
-//    int top = fixtop ? vf.origin.y : 0;
+    [self internlLayoutSubViews];
     
-    fixtop = IS_LANDSCAPE && !IS_IPAD;
+    [self loadAdsView:NO];
+    [self loadCategoryView:NO];
+    [self loadMenuView:NO];
+}
+- (void) internlLayoutSubViews {
+    CGRect vf = self.view.frame;
+    
+    BOOL fixtop = IS_LANDSCAPE && !IS_IPAD;
     int top = fixtop ? 12 : 0;
     int h = vf.size.height - top;
     int w = vf.size.width;
 
-//    int h = vf.size.height - vf.origin.y;
-//    int w = vf.size.width;
-//    int top = fixtop ? vf.origin.y : 0;
-    
     NSLog(@"############## DPCategoryView - h = %d, top = %d", h, top);
 
     // iphone sizes
@@ -191,17 +198,17 @@
         }
     }
     
-    self.lblTitle.frame = CGRectMake(0, 0,
-                                     self.ctgView.frame.size.width,
-                                     self.lblTitle.frame.size.height);
+    if (self.category == CTGID_EXCLUSIVE_DESIGNER || self.category == CTGID_EXCLUSIVE_ART) {
+        self.lblTitle.frame = CGRectZero;
+    } else {
+        self.lblTitle.frame = CGRectMake(0, 0,
+                                         self.ctgView.frame.size.width,
+                                         self.lblTitle.frame.size.height);
+    }
     self.actualCtgView.frame = CGRectMake(0,
                                           self.lblTitle.frame.size.height,
                                           self.ctgView.frame.size.width,
                                           self.ctgView.frame.size.height - self.lblTitle.frame.size.height);
-    
-    [self loadAdsView:NO];
-    [self loadCategoryView:NO];
-    [self loadMenuView:NO];
 }
 
 - (void) loadAdsView:(BOOL)reload {
@@ -232,6 +239,7 @@
 - (void) showCategory:(int)ctgID {
     if (_category != ctgID) {
         _category = ctgID;
+        [self internlLayoutSubViews];
         [self fixTitleLabel];
         [self loadAdsView:NO];
         [self loadCategoryView:YES];
@@ -242,7 +250,7 @@
     if (self.category == 0)
         return;
 
-//    if (reload)
+    if (reload || (self.ctgViewController && self.category != self.ctgViewController.category))
     {
         if (self.ctgViewController)
         {

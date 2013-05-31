@@ -129,7 +129,8 @@
             break;
         }
         case SOCIAL_ACT_TWITTER:
-            [self tweet:[DPAppHelper sharedInstance].imageUrl2Share url:[DPAppHelper sharedInstance].imageUrl2Share];
+            [self tweet:[DPAppHelper sharedInstance].imageUrl2Share
+                    url:[DPAppHelper sharedInstance].imageUrl2Share];
             break;
             
         case SOCIAL_ACT_LINKEDIN:
