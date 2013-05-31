@@ -69,24 +69,29 @@
     self.adsView.backgroundColor = [UIColor clearColor];
     self.ctgView.backgroundColor = [UIColor clearColor];
     self.mmView.backgroundColor = [UIColor clearColor];
+    self.imgTitle.backgroundColor = [UIColor clearColor];
+    self.imgTitle.contentMode = UIViewContentModeTop;
     
-    if (self.category == CTGID_EXCLUSIVE_DESIGNER || self.category == CTGID_EXCLUSIVE_ART) {
-        // ok do not touch it... we will show an image...
-    } else {
-        CGRect lblframe = self.lblTitle.frame;
-        lblframe.size.height = IS_IPAD ? 32 : 20;
-        self.lblTitle.frame = lblframe;
-        
-        self.lblTitle.font = [UIFont systemFontOfSize: IS_IPAD ? 28.0f : 14.0f];
-    }
+    CGRect lblframe = self.lblTitle.frame;
+    lblframe.size.height = IS_IPAD ? 32 : 20;
+    self.lblTitle.frame = lblframe;
+    self.lblTitle.font = [UIFont systemFontOfSize: IS_IPAD ? 28.0f : 14.0f];
     
-    [self doLocalize];
+    [self fixTitleLabel];
 }
 
 - (void) fixTitleLabel {
     if (self.category == CTGID_EXCLUSIVE_DESIGNER || self.category == CTGID_EXCLUSIVE_ART) {
         self.lblTitle.text = nil;
+        self.lblTitle.hidden = YES;
+        self.imgTitle.hidden = NO;
+        NSString *ctgName = self.category == CTGID_EXCLUSIVE_DESIGNER ? @"designer" : @"art";
+        NSString *orientation = IS_PORTRAIT ? @"v" : @"h";
+        NSString *imgName = [NSString stringWithFormat:@"Background/logo_%@_%@.png", ctgName, orientation];
+        self.imgTitle.image = [UIImage imageNamed:imgName];
     } else {
+        self.imgTitle.hidden = YES;
+        self.lblTitle.hidden = NO;
         NSString *ctgTitleKey = [NSString stringWithFormat:kMENU_TITLE_Fmt, self.category];
         self.lblTitle.text = DPLocalizedString(ctgTitleKey);
     }
@@ -117,6 +122,7 @@
     [self setMmView:nil];
     [self setLblTitle:nil];
     [self setActualCtgView:nil];
+    [self setImgTitle:nil];
     [super viewDidUnload];
 }
 
@@ -200,10 +206,14 @@
     
     if (self.category == CTGID_EXCLUSIVE_DESIGNER || self.category == CTGID_EXCLUSIVE_ART) {
         self.lblTitle.frame = CGRectZero;
+        self.imgTitle.frame = CGRectMake(0, 0,
+                                         self.ctgView.frame.size.width,
+                                         120);
     } else {
+        self.imgTitle.frame = CGRectZero;
         self.lblTitle.frame = CGRectMake(0, 0,
                                          self.ctgView.frame.size.width,
-                                         self.lblTitle.frame.size.height);
+                                         IS_IPAD ? 32 : 20);
     }
     self.actualCtgView.frame = CGRectMake(0,
                                           self.lblTitle.frame.size.height,

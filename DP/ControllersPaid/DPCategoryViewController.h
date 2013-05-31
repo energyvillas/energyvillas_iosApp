@@ -18,6 +18,7 @@
 @property (strong, nonatomic) IBOutlet UIView *adsView;
 @property (strong, nonatomic) IBOutlet UIView *mmView;
 
+@property (strong, nonatomic) IBOutlet UIImageView *imgTitle;
 @property (strong, nonatomic) IBOutlet UILabel *lblTitle;
 @property (strong, nonatomic) IBOutlet UIView *actualCtgView;
 
