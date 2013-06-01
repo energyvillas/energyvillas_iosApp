@@ -159,6 +159,12 @@
                                            w - PAD_WL_NEW_NEXT, h - PAD_HL_ADS);
         }
     }
+
+    // this is a fix for when returning from vimeo player in landscape
+    CGRect nbf = self.navigationController.navigationBar.frame;
+    nbf.size.height = 44;
+    self.navigationController.navigationBar.frame = nbf;
+    //
     
     [self loadAdsView:NO];
     [self loadNewNextView:NO];
