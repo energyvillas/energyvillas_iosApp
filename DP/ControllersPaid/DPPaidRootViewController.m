@@ -102,7 +102,7 @@
     int PAD_H_NEW_NEXT = 221;
     
     int PAD_HL_ADS = 120;
-    int PAD_WL_NEW_NEXT = 465;
+    int PAD_WL_NEW_NEXT = 466;
     
     
     if (IS_IPHONE) {
