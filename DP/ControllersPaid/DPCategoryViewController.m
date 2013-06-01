@@ -206,7 +206,7 @@
     
     if (self.category == CTGID_EXCLUSIVE_DESIGNER || self.category == CTGID_EXCLUSIVE_ART) {
         self.lblTitle.frame = CGRectZero;
-        self.imgTitle.frame = CGRectMake(0, 0,
+        self.imgTitle.frame = CGRectMake(0, self.category == CTGID_EXCLUSIVE_ART ? 8 : 0,
                                          self.ctgView.frame.size.width,
                                          120);
     } else {
