@@ -33,9 +33,9 @@
 	<dict>
 		<key>Titles</key>
 		<array>
-			<string>Κυκλαδίτικες Κατοικίες</string>
-			<string>Αιγαιοπελαγίτικες Κατοικίες</string>
-			<string>Κατοικίες Ιονίων Νήσων</string>
+			<string>Κυκλαδίτικες</string>
+			<string>Αιγαιοπελαγίτικες</string>
+			<string>Ιονίων Νήσων</string>
 		</array>
 		<key>Images</key>
 		<array>

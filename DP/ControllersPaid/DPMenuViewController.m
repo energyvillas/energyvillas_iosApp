@@ -296,16 +296,43 @@
                        title:(NSString *)title {
     UIFont *fnt = nil;
     if (IS_IPAD)
-        fnt = [UIFont fontWithName:@"TrebuchetMS-Bold" size:16]; //HelveticaNeue-CondensedBold"
+        fnt = [UIFont fontWithName:@"TrebuchetMS-Bold" size: IS_PORTRAIT ? 16 : 15.0f]; //HelveticaNeue-CondensedBold"
     else  if (IS_IPHONE)
-        fnt = [UIFont fontWithName:@"TrebuchetMS-Bold" size:9];
+        fnt = [UIFont fontWithName:@"TrebuchetMS-Bold" size: IS_PORTRAIT ? 8.7f : 8.4f];
     else
-        fnt = [UIFont fontWithName:@"TrebuchetMS-Bold" size:11];
+        fnt = [UIFont fontWithName:@"TrebuchetMS-Bold" size:8.0f];
     UILabel *label = createLabel(frame, title, fnt);
-    label.frame = CGRectOffset(label.frame, 0, -2);
+    int offsetV = [self calcLabelOffset];
+    label.frame = CGRectOffset(label.frame, 0, offsetV);
     return label;
 }
 /**/
+
+-(int) calcLabelOffset {
+    switch (menulevel) {
+        case 0:
+            if (IS_IPHONE) {
+                return IS_PORTRAIT ? -6 : -5;
+            } else if (IS_IPHONE_5) {
+                return IS_PORTRAIT ? -16 : -4;
+            } else {
+                return IS_PORTRAIT ? -15 : -27;
+            }
+            break;
+            
+        case 1:
+            if (IS_IPHONE) {
+                return IS_PORTRAIT ? -9 : -5;
+            } else if (IS_IPHONE_5) {
+                return IS_PORTRAIT ? -9 : -5;
+            } else {
+                return IS_PORTRAIT ? -24 : -26;
+            }
+            break;
+    }
+    
+    return 0;
+}
 
 #pragma END :: DPScrollableDataSourceDelegate
 
@@ -357,11 +384,11 @@
     
     UIFont *fnt = nil;
     if (IS_IPAD)
-        fnt = [UIFont fontWithName:@"TrebuchetMS-Bold" size:16]; //HelveticaNeue-CondensedBold"
+        fnt = [UIFont fontWithName:@"TrebuchetMS-Bold" size:19]; //HelveticaNeue-CondensedBold"
     else  if (IS_IPHONE)
         fnt = [UIFont fontWithName:@"TrebuchetMS-Bold" size:9];
     else
-        fnt = [UIFont fontWithName:@"TrebuchetMS-Bold" size:11];
+        fnt = [UIFont fontWithName:@"TrebuchetMS-Bold" size:10.0f];
 
     lv.font = fnt;
 //    if (IS_IPAD)
@@ -374,7 +401,8 @@
     lv.textColor = [UIColor whiteColor];
     [lv sizeToFit];
     CGRect b = lv.bounds;
-    frm = CGRectMake(frm.origin.x, frm.origin.y + frm.size.height - b.size.height,
+    int offsetV = [self calcPopupLabelOffset];
+    frm = CGRectMake(frm.origin.x, frm.origin.y + offsetV,
                      frm.size.width, b.size.height);
     lv.frame = frm;
     
@@ -382,6 +410,32 @@
     [v addSubview:lv];
     
     return v;
+}
+
+-(int) calcPopupLabelOffset {
+    switch (menulevel) {
+        case 0:
+            if (IS_IPHONE) {
+                return IS_PORTRAIT ? 2 : 2;
+            } else if (IS_IPHONE_5) {
+                return IS_PORTRAIT ? 2 : 2;
+            } else {
+                return IS_PORTRAIT ? 6 : 6;
+            }
+            break;
+            
+        case 1:
+            if (IS_IPHONE) {
+                return IS_PORTRAIT ? 2 : 2;
+            } else if (IS_IPHONE_5) {
+                return IS_PORTRAIT ? 2 : 2;
+            } else {
+                return IS_PORTRAIT ? 6 : 6;
+            }
+            break;
+    }
+    
+    return 0;
 }
 
 -(id) doCreateIslandViewController:(int)ctgId islandsCount:(int)islandsCount frame:(CGRect)vframe {
