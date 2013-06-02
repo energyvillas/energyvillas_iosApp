@@ -36,7 +36,7 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     
-    actualFrame = CGRectZero;
+//    actualFrame = CGRectZero;
     
     [self.view bringSubviewToFront:self.contentView];
     [self doLocalize];
@@ -55,7 +55,6 @@
     [self setImgView:nil];
     [self setBtnCall:nil];
     [self setBtnCancel:nil];
-    [self setBackgroundView:nil];
     [super viewDidUnload];
 }
 
@@ -74,8 +73,8 @@
 }
 
 -(void) doLocalize {
-    [self.btnCall setTitle:DPLocalizedString(@"SOCIAL_BTN_Close") forState:UIControlStateNormal];
-    [self.btnCancel setTitle:DPLocalizedString(@"SOCIAL_BTN_Close") forState:UIControlStateNormal];
+    [self.btnCall setTitle:DPLocalizedString(@"CALLUS_BTN_Call") forState:UIControlStateNormal];
+    [self.btnCancel setTitle:DPLocalizedString(@"CALLUS_BTN_Cancel") forState:UIControlStateNormal];
     self.imgView.image = [UIImage imageNamed:[NSString stringWithFormat:@"call_us_%@.jpg", CURRENT_LANG]];
 }
 
@@ -89,18 +88,27 @@
     
     CGPoint cntr = CGPointMake(nextViewSize.width / 2.0f,
                                nextViewSize.height / 2.0f); //)self.backView.center;
-//    cntr.y = cntr.y + 80;
-    self.backgroundView.frame = CGRectMake(0, 0, 290, 150);
-    self.contentView.frame = CGRectMake(0, 0, 270, 130);
-    self.backgroundView.center = cntr;
+    CGRect frm = IS_IPAD ? CGRectMake(0, 0, 436, 210) : CGRectMake(0, 0, 270, 130);
+    self.contentView.frame = frm; //CGRectMake(0, 0, 270, 130);
     self.contentView.center = cntr;
     
-    CGRect frm = self.contentView.frame;
+    CGRect childframe = self.contentView.bounds;
+    self.imgView.frame = childframe;
+    CGRect btnframe = CGRectMake(0, 0,
+                            (childframe.size.width / 2.0f) - 20.0f,
+                            32.0f);
+    btnframe = CGRectOffset(btnframe,
+                            15.0f,
+                            childframe.size.height - btnframe.size.height - 10.0f);
+    self.btnCall.frame = btnframe;
+    btnframe = CGRectOffset(btnframe, btnframe.size.width + 10.0f, 0);
+    self.btnCancel.frame = btnframe;
+    
+    frm = self.contentView.frame;
     if (IS_IPAD) {
-        self.backgroundView.frame = CGRectMake(0, 0,
-                                               frm.size.width,
-                                               frm.size.height);
-        self.contentView.frame = self.backgroundView.frame;
+        self.contentView.frame = CGRectMake(0, 0,
+                                            frm.size.width,
+                                            frm.size.height);
         
         actualFrame = CGRectMake((nextViewSize.width - frm.size.width) / 2.0,
                                  (nextViewSize.height - frm.size.height) / 2.0,

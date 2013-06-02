@@ -16,7 +16,7 @@
 #import "DPAppHelper.h"
 #import "DPModalDialogManager.h"
 #import "DPCallUsViewController.h"
-#import "DPSocialManager.h"
+
 
 
 @interface DPPaidMainViewController ()
@@ -29,7 +29,6 @@
 @property (strong, nonatomic) DPMoreMenuViewController *popupContentViewController;
 
 @property (strong, nonatomic) DPModalDialogManager *dlgManager;
-@property (strong, nonatomic) DPSocialManager *socialManager;
 @end
 
 @implementation DPPaidMainViewController {
@@ -266,15 +265,15 @@
     if ([self checkTop:self.buyViewController]) return;
     
     self.buyViewController = [[DPHtmlContentViewController alloc]
-                               initWithCategory:CTGID_PURCHASE_LAND lang:CURRENT_LANG];
-
+                              initWithCategory:CTGID_PURCHASE_LAND lang:CURRENT_LANG];
+    
     [self showViewController:self.buyViewController];
 }
 
 - (void) showCall {
-    //return;
     UIViewController *contr = [self.navController topViewController];
     DPCallUsViewController *callusVC = [[DPCallUsViewController alloc] init];
+    
     [callusVC setCompletion:^(int tag) {
         self.dlgManager.modalController = nil;
         contr.view.userInteractionEnabled = YES;

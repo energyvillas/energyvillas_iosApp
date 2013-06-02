@@ -91,4 +91,9 @@
 "COUNTDOWN_SECONDS"="SECONDS";
 
 
+// call us dialog
+"CALLUS_BTN_Call"="Call";
+"CALLUS_BTN_Cancel"="Cancel";
+
+
 

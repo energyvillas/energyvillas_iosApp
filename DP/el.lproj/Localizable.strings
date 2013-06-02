@@ -91,4 +91,10 @@
 "COUNTDOWN_SECONDS"="ΔΕΥΤΕΡΟΛΕΠΤΑ";
 
 
+// call us dialog
+"CALLUS_BTN_Call"="Κλήση";
+"CALLUS_BTN_Cancel"="Ακύρωση";
+
+
+
 
