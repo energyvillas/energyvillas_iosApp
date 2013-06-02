@@ -47,10 +47,17 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
-    self.htmlView.clipsToBounds = YES;
+    [self fixWebView];
     [self resetCountDownLabels];
 }
 
+- (void) fixWebView {
+    self.htmlView.backgroundColor = [UIColor clearColor];
+//    self.htmlView.opaque = NO;
+//    self.htmlView.contentMode = UIViewContentModeScaleAspectFit;
+//    self.htmlView.userInteractionEnabled = YES;
+//    self.htmlView.clipsToBounds = YES;
+}
 - (void) resetCountDownLabels {
     UIFont *font = [UIFont fontWithName:@"TrebuchetMS-Bold" size:IS_IPAD ? 20.0f : 16.0f];
     [self resetLabel:self.topLabel font:font];
@@ -163,13 +170,16 @@
     return IS_IPAD ? 28 : 24;
 }
 - (int) top2CounterLabelSpacing {
-    return IS_IPAD ? 20 : 10;
+    return IS_IPAD ? 20 : IS_PORTRAIT ? 10 : 0;
 }
 - (int) counterLabelHeight {
     return IS_IPAD ? 44 : 36;
 }
 - (int) lblLabelHeight {
     return IS_IPAD ? 20 : 16;
+}
+- (int) bottomMargin {
+    return IS_IPAD ? (IS_PORTRAIT ? 200 : 120) : IS_PORTRAIT ? 20 : 0;
 }
 
 - (void) doLayoutSubViews:(BOOL)fixtop {
@@ -184,15 +194,17 @@
     int TOP_CNT_Spacing = [self top2CounterLabelSpacing];
     int CNT_Height = [self counterLabelHeight];
     int LBL_Height = [self lblLabelHeight];
+    int BOTTOM_Margin = [self bottomMargin];
     
-    int containerHeight = TOP_Height + TOP_CNT_Spacing + CNT_Height + LBL_Height + (IS_IPAD ? 40 : 20);
+    int containerHeight = TOP_Height + TOP_CNT_Spacing + CNT_Height + LBL_Height + BOTTOM_Margin;
     
     self.htmlView.frame = CGRectMake(0, top, w, h - containerHeight);
 
     self.countDownContainerView.frame = CGRectMake(0, top + h - containerHeight,
                                                    w, containerHeight);
-    [self loadHtmlView:YES];
+
     [self layoutCounterLabels];
+    [self loadHtmlView:NO];
 }
 
 - (void) doLocalize {
@@ -206,8 +218,8 @@
 - (void) loadHtmlView:(BOOL)reload {
     if (reload && self.htmlVC) {
         self.htmlVC.dataloaderDelegate = nil;
-        [self.htmlVC.view removeFromSuperview];
         [self.htmlVC removeFromParentViewController];
+        [self.htmlVC.view removeFromSuperview];
         self.htmlVC = nil;
     }
     
