@@ -59,6 +59,13 @@
     return self;
 }
 
+//- (NSTimeInterval) autoScrollInterval {
+//    return AUTO_SCROLL_INTERVAL;
+//}
+- (NSTimeInterval) userScrollInterval {
+    return 5.0f;
+}
+
 //==============================================================================
 
 - (void)viewDidLoad

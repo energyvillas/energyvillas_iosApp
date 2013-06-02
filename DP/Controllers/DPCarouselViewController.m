@@ -311,25 +311,32 @@
                                    self.lblCounter.frame.size.height);
     counterfrm = CGRectOffset(counterfrm, self.btnAdd2Favs.frame.size.width + 2, 0);
     self.lblCounter.frame = counterfrm;
+
+    CGRect r = self.btnAdd2Favs.frame;
+    self.btnAdd2Favs.frame = CGRectMake(r.origin.x, r.origin.y, r.size.width, counterfrm.size.height);
     
+    self.lblTitle.frame = CGRectZero;
     if (self.icarousel.currentItemIndex >= self.datalist.count) {
         self.lblTitle.text = @"";
         [self.lblTitle sizeToFit];
     } else {
         NSString *title = [article title];
-        self.lblTitle.text = title;
-        [self.lblTitle sizeToFit];
+        if (title) {
+            self.lblTitle.text = title;
+            [self.lblTitle sizeToFit];
+        }
     }
-    CGRect titlefrm = CGRectMake(0, 0,
+    
+    if (!CGSizeEqualToSize(self.lblTitle.frame.size, CGSizeZero)) {
+        CGRect titlefrm = CGRectMake(0, 0,
                                  self.lblTitle.frame.size.width + 6,
                                  self.lblTitle.frame.size.height);
+
+        titlefrm = CGRectOffset(titlefrm, counterfrm.origin.x + counterfrm.size.width + 2, 0);
+        self.lblTitle.frame = titlefrm;
+    }
     
-    CGRect r = self.btnAdd2Favs.frame;
-    self.btnAdd2Favs.frame = CGRectMake(r.origin.x, r.origin.y, r.size.width, counterfrm.size.height);
-    
-    titlefrm = CGRectOffset(titlefrm, counterfrm.origin.x + counterfrm.size.width + 2, 0);
-    self.lblTitle.frame = titlefrm;
-    self.lblContainer.frame = CGRectUnion(self.btnAdd2Favs.frame, titlefrm);
+    self.lblContainer.frame = CGRectUnion(CGRectUnion(self.btnAdd2Favs.frame, counterfrm), self.lblTitle.frame);
 }
 //==============================================================================
 
@@ -404,21 +411,21 @@
         self.icarousel.delegate = self;
         self.icarousel.dataSource = self;
         
-        CGFloat scrspeed = self.icarousel.scrollSpeed;
+        //CGFloat scrspeed = self.icarousel.scrollSpeed;
         switch (self.carouselCategoryID) {
             case CTGID_CAROUSEL: {
                 self.icarousel.type = iCarouselTypeCoverFlow2;
-                self.icarousel.scrollSpeed = IS_IPAD ? 0.7f : 0.7f;
+                //self.icarousel.scrollSpeed = IS_IPAD ? 0.7f : 0.7f;
                 break;
             }
             case CTGID_CAROUSEL_MORE: {
                 self.icarousel.type = iCarouselTypeLinear;
-                self.icarousel.scrollSpeed = 0.35f;
+                //self.icarousel.scrollSpeed = 0.35f;
                 break;
             }
             default: {
                 self.icarousel.type = iCarouselTypeCoverFlow2;
-                self.icarousel.scrollSpeed = scrspeed * 0.7f;//0.35f;
+                //self.icarousel.scrollSpeed = scrspeed * 0.7f;//0.35f;
                 break;
             }
         }

@@ -669,12 +669,19 @@
     [self engageUserTimer];
 }
 
+- (NSTimeInterval) autoScrollInterval {
+    return AUTO_SCROLL_INTERVAL;
+}
+- (NSTimeInterval) userScrollInterval {
+    return USER_SCROLL_INTERVAL;
+}
+
 - (void) engageAutoTimer {
     if (!autoScroll) return;
     if (self.pageControl.numberOfPages <= 1) return;
     
     if (timer == nil) {
-        timer = [NSTimer scheduledTimerWithTimeInterval:AUTO_SCROLL_INTERVAL target:self selector:@selector(onTimer) userInfo:nil repeats:YES];
+        timer = [NSTimer scheduledTimerWithTimeInterval:[self autoScrollInterval] target:self selector:@selector(onTimer) userInfo:nil repeats:YES];
     }
 }
 
@@ -705,7 +712,7 @@
     if (!timerUsed) {
         userTimerActive++;
 
-        usertimer = [NSTimer scheduledTimerWithTimeInterval:USER_SCROLL_INTERVAL
+        usertimer = [NSTimer scheduledTimerWithTimeInterval:[self userScrollInterval]
                                 target:self
                                 selector:@selector(onUserTimer)
                                 userInfo:nil repeats:NO];
