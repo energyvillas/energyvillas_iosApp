@@ -283,9 +283,14 @@
                 // cancelled... ok go on...
                 break;
                 
-            case 101:
+            case 101: {
+                
                 // make the call
+                NSString *telNo = [NSString stringWithFormat:@"%@", @"tel:+302103611150"];
+                telNo = [telNo stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+                [[UIApplication sharedApplication] openURL:[NSURL URLWithString:telNo]];
                 break;
+            }
         }
         
         switch (tbSelItem) {

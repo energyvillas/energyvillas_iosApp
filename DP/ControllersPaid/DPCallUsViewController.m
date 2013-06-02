@@ -94,15 +94,27 @@
     
     CGRect childframe = self.contentView.bounds;
     self.imgView.frame = childframe;
-    CGRect btnframe = CGRectMake(0, 0,
-                            (childframe.size.width / 2.0f) - 20.0f,
-                            32.0f);
-    btnframe = CGRectOffset(btnframe,
-                            15.0f,
-                            childframe.size.height - btnframe.size.height - 10.0f);
-    self.btnCall.frame = btnframe;
-    btnframe = CGRectOffset(btnframe, btnframe.size.width + 10.0f, 0);
-    self.btnCancel.frame = btnframe;
+    
+    if (IS_IPAD) {
+        CGRect btnframe = CGRectMake(0, 0,
+                                     (childframe.size.width / 2.0f) - 20.0f,
+                                     32.0f);
+        btnframe = CGRectOffset(btnframe,
+                                (childframe.size.width - btnframe.size.width) / 2.0f,
+                                childframe.size.height - btnframe.size.height - 30.0f);
+        self.btnCancel.frame = btnframe;
+        self.btnCall.hidden = YES;
+    } else {
+        CGRect btnframe = CGRectMake(0, 0,
+                                     (childframe.size.width / 2.0f) - 20.0f,
+                                     32.0f);
+        btnframe = CGRectOffset(btnframe,
+                                15.0f,
+                                childframe.size.height - btnframe.size.height - 10.0f);
+        self.btnCall.frame = btnframe;
+        btnframe = CGRectOffset(btnframe, btnframe.size.width + 10.0f, 0);
+        self.btnCancel.frame = btnframe;
+    }
     
     frm = self.contentView.frame;
     if (IS_IPAD) {
