@@ -17,7 +17,6 @@
 #import "DPIAPHelper.h"
 #import "DPAppHelper.h"
 #import "DPConstants.h"
-#import "DPCtgScrollViewController.h"
 #import "DPBuyContentViewController.h"
 
 

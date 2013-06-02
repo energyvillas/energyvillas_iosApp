@@ -11,15 +11,15 @@
 
 @interface DPMenuViewController : DPScrollableViewController <DPScrollableViewDelegate, DPScrollableDataSourceDelegate, FPPopoverControllerDelegate>
 
-- (id) initWithRows:(int)rows
-            columns:(int)columns
-         autoScroll:(BOOL)autoscroll;
+@property (nonatomic, readonly, getter = getCurrentMenuPage) int currentMenuPage;
 
 - (id) initWithRows:(int)rows
             columns:(int)columns
          autoScroll:(BOOL)autoscroll
           showPages:(BOOL)showpages
     scrollDirection:(DPScrollDirection)scrolldir
-          menulevel:(int)level;
+          menulevel:(int)level
+        initialPage:(int)initialPage;
+
 
 @end

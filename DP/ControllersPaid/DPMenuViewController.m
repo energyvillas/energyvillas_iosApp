@@ -26,6 +26,10 @@
     int island_height;
 }
 
+@synthesize currentMenuPage = _currentMenuPage;
+
+
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -37,22 +41,11 @@
 
 - (id) initWithRows:(int)rows
             columns:(int)columns
-         autoScroll:(BOOL)autoscroll {
-    self = [self initWithRows:rows
-                      columns:columns
-                   autoScroll:autoscroll
-                    showPages:YES
-              scrollDirection:DPScrollDirectionHorizontal
-                    menulevel:0];
-    return self;
-}
-
-- (id) initWithRows:(int)rows
-            columns:(int)columns
          autoScroll:(BOOL)autoscroll
           showPages:(BOOL)showpages
     scrollDirection:(DPScrollDirection)scrolldir
-          menulevel:(int)level{
+          menulevel:(int)level
+        initialPage:(int)initialPage {
 
     menulevel = level;
     DPAppHelper *apphelper = [DPAppHelper sharedInstance];
@@ -60,18 +53,28 @@
                                                 lang:apphelper.currentLang];
     
     self = [super initWithContent:content
+                             rows:rows
+                          columns:columns
                        autoScroll:NO
                         showPages:showpages
-                  scrollDirection:scrolldir];
+                  scrollDirection:scrolldir
+                      initialPage:initialPage];
     
     if (self) {
         self.scrollableViewDelegate = self;
         self.dataDelegate = self;
-        self.rowCount = rows;
-        self.colCount = columns;
     }
     
     return self;
+}
+
+- (void) scrolledToPage:(int)newPage {
+    _currentMenuPage = newPage;
+    NSLog(@"scrolledToPage:%d", _currentMenuPage);
+}
+
+- (int) getCurrentMenuPage {
+    return _currentMenuPage;
 }
 
 - (void)viewDidLoad
@@ -214,7 +217,9 @@
 //}
 - (NSString *) calcImageName:(DPDataElement *)elm isHighlight:(BOOL)ishighlight {
     @try {
+#ifdef LOG_MENU
         NSLog(@"Menu - calcImageName - baseName='%@'", elm.imageUrl);
+#endif
         NSArray *parts = [elm.imageUrl componentsSeparatedByString:@"."];
         if (parts && parts.count == 2) {
             NSString *result = elm.imageUrl;
@@ -234,8 +239,6 @@
             return elm.imageUrl;
     }
     @catch (NSException* exception) {
-        NSLog(@"Uncaught exception: %@", exception.description);
-        NSLog(@"Stack trace: %@", [exception callStackSymbols]);
         return elm.imageUrl;
     }
 }
@@ -280,7 +283,9 @@
 - (void) onTap:(id)sender {
     int indx = ((UIButton *)sender).tag;
     DPDataElement * element = self.contentList[indx];
+#ifdef LOG_MENU
     NSLog(@"Clicked image at index %i named %@", indx, element.title);
+#endif
     
     [self elementTapped:sender element:element];
     
@@ -345,8 +350,9 @@
         // handling code
         int indx = sender.view.tag;
         DPDataElement *element = self.islandsContent[indx];
+#ifdef LOG_MENU
         NSLog(@"Clicked island image at index %i named %@ ", indx, element.title);
-        
+#endif
         [self elementTapped:nil element:element];
     }
 }
@@ -367,7 +373,6 @@
     v.clipsToBounds = YES;
     
     frm = CGRectMake(0, 0, island_width, island_height);
-    NSLogFrame(@"***** ISLANDS", frm);
     UIImageView *iv = [[UIImageView alloc] initWithFrame: frm];
 
     NSString *imgname =[self resolveImageName:element];

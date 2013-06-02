@@ -12,6 +12,9 @@
 
 - (void) elementTapped:(id)sender element:(id)element;
 
+@optional
+- (void) scrolledToPage:(int)newPage;
+
 @end
 
 @protocol DPScrollableDataSourceDelegate <NSObject>

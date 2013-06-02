@@ -38,10 +38,20 @@
     int TIMED_SCROLL_WIDTH;
  }
 
-@synthesize scrollView, pageControl;
-@synthesize currentPage;
-@synthesize colCount, rowCount;
+//@synthesize scrollView, pageControl;
+//@synthesize currentPage;
+//@synthesize colCount, rowCount;
 
+- (int) getCurrentPage {
+    return _currentPage;
+}
+
+- (void) setCurrentPage:(int)aCurrentPage {
+    _currentPage = aCurrentPage;
+    if (self.scrollableViewDelegate &&
+        [self.scrollableViewDelegate respondsToSelector:@selector(scrolledToPage:)])
+        [self.scrollableViewDelegate scrolledToPage:_currentPage];
+}
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -53,23 +63,35 @@
 }
 
 - (id) initWithContent:(NSArray *)content
+                  rows:(int)rows
+               columns:(int)columns
             autoScroll:(BOOL)autoscroll {
-    self = [self initWithContent:content autoScroll:autoscroll showPages:YES scrollDirection:DPScrollDirectionHorizontal];
+    self = [self initWithContent:content
+                            rows:(int)rows
+                         columns:(int)columns
+                      autoScroll:autoscroll
+                       showPages:YES
+                 scrollDirection:DPScrollDirectionHorizontal
+                     initialPage:0];
     return self;
 }
 
 - (id) initWithContent:(NSArray *)content
+                  rows:(int)rows
+               columns:(int)columns
             autoScroll:(BOOL)autoscroll
              showPages:(BOOL)showpages
-       scrollDirection:(DPScrollDirection)scrolldir {
+       scrollDirection:(DPScrollDirection)scrolldir
+           initialPage:(int)initialPage{
     self = [super init];
     if (self) {
+        self.currentPage = initialPage;
+        self.rowCount = rows;
+        self.colCount = columns;
         autoScroll = autoscroll;
         showPages = showpages;
         scrollDirection = scrolldir;
         self.contentList = content;
-//        if (!self.view)
-//            self.view = [[UIView alloc] init];
     }
     
     return self;
@@ -173,9 +195,10 @@
     else
         self.scrollView.frame = CGRectMake(0, 0, w, h);
     
+#ifdef LOG_SCROLLABLE
     NSLog(@"CALCFRAME:: class:'%@', frm=(%d,%d,%d,%f)",
           [[self class] description], 0, 0, w, self.scrollView.frame.size.height);
-
+#endif
 //    CGRect pcf = self.pageControl.frame;
     self.pageControl.frame = CGRectMake(0, h - PAGE_CONTROL_HEIGHT, //pcf.size.height,
                                         w, PAGE_CONTROL_HEIGHT);//pcf.size.height);
@@ -269,7 +292,9 @@
     
     self.scrollView.delegate = self;
 
+#ifdef LOG_SCROLLABLE
     NSLog(@"PAGES:: %@", [[self class] description]);
+#endif
     self.pageControl.hidesForSinglePage = YES;
     self.pageControl.numberOfPages = pageCount;
     self.pageControl.currentPage = self.currentPage;
@@ -291,30 +316,30 @@
     
     int pageWidth = self.scrollView.frame.size.width;
     int pageHeight = self.scrollView.frame.size.height;
-    int colWidth = pageWidth / colCount;
-    int rowHeight = pageHeight / rowCount;
+    int colWidth = pageWidth / self.colCount;
+    int rowHeight = pageHeight / self.rowCount;
     
     if (colWidth == 0 || rowHeight == 0) return;
     
-    int rowHeightResidue = (int)pageHeight % rowCount;
+    int rowHeightResidue = (int)pageHeight % self.rowCount;
     int fixHeight = (rowHeightResidue > 0 ? 1 : 0);
     
     NSMutableArray *contentRendered = UIInterfaceOrientationIsPortrait(INTERFACE_ORIENTATION) ? self.portraitRendered : self.landscapeRendered;
     
     int posY = scrollDirection == DPScrollDirectionHorizontal ? 0 : page * pageHeight;
-    for (int r = 0; r<rowCount; r++)
+    for (int r = 0; r<self.rowCount; r++)
     {
         posY = posY + (rowHeight + fixHeight) * (r == 0 ? 0 : 1);
-        int colWidthResidue = pageWidth % colCount;
+        int colWidthResidue = pageWidth % self.colCount;
         fixHeight = (rowHeightResidue > 0 ? 1 : 0);
         
         int posX = scrollDirection == DPScrollDirectionHorizontal ? page * pageWidth : 0;
         
         int fixWidth = (colWidthResidue > 0 ? 1 : 0);
-        for (int c = 0; c<colCount; c++)
+        for (int c = 0; c<self.colCount; c++)
         {
             posX = posX + (colWidth + fixWidth) * (c == 0 ? 0 : 1);
-            int indx = page * (rowCount * colCount) + r * colCount + c;
+            int indx = page * (self.rowCount * self.colCount) + r * self.colCount + c;
             fixWidth = (colWidthResidue > 0 ? 1 : 0);
             
             if (indx < self.contentList.count) {
@@ -341,11 +366,12 @@
 }
 
 - (void) loadPage:(int)contentIndex inView:(UIView *)container frame:(CGRect)frame {
+#ifdef LOG_SCROLLABLE
     NSLog(@"LOADPAGE-FRAME:: class:'%@', frm=(%f,%f,%f,%f)",
           [[self class] description],
           frame.origin.x, frame.origin.y,
           frame.size.width, frame.size.height);
-
+#endif
     if ([self.dataDelegate respondsToSelector:@selector(loadPage:inView:frameSize:)])
         [self.dataDelegate loadPage:contentIndex inView:container frame:frame];
     else
@@ -542,8 +568,9 @@
         int indx = sender.view.tag;
 
         DPDataElement * element = self.contentList[indx];
+#ifdef LOG_SCROLLABLE
         NSLog(@"Clicked image at index %i named %@", indx, element.title);
-        
+#endif
         [self invokeViewDelegate:sender element:element];
         
         // navigation logic goes here. create and push a new view controller;
@@ -554,7 +581,7 @@
     
 - (IBAction)pageChanged:(id)sender {
     if (initializing) return;
-    self.currentPage = pageControl.currentPage;
+    self.currentPage = self.pageControl.currentPage;
 	
     // load the visible page and the page on either side of it (to avoid flashes when the user starts scrolling)
     [self loadScrollViewWithPage:self.currentPage - 2];
@@ -565,8 +592,17 @@
     
 	// update the scroll view to the appropriate page
     CGRect frame = self.scrollView.frame;
-    frame.origin.x = frame.size.width * self.currentPage;
-    frame.origin.y = 0;
+    switch (self.scrollDirection) {
+        case DPScrollDirectionHorizontal:
+            frame.origin.x = frame.size.width * self.currentPage;
+            frame.origin.y = 0;
+            break;
+            
+        case DPScrollDirectionVertical:
+            frame.origin.x = 0;
+            frame.origin.y = frame.size.height * self.currentPage;
+            break;
+    }
 
     if (timerUsed && (self.currentPage == 0))
         [self.scrollView scrollRectToVisible:frame animated:NO];
@@ -593,10 +629,21 @@
     }
              
     // Switch the indicator when more than 50% of the previous/next page is visible
-    CGFloat pageWidth = self.scrollView.frame.size.width;
-    self.currentPage = floor((self.scrollView.contentOffset.x - pageWidth / 2) / pageWidth) + 1;
-    pageControl.currentPage = self.currentPage;
-             
+    CGSize pageSize = self.scrollView.frame.size;
+    switch (self.scrollDirection) {
+        case DPScrollDirectionHorizontal:
+            self.currentPage = floor((self.scrollView.contentOffset.x - pageSize.width / 2) / pageSize.width) + 1;
+            break;
+            
+        case DPScrollDirectionVertical:
+            self.currentPage = floor((self.scrollView.contentOffset.y - pageSize.height / 2) / pageSize.height) + 1;
+            break;
+    }
+    
+    self.pageControl.currentPage = self.currentPage;
+#ifdef LOG_SCROLLABLE
+    NSLog(@"SCROLLED TO PAGE %d", self.currentPage);
+#endif
     // load the visible page and the page on either side of it (to avoid flashes when the user starts scrolling)
     [self loadScrollViewWithPage:self.currentPage - 2];
     [self loadScrollViewWithPage:self.currentPage - 1];
@@ -636,9 +683,6 @@
     [dateFormatter setTimeStyle:NSDateFormatterLongStyle];
     [dateFormatter setDateStyle:NSDateFormatterNoStyle];
     
-//    NSLog(@"onTimer - time: %@", [dateFormatter stringFromDate:[NSDate date]]);
-    //This makes the scrollView scroll to the desired position
-    //[scrollView setContentOffset:CGPointMake(TIMED_SCROLL_WIDTH, 0) animated:YES];
     int cp = self.pageControl.currentPage + 1;
     int pc = self.pageControl.numberOfPages;
     if (cp == pc)
@@ -787,7 +831,6 @@
 - (void)requestFailed:(ASIHTTPRequest *)request
 {
     [self stopIndicator];
-	NSLog(@"Request Failed: %@", [request error]);    
 }
 
 @end

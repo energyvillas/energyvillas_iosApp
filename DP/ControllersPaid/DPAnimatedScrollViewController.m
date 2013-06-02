@@ -77,7 +77,7 @@
 }
 
 - (id) initWithCategory:(int)ctgID  isLeaf:(BOOL)isLeaf frame:(CGRect)frame {
-    self = [super initWithContent:nil autoScroll:NO];
+    self = [super initWithContent:nil rows:0 columns:0 autoScroll:NO ];
     
     if (self) {
         _category = ctgID;
@@ -85,8 +85,6 @@
         //self.view.frame = frame;
         initframe = frame;
         self.scrollableViewDelegate = self;
-        self.rowCount = 0;
-        self.colCount = 0;
         //[self loadData];
     }
     
@@ -254,8 +252,6 @@
             return baseName;
     }
     @catch (NSException* exception) {
-        NSLog(@"Uncaught exception: %@", exception.description);
-        NSLog(@"Stack trace: %@", [exception callStackSymbols]);
         return baseName;
     }
 }

@@ -36,14 +36,15 @@
 
 - (id) initWithGroup:(int)aGroup {
     self = [super initWithContent:nil
+                             rows:1
+                          columns:1
                        autoScroll:YES
                         showPages:NO
-                  scrollDirection:DPScrollDirectionHorizontal];
+                  scrollDirection:DPScrollDirectionHorizontal
+                      initialPage:0];
     
     if (self) {
         _group = aGroup;
-        self.rowCount = 1;
-        self.colCount = 1;
         
         self.dataDelegate = self;
     }

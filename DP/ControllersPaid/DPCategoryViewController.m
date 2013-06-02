@@ -7,7 +7,6 @@
 //
 
 #import "DPCategoryViewController.h"
-#import "../Controllers/DPCtgScrollViewController.h"
 #import "../Classes/DPImageInfo.h"
 #import "../External/OpenFlow/UIImageExtras.h"
 #import "DPConstants.h"
@@ -29,7 +28,9 @@
 
 @end
 
-@implementation DPCategoryViewController
+@implementation DPCategoryViewController {
+    int initialMenuPage;
+}
 
 @synthesize category = _category;
 ////////////////////////
@@ -160,8 +161,6 @@
     int h = vf.size.height - top;
     int w = vf.size.width;
 
-    NSLog(@"############## DPCategoryView - h = %d, top = %d", h, top);
-
     // iphone sizes
     int H_ADS = 60;
     int H_MENU = 92;//80;
@@ -288,41 +287,30 @@
     int cols = IS_PORTRAIT ? 3 : 1;
     DPScrollDirection scrolldir = IS_PORTRAIT ? DPScrollDirectionHorizontal : DPScrollDirectionVertical;
 
-    if (self.mmViewController != nil) {
+    if (reload && self.mmViewController != nil) {
+        initialMenuPage = self.mmViewController.currentMenuPage;
         [self.mmViewController.view removeFromSuperview];
         [self.mmViewController removeFromParentViewController];
         self.mmViewController = nil;
     }
     
-    self.mmViewController = [[DPMenuViewController alloc] initWithRows:rows
-                                                               columns:cols
-                                                            autoScroll:NO
-                                                             showPages:NO
-                                                       scrollDirection:scrolldir
-                                                             menulevel:1];
-    CGRect mmfrm = self.mmView.bounds;
-    self.mmViewController.view.frame = mmfrm;
-    [self addChildViewController:self.mmViewController];
-    [self.mmView addSubview:self.mmViewController.view];
-
-//    if (self.mmView.subviews.count == 0)
-//    {
-//        self.mmViewController = [[DPMenuViewController alloc] initWithRows:rows
-//                                                                   columns:cols
-//                                                                autoScroll:NO
-//                                                                 showPages:NO
-//                                                           scrollDirection:scrolldir];
-//        
-//        [self addChildViewController:self.mmViewController];
-//        [self.mmView addSubview:self.mmViewController.view];
-//        self.mmViewController.view.frame = self.mmView.bounds;
-//    }
-//    else {
-//        self.mmViewController.view.frame = self.mmView.bounds;
-//        [self.mmViewController changeRows:rows
-//                                  columns:cols
-//                          scrollDirection:scrolldir];
-//    }
+    if (self.mmViewController == nil) {
+        self.mmViewController = [[DPMenuViewController alloc] initWithRows:rows
+                                                                   columns:cols
+                                                                autoScroll:NO
+                                                                 showPages:NO
+                                                           scrollDirection:scrolldir
+                                                                 menulevel:1
+                                                               initialPage:initialMenuPage];
+        CGRect mmfrm = self.mmView.bounds;
+        self.mmViewController.view.frame = mmfrm;
+        [self addChildViewController:self.mmViewController];
+        [self.mmView addSubview:self.mmViewController.view];
+    } else {
+        CGRect mmfrm = self.mmView.bounds;
+        self.mmViewController.view.frame = mmfrm;
+        [self.mmViewController changeRows:rows columns:cols scrollDirection:scrolldir];
+    }
 }
 
 @end

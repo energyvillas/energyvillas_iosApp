@@ -32,11 +32,16 @@ typedef NS_ENUM(NSInteger, DPScrollDirection) {
 
 
 - (id) initWithContent:(NSArray *)content
+                  rows:(int)rows
+               columns:(int)columns
             autoScroll:(BOOL)autoscroll
              showPages:(BOOL)showpages
-       scrollDirection:(DPScrollDirection)scrolldir;
+       scrollDirection:(DPScrollDirection)scrolldir
+           initialPage:(int)initialPage;
 
 - (id) initWithContent:(NSArray *)content
+                  rows:(int)rows
+               columns:(int)columns
             autoScroll:(BOOL)autoscroll;
 
 - (void) changeRows:(int)rows columns:(int)columns;

@@ -37,14 +37,18 @@
 }
 
 - (id) initWithCategory:(int)ctgID {
-    self = [super initWithContent:nil autoScroll:YES showPages:NO scrollDirection:DPScrollDirectionHorizontal];
+    self = [super initWithContent:nil
+                             rows:0
+                          columns:0
+                       autoScroll:YES
+                        showPages:NO
+                  scrollDirection:DPScrollDirectionHorizontal
+                      initialPage:0];
     
     if (self) {
         category = ctgID;
         self.scrollableViewDelegate = self;
         self.dataDelegate = self;
-        self.rowCount = 0;
-        self.colCount = 0;
     }
     
     return self;

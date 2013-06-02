@@ -12,7 +12,7 @@
 #import "YTVimeoExtractor.h"
 
 
-@interface DPBuyContentViewController : DPScrollableViewController //DPCtgScrollViewController
+@interface DPBuyContentViewController : DPScrollableViewController 
     <
     DPDataLoaderDelegate
     , DPScrollableViewDelegate

@@ -45,7 +45,7 @@
                 columns:(int)cols
              autoScroll:(BOOL)autoscroll
                  parent:(UIViewController *)parentVC{
-    self = [super initWithContent:nil autoScroll:autoscroll];
+    self = [super initWithContent:nil rows:rows columns:cols autoScroll:autoscroll];
     if (self) {
         self.rowCount = rows;
         self.colCount = cols;

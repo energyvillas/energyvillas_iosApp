@@ -352,27 +352,6 @@ CGRect CGRectChangeCenter(CGRect rect, CGPoint center) {
 
 #pragma mark - loading of image data
 
-//- (NSString *) calcImageName:(NSString *)baseName highlight:(BOOL)highlight{
-//    NSLog(@"**** imageUrl (base) = %@", baseName);
-//    
-//    @try {
-//        NSArray *parts = [baseName componentsSeparatedByString:@"."];
-//        if (parts && parts.count == 2) {
-//            NSString *roll = highlight ? @"_roll" : @"";
-//            NSString *result = [NSString stringWithFormat:@"%@%@.%@",
-//                                parts[0], roll, parts[1]];
-//            return result;
-//        }
-//        else
-//            return baseName;
-//    }
-//    @catch (NSException* exception) {
-//        NSLog(@"Uncaught exception: %@", exception.description);
-//        NSLog(@"Stack trace: %@", [exception callStackSymbols]);
-//        return baseName;
-//    }
-//}
-
 - (void) startIndicator {
     if(!self.busyIndicator) {
 		self.busyIndicator = [[UIActivityIndicatorView alloc]
@@ -453,7 +432,6 @@ CGRect CGRectChangeCenter(CGRect rect, CGPoint center) {
 - (void)requestFailed:(ASIHTTPRequest *)request
 {
     [self stopIndicator];
-	NSLog(@"Request Failed: %@", [request error]);
 }
 
 

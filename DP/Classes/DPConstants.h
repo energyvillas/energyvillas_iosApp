@@ -11,6 +11,14 @@ FOUNDATION_EXPORT NSString *const MyFirstConstant;
 FOUNDATION_EXPORT NSString *const MySecondConstant;
 */
 
+// logging defines
+//#define LOG_CARDS
+//#define LOG_SCROLLABLE
+//#define LOG_CAROUSEL
+//#define LOG_MENU
+// end logging defines
+
+
 #define USE_TEST_SITE ((BOOL)NO)
 #define CACHING_ENABLED ((BOOL)YES)
 

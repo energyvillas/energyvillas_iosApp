@@ -272,7 +272,7 @@
 }
 
 - (void) showCall {
-    return;
+    //return;
     UIViewController *contr = [self.navController topViewController];
     DPCallUsViewController *callusVC = [[DPCallUsViewController alloc] init];
     [callusVC setCompletion:^(int tag) {

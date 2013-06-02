@@ -150,15 +150,11 @@
 
 - (void) onNotified:(NSNotification *) notification
 {
-    if ([[notification name] isEqualToString:DPN_currentLangChanged]) {
-        NSLog (@"Successfully received the ==DPN_currentLangChanged== notification!");
-        
+    if ([[notification name] isEqualToString:DPN_currentLangChanged]) {        
         [self doLocalize];
     }
     
     if ([[notification name] isEqualToString:kReachabilityChangedNotification]) {
-        NSLog (@"Successfully received the ==kReachabilityChangedNotification== notification!");
-        
         [self reachabilityChanged];
     }
 }
@@ -372,7 +368,9 @@
 }
 
 - (void) dataLoaded {
+#ifdef LOG_CAROUSEL
     NSLog(@"1.carousel loaded %d articles", self.datalist.count);
+#endif
     [self setupImageCache];
     
     dispatch_async(dispatch_get_main_queue(), ^{
@@ -396,8 +394,9 @@
     if (self.datalist && self.datalist.count > 0) {
         [self clearCarousel];
         
+#ifdef LOG_CAROUSEL
         NSLog(@"2.carousel loaded %d articles", self.datalist.count);
-        
+#endif
         CGRect frm = self.view.frame;
         frm = CGRectMake(0, 0, frm.size.width, frm.size.height);
         self.icarousel = [[iCarousel alloc] initWithFrame:frm];
@@ -483,65 +482,19 @@
 }
 - (void)carouselCurrentItemIndexDidChange:(iCarousel *)carousel {
     _currentIndex = carousel.currentItemIndex;
+#ifdef LOG_CAROUSEL
     NSLog(@"######################set _curIndex to '%d'", _currentIndex);
+#endif
     [self updateLabels];
 }
 - (void)carousel:(iCarousel *)carousel didSelectItemAtIndex:(NSInteger)index {
     if (index == carousel.currentItemIndex)
         [self articleAtIndexTapped:index];
 }
-- (UIView *)carousel:(iCarousel *)carousel viewForItemAtIndex:(NSUInteger)index reusingView:(UIView *)view
-{
-    //create new view if no view is available for recycling
-//    if (view == nil)
-//    {
-//        view = [self doCreateImageViewWithFrame:[self calcFittingFrame:self.icarousel.frame.size]
-//                                    contentMode:UIViewContentModeScaleAspectFit
-//                                 withReflection:YES];
-//    }
-//    
-//    UIImageView *imgView = nil;
-//    if ([view isKindOfClass:[UIImageView class]])
-//        imgView = (UIImageView *)view;
-//    
-//    Article *article = self.datalist[index];
-//    NSString *imgName = article.imageThumbUrl ? article.imageThumbUrl : article.imageUrl;
-//    if (isLocalUrl(imgName)) {
-//        imgName = [self calcImageName:imgName];
-//        UIImage *img = [UIImage imageNamed:imgName];
-//        if (imgView)
-//            imgView.image = img;
-//        else
-//            return [self createImageView:img];
-//    } else {
-//        // Check if image already exists in cache. If yes retrieve it from there, else go to internet...
-//        
-//        UIImage *img = article.imageThumbUrl ? article.imageThumb : article.image;
-//        if (img == nil) {
-//            img = [[DPAppHelper sharedInstance] loadUIImageFromCache:imgName];
-//            if (img) {
-//                if (article.imageThumbUrl)
-//                    article.imageThumb = img;
-//                else
-//                    article.image = img;
-//            }
-//        }
-//        if (img != nil) {
-//            if (imgView)
-//                imgView.image = img;
-//            else
-//                return [self createImageView:img];
-//        } else {
-//            [self downloadImageUrl:imgName atIndex:index];
-//            return [self createImageViewLoading];
-//        }
-//    }
-//    
-//    return view;
-    
-    //=======
+- (UIView *)carousel:(iCarousel *)carousel viewForItemAtIndex:(NSUInteger)index reusingView:(UIView *)view {
+#ifdef LOG_CAROUSEL
     NSLog(@"3.carousel requested article at index %d", index);
-    
+#endif
     Article *article = self.datalist[index];
     NSString *imgName = article.imageThumbUrl ? article.imageThumbUrl : article.imageUrl;
     if (isLocalUrl(imgName)) {
@@ -691,22 +644,18 @@
         @try {
             NSArray *parts = [baseName componentsSeparatedByString:@"."];
             if (parts && parts.count == 2) {
-                NSString *lang = [DPAppHelper sharedInstance].currentLang;
-//                NSString *orientation = IS_PORTRAIT ? @"v" : @"h";
-//                NSString *result = [NSString stringWithFormat:@"Carousel/%@_%@_%@.%@",
-//                                    parts[0], lang, orientation, parts[1]];
-                
+                NSString *lang = [DPAppHelper sharedInstance].currentLang;                
                 NSString *result = [NSString stringWithFormat:@"Carousel/%@_%@.%@",
                                     parts[0], lang, parts[1]];
+#ifdef LOG_CAROUSEL
                 NSLog(@"4.carousel calimageName base='%@' => calc='%@'", baseName, result);
+#endif
                 return result;
             }
             else
                 return baseName;
         }
         @catch (NSException* exception) {
-            NSLog(@"Uncaught exception: %@", exception.description);
-            NSLog(@"Stack trace: %@", [exception callStackSymbols]);
             return baseName;
         }
 }
@@ -746,7 +695,9 @@
     if ([self.imageRequests objectForKey:imageUrl])
         return;
 
+#ifdef LOG_CAROUSEL
     NSLog(@"will request image from url : ####'%@'####", imageUrl);
+#endif
     
     [self.imageRequests setObject:imageUrl forKey:imageUrl];
     
@@ -776,9 +727,7 @@
 	}
 }
 
-- (void) requestFailed:(ASIHTTPRequest *)request {
-	NSLog(@"Request Failed: %@", [request error]);
-    
+- (void) requestFailed:(ASIHTTPRequest *)request {    
 	//[self stopIndicator];
 }
 

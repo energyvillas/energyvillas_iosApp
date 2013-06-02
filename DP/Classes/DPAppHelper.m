@@ -369,7 +369,6 @@
 //    self.imageCache[url] = img;
     
     NSString *sha1 = SHA1Digest(url);
-    NSLog(@"SHA1 = '%@'", sha1);
     NSString *ext = [url pathExtension];
     NSString *filename = [NSString stringWithFormat:@"%@.%@", sha1, ext];
     NSString *filepath = getDocumentsFilePath(filename);
@@ -383,7 +382,6 @@
 //    }
 
     NSString *sha1 = SHA1Digest(url);
-    NSLog(@"SHA1 = '%@'", sha1);
     NSString *ext = [url pathExtension];
     NSString *filename = [NSString stringWithFormat:@"%@.%@", sha1, ext];
     NSString *filepath = getDocumentsFilePath(filename);

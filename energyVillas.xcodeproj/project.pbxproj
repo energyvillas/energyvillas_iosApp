@@ -105,7 +105,6 @@
 		5EC2559116FC79E10045AB99 /* DPPaidRootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EC2559016FC79E10045AB99 /* DPPaidRootViewController.m */; };
 		5EC2559416FC7A070045AB99 /* DPPaidMainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EC2559316FC7A070045AB99 /* DPPaidMainViewController.m */; };
 		5EC2559B16FCC7310045AB99 /* DPScrollableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EC2559A16FCC7310045AB99 /* DPScrollableViewController.m */; };
-		5EC2559E16FCD18C0045AB99 /* DPCtgScrollViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EC2559D16FCD18C0045AB99 /* DPCtgScrollViewController.m */; };
 		5EC255A116FF1DD70045AB99 /* DPImageContentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EC255A016FF1DD70045AB99 /* DPImageContentViewController.m */; };
 		5EC255B716FF291A0045AB99 /* ASIAuthenticationDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EC255A416FF291A0045AB99 /* ASIAuthenticationDialog.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		5EC255B816FF291A0045AB99 /* ASIDataCompressor.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EC255A716FF291A0045AB99 /* ASIDataCompressor.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -320,8 +319,6 @@
 		5EC2559316FC7A070045AB99 /* DPPaidMainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPPaidMainViewController.m; sourceTree = "<group>"; };
 		5EC2559916FCC7310045AB99 /* DPScrollableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPScrollableViewController.h; sourceTree = "<group>"; };
 		5EC2559A16FCC7310045AB99 /* DPScrollableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPScrollableViewController.m; sourceTree = "<group>"; };
-		5EC2559C16FCD18C0045AB99 /* DPCtgScrollViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPCtgScrollViewController.h; sourceTree = "<group>"; };
-		5EC2559D16FCD18C0045AB99 /* DPCtgScrollViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPCtgScrollViewController.m; sourceTree = "<group>"; };
 		5EC2559F16FF1DD60045AB99 /* DPImageContentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPImageContentViewController.h; sourceTree = "<group>"; };
 		5EC255A016FF1DD70045AB99 /* DPImageContentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPImageContentViewController.m; sourceTree = "<group>"; };
 		5EC255A316FF291A0045AB99 /* ASIAuthenticationDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASIAuthenticationDialog.h; sourceTree = "<group>"; };
@@ -685,8 +682,6 @@
 				5E71A3FB16F99DC400E7AFF9 /* DPRootViewController.m */,
 				5E9ABBDC16F9F3CA000EAB46 /* DPTestViewController.h */,
 				5E9ABBDD16F9F3CA000EAB46 /* DPTestViewController.m */,
-				5EC2559C16FCD18C0045AB99 /* DPCtgScrollViewController.h */,
-				5EC2559D16FCD18C0045AB99 /* DPCtgScrollViewController.m */,
 				5E3605101707A72400DB7B20 /* DPBuyViewController.h */,
 				5E3605111707A72400DB7B20 /* DPBuyViewController.m */,
 				5E4E851817109D38005DAD06 /* DPCategoriesViewController.h */,
@@ -1079,7 +1074,6 @@
 				5EC2559116FC79E10045AB99 /* DPPaidRootViewController.m in Sources */,
 				5EC2559416FC7A070045AB99 /* DPPaidMainViewController.m in Sources */,
 				5EC2559B16FCC7310045AB99 /* DPScrollableViewController.m in Sources */,
-				5EC2559E16FCD18C0045AB99 /* DPCtgScrollViewController.m in Sources */,
 				5EC255A116FF1DD70045AB99 /* DPImageContentViewController.m in Sources */,
 				5EC255B716FF291A0045AB99 /* ASIAuthenticationDialog.m in Sources */,
 				5EC255B816FF291A0045AB99 /* ASIDataCompressor.m in Sources */,

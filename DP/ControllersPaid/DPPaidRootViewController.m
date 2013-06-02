@@ -224,15 +224,23 @@
     }
 }
 
-- (void) loadMenuView:(BOOL)reload {    
+- (void) loadMenuView:(BOOL)reload {
+    int initialPage = 0;
     if (reload && self.mmViewController != nil) {
+        initialPage = self.mmViewController.currentMenuPage;
         [self.mmViewController.view removeFromSuperview];
         [self.mmViewController removeFromParentViewController];
         self.mmViewController = nil;
     }
     
     if (self.mmViewController == nil) {
-        self.mmViewController = [[DPMenuViewController alloc] initWithRows:3 columns:3 autoScroll:NO];
+        self.mmViewController = [[DPMenuViewController alloc] initWithRows:3
+                                                                   columns:3
+                                                                autoScroll:NO
+                                                                 showPages:NO
+                                                           scrollDirection:DPScrollDirectionHorizontal
+                                                                 menulevel:0
+                                                               initialPage:initialPage];
         self.mmViewController.view.frame = self.mmView.bounds;
         [self addChildViewController:self.mmViewController];
         [self.mmView addSubview:self.mmViewController.view];

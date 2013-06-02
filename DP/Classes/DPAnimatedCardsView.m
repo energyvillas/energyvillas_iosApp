@@ -38,11 +38,6 @@
 
 @implementation DPAnimatedCardsView
 
-//- (void) setCurrentCard:(int)value {
-//    _currentCard = value;
-////    NSLog(@"*** currentCard = %i", value);
-//}
-
 - (id)initWithFrame:(CGRect)frame
          categories:(NSArray *)aCategories
            cardSize:(CGSize)aCardSize
@@ -266,9 +261,6 @@
 
 -(void) handleTapGesture:(UIGestureRecognizer *) sender {
     CGPoint tapPoint = [sender locationInView:self.tapView];
-//    int tapX = (int) tapPoint.x;
-//    int tapY = (int) tapPoint.y;
-//    NSLog(@"TAPPED X:%d Y:%d", tapX, tapY);
 
     DPCardView *oldCurrent = self.currentCard;
     self.currentCard = [self findCardUnderPoint:tapPoint];
@@ -446,11 +438,11 @@
 
 - (CGPoint) calcNewCenter:(DPCardView *)target {
     [self calcSizes];
-
+#ifdef LOG_CARDS
     NSLog(@"max (X, Y) = (%d, %d)", maxX, maxY);
     NSLogFrame(@"CARDS CONTAINER FRAME", self.frame);
     NSLogFrame(@"CARDS CONTAINER BOUNDS", self.bounds);
-
+#endif
     CGPoint c = [self presentationCenterOf:target]; //target.center;
     BOOL atLeft = c.x < (maxX / 2);
     BOOL atTop = c.y < (maxY / 2);
@@ -462,8 +454,9 @@
     
     CGFloat x = (arc4random() % (maxX / 2)) + (toLeft ? 0 : (maxX / 2));
     CGFloat y = (arc4random() % (maxY / 2)) + (toTop ? 0 : (maxY / 2));
+#ifdef LOG_CARDS
     NSLog(@"random (X, Y) = (%.0f, %.0f)", x, y);
-    
+#endif
     int edge = arc4random() % 2; //(arc4random() % 3) == 0;
     if (edge == 0) /* top or bottom */{
         if (toLeft)
@@ -491,7 +484,9 @@
             y = y > (maxY - ofsY) ? maxY - ofsY : y;
     }
 */    
+#ifdef LOG_CARDS
     NSLog(@"NEW CENTER : (%.0f, %.0f)", x, y);
+#endif
     return CGPointMake(x, y);
 }
 
@@ -505,7 +500,9 @@
     maxDistance = sqrt((maxX - 2 * ofsX) * (maxX - 2 * ofsX) +
                        (maxY - 2 * ofsY) * (maxY - 2 * ofsY));
     confinementRect = CGRectMake(ofsX, ofsY, maxX - 2 * ofsX, maxY - 2 * ofsY);
+#ifdef LOG_CARDS
     NSLogFrame(@"ANIM frame", self.frame);
+#endif
 }
 
 - (void) setupCards {
