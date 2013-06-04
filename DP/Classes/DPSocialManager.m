@@ -96,8 +96,10 @@
 //==============================================================================
 
 - (void) showSocialsDialog_iPhones {
-    id del = self.controller.navigationController.delegate;
-    UIViewController *main = del;
+//    id del = self.controller.navigationController.delegate;
+//    UIViewController *main = del;
+    DPAppDelegate *appdel = [UIApplication sharedApplication].delegate;
+    UIViewController *main = appdel.controller;
     
     self.socialController = [[DPSocialViewController alloc]
                                   initWithCompletion:^(int indx){
@@ -187,22 +189,16 @@
         return;
     }
     
-    /*
-     {
-     MFMailComposeViewController *controller = [[MFMailComposeViewController alloc] init];
-     controller.mailComposeDelegate = self;
-     [controller setToRecipients:[NSArray arrayWithObject:eMail]];
-     [self presentViewController:controller animated:YES completion:nil];
-     }
-     else
-     */
-    
     MFMailComposeViewController *composer = [DPMailHelper composeEmail];
     composer.mailComposeDelegate = self;
-    if (!IS_IPAD)
-        [self.controller.navigationController presentModalViewController:composer
-                                                                animated:YES];
-    else {
+    if (!IS_IPAD) {
+        DPAppDelegate *appdel = [UIApplication sharedApplication].delegate;
+        [appdel.controller presentModalViewController:composer
+                                             animated:YES];
+
+//        [self.controller.navigationController presentModalViewController:composer
+//                                                                animated:YES];
+    } else {
 //        composer.modalPresentationStyle = UIModalPresentationPageSheet;
         self.controller.navigationController.modalPresentationStyle = UIModalPresentationPageSheet;
         [self.controller.navigationController presentModalViewController:composer

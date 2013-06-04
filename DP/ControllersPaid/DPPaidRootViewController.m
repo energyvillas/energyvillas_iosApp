@@ -15,6 +15,8 @@
 #import "DPAdsViewController.h"
 #import "DPNewNextViewController.h"
 #import "DPMenuViewController.h"
+#import "UIApplication+ScreenDimensions.h"
+
 
 
 @interface DPPaidRootViewController ()
@@ -78,11 +80,13 @@
     int top = fixtop ? 12 : 0;
     int h = vf.size.height - top;
     int w = vf.size.width;
-
-//    int h = vf.size.height - vf.origin.y;
-//    int w = vf.size.width;
-//    int top = fixtop ? vf.origin.y : 0;
     
+//    CGSize sz = [UIApplication sizeInOrientation:INTERFACE_ORIENTATION];
+//    sz.height = sz.height - 44 - 49;
+//    if (h != sz.height) {
+//        h = sz.height;
+//    }
+
     // iphone sizes
     int PHONE_H_ADS = 60;
     int PHONE_H_NEW_NEXT = 92;

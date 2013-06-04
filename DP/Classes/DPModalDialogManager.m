@@ -47,19 +47,6 @@
     return [appdel findNavController];
 }
 - (void) showDialog_iPads {
-//    self.modalController = [[DPSocialViewController alloc]
-//                             initWithCompletion:^(int indx){
-//                                 self.controller.view.userInteractionEnabled = YES;
-//                                 self.socialController = nil;
-//                                 
-//                                 //                                 if (self.onCompleted)
-//                                 //                                     self.onCompleted(indx);
-//                                 if (indx == -1)
-//                                     ;//[self showSocialsDialog];
-//                                 else if (indx > 0)
-//                                     [self launchSocialAction:indx];
-//                             }];
-    
     self.controller.view.userInteractionEnabled = NO;
     self.modalController.modalPresentationStyle = UIModalPresentationFormSheet;
     UINavigationController *nc = [self findNavController];
@@ -81,22 +68,11 @@
 //==============================================================================
 
 - (void) showDialog_iPhones {
-    UINavigationController *nc = [self findNavController];
-    id del = nc.delegate;
-    UIViewController *main = del;
-    
-//    self.socialController = [[DPSocialViewController alloc]
-//                             initWithCompletion:^(int indx){
-//                                 self.controller.view.userInteractionEnabled = YES;
-//                                 self.socialController = nil;
-//                                 
-//                                 //                                      if (self.onCompleted)
-//                                 //                                          self.onCompleted(indx);
-//                                 if (indx == -1)
-//                                     ;//[self showSocialsDialog:self.onCompleted];
-//                                 else if (indx > 0)
-//                                     [self launchSocialAction:indx];
-//                             }];
+//    UINavigationController *nc = [self findNavController];
+//    id del = nc.delegate;
+//    UIViewController *main = del;
+    DPAppDelegate *appdel = [UIApplication sharedApplication].delegate;
+    UIViewController *main = appdel.controller;
     
     self.controller.view.userInteractionEnabled = NO;
     
