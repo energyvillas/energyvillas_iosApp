@@ -531,41 +531,46 @@
 }
 
 -(UIView *) createImageViewLoading  {
-    CGSize szCarousel = self.icarousel.frame.size;
-    szCarousel.width = 0.8f * szCarousel.width;
-    szCarousel.height = szCarousel.height * 0.8f;
-    
-    UIImage *img = [UIImage imageNamed:[NSString stringWithFormat:@"loading_%@.png", CURRENT_LANG]];
-    CGSize imgSize = img.size;
-    img = [img imageScaledToFitSize:CGSizeMake(szCarousel.width / 2.0f, szCarousel.height / 2.0f)];
-    imgSize = img.size;
-    
-    CGSize loadingImgSize = CGSizeMake(3600.0f, 2400.0f);
-    CGRect frm = [self calcFittingFrame:loadingImgSize];//]self.icarousel.frame.size];
-    
-    UIImageView *iv = [[UIImageView alloc] initWithFrame:CGRectOffset(frm, 0.0f, -10.0f)];
-    iv.contentMode = UIViewContentModeCenter;
-    iv.image = img;
-    
-    UIView *v = [[UIView alloc] initWithFrame:frm];
-    v.backgroundColor = [UIColor colorWithWhite:0.0f alpha:0.7f]; //[UIColor colorWithRed:0.0f green:0.0f blue:0.0f alpha:0.6f];
-    v.layer.cornerRadius = IS_IPAD ? 8.0f : 4.0f;
-    v.layer.borderWidth = IS_IPAD ? 4.0f : 2.0;
-    v.layer.borderColor = [UIColor colorWithWhite:1.0f alpha:0.75f].CGColor;
-    
-    frm = v.bounds;
-    UIActivityIndicatorView *bi = [[UIActivityIndicatorView alloc]
-                                   initWithActivityIndicatorStyle: IS_IPAD ? UIActivityIndicatorViewStyleWhiteLarge: UIActivityIndicatorViewStyleWhite];
-    bi.frame = CGRectOffset(CGRectMake((frm.size.width-25)/2,
-                                       (frm.size.height-25)/2,
-                                       25, 25),
-                            0, IS_IPAD ? 110 : IS_IPHONE ? 40 : (IS_PORTRAIT ? 55 : 40));
-    bi.hidesWhenStopped = TRUE;
-    [v addSubview:iv];
-    [v addSubview:bi];
-    [bi startAnimating];
-
-    return v;
+    return createImageViewLoading(CGRectInset(self.icarousel.bounds,
+                                              self.icarousel.bounds .size.width * 0.1f,
+                                              self.icarousel.bounds .size.height * 0.1f),
+                                  NO, NO);
+                                  
+//    CGSize szCarousel = self.icarousel.frame.size;
+//    szCarousel.width = 0.8f * szCarousel.width;
+//    szCarousel.height = szCarousel.height * 0.8f;
+//    
+//    UIImage *img = [UIImage imageNamed:[NSString stringWithFormat:@"loading_%@.png", CURRENT_LANG]];
+//    CGSize imgSize = img.size;
+//    img = [img imageScaledToFitSize:CGSizeMake(szCarousel.width / 2.0f, szCarousel.height / 2.0f)];
+//    imgSize = img.size;
+//    
+//    CGSize loadingImgSize = CGSizeMake(3600.0f, 2400.0f);
+//    CGRect frm = [self calcFittingFrame:loadingImgSize];//]self.icarousel.frame.size];
+//    
+//    UIImageView *iv = [[UIImageView alloc] initWithFrame:CGRectOffset(frm, 0.0f, -10.0f)];
+//    iv.contentMode = UIViewContentModeCenter;
+//    iv.image = img;
+//    
+//    UIView *v = [[UIView alloc] initWithFrame:frm];
+//    v.backgroundColor = [UIColor colorWithWhite:0.0f alpha:0.7f]; //[UIColor colorWithRed:0.0f green:0.0f blue:0.0f alpha:0.6f];
+//    v.layer.cornerRadius = IS_IPAD ? 8.0f : 4.0f;
+//    v.layer.borderWidth = IS_IPAD ? 4.0f : 2.0;
+//    v.layer.borderColor = [UIColor colorWithWhite:1.0f alpha:0.75f].CGColor;
+//    
+//    frm = v.bounds;
+//    UIActivityIndicatorView *bi = [[UIActivityIndicatorView alloc]
+//                                   initWithActivityIndicatorStyle: IS_IPAD ? UIActivityIndicatorViewStyleWhiteLarge: UIActivityIndicatorViewStyleWhite];
+//    bi.frame = CGRectOffset(CGRectMake((frm.size.width-25)/2,
+//                                       (frm.size.height-25)/2,
+//                                       25, 25),
+//                            0, IS_IPAD ? 110 : IS_IPHONE ? 40 : (IS_PORTRAIT ? 55 : 40));
+//    bi.hidesWhenStopped = TRUE;
+//    [v addSubview:iv];
+//    [v addSubview:bi];
+//    [bi startAnimating];
+//
+//    return v;
 }
 
 -(CGRect) calcFittingFrame:(CGSize)szImage {

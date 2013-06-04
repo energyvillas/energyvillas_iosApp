@@ -107,7 +107,9 @@
     
     [self loadCategoryView:YES];
     
-    [self loadMenuView:YES];
+    if (self.mmViewController)
+        //[self loadMenuView:YES];
+        [self.mmViewController doLocalize];
 }
 
 
@@ -134,11 +136,14 @@
                                    columns:self.ctgViewController.colCount
                            scrollDirection:self.ctgViewController.scrollDirection];
     
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self doLocalize];
+    });
+    
     [[NSNotificationCenter defaultCenter] postNotificationName:DPN_PAID_SelectedCategoryChanged_Notification
                                                         object:self
                                                       userInfo:[NSDictionary dictionaryWithObject:[NSNumber numberWithInt:_category]
                                                                                            forKey:@"menuCategory"]];
-
 }
 
 - (void) viewWillDisappear:(BOOL)animated {
@@ -153,6 +158,7 @@
     [self loadCategoryView:NO];
     [self loadMenuView:NO];
 }
+
 - (void) internlLayoutSubViews {
     CGRect vf = self.view.frame;
     

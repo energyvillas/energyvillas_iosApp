@@ -259,11 +259,12 @@
 
 
 - (void)loadFinished:(DPDataLoader *)loader {
-    if (loader.datalist.count == 0)
-        showAlertMessage(nil,
-                         DPLocalizedString(kERR_TITLE_INFO),
-                         DPLocalizedString(kERR_MSG_NO_DATA_FOUND));
-    else {
+    if (loader.datalist.count == 0) {
+        // ok, let it be
+//        showAlertMessage(nil,
+//                         DPLocalizedString(kERR_TITLE_INFO),
+//                         DPLocalizedString(kERR_MSG_NO_DATA_FOUND));
+    } else {
         // keep only children of category
         NSMutableArray *children = [[NSMutableArray alloc] init];
         
@@ -313,9 +314,10 @@
 //}
 
 - (void)loadFailed:(DPDataLoader *)loader {
-    showAlertMessage(nil,
-                     DPLocalizedString(kERR_TITLE_URL_NOT_FOUND),
-                     DPLocalizedString(kERR_MSG_DATA_LOAD_FAILED));
+    // ok, let it be
+//    showAlertMessage(nil,
+//                     DPLocalizedString(kERR_TITLE_URL_NOT_FOUND),
+//                     DPLocalizedString(kERR_MSG_DATA_LOAD_FAILED));
 }
 
 #pragma mark

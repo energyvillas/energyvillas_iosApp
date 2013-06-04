@@ -353,6 +353,7 @@ CGRect CGRectChangeCenter(CGRect rect, CGPoint center) {
 #pragma mark - loading of image data
 
 - (void) startIndicator {
+    return;
     if(!self.busyIndicator) {
 		self.busyIndicator = [[UIActivityIndicatorView alloc]
                               initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
@@ -368,6 +369,7 @@ CGRect CGRectChangeCenter(CGRect rect, CGPoint center) {
 }
 
 - (void) stopIndicator {
+    return;
     if (self.busyIndicator &&
         self.queue &&
         self.queue.operationCount == 0) {
@@ -383,6 +385,7 @@ CGRect CGRectChangeCenter(CGRect rect, CGPoint center) {
         data:(NSData *)imgData
   addToCache:(BOOL)addToCache{
     //elm.imageData = [request responseData];
+    releaseSubViews(imgView);
     imgView.image = [UIImage imageWithData:imgData scale:DEVICE_SCALE];
     if (addToCache)
         [[DPAppHelper sharedInstance] saveImageToCache:imageUrl data:imgData];
@@ -396,8 +399,10 @@ CGRect CGRectChangeCenter(CGRect rect, CGPoint center) {
         imageView:imgView
          imageUrl:highlight ? elm.imageRollUrl : elm.imageUrl
              data:imgData addToCache:NO];
-    else
+    else {
         [self doloadImageAsync:elm highlight:highlight inView:imgView];
+        [imgView addSubview: createImageViewLoading(imgView.bounds, YES, YES)];
+    }
 }
 
 - (void) doloadImageAsync:(Category *)elm highlight:(BOOL)highlight inView:(UIImageView *)imgView {

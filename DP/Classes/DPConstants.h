@@ -253,4 +253,9 @@ NSString* SHA1Digest(NSString* input);
 
 NSString* getDocumentsFilePath(NSString* filename);
 
+UIView* createImageViewLoading(CGRect vFrame, BOOL addIndicator, BOOL startIndicator);
 
+void releaseSubViews(UIView *v);
+
+void startActivityIndicators(UIView *v);
+void stopActivityIndicators(UIView *v);

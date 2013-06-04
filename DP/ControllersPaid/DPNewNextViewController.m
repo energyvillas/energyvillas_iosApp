@@ -145,11 +145,14 @@
         [self.view addSubview:self.houseNext];
     } else {
         self.houseNext.frame = CGRectMake(x, y, w, h);
-        if (self.ctgNew) [self internalLoadImage:self.ctgNew];
-        if (self.ctgNext) [self internalLoadImage:self.ctgNext];
 //        for (UIView *v in self.houseNext.subviews)
 //            v.frame = self.houseNext.bounds;
     }
+    
+//    if (self.ctgNew)
+        [self internalLoadImage:self.ctgNew index:0];
+//    if (self.ctgNext)
+        [self internalLoadImage:self.ctgNext index:1];
 }
 
 - (UIImageView *) createViewWithFrame:(CGRect)frame {
@@ -231,8 +234,11 @@
         self.loaderNext.delegate = self;
     }
     
-    [self.loaderNew loadData];
-    [self.loaderNext loadData];
+    if (self.ctgNew == nil || self.loaderNew.dataRefreshNeeded)
+        [self.loaderNew loadData];
+
+    if (self.ctgNext == nil || self.loaderNext.dataRefreshNeeded)
+            [self.loaderNext loadData];
 }
 
 //==============================================================================
@@ -269,60 +275,38 @@
 
 - (void) loadImage:(Category *)element {
     [self doLayoutSubViews:NO];
-    [self internalLoadImage:element];
+    [self internalLoadImage:element index:-1];
 }
 
-- (void) internalLoadImage:(Category *)element {
-    int indx = -1;
-    if (element == self.ctgNew)
-        indx = 0;
-    else if (element == self.ctgNext)
-        indx = 1;
+- (void) internalLoadImage:(Category *)element index:(int)index {
+    int indx = element == nil ? index : -1;
+    if (element) {
+        if (element == self.ctgNew)
+            indx = 0;
+        else if (element == self.ctgNext)
+            indx = 1;
+    }
+    
     if (indx != -1) {
         NSString *imgName = IS_PORTRAIT ? element.imageUrl : element.imageRollUrl;
-        if (![self loadCachedImage:imgName atIndex:indx])
+        if (![self loadCachedImage:imgName atIndex:indx]) {
             [self downloadImageUrl:imgName atIndex:indx];
+        }
     }
 }
-
-//- (NSString *) calcImageName:(NSString *)imgUrl isHighlight:(BOOL)ishighlight {
-//    @try {
-//        NSLog(@"NEW-NEXT - calcImageName - baseName='%@'", imgUrl);
-//        NSArray *parts = [imgUrl componentsSeparatedByString:@"."];
-//        if (parts && parts.count == 2) {
-//            NSString *orientation = IS_PORTRAIT ? @"v" : @"h";
-//            NSString *lang = CURRENT_LANG;
-//            NSString *fmt = @"%@_%@_%@.%@";
-//            
-//            NSString *result = [NSString stringWithFormat:fmt,
-//                                parts[0], orientation, lang, parts[1]];
-//            
-////            if (ishighlight) {
-////                NSString *high = ishighlight ? @"roll" : @"";
-////                
-////                result = [NSString stringWithFormat:@"MainMenu/main_menu_%@_%@%@_%@.%@",
-////                          parts[0], orientation, lang, parts[1]];
-////            }
-//            return result;
-//        }
-//        else
-//            return imgUrl;
-//    }
-//    @catch (NSException* exception) {
-//        NSLog(@"Uncaught exception: %@", exception.description);
-//        NSLog(@"Stack trace: %@", [exception callStackSymbols]);
-//        return imgUrl;
-//    }
-//}
 
 - (BOOL) loadCachedImage:(NSString *)imgName atIndex:(int)aIndex{
     if (aIndex >= self.view.subviews.count) return NO;
     
+    UIImageView *houseview = aIndex == 0 ? self.houseNew : (aIndex == 1 ? self.houseNext : nil);
+    releaseSubViews(houseview);
+    
     UIImage *img = [[DPAppHelper sharedInstance] loadUIImageFromCache:imgName];
     if (img != nil) {
-        UIImageView *iv = aIndex == 0 ? self.houseNew : (aIndex == 1 ? self.houseNext : nil);
-        [iv setImage:img];
+        [houseview setImage:img];
         return YES;
+    } else {
+        [houseview addSubview:createImageViewLoading(houseview.bounds, NO, NO)];
     }
     
     return NO;

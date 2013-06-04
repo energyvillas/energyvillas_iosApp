@@ -10,6 +10,9 @@
 #import "DPAppHelper.h"
 #import <QuartzCore/QuartzCore.h>
 #import <CommonCrypto/CommonDigest.h>
+#import "UIImage+FX.h"
+
+
 /*
 NSString *const MyFirstConstant = @"FirstConstant";
 NSString *const MySecondConstant = @"SecondConstant";
@@ -227,5 +230,87 @@ NSString* getDocumentsFilePath(NSString* filename) {
     NSString *filePath = [docDir stringByAppendingPathComponent:filename];
     
     return filePath;
+}
+
+UIView* createImageViewLoading(CGRect vFrame, BOOL addIndicator, BOOL startIndicator)  {
+//    CGRect vFrame = container.bounds;
+//    vFrame = CGRectInset(vFrame, inset.width, inset.height);
+    
+//    UIImage *img = [UIImage imageNamed:[NSString stringWithFormat:@"loading_%@.png", CURRENT_LANG]];
+    UIImage *img = [UIImage imageNamed:@"loading.png"];
+    CGFloat coeff = addIndicator ? 0.5f : 0.8f;
+    CGSize maxSize = CGSizeMake(vFrame.size.width * coeff,
+                                vFrame.size.height * coeff);
+    if (img.size.width > maxSize.width || img.size.height > maxSize.height) {
+        img = [img imageScaledToFitSize:maxSize];
+    }
+    
+    CGRect frm = CGRectMake(0.0f, 0.0f,
+                            vFrame.size.width * coeff,
+                            vFrame.size.height * coeff);
+    frm = CGRectOffset(frm,
+                       (vFrame.size.width - frm.size.width) / 2.0f,
+                       (vFrame.size.height - frm.size.height) / 2.0f);
+    
+    UIImageView *iv = [[UIImageView alloc] initWithFrame:frm];
+    iv.contentMode = UIViewContentModeCenter;
+    iv.image = img;
+    
+    UIView *v = [[UIView alloc] initWithFrame:vFrame];
+    v.backgroundColor = [UIColor colorWithWhite:0.0f alpha:0.7f];
+    v.layer.cornerRadius = IS_IPAD ? 8.0f : 4.0f;
+    v.layer.borderWidth = IS_IPAD ? 2.0f : 2.0f;
+    v.layer.borderColor = [UIColor colorWithWhite:1.0f alpha:0.75f].CGColor;
+    
+    [v addSubview:iv];
+    
+//    if (addIndicator) {
+//        frm = v.bounds;
+//        UIActivityIndicatorView *bi = [[UIActivityIndicatorView alloc]
+//                                       initWithActivityIndicatorStyle: IS_IPAD ? UIActivityIndicatorViewStyleWhiteLarge: UIActivityIndicatorViewStyleWhite];
+////        bi.frame = CGRectOffset(CGRectMake((frm.size.width-25)/2,
+////                                           (frm.size.height-25)/2,
+////                                           25, 25),
+////                                0, IS_IPAD ? 110 : IS_IPHONE ? 40 : 55);
+//        bi.center = v.center;
+//        bi.hidesWhenStopped = YES;
+//        [v addSubview:bi];
+//        if (startIndicator)
+//            [bi startAnimating];
+//    }
+    
+    return v;
+}
+
+void releaseSubViews(UIView *v) {
+    for (UIView *sv in v.subviews) {
+        releaseSubViews(sv);
+        
+        if ([sv isKindOfClass:[UIActivityIndicatorView class]])
+            [((UIActivityIndicatorView *)sv) stopAnimating];
+
+        [sv removeFromSuperview];
+    }
+}
+
+void fixActivityIndicators(UIView *v, BOOL start) {
+    for (UIView *sv in v.subviews) {
+        fixActivityIndicators(sv, start);
+        
+        if ([sv isKindOfClass:[UIActivityIndicatorView class]]) {
+            if (start)
+                [((UIActivityIndicatorView *)sv) stopAnimating];
+            else
+                [((UIActivityIndicatorView *)sv) stopAnimating];
+        }
+    }
+}
+
+void startActivityIndicators(UIView *v) {
+    fixActivityIndicators(v, YES);
+}
+
+void stopActivityIndicators(UIView *v) {
+    fixActivityIndicators(v, NO);
 }
 

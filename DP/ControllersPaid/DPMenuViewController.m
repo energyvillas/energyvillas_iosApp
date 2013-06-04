@@ -48,11 +48,8 @@
         initialPage:(int)initialPage {
 
     menulevel = level;
-    DPAppHelper *apphelper = [DPAppHelper sharedInstance];
-    NSArray *content = [apphelper paidMenuOfCategory:-1
-                                                lang:apphelper.currentLang];
     
-    self = [super initWithContent:content
+    self = [super initWithContent:[DPMenuViewController loadMenuData]
                              rows:rows
                           columns:columns
                        autoScroll:NO
@@ -66,6 +63,20 @@
     }
     
     return self;
+}
+
++ (NSArray *) loadMenuData {
+    DPAppHelper *apphelper = [DPAppHelper sharedInstance];
+    NSArray *content = [apphelper paidMenuOfCategory:-1
+                                                lang:apphelper.currentLang];
+    return content;
+}
+
+- (void) doLocalize {
+    [super doLocalize];
+    NSArray *lst = [DPMenuViewController loadMenuData];    
+    [self contentLoaded:lst];
+    [self changeRows:self.rowCount columns:self.colCount scrollDirection:self.scrollDirection];
 }
 
 - (void) scrolledToPage:(int)newPage {

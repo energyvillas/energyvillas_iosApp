@@ -52,7 +52,6 @@
 - (id) initWithCategory:(Category *)ctg {
     if (self = [super init]) {
         self.category = ctg;
-        //        self.categories = [[DPAppHelper sharedInstance] getSubCategoriesOf:ctgID];
     }
     
     return self;
@@ -111,16 +110,6 @@
 - (void) loadData {
     [self clearDataLoaders];
     
-//    self.ctgLoader = [[DPCategoryLoader alloc] initWithView:self.subCtgView
-//                                                useInternet:YES
-//                                                 useCaching:YES
-//                                                   category:self.category.Id
-//                                                       lang:CURRENT_LANG
-//                                              useDeviceType:NO
-//                                                  localData:nil];
-//    self.ctgLoader.delegate = self;
-//    [self.ctgLoader loadData];
-    
     self.hovLoader = [[HouseOverviewLoader alloc] initWithView:self.view
                                                           lang:CURRENT_LANG
                                                         category:self.category.Id];
@@ -129,59 +118,33 @@
 }
 
 #pragma mark - dataloader delegate
-//-(void) hikCtgsLoaded {
-//    
-//}
-//- (void) ctgLoadFinished:(DPCategoryLoader *)loader {
-//    if (loader.datalist.count == 0)
-//        showAlertMessage(nil,
-//                         DPLocalizedString(kERR_TITLE_INFO),
-//                         DPLocalizedString(kERR_MSG_NO_DATA_FOUND));
-//    else {
-//        self.hikCategories = loader.datalist;
-//        [self hikCtgsLoaded];
-//    }
-//}
 
 -(void) hovLoaded {
-    if (self.houseOverview) {
+    if (self.houseOverview) 
         [self.titleView loadHTMLString:self.houseOverview.title baseURL:nil];
-        [self loadPhotoView];
-    }
+    
+    [self loadPhotoView];
 }
 - (void) hovLoadFinished:(HouseOverviewLoader *)loader {
-    if (loader.datalist.count == 0)
+    if (loader.datalist.count == 0) {
+        stopActivityIndicators(self.photoView);
         showAlertMessage(nil,
                          DPLocalizedString(kERR_TITLE_INFO),
                          DPLocalizedString(kERR_MSG_NO_DATA_FOUND));
-    else {
+    } else {
         self.houseOverview = loader.datalist[0];
         [self hovLoaded];
     }
 }
 
 - (void) loadFinished:(DPDataLoader *)loader {
-//    if (loader == self.ctgLoader) 
-//        [self ctgLoadFinished:(DPCategoryLoader *)loader];
-//    else
-        if (loader == self.hovLoader)
+    if (loader == self.hovLoader)
         [self hovLoadFinished:(HouseOverviewLoader *)loader];
-//====
-//    else  { // if (loader == self.categoriesLoader)
-//        if (loader.datalist.count == 0)
-//            showAlertMessage(nil, DPLocalizedString(kERR_TITLE_INFO), DPLocalizedString(kERR_MSG_NO_DATA_FOUND));
-//        else {
-//            NSMutableArray *children = [[NSMutableArray alloc] init];
-//            for (Category *ctg in loader.datalist)
-//                if (ctg.parentId == self.category.Id)
-//                    [children addObject:ctg];
-//            self.categories = [[NSArray alloc] initWithArray:children];
-//            [self loadCategoryView];
-//        }
-//    }
 }
 
 - (void)loadFailed:(DPDataLoader *)loader {
+    stopActivityIndicators(self.photoView);
+
     showAlertMessage(nil,
                      DPLocalizedString(kERR_TITLE_CONNECTION_FAILED),
                      DPLocalizedString(kERR_MSG_DATA_LOAD_FAILED));
@@ -191,16 +154,11 @@
 
 - (void) doLayoutSubViews:(BOOL)fixtop {    
     CGRect vf = self.view.frame;
-    //    CGRect svf = self.view.superview.frame;
     
     fixtop = IS_LANDSCAPE && !IS_IPAD;
     int top = fixtop ? 12 : 0;
     int h = vf.size.height - top;
     int w = vf.size.width;
-    //BOOL fixtop = NO;
-//    int h = IS_PORTRAIT ? vf.size.height : vf.size.height - vf.origin.y;
-//    int w = vf.size.width;
-//    int top = fixtop ? vf.origin.y : 0;
     
     // iphone sizes
     //portrait
@@ -342,22 +300,38 @@
 }
 
 -(void) loadPhotoView {
-    for (UIView *v in self.photoView.subviews) {
-        [v removeFromSuperview];
+    releaseSubViews(self.photoView);
+    
+    if (!self.houseOverview) {
+        UIView *v = createImageViewLoading(self.photoView.bounds, NO, NO);
+        [self.photoView addSubview:v];
+    } else {
+        UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
+        btn.frame = CGRectInset(self.photoView.bounds, 0, 0);
+        btn.showsTouchWhenHighlighted = YES;
+        btn.contentMode = UIViewContentModeCenter;
+        NSString *imgName = nil;
+        if (self.category.parentId == CTGID_EXCLUSIVE_ART) {
+            imgName = (self.houseOverview.isMaster)
+            ? @"HouseInfo/Posters/poster_frame_play_art_%@.png"
+            : @"HouseInfo/Posters/poster_frame_gallery_art_%@.png";
+            imgName = [NSString stringWithFormat:imgName, IS_PORTRAIT ? @"v" : @"h"];
+        } else if (self.category.parentId == CTGID_EXCLUSIVE_DESIGNER) {
+            imgName = (self.houseOverview.isMaster)
+            ? @"HouseInfo/Posters/poster_frame_play_designer_%@.png"
+            : @"HouseInfo/Posters/poster_frame_gallery_designer_%@.png";
+            imgName = [NSString stringWithFormat:imgName, IS_PORTRAIT ? @"v" : @"h"];
+        } else {
+            imgName = (self.houseOverview.isMaster)
+            ? @"HouseInfo/Posters/poster_frame_play_%@_%@.png"
+            : @"HouseInfo/Posters/poster_frame_gallery_%@_%@.png";
+            imgName = [NSString stringWithFormat:imgName, IS_PORTRAIT ? @"v" : @"h", CURRENT_LANG];
+        }
+        [btn setImage:[UIImage imageNamed:imgName] forState:UIControlStateNormal];
+        [btn addTarget:self action:@selector(photoTapped:) forControlEvents:UIControlEventTouchUpInside];
+        
+        [self.photoView addSubview:btn];
     }
-    
-    UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
-    btn.frame = CGRectInset(self.photoView.bounds, 0, 0);
-    btn.showsTouchWhenHighlighted = YES;
-    btn.contentMode = UIViewContentModeCenter;
-    NSString *imgName = (self.houseOverview.isMaster)
-                            ? @"HouseInfo/Posters/poster_frame_play_%@_%@.png"
-                            : @"HouseInfo/Posters/poster_frame_gallery_%@_%@.png";
-    imgName = [NSString stringWithFormat:imgName, IS_PORTRAIT ? @"v" : @"h", CURRENT_LANG];
-    [btn setImage:[UIImage imageNamed:imgName] forState:UIControlStateNormal];
-    [btn addTarget:self action:@selector(photoTapped:) forControlEvents:UIControlEventTouchUpInside];
-    
-    [self.photoView addSubview:btn];
 }
 
 -(void) loadInfoDescView {
