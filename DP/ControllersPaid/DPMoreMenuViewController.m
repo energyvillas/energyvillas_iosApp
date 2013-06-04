@@ -27,6 +27,13 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
+    self.title = nil;
+    self.scrollView.contentSize = CGSizeMake(64, 6*64);
+}
+
+- (void) viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    [self.scrollView flashScrollIndicators];
 }
 
 - (void)didReceiveMemoryWarning
@@ -39,5 +46,9 @@
     UIButton *btn = sender;
     if (self.menuDelegate)
         [self.menuDelegate menuItemSelected:btn.tag];
+}
+- (void)viewDidUnload {
+    [self setScrollView:nil];
+    [super viewDidUnload];
 }
 @end

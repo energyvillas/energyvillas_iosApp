@@ -422,19 +422,23 @@
     //the view controller you want to present as popover
     if (!self.popupContentViewController)
         self.popupContentViewController = [self doCreatePopupContentViewController];
-    
     self.popupContentViewController.title = nil;
     
     //our popover
     self.popupController = [[FPPopoverController alloc]
                           initWithViewController:self.popupContentViewController];
     self.popupController.delegate = self;
+
+    CGSize sz = self.popupContentViewController.view.bounds.size;
+    sz.width += 20; sz.height += 22;
+    self.popupController.contentSize = sz;
+    
+    self.popupContentViewController.title = nil;
+    self.popupController.title = nil;
     self.popupController.border = NO;
     self.popupController.tint = FPPopoverBlackTint;
-    self.popupController.arrowDirection = FPPopoverNoArrow;
-    CGSize sz = self.popupContentViewController.view.bounds.size;
-    sz.width += 20; sz.height += 40;
-    self.popupController.contentSize = sz;
+    self.popupController.arrowDirection = FPPopoverNoArrow;//ArrowDirectionDown;//NoArrow;
+
     CGPoint pnt = CGPointMake(frm.size.width, frm.size.height - 49);
     [self.popupController presentPopoverFromPoint:pnt];
 }

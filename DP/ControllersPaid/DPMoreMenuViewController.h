@@ -17,6 +17,7 @@
 
 @interface DPMoreMenuViewController : UIViewController
 
+@property (strong, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (weak, nonatomic) id<DPMoreMenuHandlerDelegate> menuDelegate;
 
 - (IBAction)btnTouchUpInside:(id)sender;
