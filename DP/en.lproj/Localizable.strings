@@ -53,10 +53,19 @@
 
 /* ======= PAID ====== */
 "tbiMain_Title"="Home";
-"tbiWho_Title"="Who we are";
-"tbiBuy_Title"="Real Estate";
+"tbiIdea_Title"="Idea";
+"tbiRealEstate_Title"="Real Estate";
 "tbiCall_Title"="Call us";
 "tbiMore_Title"="More";
+
+"tbiWho_Title"="Who we are";
+"tbiFranchise_Title"="Franchise";
+"tbiCost_Title"="Cost";
+"tbiProfit_Title"="Profit";
+"tbiMaterials_Title"="Materials";
+"tbiPlanet_Title"="Save the Planet";
+"tbiFavorites_Title"="Favorites";
+
 
 
 "MENU_TITLE_52"="Smart Ηouses";
@@ -94,6 +103,7 @@
 // call us dialog
 "CALLUS_BTN_Call"="Call";
 "CALLUS_BTN_Cancel"="Cancel";
+
 
 
 

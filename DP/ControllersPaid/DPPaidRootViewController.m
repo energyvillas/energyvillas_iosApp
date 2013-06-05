@@ -176,7 +176,7 @@
 }
 
 - (void) loadAdsView:(BOOL)reload {
-    if (reload && self.adsViewController != nil) {
+    if (/*reload && */self.adsViewController != nil) {
         [self.adsViewController.view removeFromSuperview];
         [self.adsViewController removeFromParentViewController];
         self.adsViewController = nil;

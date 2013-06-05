@@ -132,7 +132,7 @@
     
     //NO BORDER
     if(self.border == NO) {
-        b = 10.0;
+        b = 0.0;//10.0; //GGSE PENDING
     }
     
     CGRect rect;
@@ -508,11 +508,16 @@
 //			contentRect.size = CGSizeMake(self.bounds.size.width-20, self.bounds.size.height-40);
             // bug fix as found on the github issues "Issue #63"
             contentRect.origin = CGPointMake(10, 10);
-            contentRect.size = CGSizeMake(self.bounds.size.width-20, self.bounds.size.height-20);		}
+            contentRect.size = CGSizeMake(self.bounds.size.width-20, self.bounds.size.height-20);
+        }
     }
 
-    _contentView.frame = contentRect;
-    _titleLabel.text = self.title;    
+    if (self.border) //GGSE
+        _contentView.frame = contentRect;
+    else
+        _contentView.frame = CGRectInset(contentRect, -10, -10);
+    
+    _titleLabel.text = self.title;
     
 }
 

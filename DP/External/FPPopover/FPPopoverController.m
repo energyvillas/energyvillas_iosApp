@@ -444,6 +444,7 @@
     CGFloat best_w = MAX(wl, wr);
     
     CGRect r;
+    r.origin = CGPointMake(0, 0);
     r.size = self.contentSize;
 
     FPPopoverArrowDirection bestDirection;
@@ -475,7 +476,7 @@
     }
     
     
-    else 
+    else if(FPPopoverArrowDirectionIsHorizontal(self.arrowDirection)) //GGSE
     {
         //ok, will be horizontal
         //the arrow must NOT be forced to left

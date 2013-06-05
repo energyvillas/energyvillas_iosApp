@@ -74,16 +74,18 @@ FOUNDATION_EXPORT NSString *const MySecondConstant;
 
 // tabBar buttons
 #define TAG_TBI_MAIN ((int)1001)
-#define TAG_TBI_WHO ((int)1002)
-#define TAG_TBI_BUY ((int)1003)
-#define TAG_TBI_CALL ((int)1004)
+#define TAG_TBI_IDEA ((int)1002)
+#define TAG_TBI_CALL ((int)1003)
+#define TAG_TBI_REAL_ESTATE ((int)1004) // was: buy
 #define TAG_TBI_MORE ((int)1005)
-#define TAG_TBIX_COST ((int)1101)
-#define TAG_TBIX_FRANCHISE ((int)1102)
-#define TAG_TBIX_IDEA ((int)1103)
-#define TAG_TBIX_MATERIALS ((int)1104)
-#define TAG_TBIX_PLANET ((int)1105)
-#define TAG_TBIX_PROFIT ((int)1106)
+
+#define TAG_TBIX_WHO ((int)1011)
+#define TAG_TBIX_FRANCHISE ((int)1012)
+#define TAG_TBIX_COST ((int)1013)
+#define TAG_TBIX_PROFIT ((int)1014)
+#define TAG_TBIX_MATERIALS ((int)1015)
+#define TAG_TBIX_PLANET ((int)1016)
+#define TAG_TBIX_FAVORITES ((int)1017)
 
 // main menu buttons
 #define CTGID_SMART ((int)52) //100)
@@ -108,9 +110,18 @@ FOUNDATION_EXPORT NSString *const MySecondConstant;
 #define CTGID_CAROUSEL ((int)77)
 #define CTGID_CAROUSEL_MORE ((int)78)
 #define CTGID_GENERAL_BUY_DLG ((int)76)
+
+#define CTGID_IDEA ((int)223)
+//#define CTGID_CALL_US  ((int)174)
+#define CTGID_REAL_ETATE  ((int)173) // PURCHASE_LAND
+
 #define CTGID_WHO_WE_ARE ((int)60)
-#define CTGID_PURCHASE_LAND  ((int)173)
-#define CTGID_CALL_US  ((int)174)
+#define CTGID_FRANCHISE ((int)224)
+#define CTGID_COST ((int)225)
+#define CTGID_PROFIT ((int)226)
+#define CTGID_MATERIALS ((int)227)
+#define CTGID_PLANET ((int)228)
+
 #define CTGID_INFO ((int)179)
 
 #define CTGID_NEW ((int)175)
@@ -211,10 +222,20 @@ UIKIT_EXTERN NSString *const NAVBAR_INFO_IMG;
 UIKIT_EXTERN NSString *const kbtnOK_Title;
 
 UIKIT_EXTERN NSString *const ktbiMain_Title;
-UIKIT_EXTERN NSString *const ktbiWho_Title;
-UIKIT_EXTERN NSString *const ktbiBuy_Title;
+UIKIT_EXTERN NSString *const ktbiIdea_Title;
 UIKIT_EXTERN NSString *const ktbiCall_Title;
+UIKIT_EXTERN NSString *const ktbiRealEstate_Title;
 UIKIT_EXTERN NSString *const ktbiMore_Title;
+
+UIKIT_EXTERN NSString *const ktbiWho_Title;
+UIKIT_EXTERN NSString *const ktbiFranchise_Title;
+UIKIT_EXTERN NSString *const ktbiCost_Title;
+UIKIT_EXTERN NSString *const ktbiProfit_Title;
+UIKIT_EXTERN NSString *const ktbiMaterials_Title;
+UIKIT_EXTERN NSString *const ktbiPlanet_Title;
+UIKIT_EXTERN NSString *const ktbiFavorites_Title;
+
+
 
 UIKIT_EXTERN NSString *const kbbiMore_Title;
 UIKIT_EXTERN NSString *const kbbiMoreBack_Title;

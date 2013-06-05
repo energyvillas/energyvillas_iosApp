@@ -431,7 +431,7 @@
 }
 
 -(UIView *) createImageViewLoading:(UIView *)container  {
-    return createImageViewLoading(CGRectInset(container.bounds, 20.0f, 20.0f), NO, NO);
+    return createImageViewLoading(container.bounds, NO, NO);
     
 //    CGRect vFrame = container.bounds;
 //    vFrame = CGRectInset(vFrame, 20.0f, 20.0f);

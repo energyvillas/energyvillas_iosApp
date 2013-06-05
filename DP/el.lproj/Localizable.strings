@@ -53,10 +53,19 @@
 
 /* ======= PAID ====== */
 "tbiMain_Title"="Αρχή";
-"tbiWho_Title"="Ποιοί είμαστε";
-"tbiBuy_Title"="Real Estate";
+"tbiIdea_Title"="Ιδέα";
+"tbiRealEstate_Title"="Real Estate";
 "tbiCall_Title"="Κλήση";
 "tbiMore_Title"="Περισσότερα";
+
+"tbiWho_Title"="Ποιοί είμαστε";
+"tbiFranchise_Title"="Franchise";
+"tbiCost_Title"="Κόστος";
+"tbiProfit_Title"="Κερδίζω";
+"tbiMaterials_Title"="Υλικά";
+"tbiPlanet_Title"="Προστατεύω";
+"tbiFavorites_Title"="Αγαπημένα";
+
 
 
 "MENU_TITLE_52"="Έξυπνες Κατοικίες";

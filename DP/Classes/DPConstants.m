@@ -88,10 +88,20 @@ NSString *const NAVBAR_INFO_IMG = @"Navbar/info-big_03.png";
 NSString *const kbtnOK_Title = @"btnOK_Title";
 
 NSString *const ktbiMain_Title = @"tbiMain_Title";
-NSString *const ktbiWho_Title = @"tbiWho_Title";
-NSString *const ktbiBuy_Title = @"tbiBuy_Title";
+NSString *const ktbiIdea_Title = @"tbiIdea_Title";
+NSString *const ktbiRealEstate_Title = @"tbiRealEstate_Title";
 NSString *const ktbiCall_Title = @"tbiCall_Title";
 NSString *const ktbiMore_Title = @"tbiMore_Title";
+
+NSString *const ktbiWho_Title = @"tbiWho_Title";
+NSString *const ktbiFranchise_Title = @"tbiFranchise_Title";
+NSString *const ktbiCost_Title = @"tbiCost_Title";
+NSString *const ktbiProfit_Title = @"tbiProfit_Title";
+NSString *const ktbiMaterials_Title = @"tbiMaterials_Title";
+NSString *const ktbiPlanet_Title = @"tbiPlanet_Title";
+NSString *const ktbiFavorites_Title = @"tbiFavorites_Title";
+
+
 
 NSString *const kbbiMore_Title = @"bbiMore_Title";
 NSString *const kbbiMoreBack_Title = @"bbiMoreBack_Title";
@@ -241,13 +251,17 @@ UIView* createImageViewLoading(CGRect vFrame, BOOL addIndicator, BOOL startIndic
     CGFloat coeff = addIndicator ? 0.5f : 0.8f;
     CGSize maxSize = CGSizeMake(vFrame.size.width * coeff,
                                 vFrame.size.height * coeff);
+    maxSize = CGSizeMake(MIN(maxSize.width, 60.0f), MIN(maxSize.height, 60.0f));
     if (img.size.width > maxSize.width || img.size.height > maxSize.height) {
         img = [img imageScaledToFitSize:maxSize];
     }
     
+//    CGRect frm = CGRectMake(0.0f, 0.0f,
+//                            vFrame.size.width * coeff,
+//                            vFrame.size.height * coeff);
     CGRect frm = CGRectMake(0.0f, 0.0f,
-                            vFrame.size.width * coeff,
-                            vFrame.size.height * coeff);
+                            maxSize.width,
+                            maxSize.height);
     frm = CGRectOffset(frm,
                        (vFrame.size.width - frm.size.width) / 2.0f,
                        (vFrame.size.height - frm.size.height) / 2.0f);

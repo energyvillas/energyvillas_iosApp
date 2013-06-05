@@ -13,6 +13,8 @@
 #import "Reachability.h"
 #import "Article.h"
 #import "Category.h"
+#import "DPAppDelegate.h"
+#import "UINavContentViewController.h"
 
 
 
@@ -98,6 +100,12 @@
             _currentLang = @"en";
 
         dispatch_async(dispatch_get_main_queue(), ^{
+            if (self.isPurchased) {
+                DPAppDelegate *del = [UIApplication sharedApplication].delegate;
+                UINavContentViewController *main = (UINavContentViewController *)del.controller;
+                [main doLocalize];
+            }
+            
             [[NSNotificationCenter defaultCenter]
              postNotificationName:DPN_currentLangChanged object:nil];
         });
@@ -105,7 +113,7 @@
 }
 
 - (BOOL) calcIsPurchased {
-    //return YES;
+    return YES;
     
     NSUserDefaults *usrDefaults = [NSUserDefaults standardUserDefaults];
     BOOL productPurchased = [usrDefaults boolForKey:PRODUCT_IDENTIFIER];

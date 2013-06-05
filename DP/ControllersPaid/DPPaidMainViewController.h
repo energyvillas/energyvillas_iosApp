@@ -18,8 +18,8 @@
 
 @property (strong, nonatomic) IBOutlet UITabBar *tabBar;
 @property (strong, nonatomic) IBOutlet UITabBarItem *tbiMain;
-@property (strong, nonatomic) IBOutlet UITabBarItem *tbiWho;
-@property (strong, nonatomic) IBOutlet UITabBarItem *tbiBuy;
+@property (strong, nonatomic) IBOutlet UITabBarItem *tbiIdea;
+@property (strong, nonatomic) IBOutlet UITabBarItem *tbiRealEstate;
 @property (strong, nonatomic) IBOutlet UITabBarItem *tbiCall;
 @property (strong, nonatomic) IBOutlet UITabBarItem *tbiMore;
 

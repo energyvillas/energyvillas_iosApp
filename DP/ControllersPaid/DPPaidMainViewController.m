@@ -20,10 +20,12 @@
 
 
 @interface DPPaidMainViewController ()
+@property (strong, nonatomic) UIViewController *ideaViewController;
+@property (strong, nonatomic) UIViewController *realEstateViewController;
 @property (strong, nonatomic) UIViewController *whoViewController;
-@property (strong, nonatomic) UIViewController *buyViewController;
-@property (strong, nonatomic) UIViewController *callViewController;
-@property (strong, nonatomic) UIViewController *moreViewController;
+
+//@property (strong, nonatomic) UIViewController *callViewController;
+//@property (strong, nonatomic) UIViewController *moreViewController;
 
 @property (strong, nonatomic) FPPopoverController *popupController;
 @property (strong, nonatomic) DPMoreMenuViewController *popupContentViewController;
@@ -38,8 +40,6 @@
     int tbSelItem;
 }
 
-//@synthesize navController, tabBar;
-//@synthesize whoViewController, buyViewController, callViewController, moreViewController;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -65,8 +65,8 @@
     [super doLocalize];
 
     self.tbiMain.title = DPLocalizedString(ktbiMain_Title);
-    self.tbiWho.title = DPLocalizedString(ktbiWho_Title);
-    self.tbiBuy.title = DPLocalizedString(ktbiBuy_Title);
+    self.tbiIdea.title = DPLocalizedString(ktbiIdea_Title);
+    self.tbiRealEstate.title = DPLocalizedString(ktbiRealEstate_Title);
     self.tbiCall.title = DPLocalizedString(ktbiCall_Title);
     self.tbiMore.title = DPLocalizedString(ktbiMore_Title);
     
@@ -74,9 +74,9 @@
                                               stringWithFormat:@"TabBar/bottom_menu_ev_%@.png",
                                               CURRENT_LANG]];
     
-    self.tbiWho.image = [UIImage imageNamed:@"TabBar/bottom_menu_poioi_eimaste.png"];
+    self.tbiIdea.image = [UIImage imageNamed:@"TabBar/bottom_menu_idea.png"];
     
-    self.tbiBuy.image = [UIImage imageNamed:@"TabBar/bottom_menu_agora_oikopedou.png"];
+    self.tbiRealEstate.image = [UIImage imageNamed:@"TabBar/bottom_menu_agora_oikopedou.png"];
     
     self.tbiCall.image = [UIImage imageNamed:@"TabBar/bottom_menu_klisi.png"];
     
@@ -198,10 +198,12 @@
 }
 
 - (void) cleanControllers:(UIViewController *)tvc {
+    if (tvc == self.ideaViewController) self.ideaViewController = nil;
+    if (tvc == self.realEstateViewController) self.realEstateViewController = nil;
+    //if (tvc == self.callViewController) self.callViewController = nil;
+    //if (tvc == self.moreViewController) self.moreViewController = nil;
+
     if (tvc == self.whoViewController) self.whoViewController = nil;
-    if (tvc == self.buyViewController) self.buyViewController = nil;
-    if (tvc == self.callViewController) self.callViewController = nil;
-    if (tvc == self.moreViewController) self.moreViewController = nil;
 }
 
 - (void) checkRootAndPop:(UIViewController *)tvc {
@@ -233,10 +235,11 @@
 
 -(BOOL) isTabBarPage:(UIViewController *)tvc {
     return (tvc != nil) && (
-                            (tvc == self.whoViewController) ||
-                            (tvc == self.buyViewController) ||
-                            (tvc == self.callViewController) ||
-                            (tvc == self.moreViewController)
+                            (tvc == self.ideaViewController) ||
+                            (tvc == self.realEstateViewController) ||
+                            //(tvc == self.callViewController) ||
+                            //(tvc == self.moreViewController) ||
+                            (tvc == self.whoViewController)
                             );
 }
 
@@ -252,23 +255,33 @@
     }
 }
 
+- (void) showIdea {
+    if ([self checkTop:self.ideaViewController]) return;
+    
+    self.ideaViewController = [[DPHtmlContentViewController alloc]
+                              initWithCategory:CTGID_IDEA lang:CURRENT_LANG];
+    
+    [self showViewController:self.ideaViewController];
+}
+
+- (void) showRealEstate {
+    if ([self checkTop:self.realEstateViewController]) return;
+    
+    self.realEstateViewController = [[DPHtmlContentViewController alloc]
+                              initWithCategory:CTGID_REAL_ETATE lang:CURRENT_LANG];
+    
+    [self showViewController:self.realEstateViewController];
+}
+
 - (void) showWho {
     if ([self checkTop:self.whoViewController]) return;
     
     self.whoViewController = [[DPHtmlContentViewController alloc]
-                              initWithCategory:CTGID_WHO_WE_ARE lang:CURRENT_LANG];
+                               initWithCategory:CTGID_WHO_WE_ARE lang:CURRENT_LANG];
     
     [self showViewController:self.whoViewController];
 }
 
-- (void) showBuy {
-    if ([self checkTop:self.buyViewController]) return;
-    
-    self.buyViewController = [[DPHtmlContentViewController alloc]
-                              initWithCategory:CTGID_PURCHASE_LAND lang:CURRENT_LANG];
-    
-    [self showViewController:self.buyViewController];
-}
 
 - (void) showCall {
     UIViewController *contr = [self.navController topViewController];
@@ -296,9 +309,9 @@
         switch (tbSelItem) {
             case TAG_TBI_MAIN: self.tabBar.selectedItem = self.tbiMain;
                 break;
-            case TAG_TBI_WHO: self.tabBar.selectedItem = self.tbiWho;
+            case TAG_TBI_IDEA: self.tabBar.selectedItem = self.tbiIdea;
                 break;
-            case TAG_TBI_BUY: self.tabBar.selectedItem = self.tbiBuy;
+            case TAG_TBI_REAL_ESTATE: self.tabBar.selectedItem = self.tbiRealEstate;
                 break;
                 
             default:
@@ -331,13 +344,13 @@
             tbSelItem = item.tag;
             break;
         }
-        case TAG_TBI_WHO: {
-            [self showWho];
+        case TAG_TBI_IDEA: {
+            [self showIdea];
             tbSelItem = item.tag;
             break;
         }
-        case TAG_TBI_BUY: {
-            [self showBuy];
+        case TAG_TBI_REAL_ESTATE: {
+            [self showRealEstate];
             tbSelItem = item.tag;
              break;
         }
@@ -356,13 +369,16 @@
     self.popupController = nil;
 
     switch (menuTag) {
-        case TAG_TBIX_COST: 
+        case TAG_TBIX_WHO: [self showWho];
             break;
             
         case TAG_TBIX_FRANCHISE:
             break;
             
-        case TAG_TBIX_IDEA:
+        case TAG_TBIX_COST:
+            break;
+            
+        case TAG_TBIX_PROFIT:
             break;
             
         case TAG_TBIX_MATERIALS:
@@ -371,8 +387,9 @@
         case TAG_TBIX_PLANET:
             break;
             
-        case TAG_TBIX_PROFIT:
+        case TAG_TBIX_FAVORITES:
             break;
+            
     }
 }
 - (void)handleIslandTap:(UITapGestureRecognizer *)sender {
@@ -429,8 +446,8 @@
                           initWithViewController:self.popupContentViewController];
     self.popupController.delegate = self;
 
-    CGSize sz = self.popupContentViewController.view.bounds.size;
-    sz.width += 20; sz.height += 22;
+    CGSize sz = [self.popupContentViewController calcViewSize];
+    //sz.width += 20; sz.height += 22;
     self.popupController.contentSize = sz;
     
     self.popupContentViewController.title = nil;
@@ -439,8 +456,8 @@
     self.popupController.tint = FPPopoverBlackTint;
     self.popupController.arrowDirection = FPPopoverNoArrow;//ArrowDirectionDown;//NoArrow;
 
-    CGPoint pnt = CGPointMake(frm.size.width, frm.size.height - 49);
-    [self.popupController presentPopoverFromPoint:pnt];
+    CGPoint orgn = [self.popupContentViewController calcOriginInFrame:frm];
+    [self.popupController presentPopoverFromPoint:orgn];
 }
 
 
@@ -469,33 +486,32 @@
     [self setNavController:nil];
     [self setTabBar:nil];
     [self setTbiMain:nil];
-    [self setTbiWho:nil];
-    [self setTbiBuy:nil];
+    [self setTbiIdea:nil];
+    [self setTbiRealEstate:nil];
     [self setTbiCall:nil];
     [self setTbiMore:nil];
+
+    if (self.ideaViewController) {
+        self.ideaViewController=nil;
+    }
+
+    if (self.realEstateViewController) {
+        self.realEstateViewController=nil;
+    }
+
+//    if (self.callViewController) {
+//        self.callViewController=nil;
+//    }
+
+//    if (self.moreViewController) {
+//        self.moreViewController=nil;
+//    }
 
     if (self.whoViewController) {
         self.whoViewController=nil;
     }
-
-    if (self.buyViewController) {
-//        [self.buyViewController.view removeFromSuperview];
-//        [self.buyViewController removeFromParentViewController];
-        self.buyViewController=nil;
-    }
-
-    if (self.callViewController) {
-//        [self.callViewController.view removeFromSuperview];
-//        [self.callViewController removeFromParentViewController];
-        self.callViewController=nil;
-    }
-
-    if (self.moreViewController) {
-//        [self.moreViewController.view removeFromSuperview];
-//        [self.moreViewController removeFromParentViewController];
-        self.moreViewController=nil;
-    }
     
+
     [super viewDidUnload];
 }
 
