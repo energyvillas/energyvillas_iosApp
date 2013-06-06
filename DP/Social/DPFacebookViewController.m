@@ -222,7 +222,7 @@ NSString *const kPlaceholderPostMessage = @"Say something about this...";
                                                [result objectForKey:@"id"]];
                               }
                               // Show the result in an alert
-                              showAlertMessage(self, @"Result", alertText);
+                              showAlertMessage(self, DPLocalizedString(kERR_TITLE_INFO), alertText);
                           }];
 }
 

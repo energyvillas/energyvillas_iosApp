@@ -59,7 +59,6 @@
 
 
 @implementation DPAnimatedScrollViewController {
-    bool isPortrait;
     BOOL isLeafCategory;
     CGRect initframe;
 }
@@ -233,8 +232,7 @@
         [acv frameChanged];
 }
 
-#pragma mark -
-#pragma mark dataloaderdelegate methods
+#pragma mark - dataloaderdelegate methods
 
 - (NSString *) calcLeafImageName:(NSString *)baseName
                        highlight:(BOOL)highlight

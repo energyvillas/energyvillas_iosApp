@@ -13,6 +13,7 @@
 #import "DPAppHelper.h"
 #import "DPSocialManager.h"
 #import "DPHtmlContentViewController.h"
+#import "DPCTGViewController.h"
 
 
 @interface UINavContentViewController ()
@@ -543,8 +544,10 @@
 }
 
 - (void) showInfo {
-    DPHtmlContentViewController *vc = [[DPHtmlContentViewController alloc] initWithCategory:CTGID_INFO
-                                                                                       lang:CURRENT_LANG];
+    UIViewController *vc = [[DPCTGViewController alloc] initWithCategory:CTGID_INFO
+                                                              fromParent:CTGID_ROOT_CATEGORY
+                                                           useDeviceType:YES];
+    
     [self.navigationController pushViewController:vc animated:YES];
 }
 

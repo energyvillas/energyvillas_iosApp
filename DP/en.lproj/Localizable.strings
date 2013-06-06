@@ -9,6 +9,8 @@
 /* ======= common ====== */
 "btnOK_Title"="OK";
 
+"ERR_TITLE_ERROR"="Error";
+"ERR_TITLE_WARNING"="Warning";
 
 "ERR_TITLE_URL_NOT_FOUND"="Connection Failed";
 "ERR_MSG_DATA_LOAD_FAILED"="Connection not found! Please try again later...";

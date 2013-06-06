@@ -95,12 +95,12 @@
         [webView loadRequest:request];
     } else if (self.htmlData)
         [webView loadHTMLString:self.htmlData
-                        baseURL:nil];
+                        baseURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://%@", BASE_HOST_NAME]]];
     else if (self.mimeData)
         [webView loadData:self.mimeData
                  MIMEType:self.mimetype
          textEncodingName:@"utf-8"
-                  baseURL:nil];
+                  baseURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://%@", BASE_HOST_NAME]]];
     
 //    [self addGestureRecognizersTo:webView];
     [self.view addSubview:webView];

@@ -22,13 +22,13 @@
 		5E31F0431720574E008B15F0 /* Twitter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E31F0421720574E008B15F0 /* Twitter.framework */; };
 		5E31F04917205AC0008B15F0 /* DPSocialViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E31F04817205AC0008B15F0 /* DPSocialViewController.m */; };
 		5E31F04B17205AD8008B15F0 /* DPSocialView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5E31F04A17205AD8008B15F0 /* DPSocialView.xib */; };
+		5E32E8701760A62A006BFDEB /* DPCTGViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E32E86F1760A629006BFDEB /* DPCTGViewController.m */; };
 		5E3605021707154E00DB7B20 /* DPAppHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E3605011707154E00DB7B20 /* DPAppHelper.m */; };
 		5E3605121707A72400DB7B20 /* DPBuyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E3605111707A72400DB7B20 /* DPBuyViewController.m */; };
 		5E3605141707A74300DB7B20 /* DPBuyView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5E3605131707A74300DB7B20 /* DPBuyView.xib */; };
 		5E3605171707BDE600DB7B20 /* UIApplication+ScreenDimensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E3605161707BDD900DB7B20 /* UIApplication+ScreenDimensions.m */; };
 		5E3605211708438F00DB7B20 /* close.png in Resources */ = {isa = PBXBuildFile; fileRef = 5E36051F1708438F00DB7B20 /* close.png */; };
 		5E3605221708438F00DB7B20 /* close@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5E3605201708438F00DB7B20 /* close@2x.png */; };
-		5E3605291708B5B600DB7B20 /* DPFloatingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E3605281708B5B600DB7B20 /* DPFloatingViewController.m */; };
 		5E36052B1708B5E300DB7B20 /* DPFloatingView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5E36052A1708B5E300DB7B20 /* DPFloatingView.xib */; };
 		5E36052E1708C83400DB7B20 /* DPAdsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E36052D1708C83400DB7B20 /* DPAdsViewController.m */; };
 		5E3605311708C91C00DB7B20 /* DPArticlesLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E3605301708C91C00DB7B20 /* DPArticlesLoader.m */; };
@@ -75,7 +75,6 @@
 		5E756E37174AB197001AA085 /* info-small_01.png in Resources */ = {isa = PBXBuildFile; fileRef = 5E756E33174AB197001AA085 /* info-small_01.png */; };
 		5E756E38174AB197001AA085 /* info-small_01@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5E756E34174AB197001AA085 /* info-small_01@2x.png */; };
 		5E756E3A174BDC41001AA085 /* HouseInfo in Resources */ = {isa = PBXBuildFile; fileRef = 5E756E39174BDC41001AA085 /* HouseInfo */; };
-		5E756E3D174C2630001AA085 /* DPArticleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E756E3C174C262F001AA085 /* DPArticleViewController.m */; };
 		5E869E0D173010EA00516D2D /* FreeImages in Resources */ = {isa = PBXBuildFile; fileRef = 5E869E0C173010EA00516D2D /* FreeImages */; };
 		5E8AB0CC171706D1004AFE76 /* UIImage+Retina4.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E8AB0CB171706D1004AFE76 /* UIImage+Retina4.m */; };
 		5E956E9D17534B4600B86DAC /* DPMoreMenuView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5E956E9C17534B4600B86DAC /* DPMoreMenuView.xib */; };
@@ -190,6 +189,8 @@
 		5E31F04717205AC0008B15F0 /* DPSocialViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPSocialViewController.h; sourceTree = "<group>"; };
 		5E31F04817205AC0008B15F0 /* DPSocialViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPSocialViewController.m; sourceTree = "<group>"; };
 		5E31F04A17205AD8008B15F0 /* DPSocialView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DPSocialView.xib; sourceTree = "<group>"; };
+		5E32E86E1760A629006BFDEB /* DPCTGViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPCTGViewController.h; sourceTree = "<group>"; };
+		5E32E86F1760A629006BFDEB /* DPCTGViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPCTGViewController.m; sourceTree = "<group>"; };
 		5E3605001707154E00DB7B20 /* DPAppHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPAppHelper.h; sourceTree = "<group>"; };
 		5E3605011707154E00DB7B20 /* DPAppHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPAppHelper.m; sourceTree = "<group>"; };
 		5E3605101707A72400DB7B20 /* DPBuyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPBuyViewController.h; sourceTree = "<group>"; };
@@ -199,8 +200,6 @@
 		5E3605161707BDD900DB7B20 /* UIApplication+ScreenDimensions.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIApplication+ScreenDimensions.m"; sourceTree = "<group>"; };
 		5E36051F1708438F00DB7B20 /* close.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = close.png; sourceTree = "<group>"; };
 		5E3605201708438F00DB7B20 /* close@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "close@2x.png"; sourceTree = "<group>"; };
-		5E3605271708B5B600DB7B20 /* DPFloatingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPFloatingViewController.h; sourceTree = "<group>"; };
-		5E3605281708B5B600DB7B20 /* DPFloatingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPFloatingViewController.m; sourceTree = "<group>"; };
 		5E36052A1708B5E300DB7B20 /* DPFloatingView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DPFloatingView.xib; sourceTree = "<group>"; };
 		5E36052C1708C83300DB7B20 /* DPAdsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPAdsViewController.h; sourceTree = "<group>"; };
 		5E36052D1708C83400DB7B20 /* DPAdsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPAdsViewController.m; sourceTree = "<group>"; };
@@ -274,8 +273,6 @@
 		5E756E33174AB197001AA085 /* info-small_01.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "info-small_01.png"; sourceTree = "<group>"; };
 		5E756E34174AB197001AA085 /* info-small_01@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "info-small_01@2x.png"; sourceTree = "<group>"; };
 		5E756E39174BDC41001AA085 /* HouseInfo */ = {isa = PBXFileReference; lastKnownFileType = folder; path = HouseInfo; sourceTree = "<group>"; };
-		5E756E3B174C262F001AA085 /* DPArticleViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPArticleViewController.h; sourceTree = "<group>"; };
-		5E756E3C174C262F001AA085 /* DPArticleViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPArticleViewController.m; sourceTree = "<group>"; };
 		5E869E0C173010EA00516D2D /* FreeImages */ = {isa = PBXFileReference; lastKnownFileType = folder; path = FreeImages; sourceTree = "<group>"; };
 		5E8AB0CA171706D1004AFE76 /* UIImage+Retina4.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Retina4.h"; sourceTree = "<group>"; };
 		5E8AB0CB171706D1004AFE76 /* UIImage+Retina4.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Retina4.m"; sourceTree = "<group>"; };
@@ -782,8 +779,6 @@
 				5EC2559016FC79E10045AB99 /* DPPaidRootViewController.m */,
 				5EC255ED1700FEF60045AB99 /* DPCategoryViewController.h */,
 				5EC255EE1700FEF60045AB99 /* DPCategoryViewController.m */,
-				5E3605271708B5B600DB7B20 /* DPFloatingViewController.h */,
-				5E3605281708B5B600DB7B20 /* DPFloatingViewController.m */,
 				5E36052C1708C83300DB7B20 /* DPAdsViewController.h */,
 				5E36052D1708C83400DB7B20 /* DPAdsViewController.m */,
 				5E0C7651170F32E200F572A0 /* DPMenuViewController.h */,
@@ -794,8 +789,6 @@
 				5E4E85211711F947005DAD06 /* DPAnimatedScrollViewController.m */,
 				5EC5739A1725978C000B7004 /* DPNewNextViewController.h */,
 				5EC5739B1725978D000B7004 /* DPNewNextViewController.m */,
-				5E756E3B174C262F001AA085 /* DPArticleViewController.h */,
-				5E756E3C174C262F001AA085 /* DPArticleViewController.m */,
 				5E63DF2F174EAA2A0086ACF5 /* DPArticlesViewController.h */,
 				5E63DF30174EAA2A0086ACF5 /* DPArticlesViewController.m */,
 				5E956E9E17534E1600B86DAC /* DPMoreMenuViewController.h */,
@@ -804,6 +797,8 @@
 				5E956EA217538C5500B86DAC /* DPNextHouseViewController.m */,
 				5E956EB31757BFDA00B86DAC /* DPCallUsViewController.h */,
 				5E956EB41757BFDC00B86DAC /* DPCallUsViewController.m */,
+				5E32E86E1760A629006BFDEB /* DPCTGViewController.h */,
+				5E32E86F1760A629006BFDEB /* DPCTGViewController.m */,
 			);
 			path = ControllersPaid;
 			sourceTree = "<group>";
@@ -1102,7 +1097,6 @@
 				5E3605021707154E00DB7B20 /* DPAppHelper.m in Sources */,
 				5E3605121707A72400DB7B20 /* DPBuyViewController.m in Sources */,
 				5E3605171707BDE600DB7B20 /* UIApplication+ScreenDimensions.m in Sources */,
-				5E3605291708B5B600DB7B20 /* DPFloatingViewController.m in Sources */,
 				5E36052E1708C83400DB7B20 /* DPAdsViewController.m in Sources */,
 				5E3605311708C91C00DB7B20 /* DPArticlesLoader.m in Sources */,
 				5EFCCCFA1709BE6C00C1FE88 /* DPDataCache.m in Sources */,
@@ -1138,12 +1132,12 @@
 				5EC573BA172AE278000B7004 /* DPBaseDataElement.m in Sources */,
 				5EB72C751744DE2D00392D6E /* SKProduct+LocalizedPrice.m in Sources */,
 				5EB72CB8174A324C00392D6E /* DPFavoritesViewController.m in Sources */,
-				5E756E3D174C2630001AA085 /* DPArticleViewController.m in Sources */,
 				5E63DF31174EAA2B0086ACF5 /* DPArticlesViewController.m in Sources */,
 				5E956EA017534E1600B86DAC /* DPMoreMenuViewController.m in Sources */,
 				5E956EA317538C5500B86DAC /* DPNextHouseViewController.m in Sources */,
 				5E956EB01757B72E00B86DAC /* DPModalDialogManager.m in Sources */,
 				5E956EB51757BFDD00B86DAC /* DPCallUsViewController.m in Sources */,
+				5E32E8701760A62A006BFDEB /* DPCTGViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

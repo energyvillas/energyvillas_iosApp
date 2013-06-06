@@ -107,6 +107,7 @@ FOUNDATION_EXPORT NSString *const MySecondConstant;
 #define CTGID_EXCLUSIVE_ART ((int)75)
 
 // predefined categories IDs
+#define CTGID_ROOT_CATEGORY ((int)-1)
 #define CTGID_CAROUSEL ((int)77)
 #define CTGID_CAROUSEL_MORE ((int)78)
 #define CTGID_GENERAL_BUY_DLG ((int)76)
@@ -244,6 +245,9 @@ UIKIT_EXTERN NSString *const kbbiBuy_Title;
 UIKIT_EXTERN NSString *const kMENU_TITLE_Fmt;
 
 UIKIT_EXTERN NSString *const kIMAGE_RESET_MENU;
+
+UIKIT_EXTERN NSString *const kERR_TITLE_ERROR;
+UIKIT_EXTERN NSString *const kERR_TITLE_WARNING;
 
 UIKIT_EXTERN NSString *const kERR_TITLE_URL_NOT_FOUND;
 UIKIT_EXTERN NSString *const kERR_MSG_DATA_LOAD_FAILED;

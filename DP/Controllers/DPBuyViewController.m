@@ -318,7 +318,7 @@
         DPIAPHelper *iap = [DPIAPHelper sharedInstance];
         
         if (![iap canMakePurchases])
-            showAlertMessage(nil, @"Info", @"Cannot make purchase at the moment. Please try later!");
+            showAlertMessage(nil, DPLocalizedString(kERR_TITLE_INFO), @"Cannot make purchase at the moment. Please try later!");
         else
             [iap buy];
 //        [iap requestProductsWithCompletionHandler:^(BOOL success, NSArray *products) {
@@ -328,7 +328,7 @@
         NSLog(@"restore tapped");
         DPIAPHelper *iap = [DPIAPHelper sharedInstance];
         if (![iap canMakePurchases])
-            showAlertMessage(nil, @"Info", @"Cannot restore purchase at the moment. Please try later!");
+            showAlertMessage(nil, DPLocalizedString(kERR_TITLE_INFO), @"Cannot restore purchase at the moment. Please try later!");
         else
             [iap restoreCompletedTransactions];
     }

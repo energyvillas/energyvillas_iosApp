@@ -9,6 +9,8 @@
 /* ======= common ====== */
 "btnOK_Title"="ΟΚ";
 
+"ERR_TITLE_ERROR"="Σφάλμα";
+"ERR_TITLE_WARNING"="Προειδοποίηση";
 
 "ERR_TITLE_URL_NOT_FOUND"="Αποτυχία Σύνδεσης";
 "ERR_MSG_DATA_LOAD_FAILED"="Η διαδικασία ανάκτησης νέων απέτυχε! Παρακαλούμε δοκιμάστε αργότερα...";
@@ -53,7 +55,7 @@
 
 /* ======= PAID ====== */
 "tbiMain_Title"="Αρχή";
-"tbiIdea_Title"="Ιδέα";
+"tbiIdea_Title"="Η Ιδέα";
 "tbiRealEstate_Title"="Real Estate";
 "tbiCall_Title"="Κλήση";
 "tbiMore_Title"="Περισσότερα";

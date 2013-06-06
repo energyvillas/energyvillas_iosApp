@@ -16,6 +16,7 @@
 #import "DPAppHelper.h"
 #import "DPModalDialogManager.h"
 #import "DPCallUsViewController.h"
+#import "DPCTGViewController.h"
 
 
 
@@ -267,8 +268,9 @@
 - (void) showRealEstate {
     if ([self checkTop:self.realEstateViewController]) return;
     
-    self.realEstateViewController = [[DPHtmlContentViewController alloc]
-                              initWithCategory:CTGID_REAL_ETATE lang:CURRENT_LANG];
+    self.realEstateViewController = [[DPCTGViewController alloc] initWithCategory:CTGID_REAL_ETATE
+                                                                       fromParent:CTGID_ROOT_CATEGORY
+                                                                    useDeviceType:YES];
     
     [self showViewController:self.realEstateViewController];
 }

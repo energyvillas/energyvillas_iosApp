@@ -196,21 +196,6 @@
 }
 
 - (void) loadNewNextView:(BOOL)reload {
-//    NSLog(@"enter loadNewNextView");
-//    if (self.nnViewController != nil) {
-//        [self.nnViewController.view removeFromSuperview];
-//        [self.nnViewController removeFromParentViewController];
-//        self.nnViewController = nil;
-//        NSLog(@"cleaned new-next");
-//    }
-//    
-//    NSLog(@"creating new-next");
-//    self.nnViewController = [[DPNewNextViewController alloc] init];
-//    self.nnViewController.view.frame =self.nnView.bounds;
-//    [self addChildViewController: self.nnViewController];
-//    [self.nnView addSubview: self.nnViewController.view];
-//    NSLog(@"exit loadNewNextView");
-
     if (reload && self.nnViewController != nil) {
         [self.nnViewController.view removeFromSuperview];
         [self.nnViewController removeFromParentViewController];
@@ -229,9 +214,7 @@
 }
 
 - (void) loadMenuView:(BOOL)reload {
-    int initialPage = 0;
-    if (reload && self.mmViewController != nil) {
-        initialPage = self.mmViewController.currentMenuPage;
+    if (/*reload && */self.mmViewController != nil) {
         [self.mmViewController.view removeFromSuperview];
         [self.mmViewController removeFromParentViewController];
         self.mmViewController = nil;
@@ -244,7 +227,7 @@
                                                                  showPages:NO
                                                            scrollDirection:DPScrollDirectionHorizontal
                                                                  menulevel:0
-                                                               initialPage:initialPage];
+                                                               initialPage:0];
         self.mmViewController.view.frame = self.mmView.bounds;
         [self addChildViewController:self.mmViewController];
         [self.mmView addSubview:self.mmViewController.view];
@@ -253,31 +236,6 @@
        [self.mmViewController.view setNeedsDisplay];
     }
 }
-
-//- (UIImage *) imageForIndex:(int) indx withFrame:(CGRect *) targetFrame {
-//    UIImage *img = [UIImage imageNamed:[NSString stringWithFormat:@"%d.jpg", indx]];
-//    
-//    if (targetFrame == nil) return img;
-//    
-//    float coeff = 1.0;
-//    float vh = (*targetFrame).size.height;
-//    float vw = (*targetFrame).size.width;
-//    float ih = img.size.height;
-//    float iw = img.size.width;
-//    if (iw/vw > ih/vh)
-//        coeff = (vw / iw);
-//    else
-//        coeff = (vh / ih);
-//    
-//    if (coeff > 1.5) coeff = 1.5;
-//    
-//    ih = ih * coeff;
-//    iw = iw * coeff;
-//    
-//    NSLog(@"scaling image %d.jpg from (%f, %f) => (%f, %f)", indx, img.size.width, img.size.height, iw, ih);
-//    return [img rescaleImageToSize:CGSizeMake(iw, ih)];
-//}
-
 
 //==============================================================================
 #pragma mark - nav bar button selection

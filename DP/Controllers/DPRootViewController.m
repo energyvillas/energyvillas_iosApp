@@ -86,10 +86,10 @@
 - (void) showBuyDialog:(int)ctgId {
     DPIAPHelper *iap = [DPIAPHelper sharedInstance];
     if (![iap canMakePurchases])
-        showAlertMessage(nil, @"Info", @"Cannot make purchase at the moment. Please try later!");
+        showAlertMessage(nil, DPLocalizedString(kERR_TITLE_INFO), @"Cannot make purchase at the moment. Please try later!");
     else {
         if (iap.product == nil)
-            showAlertMessage(nil, @"Info", @"No product found!Try again later!");
+            showAlertMessage(nil, DPLocalizedString(kERR_TITLE_INFO), @"No product found!Try again later!");
         else
             [self showBuyDialog:ctgId product:iap.product];
     }

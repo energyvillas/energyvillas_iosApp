@@ -185,7 +185,7 @@
 
 -(void) composeEmail {
     if (![MFMailComposeViewController canSendMail]){
-        showAlertMessage(nil, kERR_TITLE_INFO, kERR_MSG_TRY_LATER); // pending::new message for missing mail setup
+        showAlertMessage(nil, kERR_TITLE_INFO, @"You can't send eMail right now, make sure your device has an internet connection and you have at least one eMail account setup"); // pending::new message for missing mail setup
         return;
     }
     
@@ -224,7 +224,7 @@
 
 - (void) tweet:(NSString *)imgUrl url:(NSString *)urlstr {
     if (![TWTweetComposeViewController canSendTweet]) {
-        showAlertMessage(nil, kERR_TITLE_INFO, @"You can't send a tweet right now, make sure your device has an internet connection and you have at least one Twitter account setup"); // pending::new message for missing twitter setup
+        showAlertMessage(nil, DPLocalizedString(kERR_TITLE_INFO), @"You can't send a tweet right now, make sure your device has an internet connection and you have at least one Twitter account setup"); // pending::new message for missing twitter setup
         return;
     }
     //    if (![TWTweetComposeViewController canSendTweet])

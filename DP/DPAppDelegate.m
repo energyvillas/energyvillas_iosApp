@@ -163,7 +163,7 @@ void myExceptionHandler (NSException *exception)
     }
     
     if (error) {
-        showAlertMessage(nil, @"Error", error.localizedDescription);
+        showAlertMessage(nil, DPLocalizedString(kERR_TITLE_ERROR), error.localizedDescription);
     }
 }
 

@@ -141,7 +141,7 @@
 
 - (void)loadFinished:(DPDataLoader *)loader {
     if (loader.datalist == nil || loader.datalist.count == 0) {
-        showAlertMessage(nil, @"Info", @"No data found!");
+        showAlertMessage(nil, DPLocalizedString(kERR_TITLE_INFO), DPLocalizedString(kERR_MSG_NO_DATA_FOUND));
     } else {
         [self contentLoaded:self.dataLoader.datalist];
         [self changeRows:1 columns:1];
@@ -149,7 +149,7 @@
 }
 
 - (void)loadFailed:(DPDataLoader *)loader {
-    showAlertMessage(nil, @"Info", @"failed to find video!");
+    showAlertMessage(nil,  DPLocalizedString(kERR_TITLE_CONNECTION_FAILED),  DPLocalizedString(kERR_MSG_TRY_LATER));
 }
 
 #pragma mark END DPDataLoaderDelegate

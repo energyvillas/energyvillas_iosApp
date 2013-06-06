@@ -35,4 +35,12 @@
 - (void) reachabilityChanged;
 - (void) fixFavsButton;
 
+// protected virtual
+- (BOOL) showNavBar;
+- (BOOL) showNavBarLanguages;
+- (BOOL) showNavBarAddToFav;
+- (BOOL) showNavBarSocial;
+- (BOOL) showNavBarInfo;
+- (BOOL) showNavBarNavigator;
+
 @end
