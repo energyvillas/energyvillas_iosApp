@@ -17,6 +17,7 @@
 #import "DPModalDialogManager.h"
 #import "DPCallUsViewController.h"
 #import "DPCTGViewController.h"
+#import "DPFavoritesViewController.h"
 
 
 
@@ -24,9 +25,10 @@
 @property (strong, nonatomic) UIViewController *ideaViewController;
 @property (strong, nonatomic) UIViewController *realEstateViewController;
 @property (strong, nonatomic) UIViewController *whoViewController;
-
 //@property (strong, nonatomic) UIViewController *callViewController;
 //@property (strong, nonatomic) UIViewController *moreViewController;
+
+@property (strong, nonatomic) UIViewController *favoritesViewController;
 
 @property (strong, nonatomic) FPPopoverController *popupController;
 @property (strong, nonatomic) DPMoreMenuViewController *popupContentViewController;
@@ -39,6 +41,7 @@
     bool isPortrait;
     int currentBackgroundCategory;
     int tbSelItem;
+    BOOL inClearPopups;
 }
 
 
@@ -205,6 +208,7 @@
     //if (tvc == self.moreViewController) self.moreViewController = nil;
 
     if (tvc == self.whoViewController) self.whoViewController = nil;
+    if (tvc == self.favoritesViewController) self.favoritesViewController = nil;
 }
 
 - (void) checkRootAndPop:(UIViewController *)tvc {
@@ -232,6 +236,7 @@
     if (!self.navController.navigationBarHidden)
         [self.navController setNavigationBarHidden:YES animated:YES];
     [self.navController pushViewController:vc animated:YES];
+    [self fixSelectedTabBarItem];
 }
 
 -(BOOL) isTabBarPage:(UIViewController *)tvc {
@@ -240,7 +245,8 @@
                             (tvc == self.realEstateViewController) ||
                             //(tvc == self.callViewController) ||
                             //(tvc == self.moreViewController) ||
-                            (tvc == self.whoViewController)
+                            (tvc == self.whoViewController) ||
+                            (tvc == self.favoritesViewController)
                             );
 }
 
@@ -278,12 +284,69 @@
 - (void) showWho {
     if ([self checkTop:self.whoViewController]) return;
     
-    self.whoViewController = [[DPHtmlContentViewController alloc]
-                               initWithCategory:CTGID_WHO_WE_ARE lang:CURRENT_LANG];
+    self.whoViewController = [[DPCTGViewController alloc] initWithCategory:CTGID_WHO_WE_ARE
+                                                                fromParent:CTGID_ROOT_CATEGORY
+                                                             useDeviceType:YES];
     
     [self showViewController:self.whoViewController];
 }
 
+- (void) showFranchise {
+    
+}
+
+- (void) showCost {
+    
+}
+
+
+- (void) showProfit {
+    
+}
+
+
+- (void) showMaterials {
+    
+}
+
+;
+- (void) showPlanet {
+    
+}
+
+- (BOOL) canShowFavorites {
+    DPAppHelper *apphelper = [DPAppHelper sharedInstance];
+    return ([[apphelper favoriteArticles] count] > 0);
+}
+- (void) showFavorites {
+    if ([self checkTop:self.favoritesViewController]) return;
+    
+    self.favoritesViewController = [[DPFavoritesViewController alloc] init];
+    
+    [self showViewController:self.favoritesViewController];
+}
+
+- (void) fixSelectedTabBarItem {
+    switch (tbSelItem) {
+        case TAG_TBI_MAIN: self.tabBar.selectedItem = self.tbiMain;
+            break;
+            
+        case TAG_TBI_IDEA: self.tabBar.selectedItem = self.tbiIdea;
+            break;
+            
+        case TAG_TBI_REAL_ESTATE: self.tabBar.selectedItem = self.tbiRealEstate;
+            break;
+            
+        case TAG_TBIX_WHO:
+        case TAG_TBIX_FAVORITES:
+            self.tabBar.selectedItem = self.tbiMore;
+            break;
+            
+        default:
+            break;
+    }
+    
+}
 
 - (void) showCall {
     UIViewController *contr = [self.navController topViewController];
@@ -308,17 +371,7 @@
             }
         }
         
-        switch (tbSelItem) {
-            case TAG_TBI_MAIN: self.tabBar.selectedItem = self.tbiMain;
-                break;
-            case TAG_TBI_IDEA: self.tabBar.selectedItem = self.tbiIdea;
-                break;
-            case TAG_TBI_REAL_ESTATE: self.tabBar.selectedItem = self.tbiRealEstate;
-                break;
-                
-            default:
-                break;
-        }
+        [self fixSelectedTabBarItem];
         
         self.dlgManager = nil;
     }];
@@ -342,18 +395,18 @@
     
     switch (item.tag) {
         case TAG_TBI_MAIN: {
-            [self showMain];
             tbSelItem = item.tag;
+            [self showMain];
             break;
         }
         case TAG_TBI_IDEA: {
-            [self showIdea];
             tbSelItem = item.tag;
+            [self showIdea];
             break;
         }
         case TAG_TBI_REAL_ESTATE: {
-            [self showRealEstate];
             tbSelItem = item.tag;
+            [self showRealEstate];
              break;
         }
         case TAG_TBI_CALL: [self showCall];
@@ -367,31 +420,35 @@
 #pragma mark - START :: "more" popover submenus
 
 - (void) menuItemSelected:(int)menuTag {
-    [self.popupController dismissPopoverAnimated:YES];
-    self.popupController = nil;
+    [self clearPopups];
 
     switch (menuTag) {
-        case TAG_TBIX_WHO: [self showWho];
+        case TAG_TBIX_WHO: {
+            tbSelItem = menuTag;
+            [self showWho];
+            break;
+        }
+        case TAG_TBIX_FRANCHISE: [self showFranchise];
             break;
             
-        case TAG_TBIX_FRANCHISE:
+        case TAG_TBIX_COST: [self showCost];
             break;
             
-        case TAG_TBIX_COST:
+        case TAG_TBIX_PROFIT: [self showProfit];
             break;
             
-        case TAG_TBIX_PROFIT:
+        case TAG_TBIX_MATERIALS: [self showMaterials];
             break;
             
-        case TAG_TBIX_MATERIALS:
-            break;
-            
-        case TAG_TBIX_PLANET:
+        case TAG_TBIX_PLANET: [self showPlanet];
             break;
             
         case TAG_TBIX_FAVORITES:
-            break;
-            
+            if ([self canShowFavorites]) {
+                tbSelItem = menuTag;
+                [self showFavorites];
+                break;
+            }
     }
 }
 - (void)handleIslandTap:(UITapGestureRecognizer *)sender {
@@ -424,13 +481,19 @@
 }
 
 - (void) clearPopups {
-    if (self.popupController) {
-        [self.popupController dismissPopoverAnimated:YES];
-        self.popupController = nil;
+    inClearPopups = YES;
+    @try {
+        if (self.popupController) {
+            [self.popupController dismissPopoverAnimated:NO];
+            self.popupController = nil;
+        }
+        if (self.popupContentViewController)
+            self.popupContentViewController.menuDelegate = nil;
+        self.popupContentViewController = nil;
     }
-    if (self.popupContentViewController)
-        self.popupContentViewController.menuDelegate = nil;
-    self.popupContentViewController = nil;
+    @finally {
+        inClearPopups = NO;
+    }
 }
 
 -(void) showMoreMenu {
@@ -466,11 +529,12 @@
 - (void)presentedNewPopoverController:(FPPopoverController *)newPopoverController
           shouldDismissVisiblePopover:(FPPopoverController*)visiblePopoverController
 {
-    [visiblePopoverController dismissPopoverAnimated:YES];
+    [visiblePopoverController dismissPopoverAnimated:NO];
 }
 
 - (void)popoverControllerDidDismissPopover:(FPPopoverController *)popoverController {
-    self.tabBar.selectedItem = nil;
+    if (!inClearPopups)
+        [self fixSelectedTabBarItem];
 }
 #pragma END :: islands and exclusive popover sbmenus
 
@@ -513,6 +577,7 @@
         self.whoViewController=nil;
     }
     
+    self.favoritesViewController = nil;
 
     [super viewDidUnload];
 }
