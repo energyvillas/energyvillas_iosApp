@@ -83,12 +83,12 @@
 
 - (void) createDefaults {
     NSDictionary *defaults = [NSDictionary dictionaryWithObjectsAndKeys:
-            [NSNumber numberWithBool:CACHING_ENABLED], USE_DATA_CACHING,
+            [NSNumber numberWithBool:CACHING_ENABLED], USE_DATA_CACHING_Key,
             nil];
     
     NSUserDefaults *usrDefaults = [NSUserDefaults standardUserDefaults];
     [usrDefaults registerDefaults:defaults];
-    _useCache = [usrDefaults boolForKey:USE_DATA_CACHING];
+    _useCache = [usrDefaults boolForKey:USE_DATA_CACHING_Key];
 }
 
 - (void) setCurrentLang:(NSString *)aCurrentLang {

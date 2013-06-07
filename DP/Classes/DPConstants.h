@@ -21,6 +21,7 @@ FOUNDATION_EXPORT NSString *const MySecondConstant;
 
 #define USE_TEST_SITE ((BOOL)NO)
 #define CACHING_ENABLED ((BOOL)YES)
+#define CACHE_EXPIRATION_INTERVAL ((NSTimeInterval)(60 * 60 * 2)) // two hours
 
 
 #define IS_IPAD ((BOOL)([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad))
@@ -161,7 +162,7 @@ FOUNDATION_EXPORT NSString *const MySecondConstant;
 #define DEVICE_TYPE_ID_IPAD_RETINA ((int)5)
 
 // option identifier
-UIKIT_EXTERN NSString *const USE_DATA_CACHING;
+UIKIT_EXTERN NSString *const USE_DATA_CACHING_Key;
 
 // notifications
 UIKIT_EXTERN NSString *const DPN_currentLangChanged;

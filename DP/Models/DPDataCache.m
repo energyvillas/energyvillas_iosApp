@@ -62,7 +62,7 @@
                                                              error:&error];
         
         NSDate *fileDate =[dictionary objectForKey:NSFileModificationDate];
-        fileDate = [fileDate dateByAddingTimeInterval:(60 * 60 * 2)]; // add two hours
+        fileDate = [fileDate dateByAddingTimeInterval:CACHE_EXPIRATION_INTERVAL]; 
         NSDate *now =[NSDate date];
         res = [fileDate compare:now] != NSOrderedDescending;
     }
