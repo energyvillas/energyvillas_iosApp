@@ -154,7 +154,17 @@
 
 - (void) viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    [self.scrollView flashScrollIndicators];
+    [self doflashScrollIndicators:3 delay:0.3];
+}
+
+- (void) doflashScrollIndicators:(int)times delay:(CGFloat)secsDelay {
+    for (int i = 0; i < times; i++) {
+        double delayInSeconds = secsDelay * (i + 1) ;
+        dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+        dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+            [self.scrollView flashScrollIndicators];
+        });
+    }
 }
 
 - (void)didReceiveMemoryWarning
