@@ -380,6 +380,11 @@
             break;
             
         case TAG_TBIX_WHO:
+        case TAG_TBIX_FRANCHISE:
+        case TAG_TBIX_COST:
+        case TAG_TBIX_PROFIT:
+        case TAG_TBIX_MATERIALS:
+        case TAG_TBIX_PLANET:
         case TAG_TBIX_FAVORITES:
             self.tabBar.selectedItem = self.tbiMore;
             break;
@@ -503,6 +508,8 @@
                 break;
             }
     }
+    
+    [self fixSelectedTabBarItem];
 }
 - (void)handleIslandTap:(UITapGestureRecognizer *)sender {
 //    [self.popupController dismissPopoverAnimated:YES];
