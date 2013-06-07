@@ -1956,9 +1956,14 @@ static NSOperationQueue *sharedQueue = nil;
 /* ALWAYS CALLED ON MAIN THREAD! */
 - (void)reportFailure
 {
-	if (delegate && [delegate respondsToSelector:didFailSelector]) {
-		[delegate performSelector:didFailSelector withObject:self];
-	}
+    @try {
+        if (delegate && [delegate respondsToSelector:didFailSelector]) {
+            [delegate performSelector:didFailSelector withObject:self];
+        }
+    }
+    @catch (NSException *exception) {
+        delegate = nil;
+    }
 	if (queue && [queue respondsToSelector:@selector(requestFailed:)]) {
 		[queue performSelector:@selector(requestFailed:) withObject:self];
 	}

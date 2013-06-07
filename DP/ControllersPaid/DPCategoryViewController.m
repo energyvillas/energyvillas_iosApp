@@ -265,7 +265,7 @@
     if (self.category == 0)
         return;
 
-    if (reload || (self.ctgViewController && self.category != self.ctgViewController.category))
+    //if (reload || (self.ctgViewController && self.category != self.ctgViewController.category))
     {
         if (self.ctgViewController)
         {
@@ -293,7 +293,8 @@
     int cols = IS_PORTRAIT ? 3 : 1;
     DPScrollDirection scrolldir = IS_PORTRAIT ? DPScrollDirectionHorizontal : DPScrollDirectionVertical;
 
-    if (reload && self.mmViewController != nil) {
+    if (/*reload && */self.mmViewController != nil)
+    {
         initialMenuPage = self.mmViewController.currentMenuPage;
         [self.mmViewController.view removeFromSuperview];
         [self.mmViewController removeFromParentViewController];

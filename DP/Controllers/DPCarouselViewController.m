@@ -82,14 +82,16 @@
 -(void) cleanup {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     if (self.queue) {
-        [self.queue cancelAllOperations];
         [self stopIndicator];
 
         for (id op in self.queue.operations)
             if ([op isKindOfClass:[ASIHTTPRequest class]]) {
+                [((ASIHTTPRequest *)op) clearDelegatesAndCancel];
                 [((ASIHTTPRequest *)op) setDidFinishSelector:nil];
                 ((ASIHTTPRequest *)op).delegate = nil;
             }
+
+        [self.queue cancelAllOperations];
     }
     
     self.queue = nil;

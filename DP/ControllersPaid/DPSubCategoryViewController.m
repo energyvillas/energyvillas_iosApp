@@ -460,7 +460,8 @@
     if (self.category == nil)
         return;
     
-    if (reload) {
+    //if (reload)
+    {
         if (self.subCtgsViewController)
         {
             [self.subCtgsViewController.view removeFromSuperview];

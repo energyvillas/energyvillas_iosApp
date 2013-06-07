@@ -75,6 +75,7 @@
 
 - (void) cleanupQueueAndRequest {
     if (self.request) {
+        [self.request clearDelegatesAndCancel];
         [self.request setDidFailSelector:nil];
         [self.request setDidFinishSelector:nil];
         self.request.delegate = nil;
@@ -82,14 +83,15 @@
     self.request = nil;
     
     if (self.queue) {
-        [self.queue cancelAllOperations];
-        
         for (id op in self.queue.operations)
             if ([op isKindOfClass:[ASIHTTPRequest class]]) {
+                [((ASIHTTPRequest *)op) clearDelegatesAndCancel];
                 [((ASIHTTPRequest *)op) setDidFailSelector:nil];
                 [((ASIHTTPRequest *)op) setDidFinishSelector:nil];
                 ((ASIHTTPRequest *)op).delegate = nil;
             }
+
+        [self.queue cancelAllOperations];
     }
     
     self.queue = nil;

@@ -99,13 +99,15 @@
 }
 
 -(void) cleanUp {
+    if (self.request) {
+        [self.request clearDelegatesAndCancel];
+        self.request.delegate = nil;
+    }
+    
     if (self.queue) {
         [self.queue cancelAllOperations];
     }
-    if (self.request) {
-        [self.request cancel];
-        self.request.delegate = nil;
-    }
+    
     self.request = nil;
     self.queue = nil;
 }

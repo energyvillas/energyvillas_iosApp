@@ -24,10 +24,15 @@
 @interface DPPaidMainViewController ()
 @property (strong, nonatomic) UIViewController *ideaViewController;
 @property (strong, nonatomic) UIViewController *realEstateViewController;
-@property (strong, nonatomic) UIViewController *whoViewController;
 //@property (strong, nonatomic) UIViewController *callViewController;
 //@property (strong, nonatomic) UIViewController *moreViewController;
 
+@property (strong, nonatomic) UIViewController *whoViewController;
+@property (strong, nonatomic) UIViewController *franchiseViewController;
+@property (strong, nonatomic) UIViewController *costViewController;
+@property (strong, nonatomic) UIViewController *profitViewController;
+@property (strong, nonatomic) UIViewController *materialsViewController;
+@property (strong, nonatomic) UIViewController *planetViewController;
 @property (strong, nonatomic) UIViewController *favoritesViewController;
 
 @property (strong, nonatomic) FPPopoverController *popupController;
@@ -208,6 +213,11 @@
     //if (tvc == self.moreViewController) self.moreViewController = nil;
 
     if (tvc == self.whoViewController) self.whoViewController = nil;
+    if (tvc == self.franchiseViewController) self.franchiseViewController = nil;
+    if (tvc == self.costViewController) self.costViewController = nil;
+    if (tvc == self.profitViewController) self.profitViewController = nil;
+    if (tvc == self.materialsViewController) self.materialsViewController = nil;
+    if (tvc == self.planetViewController) self.planetViewController = nil;
     if (tvc == self.favoritesViewController) self.favoritesViewController = nil;
 }
 
@@ -246,6 +256,11 @@
                             //(tvc == self.callViewController) ||
                             //(tvc == self.moreViewController) ||
                             (tvc == self.whoViewController) ||
+                            (tvc == self.franchiseViewController) ||
+                            (tvc == self.costViewController) ||
+                            (tvc == self.profitViewController) ||
+                            (tvc == self.materialsViewController) ||
+                            (tvc == self.planetViewController) ||
                             (tvc == self.favoritesViewController)
                             );
 }
@@ -292,32 +307,59 @@
 }
 
 - (void) showFranchise {
+    if ([self checkTop:self.franchiseViewController]) return;
     
+    self.franchiseViewController = [[DPHtmlContentViewController alloc]
+                               initWithCategory:CTGID_FRANCHISE lang:CURRENT_LANG];
+    
+    [self showViewController:self.franchiseViewController];
 }
 
 - (void) showCost {
+    if ([self checkTop:self.costViewController]) return;
     
+    self.costViewController = [[DPHtmlContentViewController alloc]
+             initWithCategory:CTGID_COST lang:CURRENT_LANG];
+    
+    [self showViewController:self.costViewController];
 }
 
 
 - (void) showProfit {
+    if ([self checkTop:self.profitViewController]) return;
     
+    self.profitViewController = [[DPHtmlContentViewController alloc]
+             initWithCategory:CTGID_PROFIT lang:CURRENT_LANG];
+    
+    [self showViewController:self.profitViewController];
 }
 
 
 - (void) showMaterials {
+    if ([self checkTop:self.materialsViewController]) return;
     
+    self.materialsViewController = [[DPHtmlContentViewController alloc]
+             initWithCategory:CTGID_MATERIALS lang:CURRENT_LANG];
+    
+    [self showViewController:self.materialsViewController];
 }
 
 ;
 - (void) showPlanet {
+    if ([self checkTop:self.planetViewController]) return;
     
+    self.planetViewController = [[DPCTGViewController alloc] initWithCategory:CTGID_PLANET
+                                                                fromParent:CTGID_ROOT_CATEGORY
+                                                             useDeviceType:YES];
+    
+    [self showViewController:self.planetViewController];
 }
 
 - (BOOL) canShowFavorites {
     DPAppHelper *apphelper = [DPAppHelper sharedInstance];
     return ([[apphelper favoriteArticles] count] > 0);
 }
+
 - (void) showFavorites {
     if ([self checkTop:self.favoritesViewController]) return;
     
@@ -428,21 +470,32 @@
             [self showWho];
             break;
         }
-        case TAG_TBIX_FRANCHISE: [self showFranchise];
+        case TAG_TBIX_FRANCHISE:{
+            tbSelItem = menuTag;
+            [self showFranchise];
             break;
-            
-        case TAG_TBIX_COST: [self showCost];
+        }
+
+        case TAG_TBIX_COST:{
+            tbSelItem = menuTag;
+            [self showCost];
             break;
-            
-        case TAG_TBIX_PROFIT: [self showProfit];
+        }
+        case TAG_TBIX_PROFIT: {
+            tbSelItem = menuTag;
+            [self showProfit];
             break;
-            
-        case TAG_TBIX_MATERIALS: [self showMaterials];
+        }
+        case TAG_TBIX_MATERIALS: {
+            tbSelItem = menuTag;
+            [self showMaterials];
             break;
-            
-        case TAG_TBIX_PLANET: [self showPlanet];
+        }
+        case TAG_TBIX_PLANET: {
+            tbSelItem = menuTag;
+            [self showPlanet];
             break;
-            
+        }
         case TAG_TBIX_FAVORITES:
             if ([self canShowFavorites]) {
                 tbSelItem = menuTag;
@@ -557,26 +610,14 @@
     [self setTbiCall:nil];
     [self setTbiMore:nil];
 
-    if (self.ideaViewController) {
-        self.ideaViewController=nil;
-    }
-
-    if (self.realEstateViewController) {
-        self.realEstateViewController=nil;
-    }
-
-//    if (self.callViewController) {
-//        self.callViewController=nil;
-//    }
-
-//    if (self.moreViewController) {
-//        self.moreViewController=nil;
-//    }
-
-    if (self.whoViewController) {
-        self.whoViewController=nil;
-    }
-    
+    self.ideaViewController=nil;
+    self.realEstateViewController=nil;
+    self.whoViewController=nil;
+    self.franchiseViewController=nil;
+    self.costViewController=nil;
+    self.profitViewController=nil;
+    self.materialsViewController=nil;
+    self.planetViewController=nil;
     self.favoritesViewController = nil;
 
     [super viewDidUnload];
