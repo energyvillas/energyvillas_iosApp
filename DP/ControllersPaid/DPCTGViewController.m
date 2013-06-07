@@ -181,7 +181,7 @@
     int h = vf.size.height - top;
     int w = vf.size.width;
     
-    self.scrollView.frame = CGRectMake(0, 0, w, h);
+    self.scrollView.frame = CGRectMake(0, top, w, h);
     self.imageView.frame = self.scrollView.bounds;
     [self doAddLoadingImage];
 
@@ -219,7 +219,8 @@
     while (self.imageView.subviews.count)
         [self.imageView.subviews[0] removeFromSuperview];
     
-    self.imageView.frame = CGRectMake(0, 0, img.size.width, img.size.height);
+    CGSize imgSize = img.size;
+    self.imageView.frame = CGRectMake(0, 0, imgSize.width, imgSize.height);
     self.imageView.image = img;
     self.imageView.contentMode = UIViewContentModeTopLeft;
     self.scrollView.contentSize = img.size;

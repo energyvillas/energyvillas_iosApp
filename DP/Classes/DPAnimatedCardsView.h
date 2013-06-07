@@ -21,5 +21,7 @@
        zoomDuration:(NSTimeInterval)zoomdur
               level:(int)alevel;
 
+- (void) startAnimation;
+- (void) stopAnimation;
 - (void) frameChanged;
 @end

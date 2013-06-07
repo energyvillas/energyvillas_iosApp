@@ -79,7 +79,7 @@
     [self changeRows:self.rowCount columns:self.colCount scrollDirection:self.scrollDirection];
 }
 
-- (void) scrolledToPage:(int)newPage {
+- (void) scrolledToPage:(int)newPage fromPage:(int)oldPage {
     _currentMenuPage = newPage;
     NSLog(@"scrolledToPage:%d", _currentMenuPage);
 }

@@ -47,10 +47,11 @@
 }
 
 - (void) setCurrentPage:(int)aCurrentPage {
+    int oldPage = _currentPage;
     _currentPage = aCurrentPage;
     if (self.scrollableViewDelegate &&
-        [self.scrollableViewDelegate respondsToSelector:@selector(scrolledToPage:)])
-        [self.scrollableViewDelegate scrolledToPage:_currentPage];
+        [self.scrollableViewDelegate respondsToSelector:@selector(scrolledToPage:fromPage:)])
+        [self.scrollableViewDelegate scrolledToPage:_currentPage fromPage:oldPage];
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil

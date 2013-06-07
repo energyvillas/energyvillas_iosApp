@@ -13,7 +13,7 @@
 - (void) elementTapped:(id)sender element:(id)element;
 
 @optional
-- (void) scrolledToPage:(int)newPage;
+- (void) scrolledToPage:(int)newPage fromPage:(int)oldPage;
 
 @end
 

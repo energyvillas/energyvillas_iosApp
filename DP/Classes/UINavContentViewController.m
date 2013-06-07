@@ -208,7 +208,8 @@
 //==============================================================================
 #pragma mark - nav bar button selection
 - (BOOL) showNavBar {
-    return self.navigationController != nil;
+    return (self.navigationController != nil) &&
+            (!self.navigationController.navigationBarHidden);
 }
 - (BOOL) showNavBarLanguages {
     return YES;

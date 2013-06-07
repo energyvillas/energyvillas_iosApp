@@ -92,6 +92,12 @@
 
 #pragma mark - scrollableview delegate methods
 
+- (void) scrolledToPage:(int)newPage fromPage:(int)oldPage {
+    DPAnimatedCardsView *acv = [self findAnimCtgViewInCurrentPage];
+    if (acv)
+        [acv startAnimation];
+}
+
 - (void) elementTapped:(id)sender element:(id)element {
     Category *elm = element;
     
@@ -208,11 +214,11 @@
         [self.dataLoader loadData];
 }
 
-- (DPAnimatedCardsView *) findAnimCtgView {
+- (DPAnimatedCardsView *) findAnimCtgViewInPage:(int)aPage {
     DPAnimatedCardsView *result = nil;
-    int pg = self.pageControl.currentPage;
-    if (pg>=0){
-        UIView *container = self.scrollView.subviews[pg];
+    
+    if (aPage>=0 && self.scrollView.subviews.count > aPage) {
+        UIView *container = self.scrollView.subviews[aPage];
         if (container.subviews.count == 1 &&
             [container.subviews[0] isKindOfClass:[DPAnimatedCardsView class]]) {
             result = container.subviews[0];
@@ -221,13 +227,18 @@
     
     return result;
 }
+- (DPAnimatedCardsView *) findAnimCtgViewInCurrentPage {
+    DPAnimatedCardsView *result = nil;
+    int pg = self.pageControl.currentPage;
+    return [self findAnimCtgViewInPage:pg];
+}
 
 - (void) changeRows:(int)rows
             columns:(int)columns
     scrollDirection:(DPScrollDirection)scrolldir {
     [super changeRows:rows columns:columns scrollDirection:scrolldir];
     
-    DPAnimatedCardsView *acv = [self findAnimCtgView];
+    DPAnimatedCardsView *acv = [self findAnimCtgViewInCurrentPage];
     if (acv)
         [acv frameChanged];
 }

@@ -531,12 +531,20 @@
     
     dispatch_async(dispatch_get_main_queue(), ^{
         maxX = 0;
-//        [self calcSizes];
-//        [self randomizePositions];
         [self cleanCards];
         [self addCardAndTapViews];
         [self animateCards:moveDuration];
     });
+}
+
+- (void) startAnimation {
+    if (self.cards)
+        [self animateCards:moveDuration];
+}
+
+- (void) stopAnimation {
+    if (self.cards)
+        [self cancelAllAnimations];
 }
 
 @end
