@@ -19,7 +19,9 @@
           showPages:(BOOL)showpages
     scrollDirection:(DPScrollDirection)scrolldir
           menulevel:(int)level
-        initialPage:(int)initialPage;
+        initialPage:(int)initialPage
+         activeMenu:(int)ctgID;
 
+- (void) updateHighlights:(int)activemenu;
 
 @end

@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		5E0C7653170F32E300F572A0 /* DPMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E0C7652170F32E200F572A0 /* DPMenuViewController.m */; };
+		5E0D18EF1765CD8400A3F946 /* black_rollOver_65%.png in Resources */ = {isa = PBXBuildFile; fileRef = 5E0D18EE1765CD8400A3F946 /* black_rollOver_65%.png */; };
+		5E0D18F21765D5C100A3F946 /* DPButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E0D18F11765D5C100A3F946 /* DPButton.m */; };
 		5E31F026171FFCBB008B15F0 /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E31F025171FFCBB008B15F0 /* FacebookSDK.framework */; };
 		5E31F028171FFD54008B15F0 /* FacebookSDKResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 5E31F027171FFD54008B15F0 /* FacebookSDKResources.bundle */; };
 		5E31F02C171FFDAD008B15F0 /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E31F029171FFDAD008B15F0 /* Accounts.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
@@ -171,6 +173,9 @@
 /* Begin PBXFileReference section */
 		5E0C7651170F32E200F572A0 /* DPMenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPMenuViewController.h; sourceTree = "<group>"; };
 		5E0C7652170F32E200F572A0 /* DPMenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPMenuViewController.m; sourceTree = "<group>"; };
+		5E0D18EE1765CD8400A3F946 /* black_rollOver_65%.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "black_rollOver_65%.png"; sourceTree = "<group>"; };
+		5E0D18F01765D5C100A3F946 /* DPButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPButton.h; sourceTree = "<group>"; };
+		5E0D18F11765D5C100A3F946 /* DPButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPButton.m; sourceTree = "<group>"; };
 		5E31F025171FFCBB008B15F0 /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FacebookSDK.framework; path = ../../FacebookSDK/FacebookSDK.framework; sourceTree = "<group>"; };
 		5E31F027171FFD54008B15F0 /* FacebookSDKResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = FacebookSDKResources.bundle; path = ../../FacebookSDK/FacebookSDK.framework/Versions/A/Resources/FacebookSDKResources.bundle; sourceTree = "<group>"; };
 		5E31F029171FFDAD008B15F0 /* Accounts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accounts.framework; path = System/Library/Frameworks/Accounts.framework; sourceTree = SDKROOT; };
@@ -616,6 +621,8 @@
 				5E31F03E17203B40008B15F0 /* DPMailHelper.m */,
 				5E956EAE1757B72B00B86DAC /* DPModalDialogManager.h */,
 				5E956EAF1757B72D00B86DAC /* DPModalDialogManager.m */,
+				5E0D18F01765D5C100A3F946 /* DPButton.h */,
+				5E0D18F11765D5C100A3F946 /* DPButton.m */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -723,6 +730,7 @@
 				5EC5739F17265B43000B7004 /* TabBar */,
 				5E756E30174AB197001AA085 /* Toolbar_Free */,
 				5E956EAC17569E1600B86DAC /* woosh.mp3 */,
+				5E0D18EE1765CD8400A3F946 /* black_rollOver_65%.png */,
 				5EAE0C3C175DF6E900C75A0C /* loading.png */,
 				5ECD1546173FA6C200C0327F /* loading_el.png */,
 				5ECD1547173FA6C200C0327F /* loading_en.png */,
@@ -1045,6 +1053,7 @@
 				5E956EBE1757C23F00B86DAC /* call_us_en.jpg in Resources */,
 				5E6290D717591FEB00A7D3E1 /* Banners in Resources */,
 				5EAE0C3D175DF6E900C75A0C /* loading.png in Resources */,
+				5E0D18EF1765CD8400A3F946 /* black_rollOver_65%.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1138,6 +1147,7 @@
 				5E956EB01757B72E00B86DAC /* DPModalDialogManager.m in Sources */,
 				5E956EB51757BFDD00B86DAC /* DPCallUsViewController.m in Sources */,
 				5E32E8701760A62A006BFDEB /* DPCTGViewController.m in Sources */,
+				5E0D18F21765D5C100A3F946 /* DPButton.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

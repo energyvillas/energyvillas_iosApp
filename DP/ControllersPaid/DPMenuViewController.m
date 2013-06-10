@@ -11,6 +11,8 @@
 #import "DPDataElement.h"
 #import "DPCategoryViewController.h"
 #import "DPAppHelper.h"
+#import "DPButton.h"
+#import "UIImage+FX.h"
 
 @interface DPMenuViewController ()
 
@@ -24,6 +26,7 @@
     int menulevel;
     int island_width;
     int island_height;
+    int activeMenuID;
 }
 
 @synthesize currentMenuPage = _currentMenuPage;
@@ -45,9 +48,11 @@
           showPages:(BOOL)showpages
     scrollDirection:(DPScrollDirection)scrolldir
           menulevel:(int)level
-        initialPage:(int)initialPage {
+        initialPage:(int)initialPage
+         activeMenu:(int)ctgID {
 
     menulevel = level;
+    activeMenuID = ctgID;
     
     self = [super initWithContent:[DPMenuViewController loadMenuData]
                              rows:rows
@@ -254,40 +259,95 @@
     }
 }
 
+- (void) updateHighlightsInView:(UIView *)v isExclusive:(BOOL)isexcl {
+    if ([v isKindOfClass:[DPButton class]]) {
+        ((DPButton *)v).showExtraLayerOnHighlight = !isexcl;
+    } else
+        for (UIView *sv in v.subviews)
+            [self updateHighlightsInView:sv isExclusive:isexcl];
+}
+
+- (void) updateHighlights:(int)activemenu {
+    activeMenuID = activemenu;
+    BOOL isExclusive = activeMenuID == CTGID_EXCLUSIVE_ART || activeMenuID == CTGID_EXCLUSIVE_DESIGNER;
+    for (UIView *v in self.scrollView.subviews)
+        [self updateHighlightsInView:v isExclusive:isExclusive];
+}
+
 - (UIView *) createViewFor:(int)contentIndex
                      frame:(CGRect)frame {
-    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-    button.showsTouchWhenHighlighted = YES;
-    [button addTarget:self action:@selector(onTap:) forControlEvents:UIControlEventTouchUpInside];
-    
     DPDataElement *element = self.contentList[contentIndex];
     
     NSString *imgname =[self resolveImageName:element];
     UIImage *img = [UIImage imageNamed:imgname];
-
-    button.contentMode = UIViewContentModeScaleAspectFit;
-    button.frame = frame;
-    [button setImage:img forState:UIControlStateNormal];
-
-//    if (!img)
-//        button.frame = frame;
-//    else {
-//        CGSize imgsize = img.size;
-//        button.frame = CGRectMake((frame.size.width - imgsize.width) / 2.0,
-//                                  (frame.size.height - imgsize.height) / 2.0,
-//                                  imgsize.width, imgsize.height);
-//        [button setImage:img forState:UIControlStateNormal];
-//    }
+    NSString *imgnameHigh =[self resolveHighlightImageName:element];
+    UIImage *imgHigh = [UIImage imageNamed:imgnameHigh];
     
-    NSString *imghighname =[self resolveHighlightImageName:element];
-    if (imghighname) {
-        img = [UIImage imageNamed:imghighname];
-        if (img)
-            [button setImage:img forState:UIControlStateHighlighted];
+    
+    UIButton *button = nil;
+    if (imgHigh)
+        button = [UIButton buttonWithType:UIButtonTypeCustom];
+    else {
+        button = [DPButton buttonWithType:UIButtonTypeCustom];
+        if (menulevel == 0)
+            ((DPButton *)button).showExtraLayerOnHighlight = YES;
+        else {
+            BOOL isExclusive = activeMenuID == CTGID_EXCLUSIVE_ART || activeMenuID == CTGID_EXCLUSIVE_DESIGNER;
+            ((DPButton *)button).showExtraLayerOnHighlight = !isExclusive;
+        }
     }
     
     [button setTag: contentIndex];
+    [button addTarget:self action:@selector(onTap:) forControlEvents:UIControlEventTouchUpInside];
+
+    button.backgroundColor = [UIColor clearColor];
+    button.adjustsImageWhenHighlighted = NO;
+    button.contentMode = UIViewContentModeCenter;
     
+    if (menulevel == 0) {
+        if (IS_IPHONE) {
+            button.frame = IS_PORTRAIT ? CGRectInset(frame, 3.0f, 3.0f) : CGRectInset(frame, 2.0f, 2.0f);
+            button.layer.borderWidth = 1.0f;
+        } else if (IS_IPHONE_5) {
+            button.frame = IS_PORTRAIT ? CGRectInset(frame, 3.0f, 5.0f) : CGRectInset(frame, 4.0f, 3.0f);
+            button.layer.borderWidth = 1.0f;
+        } else {
+            button.frame = IS_PORTRAIT ? CGRectInset(frame, 5.0f, 6.0f) : CGRectInset(frame, 5.0f, 7.0f);
+            button.layer.borderWidth = 1.5f;
+        }
+    } else {
+        CGSize imgsz = CGSizeZero;
+        
+        if (IS_IPHONE) {
+            button.frame = IS_PORTRAIT ? CGRectInset(frame, 3.0f, 2.0f) : CGRectInset(frame, 3.0f, 3.0f);
+            button.layer.borderWidth = 1.0f;
+            imgsz = CGRectInset(button.frame, button.layer.borderWidth + 3.0,
+                                button.layer.borderWidth + 2.0).size;
+        } else if (IS_IPHONE_5) {
+            button.frame = IS_PORTRAIT ? CGRectInset(frame, 3.0f, 3.0f) : CGRectInset(frame, 3.0f, 3.0f);
+            button.layer.borderWidth = 1.0f;
+            imgsz = CGRectInset(button.frame, button.layer.borderWidth + 4.0,
+                                button.layer.borderWidth + 2.0).size;
+        } else {
+            button.frame = IS_PORTRAIT ? CGRectInset(frame, 3.0f, 4.0f) : CGRectInset(frame, 2.0f, 5.0f);
+            button.layer.borderWidth = 2.0f;
+            
+            imgsz = CGRectInset(button.frame, button.layer.borderWidth + 10.0,
+                                button.layer.borderWidth + 2.0).size;
+        }
+        
+        if (img)
+            img = [img imageScaledToFitSize:imgsz];
+        if (imgHigh)
+            imgHigh = [imgHigh imageScaledToFitSize:imgsz];
+    }
+
+    button.layer.borderColor = [UIColor colorWithWhite:0.8f alpha:1.0f].CGColor;
+
+    if (img) [button setImage:img forState:UIControlStateNormal];
+    if (imgHigh) [button setImage:imgHigh forState:UIControlStateHighlighted];
+    
+
     return button;
 }
 

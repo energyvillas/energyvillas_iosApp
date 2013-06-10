@@ -258,6 +258,7 @@
         [self fixTitleLabel];
         [self loadAdsView:NO];
         [self loadCategoryView:YES];
+        [self updateMenuView];
     }
 }
 
@@ -288,7 +289,15 @@
     }
 }
 
+- (void) updateMenuView {
+    if (self.category == 0) return;
+    if (self.mmViewController == nil) return;
+    [self.mmViewController updateHighlights:self.category];
+}
+
 - (void) loadMenuView:(BOOL)reload {
+    if (self.category == 0) return;
+    
     int rows = IS_PORTRAIT ? 1 : 3;
     int cols = IS_PORTRAIT ? 3 : 1;
     DPScrollDirection scrolldir = IS_PORTRAIT ? DPScrollDirectionHorizontal : DPScrollDirectionVertical;
@@ -308,7 +317,8 @@
                                                                  showPages:NO
                                                            scrollDirection:scrolldir
                                                                  menulevel:1
-                                                               initialPage:initialMenuPage];
+                                                               initialPage:initialMenuPage
+                                                                activeMenu:self.category];
         CGRect mmfrm = self.mmView.bounds;
         self.mmViewController.view.frame = mmfrm;
         [self addChildViewController:self.mmViewController];

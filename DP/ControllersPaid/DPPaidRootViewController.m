@@ -227,7 +227,8 @@
                                                                  showPages:NO
                                                            scrollDirection:DPScrollDirectionHorizontal
                                                                  menulevel:0
-                                                               initialPage:0];
+                                                               initialPage:0
+                                                                activeMenu:-1];
         self.mmViewController.view.frame = self.mmView.bounds;
         [self addChildViewController:self.mmViewController];
         [self.mmView addSubview:self.mmViewController.view];

@@ -1854,9 +1854,19 @@ static NSOperationQueue *sharedQueue = nil;
 	if ([self error] || [self mainRequest]) {
 		return;
 	}
-	if (delegate && [delegate respondsToSelector:didStartSelector]) {
-		[delegate performSelector:didStartSelector withObject:self];
-	}
+    @try {
+        if (delegate && [delegate respondsToSelector:didStartSelector]) {
+            [delegate performSelector:didStartSelector withObject:self];
+        }
+    }
+    @catch (NSException *exception) {
+        delegate = nil;
+//        [[UIAlertView alloc] initWithTitle:@"exception"
+//                                   message:@"in ASI requestStarted"
+//                                  delegate:nil
+//                         cancelButtonTitle:@"cancel"
+//                         otherButtonTitles:nil];
+    }
 	if (queue && [queue respondsToSelector:@selector(requestStarted:)]) {
 		[queue performSelector:@selector(requestStarted:) withObject:self];
 	}
@@ -1940,9 +1950,19 @@ static NSOperationQueue *sharedQueue = nil;
 /* ALWAYS CALLED ON MAIN THREAD! */
 - (void)reportFinished
 {
-	if (delegate && [delegate respondsToSelector:didFinishSelector]) {
-		[delegate performSelector:didFinishSelector withObject:self];
-	}
+    @try {
+        if (delegate && [delegate respondsToSelector:didFinishSelector]) {
+            [delegate performSelector:didFinishSelector withObject:self];
+        }
+    }
+    @catch (NSException *exception) {
+        delegate = nil;
+//        [[UIAlertView alloc] initWithTitle:@"exception"
+//                                   message:@"in ASI reportFinished"
+//                                  delegate:nil
+//                         cancelButtonTitle:@"cancel"
+//                         otherButtonTitles:nil];
+    }
 	if (queue && [queue respondsToSelector:@selector(requestFinished:)]) {
 		[queue performSelector:@selector(requestFinished:) withObject:self];
 	}
@@ -1963,6 +1983,11 @@ static NSOperationQueue *sharedQueue = nil;
     }
     @catch (NSException *exception) {
         delegate = nil;
+//        [[UIAlertView alloc] initWithTitle:@"exception"
+//                                   message:@"in ASI reportFailure"
+//                                  delegate:nil
+//                         cancelButtonTitle:@"cancel"
+//                         otherButtonTitles:nil];
     }
 	if (queue && [queue respondsToSelector:@selector(requestFailed:)]) {
 		[queue performSelector:@selector(requestFailed:) withObject:self];
