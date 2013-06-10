@@ -87,21 +87,22 @@
     UIWebView *webView = [[UIWebView alloc] initWithFrame:aframe];
     webView.backgroundColor = [UIColor clearColor];
     webView.opaque = NO;
-    webView.contentMode = UIViewContentModeScaleAspectFit;
+    //webView.contentMode = UIViewContentModeScaleAspectFit;
     webView.userInteractionEnabled = YES;
+    [webView setScalesPageToFit:NO];
     
     if (self.url) {
         NSURLRequest * request = [[NSURLRequest alloc] initWithURL:self.url];
         [webView loadRequest:request];
-    } else if (self.htmlData)
+    } else if (self.htmlData) {
         [webView loadHTMLString:self.htmlData
                         baseURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://%@", BASE_HOST_NAME]]];
-    else if (self.mimeData)
+    } else if (self.mimeData) {
         [webView loadData:self.mimeData
                  MIMEType:self.mimetype
          textEncodingName:@"utf-8"
                   baseURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://%@", BASE_HOST_NAME]]];
-    
+    }
 //    [self addGestureRecognizersTo:webView];
     [self.view addSubview:webView];
 }
