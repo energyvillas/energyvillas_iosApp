@@ -307,19 +307,19 @@
         [self.photoView addSubview:v];
     } else {
         UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
-        btn.frame = CGRectInset(self.photoView.bounds, 0, 0);
+        btn.frame = CGRectInset(self.photoView.bounds, 0, 1);
         btn.showsTouchWhenHighlighted = YES;
         btn.contentMode = UIViewContentModeCenter;
         NSString *imgName = nil;
         if (self.category.parentId == CTGID_EXCLUSIVE_ART) {
             imgName = (self.houseOverview.isMaster)
-            ? @"HouseInfo/Posters/poster_frame_play_art_%@.png"
-            : @"HouseInfo/Posters/poster_frame_gallery_art_%@.png";
+            ? @"HouseInfo/Posters/poster_frame_play_art_%@.jpg"
+            : @"HouseInfo/Posters/poster_frame_gallery_art_%@.jpg";
             imgName = [NSString stringWithFormat:imgName, IS_PORTRAIT ? @"v" : @"h"];
         } else if (self.category.parentId == CTGID_EXCLUSIVE_DESIGNER) {
             imgName = (self.houseOverview.isMaster)
-            ? @"HouseInfo/Posters/poster_frame_play_designer_%@.png"
-            : @"HouseInfo/Posters/poster_frame_gallery_designer_%@.png";
+            ? @"HouseInfo/Posters/poster_frame_play_designer_%@.jpg"
+            : @"HouseInfo/Posters/poster_frame_gallery_designer_%@.jpg";
             imgName = [NSString stringWithFormat:imgName, IS_PORTRAIT ? @"v" : @"h"];
         } else {
             imgName = (self.houseOverview.isMaster)
