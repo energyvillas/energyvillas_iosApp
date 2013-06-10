@@ -12,6 +12,7 @@
 #import "DPConstants.h"
 #import "DPAppHelper.h"
 //#import "AsyncImageView.h"
+#import "DPFavoritesViewController.h"
 
 #define USE_HOLDER_VIEW ((BOOL)YES)
 
@@ -36,7 +37,9 @@
 
 @end
 
-@implementation DPImageContentViewController
+@implementation DPImageContentViewController {
+    BOOL showNavigationItem;
+}
 
 
 
@@ -50,8 +53,18 @@
 }
 
 - (id) initWithArticle:(Article *)aArticle {
-    if (self = [super init]) {
+    self = [self initWithArticle:aArticle showNavItem:NO];
+    if (self) {
+    }
+    
+    return self;
+}
+
+- (id) initWithArticle:(Article *)aArticle showNavItem:(BOOL)showNavItem {
+    self = [super init];
+    if (self) {
         self.article = aArticle;
+        showNavigationItem = showNavItem;
     }
     
     return self;
@@ -332,9 +345,9 @@
 
 //==============================================================================
 #pragma mark - nav bar button selection
-//- (BOOL) showNavBar {
-//    return self.navigationController != nil;
-//}
+- (BOOL) showNavBar {
+    return ( [super showNavBar] || showNavigationItem );
+}
 - (BOOL) showNavBarLanguages {
     return NO;
 }

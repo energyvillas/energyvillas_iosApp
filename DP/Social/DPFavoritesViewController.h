@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "UINavContentViewController.h"
 
-@interface DPFavoritesViewController : UINavContentViewController <UITableViewDataSource, UITableViewDelegate>
+@interface DPFavoritesViewController : UINavContentViewController <UITableViewDataSource, UITableViewDelegate, DPNavigatorDelegate>
 
 @property (strong, nonatomic) IBOutlet UITableView *tableView;
 

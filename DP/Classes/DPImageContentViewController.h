@@ -13,6 +13,7 @@
 @interface DPImageContentViewController : UINavContentViewController <UIScrollViewDelegate>
 
 - (id) initWithArticle:(Article *)aArticle;
+- (id) initWithArticle:(Article *)aArticle showNavItem:(BOOL)showNavItem;
 //- (id) initWithImage:(UIImage *)aImage;
 //- (id) initWithImageUrl:(NSURL *)imageUrl;
 - (id) initWithImageName:(NSString *)imageName;

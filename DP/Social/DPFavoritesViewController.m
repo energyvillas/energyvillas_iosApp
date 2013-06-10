@@ -20,13 +20,16 @@
 
 @end
 
-@implementation DPFavoritesViewController
+@implementation DPFavoritesViewController {
+    int currIndex;
+}
 
 @synthesize favorites = _favorites;
 
 - (id) init {
     self = [super init];
     if (self) {
+        currIndex = -1;
     }
     return self;
 }
@@ -75,6 +78,11 @@
 
 - (void) willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
     [self doLayoutSubViews:YES];    
+}
+
+- (void) viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [self.navigationController setNavigationBarHidden:YES animated:YES];
 }
 - (void) doLayoutSubViews:(BOOL)fixtop {
     CGRect vf = self.view.frame;
@@ -161,9 +169,14 @@
 - (void)                            tableView:(UITableView *)tableView
      accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath {
     // Navigation logic may go here. Create and push another view controller.
-    Article *article = self.favorites[indexPath.row];
+    currIndex = indexPath.row;
+    [self showArticleAtIndex:currIndex];
+}
+
+- (void) showArticleAtIndex:(int)indx {
+    Article *article = self.favorites[indx];
     
-    UIViewController *vc = nil;
+    UINavContentViewController *vc = nil;
     if (article.body != nil) {
         vc = [[DPHtmlContentViewController alloc] initWithHTML:article.body];
     } else if (article.videoUrl != nil && article.videoUrl.length > 0) {
@@ -172,12 +185,16 @@
     } else if (article.imageUrl != nil) {
         if (isLocalUrl(article.imageUrl))
             vc = nil;// [[DPImageContentViewController alloc] initWithImageName:[self calcImageName:article.imageUrl]];
-        else
-            vc = [[DPImageContentViewController alloc] initWithArticle:article];
+        else 
+            vc = [[DPImageContentViewController alloc] initWithArticle:article
+                                                           showNavItem:YES];
     }
     
-    if (vc)
+    if (vc) {
+        vc.navigatorDelegate = self;
+        [self.navigationController setNavigationBarHidden:NO animated:YES];
         [self.navigationController pushViewController:vc animated:YES];
+    }
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -224,5 +241,37 @@
 //    return NO;
 //}
 //==============================================================================
+
+#pragma mark - DPNavigatorDelegate methods
+-(void) next {
+    int nxt = currIndex + 1;
+    if (nxt < [self itemsCount]) {
+        [self.navigationController popViewControllerAnimated:NO];
+        currIndex = nxt;
+        [self showArticleAtIndex:nxt];
+    }
+}
+-(void) prev {
+    int prv = currIndex - 1;
+    if (prv >= 0) {
+        [self.navigationController popViewControllerAnimated:NO];
+        currIndex = prv;
+        [self showArticleAtIndex:prv];
+    }
+}
+
+- (int) currentItemIndex {
+    if (self.favorites && [self itemsCount] > 0)
+        return currIndex;
+    
+    return -1;
+}
+
+- (int) itemsCount {
+    if (self.favorites)
+        return self.favorites.count;
+    
+    return 0;
+}
 
 @end
