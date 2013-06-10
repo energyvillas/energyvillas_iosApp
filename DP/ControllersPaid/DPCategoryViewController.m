@@ -302,7 +302,14 @@
     int cols = IS_PORTRAIT ? 3 : 1;
     DPScrollDirection scrolldir = IS_PORTRAIT ? DPScrollDirectionHorizontal : DPScrollDirectionVertical;
 
-    if (/*reload && */self.mmViewController != nil)
+    if (self.mmViewController != nil) {
+        reload = (rows != self.mmViewController.rowCount ||
+                  cols != self.mmViewController.colCount ||
+                  scrolldir != self.mmViewController.scrollDirection);
+        
+    }
+    
+    if (reload && self.mmViewController != nil)
     {
         initialMenuPage = self.mmViewController.currentMenuPage;
         [self.mmViewController.view removeFromSuperview];
@@ -323,7 +330,8 @@
         self.mmViewController.view.frame = mmfrm;
         [self addChildViewController:self.mmViewController];
         [self.mmView addSubview:self.mmViewController.view];
-    } else {
+    }
+    else {
         CGRect mmfrm = self.mmView.bounds;
         self.mmViewController.view.frame = mmfrm;
         [self.mmViewController changeRows:rows columns:cols scrollDirection:scrolldir];
