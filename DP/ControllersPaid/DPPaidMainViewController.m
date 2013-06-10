@@ -280,8 +280,9 @@
 - (void) showIdea {
     if ([self checkTop:self.ideaViewController]) return;
     
-    self.ideaViewController = [[DPHtmlContentViewController alloc]
-                              initWithCategory:CTGID_IDEA lang:CURRENT_LANG];
+    self.ideaViewController = [[DPCTGViewController alloc] initWithCategory:CTGID_IDEA
+                                                                 fromParent:CTGID_ROOT_CATEGORY
+                                                              useDeviceType:YES];
     
     [self showViewController:self.ideaViewController];
 }
@@ -309,8 +310,9 @@
 - (void) showFranchise {
     if ([self checkTop:self.franchiseViewController]) return;
     
-    self.franchiseViewController = [[DPHtmlContentViewController alloc]
-                               initWithCategory:CTGID_FRANCHISE lang:CURRENT_LANG];
+    self.franchiseViewController = [[DPCTGViewController alloc] initWithCategory:CTGID_FRANCHISE
+                                                                      fromParent:CTGID_ROOT_CATEGORY
+                                                                   useDeviceType:YES];
     
     [self showViewController:self.franchiseViewController];
 }
@@ -338,8 +340,10 @@
 - (void) showMaterials {
     if ([self checkTop:self.materialsViewController]) return;
     
-    self.materialsViewController = [[DPHtmlContentViewController alloc]
-             initWithCategory:CTGID_MATERIALS lang:CURRENT_LANG];
+    self.materialsViewController = [[DPCTGViewController alloc] initWithCategory:CTGID_MATERIALS
+                                                                      fromParent:CTGID_ROOT_CATEGORY
+                                                                   useDeviceType:YES];
+
     
     [self showViewController:self.materialsViewController];
 }
