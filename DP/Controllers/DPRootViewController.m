@@ -96,7 +96,7 @@
 }
 
 - (void) showBuyDialog:(int)ctgId product:(SKProduct *)aProduct {
-    [[DPAppHelper sharedInstance] playSoundWoosh];
+    [[DPAppHelper sharedInstance] playSoundBloodSplatOnWall];
     if (IS_IPAD)
         [self showBuyDialog_iPads:ctgId product:aProduct];
     else

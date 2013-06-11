@@ -302,18 +302,12 @@
 }
 
 - (IBAction)onTouchUpInside:(id)sender forEvent:(UIEvent *)event {
-//    if (sender == self.btnClose) {
-//        if (IS_IPAD) {
-//            [self dismissViewControllerAnimated:YES completion:nil];
-//        } else {
-//            [self.view removeFromSuperview];
-//            [self removeFromParentViewController];
-//        }
-//        if (self.onClose != nil)
-//            self.onClose();
-//    } else
+    if (sender == self.btnClose) {
+        [[DPAppHelper sharedInstance] playSoundBloodSplat];
+    } else
     if (sender == self.btnBuy) {
         NSLog(@"buy tapped");
+        [[DPAppHelper sharedInstance] playSoundMagicWand];
         
         DPIAPHelper *iap = [DPIAPHelper sharedInstance];
         

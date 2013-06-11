@@ -10,6 +10,7 @@
 #import "DPConstants.h"
 #import "UIApplication+ScreenDimensions.h"
 #import <QuartzCore/QuartzCore.h>
+#import "DPAppHelper.h"
 
 
 #define SOCIAL_ITEMS_CNT ((int)3) // 6
@@ -102,6 +103,9 @@
 }
 
 -(void) doOnBtnTap:(int)indx {
+    if (indx == -1)
+        [[DPAppHelper sharedInstance] playSoundBloodSplat];
+    
     if (IS_IPAD) {
         [self dismissViewControllerAnimated:NO completion:^{
             if (self.onClose != nil)
@@ -124,7 +128,7 @@
     [self.btnClose setTitle:DPLocalizedString(@"SOCIAL_BTN_Close") forState:UIControlStateNormal];
     
     for (UIView *itemView in self.contentView.subviews)
-        if (itemView.tag != 0)
+        if (itemView.tag > 0)
             [self localizeItem:itemView];
 }
 -(void) localizeItem:(UIView *)itemView {
@@ -226,7 +230,7 @@
     CGSize sz = CGSizeZero;
 
     for (UIView *itemView in self.contentView.subviews)
-        if (itemView.tag != 0) {            
+        if (itemView.tag > 0) {
             sz = [self layoutItem:itemView];
             COL_WIDTH = MAX(COL_WIDTH, sz.width);
             ROW_HEIGHT = MAX(ROW_HEIGHT, sz.height);
@@ -241,7 +245,7 @@
     CGFloat VERT_SPACER = SPACER_VERT;
     
     for (UIView *itemView in self.contentView.subviews)
-        if (itemView.tag != 0) {
+        if (itemView.tag > 0) {
             int row = (itemView.tag - 1) / COLS;
             int col = (itemView.tag - 1) % COLS;
             

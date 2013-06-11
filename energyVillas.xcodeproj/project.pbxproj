@@ -79,6 +79,12 @@
 		5E756E3A174BDC41001AA085 /* HouseInfo in Resources */ = {isa = PBXBuildFile; fileRef = 5E756E39174BDC41001AA085 /* HouseInfo */; };
 		5E869E0D173010EA00516D2D /* FreeImages in Resources */ = {isa = PBXBuildFile; fileRef = 5E869E0C173010EA00516D2D /* FreeImages */; };
 		5E8AB0CC171706D1004AFE76 /* UIImage+Retina4.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E8AB0CB171706D1004AFE76 /* UIImage+Retina4.m */; };
+		5E92521D1767841F00BE1964 /* Blood Splattering On Wall-SoundBible.com-508930244.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 5E9252171767841F00BE1964 /* Blood Splattering On Wall-SoundBible.com-508930244.mp3 */; };
+		5E92521E1767841F00BE1964 /* Blood Splatters-SoundBible.com-125814492.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 5E9252181767841F00BE1964 /* Blood Splatters-SoundBible.com-125814492.mp3 */; };
+		5E92521F1767841F00BE1964 /* Magic Wand Noise-SoundBible.com-375928671.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 5E9252191767841F00BE1964 /* Magic Wand Noise-SoundBible.com-375928671.mp3 */; };
+		5E9252201767841F00BE1964 /* Open_Soda_Can-KP-1219969174.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 5E92521A1767841F00BE1964 /* Open_Soda_Can-KP-1219969174.mp3 */; };
+		5E9252211767841F00BE1964 /* pin_dropping-Brian_Rocca-2084700791.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 5E92521B1767841F00BE1964 /* pin_dropping-Brian_Rocca-2084700791.mp3 */; };
+		5E9252221767841F00BE1964 /* Ting-Popup_Pixels-349896185.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 5E92521C1767841F00BE1964 /* Ting-Popup_Pixels-349896185.mp3 */; };
 		5E956E9D17534B4600B86DAC /* DPMoreMenuView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5E956E9C17534B4600B86DAC /* DPMoreMenuView.xib */; };
 		5E956EA017534E1600B86DAC /* DPMoreMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E956E9F17534E1600B86DAC /* DPMoreMenuViewController.m */; };
 		5E956EA317538C5500B86DAC /* DPNextHouseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E956EA217538C5500B86DAC /* DPNextHouseViewController.m */; };
@@ -281,6 +287,12 @@
 		5E869E0C173010EA00516D2D /* FreeImages */ = {isa = PBXFileReference; lastKnownFileType = folder; path = FreeImages; sourceTree = "<group>"; };
 		5E8AB0CA171706D1004AFE76 /* UIImage+Retina4.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Retina4.h"; sourceTree = "<group>"; };
 		5E8AB0CB171706D1004AFE76 /* UIImage+Retina4.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Retina4.m"; sourceTree = "<group>"; };
+		5E9252171767841F00BE1964 /* Blood Splattering On Wall-SoundBible.com-508930244.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "Blood Splattering On Wall-SoundBible.com-508930244.mp3"; sourceTree = "<group>"; };
+		5E9252181767841F00BE1964 /* Blood Splatters-SoundBible.com-125814492.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "Blood Splatters-SoundBible.com-125814492.mp3"; sourceTree = "<group>"; };
+		5E9252191767841F00BE1964 /* Magic Wand Noise-SoundBible.com-375928671.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "Magic Wand Noise-SoundBible.com-375928671.mp3"; sourceTree = "<group>"; };
+		5E92521A1767841F00BE1964 /* Open_Soda_Can-KP-1219969174.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "Open_Soda_Can-KP-1219969174.mp3"; sourceTree = "<group>"; };
+		5E92521B1767841F00BE1964 /* pin_dropping-Brian_Rocca-2084700791.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "pin_dropping-Brian_Rocca-2084700791.mp3"; sourceTree = "<group>"; };
+		5E92521C1767841F00BE1964 /* Ting-Popup_Pixels-349896185.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "Ting-Popup_Pixels-349896185.mp3"; sourceTree = "<group>"; };
 		5E956E9C17534B4600B86DAC /* DPMoreMenuView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DPMoreMenuView.xib; sourceTree = "<group>"; };
 		5E956E9E17534E1600B86DAC /* DPMoreMenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPMoreMenuViewController.h; sourceTree = "<group>"; };
 		5E956E9F17534E1600B86DAC /* DPMoreMenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPMoreMenuViewController.m; sourceTree = "<group>"; };
@@ -715,6 +727,7 @@
 		5E71A3FF16F9B5F900E7AFF9 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				5E9252161767833200BE1964 /* Sounds */,
 				5E956EB61757C19000B86DAC /* CallUs */,
 				5EDE1F8317442F9500A84BDA /* Icons */,
 				5E869E0C173010EA00516D2D /* FreeImages */,
@@ -729,7 +742,6 @@
 				5E5F949E17213BF5006C9A88 /* Social */,
 				5EC5739F17265B43000B7004 /* TabBar */,
 				5E756E30174AB197001AA085 /* Toolbar_Free */,
-				5E956EAC17569E1600B86DAC /* woosh.mp3 */,
 				5E0D18EE1765CD8400A3F946 /* black_rollOver_65%.png */,
 				5EAE0C3C175DF6E900C75A0C /* loading.png */,
 				5ECD1546173FA6C200C0327F /* loading_el.png */,
@@ -756,6 +768,20 @@
 				5E756E34174AB197001AA085 /* info-small_01@2x.png */,
 			);
 			path = Toolbar_Free;
+			sourceTree = "<group>";
+		};
+		5E9252161767833200BE1964 /* Sounds */ = {
+			isa = PBXGroup;
+			children = (
+				5E956EAC17569E1600B86DAC /* woosh.mp3 */,
+				5E9252171767841F00BE1964 /* Blood Splattering On Wall-SoundBible.com-508930244.mp3 */,
+				5E9252181767841F00BE1964 /* Blood Splatters-SoundBible.com-125814492.mp3 */,
+				5E9252191767841F00BE1964 /* Magic Wand Noise-SoundBible.com-375928671.mp3 */,
+				5E92521A1767841F00BE1964 /* Open_Soda_Can-KP-1219969174.mp3 */,
+				5E92521B1767841F00BE1964 /* pin_dropping-Brian_Rocca-2084700791.mp3 */,
+				5E92521C1767841F00BE1964 /* Ting-Popup_Pixels-349896185.mp3 */,
+			);
+			name = Sounds;
 			sourceTree = "<group>";
 		};
 		5E956EB61757C19000B86DAC /* CallUs */ = {
@@ -1054,6 +1080,12 @@
 				5E6290D717591FEB00A7D3E1 /* Banners in Resources */,
 				5EAE0C3D175DF6E900C75A0C /* loading.png in Resources */,
 				5E0D18EF1765CD8400A3F946 /* black_rollOver_65%.png in Resources */,
+				5E92521D1767841F00BE1964 /* Blood Splattering On Wall-SoundBible.com-508930244.mp3 in Resources */,
+				5E92521E1767841F00BE1964 /* Blood Splatters-SoundBible.com-125814492.mp3 in Resources */,
+				5E92521F1767841F00BE1964 /* Magic Wand Noise-SoundBible.com-375928671.mp3 in Resources */,
+				5E9252201767841F00BE1964 /* Open_Soda_Can-KP-1219969174.mp3 in Resources */,
+				5E9252211767841F00BE1964 /* pin_dropping-Brian_Rocca-2084700791.mp3 in Resources */,
+				5E9252221767841F00BE1964 /* Ting-Popup_Pixels-349896185.mp3 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

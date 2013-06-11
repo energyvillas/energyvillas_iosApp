@@ -46,5 +46,11 @@
 
 // sounds
 - (void) playSoundWoosh;
+- (void) playSoundBloodSplatOnWall;
+- (void) playSoundBloodSplat;
+- (void) playSoundMagicWand;
+- (void) playSoundOpenSoda;
+- (void) playSoundPinDrop;
+- (void) playSoundTing;
 
 @end

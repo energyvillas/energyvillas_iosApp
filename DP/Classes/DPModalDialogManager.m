@@ -32,7 +32,7 @@
 }
 
 - (void) showDialog:(UIViewController<DPModalControllerProtocol> *)aModalController {
-    [[DPAppHelper sharedInstance] playSoundWoosh];
+    [[DPAppHelper sharedInstance] playSoundBloodSplatOnWall];
     self.modalController = aModalController;
     if (IS_IPAD)
         [self showDialog_iPads];

@@ -409,11 +409,12 @@
         
         switch (tag) {
             case 100:
+                [[DPAppHelper sharedInstance] playSoundBloodSplat];
                 // cancelled... ok go on...
                 break;
                 
             case 101: {
-                
+                [[DPAppHelper sharedInstance] playSoundBloodSplatOnWall];
                 // make the call
                 NSString *telNo = [NSString stringWithFormat:@"%@", @"tel:+302103611150"];
                 telNo = [telNo stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];

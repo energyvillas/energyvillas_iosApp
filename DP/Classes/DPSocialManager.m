@@ -56,7 +56,7 @@
 
 
 - (void) showSocialsDialog:(void(^)(int socialAction))completed {
-    [[DPAppHelper sharedInstance] playSoundWoosh];
+    [[DPAppHelper sharedInstance] playSoundBloodSplatOnWall];
     self.onCompleted = completed;
     if (IS_IPAD)
         [self showSocialsDialog_iPads];
@@ -125,12 +125,16 @@
 -(void) launchSocialAction:(int) action {
     [self hideSocialsDialog];
     
+    DPAppHelper *apphelper = [DPAppHelper sharedInstance];
+    
     switch (action) {
         case SOCIAL_ACT_FACEBOOK: {
+            [apphelper playSoundOpenSoda];
             [self showFB];
             break;
         }
         case SOCIAL_ACT_TWITTER:
+            [apphelper playSoundOpenSoda];
             [self tweet:[DPAppHelper sharedInstance].imageUrl2Share
                     url:[DPAppHelper sharedInstance].imageUrl2Share];
             break;
@@ -140,12 +144,12 @@
             break;
             
         case SOCIAL_ACT_EMAIL:
-            
+            [apphelper playSoundOpenSoda];
             [self composeEmail];
             break;
             
         case SOCIAL_ACT_FAVS: {
-            DPAppHelper *apphelper = [DPAppHelper sharedInstance];
+            
             if ([[apphelper favoriteArticles] count] > 0) {
                 DPAppDelegate *appdel = [UIApplication sharedApplication].delegate;
                 UINavigationController *nvc = [appdel findNavController];
