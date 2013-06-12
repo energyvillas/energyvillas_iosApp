@@ -230,6 +230,7 @@
 
 #pragma mark -
 
+#define NAVBAR_BTN_SPACING ((int)4)
 #define NAVBAR_BTN_WIDTH ((int)34)
 #define NAVBAR_BTN_HEIGTH ((int)34)
 #define NAVBAR_BTN_TOP ((int)5)
@@ -286,7 +287,7 @@
                                                       tag:TAG_NBI_INFO
                                                    action:@selector(onNavButtonTapped:)];
         [rightButtons addSubview:navbarInfo];
-        pos += NAVBAR_BTN_WIDTH;
+        pos += (NAVBAR_BTN_WIDTH + NAVBAR_BTN_SPACING);
     }
     
     if ([self showNavBarLanguages]) {
@@ -297,7 +298,7 @@
                               tag:TAG_NBI_LANG_EL
                               action:@selector(onNavButtonTapped:)];
         [rightButtons addSubview: self.navbarLang_EL];
-        pos += NAVBAR_BTN_WIDTH;
+        pos += (NAVBAR_BTN_WIDTH + NAVBAR_BTN_SPACING);
         
         self.navbarLang_EN = [self
                               createButtonWithImage:NAVBAR_LANG_EN_IMG
@@ -306,7 +307,7 @@
                               tag:TAG_NBI_LANG_EN
                               action:@selector(onNavButtonTapped:)];
         [rightButtons addSubview: self.navbarLang_EN];
-        pos += NAVBAR_BTN_WIDTH;
+        pos += (NAVBAR_BTN_WIDTH + NAVBAR_BTN_SPACING);
     }
     
     if ([self showNavBarAddToFav]) {
@@ -317,7 +318,7 @@
                                                       tag:TAG_NBI_ADD_FAV
                                                    action:@selector(onNavButtonTapped:)];
         [rightButtons addSubview:self.navbarFavorite];
-        pos += NAVBAR_BTN_WIDTH;
+        pos += (NAVBAR_BTN_WIDTH + NAVBAR_BTN_SPACING);
     }
     
     if ([self showNavBarSocial]) {
@@ -327,7 +328,7 @@
                                   frame:CGRectMake(pos, NAVBAR_BTN_TOP, NAVBAR_BTN_WIDTH, NAVBAR_BTN_HEIGTH)
                                   tag:TAG_NBI_SHARE
                                   action:@selector(onNavButtonTapped:)]];
-        pos += NAVBAR_BTN_WIDTH;
+        pos += (NAVBAR_BTN_WIDTH + NAVBAR_BTN_SPACING);
     }
     
     if ([self showNavBarNavigator]) {
@@ -384,7 +385,7 @@
         
         [rightButtons addSubview:container];
         
-        pos += 2 * NAVBAR_BTN_WIDTH;
+        pos += (2 * NAVBAR_BTN_WIDTH + NAVBAR_BTN_SPACING);
     }
     
     if (pos > 0) {

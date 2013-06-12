@@ -82,7 +82,8 @@
 
 - (void) viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    [self.navigationController setNavigationBarHidden:YES animated:YES];
+    if ([DPAppHelper sharedInstance].isPurchased)
+        [self.navigationController setNavigationBarHidden:YES animated:YES];
 }
 - (void) doLayoutSubViews:(BOOL)fixtop {
     CGRect vf = self.view.frame;
