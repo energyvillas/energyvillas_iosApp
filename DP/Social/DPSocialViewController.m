@@ -104,7 +104,7 @@
 
 -(void) doOnBtnTap:(int)indx {
     if (indx == -1)
-        [[DPAppHelper sharedInstance] playSoundBloodSplat];
+        [[DPAppHelper sharedInstance] playSoundBloodSquirt];
     
     if (IS_IPAD) {
         [self dismissViewControllerAnimated:NO completion:^{

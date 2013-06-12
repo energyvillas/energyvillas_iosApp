@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <AudioToolbox/AudioToolbox.h>
 #import "Article.h"
 
 @interface DPAppHelper : NSObject
@@ -20,6 +21,16 @@
 
 @property (strong, nonatomic) NSString *imageTitle2Share;
 @property (strong, nonatomic) NSString *imageUrl2Share;
+
+@property (readonly, nonatomic) SystemSoundID wooshSound;
+@property (readonly, nonatomic) SystemSoundID bloodSplatOnWallSound;
+@property (readonly, nonatomic) SystemSoundID bloodSplatSound;
+@property (readonly, nonatomic) SystemSoundID magicWandSound;
+@property (readonly, nonatomic) SystemSoundID openSodaSound;
+@property (readonly, nonatomic) SystemSoundID pinDropSound;
+@property (readonly, nonatomic) SystemSoundID tingSound;
+@property (readonly, nonatomic) SystemSoundID bloodSquirtSound;
+
 
 
 //===========
@@ -52,5 +63,6 @@
 - (void) playSoundOpenSoda;
 - (void) playSoundPinDrop;
 - (void) playSoundTing;
+- (void) playSoundBloodSquirt;
 
 @end

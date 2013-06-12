@@ -129,25 +129,25 @@
     
     switch (action) {
         case SOCIAL_ACT_FACEBOOK: {
-            [apphelper playSoundOpenSoda];
             [self showFB];
+            [apphelper playSoundOpenSoda];
             break;
         }
-        case SOCIAL_ACT_TWITTER:
-            [apphelper playSoundOpenSoda];
+        case SOCIAL_ACT_TWITTER: {
             [self tweet:[DPAppHelper sharedInstance].imageUrl2Share
                     url:[DPAppHelper sharedInstance].imageUrl2Share];
+            [apphelper playSoundOpenSoda];
             break;
-            
+        }
         case SOCIAL_ACT_LINKEDIN:
             
             break;
             
-        case SOCIAL_ACT_EMAIL:
-            [apphelper playSoundOpenSoda];
+        case SOCIAL_ACT_EMAIL: {
             [self composeEmail];
+            [apphelper playSoundOpenSoda];
             break;
-            
+        }
         case SOCIAL_ACT_FAVS: {
             
             if ([[apphelper favoriteArticles] count] > 0) {

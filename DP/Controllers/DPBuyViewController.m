@@ -303,7 +303,7 @@
 
 - (IBAction)onTouchUpInside:(id)sender forEvent:(UIEvent *)event {
     if (sender == self.btnClose) {
-        [[DPAppHelper sharedInstance] playSoundBloodSplat];
+        [[DPAppHelper sharedInstance] playSoundBloodSquirt];
     } else
     if (sender == self.btnBuy) {
         NSLog(@"buy tapped");

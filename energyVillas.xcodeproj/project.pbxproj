@@ -82,9 +82,10 @@
 		5E92521D1767841F00BE1964 /* Blood Splattering On Wall-SoundBible.com-508930244.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 5E9252171767841F00BE1964 /* Blood Splattering On Wall-SoundBible.com-508930244.mp3 */; };
 		5E92521E1767841F00BE1964 /* Blood Splatters-SoundBible.com-125814492.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 5E9252181767841F00BE1964 /* Blood Splatters-SoundBible.com-125814492.mp3 */; };
 		5E92521F1767841F00BE1964 /* Magic Wand Noise-SoundBible.com-375928671.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 5E9252191767841F00BE1964 /* Magic Wand Noise-SoundBible.com-375928671.mp3 */; };
-		5E9252201767841F00BE1964 /* Open_Soda_Can-KP-1219969174.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 5E92521A1767841F00BE1964 /* Open_Soda_Can-KP-1219969174.mp3 */; };
 		5E9252211767841F00BE1964 /* pin_dropping-Brian_Rocca-2084700791.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 5E92521B1767841F00BE1964 /* pin_dropping-Brian_Rocca-2084700791.mp3 */; };
-		5E9252221767841F00BE1964 /* Ting-Popup_Pixels-349896185.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 5E92521C1767841F00BE1964 /* Ting-Popup_Pixels-349896185.mp3 */; };
+		5E925224176880C600BE1964 /* Ting_Sound.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 5E92522317687F3300BE1964 /* Ting_Sound.m4a */; };
+		5E9252261768815C00BE1964 /* Open Soda Can Sound.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 5E9252251768815C00BE1964 /* Open Soda Can Sound.m4a */; };
+		5E9252281768843F00BE1964 /* Blood Squirt-SoundBible.com-1808242738.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 5E9252271768843F00BE1964 /* Blood Squirt-SoundBible.com-1808242738.mp3 */; };
 		5E956E9D17534B4600B86DAC /* DPMoreMenuView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5E956E9C17534B4600B86DAC /* DPMoreMenuView.xib */; };
 		5E956EA017534E1600B86DAC /* DPMoreMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E956E9F17534E1600B86DAC /* DPMoreMenuViewController.m */; };
 		5E956EA317538C5500B86DAC /* DPNextHouseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E956EA217538C5500B86DAC /* DPNextHouseViewController.m */; };
@@ -290,9 +291,10 @@
 		5E9252171767841F00BE1964 /* Blood Splattering On Wall-SoundBible.com-508930244.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "Blood Splattering On Wall-SoundBible.com-508930244.mp3"; sourceTree = "<group>"; };
 		5E9252181767841F00BE1964 /* Blood Splatters-SoundBible.com-125814492.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "Blood Splatters-SoundBible.com-125814492.mp3"; sourceTree = "<group>"; };
 		5E9252191767841F00BE1964 /* Magic Wand Noise-SoundBible.com-375928671.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "Magic Wand Noise-SoundBible.com-375928671.mp3"; sourceTree = "<group>"; };
-		5E92521A1767841F00BE1964 /* Open_Soda_Can-KP-1219969174.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "Open_Soda_Can-KP-1219969174.mp3"; sourceTree = "<group>"; };
 		5E92521B1767841F00BE1964 /* pin_dropping-Brian_Rocca-2084700791.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "pin_dropping-Brian_Rocca-2084700791.mp3"; sourceTree = "<group>"; };
-		5E92521C1767841F00BE1964 /* Ting-Popup_Pixels-349896185.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "Ting-Popup_Pixels-349896185.mp3"; sourceTree = "<group>"; };
+		5E92522317687F3300BE1964 /* Ting_Sound.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = Ting_Sound.m4a; sourceTree = "<group>"; };
+		5E9252251768815C00BE1964 /* Open Soda Can Sound.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Open Soda Can Sound.m4a"; sourceTree = "<group>"; };
+		5E9252271768843F00BE1964 /* Blood Squirt-SoundBible.com-1808242738.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "Blood Squirt-SoundBible.com-1808242738.mp3"; sourceTree = "<group>"; };
 		5E956E9C17534B4600B86DAC /* DPMoreMenuView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DPMoreMenuView.xib; sourceTree = "<group>"; };
 		5E956E9E17534E1600B86DAC /* DPMoreMenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPMoreMenuViewController.h; sourceTree = "<group>"; };
 		5E956E9F17534E1600B86DAC /* DPMoreMenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPMoreMenuViewController.m; sourceTree = "<group>"; };
@@ -777,9 +779,10 @@
 				5E9252171767841F00BE1964 /* Blood Splattering On Wall-SoundBible.com-508930244.mp3 */,
 				5E9252181767841F00BE1964 /* Blood Splatters-SoundBible.com-125814492.mp3 */,
 				5E9252191767841F00BE1964 /* Magic Wand Noise-SoundBible.com-375928671.mp3 */,
-				5E92521A1767841F00BE1964 /* Open_Soda_Can-KP-1219969174.mp3 */,
+				5E9252251768815C00BE1964 /* Open Soda Can Sound.m4a */,
 				5E92521B1767841F00BE1964 /* pin_dropping-Brian_Rocca-2084700791.mp3 */,
-				5E92521C1767841F00BE1964 /* Ting-Popup_Pixels-349896185.mp3 */,
+				5E92522317687F3300BE1964 /* Ting_Sound.m4a */,
+				5E9252271768843F00BE1964 /* Blood Squirt-SoundBible.com-1808242738.mp3 */,
 			);
 			name = Sounds;
 			sourceTree = "<group>";
@@ -1083,9 +1086,10 @@
 				5E92521D1767841F00BE1964 /* Blood Splattering On Wall-SoundBible.com-508930244.mp3 in Resources */,
 				5E92521E1767841F00BE1964 /* Blood Splatters-SoundBible.com-125814492.mp3 in Resources */,
 				5E92521F1767841F00BE1964 /* Magic Wand Noise-SoundBible.com-375928671.mp3 in Resources */,
-				5E9252201767841F00BE1964 /* Open_Soda_Can-KP-1219969174.mp3 in Resources */,
 				5E9252211767841F00BE1964 /* pin_dropping-Brian_Rocca-2084700791.mp3 in Resources */,
-				5E9252221767841F00BE1964 /* Ting-Popup_Pixels-349896185.mp3 in Resources */,
+				5E925224176880C600BE1964 /* Ting_Sound.m4a in Resources */,
+				5E9252261768815C00BE1964 /* Open Soda Can Sound.m4a in Resources */,
+				5E9252281768843F00BE1964 /* Blood Squirt-SoundBible.com-1808242738.mp3 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

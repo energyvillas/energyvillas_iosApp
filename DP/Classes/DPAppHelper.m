@@ -6,7 +6,6 @@
 //  Copyright (c) 2013 Γεώργιος Γράβος. All rights reserved.
 //
 
-#import <AudioToolbox/AudioToolbox.h>
 #import "DPConstants.h"
 #import "DPAppHelper.h"
 #import "DPImageInfo.h"
@@ -36,16 +35,7 @@
 
 @end
 
-@implementation DPAppHelper {
-    SystemSoundID wooshSound;
-    SystemSoundID bloodSplatOnWallSound;
-    SystemSoundID bloodSplatSound;
-    SystemSoundID magicWandSound;
-    SystemSoundID openSodaSound;
-    SystemSoundID pinDropSound;
-    SystemSoundID tingSound;
-}
-
+@implementation DPAppHelper
 
 
 @synthesize connectionRequired = _connectionRequired;
@@ -540,64 +530,88 @@
 
 - (void) createSysSounds {
     NSURL *audioPath = [[NSBundle mainBundle] URLForResource:@"woosh" withExtension:@"mp3"];
-    AudioServicesCreateSystemSoundID((__bridge CFURLRef)audioPath, &wooshSound);
+    AudioServicesCreateSystemSoundID((__bridge CFURLRef)audioPath, &_wooshSound);
     
     audioPath = [[NSBundle mainBundle] URLForResource:@"Blood Splattering On Wall-SoundBible.com-508930244" withExtension:@"mp3"];
-    AudioServicesCreateSystemSoundID((__bridge CFURLRef)audioPath, &bloodSplatOnWallSound);
+    AudioServicesCreateSystemSoundID((__bridge CFURLRef)audioPath, &_bloodSplatOnWallSound);
     
     audioPath = [[NSBundle mainBundle] URLForResource:@"Blood Splatters-SoundBible.com-125814492" withExtension:@"mp3"];
-    AudioServicesCreateSystemSoundID((__bridge CFURLRef)audioPath, &bloodSplatSound);
+    AudioServicesCreateSystemSoundID((__bridge CFURLRef)audioPath, &_bloodSplatSound);
     
     audioPath = [[NSBundle mainBundle] URLForResource:@"Magic Wand Noise-SoundBible.com-375928671" withExtension:@"mp3"];
-    AudioServicesCreateSystemSoundID((__bridge CFURLRef)audioPath, &magicWandSound);
+    AudioServicesCreateSystemSoundID((__bridge CFURLRef)audioPath, &_magicWandSound);
     
-    audioPath = [[NSBundle mainBundle] URLForResource:@"Open_Soda_Can-KP-1219969174" withExtension:@"mp3"];
-    AudioServicesCreateSystemSoundID((__bridge CFURLRef)audioPath, &openSodaSound);
+//    audioPath = [[NSBundle mainBundle] URLForResource:@"Open_Soda_Can-KP-1219969174" withExtension:@"mp3"];
+//    AudioServicesCreateSystemSoundID((__bridge CFURLRef)audioPath, &openSodaSound);
+    audioPath = [[NSBundle mainBundle] URLForResource:@"Open Soda Can Sound" withExtension:@"m4a"];
+    AudioServicesCreateSystemSoundID((__bridge CFURLRef)audioPath, &_openSodaSound);
     
     audioPath = [[NSBundle mainBundle] URLForResource:@"pin_dropping-Brian_Rocca-2084700791" withExtension:@"mp3"];
-    AudioServicesCreateSystemSoundID((__bridge CFURLRef)audioPath, &pinDropSound);
+    AudioServicesCreateSystemSoundID((__bridge CFURLRef)audioPath, &_pinDropSound);
     
-    audioPath = [[NSBundle mainBundle] URLForResource:@"Ting-Popup_Pixels-349896185" withExtension:@"mp3"];
-    AudioServicesCreateSystemSoundID((__bridge CFURLRef)audioPath, &tingSound);
+//    audioPath = [[NSBundle mainBundle] URLForResource:@"Ting-Popup_Pixels-349896185" withExtension:@"mp3"];
+//    OSStatus status = AudioServicesCreateSystemSoundID((__bridge CFURLRef)audioPath, &tingSound);
+//    NSLog(@"tingSound status = %ld", status);
+    audioPath = [[NSBundle mainBundle] URLForResource:@"Ting_Sound" withExtension:@"m4a"];
+    AudioServicesCreateSystemSoundID((__bridge CFURLRef)audioPath, &_tingSound);
+    
+    audioPath = [[NSBundle mainBundle] URLForResource:@"Blood Squirt-SoundBible.com-1808242738" withExtension:@"mp3"];
+    AudioServicesCreateSystemSoundID((__bridge CFURLRef)audioPath, &_bloodSquirtSound);
+    
 }
 
  
 
 - (void) playSoundWoosh {
-    AudioServicesPlaySystemSound(wooshSound);
+    AudioServicesPlaySystemSound(_wooshSound);
 }
 
 - (void) playSoundBloodSplatOnWall {
-    AudioServicesPlaySystemSound(bloodSplatOnWallSound);
+    AudioServicesPlaySystemSound(_bloodSplatOnWallSound);
 }
 
 - (void) playSoundBloodSplat {
-    AudioServicesPlaySystemSound(bloodSplatSound);
+    AudioServicesPlaySystemSound(_bloodSplatSound);
 }
 
 - (void) playSoundMagicWand {
-    AudioServicesPlaySystemSound(magicWandSound);
+    AudioServicesPlaySystemSound(_magicWandSound);
 }
 
 - (void) playSoundOpenSoda {
-    AudioServicesPlaySystemSound(openSodaSound);
+    AudioServicesPlaySystemSound(_openSodaSound);
 }
 
 - (void) playSoundPinDrop {
-    AudioServicesPlaySystemSound(pinDropSound);
+    AudioServicesPlaySystemSound(_pinDropSound);
 }
 
 - (void) playSoundTing {
-    AudioServicesPlaySystemSound(tingSound);
+    AudioServicesPlaySystemSound(_tingSound);
+}
+
+- (void) playSoundBloodSquirt {
+    AudioServicesPlaySystemSound(_bloodSquirtSound);
 }
 
 - (void) dealloc {
-    AudioServicesDisposeSystemSoundID(wooshSound);
-    AudioServicesDisposeSystemSoundID(bloodSplatOnWallSound);
-    AudioServicesDisposeSystemSoundID(bloodSplatSound);
-    AudioServicesDisposeSystemSoundID(magicWandSound);
-    AudioServicesDisposeSystemSoundID(openSodaSound);
-    AudioServicesDisposeSystemSoundID(pinDropSound);
-    AudioServicesDisposeSystemSoundID(tingSound);
+    AudioServicesRemoveSystemSoundCompletion(_wooshSound);
+    AudioServicesRemoveSystemSoundCompletion(_bloodSplatOnWallSound);
+    AudioServicesRemoveSystemSoundCompletion(_bloodSplatSound);
+    AudioServicesRemoveSystemSoundCompletion(_magicWandSound);
+    AudioServicesRemoveSystemSoundCompletion(_openSodaSound);
+    AudioServicesRemoveSystemSoundCompletion(_pinDropSound);
+    AudioServicesRemoveSystemSoundCompletion(_tingSound);
+    AudioServicesRemoveSystemSoundCompletion(_bloodSquirtSound);
+    
+    
+    AudioServicesDisposeSystemSoundID(_wooshSound);
+    AudioServicesDisposeSystemSoundID(_bloodSplatOnWallSound);
+    AudioServicesDisposeSystemSoundID(_bloodSplatSound);
+    AudioServicesDisposeSystemSoundID(_magicWandSound);
+    AudioServicesDisposeSystemSoundID(_openSodaSound);
+    AudioServicesDisposeSystemSoundID(_pinDropSound);
+    AudioServicesDisposeSystemSoundID(_tingSound);
+    AudioServicesDisposeSystemSoundID(_bloodSquirtSound);
 }
 @end
