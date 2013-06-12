@@ -27,6 +27,9 @@
 @property (strong, nonatomic) Article *article;
 @property int categoryID;
 @property (strong, nonatomic) NSString *lang;
+
+@property (strong, nonatomic) UIView *containerView;
+@property (strong, nonatomic) UIWebView *webView;
 @end
 
 @implementation DPHtmlContentViewController
@@ -79,32 +82,36 @@
 }
 
 - (void) doInitWebView {
-    while (self.view.subviews.count > 0)
-        [self.view.subviews[0] removeFromSuperview];
+    if (self.webView)
+        [self.webView removeFromSuperview];
+    self.webView = nil;
     
-    CGRect aframe = self.view.bounds;
+    if (self.containerView == nil) return;
     
-    UIWebView *webView = [[UIWebView alloc] initWithFrame:aframe];
-    webView.backgroundColor = [UIColor clearColor];
-    webView.opaque = NO;
+    CGRect aframe = self.containerView.bounds;
+    
+    UIWebView *aWebView = [[UIWebView alloc] initWithFrame:aframe];
+    aWebView.backgroundColor = [UIColor clearColor];
+    aWebView.opaque = NO;
     //webView.contentMode = UIViewContentModeScaleAspectFit;
-    webView.userInteractionEnabled = YES;
-    [webView setScalesPageToFit:NO];
+    aWebView.userInteractionEnabled = YES;
+    [aWebView setScalesPageToFit:NO];
     
     if (self.url) {
         NSURLRequest * request = [[NSURLRequest alloc] initWithURL:self.url];
-        [webView loadRequest:request];
+        [aWebView loadRequest:request];
     } else if (self.htmlData) {
-        [webView loadHTMLString:self.htmlData
+        [aWebView loadHTMLString:self.htmlData
                         baseURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://%@", BASE_HOST_NAME]]];
     } else if (self.mimeData) {
-        [webView loadData:self.mimeData
+        [aWebView loadData:self.mimeData
                  MIMEType:self.mimetype
          textEncodingName:@"utf-8"
                   baseURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://%@", BASE_HOST_NAME]]];
     }
 //    [self addGestureRecognizersTo:webView];
-    [self.view addSubview:webView];
+    [self.containerView addSubview:aWebView];
+    self.webView = aWebView;
 }
 
 #pragma -
@@ -146,6 +153,9 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
+    self.containerView = [[UIView alloc] initWithFrame:self.view.bounds];
+    [self.view addSubview:self.containerView];
+    
     if (self.categoryID != 0) {
         self.articlesLoader = [[DPArticlesLoader alloc] initWithView:self.view
                                                             category:self.categoryID
@@ -174,11 +184,13 @@
     int h = vf.size.height - top;
     int w = vf.size.width;
 
-    UIView *innerview = self.view.subviews.count == 1 ? self.view.subviews[0] : nil;
-    if (innerview) {
-        innerview.frame = CGRectMake(0, top, w, h);
-        [innerview setNeedsDisplay];
+    if (self.containerView) {
+        self.containerView.frame = CGRectMake(0, top, w, h);
     }
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self doInitWebView];
+    });
 }
 
 -(void) clearDataLoader {
@@ -190,6 +202,8 @@
 
 -(void) dealloc {
     [self clearDataLoader];
+    self.webView = nil;
+    self.containerView = nil;
 }
 - (void)didReceiveMemoryWarning
 {

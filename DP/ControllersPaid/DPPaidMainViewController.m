@@ -206,28 +206,77 @@
     self.view.layer.contents = (id)[[UIImage imageNamed:imgName] CGImage];
 }
 
-- (void) cleanControllers:(UIViewController *)tvc {
-    if (tvc == self.ideaViewController) self.ideaViewController = nil;
-    if (tvc == self.realEstateViewController) self.realEstateViewController = nil;
+- (void) cleanControllers { //:(UIViewController *)tvc {
+//    if (tvc == self.ideaViewController)
+        self.ideaViewController = nil;
+    
+//    if (tvc == self.realEstateViewController)
+        self.realEstateViewController = nil;
+    
     //if (tvc == self.callViewController) self.callViewController = nil;
     //if (tvc == self.moreViewController) self.moreViewController = nil;
 
-    if (tvc == self.whoViewController) self.whoViewController = nil;
-    if (tvc == self.franchiseViewController) self.franchiseViewController = nil;
-    if (tvc == self.costViewController) self.costViewController = nil;
-    if (tvc == self.profitViewController) self.profitViewController = nil;
-    if (tvc == self.materialsViewController) self.materialsViewController = nil;
-    if (tvc == self.planetViewController) self.planetViewController = nil;
-    if (tvc == self.favoritesViewController) self.favoritesViewController = nil;
+//    if (tvc == self.whoViewController)
+        self.whoViewController = nil;
+    
+//    if (tvc == self.franchiseViewController)
+        self.franchiseViewController = nil;
+    
+//    if (tvc == self.costViewController)
+        self.costViewController = nil;
+    
+//    if (tvc == self.profitViewController)
+        self.profitViewController = nil;
+    
+//    if (tvc == self.materialsViewController)
+        self.materialsViewController = nil;
+    
+//    if (tvc == self.planetViewController)
+        self.planetViewController = nil;
+    
+//    if (tvc == self.favoritesViewController)
+        self.favoritesViewController = nil;
+}
+
+- (int) findTabViewControllerIndexInNavigator {
+    int result = -1;
+    int count = self.navController.viewControllers.count;
+    for (int i = count - 1; i > 0; i--) { // i>0 to avoid touching the "root"
+        UIViewController *vc = self.navController.viewControllers[i];
+        if ([self isTabBarPage:vc]) {
+            result = i;
+            break;
+        }
+    }
+    return result;
 }
 
 - (void) checkRootAndPop:(UIViewController *)tvc {
     UIViewController *rvc = self.navController.viewControllers[0];
-    if (tvc != rvc && [self isTabBarPage:tvc]) {
-        [self.navController popViewControllerAnimated:NO];
-        [self cleanControllers:tvc];
+    if (tvc != rvc) {
+        [self checkPopTabBarViewController];
     }
+    //    if (tvc != rvc && [self isTabBarPage:tvc]) {
+    //        [self.navController popViewControllerAnimated:NO];
+    //        [self cleanControllers:tvc];
+    //    }
 }
+
+- (int) checkPopTabBarViewController {
+    int tbvcIndex = [self findTabViewControllerIndexInNavigator];
+    if (tbvcIndex != -1) {
+        if (tbvcIndex == 1) {
+            [self.navController popToRootViewControllerAnimated:NO];
+        } else {
+            UIViewController *tbvc = self.navController.viewControllers[tbvcIndex - 1];
+            [self.navController popToViewController:tbvc animated:NO];
+        }
+        [self cleanControllers];//:tvc];
+    }
+    
+    return tbvcIndex;
+}
+
 
 - (BOOL) checkTop:(UIViewController *)vc {
     UIViewController *tvc = [self.navController topViewController];
@@ -266,15 +315,23 @@
 }
 
 - (void) showMain {
-    UIViewController *tvc = [self.navController topViewController];
-    if ([self isTabBarPage:tvc]){
-        [self.navController setNavigationBarHidden:NO animated:NO];
-        [self.navController popViewControllerAnimated:YES];
-        [self cleanControllers:tvc];
-    } else {
-        [self.navController setNavigationBarHidden:NO animated:NO];
+    [self.navController setNavigationBarHidden:NO animated:NO];
+    int indexOfTabBarController = [self checkPopTabBarViewController];
+    if (indexOfTabBarController == -1) {
+        // we were showing main controller, so we have to go to root...
         [self.navController popToRootViewControllerAnimated:YES];
     }
+    
+//    UIViewController *tvc = [self.navController topViewController];
+//    if ([self isTabBarPage:tvc]){
+//        [self.navController setNavigationBarHidden:NO animated:NO];
+//        [self.navController popViewControllerAnimated:YES];
+//        [self cleanControllers:tvc];
+//    }
+//    else {
+//        [self.navController setNavigationBarHidden:NO animated:NO];
+//        [self.navController popToRootViewControllerAnimated:YES];
+//    }
 }
 
 - (void) showIdea {

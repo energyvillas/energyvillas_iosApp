@@ -55,6 +55,10 @@
 
     self.request = nil;
     self.queue = nil;
+
+    self.datalist = nil;
+    self.busyIndicator = nil;
+    _dataCache = nil;
 }
 
 -(void) dealloc {
@@ -194,7 +198,16 @@
     if (!self.queue)
         self.queue = [[NSOperationQueue alloc] init];
     
-    [self.request setDelegate:self];
+    DPDataLoader *tmp_self1 = self;
+    [self.request setCompletionBlock:^{
+        [tmp_self1 requestFinished:tmp_self1.request];
+    }];
+    DPDataLoader *tmp_self2 = self;
+    [self.request setFailedBlock:^{
+        [tmp_self2 requestFailed:tmp_self2.request];
+    }];
+    
+    //[self.request setDelegate:self];
     [self.queue addOperation:self.request];
     [self startIndicator];
 }
