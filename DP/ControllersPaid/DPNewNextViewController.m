@@ -15,6 +15,7 @@
 #import "DPHtmlContentViewController.h"
 #import "DPAppDelegate.h"
 #import "DPNextHouseViewController.h"
+#import "DPCTGViewController.h"
 
 @interface DPNewNextViewController ()
 
@@ -176,14 +177,16 @@
     if (sender.state == UIGestureRecognizerStateEnded) {
         // handling code
         
-        DPDataElement * element = nil;
+        //Category * element = nil;
         UIViewController *vc = nil;
         if (sender.view == self.houseNew) {
-            element = self.ctgNew;
-            vc = [[DPHtmlContentViewController alloc] initWithCategory:element.Id lang:CURRENT_LANG];
+            //element = self.ctgNew;
+            vc = [[DPCTGViewController alloc] initWithCategory:self.ctgNew.Id
+                                                    fromParent:self.ctgNew.parentId
+                                                 useDeviceType:YES];//[[DPHtmlContentViewController alloc] initWithCategory:element.Id lang:CURRENT_LANG];
         } else if (sender.view == self.houseNext) {
-            element = self.ctgNext;
-            vc = [[DPNextHouseViewController alloc] initWithCategory:element.Id];
+            //element = self.ctgNext;
+            vc = [[DPNextHouseViewController alloc] initWithCategory:self.ctgNext.Id];
         }
         
         if (vc) {
@@ -308,7 +311,7 @@
         [houseview setImage:img];
         return YES;
     } else {
-        [houseview addSubview:createImageViewLoading(houseview.bounds, NO, NO)];
+        [houseview addSubview:createImageViewLoading(CGRectInset(houseview.bounds, 1, 1), NO, NO)];
     }
     
     return NO;

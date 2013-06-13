@@ -355,13 +355,17 @@ CGRect CGRectChangeCenter(CGRect rect, CGPoint center) {
 #pragma mark - loading of image data
 
 - (void) startIndicator {
-    return;
+//    return;
     if(!self.busyIndicator) {
 		self.busyIndicator = [[UIActivityIndicatorView alloc]
                               initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
-		self.busyIndicator.frame = CGRectMake((self.frame.size.width-25)/2,
-                                              (self.frame.size.height-25)/2,
-                                              25, 25);
+		self.busyIndicator.frame = CGRectMake((self.frame.size.width -
+                                               self.busyIndicator.bounds.size.width)/2,
+                                              (self.frame.size.height -
+                                               self.busyIndicator.bounds.size.height)/2,
+                                              self.busyIndicator.bounds.size.width,
+                                              self.busyIndicator.bounds.size.height);
+//        self.busyIndicator.center = self.center;
 		self.busyIndicator.hidesWhenStopped = TRUE;
         [self addSubview:self.busyIndicator];
 	}
@@ -371,7 +375,7 @@ CGRect CGRectChangeCenter(CGRect rect, CGPoint center) {
 }
 
 - (void) stopIndicator {
-    return;
+//    return;
     if (self.busyIndicator &&
         self.queue &&
         self.queue.operationCount == 0) {
@@ -389,6 +393,12 @@ CGRect CGRectChangeCenter(CGRect rect, CGPoint center) {
     //elm.imageData = [request responseData];
     releaseSubViews(imgView);
     imgView.image = [UIImage imageWithData:imgData scale:DEVICE_SCALE];
+//    for (UIView *v in imgView.subviews)
+//        if ([v isKindOfClass:[UIActivityIndicatorView class]]) {
+//            [(UIActivityIndicatorView *)v stopAnimating];
+//            break;
+//        }
+    
     if (addToCache)
         [[DPAppHelper sharedInstance] saveImageToCache:imageUrl data:imgData];
 }
@@ -404,6 +414,12 @@ CGRect CGRectChangeCenter(CGRect rect, CGPoint center) {
     else {
         [self doloadImageAsync:elm highlight:highlight inView:imgView];
         [imgView addSubview: createImageViewLoading(imgView.bounds, YES, YES)];
+//        UIActivityIndicatorView *bi = [[UIActivityIndicatorView alloc]
+//                                       initWithActivityIndicatorStyle: IS_IPAD ? UIActivityIndicatorViewStyleWhiteLarge: UIActivityIndicatorViewStyleWhite];
+//        bi.center = imgView.center;
+//        bi.hidesWhenStopped = YES;
+//        [bi startAnimating];
+//        [imgView addSubview:bi];
     }
 }
 

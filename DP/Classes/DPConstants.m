@@ -254,7 +254,8 @@ UIView* createImageViewLoading(CGRect vFrame, BOOL addIndicator, BOOL startIndic
     CGFloat coeff = addIndicator ? 0.5f : 0.8f;
     CGSize maxSize = CGSizeMake(vFrame.size.width * coeff,
                                 vFrame.size.height * coeff);
-    maxSize = CGSizeMake(MIN(maxSize.width, 60.0f), MIN(maxSize.height, 60.0f));
+    maxSize = CGSizeMake(MIN(maxSize.width, IS_IPAD ? LOADING_IMG_MAX_WIDTH_IPAD : LOADING_IMG_MAX_WIDTH_IPHONE),
+                         MIN(maxSize.height, IS_IPAD ? LOADING_IMG_MAX_HEIGHT_IPAD : LOADING_IMG_MAX_HEIGHT_IPHONE));
     if (img.size.width > maxSize.width || img.size.height > maxSize.height) {
         img = [img imageScaledToFitSize:maxSize];
     }
@@ -305,8 +306,8 @@ void releaseSubViews(UIView *v) {
         
         if ([sv isKindOfClass:[UIActivityIndicatorView class]])
             [((UIActivityIndicatorView *)sv) stopAnimating];
-
-        [sv removeFromSuperview];
+        else
+            [sv removeFromSuperview];
     }
 }
 

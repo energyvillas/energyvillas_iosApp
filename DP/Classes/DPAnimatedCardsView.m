@@ -411,9 +411,11 @@
     CGFloat xCenter = (IS_IPAD || IS_PORTRAIT || level == 1)
                         ? self.bounds.size.width / 2.0
                         : 20.0 + ((self.cardSize.width + self.cardInsetSize.width) / 2.0);
+    CGFloat yCenter = (IS_IPAD || IS_PORTRAIT || level == 1)
+                        ? self.bounds.size.height / 2.0
+                        : self.bounds.size.height - 8.0f - ((self.cardSize.height + self.cardInsetSize.height) / 2.0);
     
-    CGPoint where = CGPointMake(xCenter,
-                                self.bounds.size.height / 2.0);
+    CGPoint where = CGPointMake(xCenter, yCenter);
     
     [card zoomCard:duration position:where];
 }

@@ -141,7 +141,7 @@
 
 - (void)loadFinished:(DPDataLoader *)loader {
     if (loader.datalist == nil || loader.datalist.count == 0) {
-        showAlertMessage(nil, DPLocalizedString(kERR_TITLE_INFO), DPLocalizedString(kERR_MSG_NO_DATA_FOUND));
+        //showAlertMessage(nil, DPLocalizedString(kERR_TITLE_INFO), DPLocalizedString(kERR_MSG_NO_DATA_FOUND));
     } else {
         [self contentLoaded:self.dataLoader.datalist];
         [self changeRows:1 columns:1];

@@ -48,6 +48,8 @@
 		5E4E851F1711E542005DAD06 /* DPSubCategoryView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5E4E851E1711E542005DAD06 /* DPSubCategoryView.xib */; };
 		5E4E85221711F948005DAD06 /* DPAnimatedScrollViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E4E85211711F947005DAD06 /* DPAnimatedScrollViewController.m */; };
 		5E4E8527171227C2005DAD06 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E4E8526171227BF005DAD06 /* CoreText.framework */; };
+		5E4F025C176A279800084817 /* Electrical_Sweep-Sweeper-1760111493.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 5E4F025B176A279800084817 /* Electrical_Sweep-Sweeper-1760111493.mp3 */; };
+		5E4F025E176A28CE00084817 /* Spit_Splat_2-Mike_Koenig-1283100514.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 5E4F025D176A28CE00084817 /* Spit_Splat_2-Mike_Koenig-1283100514.mp3 */; };
 		5E5F949F17213BF5006C9A88 /* Social in Resources */ = {isa = PBXBuildFile; fileRef = 5E5F949E17213BF5006C9A88 /* Social */; };
 		5E6290D717591FEB00A7D3E1 /* Banners in Resources */ = {isa = PBXBuildFile; fileRef = 5E6290D617591FEB00A7D3E1 /* Banners */; };
 		5E63DF31174EAA2B0086ACF5 /* DPArticlesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E63DF30174EAA2A0086ACF5 /* DPArticlesViewController.m */; };
@@ -241,6 +243,8 @@
 		5E4E85201711F947005DAD06 /* DPAnimatedScrollViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPAnimatedScrollViewController.h; sourceTree = "<group>"; };
 		5E4E85211711F947005DAD06 /* DPAnimatedScrollViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPAnimatedScrollViewController.m; sourceTree = "<group>"; };
 		5E4E8526171227BF005DAD06 /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
+		5E4F025B176A279800084817 /* Electrical_Sweep-Sweeper-1760111493.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "Electrical_Sweep-Sweeper-1760111493.mp3"; sourceTree = "<group>"; };
+		5E4F025D176A28CE00084817 /* Spit_Splat_2-Mike_Koenig-1283100514.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "Spit_Splat_2-Mike_Koenig-1283100514.mp3"; sourceTree = "<group>"; };
 		5E5F949E17213BF5006C9A88 /* Social */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Social; sourceTree = "<group>"; };
 		5E6290D617591FEB00A7D3E1 /* Banners */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Banners; sourceTree = "<group>"; };
 		5E63DF2F174EAA2A0086ACF5 /* DPArticlesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPArticlesViewController.h; sourceTree = "<group>"; };
@@ -783,6 +787,8 @@
 				5E92521B1767841F00BE1964 /* pin_dropping-Brian_Rocca-2084700791.mp3 */,
 				5E92522317687F3300BE1964 /* Ting_Sound.m4a */,
 				5E9252271768843F00BE1964 /* Blood Squirt-SoundBible.com-1808242738.mp3 */,
+				5E4F025B176A279800084817 /* Electrical_Sweep-Sweeper-1760111493.mp3 */,
+				5E4F025D176A28CE00084817 /* Spit_Splat_2-Mike_Koenig-1283100514.mp3 */,
 			);
 			name = Sounds;
 			sourceTree = "<group>";
@@ -1090,6 +1096,8 @@
 				5E925224176880C600BE1964 /* Ting_Sound.m4a in Resources */,
 				5E9252261768815C00BE1964 /* Open Soda Can Sound.m4a in Resources */,
 				5E9252281768843F00BE1964 /* Blood Squirt-SoundBible.com-1808242738.mp3 in Resources */,
+				5E4F025C176A279800084817 /* Electrical_Sweep-Sweeper-1760111493.mp3 in Resources */,
+				5E4F025E176A28CE00084817 /* Spit_Splat_2-Mike_Koenig-1283100514.mp3 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

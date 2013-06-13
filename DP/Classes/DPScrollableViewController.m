@@ -434,7 +434,7 @@
 }
 
 -(UIView *) createImageViewLoading:(UIView *)container  {
-    return createImageViewLoading(container.bounds, NO, NO);
+    return createImageViewLoading(CGRectInset(container.bounds, 1, 1), NO, NO);
     
 //    CGRect vFrame = container.bounds;
 //    vFrame = CGRectInset(vFrame, 20.0f, 20.0f);
@@ -751,28 +751,31 @@
 }
 
 - (void) startIndicator {
-//    if(!self.busyIndicator) {
-//		self.busyIndicator = [[UIActivityIndicatorView alloc]
-//                              initWithActivityIndicatorStyle:(IS_IPAD ? UIActivityIndicatorViewStyleWhiteLarge :  UIActivityIndicatorViewStyleWhite)];
-//		self.busyIndicator.frame = CGRectMake((self.view.frame.size.width-25)/2,
-//                                              (self.view.frame.size.height-25)/2,
-//                                              25, 25);
-//		self.busyIndicator.hidesWhenStopped = TRUE;
-//        [self.view addSubview:self.busyIndicator];
-//	}
-//    
-//    if (!self.busyIndicator.isAnimating)
-//        [self.busyIndicator startAnimating];
+    if(!self.busyIndicator) {
+		self.busyIndicator = [[UIActivityIndicatorView alloc]
+                              initWithActivityIndicatorStyle:(IS_IPAD ? UIActivityIndicatorViewStyleWhiteLarge :  UIActivityIndicatorViewStyleWhite)];
+		self.busyIndicator.frame = CGRectMake((self.view.frame.size.width -
+                                               self.busyIndicator.frame.size.width)/2,
+                                              (self.view.frame.size.height -
+                                               self.busyIndicator.frame.size.height)/2,
+                                              self.busyIndicator.frame.size.width,
+                                              self.busyIndicator.frame.size.height);
+		self.busyIndicator.hidesWhenStopped = TRUE;
+        [self.view addSubview:self.busyIndicator];
+	}
+    
+    if (!self.busyIndicator.isAnimating)
+        [self.busyIndicator startAnimating];
 }
 
 - (void) stopIndicator {
-//    if (self.busyIndicator &&
-//        self.queue &&
-//        self.queue.operationCount == 0) {
-//        [self.busyIndicator stopAnimating];
-//        [self.busyIndicator removeFromSuperview];
-//        self.busyIndicator = nil;
-//    }
+    if (self.busyIndicator &&
+        self.queue &&
+        self.queue.operationCount == 0) {
+        [self.busyIndicator stopAnimating];
+        [self.busyIndicator removeFromSuperview];
+        self.busyIndicator = nil;
+    }
 }
 
 - (void) fix:(DPDataElement *)elm

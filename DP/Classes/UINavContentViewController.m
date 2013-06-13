@@ -105,11 +105,12 @@
     self.view.backgroundColor = [UIColor clearColor];
 
     [self hookToNotifications];
-    [self setupNavBar];
+//    [self setupNavBar];
 }
 
 - (void) viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    [self setupNavBar];
     [self hookToNotifications];
     [self reachabilityChanged];
 }
@@ -126,6 +127,9 @@
 
 - (void) viewWillLayoutSubviews {
     [super viewWillLayoutSubviews];
+    if (self.navigationItem)
+        self.navigationItem.hidesBackButton = YES;
+
     [self doLayoutSubViews:NO];
 }
 
@@ -238,9 +242,9 @@
 - (void) setupNavBar {
     if (![self showNavBar]) return;
     
-    self.navigationItem.title = nil;
-    self.navigationItem.leftItemsSupplementBackButton = NO;
     self.navigationItem.hidesBackButton = YES;
+    self.navigationItem.leftItemsSupplementBackButton = NO;
+    self.navigationItem.title = nil;
 
     bool ischild = self.navigationController.viewControllers[0] != self &&
                     self.navigationController.topViewController == self;
@@ -348,10 +352,6 @@
         vLine.layer.borderWidth = 1.0f;
         vLine.layer.borderColor = bordersColor.CGColor;
         [container addSubview:vLine];
-//        UIImageView *borderView = [[UIImageView alloc] initWithFrame:container.bounds];
-//        borderView.contentMode = UIViewContentModeCenter;
-//        borderView.image = [UIImage imageNamed:NAVBAR_PREVNEXT_BORDER_IMG];
-//        [container addSubview:borderView];
         
         UIButton *prevBtn = [self
                              createButtonWithImage:NAVBAR_PREV_IMG
@@ -373,12 +373,6 @@
                              action:@selector(onNavButtonTapped:)];
         [container addSubview:nextBtn];
         
-//        prevBtn.layer.cornerRadius = 6.0f;
-//        prevBtn.layer.borderWidth = 1.0f;
-//        prevBtn.layer.borderColor = bordersColor.CGColor;
-//        nextBtn.layer.cornerRadius = 6.0f;
-//        nextBtn.layer.borderWidth = 1.0f;
-//        nextBtn.layer.borderColor = bordersColor.CGColor;
         container.layer.cornerRadius = 6.0f;
         container.layer.borderWidth = 1.0f;
         container.layer.borderColor = bordersColor.CGColor;
@@ -393,6 +387,10 @@
         self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]
                                                   initWithCustomView: rightButtons];
     }
+    
+    self.navigationItem.hidesBackButton = YES;
+    self.navigationItem.leftItemsSupplementBackButton = NO;
+
     [self langSelected];
 }
 

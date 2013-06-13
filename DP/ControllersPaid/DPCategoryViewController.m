@@ -33,16 +33,6 @@
 }
 
 @synthesize category = _category;
-////////////////////////
-
-//- (void) fixlabel {
-//    NSMutableAttributedString *str = [[NSMutableAttributedString alloc] initWithString:@"Hello. That is a test attributed string."];
-//    [str addAttribute:NSBackgroundColorAttributeName value:[UIColor yellowColor] range:NSMakeRange(3,5)];
-//    [str addAttribute:NSForegroundColorAttributeName value:[UIColor greenColor] range:NSMakeRange(10,7)];
-//    [str addAttribute:NSFontAttributeName value:[UIFont fontWithName:@"HelveticaNeue-Bold" size:20.0] range:NSMakeRange(20, 10)];
-//    self.lblTitle.attributedText = str;
-//}
-//////////////////////////
 
 
 - (id) initWithCategory:(int)ctgID {
@@ -211,7 +201,7 @@
     
     if (self.category == CTGID_EXCLUSIVE_DESIGNER || self.category == CTGID_EXCLUSIVE_ART) {
         self.lblTitle.frame = CGRectZero;
-        self.imgTitle.frame = CGRectMake(0, self.category == CTGID_EXCLUSIVE_ART ? 8 : 0,
+        self.imgTitle.frame = CGRectMake(0, self.category == CTGID_EXCLUSIVE_ART ? 8 : 4,
                                          self.ctgView.frame.size.width,
                                          120);
     } else {

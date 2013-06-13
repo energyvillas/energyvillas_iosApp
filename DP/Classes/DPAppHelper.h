@@ -30,6 +30,8 @@
 @property (readonly, nonatomic) SystemSoundID pinDropSound;
 @property (readonly, nonatomic) SystemSoundID tingSound;
 @property (readonly, nonatomic) SystemSoundID bloodSquirtSound;
+@property (readonly, nonatomic) SystemSoundID electricalSweepSound;
+@property (readonly, nonatomic) SystemSoundID spitSplatSound;
 
 
 
@@ -64,5 +66,7 @@
 - (void) playSoundPinDrop;
 - (void) playSoundTing;
 - (void) playSoundBloodSquirt;
+- (void) playSoundElectricalSweep;
+- (void) playSoundSpitSplat;
 
 @end

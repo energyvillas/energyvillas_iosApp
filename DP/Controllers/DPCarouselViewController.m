@@ -29,6 +29,7 @@
 @property (strong, nonatomic) NSMutableDictionary *imageRequests;
 //@property (strong, nonatomic) AFOpenFlowView *carousel;
 
+@property (strong, nonatomic) UIView *lblFixedContainer;
 @property (strong, nonatomic) UIView *lblContainer;
 @property (strong, nonatomic) UIButton *btnAdd2Favs;
 @property (strong, nonatomic) UILabel *lblCounter;
@@ -40,6 +41,7 @@
 @end
 
 @implementation DPCarouselViewController
+
 
 @synthesize currentIndex = _currentIndex;
 @synthesize carouselCategoryID = _carouselCategoryID;
@@ -193,10 +195,13 @@
         [self.lblCounter removeFromSuperview];
         [self.lblTitle removeFromSuperview];
         [self.lblContainer removeFromSuperview];
+        [self.lblFixedContainer removeFromSuperview];
+        
         self.lblCounter = nil;
         self.lblTitle = nil;
         self.btnAdd2Favs = nil;
         self.lblContainer = nil;
+        self.lblFixedContainer = nil;
     }
 }
 
@@ -220,7 +225,7 @@
     self.btnAdd2Favs = [UIButton buttonWithType:UIButtonTypeCustom];
     self.btnAdd2Favs.frame = frmbtn;
     self.btnAdd2Favs.contentMode = UIViewContentModeCenter;
-    [self.btnAdd2Favs setImageEdgeInsets:UIEdgeInsetsMake(0, 4, 0, 4)];
+    [self.btnAdd2Favs setImageEdgeInsets:UIEdgeInsetsMake(-4, 0, -4, 0)];
     self.btnAdd2Favs.backgroundColor = [UIColor whiteColor];
     [self.btnAdd2Favs setImage:[UIImage imageNamed:NAVBAR_FAV_IMG]
                       forState:UIControlStateNormal];
@@ -251,7 +256,14 @@
     [self.lblContainer addSubview:self.lblCounter];
     [self.lblContainer addSubview:self.lblTitle];
     
-    [self.view addSubview:self.lblContainer];
+    self.lblFixedContainer = [[UIView alloc] initWithFrame:CGRectMake(0, 0,
+                                                                     self.view.bounds.size.width,
+                                                                     self.lblContainer.bounds.size.height)];
+    self.lblFixedContainer.backgroundColor = [UIColor clearColor];
+    self.lblFixedContainer.autoresizingMask = UIViewAutoresizingNone;
+    
+    [self.lblFixedContainer addSubview:self.lblContainer];
+    [self.view addSubview:self.lblFixedContainer];
 }
 
 - (void) addToFavs:(id)sender {
@@ -413,6 +425,8 @@
         self.icarousel.delegate = self;
         self.icarousel.dataSource = self;
         
+//        self.icarousel.scrollSpeed = 2.0f;
+//        self.icarousel.decelerationRate = 0.99f;
         //CGFloat scrspeed = self.icarousel.scrollSpeed;
         switch (self.carouselCategoryID) {
             case CTGID_CAROUSEL: {
@@ -450,7 +464,7 @@
             return NO;
         }
         case iCarouselOptionVisibleItems: {
-            return value;
+            return self.datalist ? (self.datalist.count / 2.0f) : value;
         }
         case iCarouselOptionShowBackfaces: {
             return NO;
@@ -466,6 +480,7 @@
                 case CTGID_CAROUSEL: return value * 1.973f;
                 case CTGID_CAROUSEL_MORE: return value * 1.1f;
                 default: return value * 1.973f;
+//                default: return value;
             }
         }
         case iCarouselOptionFadeMax:
@@ -496,8 +511,9 @@
 #endif
     [self updateLabels];
 }
+
 - (void)carousel:(iCarousel *)carousel didSelectItemAtIndex:(NSInteger)index {
-    if (index == carousel.currentItemIndex)
+    if (index == carousel.currentItemIndex && (!carousel.isScrolling))
         [self articleAtIndexTapped:index];
 }
 - (UIView *)carousel:(iCarousel *)carousel viewForItemAtIndex:(NSUInteger)index reusingView:(UIView *)view {
@@ -538,21 +554,26 @@
 //                                              self.icarousel.bounds .size.height * 0.1f),
 //                                  NO, NO);
     
-    CGSize szCarousel = self.icarousel.frame.size;
-    szCarousel.width = 0.8f * szCarousel.width;
-    szCarousel.height = szCarousel.height * 0.8f;
+//    CGSize szCarousel = self.icarousel.frame.size;
+//    szCarousel.width = 0.8f * szCarousel.width;
+//    szCarousel.height = szCarousel.height * 0.8f;
     
-    UIImage *img = [UIImage imageNamed:[NSString stringWithFormat:@"loading_%@.png", CURRENT_LANG]];
-    CGSize imgSize = img.size;
-    img = [img imageScaledToFitSize:CGSizeMake(szCarousel.width / 2.0f, szCarousel.height / 2.0f)];
-    imgSize = img.size;
+//    UIImage *img = [UIImage imageNamed:@"loading.png"];
+//    CGSize imgSize = img.size;
+//    img = [img imageScaledToFitSize:CGSizeMake(szCarousel.width / 2.0f, szCarousel.height / 2.0f)];
+//    imgSize = img.size;
     
-    CGSize loadingImgSize = CGSizeMake(3600.0f, 2400.0f);
-    CGRect frm = [self calcFittingFrame:loadingImgSize];//]self.icarousel.frame.size];
+    // define image aspect and the fact we have BIG images
+    CGSize szImageProto = CGSizeMake(3600.0f, 2400.0f);
+    CGRect frm = [self calcFittingFrame:szImageProto];
     
-    UIImageView *iv = [[UIImageView alloc] initWithFrame:CGRectOffset(frm, 0.0f, -10.0f)];
-    iv.contentMode = UIViewContentModeCenter;
-    iv.image = img;
+//    UIImageView *iv = [[UIImageView alloc] initWithFrame:CGRectOffset(frm, 0.0f, -10.0f)];
+    CGRect imgfrm = CGRectMake(0, 0,
+                               MIN(frm.size.width, IS_IPAD ? LOADING_IMG_MAX_WIDTH_IPAD : LOADING_IMG_MAX_WIDTH_IPHONE),
+                               MIN(frm.size.height, IS_IPAD ? LOADING_IMG_MAX_HEIGHT_IPAD : LOADING_IMG_MAX_HEIGHT_IPHONE));
+    UIImageView *iv = [[UIImageView alloc] initWithFrame:imgfrm];
+    iv.contentMode = UIViewContentModeScaleAspectFit;//Center;
+    iv.image = [UIImage imageNamed:@"loading.png"];//img;
     
     UIView *v = [[UIView alloc] initWithFrame:frm];
     v.backgroundColor = [UIColor colorWithWhite:0.0f alpha:0.7f]; //[UIColor colorWithRed:0.0f green:0.0f blue:0.0f alpha:0.6f];
@@ -560,14 +581,18 @@
     v.layer.borderWidth = IS_IPAD ? 4.0f : 2.0;
     v.layer.borderColor = [UIColor colorWithWhite:1.0f alpha:0.75f].CGColor;
     
-    frm = v.bounds;
+//    frm = v.bounds;
     UIActivityIndicatorView *bi = [[UIActivityIndicatorView alloc]
                                    initWithActivityIndicatorStyle: IS_IPAD ? UIActivityIndicatorViewStyleWhiteLarge: UIActivityIndicatorViewStyleWhite];
-    bi.frame = CGRectOffset(CGRectMake((frm.size.width-25)/2,
-                                       (frm.size.height-25)/2,
-                                       25, 25),
-                            0, IS_IPAD ? 110 : IS_IPHONE ? 40 : (IS_PORTRAIT ? 55 : 40));
+//    bi.frame = CGRectOffset(CGRectMake((frm.size.width-25)/2,
+//                                       (frm.size.height-25)/2,
+//                                       25, 25),
+//                            0, IS_IPAD ? 110 : IS_IPHONE ? 40 : (IS_PORTRAIT ? 55 : 40));
     bi.hidesWhenStopped = TRUE;
+    
+    iv.center = v.center;
+    bi.center = v.center;
+
     [v addSubview:iv];
     [v addSubview:bi];
     [bi startAnimating];
@@ -576,11 +601,10 @@
 }
 
 -(CGRect) calcFittingFrame:(CGSize)szImage {
-    CGRect frm;
+    CGRect frm = CGRectMake(0, 0, szImage.width, szImage.height);
     CGSize szCarousel = self.icarousel.frame.size; szCarousel.width = 0.8f * szCarousel.width;
-    if (szCarousel.width > szImage.width && szCarousel.height > szImage.height)
-        frm = CGRectMake(0, 0, szImage.width, szImage.height);
-    else {
+    if (szCarousel.width < szImage.width || szCarousel.height < szImage.height)
+    {
         CGFloat ir = szImage.width / szImage.height;
         CGFloat cr = szCarousel.width / szCarousel.height;
         if (ir < cr)  { //  image is taller than carousel

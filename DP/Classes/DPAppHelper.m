@@ -108,7 +108,7 @@
 }
 
 - (BOOL) calcIsPurchased {
-    //return YES;
+    return YES;
     
     NSUserDefaults *usrDefaults = [NSUserDefaults standardUserDefaults];
     BOOL productPurchased = [usrDefaults boolForKey:PRODUCT_IDENTIFIER];
@@ -558,6 +558,11 @@
     audioPath = [[NSBundle mainBundle] URLForResource:@"Blood Squirt-SoundBible.com-1808242738" withExtension:@"mp3"];
     AudioServicesCreateSystemSoundID((__bridge CFURLRef)audioPath, &_bloodSquirtSound);
     
+    audioPath = [[NSBundle mainBundle] URLForResource:@"Electrical_Sweep-Sweeper-1760111493" withExtension:@"mp3"];
+    AudioServicesCreateSystemSoundID((__bridge CFURLRef)audioPath, &_electricalSweepSound);
+   
+    audioPath = [[NSBundle mainBundle] URLForResource:@"Spit_Splat_2-Mike_Koenig-1283100514" withExtension:@"mp3"];
+    AudioServicesCreateSystemSoundID((__bridge CFURLRef)audioPath, &_spitSplatSound);
 }
 
  
@@ -594,6 +599,14 @@
     AudioServicesPlaySystemSound(_bloodSquirtSound);
 }
 
+- (void) playSoundElectricalSweep {
+    AudioServicesPlaySystemSound(_electricalSweepSound);
+}
+
+- (void) playSoundSpitSplat {
+    AudioServicesPlaySystemSound(_spitSplatSound);
+}
+
 - (void) dealloc {
     AudioServicesRemoveSystemSoundCompletion(_wooshSound);
     AudioServicesRemoveSystemSoundCompletion(_bloodSplatOnWallSound);
@@ -603,6 +616,8 @@
     AudioServicesRemoveSystemSoundCompletion(_pinDropSound);
     AudioServicesRemoveSystemSoundCompletion(_tingSound);
     AudioServicesRemoveSystemSoundCompletion(_bloodSquirtSound);
+    AudioServicesRemoveSystemSoundCompletion(_electricalSweepSound);
+    AudioServicesRemoveSystemSoundCompletion(_spitSplatSound);
     
     
     AudioServicesDisposeSystemSoundID(_wooshSound);
@@ -613,5 +628,7 @@
     AudioServicesDisposeSystemSoundID(_pinDropSound);
     AudioServicesDisposeSystemSoundID(_tingSound);
     AudioServicesDisposeSystemSoundID(_bloodSquirtSound);
+    AudioServicesDisposeSystemSoundID(_electricalSweepSound);
+    AudioServicesDisposeSystemSoundID(_spitSplatSound);
 }
 @end

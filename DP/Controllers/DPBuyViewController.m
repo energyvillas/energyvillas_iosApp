@@ -66,7 +66,8 @@
     
     [self doLocalize];
     [self prepareButtons];
-    [self doLayoutSubViews:NO];
+    if (IS_IPAD)
+        [self doLayoutSubViews:NO];
 }
 
 - (void) doLocalize {
@@ -303,28 +304,27 @@
 
 - (IBAction)onTouchUpInside:(id)sender forEvent:(UIEvent *)event {
     if (sender == self.btnClose) {
-        [[DPAppHelper sharedInstance] playSoundBloodSquirt];
-    } else
-    if (sender == self.btnBuy) {
+        [[DPAppHelper sharedInstance] playSoundSpitSplat];
+    } else if (sender == self.btnBuy) {
         NSLog(@"buy tapped");
-        [[DPAppHelper sharedInstance] playSoundMagicWand];
         
         DPIAPHelper *iap = [DPIAPHelper sharedInstance];
         
         if (![iap canMakePurchases])
             showAlertMessage(nil, DPLocalizedString(kERR_TITLE_INFO), @"Cannot make purchase at the moment. Please try later!");
-        else
+        else {
             [iap buy];
-//        [iap requestProductsWithCompletionHandler:^(BOOL success, NSArray *products) {
-//            NSLog(@"Finished products request!");
-//        }];
+            [[DPAppHelper sharedInstance] playSoundElectricalSweep];
+        }
     } else if (sender == self.btnRestore) {
         NSLog(@"restore tapped");
         DPIAPHelper *iap = [DPIAPHelper sharedInstance];
         if (![iap canMakePurchases])
             showAlertMessage(nil, DPLocalizedString(kERR_TITLE_INFO), @"Cannot restore purchase at the moment. Please try later!");
-        else
+        else {
             [iap restoreCompletedTransactions];
+            [[DPAppHelper sharedInstance] playSoundElectricalSweep];
+        }
     }
     
     if (IS_IPAD) {

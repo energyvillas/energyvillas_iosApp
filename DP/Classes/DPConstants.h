@@ -47,6 +47,11 @@ FOUNDATION_EXPORT NSString *const MySecondConstant;
 #define IS_APP_PURCHASED ((BOOL)[DPAppHelper sharedInstance].isPurchased)
 #define IS_APP_FREE ((BOOL)![DPAppHelper sharedInstance].isPurchased)
 
+// loading image max size
+#define LOADING_IMG_MAX_WIDTH_IPHONE ((CGFloat)60.0f)
+#define LOADING_IMG_MAX_HEIGHT_IPHONE ((CGFloat)60.0f)
+#define LOADING_IMG_MAX_WIDTH_IPAD ((CGFloat)100.0f)
+#define LOADING_IMG_MAX_HEIGHT_IPAD ((CGFloat)100.0f)
 
 // for scrollable views
 #define PAGE_CONTROL_HEIGHT ((int)16)

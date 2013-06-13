@@ -170,7 +170,7 @@
     return IS_IPAD ? 28 : 24;
 }
 - (int) top2CounterLabelSpacing {
-    return IS_IPAD ? 20 : IS_PORTRAIT ? 10 : 0;
+    return IS_IPAD ? (IS_PORTRAIT ? 120 : 80) : (IS_PORTRAIT ? 15 : 4);
 }
 - (int) counterLabelHeight {
     return IS_IPAD ? 44 : 36;

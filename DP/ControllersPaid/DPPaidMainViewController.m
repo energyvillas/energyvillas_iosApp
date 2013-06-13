@@ -466,7 +466,7 @@
         
         switch (tag) {
             case 100:
-                [[DPAppHelper sharedInstance] playSoundBloodSquirt];
+                [[DPAppHelper sharedInstance] playSoundSpitSplat];
                 // cancelled... ok go on...
                 break;
                 
