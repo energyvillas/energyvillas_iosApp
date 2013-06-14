@@ -413,19 +413,31 @@
 #pragma END :: DPScrollableDataSourceDelegate
 
 #pragma mark - START :: island's and exclusive popover sbmenus
-- (void)handleIslandTap:(UITapGestureRecognizer *)sender {
+//- (void)handleIslandTap:(UITapGestureRecognizer *)sender {
+//    [self.popController dismissPopoverAnimated:YES];
+//    self.popController = nil;
+//    
+//    if (sender.state == UIGestureRecognizerStateEnded) {
+//        // handling code
+//        int indx = sender.view.tag;
+//        DPDataElement *element = self.islandsContent[indx];
+//#ifdef LOG_MENU
+//        NSLog(@"Clicked island image at index %i named %@ ", indx, element.title);
+//#endif
+//        [self elementTapped:nil element:element];
+//    }
+//}
+- (void)handleIslandTap:(UIButton *)sender {
     [self.popController dismissPopoverAnimated:YES];
     self.popController = nil;
     
-    if (sender.state == UIGestureRecognizerStateEnded) {
-        // handling code
-        int indx = sender.view.tag;
-        DPDataElement *element = self.islandsContent[indx];
+    // handling code
+    int indx = sender.tag;
+    DPDataElement *element = self.islandsContent[indx];
 #ifdef LOG_MENU
-        NSLog(@"Clicked island image at index %i named %@ ", indx, element.title);
+    NSLog(@"Clicked island image at index %i named %@ ", indx, element.title);
 #endif
-        [self elementTapped:nil element:element];
-    }
+    [self elementTapped:nil element:element];
 }
 
 - (UIView *) doCreateItem:(DPDataElement *)element tag:(int)indx{
@@ -443,17 +455,26 @@
     UIView *v = [[UIView alloc] initWithFrame: frm];
     v.clipsToBounds = YES;
     
-    frm = CGRectMake(0, 0, island_width, island_height);
-    UIImageView *iv = [[UIImageView alloc] initWithFrame: frm];
-
     NSString *imgname =[self resolveImageName:element];
-    iv.image = [UIImage imageNamed:imgname];
-    iv.contentMode = UIViewContentModeScaleAspectFit; 
-    iv.tag = indx;
-    UITapGestureRecognizer *tapper = [[UITapGestureRecognizer alloc]
-                                      initWithTarget:self action:@selector(handleIslandTap:)];
-    [iv addGestureRecognizer:tapper];
-    iv.userInteractionEnabled = YES;
+
+    frm = CGRectMake(0, 0, island_width, island_height);
+//    UIImageView *iv = [[UIImageView alloc] initWithFrame: frm];
+//    iv.image = [UIImage imageNamed:imgname];
+//    iv.contentMode = UIViewContentModeScaleAspectFit; 
+//    iv.tag = indx;
+//    UITapGestureRecognizer *tapper = [[UITapGestureRecognizer alloc]
+//                                      initWithTarget:self action:@selector(handleIslandTap:)];
+//    [iv addGestureRecognizer:tapper];
+//    iv.userInteractionEnabled = YES;
+    DPButton *btnview = [DPButton buttonWithType:UIButtonTypeCustom];
+    btnview.frame = frm;
+    btnview.contentMode = UIViewContentModeScaleAspectFit;
+    btnview.backgroundColor = [UIColor clearColor];
+    btnview.tag = indx;
+    [btnview addTarget:self action:@selector(handleIslandTap:) forControlEvents:UIControlEventTouchUpInside];
+    btnview.extraLayerColor = [UIColor colorWithWhite:0.0f alpha:0.15f];
+    btnview.showExtraLayerOnHighlight = YES;
+    [btnview setImage:[UIImage imageNamed:imgname] forState:UIControlStateNormal];
     
     UILabel *lv = [[UILabel alloc] initWithFrame: frm];
     lv.textAlignment = NSTextAlignmentCenter;
@@ -482,7 +503,8 @@
                      frm.size.width, b.size.height);
     lv.frame = frm;
     
-    [v addSubview:iv];
+//    [v addSubview:iv];
+    [v addSubview:btnview];
     [v addSubview:lv];
     
     return v;

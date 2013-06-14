@@ -245,17 +245,17 @@ NSString* getDocumentsFilePath(NSString* filename) {
     return filePath;
 }
 
-UIView* createImageViewLoading(CGRect vFrame, BOOL addIndicator, BOOL startIndicator)  {
+UIView* createImageViewLoadingSized(CGRect vFrame, CGSize loadingImgMaxSize)  {
 //    CGRect vFrame = container.bounds;
 //    vFrame = CGRectInset(vFrame, inset.width, inset.height);
     
 //    UIImage *img = [UIImage imageNamed:[NSString stringWithFormat:@"loading_%@.png", CURRENT_LANG]];
     UIImage *img = [UIImage imageNamed:@"loading.png"];
-    CGFloat coeff = addIndicator ? 0.5f : 0.8f;
+    CGFloat coeff = /*addIndicator ? 0.5f :*/ 0.8f;
     CGSize maxSize = CGSizeMake(vFrame.size.width * coeff,
                                 vFrame.size.height * coeff);
-    maxSize = CGSizeMake(MIN(maxSize.width, IS_IPAD ? LOADING_IMG_MAX_WIDTH_IPAD : LOADING_IMG_MAX_WIDTH_IPHONE),
-                         MIN(maxSize.height, IS_IPAD ? LOADING_IMG_MAX_HEIGHT_IPAD : LOADING_IMG_MAX_HEIGHT_IPHONE));
+    maxSize = CGSizeMake(MIN(maxSize.width, loadingImgMaxSize.width),
+                         MIN(maxSize.height, loadingImgMaxSize.height));
     if (img.size.width > maxSize.width || img.size.height > maxSize.height) {
         img = [img imageScaledToFitSize:maxSize];
     }
@@ -299,6 +299,14 @@ UIView* createImageViewLoading(CGRect vFrame, BOOL addIndicator, BOOL startIndic
     
     return v;
 }
+
+UIView* createImageViewLoading(CGRect vFrame, BOOL addIndicator, BOOL startIndicator)  {
+    CGSize maxSize = CGSizeMake(IS_IPAD ? LOADING_IMG_MAX_WIDTH_IPAD : LOADING_IMG_MAX_WIDTH_IPHONE,
+                                IS_IPAD ? LOADING_IMG_MAX_HEIGHT_IPAD : LOADING_IMG_MAX_HEIGHT_IPHONE);
+
+    return createImageViewLoadingSized(vFrame, maxSize);
+}
+
 
 void releaseSubViews(UIView *v) {
     for (UIView *sv in v.subviews) {

@@ -16,20 +16,26 @@
 #import "DPAppDelegate.h"
 #import "DPNextHouseViewController.h"
 #import "DPCTGViewController.h"
+#import "DPButton.h"
 
 @interface DPNewNextViewController ()
 
 @property (strong, nonatomic) DPCategoryLoader *loaderNew;
 @property (strong, nonatomic) DPCategoryLoader *loaderNext;
 
-@property (strong, nonatomic) UIActivityIndicatorView *busyIndicator;
+@property (strong, nonatomic) UIActivityIndicatorView *busyIndicatorNew;
+@property (strong, nonatomic) UIActivityIndicatorView *busyIndicatorNext;
+
 @property (strong, nonatomic) NSOperationQueue *queue;
 //@property (strong, nonatomic) NSArray *datalist;
 //@property (strong, nonatomic) NSMutableArray *imageCache;
 @property (strong, nonatomic) NSMutableDictionary *imageRequests;
 
-@property (strong, nonatomic) UIImageView *houseNew;
-@property (strong, nonatomic) UIImageView *houseNext;
+@property (strong, nonatomic) UIButton *houseNew;
+@property (strong, nonatomic) UIButton *houseNext;
+
+@property (strong, nonatomic) UIView *loadingImageNew;
+@property (strong, nonatomic) UIView *loadingImageNext;
 
 @property (strong, nonatomic) Category *ctgNew;
 @property (strong, nonatomic) Category *ctgNext;
@@ -72,11 +78,31 @@
 
 -(void)dealloc {
     [self cleanup];
+    
+    self.loaderNew = nil;
+    self.loaderNext = nil;
+    
+    self.busyIndicatorNew = nil;
+    self.busyIndicatorNext = nil;
+    
+    self.queue = nil;
+
+    self.imageRequests = nil;
+    
+    self.loadingImageNew = nil;
+    self.loadingImageNext = nil;
+    
+    self.houseNew = nil;
+    self.houseNext = nil;
+    
+    self.ctgNew = nil;
+    self.ctgNext = nil;
 }
 
 -(void) cleanup {
     if (self.queue) {
-        [self stopIndicator];
+        [self stopIndicator:0];
+        [self stopIndicator:1];
         
         for (id op in self.queue.operations)
             if ([op isKindOfClass:[ASIHTTPRequest class]]) {
@@ -158,47 +184,48 @@
         [self internalLoadImage:self.ctgNext index:1];
 }
 
-- (UIImageView *) createViewWithFrame:(CGRect)frame {
-    UIImageView *result = [[UIImageView alloc] initWithFrame:frame];
+- (UIButton *) createViewWithFrame:(CGRect)frame {
+    DPButton *result = [DPButton buttonWithType:UIButtonTypeCustom]; //[[UIImageView alloc] initWithFrame:frame];
+    result.extraLayerColor = [UIColor colorWithWhite:0.0f alpha:0.5f];
+    result.showExtraLayerOnHighlight = YES;
+    result.frame = frame;
     result.contentMode = UIViewContentModeScaleAspectFit;
     result.backgroundColor = [UIColor clearColor];
-    
-    //result.tag = contentIndex;
-    UITapGestureRecognizer *tapper = [[UITapGestureRecognizer alloc]
-                                      initWithTarget:self action:@selector(handleTap:)];
-    [result addGestureRecognizer:tapper];
-    result.userInteractionEnabled = YES;
+
+//    UITapGestureRecognizer *tapper = [[UITapGestureRecognizer alloc]
+//                                      initWithTarget:self action:@selector(handleTap:)];
+//    [result addGestureRecognizer:tapper];
+//    result.userInteractionEnabled = YES;
+    [result addTarget:self action:@selector(handleTap:) forControlEvents:UIControlEventTouchUpInside];
     
     return result;
 }
 
-- (void)handleTap:(UITapGestureRecognizer *)sender {
+- (void)handleTap:(id)sender {
     if (sender == nil) return;
-    if (sender.state == UIGestureRecognizerStateEnded) {
-        // handling code
-        
-        //Category * element = nil;
-        UIViewController *vc = nil;
-        if (sender.view == self.houseNew) {
-            //element = self.ctgNew;
-            vc = [[DPCTGViewController alloc] initWithCategory:self.ctgNew.Id
-                                                    fromParent:self.ctgNew.parentId
-                                                 useDeviceType:YES];//[[DPHtmlContentViewController alloc] initWithCategory:element.Id lang:CURRENT_LANG];
-        } else if (sender.view == self.houseNext) {
-            //element = self.ctgNext;
-            vc = [[DPNextHouseViewController alloc] initWithCategory:self.ctgNext.Id];
+    // handling code
+    
+    //Category * element = nil;
+    UIViewController *vc = nil;
+    if (sender == self.houseNew) {
+        //element = self.ctgNew;
+        vc = [[DPCTGViewController alloc] initWithCategory:self.ctgNew.Id
+                                                fromParent:self.ctgNew.parentId
+                                             useDeviceType:YES];//[[DPHtmlContentViewController alloc] initWithCategory:element.Id lang:CURRENT_LANG];
+    } else if (sender == self.houseNext) {
+        //element = self.ctgNext;
+        vc = [[DPNextHouseViewController alloc] initWithCategory:self.ctgNext.Id];
+    }
+    
+    if (vc) {
+        UINavigationController *nvc = nil;
+        if (self.parentViewController)
+            nvc = self.parentViewController.navigationController;
+        if (!nvc) {
+            DPAppDelegate *appdel = [UIApplication sharedApplication].delegate;
+            nvc = [appdel findNavController];
         }
-        
-        if (vc) {
-            UINavigationController *nvc = nil;
-            if (self.parentViewController)
-                nvc = self.parentViewController.navigationController;
-            if (!nvc) {
-                DPAppDelegate *appdel = [UIApplication sharedApplication].delegate;
-                nvc = [appdel findNavController];
-            }
-            [nvc pushViewController: vc animated: YES];
-        }
+        [nvc pushViewController: vc animated: YES];
     }
 }
 
@@ -303,15 +330,32 @@
 - (BOOL) loadCachedImage:(NSString *)imgName atIndex:(int)aIndex{
     if (aIndex >= self.view.subviews.count) return NO;
     
-    UIImageView *houseview = aIndex == 0 ? self.houseNew : (aIndex == 1 ? self.houseNext : nil);
-    releaseSubViews(houseview);
-    
     UIImage *img = [[DPAppHelper sharedInstance] loadUIImageFromCache:imgName];
-    if (img != nil) {
-        [houseview setImage:img];
-        return YES;
-    } else {
-        [houseview addSubview:createImageViewLoading(CGRectInset(houseview.bounds, 1, 1), NO, NO)];
+
+    if (aIndex == 0) {
+        if (self.loadingImageNew)
+            [self.loadingImageNew removeFromSuperview];
+        
+        if (img != nil) {
+            [self.houseNew setImage:img forState:UIControlStateNormal];
+            return YES;
+        }
+        
+        self.loadingImageNew = createImageViewLoadingSized(CGRectInset(self.houseNew.bounds, 1, 1),
+                                                           CGSizeMake(40.0f, 40.0f));
+        [self.houseNew addSubview:self.loadingImageNew];
+    } else if (aIndex == 1) {
+        if (self.loadingImageNext)
+            [self.loadingImageNext removeFromSuperview];
+
+        if (img != nil) {
+            [self.houseNext setImage:img forState:UIControlStateNormal];
+            return YES;
+        }
+
+        self.loadingImageNext = createImageViewLoadingSized(CGRectInset(self.houseNext.bounds, 1, 1),
+                                                            CGSizeMake(40.0f, 40.0f));
+        [self.houseNext addSubview:self.loadingImageNext];
     }
     
     return NO;
@@ -320,26 +364,51 @@
 //==============================================================================
 #pragma mark - === busy indication handling  ===
 
-- (void) startIndicator {
-    return;
-    if(!self.busyIndicator) {
-		self.busyIndicator = [[UIActivityIndicatorView alloc]
-                              initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
-		self.busyIndicator.frame = CGRectMake((self.view.frame.size.width-25)/2,
-                                              (self.view.frame.size.height-25)/2,
-                                              25, 25);
-		self.busyIndicator.hidesWhenStopped = TRUE;
-        [self.view addSubview:self.busyIndicator];
-	}
-    [self.busyIndicator startAnimating];
+- (UIActivityIndicatorView *) makeIndicatorForView:(UIView *)container {
+    UIActivityIndicatorView *busyIndicator = [[UIActivityIndicatorView alloc]
+                          initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
+    busyIndicator.frame = CGRectMake(0, 0,
+                                     busyIndicator.frame.size.width,
+                                     busyIndicator.frame.size.height);
+    busyIndicator.hidesWhenStopped = TRUE;
+
+    busyIndicator.center = [self calcBoundsCenterOfView:container];
+    [container addSubview:busyIndicator];
+    [busyIndicator startAnimating];
+    
+    return busyIndicator;
 }
 
-- (void) stopIndicator {
-    return;
-    if(self.busyIndicator) {
-        [self.busyIndicator stopAnimating];
-        [self.busyIndicator removeFromSuperview];
-        self.busyIndicator = nil;
+- (CGPoint) calcBoundsCenterOfView:(UIView *)view {
+    CGPoint cntr = view.center;
+    cntr.x -= view.frame.origin.x;
+    cntr.y -= view.frame.origin.y;
+    return cntr;
+}
+
+- (void) startIndicator:(int)aIndex {
+    if (aIndex == 0) {
+        if (!self.busyIndicatorNew)
+            self.busyIndicatorNew = [self makeIndicatorForView:self.houseNew];
+    } else if (aIndex == 1) {
+        if (!self.busyIndicatorNext)
+            self.busyIndicatorNext = [self makeIndicatorForView:self.houseNext];
+    }
+}
+
+-(void) doStopIndicator:(UIActivityIndicatorView *)busyIndicator {
+    if (busyIndicator) {
+        [busyIndicator stopAnimating];
+        [busyIndicator removeFromSuperview];
+    }
+}
+- (void) stopIndicator:(int)aIndex {
+    if (aIndex == 0) {
+        [self doStopIndicator:self.busyIndicatorNew];
+        self.busyIndicatorNew = nil;
+    } else if (aIndex == 1) {
+        [self doStopIndicator:self.busyIndicatorNext];
+        self.busyIndicatorNext = nil;
     }
 }
 
@@ -363,13 +432,14 @@
                              imageUrl, @"imageName",
                              nil];
     [self.queue addOperation:imageRequest];
-    [self startIndicator];
+    [self startIndicator:aIndex];
 }
 
 - (void) imageRequestDone:(ASIHTTPRequest *)request{
-    [self stopIndicator];
-
 	int aIndex = [[request.userInfo objectForKey:@"imageIndex"] intValue];
+    
+    [self stopIndicator:aIndex];
+
     NSString *imgName = [request.userInfo objectForKey:@"imageName"];
     NSData *imgData = [request responseData];
 	UIImage *aImage = [UIImage imageWithData:imgData scale:DEVICE_SCALE];
@@ -383,7 +453,9 @@
 - (void) requestFailed:(ASIHTTPRequest *)request {
 	NSLog(@"Request Failed: %@", [request error]);
     
-	//[self stopIndicator];
+	int aIndex = [[request.userInfo objectForKey:@"imageIndex"] intValue];
+    
+    [self stopIndicator:aIndex];
 }
 
 

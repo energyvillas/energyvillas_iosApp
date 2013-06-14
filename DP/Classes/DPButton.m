@@ -56,7 +56,9 @@
             extraLayer.position = pos;
             extraLayer.masksToBounds = YES;
             extraLayer.contentsRect = CGRectMake(0.0, 0.0, 1.0, 1.0);
-            extraLayer.backgroundColor = self.extraLayerColor ? self.extraLayerColor.CGColor : [UIColor colorWithWhite:0.0f alpha:0.65f].CGColor;
+            extraLayer.backgroundColor = (self.extraLayerColor
+                                          ? self.extraLayerColor.CGColor
+                                          : [UIColor colorWithWhite:0.0f alpha:0.65f].CGColor);
             extraLayer.hidden = [self calcExtraLayerIsHidden:self.isHighlighted];
          
             // thse are for debugging...
