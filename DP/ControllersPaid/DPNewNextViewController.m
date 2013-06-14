@@ -342,7 +342,8 @@
         }
         
         self.loadingImageNew = createImageViewLoadingSized(CGRectInset(self.houseNew.bounds, 1, 1),
-                                                           CGSizeMake(40.0f, 40.0f));
+                                                           CGSizeMake(IS_IPAD ? 80.0f : 40.0f,
+                                                                      IS_IPAD ? 80.0f : 40.0f));
         [self.houseNew addSubview:self.loadingImageNew];
     } else if (aIndex == 1) {
         if (self.loadingImageNext)
@@ -354,7 +355,8 @@
         }
 
         self.loadingImageNext = createImageViewLoadingSized(CGRectInset(self.houseNext.bounds, 1, 1),
-                                                            CGSizeMake(40.0f, 40.0f));
+                                                            CGSizeMake(IS_IPAD ? 80.0f : 40.0f,
+                                                                       IS_IPAD ? 80.0f : 40.0f));
         [self.houseNext addSubview:self.loadingImageNext];
     }
     

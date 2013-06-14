@@ -44,8 +44,8 @@
         self.datalist = self.localData;
 }
 
-- (NSString *) cacheFileName {
-    return [NSString stringWithFormat:@"banners-%@-%d.dat", self.lang, self.groupID];
+- (NSString *) cacheFileName {    
+    return [NSString stringWithFormat:@"banners-%@-%d-%d.dat", self.lang, self.groupID, getDeviceType()];
 }
 
 - (ASIFormDataRequest *) createAndPrepareRequest {
