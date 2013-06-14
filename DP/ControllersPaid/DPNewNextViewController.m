@@ -210,7 +210,7 @@
     if (sender == self.houseNew) {
         //element = self.ctgNew;
         vc = [[DPCTGViewController alloc] initWithCategory:self.ctgNew.Id
-                                                fromParent:self.ctgNew.parentId
+                                               // fromParent:self.ctgNew.parentId
                                              useDeviceType:YES];//[[DPHtmlContentViewController alloc] initWithCategory:element.Id lang:CURRENT_LANG];
     } else if (sender == self.houseNext) {
         //element = self.ctgNext;

@@ -64,6 +64,16 @@
     return self;
 }
 
+- (id) initWithCategory:(int)ctgID useDeviceType:(BOOL)usedevicetype {
+    self = [super init];
+    if (self) {
+        _parentId = ctgID;
+        _categoryId = -1;
+        useDeviceType = usedevicetype;
+    }
+    return self;
+}
+
 //==============================================================================
 #pragma mark - memory management
 
@@ -277,14 +287,18 @@
                          DPLocalizedString(kERR_TITLE_INFO),
                          DPLocalizedString(kERR_MSG_NO_DATA_FOUND));
     } else {
-        // find the category        
-        for (Category *ctg in loader.datalist)
-            if (ctg.Id == self.categoryId) {
-                self.category = ctg;
-                break;
-            }
-        
-        [self categoryLoaded];
+        // find the category
+        if (self.categoryId == -1)
+            self.category = loader.datalist[0];
+        else {
+            for (Category *ctg in loader.datalist)
+                if (ctg.Id == self.categoryId) {
+                    self.category = ctg;
+                    break;
+                }
+            
+            [self categoryLoaded];
+        }
     }
 }
 

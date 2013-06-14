@@ -53,6 +53,9 @@ FOUNDATION_EXPORT NSString *const MySecondConstant;
 #define LOADING_IMG_MAX_WIDTH_IPAD ((CGFloat)100.0f)
 #define LOADING_IMG_MAX_HEIGHT_IPAD ((CGFloat)100.0f)
 
+#define LOADING_IMG_MAX_WIDTH ((CGFloat)(IS_IPAD ? LOADING_IMG_MAX_WIDTH_IPAD : LOADING_IMG_MAX_WIDTH_IPHONE))
+#define LOADING_IMG_MAX_HEIGHT ((CGFloat)(IS_IPAD ? LOADING_IMG_MAX_HEIGHT_IPAD: LOADING_IMG_MAX_HEIGHT_IPHONE))
+
 // for scrollable views
 #define PAGE_CONTROL_HEIGHT ((int)16)
 
@@ -284,9 +287,15 @@ NSString* SHA1Digest(NSString* input);
 
 NSString* getDocumentsFilePath(NSString* filename);
 
+CGPoint calcBoundsCenterOfView(UIView *view);
+UIActivityIndicatorView* makeIndicatorForView(UIView *container);
+
+UIView* createImageViewLoadingSizedWithIndicator(CGRect vFrame, CGSize loadingImgMaxSize,
+                                                 BOOL addIndicator, BOOL startIndicator);
 UIView* createImageViewLoading(CGRect vFrame, BOOL addIndicator, BOOL startIndicator);
 UIView* createImageViewLoadingSized(CGRect vFrame, CGSize loadingImgMaxSize);
 
+void removeSubViews(UIView *v);
 void releaseSubViews(UIView *v);
 
 void startActivityIndicators(UIView *v);

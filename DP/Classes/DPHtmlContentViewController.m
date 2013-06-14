@@ -29,12 +29,11 @@
 @property (strong, nonatomic) NSString *lang;
 
 @property (strong, nonatomic) UIView *containerView;
+//@property (strong, nonatomic) UIActivityIndicatorView *busyIndicator;
 @property (strong, nonatomic) UIWebView *webView;
 @end
 
 @implementation DPHtmlContentViewController
-
-//@synthesize htmlData, busyIndicator, queue;
 
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -87,6 +86,9 @@
     self.webView = nil;
     
     if (self.containerView == nil) return;
+    
+    releaseSubViews(self.containerView);
+//    [self.busyIndicator stopAnimating];
     
     CGRect aframe = self.containerView.bounds;
     
@@ -155,7 +157,7 @@
 	// Do any additional setup after loading the view.
     self.containerView = [[UIView alloc] initWithFrame:self.view.bounds];
     [self.view addSubview:self.containerView];
-    
+        
     if (self.categoryID != 0) {
         self.articlesLoader = [[DPArticlesLoader alloc] initWithView:self.view
                                                             category:self.categoryID
@@ -166,16 +168,18 @@
 }
 
 - (void) viewWillAppear:(BOOL)animated {
+    [self checkInitWebView];
+    [super viewWillAppear:animated];
+}
+
+- (void) checkInitWebView {
     if (self.url)
         [self doInitWebView];
     else if (self.htmlData)
         [self doInitWebView];
     else if (self.mimeData)
         [self doInitWebView];
-    
-    [super viewWillAppear:animated];
 }
-
 
 - (void) doLayoutSubViews:(BOOL)fixtop {
     CGRect vf = self.view.frame;
@@ -188,8 +192,19 @@
         self.containerView.frame = CGRectMake(0, top, w, h);
     }
     
+    if (self.categoryID != 0) {
+        [self.containerView addSubview:createImageViewLoading(self.containerView.bounds, NO, NO)];
+//        if (!self.busyIndicator)
+//            self.busyIndicator = makeIndicatorForView(self.containerView);
+//        else
+//            self.busyIndicator.center = calcBoundsCenterOfView(self.containerView);
+//        
+//        [self.containerView addSubview:makeIndicatorForView(self.busyIndicator)];
+//        [self.busyIndicator startAnimating];
+    }
+    
     dispatch_async(dispatch_get_main_queue(), ^{
-        [self doInitWebView];
+        [self checkInitWebView];
     });
 }
 
@@ -203,6 +218,7 @@
 -(void) dealloc {
     [self clearDataLoader];
     self.webView = nil;
+//    self.busyIndicator = nil;
     self.containerView = nil;
 }
 - (void)didReceiveMemoryWarning

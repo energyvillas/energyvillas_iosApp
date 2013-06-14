@@ -245,11 +245,34 @@ NSString* getDocumentsFilePath(NSString* filename) {
     return filePath;
 }
 
-UIView* createImageViewLoadingSized(CGRect vFrame, CGSize loadingImgMaxSize)  {
-//    CGRect vFrame = container.bounds;
-//    vFrame = CGRectInset(vFrame, inset.width, inset.height);
+
+CGPoint calcBoundsCenterOfView(UIView *view) {
+    CGPoint cntr = view.center;
+    cntr.x -= view.frame.origin.x;
+    cntr.y -= view.frame.origin.y;
+    return cntr;
+}
+
+UIActivityIndicatorView* makeIndicatorForView(UIView *container) {
+    UIActivityIndicatorView *busyIndicator = [[UIActivityIndicatorView alloc]
+                                              initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
+    busyIndicator.frame = CGRectMake(0, 0,
+                                     busyIndicator.frame.size.width,
+                                     busyIndicator.frame.size.height);
+    busyIndicator.hidesWhenStopped = TRUE;
     
-//    UIImage *img = [UIImage imageNamed:[NSString stringWithFormat:@"loading_%@.png", CURRENT_LANG]];
+    busyIndicator.center = calcBoundsCenterOfView(container);
+    [container addSubview:busyIndicator];
+    [busyIndicator startAnimating];
+    
+    return busyIndicator;
+}
+
+
+UIView* createImageViewLoadingSizedWithIndicator(CGRect vFrame, CGSize loadingImgMaxSize,
+                                                 BOOL addIndicator, BOOL startIndicator)  {
+    addIndicator = NO; startIndicator = NO;
+    
     UIImage *img = [UIImage imageNamed:@"loading.png"];
     CGFloat coeff = /*addIndicator ? 0.5f :*/ 0.8f;
     CGSize maxSize = CGSizeMake(vFrame.size.width * coeff,
@@ -260,9 +283,6 @@ UIView* createImageViewLoadingSized(CGRect vFrame, CGSize loadingImgMaxSize)  {
         img = [img imageScaledToFitSize:maxSize];
     }
     
-//    CGRect frm = CGRectMake(0.0f, 0.0f,
-//                            vFrame.size.width * coeff,
-//                            vFrame.size.height * coeff);
     CGRect frm = CGRectMake(0.0f, 0.0f,
                             maxSize.width,
                             maxSize.height);
@@ -282,31 +302,38 @@ UIView* createImageViewLoadingSized(CGRect vFrame, CGSize loadingImgMaxSize)  {
     
     [v addSubview:iv];
     
-//    if (addIndicator) {
-//        frm = v.bounds;
-//        UIActivityIndicatorView *bi = [[UIActivityIndicatorView alloc]
-//                                       initWithActivityIndicatorStyle: IS_IPAD ? UIActivityIndicatorViewStyleWhiteLarge: UIActivityIndicatorViewStyleWhite];
-////        bi.frame = CGRectOffset(CGRectMake((frm.size.width-25)/2,
-////                                           (frm.size.height-25)/2,
-////                                           25, 25),
-////                                0, IS_IPAD ? 110 : IS_IPHONE ? 40 : 55);
-//        bi.center = v.center;
-//        bi.hidesWhenStopped = YES;
-//        [v addSubview:bi];
-//        if (startIndicator)
-//            [bi startAnimating];
-//    }
+    if (addIndicator) {
+        frm = v.bounds;
+        UIActivityIndicatorView *bi = [[UIActivityIndicatorView alloc]
+                                       initWithActivityIndicatorStyle: IS_IPAD ? UIActivityIndicatorViewStyleWhiteLarge: UIActivityIndicatorViewStyleWhite];
+        bi.center = v.center;
+        bi.hidesWhenStopped = YES;
+        [v addSubview:bi];
+        if (startIndicator)
+            [bi startAnimating];
+    }
     
     return v;
 }
 
-UIView* createImageViewLoading(CGRect vFrame, BOOL addIndicator, BOOL startIndicator)  {
-    CGSize maxSize = CGSizeMake(IS_IPAD ? LOADING_IMG_MAX_WIDTH_IPAD : LOADING_IMG_MAX_WIDTH_IPHONE,
-                                IS_IPAD ? LOADING_IMG_MAX_HEIGHT_IPAD : LOADING_IMG_MAX_HEIGHT_IPHONE);
-
-    return createImageViewLoadingSized(vFrame, maxSize);
+UIView* createImageViewLoadingSized(CGRect vFrame, CGSize loadingImgMaxSize) {
+    CGSize maxSize = CGSizeMake(LOADING_IMG_MAX_WIDTH, LOADING_IMG_MAX_HEIGHT);
+    
+    return createImageViewLoadingSizedWithIndicator(vFrame, maxSize, NO, NO);
 }
 
+UIView* createImageViewLoading(CGRect vFrame, BOOL addIndicator, BOOL startIndicator)  {
+    CGSize maxSize = CGSizeMake(LOADING_IMG_MAX_WIDTH, LOADING_IMG_MAX_HEIGHT);
+
+    return createImageViewLoadingSizedWithIndicator(vFrame, maxSize, NO, NO);
+}
+
+void removeSubViews(UIView *v) {
+    for (UIView *sv in v.subviews) {
+        releaseSubViews(sv);
+        [sv removeFromSuperview];
+    }
+}
 
 void releaseSubViews(UIView *v) {
     for (UIView *sv in v.subviews) {

@@ -86,10 +86,13 @@
 
 - (void) viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    if (self.subCtgsViewController)
-        [self.subCtgsViewController changeRows:self.subCtgsViewController.rowCount
-                                       columns:self.subCtgsViewController.colCount
-                               scrollDirection:self.subCtgsViewController.scrollDirection];
+    
+    [self.view setNeedsDisplay];
+    [self.view setNeedsLayout];
+//    if (self.subCtgsViewController)
+//        [self.subCtgsViewController changeRows:self.subCtgsViewController.rowCount
+//                                       columns:self.subCtgsViewController.colCount
+//                               scrollDirection:self.subCtgsViewController.scrollDirection];
 }
 
 - (void) viewWillDisappear:(BOOL)animated {

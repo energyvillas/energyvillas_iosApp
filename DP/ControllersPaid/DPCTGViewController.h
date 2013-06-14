@@ -12,5 +12,6 @@
 @interface DPCTGViewController : UINavContentViewController <DPDataLoaderDelegate>
 
 - (id) initWithCategory:(int)ctgID fromParent:(int)pid useDeviceType:(BOOL)usedevicetype;
+- (id) initWithCategory:(int)ctgID useDeviceType:(BOOL)usedevicetype;
 
 @end
