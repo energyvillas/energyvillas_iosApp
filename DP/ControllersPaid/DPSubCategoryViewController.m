@@ -93,6 +93,13 @@
 //        [self.subCtgsViewController changeRows:self.subCtgsViewController.rowCount
 //                                       columns:self.subCtgsViewController.colCount
 //                               scrollDirection:self.subCtgsViewController.scrollDirection];
+    if (self.category)
+        [[NSNotificationCenter defaultCenter] postNotificationName:DPN_PAID_SelectedCategoryChanged_Notification
+                                                            object:self
+                                                          userInfo:[NSDictionary
+                                                                    dictionaryWithObject:[NSNumber numberWithInt:self.category.parentId]
+                                                                    forKey:@"menuCategory"]];
+
 }
 
 - (void) viewWillDisappear:(BOOL)animated {
@@ -277,6 +284,7 @@
     // this is a fix for when returning from vimeo player in landscape
     CGRect nbf = self.navigationController.navigationBar.frame;
     nbf.size.height = 44;
+    nbf.origin = CGPointZero;
     self.navigationController.navigationBar.frame = nbf;
     //
 

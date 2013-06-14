@@ -433,7 +433,7 @@
     self.btnAdd2Favs = [UIButton buttonWithType:UIButtonTypeCustom];
     self.btnAdd2Favs.frame = frmbtn;
     self.btnAdd2Favs.contentMode = UIViewContentModeCenter;
-    [self.btnAdd2Favs setImageEdgeInsets:UIEdgeInsetsMake(0, 4, 0, 4)];
+    [self.btnAdd2Favs setImageEdgeInsets:UIEdgeInsetsMake(-4, 0, -4, 0)];
     self.btnAdd2Favs.backgroundColor = [UIColor whiteColor];
     [self.btnAdd2Favs addTarget:self
                          action:@selector(addToFavs:)

@@ -55,7 +55,9 @@
                                                           userInfo:[NSDictionary dictionaryWithObject:[NSNumber numberWithInt:0]
                                                                                                forKey:@"menuCategory"]];
 //    });
-    [self doLocalize];
+    //[self doLocalize];
+    [self.view setNeedsDisplay];
+    [self.view setNeedsLayout];
 }
 
 - (void) doLocalize {
@@ -167,6 +169,7 @@
     // this is a fix for when returning from vimeo player in landscape
     CGRect nbf = self.navigationController.navigationBar.frame;
     nbf.size.height = 44;
+    nbf.origin = CGPointZero;
     self.navigationController.navigationBar.frame = nbf;
     //
     
@@ -196,7 +199,7 @@
 }
 
 - (void) loadNewNextView:(BOOL)reload {
-    if (reload && self.nnViewController != nil) {
+    if (/*reload &&*/ self.nnViewController != nil) {
         [self.nnViewController.view removeFromSuperview];
         [self.nnViewController removeFromParentViewController];
         self.nnViewController = nil;

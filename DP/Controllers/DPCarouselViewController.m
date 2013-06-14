@@ -107,6 +107,8 @@
         [self setupLabels];
         [self updateLabels];
     }
+    [self.view setNeedsDisplay];
+    [self.view setNeedsLayout];
 }
 
 - (void) viewWillDisappear:(BOOL)animated {

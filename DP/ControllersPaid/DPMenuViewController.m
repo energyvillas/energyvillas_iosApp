@@ -8,6 +8,7 @@
 
 #import "DPMenuViewController.h"
 #import "DPConstants.h"
+#import "Category.h"
 #import "DPDataElement.h"
 #import "DPCategoryViewController.h"
 #import "DPAppHelper.h"
@@ -466,15 +467,28 @@
 //                                      initWithTarget:self action:@selector(handleIslandTap:)];
 //    [iv addGestureRecognizer:tapper];
 //    iv.userInteractionEnabled = YES;
-    DPButton *btnview = [DPButton buttonWithType:UIButtonTypeCustom];
-    btnview.frame = frm;
-    btnview.contentMode = UIViewContentModeScaleAspectFit;
-    btnview.backgroundColor = [UIColor clearColor];
-    btnview.tag = indx;
-    [btnview addTarget:self action:@selector(handleIslandTap:) forControlEvents:UIControlEventTouchUpInside];
-    btnview.extraLayerColor = [UIColor colorWithWhite:0.0f alpha:0.15f];
-    btnview.showExtraLayerOnHighlight = YES;
-    [btnview setImage:[UIImage imageNamed:imgname] forState:UIControlStateNormal];
+    UIView *bv = nil;
+    if (((Category *)element).parentId == CTGID_ISLAND) {
+        UIButton *btnview = [UIButton buttonWithType:UIButtonTypeCustom];
+        btnview.frame = frm;
+        btnview.contentMode = UIViewContentModeScaleAspectFit;
+        btnview.backgroundColor = [UIColor clearColor];
+        btnview.tag = indx;
+        [btnview addTarget:self action:@selector(handleIslandTap:) forControlEvents:UIControlEventTouchUpInside];
+//        btnview.extraLayerColor = [UIColor colorWithWhite:0.0f alpha:0.15f];
+//        btnview.showExtraLayerOnHighlight = YES;
+        [btnview setImage:[UIImage imageNamed:imgname] forState:UIControlStateNormal];
+        bv = btnview;
+    } else { // these are the exclusives
+        UIButton *btnview = [UIButton buttonWithType:UIButtonTypeCustom];
+        btnview.frame = frm;
+        btnview.contentMode = UIViewContentModeScaleAspectFit;
+        btnview.backgroundColor = [UIColor clearColor];
+        btnview.tag = indx;
+        [btnview addTarget:self action:@selector(handleIslandTap:) forControlEvents:UIControlEventTouchUpInside];
+        [btnview setImage:[UIImage imageNamed:imgname] forState:UIControlStateNormal];
+        bv = btnview;
+    }
     
     UILabel *lv = [[UILabel alloc] initWithFrame: frm];
     lv.textAlignment = NSTextAlignmentCenter;
@@ -504,7 +518,7 @@
     lv.frame = frm;
     
 //    [v addSubview:iv];
-    [v addSubview:btnview];
+    [v addSubview:bv];
     [v addSubview:lv];
     
     return v;
