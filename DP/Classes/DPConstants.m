@@ -295,7 +295,7 @@ UIView* createImageViewLoadingSizedWithIndicator(CGRect vFrame, CGSize loadingIm
     iv.image = img;
     
     UIView *v = [[UIView alloc] initWithFrame:vFrame];
-    v.backgroundColor = [UIColor colorWithWhite:0.0f alpha:0.7f];
+    v.backgroundColor = [UIColor colorWithWhite:0.0f alpha:0.5f];
     v.layer.cornerRadius = IS_IPAD ? 8.0f : 4.0f;
     v.layer.borderWidth = IS_IPAD ? 2.0f : 2.0f;
     v.layer.borderColor = [UIColor colorWithWhite:1.0f alpha:0.75f].CGColor;
@@ -325,7 +325,7 @@ UIView* createImageViewLoadingSized(CGRect vFrame, CGSize loadingImgMaxSize) {
 UIView* createImageViewLoading(CGRect vFrame, BOOL addIndicator, BOOL startIndicator)  {
     CGSize maxSize = CGSizeMake(LOADING_IMG_MAX_WIDTH, LOADING_IMG_MAX_HEIGHT);
 
-    return createImageViewLoadingSizedWithIndicator(vFrame, maxSize, NO, NO);
+    return createImageViewLoadingSizedWithIndicator(vFrame, maxSize, addIndicator, startIndicator);
 }
 
 void removeSubViews(UIView *v) {
@@ -339,9 +339,15 @@ void releaseSubViews(UIView *v) {
     for (UIView *sv in v.subviews) {
         releaseSubViews(sv);
         
-        if ([sv isKindOfClass:[UIActivityIndicatorView class]])
-            [((UIActivityIndicatorView *)sv) stopAnimating];
-        else
+        if ([sv isKindOfClass:[UIActivityIndicatorView class]]) {
+            UIActivityIndicatorView *aiv = (UIActivityIndicatorView *)sv;
+            [aiv stopAnimating];
+            int cntr = 20;
+            while (aiv.isAnimating && cntr>=0) {
+                [[NSRunLoop mainRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:0.1]];
+                cntr--;
+            }
+        } else
             [sv removeFromSuperview];
     }
 }

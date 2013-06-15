@@ -365,13 +365,16 @@ CGRect CGRectChangeCenter(CGRect rect, CGPoint center) {
                                                self.busyIndicator.bounds.size.height)/2,
                                               self.busyIndicator.bounds.size.width,
                                               self.busyIndicator.bounds.size.height);
-//        self.busyIndicator.center = self.center;
+
 		self.busyIndicator.hidesWhenStopped = TRUE;
         [self addSubview:self.busyIndicator];
+        [self bringSubviewToFront:self.busyIndicator];
 	}
     
-    if (!self.busyIndicator.isAnimating)
+    if (!self.busyIndicator.isAnimating) {
+        [self bringSubviewToFront:self.busyIndicator];
         [self.busyIndicator startAnimating];
+    }
 }
 
 - (void) stopIndicator {

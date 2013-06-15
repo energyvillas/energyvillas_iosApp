@@ -466,7 +466,7 @@
             return NO;
         }
         case iCarouselOptionVisibleItems: {
-            return self.datalist ? (self.datalist.count / 2.0f) : value;
+            return value;//self.datalist ? (self.datalist.count / 2.0f) : value;
         }
         case iCarouselOptionShowBackfaces: {
             return NO;

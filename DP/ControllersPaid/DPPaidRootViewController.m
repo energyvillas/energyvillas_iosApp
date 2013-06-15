@@ -49,29 +49,30 @@
 -(void) viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
-//    dispatch_async(dispatch_get_main_queue(), ^{
-        [[NSNotificationCenter defaultCenter] postNotificationName:DPN_PAID_SelectedCategoryChanged_Notification
-                                                            object:self
-                                                          userInfo:[NSDictionary dictionaryWithObject:[NSNumber numberWithInt:0]
-                                                                                               forKey:@"menuCategory"]];
-//    });
-    //[self doLocalize];
+    [[NSNotificationCenter defaultCenter] postNotificationName:DPN_PAID_SelectedCategoryChanged_Notification
+                                                        object:self
+                                                      userInfo:[NSDictionary dictionaryWithObject:[NSNumber numberWithInt:0]
+                                                                                           forKey:@"menuCategory"]];
+
     [self.view setNeedsDisplay];
     [self.view setNeedsLayout];
+//    double delayInSeconds = 0.2;
+//    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+//    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+//        [self doLocalize];
+//    });
 }
 
 - (void) doLocalize {
     [super doLocalize];
-//    self.bbiMore.title = DPLocalizedString(kbbiMore_Title);
-//    self.bbiBuy.title = DPLocalizedString(kbbiBuy_Title);
     
-    if (self.adsView.subviews.count > 0)
+    //if (self.adsView.subviews.count > 0)
         [self loadAdsView:YES];
  
-    if (self.nnView.subviews.count > 0)
+    //if (self.nnView.subviews.count > 0)
         [self loadNewNextView:YES];
     
-    if (self.mmView.subviews.count > 0)
+    //if (self.mmView.subviews.count > 0)
         [self loadMenuView:YES];
 }
 

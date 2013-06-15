@@ -44,6 +44,10 @@
 
 @implementation DPNewNextViewController
 
+- (void) setCtgNew:(Category *)ctgNew {
+    _ctgNew = ctgNew;
+}
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -55,6 +59,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self loadData];
 }
 
 -(void) viewDidUnload {
@@ -158,15 +163,12 @@
     
     CGFloat x = IS_PORTRAIT ? w : 0;
     CGFloat y = IS_PORTRAIT ? 0 : h;
-//    [self cleanSubViews];
     
     if (self.houseNew == nil) {
         self.houseNew = [self createViewWithFrame:CGRectMake(0, 0, w, h)];
         [self.view addSubview:self.houseNew];
     } else {
         self.houseNew.frame = CGRectMake(0, 0, w, h);
-//        for (UIView *v in self.houseNew.subviews)
-//            v.frame = self.houseNew.bounds;
     }
     
     if (self.houseNext == nil) {
@@ -174,13 +176,11 @@
         [self.view addSubview:self.houseNext];
     } else {
         self.houseNext.frame = CGRectMake(x, y, w, h);
-//        for (UIView *v in self.houseNext.subviews)
-//            v.frame = self.houseNext.bounds;
     }
     
-//    if (self.ctgNew)
+    if (self.ctgNew)
         [self internalLoadImage:self.ctgNew index:0];
-//    if (self.ctgNext)
+    if (self.ctgNext)
         [self internalLoadImage:self.ctgNext index:1];
 }
 
