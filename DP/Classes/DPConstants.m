@@ -125,6 +125,15 @@ NSString *const kERR_TITLE_CONNECTION_FAILED = @"ERR_TITLE_CONNECTION_FAILED";
 NSString *const kERR_MSG_TRY_LATER = @"ERR_MSG_TRY_LATER";
 
 
+NSString *const kERR_MSG_UNABLE_TO_SEND_MAIL = @"ERR_MSG_UNABLE_TO_SEND_MAIL";
+NSString *const kERR_MSG_UNABLE_TO_TWEET = @"ERR_MSG_UNABLE_TO_TWEET";
+NSString *const kTWEET_INITIAL_TEXT = @"TWEET_INITIAL_TEXT";
+NSString *const kEMAIL_SUBJECT = @"EMAIL_SUBJECT";
+NSString *const kEMAIL_BODY_FMT = @"EMAIL_BODY_FMT";
+NSString *const kFACEBOOK_DESCR = @"FACEBOOK_DESCR";
+NSString *const kFACEBOOK_RESULT_FMT = @"FACEBOOK_RESULT_FMT";
+
+
 void showAlertMessage(id aDelegate, NSString *aTitle, NSString *aMessage) {
 	UIAlertView *alertDialog;
 	alertDialog = [[UIAlertView alloc]

@@ -66,6 +66,8 @@
 -(void) viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [self fixToolbarSpacing];
+    
+    [self doLocalize];
 }
 
 -(void) fixToolbarSpacing {
@@ -77,10 +79,10 @@
     self.bbiMore.title = showingMore ? DPLocalizedString(kbbiMoreBack_Title) : DPLocalizedString(kbbiMore_Title);
     self.bbiBuy.title = DPLocalizedString(kbbiBuy_Title);
     
-    if (self.bottomView.subviews.count > 0) {
+//    if (self.bottomView.subviews.count > 0) {
         [self loadDetailView:YES];
         [self loadOpenFlow:YES];
-    }
+//    }
 }
 
 - (void) showBuyDialog:(int)ctgId {

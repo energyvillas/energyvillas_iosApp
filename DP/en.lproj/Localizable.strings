@@ -107,5 +107,15 @@
 "CALLUS_BTN_Cancel"="Cancel";
 
 
+// socials
+"ERR_MSG_UNABLE_TO_SEND_MAIL"="You can't send eMail right now, make sure your device has an internet connection and you have at least one eMail account setup";
+"EMAIL_SUBJECT"="Energy Villas";
+"EMAIL_BODY_FMT"="-----<br/>Sent from the Energy Villas application for %@<br/>-----<br/><br/>Hey, check this out :<br/><a href=\"%@\"> <img src=\"%@\" alt=\"\" width=\"%.0f\" height=\"%.0f\" /></a><br/>%@";
+
+"ERR_MSG_UNABLE_TO_TWEET"="You can't send a tweet right now, make sure your device has an internet connection and you have at least one Twitter account setup";
+"TWEET_INITIAL_TEXT"="Tweeting from energyVillas! :)";
+
+"FACEBOOK_DESCR"="Energy villas makes it possible to actually get the house you always wanted.";
+"FACEBOOK_RESULT_FMT"="Posted story, id: %@";
 
 

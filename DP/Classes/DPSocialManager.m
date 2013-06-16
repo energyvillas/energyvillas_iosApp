@@ -134,8 +134,7 @@
             break;
         }
         case SOCIAL_ACT_TWITTER: {
-            [self tweet:[DPAppHelper sharedInstance].imageUrl2Share
-                    url:[DPAppHelper sharedInstance].imageUrl2Share];
+            [self tweet];
             [apphelper playSoundOpenSoda];
             break;
         }
@@ -189,7 +188,7 @@
 
 -(void) composeEmail {
     if (![MFMailComposeViewController canSendMail]){
-        showAlertMessage(nil, kERR_TITLE_INFO, @"You can't send eMail right now, make sure your device has an internet connection and you have at least one eMail account setup"); // pending::new message for missing mail setup
+        showAlertMessage(nil, DPLocalizedString(kERR_TITLE_INFO), DPLocalizedString(kERR_MSG_UNABLE_TO_SEND_MAIL));
         return;
     }
     
@@ -226,32 +225,24 @@
 //==============================================================================
 #pragma mark - Twitter
 
-- (void) tweet:(NSString *)imgUrl url:(NSString *)urlstr {
+- (void) tweet { //:(NSString *)imgUrl url:(NSString *)urlstr {
     if (![TWTweetComposeViewController canSendTweet]) {
-        showAlertMessage(nil, DPLocalizedString(kERR_TITLE_INFO), @"You can't send a tweet right now, make sure your device has an internet connection and you have at least one Twitter account setup"); // pending::new message for missing twitter setup
+        showAlertMessage(nil, DPLocalizedString(kERR_TITLE_INFO), DPLocalizedString(kERR_MSG_UNABLE_TO_TWEET));
         return;
     }
-    //    if (![TWTweetComposeViewController canSendTweet])
-    //    {
-    //        UIAlertView *alertView = [[UIAlertView alloc]
-    //                                  initWithTitle:@"Sorry"
-    //                                  message:@"You can't send a tweet right now, make sure your device has an internet connection and you have at least one Twitter account setup"
-    //                                  delegate:self
-    //                                  cancelButtonTitle:@"OK"
-    //                                  otherButtonTitles:nil];
-    //        [alertView show];
-    //
-    //        return;
-    //    }
     
     TWTweetComposeViewController *tweetSheet = [[TWTweetComposeViewController alloc] init];
-    [tweetSheet setInitialText: @"Tweeting from energyVillas! :)"];
+    [tweetSheet setInitialText: DPLocalizedString(kTWEET_INITIAL_TEXT)];
+    
+    NSString *urlstr = [CURRENT_LANG isEqualToString:@"el"] ? @"http://www.energeiakikatoikia.gr" : @"http://www.energyvillas.com";
+    NSString *imgUrl = [DPAppHelper sharedInstance].imageUrl2Share;
+
     BOOL added = NO;
-//    if (imgUrl) {
-//        UIImage *img = [UIImage imageNamed:imgUrl];
-//        if (img)
-//            added = [tweetSheet addImage:img];
-//    }
+    if (imgUrl) {
+        UIImage *img = [[DPAppHelper sharedInstance] loadUIImageFromCache:imgUrl];
+        if (img)
+            added = [tweetSheet addImage:img];
+    }
     
     if (urlstr) {
         NSURL *url = [NSURL URLWithString:urlstr];

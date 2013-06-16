@@ -67,7 +67,19 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     [self hookToNotifications];
-    [self loadData];
+    [self delayLoadData];
+}
+
+- (void) delayLoadData {
+    if (self.carouselCategoryID == CTGID_CAROUSEL) {
+        [self loadLocalData];
+        double delayInSeconds = 1.0;
+        dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+        dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+            [self loadData];
+        });
+    } else
+        [self loadData]; 
 }
 
 -(void) clearDataLoader {
@@ -170,7 +182,7 @@
 
 
 - (void) reachabilityChanged {
-    [self loadData];
+    [self delayLoadData];
 }
 
 - (void) loadData {
@@ -181,7 +193,15 @@
         self.dataLoader.delegate = self;
     }
     
-    if (self.datalist.count == 0 || self.dataLoader.dataRefreshNeeded)
+    BOOL shouldLoad = (
+                       (self.carouselCategoryID == CTGID_CAROUSEL && self.datalist.count <= 1) ||
+                       (
+                        (self.carouselCategoryID != CTGID_CAROUSEL && self.datalist.count == 0) ||
+                        self.dataLoader.dataRefreshNeeded
+                       )
+                      );
+    
+    if (shouldLoad)
         [self.dataLoader loadData];
 }
 

@@ -8,6 +8,7 @@
 
 #import "DPMailHelper.h"
 #import "DPAppHelper.h"
+#import "DPConstants.h"
 
 @interface DPMailHelper ()  
 
@@ -16,14 +17,28 @@
 @implementation DPMailHelper
 
 +(MFMailComposeViewController *) composeEmail {
-    NSString *bodyfmt = @"-----<br/>Sent from the energyVillas App for iPhone<br/>-----<br/><br/>Hey, check this out :<br/><img src=\"%@\" alt=\"\" width=\"100\" height=\"100\" /><br/>%@";
+    NSString *bodyfmt = DPLocalizedString(kEMAIL_BODY_FMT);
     
-    NSString *mailSubject = [NSString stringWithFormat:@"energyVillas - %@", @"subject"];
-	NSString *mailBody = [NSString stringWithFormat:bodyfmt,
-                          [DPAppHelper sharedInstance].imageUrl2Share, @"" ];// [self getCurrentArticle].articleTitle, [self getCurrentArticle].articleURL];
+    NSString *mailSubject = DPLocalizedString(kEMAIL_SUBJECT);
+    NSString *device = IS_IPAD ? @"iPad" : @"iPhone";
+    NSString *evurl = [CURRENT_LANG isEqualToString:@"el"] ? @"http://www.energeiakikatoikia.gr" : @"http://www.energyvillas.com";
+    NSString *imgname = [DPAppHelper sharedInstance].imageUrl2Share;
+    UIImage *img = [[DPAppHelper sharedInstance] loadUIImageFromCache:imgname];
+    CGSize sz = img.size;
+    if (sz.width > 300 || sz.height > 300) {
+        CGFloat ratio = sz.width / sz.height;
+        if (sz.width > sz.height) {
+            sz.width = 300.0f;
+            sz.height = sz.width / ratio;
+        } else {
+            sz.height = 300.0f;
+            sz.width = sz.height * ratio;
+        }
+    }
+    
+	NSString *mailBody = [NSString stringWithFormat:bodyfmt, device, imgname, imgname, sz.width, sz.height, evurl];
 	
 	MFMailComposeViewController *mailComposer = [[MFMailComposeViewController alloc] init];
-//	mailComposer.mailComposeDelegate = delegate;
 	[mailComposer setSubject:mailSubject];
 	[mailComposer setMessageBody:mailBody isHTML:TRUE];
     

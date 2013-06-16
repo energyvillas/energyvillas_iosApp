@@ -6,16 +6,13 @@
 //  Copyright (c) 2012 Razeware LLC. All rights reserved.
 //
 
-// 1
 #import "IAPHelper.h"
 
-NSString *const IAPHelperProductPurchasedNotification = @"IAPHelperProductPurchasedNotification";
+NSString *const IAPHelperProductPurchasedNotification = @"com.energyvillas.energyvillas.IAPHelperProductPurchasedNotification";
 
-// 2
 @interface IAPHelper () <SKProductsRequestDelegate, SKPaymentTransactionObserver>
 @end
 
-// 3
 @implementation IAPHelper {
     SKProductsRequest * _productsRequest;
 //    RequestProductsCompletionHandler _completionHandler;

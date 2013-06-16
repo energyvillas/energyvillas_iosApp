@@ -20,12 +20,8 @@
 @interface DPAppHelper ()
 
 @property (strong, nonatomic) NSDictionary *freeDetails;
-//@property (strong, nonatomic) NSDictionary *freeBuyContent;
 @property (strong, nonatomic) NSDictionary *freeCoverFlow;
 @property (strong, nonatomic) NSDictionary *paidMainMenu;
-//@property (strong, nonatomic) NSArray *categories;
-@property (strong, nonatomic) NSMutableDictionary *imageCache;
-@property (strong, nonatomic) NSMutableDictionary *imageDataCache;
 
 @property (strong, nonatomic) Reachability* hostReach;
 //@property (strong, nonatomic) Reachability* internetReach;
@@ -63,11 +59,8 @@
         [self createDefaults];
         _connectionRequired = true;
         _hostIsReachable = false;
-//        _isPurchased = [self calcIsPurchased];
         [self configureReachability];
-//        [self loadCategories];
         [self addFreeDetails];
-//        [self addFreeBuyContent];
         [self addFreeCoverFlow];
         [self addPaidMainMenu];
         [self createSysSounds];
@@ -114,8 +107,6 @@
     BOOL productPurchased = [usrDefaults boolForKey:PRODUCT_IDENTIFIER];
     return productPurchased;
 }
-
-#define FREE_BUY_CNT ((int) 3)
 
 - (NSDictionary *) doGetDictionaryFrom:(NSString *)aFileName {
     NSString *path = [[NSBundle mainBundle] bundlePath];
@@ -228,14 +219,6 @@
 - (NSArray *) freeDetailsFor:(NSString *)lang {
     return [self doGetArticlesFrom:self.freeDetails lang:lang];
 }
-
-//- (void) addFreeBuyContent{    
-//    self.freeBuyContent = [self doGetDictionaryFrom:@"free-Buy.plist"];
-//}
-
-//- (NSArray *) freeBuyContentFor:(int)ctgid lang:(NSString *)lang {
-//    return [self doGetBuyArticlesFrom:self.freeBuyContent category:ctgid lang:lang];
-//}
 
 - (void) addFreeCoverFlow{    
     self.freeCoverFlow = [self doGetDictionaryFrom:@"free-CoverFlow.plist"];
@@ -362,14 +345,6 @@
 #pragma mark transient image cache handling
 
 - (void) saveImageToCache:(NSString *)url data:(NSData *)imgData {
-//    if (!self.imageCache)
-//        self.imageCache = [[NSMutableDictionary alloc] init];
-//    if (!self.imageDataCache)
-//        self.imageDataCache = [[NSMutableDictionary alloc] init];
-//    
-//    self.imageDataCache[url] = imgData;
-//    UIImage *img = [UIImage imageWithData:imgData scale:DEVICE_SCALE];
-//    self.imageCache[url] = img;
     
     NSString *sha1 = SHA1Digest(url);
     NSString *ext = [url pathExtension];
@@ -380,9 +355,6 @@
 
 - (NSData *) loadImageFromCache:(NSString *)url {
     NSData *result = nil;
-//    if (self.imageDataCache) {
-//        result = self.imageDataCache[url];
-//    }
 
     NSString *sha1 = SHA1Digest(url);
     NSString *ext = [url pathExtension];
@@ -395,9 +367,6 @@
 }
 - (UIImage *) loadUIImageFromCache:(NSString *)url {
     UIImage *result = nil;
-//    if (self.imageCache) {
-//        result = self.imageCache[url];
-//    }
     if (!result) {
         NSData *data = [self loadImageFromCache:url];
         if (data)
@@ -405,19 +374,6 @@
     }
     return result;
 }
-//- (void) loadUIImageFromCache:(NSString *)url
-//                    completed:(void (^)(NSString *url, UIImage *img))onCompleted {
-//    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-//        UIImage *result = nil;
-//        if (self.imageCache) {
-//            result = self.imageCache[url];
-//        }
-//
-//        dispatch_async(dispatch_get_main_queue(), ^{
-//            onCompleted(url, result);
-//        });
-//    });
-//}
 
 #pragma mark -
 #pragma mark reachability handling

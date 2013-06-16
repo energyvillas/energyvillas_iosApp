@@ -50,8 +50,9 @@
 
     [self hookToNotifications];
     
-    if ([DPAppHelper sharedInstance].hostIsReachable)
-        [DPIAPHelper loadStore];
+    if (!IS_APP_PURCHASED)
+        if ([DPAppHelper sharedInstance].hostIsReachable)
+            [DPIAPHelper loadStore];
 
     return YES;
 }
@@ -222,15 +223,20 @@ void myExceptionHandler (NSException *exception)
 
 - (void) showFBFeedDlg {
     // Put together the dialog parameters
+    NSString *link = [CURRENT_LANG isEqualToString:@"el"] ? @"http://www.energeiakikatoikia.gr" : @"http://www.energyvillas.com";
+    NSString *imgurl = [DPAppHelper sharedInstance].imageUrl2Share;
+    NSString *imgname = [DPAppHelper sharedInstance].imageTitle2Share;
+    
+    
     NSMutableDictionary *params =
     [NSMutableDictionary dictionaryWithObjectsAndKeys:
      @"Energy Villas", @"name",
-     @"http://www.energyvillas.com", @"link",
+     link, @"link",
      
-     [DPAppHelper sharedInstance].imageUrl2Share, @"picture",
-     [DPAppHelper sharedInstance].imageTitle2Share, @"caption",
+     imgurl, @"picture",
+     imgname, @"caption",
      
-     @"Energy villas makes it possible to actually get the house you always wanted.", @"description",
+     DPLocalizedString(kFACEBOOK_DESCR), @"description",
      nil];
     
     // Invoke the dialog
@@ -254,14 +260,14 @@ void myExceptionHandler (NSException *exception)
                  } else {
                      // User clicked the Share button
                      NSString *msg = [NSString stringWithFormat:
-                                      @"Posted story, id: %@",
+                                      DPLocalizedString(kFACEBOOK_RESULT_FMT),
                                       [urlParams valueForKey:@"post_id"]];
                      NSLog(@"%@", msg);
                      // Show the result in an alert
-                     [[[UIAlertView alloc] initWithTitle:@"Result"
+                     [[[UIAlertView alloc] initWithTitle:DPLocalizedString(kERR_TITLE_INFO)
                                                  message:msg
                                                 delegate:nil
-                                       cancelButtonTitle:@"OK!"
+                                       cancelButtonTitle:@"OK"
                                        otherButtonTitles:nil]
                       show];
                  }
