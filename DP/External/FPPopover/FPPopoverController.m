@@ -277,7 +277,7 @@
 
 -(CGPoint)originFromView:(UIView*)fromView
 {
-    CGPoint p;
+    CGPoint p = CGPointZero;
     if([_contentView arrowDirection] == FPPopoverArrowDirectionUp ||
        [_contentView arrowDirection] == FPPopoverNoArrow)
     {
@@ -447,7 +447,7 @@
     r.origin = CGPointMake(0, 0);
     r.size = self.contentSize;
 
-    FPPopoverArrowDirection bestDirection;
+    FPPopoverArrowDirection bestDirection = self.arrowDirection;
     
     //if the user wants vertical arrow, check if the content will fit vertically 
     if(FPPopoverArrowDirectionIsVertical(self.arrowDirection) || 
