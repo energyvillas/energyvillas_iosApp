@@ -427,8 +427,13 @@
     [self.imageRequests setObject:imageUrl forKey:imageUrl];
     
     ASIHTTPRequest *imageRequest = [ASIHTTPRequest requestWithURL:[NSURL URLWithString:imageUrl]];
-    [imageRequest setDelegate:self];
-    [imageRequest setDidFinishSelector:@selector(imageRequestDone:)];
+//    [imageRequest setDelegate:self];
+//    [imageRequest setDidFinishSelector:@selector(imageRequestDone:)];
+    __block ASIHTTPRequest *ir = imageRequest;
+    __block id this = self;
+    [imageRequest setCompletionBlock:^{ [this imageRequestDone:ir]; }];
+    [imageRequest setFailedBlock:^{ [this requestFailed:ir]; }];
+
     imageRequest.userInfo = [NSDictionary dictionaryWithObjectsAndKeys:
                              [NSNumber numberWithInt:aIndex], @"imageIndex",
                              imageUrl, @"imageName",

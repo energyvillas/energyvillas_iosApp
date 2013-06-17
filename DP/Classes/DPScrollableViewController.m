@@ -810,8 +810,14 @@
         self.queue = [[NSOperationQueue alloc] init];
 
     ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:[NSURL URLWithString:imgUrl]];
-    [request setDelegate:self];
-    [request setDidFinishSelector:@selector(requestDone:)];
+//    [request setDelegate:self];
+//    [request setDidFinishSelector:@selector(requestDone:)];
+    
+    __block ASIHTTPRequest *ir = request;
+    __block id this = self;
+    [request setCompletionBlock:^{ [this requestDone:ir]; }];
+    [request setFailedBlock:^{ [this requestFailed:ir]; }];
+
     request.userInfo = [NSDictionary dictionaryWithObjectsAndKeys:
                         elm, @"element",
                         imgView, @"imageView",

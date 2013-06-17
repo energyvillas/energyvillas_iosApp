@@ -310,8 +310,13 @@
 
     if (!self.request) {
         self.request = [ASIHTTPRequest requestWithURL:[NSURL URLWithString:imageUrl]];
-        [self.request setDelegate:self];
-        [self.request setDidFinishSelector:@selector(imageRequestDone:)];
+//        [self.request setDelegate:self];
+//        [self.request setDidFinishSelector:@selector(imageRequestDone:)];
+        __block ASIHTTPRequest *ir = self.request;
+        __block id this = self;
+        [self.request setCompletionBlock:^{ [this imageRequestDone:ir]; }];
+        [self.request setFailedBlock:^{ [this requestFailed:ir]; }];
+
         self.request.userInfo = [NSDictionary dictionaryWithObjectsAndKeys:
                                  imageUrl, @"imageName",
                                  nil];

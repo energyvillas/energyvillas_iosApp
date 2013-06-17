@@ -198,14 +198,10 @@
     if (!self.queue)
         self.queue = [[NSOperationQueue alloc] init];
     
-    DPDataLoader *tmp_self1 = self;
-    [self.request setCompletionBlock:^{
-        [tmp_self1 requestFinished:tmp_self1.request];
-    }];
-    DPDataLoader *tmp_self2 = self;
-    [self.request setFailedBlock:^{
-        [tmp_self2 requestFailed:tmp_self2.request];
-    }];
+    __block ASIHTTPRequest *r = self.request;
+    __block DPDataLoader *this = self;
+    [self.request setCompletionBlock:^{ [this requestFinished:r]; }];
+    [self.request setFailedBlock:^{ [this requestFailed:r]; }];
     
     //[self.request setDelegate:self];
     [self.queue addOperation:self.request];

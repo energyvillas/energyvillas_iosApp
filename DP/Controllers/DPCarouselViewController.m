@@ -141,15 +141,11 @@
     [self cleanup];
 }
 -(void) makeCurrentImageAtIndex:(int)indx {
-//    dispatch_async(dispatch_get_main_queue(), ^{
-//        if (self.currentIndex != -1 && self.icarousel)
-//            [self.icarousel setCurrentItemIndex:indx];
-//    });
     _currentIndex = indx;
-    if (self.currentIndex != -1 && self.icarousel)
-        [self.icarousel setCurrentItemIndex:self.currentIndex];
-//    if (self.currentIndex != -1 && self.carousel)
-//        [self.carousel setSelectedCover: self.currentIndex];
+    if (self.currentIndex != -1 && self.icarousel) {
+        //[self.icarousel setCurrentItemIndex:self.currentIndex];
+        [self.icarousel scrollToItemAtIndex:self.currentIndex animated:YES];
+    }
 }
 
 //==============================================================================
@@ -469,9 +465,10 @@
         }
 
         [self.view addSubview:self.icarousel];
+        
         [self makeCurrentImageAtIndex:self.currentIndex];
         [self setupLabels];
-        [self updateLabels];
+        //[self updateLabels];
     }
 }
 
@@ -527,11 +524,19 @@
     return self.datalist.count;
 }
 - (void)carouselCurrentItemIndexDidChange:(iCarousel *)carousel {
+//    _currentIndex = carousel.currentItemIndex;
+//#ifdef LOG_CAROUSEL
+//    NSLog(@"######################set _curIndex to '%d'", _currentIndex);
+//#endif
+//    [self updateLabels];
+}
+
+- (void) carouselDidScroll:(iCarousel *)carousel {
     _currentIndex = carousel.currentItemIndex;
+    [self updateLabels];
 #ifdef LOG_CAROUSEL
     NSLog(@"######################set _curIndex to '%d'", _currentIndex);
 #endif
-    [self updateLabels];
 }
 
 - (void)carousel:(iCarousel *)carousel didSelectItemAtIndex:(NSInteger)index {
@@ -762,8 +767,13 @@
     [self.imageRequests setObject:imageUrl forKey:imageUrl];
     
     ASIHTTPRequest *imageRequest = [ASIHTTPRequest requestWithURL:[NSURL URLWithString:imageUrl]];
-    [imageRequest setDelegate:self];
-    [imageRequest setDidFinishSelector:@selector(imageRequestDone:)];
+    //[imageRequest setDelegate:self];
+    //[imageRequest setDidFinishSelector:@selector(imageRequestDone:)];
+    __block ASIHTTPRequest *ir = imageRequest;
+    __block id this = self;
+    [imageRequest setCompletionBlock:^{ [this imageRequestDone:ir]; }];
+    [imageRequest setFailedBlock:^{ [this requestFailed:ir]; }];
+    
     imageRequest.userInfo = [NSDictionary dictionaryWithObjectsAndKeys:
                              [NSNumber numberWithInt:aIndex], @"imageIndex",
                              imageUrl, @"imageName",
@@ -788,7 +798,7 @@
 }
 
 - (void) requestFailed:(ASIHTTPRequest *)request {    
-	//[self stopIndicator];
+	[self stopIndicator];
 }
 
 #pragma mark - DPNavigatorDelegate methods
