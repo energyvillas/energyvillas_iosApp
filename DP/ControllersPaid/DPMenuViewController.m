@@ -296,6 +296,7 @@
         button = [UIButton buttonWithType:UIButtonTypeCustom];
     else {
         button = [DPButton buttonWithType:UIButtonTypeCustom];
+        button.showsTouchWhenHighlighted = YES;
         if (menulevel == 0)
             ((DPButton *)button).showExtraLayerOnHighlight = YES;
         else {

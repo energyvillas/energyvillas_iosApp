@@ -224,6 +224,7 @@ void myExceptionHandler (NSException *exception)
 
 - (void) showFBFeedDlg {
     // Put together the dialog parameters
+    NSString *name = [CURRENT_LANG isEqualToString:@"el"] ? @"Ενεργειακή κατοικία" : @"Energy Villas";
     NSString *link = [CURRENT_LANG isEqualToString:@"el"] ? @"http://www.energeiakikatoikia.gr" : @"http://www.energyvillas.com";
     NSString *imgurl = [DPAppHelper sharedInstance].imageUrl2Share;
     NSString *imgname = [DPAppHelper sharedInstance].imageTitle2Share;
@@ -231,7 +232,7 @@ void myExceptionHandler (NSException *exception)
     
     NSMutableDictionary *params =
     [NSMutableDictionary dictionaryWithObjectsAndKeys:
-     @"Energy Villas", @"name",
+     name, @"name",
      link, @"link",
      
      imgurl, @"picture",

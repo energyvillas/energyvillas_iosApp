@@ -40,14 +40,14 @@
 		<dict>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>fb469022669833090</string>
+				<string>fb172672736236196</string>
 			</array>
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
 	<string>97.0</string>
 	<key>FacebookAppID</key>
-	<string>469022669833090</string>
+	<string>172672736236196</string>
 	<key>FacebookDisplayName</key>
 	<string>Energy Villas</string>
 	<key>LSRequiresIPhoneOS</key>
