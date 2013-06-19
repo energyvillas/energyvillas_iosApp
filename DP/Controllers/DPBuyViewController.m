@@ -56,8 +56,21 @@
     return self;
 }
 
-- (void)viewDidLoad
-{
+- (void) dealloc {
+    self.backView = nil;
+    self.contentView = nil;
+    self.innerView = nil;
+    self.toolbar = nil;
+    self.btnBuy = nil;
+    self.btnRestore = nil;
+    self.btnClose = nil;
+    
+    self.buyContentController = nil;
+    self.onClose = nil;
+    self.product = nil;
+}
+
+- (void)viewDidLoad {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     actualFrame = CGRectZero;
@@ -66,6 +79,8 @@
     
     [self doLocalize];
     [self prepareButtons];
+    [self.view setNeedsDisplay];
+    [self.view setNeedsLayout];
     if (IS_IPAD)
         [self doLayoutSubViews:NO];
 }

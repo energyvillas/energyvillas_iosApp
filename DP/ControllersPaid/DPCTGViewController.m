@@ -123,6 +123,10 @@
     
     [self.scrollView removeFromSuperview];
     self.scrollView = nil;
+    
+    self.category = nil;
+    
+    self.busyIndicator = nil;
 }
 
 - (void) dealloc {

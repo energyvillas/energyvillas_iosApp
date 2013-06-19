@@ -549,4 +549,14 @@
         [self cancelAllAnimations];
 }
 
+- (void) dealloc {
+    self.cards = nil;
+    self.categories = nil;
+    self.tapView = nil;
+    self.tapGesture = nil;
+    self.panGesture = nil;
+    self.currentCard = nil;
+    self.panningCard = nil;
+}
+
 @end

@@ -28,6 +28,12 @@
 @implementation DPCategoryLoader {
 }
 
+- (void) dealloc {
+    self.lang = nil;
+    self.localData = nil;
+    self.plistFile = nil;
+}
+
 - (id) initWithView:(UIView *)indicatorcontainer
         useInternet:(BOOL)useInternet
          useCaching:(BOOL)useCaching

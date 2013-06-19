@@ -41,6 +41,10 @@
     return self;
 }
 
+- (void) dealloc {
+    self.container = nil;
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];

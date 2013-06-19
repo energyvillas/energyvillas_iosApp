@@ -11,6 +11,18 @@
 
 @implementation BannerParser
 
+- (void) dealloc {
+    self.currentString = nil;
+    self.responseCode = nil;
+    self.banners = nil;
+    self.bannerId = nil;
+    self.lang = nil;
+    self.orderNo = nil;
+    self.title = nil;
+    self.image = nil;
+    self.imageLandscape = nil;
+    self.url = nil;
+}
 
 /*
  to parse a XML file from path.

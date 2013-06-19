@@ -189,4 +189,15 @@
     [self setBtnFavs:nil];
     [super viewDidUnload];
 }
+
+- (void) dealloc {
+    [self setScrollView:nil];
+    [self setBtnWho:nil];
+    [self setBtnFranchise:nil];
+    [self setBtnCost:nil];
+    [self setBtnProfit:nil];
+    [self setBtnMaterial:nil];
+    [self setBtnPlanet:nil];
+    [self setBtnFavs:nil];
+}
 @end

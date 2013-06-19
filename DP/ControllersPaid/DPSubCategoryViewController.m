@@ -514,6 +514,17 @@
 
 -(void) dealloc {
     [self clearDataLoaders];
+    
+    self.titleView = nil;
+    self.photoView = nil;
+    self.htmlView = nil;
+    self.subCtgView = nil;
+    
+    self.category = nil;
+    self.subCtgsViewController = nil;
+    self.houseOverview = nil;
+    self.hovLoader = nil;
+    self.titleLine = nil;
 }
 
 - (void)didReceiveMemoryWarning

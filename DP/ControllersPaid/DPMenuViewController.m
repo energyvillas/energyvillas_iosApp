@@ -71,6 +71,12 @@
     return self;
 }
 
+- (void) dealloc {
+    self.popController = nil;
+    self.islandPopupViewController = nil;
+    self.islandsContent = nil;
+}
+
 + (NSArray *) loadMenuData {
     DPAppHelper *apphelper = [DPAppHelper sharedInstance];
     NSArray *content = [apphelper paidMenuOfCategory:-1
@@ -487,6 +493,8 @@
         btnview.tag = indx;
         [btnview addTarget:self action:@selector(handleIslandTap:) forControlEvents:UIControlEventTouchUpInside];
         [btnview setImage:[UIImage imageNamed:imgname] forState:UIControlStateNormal];
+        NSString *imgnamehigh =[self resolveHighlightImageName:element];
+        [btnview setImage:[UIImage imageNamed:imgnamehigh] forState:UIControlStateHighlighted];
         bv = btnview;
     }
     

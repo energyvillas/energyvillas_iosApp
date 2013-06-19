@@ -94,8 +94,9 @@ void myExceptionHandler (NSException *exception)
     if ([[notification name] isEqualToString:kReachabilityChangedNotification]) {
         NSLog (@"Successfully received the ==kReachabilityChangedNotification== notification!");
         
-        if ([DPAppHelper sharedInstance].hostIsReachable)
-            [DPIAPHelper loadStore];
+        if (!IS_APP_PURCHASED)
+            if ([DPAppHelper sharedInstance].hostIsReachable)
+                [DPIAPHelper loadStore];
     }
 }
 

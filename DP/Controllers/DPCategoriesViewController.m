@@ -81,6 +81,8 @@
     }
     self.dataLoader = nil;
     self.dataDelegate = nil;
+    self.lang = nil;
+    self.plistFile = nil;
 }
 
 - (void)didReceiveMemoryWarning

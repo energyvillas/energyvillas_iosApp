@@ -38,6 +38,12 @@
 	return self;
 }
 
+- (void) dealloc {
+    _fileName = nil;
+    _filePath = nil;
+    _dataList = nil;
+}
+
 - (NSArray *) getDataList {
     if (!_dataList) {
         [self loadFromFile];

@@ -175,6 +175,8 @@
     }
     self.dataLoader = nil;
     self.dataDelegate = nil;
+    self.busyIndicator = nil;
+    self.queue = nil;
 }
 
 - (void)didReceiveMemoryWarning

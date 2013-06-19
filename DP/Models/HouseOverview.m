@@ -64,6 +64,14 @@
 	return self;
 }
 
+- (void) dealloc {
+    self.lang = nil;
+    self.videoUrl = nil;
+    self.title = nil;
+    self.info = nil;
+    self.description = nil;
+}
+
 #pragma mark - NSCopying protocol implementation
 
 - (id)copyWithZone:(NSZone *)zone {

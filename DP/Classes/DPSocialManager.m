@@ -39,6 +39,13 @@
     return self;
 }
 
+- (void) dealloc {
+    self.socialController = nil;
+    self.controller = nil;
+    self.onSocialClosed = nil;
+    self.onCompleted = nil;
+}
+
 //==============================================================================
 #pragma mark - Dialog handling
 

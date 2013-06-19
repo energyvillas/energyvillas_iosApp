@@ -285,5 +285,26 @@ parseErrorOccurred:(NSError *)parseError {
 	
 }
 
+- (void) dealloc {
+    self.currentString = nil;
+    self.responseCode = nil;
+    self.articles = nil;
+    
+    self.articleId = nil;
+    self.langcode = nil;
+    self.categoryId = nil;
+    
+    self.forFree = nil;
+    self.orderNo = nil;
+    self.imageThumbUrl = nil;
+    
+    self.title = nil;
+    self.image = nil;
+    self.body = nil;
+    self.url = nil;
+    self.publishDate = nil;
+    self.articlevideo = nil;
+    self.articlevideolength = nil;
+}
 
 @end

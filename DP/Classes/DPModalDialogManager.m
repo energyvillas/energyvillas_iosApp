@@ -31,6 +31,10 @@
     return self;
 }
 
+- (void) dealloc {
+    self.modalController = nil;
+}
+
 - (void) showDialog:(UIViewController<DPModalControllerProtocol> *)aModalController {
     [[DPAppHelper sharedInstance] playSoundBloodSplatOnWall];
     self.modalController = aModalController;

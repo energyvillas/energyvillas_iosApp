@@ -39,6 +39,11 @@
     return self;
 }
 
+- (void) dealloc {
+    self.lang = nil;
+    self.localData = nil;
+}
+
 - (void) loadFromPlist {
     if (self.localData)
         self.datalist = self.localData;

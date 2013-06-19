@@ -108,6 +108,11 @@
 -(void) dealloc {
     [self clearDataLoader];
     self.dataDelegate = nil;
+    
+    self.dataLoader = nil;
+    self.playerController = nil;
+    self.extractor = nil;
+    self.videoContainerView = nil;
 }
 
 - (void)didReceiveMemoryWarning
@@ -223,7 +228,7 @@
         UIImageView *imgView = [[UIImageView alloc] initWithFrame: frame];
         imgView.backgroundColor = [UIColor clearColor];
         imgView.contentMode = UIViewContentModeScaleAspectFit;//Center;//ScaleAspectFit;
-        imgView.clipsToBounds = YES;
+        //imgView.clipsToBounds = YES;
         result = imgView;
     }
 

@@ -269,9 +269,21 @@
 }
 
 - (void)viewDidUnload {
-    [self setAdsView:nil];
-    [self setNnView:nil];
-    [self setMmView:nil];
+    self.adsView = nil;
+    self.adsViewController = nil;
+    self.nnView = nil;
+    self.nnViewController = nil;
+    self.mmView = nil;
+    self.mmViewController = nil;
     [super viewDidUnload];
+}
+
+- (void) dealloc {
+    self.adsView = nil;
+    self.adsViewController = nil;
+    self.nnView = nil;
+    self.nnViewController = nil;
+    self.mmView = nil;
+    self.mmViewController = nil;
 }
 @end

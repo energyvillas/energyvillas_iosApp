@@ -22,6 +22,7 @@
 
 
 @interface DPPaidMainViewController ()
+
 @property (strong, nonatomic) UIViewController *ideaViewController;
 @property (strong, nonatomic) UIViewController *realEstateViewController;
 //@property (strong, nonatomic) UIViewController *callViewController;
@@ -39,6 +40,7 @@
 @property (strong, nonatomic) DPMoreMenuViewController *popupContentViewController;
 
 @property (strong, nonatomic) DPModalDialogManager *dlgManager;
+
 @end
 
 @implementation DPPaidMainViewController {
@@ -667,30 +669,63 @@
     // Dispose of any resources that can be recreated.
 }
 
-// PENDING
+
 - (void)viewDidUnload {
     [self removeNotificationObservers];
     
-    [self setNavController:nil];
-    [self setTabBar:nil];
-    [self setTbiMain:nil];
-    [self setTbiIdea:nil];
-    [self setTbiRealEstate:nil];
-    [self setTbiCall:nil];
-    [self setTbiMore:nil];
-
-    self.ideaViewController=nil;
-    self.realEstateViewController=nil;
-    self.whoViewController=nil;
-    self.franchiseViewController=nil;
-    self.costViewController=nil;
-    self.profitViewController=nil;
-    self.materialsViewController=nil;
-    self.planetViewController=nil;
+    self.navController = nil;
+    
+    self.tabBar = nil;
+    self.tbiMain = nil;
+    self.tbiIdea = nil;
+    self.tbiRealEstate = nil;
+    self.tbiCall = nil;
+    self.tbiMore = nil;
+    
+    self.ideaViewController = nil;
+    self.realEstateViewController = nil;
+    
+    self.whoViewController = nil;
+    self.franchiseViewController = nil;
+    self.costViewController = nil;
+    self.profitViewController = nil;
+    self.materialsViewController = nil;
+    self.planetViewController = nil;
     self.favoritesViewController = nil;
+    
+    self.popupController = nil;
+    self.popupContentViewController = nil;
+    
+    self.dlgManager = nil;
 
     [super viewDidUnload];
 }
 
+- (void) dealloc {
+    self.navController = nil;
+    
+    self.tabBar = nil;
+    self.tbiMain = nil;
+    self.tbiIdea = nil;
+    self.tbiRealEstate = nil;
+    self.tbiCall = nil;
+    self.tbiMore = nil;
+
+    self.ideaViewController = nil;
+    self.realEstateViewController = nil;
+    
+    self.whoViewController = nil;
+    self.franchiseViewController = nil;
+    self.costViewController = nil;
+    self.profitViewController = nil;
+    self.materialsViewController = nil;
+    self.planetViewController = nil;
+    self.favoritesViewController = nil;
+    
+    self.popupController = nil;
+    self.popupContentViewController = nil;
+    
+    self.dlgManager = nil;
+}
 
 @end

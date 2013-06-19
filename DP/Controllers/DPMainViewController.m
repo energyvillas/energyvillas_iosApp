@@ -29,6 +29,10 @@
     return self;
 }
 
+- (void) dealloc {
+    self.navController = nil;
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];

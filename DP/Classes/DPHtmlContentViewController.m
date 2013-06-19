@@ -218,9 +218,20 @@
 -(void) dealloc {
     [self clearDataLoader];
     self.webView = nil;
-//    self.busyIndicator = nil;
     self.containerView = nil;
+    
+    self.url = nil;
+    self.htmlData = nil;
+    self.mimetype = nil;
+    self.mimeData = nil;
+    self.articlesLoader = nil;
+    self.article = nil;
+    self.lang = nil;
+    
+    self.containerView = nil;
+    self.webView = nil;
 }
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];

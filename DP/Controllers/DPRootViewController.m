@@ -53,6 +53,26 @@
     return self;
 }
 
+- (void) dealloc {
+    self.topView = nil;
+    self.toolbar = nil;
+    
+    self.spacingLeft = nil;
+    
+    self.bbiFavs = nil;
+    self.bbiInfo = nil;
+    
+    self.spacingInfoMore = nil;
+    
+    self.bbiMore = nil;
+    self.bbiBuy = nil;
+    
+    self.bottomView = nil;
+
+    self.coverFlowDict = nil;
+    self.buyController = nil;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.

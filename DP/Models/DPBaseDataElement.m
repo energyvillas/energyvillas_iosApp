@@ -33,6 +33,9 @@
 	return self;
 }
 
+-(void)dealloc {
+    self.key = nil;
+}
 
 -(int) getID {
     if (!self.key)

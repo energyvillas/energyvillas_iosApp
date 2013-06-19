@@ -19,6 +19,10 @@
 
 @implementation HouseOverviewLoader
 
+- (void) dealloc {
+    self.lang = nil;
+}
+
 - (id) initWithView:(UIView *)indicatorcontainer
                lang:(NSString *)aLang
            category:(int)ctgid{

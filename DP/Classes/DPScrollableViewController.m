@@ -158,8 +158,16 @@
 
     self.queue = nil;
     
-    [self setScrollView:nil];
-    [self setPageControl:nil];
+    self.scrollView = nil;
+    self.pageControl = nil;
+    
+    self.contentList = nil;
+
+    self.portraitRendered = nil;
+    self.landscapeRendered = nil;
+    
+    self.busyIndicator = nil;
+    self.queue = nil;
 }
 
 -(void) dealloc {

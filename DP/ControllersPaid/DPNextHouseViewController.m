@@ -154,6 +154,13 @@
     [self setMinutesLabel:nil];
     [self setSecondsLabel:nil];
     [self setCountDownContainerView:nil];
+    
+    self.htmlVC = nil;
+    self.article = nil;
+    [self.timer invalidate];
+    self.timer = nil;
+    self.targetDate = nil;
+    self.calendar = nil;
 }
 
 -(void) viewWillAppear:(BOOL)animated {

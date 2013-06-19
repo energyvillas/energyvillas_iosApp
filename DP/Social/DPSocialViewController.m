@@ -79,6 +79,20 @@
     [super viewDidUnload];
 }
 
+- (void) dealloc {
+    [self setBtnClose:nil];
+    [self setContentView:nil];
+    [self setBackView:nil];
+    self.onClose = nil;
+    [self setFacebookView:nil];
+    [self setTwitterView:nil];
+    [self setLinkedinView:nil];
+    [self setEmailView:nil];
+    [self setFavsView:nil];
+    [self setOtherView:nil];
+    [self setBackgroundView:nil];
+}
+
 -(void) viewWillLayoutSubviews {
     [super viewWillLayoutSubviews];
     [self internalLayoutSubViews];

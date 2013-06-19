@@ -33,6 +33,11 @@
     }
     return self;
 }
+
+- (void) dealloc {
+    _favorites = nil;
+    self.tableView = nil;
+}
 - (void)viewDidLoad
 {
     [super viewDidLoad];

@@ -78,6 +78,13 @@ NSString *const kPlaceholderPostMessage = @"Say something about this...";
     [super viewDidUnload];
 }
 
+- (void) dealloc {
+    [self setUserProfilePicture:nil];
+    [self setUserName:nil];
+    [self setPostMessageTextView:nil];
+    self.postParams = nil;
+}
+
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [self populateUserDetails];

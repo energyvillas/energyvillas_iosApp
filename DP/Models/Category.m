@@ -77,6 +77,12 @@
     return self;
 }
 
+- (void) dealloc {
+    self.lang = nil;
+    self.parent = nil;
+    self.imageRollUrl = nil;
+}
+
 #pragma mark - NSCopying protocol implementation
 
 - (id)copyWithZone:(NSZone *)zone {

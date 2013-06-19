@@ -31,6 +31,14 @@
     return self;
 }
 
+- (void) dealloc {
+    self.backView = nil;
+    self.contentView = nil;
+    self.imgView = nil;
+    self.btnCall = nil;
+    self.btnCancel = nil;
+    self.onClose = nil;
+}
 - (void)viewDidLoad
 {
     [super viewDidLoad];

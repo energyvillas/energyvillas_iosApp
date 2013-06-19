@@ -110,13 +110,32 @@
 }
 
 - (void)viewDidUnload {
-    [self setCtgView:nil];
-    [self setAdsView:nil];
-    [self setMmView:nil];
-    [self setLblTitle:nil];
-    [self setActualCtgView:nil];
-    [self setImgTitle:nil];
+    self.ctgView = nil;
+    self.adsView = nil;
+    self.mmView = nil;
+    
+    self.imgTitle = nil;
+    self.lblTitle = nil;
+    self.actualCtgView = nil;
+    
+    self.adsViewController = nil;
+    self.ctgViewController = nil;
+    self.mmViewController = nil;
     [super viewDidUnload];
+}
+
+- (void) dealloc {
+    self.ctgView = nil;
+    self.adsView = nil;
+    self.mmView = nil;
+    
+    self.imgTitle = nil;
+    self.lblTitle = nil;
+    self.actualCtgView = nil;
+    
+    self.adsViewController = nil;
+    self.ctgViewController = nil;
+    self.mmViewController = nil;
 }
 
 - (void) viewWillAppear:(BOOL)animated {

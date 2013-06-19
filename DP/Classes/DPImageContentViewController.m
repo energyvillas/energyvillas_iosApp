@@ -123,6 +123,18 @@
     
     self.request = nil;
     self.queue = nil;
+    
+    self.article = nil;
+    self.image = nil;
+    self.busyIndicator = nil;
+    
+    self.scrollView = nil;
+    self.imageView = nil;
+    
+    self.lblContainer = nil;
+    self.btnAdd2Favs = nil;
+    self.lblCounter = nil;
+    self.lblTitle = nil;
 }
 
 -(void) dealloc {

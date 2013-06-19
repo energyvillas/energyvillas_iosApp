@@ -108,5 +108,19 @@
     return copy;
 }
 
+- (void) dealloc {
+    self.lang = nil;
+    self.imageThumbUrl = nil;
+    
+    self.body = nil;
+    self.url = nil;
+    self.publishDate = nil;
+    self.videoUrl = nil;
+    self.videolength = nil;
+    
+    self.image = nil;
+    self.imageThumb = nil;
+}
+
 @end
 

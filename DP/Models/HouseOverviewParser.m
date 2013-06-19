@@ -11,6 +11,22 @@
 
 @implementation HouseOverviewParser
 
+- (void) dealloc {
+    self.currentString = nil;
+    self.responseCode = nil;
+    self.datalist = nil;
+    
+    self.hovId = nil;
+    self.langcode = nil;
+    self.categoryId = nil;
+    self.isMaster = nil;
+    
+    self.videourl = nil;
+    self.title = nil;
+    self.info = nil;
+    self.description = nil;
+}
+
 /*
  to parse a XML file from path.
  */

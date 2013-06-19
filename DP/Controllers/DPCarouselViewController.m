@@ -21,6 +21,7 @@
 
 @interface DPCarouselViewController ()
 
+@property (strong, nonatomic) NSString *displayinglang;
 @property (strong, nonatomic) UIActivityIndicatorView *busyIndicator;
 @property (strong, nonatomic) NSOperationQueue *queue;
 @property (strong, nonatomic) DPDataLoader *dataLoader;
@@ -67,19 +68,7 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     [self hookToNotifications];
-    [self delayLoadData];
-}
-
-- (void) delayLoadData {
-    if (self.carouselCategoryID == CTGID_CAROUSEL) {
-        [self loadLocalData];
-        double delayInSeconds = 1.0;
-        dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
-        dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-            [self loadData];
-        });
-    } else
-        [self loadData]; 
+    [self loadData];
 }
 
 -(void) clearDataLoader {
@@ -111,16 +100,34 @@
     self.queue = nil;
     [self clearDataLoader];
     [self clearCarousel];
+    
+    self.busyIndicator = nil;
+    self.dataLoader = nil;
+    self.datalist = nil;
+    self.imageRequests = nil;
+    
+    self.lblFixedContainer = nil;
+    self.lblContainer = nil;
+    self.btnAdd2Favs = nil;
+    self.lblCounter = nil;
+    self.lblTitle = nil;
+    
+    self.icarousel = nil;
+    self.displayinglang = nil;
 }
 
 - (void) viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    if (self.datalist && self.datalist.count > 0) {
-        [self setupLabels];
-        [self updateLabels];
-    }
+//    int ci = _currentIndex;
+//    if (self.datalist && self.datalist.count > 0) {
+//        [self setupLabels];
+//        [self updateLabels];
+//    }
+//    _currentIndex = ci;
     [self.view setNeedsDisplay];
     [self.view setNeedsLayout];
+    if ([self dataLoadNeeded])
+        [self loadData];
 }
 
 - (void) viewWillDisappear:(BOOL)animated {
@@ -178,9 +185,25 @@
 
 
 - (void) reachabilityChanged {
-    [self delayLoadData];
+    [self loadData];
 }
 
+- (BOOL) dataLoadNeeded {
+    BOOL shouldLoad = (self.displayinglang == nil ||
+                       (![CURRENT_LANG isEqualToString:self.displayinglang]) ||
+                       self.datalist == nil ||
+                       self.datalist.count == 0 ||
+                       self.dataLoader.dataRefreshNeeded);
+    //    (
+    //                       (self.carouselCategoryID == CTGID_CAROUSEL && self.datalist.count <= 1) ||
+    //                       (
+    //                        (self.carouselCategoryID != CTGID_CAROUSEL && self.datalist.count == 0) ||
+    //                        self.dataLoader.dataRefreshNeeded
+    //                       )
+    //                      );
+    
+    return shouldLoad;
+}
 - (void) loadData {
     if (self.dataLoader == nil) {
         self.dataLoader = [[DPArticlesLoader alloc] initWithView:self.view
@@ -189,15 +212,7 @@
         self.dataLoader.delegate = self;
     }
     
-    BOOL shouldLoad = (
-                       (self.carouselCategoryID == CTGID_CAROUSEL && self.datalist.count <= 1) ||
-                       (
-                        (self.carouselCategoryID != CTGID_CAROUSEL && self.datalist.count == 0) ||
-                        self.dataLoader.dataRefreshNeeded
-                       )
-                      );
-    
-    if (shouldLoad)
+    if ([self dataLoadNeeded])
         [self.dataLoader loadData];
 }
 
@@ -430,9 +445,11 @@
     }
 }
 -(void) loadCarousel {
-    if (self.datalist && self.datalist.count > 0) {
+    if (self.datalist && self.datalist.count > 0 && [self dataLoadNeeded]) {
         [self clearCarousel];
-        
+    }
+    
+    if (!self.icarousel) {
 #ifdef LOG_CAROUSEL
         NSLog(@"2.carousel loaded %d articles", self.datalist.count);
 #endif
@@ -803,7 +820,7 @@
 
 #pragma mark - DPNavigatorDelegate methods
 -(void) next {
-    int nxt = self.icarousel.currentItemIndex + 1;
+    int nxt = self.currentItemIndex + 1;
     if (nxt < self.datalist.count) {
         [self.navigationController popViewControllerAnimated:NO];
         [self makeCurrentImageAtIndex:nxt];
@@ -811,7 +828,7 @@
     }
 }
 -(void) prev {
-    int prv = self.icarousel.currentItemIndex - 1;
+    int prv = self.currentItemIndex - 1;
     if (prv >= 0) {
         [self.navigationController popViewControllerAnimated:NO];
         [self makeCurrentImageAtIndex:prv];
@@ -821,7 +838,7 @@
 
 - (int) currentItemIndex {
     if (self.icarousel && [self itemsCount] > 0)
-        return self.icarousel.currentItemIndex;
+        return self.currentIndex; // self.icarousel.currentItemIndex;
     
     return -1;
 }

@@ -111,4 +111,7 @@
     return articles;
 }
 
+- (void) dealloc {
+    self.lang = nil;
+}
 @end

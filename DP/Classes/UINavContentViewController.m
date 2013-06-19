@@ -28,6 +28,14 @@
 
 @implementation UINavContentViewController 
 
+- (void) dealloc {
+    self.navbarTitleItemButton = nil;
+    self.navbarLang_EN = nil;
+    self.navbarLang_EL = nil;
+    self.navbarFavorite = nil;
+    self.socialManager = nil;
+}
+
 - (void) hookToNotifications {
     [self unHookFromNotifications];
     

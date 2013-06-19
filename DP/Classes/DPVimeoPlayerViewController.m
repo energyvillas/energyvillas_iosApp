@@ -49,6 +49,12 @@
     return self;
 }
 
+- (void) dealloc {
+    self.extractor = nil;
+    self.playerView = nil;
+    self.videoUrl = nil;
+    self.btn = nil;
+}
 
 - (void)viewDidLoad
 {

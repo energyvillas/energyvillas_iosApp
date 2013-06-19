@@ -57,6 +57,13 @@
     [super viewDidUnload];
 }
 
+- (void) dealloc {
+    [self setBusyIndicator:nil];
+    [self setLogoImgView:nil];
+    [self setBtnLogin:nil];
+    [self setBtnClose:nil];
+}
+
 - (void) doLayoutSubViews:(BOOL)fixtop {
     CGRect vf = self.view.frame;
     

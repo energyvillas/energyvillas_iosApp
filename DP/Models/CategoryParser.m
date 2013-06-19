@@ -11,6 +11,19 @@
 
 @implementation CategoryParser
 
+- (void) dealloc {
+    self.currentString = nil;
+    self.responseCode = nil;
+    self.categories = nil;
+    self.ctgId = nil;
+    self.langcode = nil;
+    self.title = nil;
+    self.imageUrl = nil;
+    self.imageRollUrl = nil;
+    self.parent = nil;
+    self.hikind = nil;
+}
+
 /*
  to parse a XML file from path.
  */
