@@ -382,14 +382,18 @@ CGRect CGRectChangeCenter(CGRect rect, CGPoint center) {
     if (imgView == self.imageView) {
         if(!self.busyIndicator) {
             self.busyIndicator = [[UIActivityIndicatorView alloc]
-                                  initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
+                                  initWithActivityIndicatorStyle:(IS_IPAD
+                                                                  ? UIActivityIndicatorViewStyleWhiteLarge
+                                                                  : UIActivityIndicatorViewStyleWhite)];
             aiv = self.busyIndicator;
             wasNew = YES;
         }
     } else if (imgView == self.zoomImageView) {
         if(!self.zoomBusyIndicator) {
             self.zoomBusyIndicator = [[UIActivityIndicatorView alloc]
-                                      initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
+                                      initWithActivityIndicatorStyle:(IS_IPAD
+                                                                      ? UIActivityIndicatorViewStyleWhiteLarge
+                                                                      : UIActivityIndicatorViewStyleWhite)];
             aiv = self.zoomBusyIndicator;
             wasNew = YES;
         }
