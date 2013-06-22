@@ -369,7 +369,9 @@
 
 - (UIActivityIndicatorView *) makeIndicatorForView:(UIView *)container {
     UIActivityIndicatorView *busyIndicator = [[UIActivityIndicatorView alloc]
-                          initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
+                          initWithActivityIndicatorStyle:(IS_IPAD
+                                                          ? UIActivityIndicatorViewStyleWhiteLarge
+                                                          : UIActivityIndicatorViewStyleWhite)];
     busyIndicator.frame = CGRectMake(0, 0,
                                      busyIndicator.frame.size.width,
                                      busyIndicator.frame.size.height);
