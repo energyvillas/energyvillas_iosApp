@@ -274,12 +274,14 @@
                forControlEvents:UIControlEventTouchUpInside];
     
     CGRect frmcntr = CGRectOffset(frmbtn, frmbtn.size.width + 2, 0);
+    frmcntr.size.width = 0;
     self.lblCounter = [[UILabel alloc] initWithFrame: frmcntr];
     self.lblCounter.font = [UIFont systemFontOfSize: IS_IPAD ? IPADS_FONT_SIZE : IPHONES_FONT_SIZE];
     self.lblCounter.backgroundColor = [UIColor whiteColor];
     self.lblCounter.textAlignment = UITextAlignmentRight;
     
-    CGRect frmtitle = CGRectOffset(frmcntr, frmcntr.origin.x + frmcntr.size.width + 2, 0);
+    CGRect frmtitle = CGRectOffset(frmcntr, frmcntr.size.width + 2, 0);
+    frmtitle.size.width = 0;
     self.lblTitle = [[UILabel alloc] initWithFrame:frmtitle];
     self.lblTitle.font = [UIFont systemFontOfSize:IS_IPAD ? IPADS_FONT_SIZE : IPHONES_FONT_SIZE];
     self.lblTitle.backgroundColor = [UIColor whiteColor];
@@ -770,6 +772,9 @@
         [self.view addSubview:self.busyIndicator];
 	}
     [self.busyIndicator startAnimating];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self.view bringSubviewToFront:self.busyIndicator];
+    });
 }
 
 - (void) stopIndicator {

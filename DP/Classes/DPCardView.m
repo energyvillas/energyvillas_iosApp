@@ -25,7 +25,6 @@
 @property (strong, nonatomic) UILabel *label;
 
 @property (strong, nonatomic) UIActivityIndicatorView *busyIndicator;
-@property (strong, nonatomic) UIActivityIndicatorView *zoomBusyIndicator;
 @property (strong, nonatomic) NSOperationQueue *queue;
 
 @end
@@ -61,8 +60,7 @@
 
 -(void) cleanUp {
     if (self.queue) {
-        [self stopIndicatorInView:self.imageView];
-        [self stopIndicatorInView:self.zoomImageView];
+        [self stopIndicator];
         
         for (id op in self.queue.operations)
             if ([op isKindOfClass:[ASIHTTPRequest class]]) {
@@ -79,7 +77,6 @@
     self.imageView = nil;
     self.zoomImageView = nil;
     self.busyIndicator = nil;
-    self.zoomBusyIndicator = nil;
     self.label = nil;
     self.element = nil;
 }
@@ -148,66 +145,8 @@ CGRect CGRectChangeCenter(CGRect rect, CGPoint center) {
     return result;
 }
 
-- (void)performTransition:(UIViewAnimationOptions)options
-                 duration:(NSTimeInterval)duration
-               completion:(void(^)(BOOL finished))completion
-{
-    UIView *fromView, *toView;
-    
-    if ([self.imageView superview] != nil)
-    {
-        fromView = self.imageView;
-        toView = self.zoomImageView;
-    }
-    else
-    {
-        fromView = self.zoomImageView;
-        toView = self.imageView;
-    }
-    
-    [UIView transitionFromView:fromView
-                        toView:toView
-                      duration:duration
-                       options:options
-                    completion:completion];
-}
-
-//- (IBAction)fadeAction:(id)sender
-//{
-//    [self performTransition:UIViewAnimationOptionTransitionCrossDissolve];
-//}
-
-//- (IBAction)flipAction:(id)sender
-//{
-//    UIViewAnimationOptions transitionOptions = ([self.frontView superview] != nil) ?
-//    UIViewAnimationOptionTransitionFlipFromLeft : UIViewAnimationOptionTransitionFlipFromRight;
-//    
-//    [self performTransition:transitionOptions];
-//}
 
 - (void) zoomCard:(NSTimeInterval)duration position:(CGPoint)newCenter{
-//    int rw = IS_IPAD ? IPAD_CARD_RESIZE_WIDTH : IPHONE_CARD_RESIZE_WIDTH;
-//    int rh = IS_IPAD ? IPAD_CARD_RESIZE_HEIGHT : IPHONE_CARD_RESIZE_HEIGHT;
-//    int w = IS_IPAD ? IPAD_CARD_WIDTH : IPHONE_CARD_WIDTH;
-//    int h = IS_IPAD ? IPAD_CARD_HEIGHT : IPHONE_CARD_HEIGHT;
-//    
-//    CGRect bigFrame = CGRectInset(self.frame, -1000, -1000);
-//    self.frame = bigFrame;
-//    
-//    self.imageView.frame = CGRectOffset(self.imageView.frame, 1000, 1000);
-//    CGPoint cp = [self convertPoint:newCenter fromView:self.superview];
-//    self.zoomImageView.center = cp;
-//    
-//    [self performTransition:UIViewAnimationOptionTransitionCrossDissolve
-//                   duration:duration
-//                 completion:^(BOOL finished) {
-//                     CGRect zoomFrame = CGRectInset(CGRectMake(0, 0, w, h), -rw, -rh);
-//                     self.frame = CGRectChangeCenter(zoomFrame, newCenter);
-//                     self.zoomImageView.frame = self.bounds;
-//                 }];
-//
-//    return;
-    
     CGRect zoomFrame = CGRectInset(CGRectMake(0, 0, cardSize.width, cardSize.height),
                                    -insetSize.width, -insetSize.height);
     zoomFrame = CGRectChangeCenter(zoomFrame, newCenter);
@@ -223,53 +162,17 @@ CGRect CGRectChangeCenter(CGRect rect, CGPoint center) {
     self.imageView.center = calcBoundsCenterOfView(self);
     self.zoomImageView.center = calcBoundsCenterOfView(self);
     if (self.busyIndicator)
-        self.busyIndicator.center = calcBoundsCenterOfView(self.imageView);
-    if (self.zoomBusyIndicator)
-        self.zoomBusyIndicator.center = calcBoundsCenterOfView(self.zoomImageView);
+        self.busyIndicator.center = calcBoundsCenterOfView(self);
     [self.imageView removeFromSuperview];
     [self addSubview:self.zoomImageView];
 
+    if (self.busyIndicator)
+        [self bringSubviewToFront:self.busyIndicator];
+
     [UIView commitAnimations];
-    
-//    return;
-//    
-//    [UIView animateWithDuration:duration
-//                          delay:0.0
-//                        options:UIViewAnimationOptionCurveLinear | UIViewAnimationOptionBeginFromCurrentState
-//                     animations:^{
-//                         int rw = IS_IPAD ? IPAD_CARD_RESIZE_WIDTH : IPHONE_CARD_RESIZE_WIDTH;
-//                         int rh = IS_IPAD ? IPAD_CARD_RESIZE_HEIGHT : IPHONE_CARD_RESIZE_HEIGHT;
-//                         CGRect zoomFrame = CGRectInset(self.frame, -rw, -rh);
-//                         self.frame = CGRectChangeCenter(zoomFrame, newCenter);
-//                         self.imageView.frame = CGRectMake(0, 0,
-//                                                      zoomFrame.size.width,
-//                                                      zoomFrame.size.height);
-//                         
-//                         self.imageView.image = [UIImage imageNamed:@"balloon_roll.png"];
-//                         
-//                         if (useLabel) {
-//                             self.label.frame = zoomLabelFrame;
-//                             self.label.font = [self.label.font fontWithSize:zoomFontSize];
-//                         }
-//                     }
-//                     completion:nil];
 }
 
 - (void) cancelCardZoom:(NSTimeInterval)duration {
-//    CGRect frm = [self presentationFrameOf:self];
-//    int diffX = frm.size.width - cardSize.width;
-//    int diffY = frm.size.height - cardSize.height;
-//    self.frame = CGRectInset(frm, diffX / 2, diffY / 2);
-    
-//    self.imageView.frame = CGRectMake(0, 0,
-//                                      cardSize.width,
-//                                      cardSize.height);
-    
-//    int rw = IS_IPAD ? IPAD_CARD_RESIZE_WIDTH : IPHONE_CARD_RESIZE_WIDTH;
-//    int rh = IS_IPAD ? IPAD_CARD_RESIZE_HEIGHT : IPHONE_CARD_RESIZE_HEIGHT;
-//    int w = IS_IPAD ? IPAD_CARD_WIDTH : IPHONE_CARD_WIDTH;
-//    int h = IS_IPAD ? IPAD_CARD_HEIGHT : IPHONE_CARD_HEIGHT;
-    
     CGRect unZoomFrame = CGRectInset(self.frame, insetSize.width, insetSize.height);
     
     [UIView beginAnimations:nil context:nil];
@@ -283,38 +186,14 @@ CGRect CGRectChangeCenter(CGRect rect, CGPoint center) {
     self.imageView.center = calcBoundsCenterOfView(self);
     self.zoomImageView.center = calcBoundsCenterOfView(self);
     if (self.busyIndicator)
-        self.busyIndicator.center = calcBoundsCenterOfView(self.imageView);
-    if (self.zoomBusyIndicator)
-        self.zoomBusyIndicator.center = calcBoundsCenterOfView(self.zoomImageView);
+        self.busyIndicator.center = calcBoundsCenterOfView(self);
     [self.zoomImageView removeFromSuperview];
     [self addSubview:self.imageView];
     
+    if (self.busyIndicator)
+        [self bringSubviewToFront:self.busyIndicator];
+    
     [UIView commitAnimations];
-    
-    
-//    return;
-//    
-//    [UIView animateWithDuration:duration
-//                          delay:0.0
-//                        options:UIViewAnimationOptionCurveLinear | UIViewAnimationOptionBeginFromCurrentState |UIViewAnimationOptionTransitionCrossDissolve
-//                     animations:^{
-//                         CGRect frm = [self presentationFrameOf:self];
-//                         int diffX = frm.size.width - cardSize.width;
-//                         int diffY = frm.size.height - cardSize.height;
-//                         self.frame = CGRectInset(frm, diffX / 2, diffY / 2);
-//
-//                         self.imageView.frame = CGRectMake(0, 0,
-//                                                      cardSize.width,
-//                                                      cardSize.height);
-//
-//                         self.imageView.image = [UIImage imageNamed:@"balloon.png"];
-//
-//                         if (useLabel) {
-//                             self.label.frame = baseLabelFrame;
-//                             self.label.font = [self.label.font fontWithSize:baseFontSize];
-//                         }
-//                     }
-//                     completion:nil];
 }
 
 
@@ -376,65 +255,35 @@ CGRect CGRectChangeCenter(CGRect rect, CGPoint center) {
 
 #pragma mark - loading of image data
 
-- (void) startIndicatorInView:(UIView *)imgView {
-    UIActivityIndicatorView *aiv = nil;
-    BOOL wasNew = NO;
-    if (imgView == self.imageView) {
-        if(!self.busyIndicator) {
-            self.busyIndicator = [[UIActivityIndicatorView alloc]
-                                  initWithActivityIndicatorStyle:(IS_IPAD
-                                                                  ? UIActivityIndicatorViewStyleWhiteLarge
-                                                                  : UIActivityIndicatorViewStyleWhite)];
-            aiv = self.busyIndicator;
-            wasNew = YES;
-        }
-    } else if (imgView == self.zoomImageView) {
-        if(!self.zoomBusyIndicator) {
-            self.zoomBusyIndicator = [[UIActivityIndicatorView alloc]
-                                      initWithActivityIndicatorStyle:(IS_IPAD
-                                                                      ? UIActivityIndicatorViewStyleWhiteLarge
-                                                                      : UIActivityIndicatorViewStyleWhite)];
-            aiv = self.zoomBusyIndicator;
-            wasNew = YES;
-        }
+- (void) startIndicator {
+    if(!self.busyIndicator) {
+        self.busyIndicator = [[UIActivityIndicatorView alloc]
+                              initWithActivityIndicatorStyle:(IS_IPAD
+                                                              ? UIActivityIndicatorViewStyleWhiteLarge
+                                                              : UIActivityIndicatorViewStyleWhite)];
+        
+		self.busyIndicator.hidesWhenStopped = TRUE;
+        [self addSubview:self.busyIndicator];
+        self.busyIndicator.center = calcBoundsCenterOfView(self);
     }
 
-    if (wasNew) {
-		aiv.frame = CGRectMake((imgView.frame.size.width - aiv.bounds.size.width) / 2,
-                               (imgView.frame.size.height - aiv.bounds.size.height) / 2,
-                               aiv.bounds.size.width,
-                               aiv.bounds.size.height);
-
-		aiv.hidesWhenStopped = TRUE;
-        [self addSubview:aiv];
-        [self bringSubviewToFront:aiv];
-	}
-    
-    if (!aiv.isAnimating) {
-        [self bringSubviewToFront:aiv];
-        [aiv startAnimating];
+    if (!self.busyIndicator.isAnimating) {
+        [self.busyIndicator startAnimating];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self bringSubviewToFront:self.busyIndicator];
+        });
     }
 }
 
-- (void) stopIndicatorInView:(UIView *)imgView {
-    UIActivityIndicatorView *aiv = nil;
-    if (imgView == self.imageView) {
-        aiv = self.busyIndicator;
-    } else if (imgView == self.zoomImageView) {
-        aiv = self.zoomBusyIndicator;
-    }
-    
-    if (aiv) {
-        [aiv stopAnimating];
-        [aiv removeFromSuperview];
-    }
-    
-    if (imgView == self.imageView) {
+- (void) stopIndicator {
+    if (self.busyIndicator &&
+        self.queue &&
+        self.queue.operationCount == 0) {
+        [self.busyIndicator stopAnimating];
+        [self.busyIndicator removeFromSuperview];
+        
         self.busyIndicator = nil;
-    } else if (imgView == self.zoomImageView) {
-        self.zoomBusyIndicator = nil;
     }
-
 }
 
 - (void) fix:(DPDataElement *)elm
@@ -442,14 +291,9 @@ CGRect CGRectChangeCenter(CGRect rect, CGPoint center) {
     imageUrl:(NSString *)imageUrl
         data:(NSData *)imgData
   addToCache:(BOOL)addToCache{
-    //elm.imageData = [request responseData];
+    
     releaseSubViews(imgView);
     imgView.image = [UIImage imageWithData:imgData scale:DEVICE_SCALE];
-//    for (UIView *v in imgView.subviews)
-//        if ([v isKindOfClass:[UIActivityIndicatorView class]]) {
-//            [(UIActivityIndicatorView *)v stopAnimating];
-//            break;
-//        }
     
     if (addToCache)
         [[DPAppHelper sharedInstance] saveImageToCache:imageUrl data:imgData];
@@ -463,15 +307,11 @@ CGRect CGRectChangeCenter(CGRect rect, CGPoint center) {
         imageView:imgView
          imageUrl:highlight ? elm.imageRollUrl : elm.imageUrl
              data:imgData addToCache:NO];
-    else {
+    else
+    {
         [imgView addSubview: createImageViewLoading(imgView.bounds, YES, YES)];
+
         [self doloadImageAsync:elm highlight:highlight inView:imgView];
-//        UIActivityIndicatorView *bi = [[UIActivityIndicatorView alloc]
-//                                       initWithActivityIndicatorStyle: IS_IPAD ? UIActivityIndicatorViewStyleWhiteLarge: UIActivityIndicatorViewStyleWhite];
-//        bi.center = imgView.center;
-//        bi.hidesWhenStopped = YES;
-//        [bi startAnimating];
-//        [imgView addSubview:bi];
     }
 }
 
@@ -480,8 +320,6 @@ CGRect CGRectChangeCenter(CGRect rect, CGPoint center) {
         self.queue = [[NSOperationQueue alloc] init];
     
     ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:[NSURL URLWithString:highlight ? elm.imageRollUrl : elm.imageUrl]];
-//    [request setDelegate:self];
-//    [request setDidFinishSelector:@selector(requestDone:)];
     __block ASIHTTPRequest *ir = request;
     __block id this = self;
     [request setCompletionBlock:^{ [this requestDone:ir]; }];
@@ -494,27 +332,23 @@ CGRect CGRectChangeCenter(CGRect rect, CGPoint center) {
                         nil];
     [self.queue addOperation:request];
     
-    [self startIndicatorInView:imgView];
+    [self startIndicator];
 }
 
 - (void)requestDone:(ASIHTTPRequest *)request {
+    [self stopIndicator];
+
     NSDictionary *uiDict = request.userInfo;
     
-    UIImageView *imgView = uiDict[@"imageView"];
-    [self stopIndicatorInView:imgView];
-    
     [self fix:uiDict[@"element"]
-    imageView:imgView
+    imageView:uiDict[@"imageView"]
      imageUrl:uiDict[@"imageUrl"]
          data:[request responseData]
    addToCache:YES];
 }
 
 - (void)requestFailed:(ASIHTTPRequest *)request {
-    NSDictionary *uiDict = request.userInfo;
-    
-    UIImageView *imgView = uiDict[@"imageView"];
-    [self stopIndicatorInView:imgView];
+    [self stopIndicator];
 }
 
 

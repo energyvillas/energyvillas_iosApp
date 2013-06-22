@@ -47,6 +47,7 @@
     bool framesDone;
     bool isPortrait;
     int currentBackgroundCategory;
+    int prevBackgroundCategory;
     int tbSelItem;
     BOOL inClearPopups;
 }
@@ -323,20 +324,19 @@
         // we were showing main controller, so we have to go to root...
         [self.navController popToRootViewControllerAnimated:YES];
     }
-    
-//    UIViewController *tvc = [self.navController topViewController];
-//    if ([self isTabBarPage:tvc]){
-//        [self.navController setNavigationBarHidden:NO animated:NO];
-//        [self.navController popViewControllerAnimated:YES];
-//        [self cleanControllers:tvc];
-//    }
-//    else {
-//        [self.navController setNavigationBarHidden:NO animated:NO];
-//        [self.navController popToRootViewControllerAnimated:YES];
-//    }
+   
+    [[NSNotificationCenter defaultCenter] postNotificationName:DPN_PAID_SelectedCategoryChanged_Notification
+                                                        object:nil
+                                                      userInfo:@{@"menuCategory": @(prevBackgroundCategory)}];
+
+//    [NSDictionary dictionaryWithObject:[NSNumber numberWithInt:prevBackgroundCategory]
+//                                forKey:]
 }
 
 - (void) showIdea {
+    if ([self findTabViewControllerIndexInNavigator] == -1)
+        prevBackgroundCategory = currentBackgroundCategory;
+    
     if ([self checkTop:self.ideaViewController]) return;
     
     self.ideaViewController = [[DPCTGViewController alloc] initWithCategory:CTGID_IDEA
@@ -347,6 +347,9 @@
 }
 
 - (void) showRealEstate {
+    if ([self findTabViewControllerIndexInNavigator] == -1)
+        prevBackgroundCategory = currentBackgroundCategory;
+    
     if ([self checkTop:self.realEstateViewController]) return;
     
     self.realEstateViewController = [[DPCTGViewController alloc] initWithCategory:CTGID_REAL_ETATE
@@ -357,6 +360,9 @@
 }
 
 - (void) showWho {
+    if ([self findTabViewControllerIndexInNavigator] == -1)
+        prevBackgroundCategory = currentBackgroundCategory;
+    
     if ([self checkTop:self.whoViewController]) return;
     
     self.whoViewController = [[DPCTGViewController alloc] initWithCategory:CTGID_WHO_WE_ARE
@@ -367,6 +373,9 @@
 }
 
 - (void) showFranchise {
+    if ([self findTabViewControllerIndexInNavigator] == -1)
+        prevBackgroundCategory = currentBackgroundCategory;
+    
     if ([self checkTop:self.franchiseViewController]) return;
     
     self.franchiseViewController = [[DPCTGViewController alloc] initWithCategory:CTGID_FRANCHISE
@@ -377,6 +386,9 @@
 }
 
 - (void) showCost {
+    if ([self findTabViewControllerIndexInNavigator] == -1)
+        prevBackgroundCategory = currentBackgroundCategory;
+    
     if ([self checkTop:self.costViewController]) return;
     
     self.costViewController = [[DPHtmlContentViewController alloc]
@@ -387,6 +399,9 @@
 
 
 - (void) showProfit {
+    if ([self findTabViewControllerIndexInNavigator] == -1)
+        prevBackgroundCategory = currentBackgroundCategory;
+    
     if ([self checkTop:self.profitViewController]) return;
     
     self.profitViewController = [[DPHtmlContentViewController alloc]
@@ -397,6 +412,9 @@
 
 
 - (void) showMaterials {
+    if ([self findTabViewControllerIndexInNavigator] == -1)
+        prevBackgroundCategory = currentBackgroundCategory;
+    
     if ([self checkTop:self.materialsViewController]) return;
     
     self.materialsViewController = [[DPCTGViewController alloc] initWithCategory:CTGID_MATERIALS
@@ -409,6 +427,9 @@
 
 ;
 - (void) showPlanet {
+    if ([self findTabViewControllerIndexInNavigator] == -1)
+        prevBackgroundCategory = currentBackgroundCategory;
+    
     if ([self checkTop:self.planetViewController]) return;
     
     self.planetViewController = [[DPCTGViewController alloc] initWithCategory:CTGID_PLANET
@@ -424,6 +445,9 @@
 }
 
 - (void) showFavorites {
+    if ([self findTabViewControllerIndexInNavigator] == -1)
+        prevBackgroundCategory = currentBackgroundCategory;
+    
     if ([self checkTop:self.favoritesViewController]) return;
     
     self.favoritesViewController = [[DPFavoritesViewController alloc] init];
