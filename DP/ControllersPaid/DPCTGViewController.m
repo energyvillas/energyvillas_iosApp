@@ -206,7 +206,10 @@
     self.imageView.image = nil;
     while (self.imageView.subviews.count)
         [self.imageView.subviews[0] removeFromSuperview];
-    [self.imageView addSubview:createImageViewLoading(self.scrollView.bounds, NO, NO)];
+    [self.imageView addSubview:createImageViewLoadingSized(self.scrollView.bounds,
+                                                           (IS_IPAD
+                                                            ? CGSizeMake(120.0f, 120.0f)
+                                                            : CGSizeMake(80.0f, 80.0f)))];
     self.busyIndicator.center = self.imageView.center;
     [self.imageView addSubview:self.busyIndicator];
 }
@@ -382,11 +385,11 @@
 //- (BOOL) showNavBarAddToFav {
 //    return NO;
 //}
-//- (BOOL) showNavBarSocial {
-//    return NO;
-//}
+- (BOOL) showNavBarSocial {
+    return YES;
+}
 - (BOOL) showNavBarInfo {
-    return NO;//[DPAppHelper sharedInstance].isPurchased;
+    return self.categoryId != CTGID_INFO ; //[DPAppHelper sharedInstance].isPurchased;
 }
 //- (BOOL) showNavBarNavigator {
 //    return self.navigatorDelegate != nil;
