@@ -180,12 +180,31 @@
     
     if (self.ctgNew)
         [self internalLoadImage:self.ctgNew index:0];
+    else {
+        if (self.loadingImageNew)
+            [self.loadingImageNew removeFromSuperview];
+        
+        self.loadingImageNew = createImageViewLoadingSized(CGRectInset(self.houseNew.bounds, 1, 1),
+                                                           CGSizeMake(IS_IPAD ? 80.0f : 40.0f,
+                                                                      IS_IPAD ? 80.0f : 40.0f));
+        [self.houseNew addSubview:self.loadingImageNew];
+    }
+    
     if (self.ctgNext)
         [self internalLoadImage:self.ctgNext index:1];
+    else {
+        if (self.loadingImageNext)
+            [self.loadingImageNext removeFromSuperview];
+        
+        self.loadingImageNext = createImageViewLoadingSized(CGRectInset(self.houseNext.bounds, 1, 1),
+                                                           CGSizeMake(IS_IPAD ? 80.0f : 40.0f,
+                                                                      IS_IPAD ? 80.0f : 40.0f));
+        [self.houseNext addSubview:self.loadingImageNext];
+    }
 }
 
 - (UIButton *) createViewWithFrame:(CGRect)frame {
-    DPButton *result = [DPButton buttonWithType:UIButtonTypeCustom]; //[[UIImageView alloc] initWithFrame:frame];
+    DPButton *result = [DPButton buttonWithType:UIButtonTypeCustom];
     result.showsTouchWhenHighlighted = YES;
     result.extraLayerColor = [UIColor colorWithWhite:0.0f alpha:0.25f];
     result.showExtraLayerOnHighlight = YES;
@@ -193,10 +212,6 @@
     result.contentMode = UIViewContentModeScaleAspectFit;
     result.backgroundColor = [UIColor clearColor];
 
-//    UITapGestureRecognizer *tapper = [[UITapGestureRecognizer alloc]
-//                                      initWithTarget:self action:@selector(handleTap:)];
-//    [result addGestureRecognizer:tapper];
-//    result.userInteractionEnabled = YES;
     [result addTarget:self action:@selector(handleTap:) forControlEvents:UIControlEventTouchUpInside];
     
     return result;
@@ -206,15 +221,12 @@
     if (sender == nil) return;
     // handling code
     
-    //Category * element = nil;
     UIViewController *vc = nil;
     if (sender == self.houseNew) {
-        //element = self.ctgNew;
         vc = [[DPCTGViewController alloc] initWithCategory:self.ctgNew.Id
-                                               // fromParent:self.ctgNew.parentId
-                                             useDeviceType:YES];//[[DPHtmlContentViewController alloc] initWithCategory:element.Id lang:CURRENT_LANG];
+                                             useDeviceType:YES];
+        
     } else if (sender == self.houseNext) {
-        //element = self.ctgNext;
         vc = [[DPNextHouseViewController alloc] initWithCategory:self.ctgNext.Id];
     }
     
