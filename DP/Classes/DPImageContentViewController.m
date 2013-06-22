@@ -99,6 +99,21 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
+    [self loadScrollAndImageView];
+}
+
+- (void) clearScrollAndImageView {
+    if (self.imageView)
+        [self.imageView removeFromSuperview];
+    self.imageView = nil;
+    
+    if (self.scrollView)
+        [self.scrollView removeFromSuperview];
+    self.scrollView = nil;
+}
+- (void) loadScrollAndImageView {
+    [self clearScrollAndImageView];
+    
     self.scrollView = [[UIScrollView alloc] initWithFrame:self.view.bounds];
     self.scrollView.backgroundColor = [UIColor clearColor];
     [self.view addSubview:self.scrollView];
@@ -107,7 +122,6 @@
     self.imageView.backgroundColor = [UIColor clearColor];
     [self.scrollView addSubview:self.imageView];
 }
-
 
 - (void) viewDidUnload {
     [super viewDidUnload];
@@ -184,20 +198,11 @@
     int h = vf.size.height - top;
     int w = vf.size.width;
 
-//    CGFloat zs = self.scrollView.zoomScale;
+    [self loadScrollAndImageView];
     self.scrollView.frame = CGRectMake(0, top, w, h);
     self.imageView.frame = self.scrollView.bounds;
 
     [self doInitImageView];
-//    self.scrollView.zoomScale = zs;
-//    if (self.imageView.image) { // && (fabs(zs - 1.0f) > DBL_EPSILON)) {
-////        self.scrollView.zoomScale = 1.0f;
-//        [self setupScrollZoom];
-////        self.imageView.frame = CGRectMake(0, 0,
-////                                          self.image.size.width,
-////                                          self.image.size.height);
-////        self.scrollView.zoomScale = zs;
-//    }
     
     CGPoint centerPoint = CGPointMake(CGRectGetMidX(self.scrollView.bounds),
                                       CGRectGetMidY(self.scrollView.bounds));
