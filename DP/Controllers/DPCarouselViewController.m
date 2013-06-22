@@ -452,7 +452,7 @@
         [self clearCarousel];
     }
     
-    if (!self.icarousel) {
+    if (!self.icarousel && self.datalist && self.datalist.count > 0) {
 #ifdef LOG_CAROUSEL
         NSLog(@"2.carousel loaded %d articles", self.datalist.count);
 #endif
@@ -486,9 +486,10 @@
 
         [self.view addSubview:self.icarousel];
         
-        [self makeCurrentImageAtIndex:self.currentIndex];
         [self setupLabels];
         //[self updateLabels];
+        
+        [self makeCurrentImageAtIndex:self.currentIndex];
     }
 }
 
