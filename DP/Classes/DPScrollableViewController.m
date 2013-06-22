@@ -188,6 +188,10 @@
 
 - (void) doLayoutSubViews:(BOOL)fixtop {
     [super doLayoutSubViews:fixtop];
+    
+    if (self.busyIndicator)
+        self.busyIndicator.center = calcBoundsCenterOfView(self.view);
+    
     [self changeRows:self.rowCount columns:self.colCount];
 }
 
@@ -443,46 +447,6 @@
 
 -(UIView *) createImageViewLoading:(UIView *)container  {
     return createImageViewLoading(CGRectInset(container.bounds, 1, 1), NO, NO);
-    
-//    CGRect vFrame = container.bounds;
-//    vFrame = CGRectInset(vFrame, 20.0f, 20.0f);
-//    
-//    UIImage *img = [UIImage imageNamed:[NSString stringWithFormat:@"loading_%@.png", CURRENT_LANG]];
-//    img = [img imageScaledToFitSize:CGSizeMake(vFrame.size.width / 2.0f,
-//                                               vFrame.size.height / 2.0f)];
-//    
-//    //CGRect frm = CGRectInset(vFrame, vFrame.size.width / 4.0f, vFrame.size.height / 4.0f);
-//    CGRect frm = CGRectMake(0.0f, 0.0f,
-//                            vFrame.size.width / 2.0f,
-//                            vFrame.size.height / 2.0f);
-//    frm = CGRectOffset(frm,
-//                       vFrame.size.width / 4.0f,
-//                       vFrame.size.height / 4.0f);
-//    
-//    UIImageView *iv = [[UIImageView alloc] initWithFrame:frm];
-//    iv.contentMode = UIViewContentModeCenter;
-//    iv.image = img;
-//    
-//    UIView *v = [[UIView alloc] initWithFrame:vFrame];
-//    v.backgroundColor = [UIColor colorWithWhite:0.0f alpha:0.7f];
-//    v.layer.cornerRadius = IS_IPAD ? 8.0f : 4.0f;
-//    v.layer.borderWidth = IS_IPAD ? 4.0f : 2.0;
-//    v.layer.borderColor = [UIColor colorWithWhite:1.0f alpha:0.75f].CGColor;
-//    
-//    [v addSubview:iv];
-//    
-////    frm = v.bounds;
-////    UIActivityIndicatorView *bi = [[UIActivityIndicatorView alloc]
-////                                   initWithActivityIndicatorStyle: IS_IPAD ? UIActivityIndicatorViewStyleWhiteLarge: UIActivityIndicatorViewStyleWhite];
-////    bi.frame = CGRectOffset(CGRectMake((frm.size.width-25)/2,
-////                                       (frm.size.height-25)/2,
-////                                       25, 25),
-////                            0, IS_IPAD ? 110 : IS_IPHONE ? 40 : 55);
-////    bi.hidesWhenStopped = YES;
-////    [v addSubview:bi];
-////    [bi startAnimating];
-//    
-//    return v;
 }
 
 - (UIView *) internalCreateViewFor:(int)contentIndex frame:(CGRect)frame {
@@ -762,18 +726,17 @@
     if(!self.busyIndicator) {
 		self.busyIndicator = [[UIActivityIndicatorView alloc]
                               initWithActivityIndicatorStyle:(IS_IPAD ? UIActivityIndicatorViewStyleWhiteLarge :  UIActivityIndicatorViewStyleWhite)];
-		self.busyIndicator.frame = CGRectMake((self.view.frame.size.width -
-                                               self.busyIndicator.frame.size.width)/2,
-                                              (self.view.frame.size.height -
-                                               self.busyIndicator.frame.size.height)/2,
-                                              self.busyIndicator.frame.size.width,
-                                              self.busyIndicator.frame.size.height);
 		self.busyIndicator.hidesWhenStopped = TRUE;
         [self.view addSubview:self.busyIndicator];
+        self.busyIndicator.center = calcBoundsCenterOfView(self.view);
 	}
     
-    if (!self.busyIndicator.isAnimating)
+    if (!self.busyIndicator.isAnimating) {
         [self.busyIndicator startAnimating];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.view bringSubviewToFront:self.busyIndicator];
+        });
+    }
 }
 
 - (void) stopIndicator {
@@ -818,8 +781,6 @@
         self.queue = [[NSOperationQueue alloc] init];
 
     ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:[NSURL URLWithString:imgUrl]];
-//    [request setDelegate:self];
-//    [request setDidFinishSelector:@selector(requestDone:)];
     
     __block ASIHTTPRequest *ir = request;
     __block id this = self;
