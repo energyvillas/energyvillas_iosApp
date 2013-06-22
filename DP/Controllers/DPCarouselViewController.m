@@ -722,10 +722,7 @@
         [self.navigationController pushViewController:vc animated:animated];
     } else if (article.videoUrl != nil && article.videoUrl.length > 0) {
         NSString *videourl = article.videoUrl;
-        DPVimeoPlayerViewController *vc = [[DPVimeoPlayerViewController alloc]
-                                              initWithUrl:videourl];
-        vc.navigatorDelegate = self;
-        [self.navigationController pushViewController:vc animated:animated];
+        [DPVimeoPlayerViewController clsPlayVideoUrl:videourl];
     } else if (article.imageUrl != nil) {
         DPImageContentViewController *vc = nil;
         if (isLocalUrl(article.imageUrl))

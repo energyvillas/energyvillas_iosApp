@@ -138,6 +138,12 @@
     if (self.navigationItem)
         self.navigationItem.hidesBackButton = YES;
 
+    // this is a fix for when returning from vimeo player in landscape
+    CGRect nbf = self.navigationController.navigationBar.frame;
+    nbf.size.height = 44;
+    self.navigationController.navigationBar.frame = nbf;
+    //
+    
     [self doLayoutSubViews:NO];
 }
 

@@ -187,7 +187,7 @@
         vc = [[DPHtmlContentViewController alloc] initWithHTML:article.body];
     } else if (article.videoUrl != nil && article.videoUrl.length > 0) {
         NSString *videourl = article.videoUrl;
-        vc = [[DPVimeoPlayerViewController alloc] initWithUrl:videourl];
+        [DPVimeoPlayerViewController clsPlayVideoUrl:videourl];
     } else if (article.imageUrl != nil) {
         if (isLocalUrl(article.imageUrl))
             vc = nil;// [[DPImageContentViewController alloc] initWithImageName:[self calcImageName:article.imageUrl]];

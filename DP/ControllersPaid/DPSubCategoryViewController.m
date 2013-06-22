@@ -446,9 +446,7 @@
     if (self.houseOverview.isMaster) {
         // play video
         NSString *videourl = self.houseOverview.videoUrl;
-        DPVimeoPlayerViewController *vc = [[DPVimeoPlayerViewController alloc]
-                                           initWithUrl:videourl];
-        [self.navigationController pushViewController:vc animated:YES];
+        [DPVimeoPlayerViewController clsPlayVideoUrl:videourl];
     } else {
         // show images
         DPArticlesViewController *avc = [[DPArticlesViewController alloc] initWithCategory:self.houseOverview.ctgid showSocials:YES];

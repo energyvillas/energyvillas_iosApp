@@ -9,9 +9,13 @@
 #import <UIKit/UIKit.h>
 #import "UINavContentViewController.h"
 #import "YTVimeoExtractor.h"
+#import <MediaPlayer/MediaPlayer.h>
 
-@interface DPVimeoPlayerViewController : UINavContentViewController <YTVimeoExtractorDelegate, UIAlertViewDelegate>
+@interface DPVimeoPlayerViewController : UINavContentViewController // <YTVimeoExtractorDelegate, UIAlertViewDelegate>
 
-- (id) initWithUrl:(NSString *)videoUrl;
++ (void) clsPlayVideoUrl:(NSString *)vidUrl;
+//+ (void) playVideoUrl:(NSString *)vidUrl withCompletion:(VimeoPlayerBlock)onCompleted;
+
+//- (id) initWithUrl:(NSString *)videoUrl;
 
 @end

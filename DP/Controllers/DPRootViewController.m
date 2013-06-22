@@ -11,7 +11,6 @@
 #import "DPCategoriesViewController.h"
 #import "../Classes/DPImageContentViewController.h"
 #import "DPConstants.h"
-#import "DPVimeoPlayerViewController.h"
 #import "DPAppHelper.h"
 #import "DPMainViewController.h"
 #import "DPBuyViewController.h"
