@@ -274,7 +274,7 @@
     return self.categoryID != 0;
 }
 - (BOOL) showNavBarSocial {
-    return YES;
+    return NO;
 }
 //- (BOOL) showNavBarInfo {
 //    return YES;
