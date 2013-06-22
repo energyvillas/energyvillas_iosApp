@@ -18,7 +18,7 @@
 
 @implementation DPArticlesViewController {
     int category;
-    
+    BOOL showSocials;
 }
 
 
@@ -31,11 +31,12 @@
     return self;
 }
 
-- (id) initWithCategory:(int)ctgID {
+- (id) initWithCategory:(int)ctgID  showSocials:(BOOL)aShowSocials{
     self = [super init];
     
     if (self) {
         category = ctgID;
+        showSocials = aShowSocials;
     }
     
     return self;
@@ -96,7 +97,7 @@
     [self.container setNeedsDisplay];
     
     if (carousel == nil) {
-        carousel = [[DPCarouselViewController alloc] initWithCtg:category];
+        carousel = [[DPCarouselViewController alloc] initWithCtg:category showSocials:(BOOL)showSocials];
         CGRect frm = self.container.bounds;
         carousel.view.frame = frm;
         [self addChildViewController:carousel];

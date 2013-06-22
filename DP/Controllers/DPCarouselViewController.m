@@ -41,7 +41,9 @@
 
 @end
 
-@implementation DPCarouselViewController
+@implementation DPCarouselViewController {
+    BOOL showSocials;
+}
 
 
 @synthesize currentIndex = _currentIndex;
@@ -56,11 +58,12 @@
     return self;
 }
 
--(id) initWithCtg:(int)ctgid {
+-(id) initWithCtg:(int)ctgid showSocials:(BOOL)aShowSocials {
     self = [super init];
-    if (self)
+    if (self) {
         _carouselCategoryID = ctgid;
-    
+        showSocials = aShowSocials;
+    }
     return self;
 }
 
@@ -715,7 +718,7 @@
         if (isLocalUrl(article.imageUrl))
             vc = [[DPImageContentViewController alloc] initWithImageName:[self calcImageName:article.imageUrl]];
         else
-            vc = [[DPImageContentViewController alloc] initWithArticle:article];
+            vc = [[DPImageContentViewController alloc] initWithArticle:article showSocials:showSocials];
         
         vc.navigatorDelegate = self;
         [self.navigationController pushViewController:vc animated:animated];

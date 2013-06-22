@@ -193,7 +193,8 @@
             vc = nil;// [[DPImageContentViewController alloc] initWithImageName:[self calcImageName:article.imageUrl]];
         else 
             vc = [[DPImageContentViewController alloc] initWithArticle:article
-                                                           showNavItem:YES];
+                                                           showNavItem:YES
+                                                           showSocials:YES];
     }
     
     if (vc) {

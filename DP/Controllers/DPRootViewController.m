@@ -326,7 +326,7 @@
 //    }
     
     if (carousel == nil) {
-        carousel = [[DPCarouselViewController alloc] initWithCtg:[self carouselCategory]];
+        carousel = [[DPCarouselViewController alloc] initWithCtg:[self carouselCategory] showSocials:YES];
         CGRect frm = self.topView.bounds;
         carousel.view.frame = frm;
         [self addChildViewController:carousel];

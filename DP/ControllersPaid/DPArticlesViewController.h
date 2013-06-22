@@ -10,6 +10,6 @@
 
 @interface DPArticlesViewController : UINavContentViewController
 
-- (id) initWithCategory:(int)ctgID;
+- (id) initWithCategory:(int)ctgID showSocials:(BOOL)showSocials;
 
 @end

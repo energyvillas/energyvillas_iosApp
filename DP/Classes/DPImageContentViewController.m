@@ -39,6 +39,7 @@
 
 @implementation DPImageContentViewController {
     BOOL showNavigationItem;
+    BOOL showSocials;
 }
 
 
@@ -52,19 +53,20 @@
     return self;
 }
 
-- (id) initWithArticle:(Article *)aArticle {
-    self = [self initWithArticle:aArticle showNavItem:NO];
+- (id) initWithArticle:(Article *)aArticle showSocials:(BOOL)aShowSocials {
+    self = [self initWithArticle:aArticle showNavItem:NO showSocials:aShowSocials];
     if (self) {
     }
     
     return self;
 }
 
-- (id) initWithArticle:(Article *)aArticle showNavItem:(BOOL)showNavItem {
+- (id) initWithArticle:(Article *)aArticle showNavItem:(BOOL)showNavItem showSocials:(BOOL)aShowSocials {
     self = [super init];
     if (self) {
         self.article = aArticle;
         showNavigationItem = showNavItem;
+        showSocials = aShowSocials;
     }
     
     return self;
@@ -372,7 +374,7 @@
     return NO;//(self.article != nil);
 }
 - (BOOL) showNavBarSocial {
-    return (self.article != nil);
+    return (showSocials && self.article != nil);
 }
 //- (BOOL) showNavBarInfo {
 //    return YES;

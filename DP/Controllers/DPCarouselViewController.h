@@ -18,7 +18,7 @@
 @property (nonatomic, readonly) int carouselCategoryID;
 
 
--(id) initWithCtg:(int)ctgid;
+-(id) initWithCtg:(int)ctgid showSocials:(BOOL)showSocials;
 
 -(void) makeCurrentImageAtIndex:(int)indx;
 

@@ -451,7 +451,7 @@
         [self.navigationController pushViewController:vc animated:YES];
     } else {
         // show images
-        DPArticlesViewController *avc = [[DPArticlesViewController alloc] initWithCategory:self.houseOverview.ctgid];
+        DPArticlesViewController *avc = [[DPArticlesViewController alloc] initWithCategory:self.houseOverview.ctgid showSocials:YES];
         [self.navigationController pushViewController:avc animated:YES];
     }
 }
