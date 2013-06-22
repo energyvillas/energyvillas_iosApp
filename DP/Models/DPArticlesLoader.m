@@ -18,7 +18,6 @@
 @interface DPArticlesLoader ()
 
 @property int categoryID;
-@property (strong, nonatomic) NSString *lang;
 //@property (strong, nonatomic) NSString *plistFile;
 //@property (strong, nonatomic) NSArray *localData;
 
@@ -64,7 +63,7 @@
     self = [super initWithView:indicatorcontainer useInternet:aUseInternet useCaching:aUseCaching];
     if (self) {
         self.categoryID = ctgID;
-        self.lang = aLang;
+        _lang = aLang;
 //        self.localData = localData;
     }
     
@@ -112,6 +111,6 @@
 }
 
 - (void) dealloc {
-    self.lang = nil;
+    _lang = nil;
 }
 @end

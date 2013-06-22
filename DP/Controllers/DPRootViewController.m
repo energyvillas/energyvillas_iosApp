@@ -308,25 +308,27 @@
         if ([self.childViewControllers[i] isKindOfClass:[DPCarouselViewController class]]) {
             carousel = (DPCarouselViewController *)self.childViewControllers[i];
             currImgIndex = carousel.currentIndex;
-            if (reload) {
-                [carousel.view removeFromSuperview];
-                [carousel removeFromParentViewController];
-                carousel = nil;
-            }
+//            if (reload) {
+//                [carousel.view removeFromSuperview];
+//                [carousel removeFromParentViewController];
+//                carousel = nil;
+//            }
             break;
         }
     
     [self.topView setNeedsDisplay];
 
-//    if (carousel != nil && carousel.carouselCategoryID != [self carouselCategory]) {
-//        [carousel.view removeFromSuperview];
-//        [carousel removeFromParentViewController];
-//        carousel = nil;
-//        currImgIndex = 0;
-//    }
+    if (carousel != nil && carousel.carouselCategoryID != [self carouselCategory]) {
+        [carousel.view removeFromSuperview];
+        [carousel removeFromParentViewController];
+        carousel = nil;
+        currImgIndex = 0;
+    }
     
     if (carousel == nil) {
-        carousel = [[DPCarouselViewController alloc] initWithCtg:[self carouselCategory] showSocials:YES];
+        carousel = [[DPCarouselViewController alloc] initWithCtg:[self carouselCategory]
+                                                    currentIndex:currImgIndex
+                                                     showSocials:YES];
         CGRect frm = self.topView.bounds;
         carousel.view.frame = frm;
         [self addChildViewController:carousel];
@@ -335,7 +337,10 @@
         CGRect frm = self.topView.bounds;
         carousel.view.frame = frm;
     }
-    [carousel makeCurrentImageAtIndex:currImgIndex];
+    if (reload)
+        [carousel reloadData];
+    else
+        [carousel makeCurrentImageAtIndex:currImgIndex];
 }
 
 -(void) viewDidAppear:(BOOL)animated {

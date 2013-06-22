@@ -79,25 +79,34 @@
     [self loadOpenFlow:NO];
 }
 
-- (void) loadOpenFlow:(BOOL)reload {    
+- (void) loadOpenFlow:(BOOL)reload {
     DPCarouselViewController *carousel = nil;
     int currImgIndex = 0;
     for (int i = 0; i < self.childViewControllers.count; i++)
         if ([self.childViewControllers[i] isKindOfClass:[DPCarouselViewController class]]) {
             carousel = (DPCarouselViewController *)self.childViewControllers[i];
             currImgIndex = carousel.currentIndex;
-            if (reload) {
-                [carousel.view removeFromSuperview];
-                [carousel removeFromParentViewController];
-                carousel = nil;
-            }
+            //            if (reload) {
+            //                [carousel.view removeFromSuperview];
+            //                [carousel removeFromParentViewController];
+            //                carousel = nil;
+            //            }
             break;
         }
     
     [self.container setNeedsDisplay];
     
+    if (carousel != nil && carousel.carouselCategoryID != category) {
+        [carousel.view removeFromSuperview];
+        [carousel removeFromParentViewController];
+        carousel = nil;
+        currImgIndex = 0;
+    }
+    
     if (carousel == nil) {
-        carousel = [[DPCarouselViewController alloc] initWithCtg:category showSocials:(BOOL)showSocials];
+        carousel = [[DPCarouselViewController alloc] initWithCtg:category
+                                                    currentIndex:currImgIndex
+                                                     showSocials:showSocials];
         CGRect frm = self.container.bounds;
         carousel.view.frame = frm;
         [self addChildViewController:carousel];
@@ -106,7 +115,12 @@
         CGRect frm = self.container.bounds;
         carousel.view.frame = frm;
     }
-    [carousel makeCurrentImageAtIndex:currImgIndex];
+
+    if (reload)
+        [carousel reloadData];
+    else
+        [carousel makeCurrentImageAtIndex:currImgIndex];
+
 }
 
 @end

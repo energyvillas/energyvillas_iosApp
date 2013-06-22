@@ -106,9 +106,9 @@
         
         [self.navigationController pushViewController:ctrlr animated:YES];
     } else {
-        BOOL showsocials = (elm.hikId == HIKID_GROUND_FLOOR ||
-                            elm.hikId == HIKID_1ST_FLOOR ||
-                            elm.hikId == HIKID_ATTIC);
+        BOOL showsocials = !(elm.hikId == HIKID_GROUND_FLOOR ||
+                             elm.hikId == HIKID_1ST_FLOOR ||
+                             elm.hikId == HIKID_ATTIC);
         DPArticlesViewController *avc = [[DPArticlesViewController alloc] initWithCategory:elm.Id showSocials:showsocials];
         [self.navigationController pushViewController:avc animated:YES];
     }

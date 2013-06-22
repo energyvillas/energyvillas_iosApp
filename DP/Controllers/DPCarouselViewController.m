@@ -24,7 +24,7 @@
 @property (strong, nonatomic) NSString *displayinglang;
 @property (strong, nonatomic) UIActivityIndicatorView *busyIndicator;
 @property (strong, nonatomic) NSOperationQueue *queue;
-@property (strong, nonatomic) DPDataLoader *dataLoader;
+@property (strong, nonatomic) DPArticlesLoader *dataLoader;
 @property (strong, nonatomic) NSArray *datalist;
 //@property (strong, nonatomic) NSMutableArray *imageCache;
 @property (strong, nonatomic) NSMutableDictionary *imageRequests;
@@ -58,11 +58,12 @@
     return self;
 }
 
--(id) initWithCtg:(int)ctgid showSocials:(BOOL)aShowSocials {
+-(id) initWithCtg:(int)ctgid currentIndex:(int)currIndx showSocials:(BOOL)aShowSocials {
     self = [super init];
     if (self) {
         _carouselCategoryID = ctgid;
         showSocials = aShowSocials;
+        _currentIndex = currIndx;
     }
     return self;
 }
@@ -71,7 +72,7 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     [self hookToNotifications];
-    [self loadData];
+    [self loadData:NO];
 }
 
 -(void) clearDataLoader {
@@ -130,7 +131,7 @@
     [self.view setNeedsDisplay];
     [self.view setNeedsLayout];
     if ([self dataLoadNeeded])
-        [self loadData];
+        [self loadData:NO];
 }
 
 - (void) viewWillDisappear:(BOOL)animated {
@@ -188,26 +189,26 @@
 
 
 - (void) reachabilityChanged {
-    [self loadData];
+    [self loadData:NO];
 }
 
 - (BOOL) dataLoadNeeded {
-    BOOL shouldLoad = (self.displayinglang == nil ||
-                       (![CURRENT_LANG isEqualToString:self.displayinglang]) ||
-                       self.datalist == nil ||
+    BOOL shouldLoad = (self.datalist == nil ||
                        self.datalist.count == 0 ||
-                       self.dataLoader.dataRefreshNeeded);
-    //    (
-    //                       (self.carouselCategoryID == CTGID_CAROUSEL && self.datalist.count <= 1) ||
-    //                       (
-    //                        (self.carouselCategoryID != CTGID_CAROUSEL && self.datalist.count == 0) ||
-    //                        self.dataLoader.dataRefreshNeeded
-    //                       )
-    //                      );
+                       (self.dataLoader != nil && ![self.dataLoader.lang isEqualToString:CURRENT_LANG]) ||
+                       (self.dataLoader != nil && self.dataLoader.dataRefreshNeeded));
     
     return shouldLoad;
 }
-- (void) loadData {
+
+- (void) reloadData {
+    [self loadData:YES];
+}
+
+- (void) loadData:(BOOL)force {
+    if (force || (self.dataLoader != nil && ![self.dataLoader.lang isEqualToString:CURRENT_LANG]))
+        [self clearDataLoader];
+        
     if (self.dataLoader == nil) {
         self.dataLoader = [[DPArticlesLoader alloc] initWithView:self.view
                                                         category:self.carouselCategoryID
@@ -215,7 +216,7 @@
         self.dataLoader.delegate = self;
     }
     
-    if ([self dataLoadNeeded])
+    if (force || [self dataLoadNeeded])
         [self.dataLoader loadData];
 }
 
@@ -448,10 +449,15 @@
     }
 }
 -(void) loadCarousel {
-    if (self.datalist && self.datalist.count > 0 && [self dataLoadNeeded]) {
-        [self clearCarousel];
-    }
-    
+//    if (self.datalist && self.datalist.count > 0 && [self dataLoadNeeded]) {
+//        [self clearCarousel];
+//    }
+
+    int currindx = self.currentIndex;
+    if (self.icarousel) {
+        self.icarousel.frame = self.view.bounds;
+        [self.icarousel reloadData];
+    } else
     if (!self.icarousel && self.datalist && self.datalist.count > 0) {
 #ifdef LOG_CAROUSEL
         NSLog(@"2.carousel loaded %d articles", self.datalist.count);
@@ -486,11 +492,15 @@
 
         [self.view addSubview:self.icarousel];
         
-        [self setupLabels];
-        //[self updateLabels];
-        
-        [self makeCurrentImageAtIndex:self.currentIndex];
+//        [self setupLabels];
+//        //[self updateLabels];
+//        
+//        [self makeCurrentImageAtIndex:self.currentIndex];
     }
+    [self setupLabels];
+    
+    [self makeCurrentImageAtIndex:currindx];
+    [self updateLabels];
 }
 
 - (CGFloat)carousel:(iCarousel *)carousel valueForOption:(iCarouselOption)option withDefault:(CGFloat)value
