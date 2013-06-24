@@ -19,7 +19,7 @@ extern NSString * const SVProgressHUDStatusUserInfoKey;
 enum {
     SVProgressHUDMaskTypeNone = 1, // allow user interactions while HUD is displayed
     SVProgressHUDMaskTypeClear, // don't allow
-    SVProgressHUDMaskTypeBlack, // don't allow and dim the UI in the back of the HUD
+    SVProgressHUDMaskTypeCustom, // don't allow and dim the UI in the back of the HUD
     SVProgressHUDMaskTypeGradient // don't allow and dim the UI with a a-la-alert-view bg gradient
 };
 
@@ -35,6 +35,8 @@ typedef NSUInteger SVProgressHUDMaskType;
 @property (readwrite, nonatomic, retain) UIImage *hudSuccessImage NS_AVAILABLE_IOS(5_0) UI_APPEARANCE_SELECTOR;
 @property (readwrite, nonatomic, retain) UIImage *hudErrorImage NS_AVAILABLE_IOS(5_0) UI_APPEARANCE_SELECTOR;
 #endif
+
++ (void) setCustomHudColor:(UIColor *)customColor;
 
 + (void)show;
 + (void)showWithMaskType:(SVProgressHUDMaskType)maskType;

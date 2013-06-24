@@ -25,6 +25,7 @@ CGFloat SVProgressHUDRingThickness = 6;
 
 @interface SVProgressHUD ()
 
+@property (nonatomic, strong) UIColor *hudCustomColor;
 @property (nonatomic, readwrite) SVProgressHUDMaskType maskType;
 @property (nonatomic, strong, readonly) NSTimer *fadeOutTimer;
 
@@ -89,6 +90,10 @@ CGFloat SVProgressHUDRingThickness = 6;
     return sharedView;
 }
 
+
++ (void) setCustomHudColor:(UIColor *)customColor {
+    [self sharedView].hudCustomColor = customColor;
+}
 
 + (void)setStatus:(NSString *)string {
 	[[self sharedView] setStatus:string];
@@ -174,8 +179,12 @@ CGFloat SVProgressHUDRingThickness = 6;
     
     switch (self.maskType) {
             
-        case SVProgressHUDMaskTypeBlack: {
-            [[UIColor colorWithWhite:0 alpha:0.5] set];
+        case SVProgressHUDMaskTypeCustom: {
+            if (self.hudCustomColor)
+                [self.hudCustomColor set];
+            else
+                [[UIColor colorWithWhite:0 alpha:0.5] set];
+            
             CGContextFillRect(context, self.bounds);
             break;
         }

@@ -323,6 +323,7 @@
     if (indexOfTabBarController == -1) {
         // we were showing main controller, so we have to go to root...
         [self.navController popToRootViewControllerAnimated:YES];
+        prevBackgroundCategory = 0;
     }
    
     [[NSNotificationCenter defaultCenter] postNotificationName:DPN_PAID_SelectedCategoryChanged_Notification

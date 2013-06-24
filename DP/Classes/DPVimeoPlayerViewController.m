@@ -141,8 +141,10 @@ typedef void (^VimeoPlayerBlock)(MPMoviePlayerViewController *mpvc, NSError *err
 //}
 //#pragma mark - video playing private
 //
+
 + (void) playVideoUrl:(NSString *)vidUrl withCompletion:(VimeoPlayerBlock)onCompleted {
-    [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeGradient];
+    [SVProgressHUD setCustomHudColor: [UIColor blackColor]];
+    [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeCustom];
     [YTVimeoExtractor fetchVideoURLFromURL:vidUrl
                                    quality:YTVimeoVideoQualityHigh
                                    success:^(NSURL *videoURL) {
