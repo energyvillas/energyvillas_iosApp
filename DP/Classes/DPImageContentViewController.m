@@ -450,20 +450,23 @@
     [self clearLabels];
     if (!self.article) return;
     
-    CGSize favSize = CGSizeMake(IS_IPAD ? IPADS_FAV_SIZE_WIDTH : IPHONES_FAV_SIZE_WIDTH,
+    CGSize favSize = CGSizeMake(!showSocials ? 0.0f : (IS_IPAD ? IPADS_FAV_SIZE_WIDTH : IPHONES_FAV_SIZE_WIDTH),
                                 IS_IPAD ? IPADS_FAV_SIZE_HEIGHT : IPHONES_FAV_SIZE_HEIGHT);
     CGRect frmbtn = CGRectMake(0, 0, favSize.width, favSize.height);
     
-    self.btnAdd2Favs = [UIButton buttonWithType:UIButtonTypeCustom];
-    self.btnAdd2Favs.frame = frmbtn;
-    self.btnAdd2Favs.contentMode = UIViewContentModeCenter;
-    [self.btnAdd2Favs setImageEdgeInsets:UIEdgeInsetsMake(-4, 0, -4, 0)];
-    self.btnAdd2Favs.backgroundColor = [UIColor whiteColor];
-    [self.btnAdd2Favs addTarget:self
-                         action:@selector(addToFavs:)
-               forControlEvents:UIControlEventTouchUpInside];
+    if (showSocials) {
+        self.btnAdd2Favs = [UIButton buttonWithType:UIButtonTypeCustom];
+        self.btnAdd2Favs.frame = frmbtn;
+        self.btnAdd2Favs.contentMode = UIViewContentModeCenter;
+        [self.btnAdd2Favs setImageEdgeInsets:UIEdgeInsetsMake(-4, 0, -4, 0)];
+        self.btnAdd2Favs.backgroundColor = [UIColor whiteColor];
+        [self.btnAdd2Favs addTarget:self
+                             action:@selector(addToFavs:)
+                   forControlEvents:UIControlEventTouchUpInside];
+    }
     
-    CGRect frmcntr = CGRectOffset(frmbtn, frmbtn.size.width + 2, 0);
+    CGFloat frmcntrOfs = showSocials ? frmbtn.size.width + 2.0f : 0.0f;
+    CGRect frmcntr = CGRectOffset(frmbtn, frmcntrOfs, 0);
     self.lblCounter = [[UILabel alloc] initWithFrame: frmcntr];
     self.lblCounter.font = [UIFont systemFontOfSize: IS_IPAD ? IPADS_FONT_SIZE : IPHONES_FONT_SIZE];
     self.lblCounter.backgroundColor = [UIColor whiteColor];
@@ -479,7 +482,8 @@
     self.lblContainer = [[UIView alloc] initWithFrame:frm];
     self.lblContainer.backgroundColor = [UIColor blackColor];
     
-    [self.lblContainer addSubview:self.btnAdd2Favs];
+    if (showSocials)
+        [self.lblContainer addSubview:self.btnAdd2Favs];
     [self.lblContainer addSubview:self.lblCounter];
     [self.lblContainer addSubview:self.lblTitle];
     
@@ -494,11 +498,13 @@
 }
 
 - (void) fixFavsButton {
-    [super fixFavsButton];
-    
-    NSString *favImgName = [self isInFavorites] ? NAVBAR_FAV_SEL_IMG : NAVBAR_FAV_IMG;
-    [self.btnAdd2Favs setImage:[UIImage imageNamed:favImgName]
-                      forState:UIControlStateNormal];
+    if (self.btnAdd2Favs) {
+        [super fixFavsButton];
+        
+        NSString *favImgName = [self isInFavorites] ? NAVBAR_FAV_SEL_IMG : NAVBAR_FAV_IMG;
+        [self.btnAdd2Favs setImage:[UIImage imageNamed:favImgName]
+                          forState:UIControlStateNormal];
+    }
 }
 
 - (int) currentIndex {
@@ -528,7 +534,8 @@
     CGRect counterfrm = CGRectMake(0, 0,
                                    IS_IPAD ? IPADS_COUNTER_WIDTH : IPHONES_COUNTER_WIDTH,
                                    self.lblCounter.frame.size.height);
-    counterfrm = CGRectOffset(counterfrm, self.btnAdd2Favs.frame.size.width + 2, 0);
+    CGFloat cntrfrmOfs = showSocials ? self.btnAdd2Favs.frame.size.width + 2.0f : 0.0f;
+    counterfrm = CGRectOffset(counterfrm, cntrfrmOfs, 0);
     self.lblCounter.frame = counterfrm;
     
     if (currIndex == 0) {
@@ -543,12 +550,18 @@
                                  self.lblTitle.frame.size.width + 6,
                                  self.lblTitle.frame.size.height);
     
-    CGRect r = self.btnAdd2Favs.frame;
-    self.btnAdd2Favs.frame = CGRectMake(r.origin.x, r.origin.y, r.size.width, counterfrm.size.height);
+    if (showSocials) {
+        CGRect r = self.btnAdd2Favs.frame;
+        self.btnAdd2Favs.frame = CGRectMake(r.origin.x, r.origin.y, r.size.width, counterfrm.size.height);
+    }
     
     titlefrm = CGRectOffset(titlefrm, counterfrm.origin.x + counterfrm.size.width + 2, 0);
     self.lblTitle.frame = titlefrm;
-    self.lblContainer.frame = CGRectUnion(self.btnAdd2Favs.frame, titlefrm);
+    
+    if (showSocials)
+        self.lblContainer.frame = CGRectUnion(self.btnAdd2Favs.frame, titlefrm);
+    else
+        self.lblContainer.frame = CGRectUnion(counterfrm, titlefrm);
 }
 
 @end

@@ -63,7 +63,7 @@
 - (void) doLocalize {
     [super doLocalize];
 
-    [self loadOpenFlow:YES];
+//    [self loadOpenFlow:YES];
 }
 
 - (void) doLayoutSubViews:(BOOL)fixtop {

@@ -141,6 +141,7 @@
 - (void)viewWillLayoutSubviews {
     [super viewWillLayoutSubviews];
     //[self loadOpenFlow];
+    [self clearCarousel];
     [self loadCarousel];
 }
 - (void)didReceiveMemoryWarning {
@@ -155,7 +156,7 @@
     _currentIndex = indx;
     if (self.currentIndex != -1 && self.icarousel) {
         //[self.icarousel setCurrentItemIndex:self.currentIndex];
-        [self.icarousel scrollToItemAtIndex:self.currentIndex animated:YES];
+        [self.icarousel scrollToItemAtIndex:indx animated:NO];
     }
 }
 
@@ -185,6 +186,7 @@
 }
 
 - (void) doLocalize {
+    [self reloadData];
 }
 
 
@@ -255,25 +257,27 @@
 
 -(void) setupLabels {
     [self clearLabels];
-    CGSize favSize = CGSizeMake(IS_IPAD ? IPADS_FAV_SIZE_WIDTH : IPHONES_FAV_SIZE_WIDTH,
+//    if (showSocials)
+    CGSize favSize = CGSizeMake(!showSocials ? 0.0f : (IS_IPAD ? IPADS_FAV_SIZE_WIDTH : IPHONES_FAV_SIZE_WIDTH),
                                 IS_IPAD ? IPADS_FAV_SIZE_HEIGHT : IPHONES_FAV_SIZE_HEIGHT);
     CGRect frmbtn = CGRectMake(0, 0, favSize.width, favSize.height);
-    
-    self.btnAdd2Favs = [UIButton buttonWithType:UIButtonTypeCustom];
-    self.btnAdd2Favs.frame = frmbtn;
-    self.btnAdd2Favs.contentMode = UIViewContentModeCenter;
-    [self.btnAdd2Favs setImageEdgeInsets:UIEdgeInsetsMake(-4, 0, -4, 0)];
-    self.btnAdd2Favs.backgroundColor = [UIColor whiteColor];
-    [self.btnAdd2Favs setImage:[UIImage imageNamed:NAVBAR_FAV_IMG]
-                      forState:UIControlStateNormal];
-    [self.btnAdd2Favs setImage:[UIImage imageNamed:NAVBAR_FAV_SEL_IMG]
-                      forState:UIControlStateSelected];
-
-    [self.btnAdd2Favs addTarget:self
-                         action:@selector(addToFavs:)
-               forControlEvents:UIControlEventTouchUpInside];
-    
-    CGRect frmcntr = CGRectOffset(frmbtn, frmbtn.size.width + 2, 0);
+    CGFloat favbtnOfs = showSocials ? 2.0f : 0.0f;
+    if (showSocials) {
+        self.btnAdd2Favs = [UIButton buttonWithType:UIButtonTypeCustom];
+        self.btnAdd2Favs.frame = frmbtn;
+        self.btnAdd2Favs.contentMode = UIViewContentModeCenter;
+        [self.btnAdd2Favs setImageEdgeInsets:UIEdgeInsetsMake(-4, 0, -4, 0)];
+        self.btnAdd2Favs.backgroundColor = [UIColor whiteColor];
+        [self.btnAdd2Favs setImage:[UIImage imageNamed:NAVBAR_FAV_IMG]
+                          forState:UIControlStateNormal];
+        [self.btnAdd2Favs setImage:[UIImage imageNamed:NAVBAR_FAV_SEL_IMG]
+                          forState:UIControlStateSelected];
+        
+        [self.btnAdd2Favs addTarget:self
+                             action:@selector(addToFavs:)
+                   forControlEvents:UIControlEventTouchUpInside];
+    }
+    CGRect frmcntr = CGRectOffset(frmbtn, frmbtn.size.width + favbtnOfs, 0);
     frmcntr.size.width = 0;
     self.lblCounter = [[UILabel alloc] initWithFrame: frmcntr];
     self.lblCounter.font = [UIFont systemFontOfSize: IS_IPAD ? IPADS_FONT_SIZE : IPHONES_FONT_SIZE];
@@ -291,7 +295,9 @@
     self.lblContainer = [[UIView alloc] initWithFrame:frm];
     self.lblContainer.backgroundColor = [UIColor blackColor];
     
-    [self.lblContainer addSubview:self.btnAdd2Favs];
+    if (showSocials)
+        [self.lblContainer addSubview:self.btnAdd2Favs];
+    
     [self.lblContainer addSubview:self.lblCounter];
     [self.lblContainer addSubview:self.lblTitle];
     
@@ -359,14 +365,17 @@
     
     [self.lblCounter sizeToFit];
     
+    CGFloat counterfrmOfsX = self.btnAdd2Favs == nil ? 0.0f : self.btnAdd2Favs.frame.size.width + 2.0f;
     CGRect counterfrm = CGRectMake(0, 0,
                                    IS_IPAD ? IPADS_COUNTER_WIDTH : IPHONES_COUNTER_WIDTH,
                                    self.lblCounter.frame.size.height);
-    counterfrm = CGRectOffset(counterfrm, self.btnAdd2Favs.frame.size.width + 2, 0);
+    counterfrm = CGRectOffset(counterfrm, counterfrmOfsX, 0);
     self.lblCounter.frame = counterfrm;
 
-    CGRect r = self.btnAdd2Favs.frame;
-    self.btnAdd2Favs.frame = CGRectMake(r.origin.x, r.origin.y, r.size.width, counterfrm.size.height);
+    if (self.btnAdd2Favs) {
+        CGRect r = self.btnAdd2Favs.frame;
+        self.btnAdd2Favs.frame = CGRectMake(r.origin.x, r.origin.y, r.size.width, counterfrm.size.height);
+    }
     
     self.lblTitle.frame = CGRectZero;
     if (self.icarousel.currentItemIndex >= self.datalist.count) {
@@ -389,7 +398,10 @@
         self.lblTitle.frame = titlefrm;
     }
     
-    self.lblContainer.frame = CGRectUnion(CGRectUnion(self.btnAdd2Favs.frame, counterfrm), self.lblTitle.frame);
+    if (self.btnAdd2Favs)
+        self.lblContainer.frame = CGRectUnion(CGRectUnion(self.btnAdd2Favs.frame, counterfrm), self.lblTitle.frame);
+    else
+        self.lblContainer.frame = CGRectUnion(counterfrm, self.lblTitle.frame);
 }
 //==============================================================================
 
@@ -435,7 +447,10 @@
     
     dispatch_async(dispatch_get_main_queue(), ^{
         //[self loadOpenFlow];
+        [self clearCarousel];
         [self loadCarousel];
+        [self.view setNeedsDisplay];
+        [self.view setNeedsLayout];
     });
 }
 #pragma mark END DPDataLoaderDelegate

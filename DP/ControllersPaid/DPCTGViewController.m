@@ -386,7 +386,7 @@
 //    return NO;
 //}
 - (BOOL) showNavBarSocial {
-    return YES;
+    return self.categoryId != CTGID_INFO;
 }
 - (BOOL) showNavBarInfo {
     return self.categoryId != CTGID_INFO ; //[DPAppHelper sharedInstance].isPurchased;

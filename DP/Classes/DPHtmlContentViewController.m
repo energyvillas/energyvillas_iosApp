@@ -271,7 +271,7 @@
     return NO;
 }
 - (BOOL) showNavBarAddToFav {
-    return self.categoryID != 0;
+    return self.categoryID != 0 && self.categoryID != CTGID_INFO;
 }
 - (BOOL) showNavBarSocial {
     return NO;

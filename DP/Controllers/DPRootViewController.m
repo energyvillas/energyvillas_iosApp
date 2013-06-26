@@ -100,7 +100,7 @@
     
 //    if (self.bottomView.subviews.count > 0) {
         [self loadDetailView:YES];
-        [self loadOpenFlow:YES];
+//        [self loadOpenFlow:YES];
 //    }
 }
 
