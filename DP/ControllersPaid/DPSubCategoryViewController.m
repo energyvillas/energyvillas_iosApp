@@ -358,10 +358,10 @@
 }
 
 -(UIView *) loadInnerHtmlView {
-    CGFloat grayPcnt = 70.0f / 256.0f;
+    CGFloat grayPcnt = 65.0f / 256.0f; //70.0f / 256.0f;
     UIView *innerHtmlView = [[UIView alloc] initWithFrame:CGRectInset(self.htmlView.bounds, 0, 2)];
 //    innerHtmlView.backgroundColor = [UIColor colorWithRed:grayPcnt green:grayPcnt blue:grayPcnt alpha:0.9f];
-    innerHtmlView.backgroundColor = [UIColor colorWithWhite:grayPcnt alpha:0.9f];
+    innerHtmlView.backgroundColor = [UIColor colorWithRed:grayPcnt green:grayPcnt blue:grayPcnt alpha:1.0f]; //[UIColor colorWithWhite:grayPcnt alpha:0.9f];
     innerHtmlView.layer.borderColor = [UIColor colorWithWhite:0.6f alpha:1.0f].CGColor;
     innerHtmlView.layer.borderWidth = 2.0f;
     
