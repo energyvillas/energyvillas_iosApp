@@ -113,9 +113,10 @@
 "EMAIL_BODY_FMT"="-----<br/>Στάλθηκε μέσω της εφαρμογής Energy Villas<br/>-----<br/><br/><br/><a href=\"%@\">%@</a><br/><a href=\"%@\"><img src=\"%@\" alt=\"%@\" width=\"%.0f\" height=\"%.0f\" /></a><br/>Θέλετε να κατασκευάσετε κατοικία, χωρίς να χάνετε χρόνο και χρήμα?<br/>Θέλετε να επιλέγετε από οποιοδήποτε σημείο του κόσμου κι αν βρίσκεστε, μαζί με τους δικούς σας ανθρώπους, την κατοικία των ονείρων σας?<br/>Θέλετε να βλέπετε μοναδικά αρχιτεκτονικά σχέδια κατοικιών, design, έπιπλα επώνυμων οίκων και διακόσμηση?<br/>Επισκεφτείτε την ιστοσελίδα μας: <a href=\"%@\">%@</a>";
 
 "ERR_MSG_UNABLE_TO_TWEET"="You can't send a tweet right now, make sure your device has an internet connection and you have at least one Twitter account setup";
-"TWEET_INITIAL_TEXT"="Tweeting from energyVillas! :)";
+"TWEET_INITIAL_TEXT"="Μαζί μας μπορείτε να κατασκευάστε την κατοικία των ονείρων σας,χωρίς να χάνε";//τε χρόνο και χρήμα!!";
 
-"FACEBOOK_DESCR"="Energy villas makes it possible to actually get the house you always wanted.";
+"FACEBOOK_LINK_TEXT"="Ενεργειακή Κατοικία:Κατασκευάστε μοναδικές κατοικίες,χωρίς να χάνετε χρόνο και χρήμα!!";
+"FACEBOOK_DESCR"="Μια πρωτοποριακή ιδέα για όλους όσους ενδιαφέρονται για κατασκευή κατοικίας, οικιακή αρχιτεκτονική, design, διακόσμηση και εξοικονόμηση ενέργειας.";
 "FACEBOOK_RESULT_FMT"="Posted story, id: %@";
 
 

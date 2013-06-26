@@ -239,9 +239,9 @@
     }
     
     TWTweetComposeViewController *tweetSheet = [[TWTweetComposeViewController alloc] init];
-    [tweetSheet setInitialText: DPLocalizedString(kTWEET_INITIAL_TEXT)];
-    
-    NSString *urlstr = [CURRENT_LANG isEqualToString:@"el"] ? @"http://www.energeiakikatoikia.gr" : @"http://www.energyvillas.com";
+    NSString *urlstr = ([CURRENT_LANG isEqualToString:@"el"]
+                        ? @"http://www.energeiakikatoikia.gr"
+                        : @"http://www.energyvillas.com");
     NSString *imgUrl = [DPAppHelper sharedInstance].imageUrl2Share;
 
     BOOL added = NO;
@@ -256,6 +256,8 @@
         if (url)
             added = [tweetSheet addURL:url];
     }
+
+    added = [tweetSheet setInitialText: DPLocalizedString(kTWEET_INITIAL_TEXT)];
     
     [self.controller presentModalViewController:tweetSheet animated:YES];
 }
