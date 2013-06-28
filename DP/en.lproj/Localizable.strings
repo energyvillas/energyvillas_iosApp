@@ -113,7 +113,7 @@
 "EMAIL_BODY_FMT"="-----<br/>Sent from the Energy Villas application<br/>-----<br/><br/><a href=\"%@\">%@</a><br/><a href=\"%@\"><img src=\"%@\" alt=\"%@\" width=\"%.0f\" height=\"%.0f\" /></a><br/>Do you wish to have a house built without waisting time or money?<br/>Do you wish to be able to choose from whichever part of the world you are at the time, the house of your dreams, together with your loved ones?<br/>Do you wish to see unique architectural house designs,  furnished from famous firms, fully decorated and equipped?<br/>Visit our site: <a href=\"%@\">%@</a>";
 
 "ERR_MSG_UNABLE_TO_TWEET"="You can't send a tweet right now, make sure your device has an internet connection and you have at least one Twitter account setup";
-"TWEET_INITIAL_TEXT"="We can construct on your behalf the house of your dreams, saving you time and money!";
+"TWEET_INITIAL_TEXT"="We can construct the house of your dreams, saving you time and money!";
 
 "FACEBOOK_LINK_TEXT"="Energy Villas:We Build unique houses, saving you time an";//d money!";
 "FACEBOOK_DESCR"="An innovative idea for everyone interested in residential construction, residential architecture, design, decoration and energy saving.";
