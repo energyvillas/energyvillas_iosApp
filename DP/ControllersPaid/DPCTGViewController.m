@@ -154,6 +154,7 @@
 - (void) viewDidLoad {
     [super viewDidLoad];
     [self doSetup];
+    [self loadData];
 }
 
 -(void)viewDidUnload {
@@ -252,14 +253,6 @@
 }
 
 - (void) loadData {
-    if (![[DPAppHelper sharedInstance] hostIsReachable]) {
-        showAlertMessage(nil,
-                         DPLocalizedString(kERR_TITLE_CONNECTION_FAILED),
-                         DPLocalizedString(kERR_MSG_TRY_LATER));
-        
-        return;
-    }
-    
     if (self.dataLoader == nil) {
         self.dataLoader = [[DPCategoryLoader alloc] initWithView:nil//self.imageView
                                                      useInternet:YES
@@ -303,9 +296,9 @@
                     self.category = ctg;
                     break;
                 }
-            
-            [self categoryLoaded];
         }
+        
+        [self categoryLoaded];
     }
 }
 
