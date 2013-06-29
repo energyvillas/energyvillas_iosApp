@@ -205,6 +205,7 @@
 
 - (UIButton *) createViewWithFrame:(CGRect)frame {
     DPButton *result = [DPButton buttonWithType:UIButtonTypeCustom];
+    result.adjustsImageWhenHighlighted = NO;
     result.showsTouchWhenHighlighted = NO;
     result.extraLayerColor = [UIColor colorWithWhite:0.0f alpha:0.25f];
     result.showExtraLayerOnHighlight = YES;
