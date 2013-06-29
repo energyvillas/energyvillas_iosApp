@@ -97,17 +97,20 @@
 }
 
 - (void) loadData {
-    self.dataLoader = [[DPBannersLoader alloc] initWithView:self.view
-                                                      group:self.group
-                                                       lang:CURRENT_LANG
-                                                  localData:[self createLocalData]];
-    self.dataLoader.delegate = self;
-    [self.dataLoader loadData];
+    if (!self.dataLoader) {
+        self.dataLoader = [[DPBannersLoader alloc] initWithView:self.view
+                                                          group:self.group
+                                                           lang:CURRENT_LANG
+                                                      localData:[self createLocalData]];
+        self.dataLoader.delegate = self;
+    }
+    
+    if (self.contentList == nil || self.contentList.count == 0 || self.dataLoader.dataRefreshNeeded)
+        [self.dataLoader loadData];
 }
 
 - (void) reachabilityChanged {
     [super reachabilityChanged];
-    if (self.contentList.count == 0 || self.dataLoader == nil || self.dataLoader.dataRefreshNeeded)
         [self loadData];    
 }
 
@@ -118,6 +121,9 @@
         ; // no worries....
     else 
         [self contentLoaded:loader.datalist];
+    
+    [self.view setNeedsLayout];
+    [self.view setNeedsDisplay];
 }
 
 //- (void) contentLoaded:(NSArray *)content {

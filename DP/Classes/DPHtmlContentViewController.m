@@ -157,14 +157,23 @@
 	// Do any additional setup after loading the view.
     self.containerView = [[UIView alloc] initWithFrame:self.view.bounds];
     [self.view addSubview:self.containerView];
-        
-    if (self.categoryID != 0) {
+    [self loadArticleData];
+}
+
+- (void) reachabilityChanged {
+    [super reachabilityChanged];
+    [self loadArticleData];    
+}
+
+- (void) loadArticleData {
+    if (self.categoryID != 0 && self.article == nil) {
         self.articlesLoader = [[DPArticlesLoader alloc] initWithView:self.view
                                                             category:self.categoryID
                                                                 lang:self.lang];
         self.articlesLoader.delegate = self;
         [self.articlesLoader loadData];
     }
+    
 }
 
 - (void) viewWillAppear:(BOOL)animated {

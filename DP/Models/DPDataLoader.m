@@ -83,6 +83,8 @@
 #pragma mark === busy indication handling  ===
 
 - (void) startIndicator {
+    return;
+    
     if (!self.indicatorContainer) return;
     
     if(!self.busyIndicator) {
@@ -98,6 +100,7 @@
 }
 
 - (void) stopIndicator {
+    return;
     if(self.busyIndicator) {
         [self.busyIndicator stopAnimating];
         [self.busyIndicator removeFromSuperview];
