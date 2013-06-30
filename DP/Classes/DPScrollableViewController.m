@@ -106,6 +106,7 @@
     self.contentList = content;
     self.portraitRendered = nil;
     self.landscapeRendered = nil;
+    [self clearQueueAndOperations];
 }
 
 - (void)viewDidLoad
@@ -139,12 +140,11 @@
     [super viewDidUnload];
 }
 
--(void) cleanUp {
-    [self killUserTimer];
-    [self killTimer];
-
+- (void) clearQueueAndOperations {
     if (self.queue) {
         [self stopIndicator];
+        
+        [self.queue cancelAllOperations];
         
         for (id op in self.queue.operations)
             if ([op isKindOfClass:[ASIHTTPRequest class]]) {
@@ -152,12 +152,17 @@
                 [((ASIHTTPRequest *)op) setDidFinishSelector:nil];
                 ((ASIHTTPRequest *)op).delegate = nil;
             }
-
-        [self.queue cancelAllOperations];
     }
-
-    self.queue = nil;
     
+    self.queue = nil;
+}
+
+-(void) cleanUp {
+    [self killUserTimer];
+    [self killTimer];
+    
+    [self clearQueueAndOperations];
+
     self.scrollView = nil;
     self.pageControl = nil;
     
@@ -762,9 +767,10 @@
         [[DPAppHelper sharedInstance] saveImageToCache:imageUrl data:imgData];
 }
 
-//PENDING : i think i must pass just the elm.imageUrl not the calced name!!!!
-// in the whole async process!!!!
-- (void) loadImageAsync:(DPDataElement *)elm imageUrl:(NSString *)imgUrl inView:(UIImageView *)imgView cacheImage:(BOOL)cacheimage{
+- (void) loadImageAsync:(DPDataElement *)elm
+               imageUrl:(NSString *)imgUrl
+                 inView:(UIImageView *)imgView
+             cacheImage:(BOOL)cacheimage {
     DPAppHelper *appHelper = [DPAppHelper sharedInstance];
     NSData *imgData = [appHelper loadImageFromCache:imgUrl];
     if (imgData) 
@@ -784,8 +790,17 @@
     
     __block ASIHTTPRequest *ir = request;
     __block id this = self;
-    [request setCompletionBlock:^{ [this requestDone:ir]; }];
-    [request setFailedBlock:^{ [this requestFailed:ir]; }];
+    [request setCompletionBlock:^{
+        [this requestDone:ir];
+        this = nil;
+        ir = nil;
+    }];
+    
+    [request setFailedBlock:^{
+        [this requestFailed:ir];
+        this = nil;
+        ir = nil;
+    }];
 
     request.userInfo = [NSDictionary dictionaryWithObjectsAndKeys:
                         elm, @"element",

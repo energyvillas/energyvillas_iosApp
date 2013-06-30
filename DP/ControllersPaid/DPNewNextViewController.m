@@ -109,17 +109,18 @@
         [self stopIndicator:0];
         [self stopIndicator:1];
         
+        [self.queue cancelAllOperations];
+
         for (id op in self.queue.operations)
             if ([op isKindOfClass:[ASIHTTPRequest class]]) {
                 [((ASIHTTPRequest *)op) clearDelegatesAndCancel];
                 [((ASIHTTPRequest *)op) setDidFinishSelector:nil];
                 ((ASIHTTPRequest *)op).delegate = nil;
             }
-
-        [self.queue cancelAllOperations];
     }
     
     self.queue = nil;
+    self.imageRequests = nil;
     [self clearDataLoaders];
 }
 
@@ -447,8 +448,16 @@
 //    [imageRequest setDidFinishSelector:@selector(imageRequestDone:)];
     __block ASIHTTPRequest *ir = imageRequest;
     __block id this = self;
-    [imageRequest setCompletionBlock:^{ [this imageRequestDone:ir]; }];
-    [imageRequest setFailedBlock:^{ [this requestFailed:ir]; }];
+    [imageRequest setCompletionBlock:^{
+        [this imageRequestDone:ir];
+        this = nil;
+        ir = nil;
+    }];
+    [imageRequest setFailedBlock:^{
+        [this requestFailed:ir];
+        this = nil;
+        ir = nil;
+    }];
 
     imageRequest.userInfo = [NSDictionary dictionaryWithObjectsAndKeys:
                              [NSNumber numberWithInt:aIndex], @"imageIndex",

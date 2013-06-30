@@ -16,6 +16,7 @@
 #import "DPCTGViewController.h"
 
 
+
 @interface UINavContentViewController ()
 
 @property (strong, nonatomic) UIButton *navbarTitleItemButton;
@@ -29,6 +30,7 @@
 @implementation UINavContentViewController 
 
 - (void) dealloc {
+    [self unHookFromNotifications];
     self.navbarTitleItemButton = nil;
     self.navbarLang_EN = nil;
     self.navbarLang_EL = nil;

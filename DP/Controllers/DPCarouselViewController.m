@@ -86,23 +86,32 @@
     [super viewDidUnload];
     [self cleanup];
 }
--(void) cleanup {
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
+
+- (void) clearQueueAndOperations {
     if (self.queue) {
         [self stopIndicator];
-
+        
+        [self.queue cancelAllOperations];
+        
         for (id op in self.queue.operations)
             if ([op isKindOfClass:[ASIHTTPRequest class]]) {
                 [((ASIHTTPRequest *)op) clearDelegatesAndCancel];
                 [((ASIHTTPRequest *)op) setDidFinishSelector:nil];
                 ((ASIHTTPRequest *)op).delegate = nil;
             }
-
-        [self.queue cancelAllOperations];
     }
     
     self.queue = nil;
+    
+    self.imageRequests = nil;
+}
+
+-(void) cleanup {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [self clearQueueAndOperations];
+    
     [self clearDataLoader];
+    
     [self clearCarousel];
     
     self.busyIndicator = nil;
@@ -208,9 +217,12 @@
 }
 
 - (void) loadData:(BOOL)force {
-    if (force || (self.dataLoader != nil && ![self.dataLoader.lang isEqualToString:CURRENT_LANG]))
+    if (force || (self.dataLoader != nil && ![self.dataLoader.lang isEqualToString:CURRENT_LANG])) {
+        [self clearQueueAndOperations];
         [self clearDataLoader];
-        
+        self.datalist = nil;
+    }
+    
     if (self.dataLoader == nil) {
         self.dataLoader = [[DPArticlesLoader alloc] initWithView:self.view
                                                         category:self.carouselCategoryID
@@ -819,8 +831,18 @@
     //[imageRequest setDidFinishSelector:@selector(imageRequestDone:)];
     __block ASIHTTPRequest *ir = imageRequest;
     __block id this = self;
-    [imageRequest setCompletionBlock:^{ [this imageRequestDone:ir]; }];
-    [imageRequest setFailedBlock:^{ [this requestFailed:ir]; }];
+    
+    [imageRequest setCompletionBlock:^{
+        [this imageRequestDone:ir];
+        this = nil;
+        ir = nil;
+    }];
+    
+    [imageRequest setFailedBlock:^{
+        [this requestFailed:ir];
+        this = nil;
+        ir = nil;
+    }];
     
     imageRequest.userInfo = [NSDictionary dictionaryWithObjectsAndKeys:
                              [NSNumber numberWithInt:aIndex], @"imageIndex",

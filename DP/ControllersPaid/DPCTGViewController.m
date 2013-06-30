@@ -330,8 +330,16 @@
         
         __block ASIHTTPRequest *r = self.request;
         __block id this = self;
-        [self.request setCompletionBlock:^{ [this imageRequestDone:r]; }];
-        [self.request setFailedBlock:^{ [this imageRequestFailed:r]; }];
+        [self.request setCompletionBlock:^{
+            [this imageRequestDone:r];
+            this = nil;
+            r = nil;
+        }];
+        [self.request setFailedBlock:^{
+            [this imageRequestFailed:r];
+            this = nil;
+            r = nil;
+        }];
 
         self.request.userInfo = [NSDictionary dictionaryWithObjectsAndKeys:
                                  imageUrl, @"imageName",

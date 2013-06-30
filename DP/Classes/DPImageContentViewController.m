@@ -333,8 +333,16 @@
 //        [self.request setDidFinishSelector:@selector(imageRequestDone:)];
         __block ASIHTTPRequest *ir = self.request;
         __block id this = self;
-        [self.request setCompletionBlock:^{ [this imageRequestDone:ir]; }];
-        [self.request setFailedBlock:^{ [this requestFailed:ir]; }];
+        [self.request setCompletionBlock:^{
+            [this imageRequestDone:ir];
+            this = nil;
+            ir = nil;
+        }];
+        [self.request setFailedBlock:^{
+            [this requestFailed:ir];
+            this = nil;
+            ir = nil;
+        }];
 
         self.request.userInfo = [NSDictionary dictionaryWithObjectsAndKeys:
                                  imageUrl, @"imageName",

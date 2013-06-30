@@ -203,8 +203,17 @@
     
     __block ASIHTTPRequest *r = self.request;
     __block DPDataLoader *this = self;
-    [self.request setCompletionBlock:^{ [this requestFinished:r]; }];
-    [self.request setFailedBlock:^{ [this requestFailed:r]; }];
+    [self.request setCompletionBlock:^{
+        [this requestFinished:r];
+        this = nil;
+        r = nil;
+    }];
+    
+    [self.request setFailedBlock:^{
+        [this requestFailed:r];
+        this = nil;
+        r = nil;
+    }];
     
     //[self.request setDelegate:self];
     [self.queue addOperation:self.request];

@@ -322,8 +322,16 @@ CGRect CGRectChangeCenter(CGRect rect, CGPoint center) {
     ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:[NSURL URLWithString:highlight ? elm.imageRollUrl : elm.imageUrl]];
     __block ASIHTTPRequest *ir = request;
     __block id this = self;
-    [request setCompletionBlock:^{ [this requestDone:ir]; }];
-    [request setFailedBlock:^{ [this requestFailed:ir]; }];
+    [request setCompletionBlock:^{
+        [this requestDone:ir];
+        this = nil;
+        ir = nil;
+    }];
+    [request setFailedBlock:^{
+        [this requestFailed:ir];
+        this = nil;
+        ir = nil;
+    }];
 
     request.userInfo = [NSDictionary dictionaryWithObjectsAndKeys:
                         elm, @"element",
