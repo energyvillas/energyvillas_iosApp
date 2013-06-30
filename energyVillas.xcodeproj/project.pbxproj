@@ -107,8 +107,6 @@
 		5E956EB51757BFDD00B86DAC /* DPCallUsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E956EB41757BFDC00B86DAC /* DPCallUsViewController.m */; };
 		5E956EBD1757C23F00B86DAC /* call_us_el.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 5E956EBB1757C23F00B86DAC /* call_us_el.jpg */; };
 		5E956EBE1757C23F00B86DAC /* call_us_en.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 5E956EBC1757C23F00B86DAC /* call_us_en.jpg */; };
-		5E9ABBDE16F9F3CA000EAB46 /* DPTestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E9ABBDD16F9F3CA000EAB46 /* DPTestViewController.m */; };
-		5E9ABBE016F9F3E2000EAB46 /* DPTestView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5E9ABBDF16F9F3E2000EAB46 /* DPTestView.xib */; };
 		5EAE0C3D175DF6E900C75A0C /* loading.png in Resources */ = {isa = PBXBuildFile; fileRef = 5EAE0C3C175DF6E900C75A0C /* loading.png */; };
 		5EB72C751744DE2D00392D6E /* SKProduct+LocalizedPrice.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EB72C741744DE2D00392D6E /* SKProduct+LocalizedPrice.m */; };
 		5EB72CB8174A324C00392D6E /* DPFavoritesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EB72CB7174A324B00392D6E /* DPFavoritesViewController.m */; };
@@ -144,7 +142,6 @@
 		5EC255F5170101540045AB99 /* DPPaidMainView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5EC255F3170101540045AB99 /* DPPaidMainView.xib */; };
 		5EC255F6170101540045AB99 /* DPPaidRootView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5EC255F4170101540045AB99 /* DPPaidRootView.xib */; };
 		5EC255F81701054A0045AB99 /* DPCategoryView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5EC255F71701054A0045AB99 /* DPCategoryView.xib */; };
-		5EC48CDB1714B7CF00A9566E /* testView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5EC48CDA1714B7CF00A9566E /* testView.xib */; };
 		5EC48CDE1714BF7E00A9566E /* DPBuyContentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EC48CDD1714BF7E00A9566E /* DPBuyContentViewController.m */; };
 		5EC5739917255527000B7004 /* DPSocialManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EC5739817255527000B7004 /* DPSocialManager.m */; };
 		5EC5739C1725978E000B7004 /* DPNewNextViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EC5739B1725978D000B7004 /* DPNewNextViewController.m */; };
@@ -336,9 +333,6 @@
 		5E956EB41757BFDC00B86DAC /* DPCallUsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPCallUsViewController.m; sourceTree = "<group>"; };
 		5E956EBB1757C23F00B86DAC /* call_us_el.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = call_us_el.jpg; sourceTree = "<group>"; };
 		5E956EBC1757C23F00B86DAC /* call_us_en.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = call_us_en.jpg; sourceTree = "<group>"; };
-		5E9ABBDC16F9F3CA000EAB46 /* DPTestViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPTestViewController.h; sourceTree = "<group>"; };
-		5E9ABBDD16F9F3CA000EAB46 /* DPTestViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPTestViewController.m; sourceTree = "<group>"; };
-		5E9ABBDF16F9F3E2000EAB46 /* DPTestView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DPTestView.xib; sourceTree = "<group>"; };
 		5EAE0C3C175DF6E900C75A0C /* loading.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = loading.png; sourceTree = "<group>"; };
 		5EB72C731744DE2D00392D6E /* SKProduct+LocalizedPrice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SKProduct+LocalizedPrice.h"; sourceTree = "<group>"; };
 		5EB72C741744DE2D00392D6E /* SKProduct+LocalizedPrice.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "SKProduct+LocalizedPrice.m"; sourceTree = "<group>"; };
@@ -405,7 +399,6 @@
 		5EC255F4170101540045AB99 /* DPPaidRootView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DPPaidRootView.xib; sourceTree = "<group>"; };
 		5EC255F71701054A0045AB99 /* DPCategoryView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DPCategoryView.xib; sourceTree = "<group>"; };
 		5EC255F917010D610045AB99 /* DPScrollableViewDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DPScrollableViewDelegate.h; sourceTree = "<group>"; };
-		5EC48CDA1714B7CF00A9566E /* testView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = testView.xib; sourceTree = "<group>"; };
 		5EC48CDC1714BF7E00A9566E /* DPBuyContentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPBuyContentViewController.h; sourceTree = "<group>"; };
 		5EC48CDD1714BF7E00A9566E /* DPBuyContentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPBuyContentViewController.m; sourceTree = "<group>"; };
 		5EC5739717255527000B7004 /* DPSocialManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DPSocialManager.h; path = DP/Classes/DPSocialManager.h; sourceTree = SOURCE_ROOT; };
@@ -739,8 +732,6 @@
 				5E71A3F316F99ADB00E7AFF9 /* DPMainViewController.m */,
 				5E71A3FA16F99DC400E7AFF9 /* DPRootViewController.h */,
 				5E71A3FB16F99DC400E7AFF9 /* DPRootViewController.m */,
-				5E9ABBDC16F9F3CA000EAB46 /* DPTestViewController.h */,
-				5E9ABBDD16F9F3CA000EAB46 /* DPTestViewController.m */,
 				5E3605101707A72400DB7B20 /* DPBuyViewController.h */,
 				5E3605111707A72400DB7B20 /* DPBuyViewController.m */,
 				5E4E851817109D38005DAD06 /* DPCategoriesViewController.h */,
@@ -758,9 +749,7 @@
 			children = (
 				5E71A3F816F99C9500E7AFF9 /* DPMainView.xib */,
 				5E71A3FD16F99DD900E7AFF9 /* DPRootView.xib */,
-				5E9ABBDF16F9F3E2000EAB46 /* DPTestView.xib */,
 				5E3605131707A74300DB7B20 /* DPBuyView.xib */,
-				5EC48CDA1714B7CF00A9566E /* testView.xib */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -1068,7 +1057,6 @@
 				5E71A3C216F9973500E7AFF9 /* InfoPlist.strings in Resources */,
 				5E71A3F916F99C9500E7AFF9 /* DPMainView.xib in Resources */,
 				5E71A3FE16F99DD900E7AFF9 /* DPRootView.xib in Resources */,
-				5E9ABBE016F9F3E2000EAB46 /* DPTestView.xib in Resources */,
 				5EC255D216FF95040045AB99 /* Localizable.strings in Resources */,
 				5EC255F5170101540045AB99 /* DPPaidMainView.xib in Resources */,
 				5EC255F6170101540045AB99 /* DPPaidRootView.xib in Resources */,
@@ -1086,7 +1074,6 @@
 				5E4E85131710356A005DAD06 /* Background in Resources */,
 				5E4E8515171059AA005DAD06 /* Navbar in Resources */,
 				5E4E851F1711E542005DAD06 /* DPSubCategoryView.xib in Resources */,
-				5EC48CDB1714B7CF00A9566E /* testView.xib in Resources */,
 				5EE16DFF171C47D10006E1CE /* Carousel in Resources */,
 				5E31F028171FFD54008B15F0 /* FacebookSDKResources.bundle in Resources */,
 				5E31F03717201073008B15F0 /* DPFBLoginView.xib in Resources */,
@@ -1159,7 +1146,6 @@
 				5E71A3EE16F9991000E7AFF9 /* UIImageExtras.m in Sources */,
 				5E71A3F416F99ADB00E7AFF9 /* DPMainViewController.m in Sources */,
 				5E71A3FC16F99DC400E7AFF9 /* DPRootViewController.m in Sources */,
-				5E9ABBDE16F9F3CA000EAB46 /* DPTestViewController.m in Sources */,
 				5EC2557D16FC64400045AB99 /* DPImageInfo.m in Sources */,
 				5EC2558416FC71BD0045AB99 /* IAPHelper.m in Sources */,
 				5EC2558716FC73430045AB99 /* DPIAPHelper.m in Sources */,
