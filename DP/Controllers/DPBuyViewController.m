@@ -280,10 +280,10 @@
     self.contentView.layer.borderWidth = IS_IPAD ? 3.0f : 1.5f;
     
         if (IS_IPAD) {
-            actualFrame = CGRectMake((nextViewSize.width - frm.size.width) / 2,
+            actualFrame = CGRectMake((nextViewSize.width - cf.size.width) / 2,
                                      cf.origin.y,
-                                     frm.size.width,
-                                     frm.origin.y + frm.size.height);
+                                     cf.size.width,
+                                     cf.size.height);
         }
 }
 
