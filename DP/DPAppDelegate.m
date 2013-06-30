@@ -224,16 +224,22 @@ void myExceptionHandler (NSException *exception)
 
 - (void) showFBFeedDlg {
     // Put together the dialog parameters
+    NSString *name = NilIfEmpty(DPLocalizedString(kFACEBOOK_LINK_TEXT));
     NSString *link = ([CURRENT_LANG isEqualToString:@"el"]
                       ? @"http://www.energeiakikatoikia.gr"
                       : @"http://www.energyvillas.com");
-        
-    NSDictionary *params = @{ @"name"           : DPLocalizedString(kFACEBOOK_LINK_TEXT),
-                              @"link"           : link,
-                              @"picture"        : [DPAppHelper sharedInstance].imageUrl2Share,
-                              @"caption"        : [DPAppHelper sharedInstance].imageTitle2Share,
-                              @"description"    : DPLocalizedString(kFACEBOOK_DESCR)
-                            };
+    NSString *tmp = [DPAppHelper sharedInstance].imageUrl2Share;
+    NSString *picUrl = NilIfEmpty(tmp);
+    tmp = [DPAppHelper sharedInstance].imageTitle2Share;
+    NSString *caption = NilIfEmpty(tmp);
+    NSString *descr = NilIfEmpty(DPLocalizedString(kFACEBOOK_DESCR));
+    
+    NSMutableDictionary *params = [NSMutableDictionary dictionary];
+    if (name != nil) params[@"name"] = name;
+    if (link != nil) params[@"link"] = link;
+    if (picUrl != nil) params[@"picture"] = picUrl;
+    if (caption != nil) params[@"caption"] = caption;
+    if (descr != nil) params[@"description"] = descr;
     
     // Invoke the dialog
     [FBWebDialogs presentFeedDialogModallyWithSession:nil

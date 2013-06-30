@@ -273,6 +273,7 @@ UIKIT_EXTERN NSString *const kERR_MSG_UNABLE_TO_TWEET;
 UIKIT_EXTERN NSString *const kTWEET_INITIAL_TEXT;
 UIKIT_EXTERN NSString *const kEMAIL_SUBJECT;
 UIKIT_EXTERN NSString *const kEMAIL_BODY_FMT;
+UIKIT_EXTERN NSString *const kEMAIL_BODY_NO_IMG_FMT;
 UIKIT_EXTERN NSString *const kFACEBOOK_LINK_TEXT;
 UIKIT_EXTERN NSString *const kFACEBOOK_DESCR;
 UIKIT_EXTERN NSString *const kFACEBOOK_RESULT_FMT;
@@ -282,7 +283,8 @@ void showAlertMessage(id delegate, NSString *aTitle, NSString *aMessage);
 
 NSString* DPLocalizedString(NSString *key);
 
-NSString* NullIfEmpty(NSString *aString);
+NSString* NilIfEmpty(NSString *aString);
+id NullIfEmpty(NSString *aString);
 
 void NSLogFrame(NSString *msg, CGRect frame);
 

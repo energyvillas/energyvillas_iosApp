@@ -63,12 +63,12 @@
 //		self.key = aId;
 //		self.title = NullIfEmpty(aTitle);
 //		self.image = NullIfEmpty(aImage);
-		self.lang = NullIfEmpty(aLang);
+		self.lang = NilIfEmpty(aLang);
         self.orderNo = aOrderNo;
-        self.imageUrlLandsape = NullIfEmpty(aImageUrlLandscape);
+        self.imageUrlLandsape = NilIfEmpty(aImageUrlLandscape);
 //		self.body = NullIfEmpty(aBody);
 //		self.publishDate = NullIfEmpty(aPublishDate);
-		self.url = NullIfEmpty(aURL);
+		self.url = NilIfEmpty(aURL);
 	}
     
 	return self;

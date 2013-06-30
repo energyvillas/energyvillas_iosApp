@@ -390,4 +390,21 @@
 
 //==============================================================================
 
+- (NSString *) aquireImageTitleToShare {
+    if ([self aquireImageUrlToShare] != nil)
+        return NilIfEmpty(self.category.title);
+    
+    return nil;
+}
+
+- (NSString *) aquireImageUrlToShare {
+    if (self.category)
+        return NilIfEmpty(IS_PORTRAIT ? self.category.imageUrl : self.category.imageRollUrl);
+    
+    return nil;
+}
+
+
+
+
 @end

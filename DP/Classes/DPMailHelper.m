@@ -17,10 +17,8 @@
 @implementation DPMailHelper
 
 +(MFMailComposeViewController *) composeEmail {
-    NSString *bodyfmt = DPLocalizedString(kEMAIL_BODY_FMT);
-    
     NSString *mailSubject = DPLocalizedString(kEMAIL_SUBJECT);
-    NSString *device = IS_IPAD ? @"iPad" : @"iPhone";
+//    NSString *device = IS_IPAD ? @"iPad" : @"iPhone";
     NSString *evurl = [CURRENT_LANG isEqualToString:@"el"] ? @"http://www.energeiakikatoikia.gr" : @"http://www.energyvillas.com";
     NSString *imgname = [DPAppHelper sharedInstance].imageUrl2Share;
     NSString *imgdescr = [DPAppHelper sharedInstance].imageTitle2Share;
@@ -37,10 +35,19 @@
         }
     }
     
-	NSString *mailBody = [NSString stringWithFormat:bodyfmt, /*device, */imgname, imgdescr,
-                          imgname, imgname, imgdescr, sz.width, sz.height,
-                          evurl, evurl];
-	
+    NSString *bodyfmt = ((imgname == nil)
+                         ? DPLocalizedString(kEMAIL_BODY_NO_IMG_FMT)
+                         : DPLocalizedString(kEMAIL_BODY_FMT));
+    NSString *mailBody = nil;
+    if (imgname == nil) {
+        mailBody = [NSString stringWithFormat:bodyfmt, evurl, evurl];
+
+	} else {
+        mailBody = [NSString stringWithFormat:bodyfmt, imgname, imgdescr,
+                    imgname, imgname, imgdescr, sz.width, sz.height,
+                    evurl, evurl];
+    }
+    
     NSLog(@"%@", mailBody);
 	MFMailComposeViewController *mailComposer = [[MFMailComposeViewController alloc] init];
 	[mailComposer setSubject:mailSubject];

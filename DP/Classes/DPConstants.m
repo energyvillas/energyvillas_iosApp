@@ -130,6 +130,7 @@ NSString *const kERR_MSG_UNABLE_TO_TWEET = @"ERR_MSG_UNABLE_TO_TWEET";
 NSString *const kTWEET_INITIAL_TEXT = @"TWEET_INITIAL_TEXT";
 NSString *const kEMAIL_SUBJECT = @"EMAIL_SUBJECT";
 NSString *const kEMAIL_BODY_FMT = @"EMAIL_BODY_FMT";
+NSString *const kEMAIL_BODY_NO_IMG_FMT = @"EMAIL_BODY_NO_IMG_FMT";
 NSString *const kFACEBOOK_LINK_TEXT = @"FACEBOOK_LINK_TEXT";
 NSString *const kFACEBOOK_DESCR = @"FACEBOOK_DESCR";
 NSString *const kFACEBOOK_RESULT_FMT = @"FACEBOOK_RESULT_FMT";
@@ -168,8 +169,12 @@ NSString* DPLocalizedString(NSString *key)
     return result;
 }
 
-NSString* NullIfEmpty(NSString *aString) {
+NSString* NilIfEmpty(NSString *aString) {
     return aString == nil || aString.length == 0 || [aString isEqualToString:@""] ? nil : aString;
+}
+
+id NullIfEmpty(NSString *aString) {
+    return aString == nil || aString.length == 0 || [aString isEqualToString:@""] ? [NSNull null] : aString;
 }
 
 void NSLogFrame(NSString *msg, CGRect frame) {

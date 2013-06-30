@@ -551,8 +551,10 @@
         self.socialManager = [[DPSocialManager alloc] initWithController:self
                                                           onSocialClosed:nil];
 
-    [DPAppHelper sharedInstance].imageTitle2Share = [self aquireImageTitleToShare];
-    [DPAppHelper sharedInstance].imageUrl2Share = [self aquireImageUrlToShare];
+    NSString *tmp = [self aquireImageTitleToShare];
+    [DPAppHelper sharedInstance].imageTitle2Share = tmp;
+    tmp = [self aquireImageUrlToShare];
+    [DPAppHelper sharedInstance].imageUrl2Share = tmp;
    
     [self.socialManager showSocialsDialog:nil];
 }

@@ -52,13 +52,13 @@
     self = [super initWithValues:aId];
     
 	if (self) {
-		self.lang = NullIfEmpty(aLang);
+		self.lang = NilIfEmpty(aLang);
 		self.ctgid = cid;
 		self.isMaster = aIsMaster;
-        self.videoUrl = NullIfEmpty(aVideoUrl);
-		self.title = NullIfEmpty(aTitle);
-		self.info = NullIfEmpty(aInfo);
-		self.description = NullIfEmpty(aDescr);
+        self.videoUrl = NilIfEmpty(aVideoUrl);
+		self.title = NilIfEmpty(aTitle);
+		self.info = NilIfEmpty(aInfo);
+		self.description = NilIfEmpty(aDescr);
 	}
     
 	return self;

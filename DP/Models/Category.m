@@ -54,8 +54,8 @@
         self.lang = aLang;
 //		self.title = NullIfEmpty(aTitle);
 //		self.imageUrl = NullIfEmpty(aImageUrl);
-		self.parent = NullIfEmpty(aParent);
-        self.imageRollUrl = NullIfEmpty(aImageRollUrl);
+		self.parent = NilIfEmpty(aParent);
+        self.imageRollUrl = NilIfEmpty(aImageRollUrl);
         self.hikId = HIKID_UNDEFINED;
 	}
     

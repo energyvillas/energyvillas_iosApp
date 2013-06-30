@@ -42,12 +42,12 @@
 
         self.forFree = [[aDecoder decodeObjectForKey:encArticleForFree] boolValue];
         self.orderNo = [[aDecoder decodeObjectForKey:encArticleOrder] intValue];
-		self.imageThumbUrl = NullIfEmpty([aDecoder decodeObjectForKey:encArticleImageThumb]);
+		self.imageThumbUrl = NilIfEmpty([aDecoder decodeObjectForKey:encArticleImageThumb]);
 
-		self.body = NullIfEmpty([aDecoder decodeObjectForKey:encArticleBody]);
-		self.url = NullIfEmpty([aDecoder decodeObjectForKey:encArticleURL]);
-		self.publishDate = NullIfEmpty([aDecoder decodeObjectForKey:encArticlePublishDate]);
-		self.videoUrl = NullIfEmpty([aDecoder decodeObjectForKey:encArticleVideoFile]);
+		self.body = NilIfEmpty([aDecoder decodeObjectForKey:encArticleBody]);
+		self.url = NilIfEmpty([aDecoder decodeObjectForKey:encArticleURL]);
+		self.publishDate = NilIfEmpty([aDecoder decodeObjectForKey:encArticlePublishDate]);
+		self.videoUrl = NilIfEmpty([aDecoder decodeObjectForKey:encArticleVideoFile]);
 		self.videolength = [aDecoder decodeObjectForKey:encArticleVideoLength];
 //		self.imageData = [aDecoder decodeObjectForKey:encArticleImageData];
 	}
@@ -78,13 +78,13 @@
         
         self.orderNo = aOrderNo;
         self.forFree = aForFree;
-        self.imageThumbUrl = NullIfEmpty(aImageThumbUrl);
+        self.imageThumbUrl = NilIfEmpty(aImageThumbUrl);
         
-		self.body = NullIfEmpty(aBody);
-		self.publishDate = NullIfEmpty(aPublishDate);
-		self.url = NullIfEmpty(aURL);
-		self.videoUrl = NullIfEmpty(aVideoFile);
-		self.videolength = NullIfEmpty(aVideoLength);
+		self.body = NilIfEmpty(aBody);
+		self.publishDate = NilIfEmpty(aPublishDate);
+		self.url = NilIfEmpty(aURL);
+		self.videoUrl = NilIfEmpty(aVideoFile);
+		self.videolength = NilIfEmpty(aVideoLength);
 	}
     
 	return self;

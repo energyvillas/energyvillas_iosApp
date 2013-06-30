@@ -152,7 +152,7 @@
 
 - (NSString *) getBaseImageUrlToLoadFor:(DPDataElement *)elm {
     Banner *banner = (Banner *)elm;
-    return NullIfEmpty( IS_PORTRAIT ? banner.imageUrl : banner.imageUrlLandsape );
+    return NilIfEmpty( IS_PORTRAIT ? banner.imageUrl : banner.imageUrlLandsape );
 }
 
 - (UIView *)createViewFor:(int)contentIndex frame:(CGRect)frame {

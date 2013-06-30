@@ -34,8 +34,8 @@
     self = [super initWithValues:aId];
     
 	if (self) {
-		self.title = NullIfEmpty(aTitle);
-		self.imageUrl = NullIfEmpty(aImageUrl);
+		self.title = NilIfEmpty(aTitle);
+		self.imageUrl = NilIfEmpty(aImageUrl);
 	}
     
 	return self;
