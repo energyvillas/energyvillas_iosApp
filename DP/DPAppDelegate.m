@@ -16,8 +16,6 @@
 #import "UIImage+Retina4.h"
 #import <FacebookSDK/FacebookSDK.h>
 #import "Reachability.h"
-#import "DPFBLoginViewController.h"
-#import "DPFacebookViewController.h"
 
 @implementation DPAppDelegate
 
@@ -144,11 +142,6 @@ void myExceptionHandler (NSException *exception)
                          error:(NSError *)error {
     switch (state) {
         case FBSessionStateOpen: {
-            UIViewController *topVC = [[self findNavController] topViewController];
-            if ([topVC.modalViewController isKindOfClass:[DPFBLoginViewController class]]) {
-                [topVC dismissModalViewControllerAnimated:NO];
-            }
-
             [self showFBView];
         }
             break;
@@ -156,7 +149,6 @@ void myExceptionHandler (NSException *exception)
         case FBSessionStateClosed:
         case FBSessionStateClosedLoginFailed: {
             [FBSession.activeSession closeAndClearTokenInformation];
-//            [self showFBLogin];
         }
             break;
             
@@ -180,30 +172,10 @@ void myExceptionHandler (NSException *exception)
                                   }];
 }
 
-- (void) showFBLogin {
-    UINavigationController *nvc = [self findNavController];
-    UIViewController *topVC = [nvc topViewController];
-    UIViewController *modalVC = topVC.modalViewController;
-    
-    DPFBLoginViewController *fbloginVC = nil;
-    if (![modalVC isKindOfClass:[DPFBLoginViewController class]]) {
-        fbloginVC = [[DPFBLoginViewController alloc] init];
-        [topVC presentModalViewController:fbloginVC animated:NO];
-    } else {
-        fbloginVC = (DPFBLoginViewController *)modalVC;
-        [fbloginVC loginFailed];
-    }
-}
-
 - (void) showFBView {
     [self showFBFeedDlg];
-//    [self doShowFBView];
 }
-- (void) doShowFBView {
-    UINavigationController *nvc = [self findNavController];
-    DPFacebookViewController *facebook = [[DPFacebookViewController alloc] init];
-    [nvc pushViewController:facebook animated:YES];
-}
+
 
 /**
  * A function for parsing URL parameters.

@@ -18,7 +18,6 @@
 #import "DPCategoryLoader.h"
 #import <AudioToolbox/AudioToolbox.h>
 #import "DPCarouselViewController.h"
-#import "DPFacebookViewController.h"
 #import <Twitter/Twitter.h>
 #import "DPIAPHelper.h"
 #import "DPFavoritesViewController.h"

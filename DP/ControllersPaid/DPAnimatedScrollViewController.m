@@ -233,7 +233,8 @@
 - (DPAnimatedCardsView *) findAnimCtgViewInCurrentPage {
     DPAnimatedCardsView *result = nil;
     int pg = self.pageControl.currentPage;
-    return [self findAnimCtgViewInPage:pg];
+    result = [self findAnimCtgViewInPage:pg];
+    return result;
 }
 
 - (void) changeRows:(int)rows

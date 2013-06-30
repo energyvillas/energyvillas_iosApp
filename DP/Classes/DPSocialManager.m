@@ -10,10 +10,8 @@
 #import "DPSocialManager.h"
 #import "DPSocialViewController.h"
 #import "DPConstants.h"
-#import "DPFacebookViewController.h"
 #import <Twitter/Twitter.h>
 #import "DPMailHelper.h"
-#import <FacebookSDK/FacebookSDK.h>
 #import "DPAppDelegate.h"
 #import "DPAppHelper.h"
 #import "DPFavoritesViewController.h"

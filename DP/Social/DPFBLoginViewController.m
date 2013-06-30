@@ -65,12 +65,12 @@
 }
 
 - (void) doLayoutSubViews:(BOOL)fixtop {
-    CGRect vf = self.view.frame;
+//    CGRect vf = self.view.frame;
     
-    fixtop = IS_LANDSCAPE && !IS_IPAD;
-    int top = fixtop ? 12 : 0;
-    int h = vf.size.height - top;
-    int w = vf.size.width;
+//    fixtop = IS_LANDSCAPE && !IS_IPAD;
+//    int top = fixtop ? 12 : 0;
+//    int h = vf.size.height - top;
+//    int w = vf.size.width;
     
 }
 
