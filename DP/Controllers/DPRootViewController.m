@@ -17,7 +17,7 @@
 #import "Article.h"
 #import "DPCategoryLoader.h"
 #import <AudioToolbox/AudioToolbox.h>
-#import "DPCarouselViewController.h"
+#import "DPiCarouselViewController.h"
 #import <Twitter/Twitter.h>
 #import "DPIAPHelper.h"
 #import "DPFavoritesViewController.h"
@@ -302,11 +302,11 @@
 - (void) loadOpenFlow:(BOOL)reload {
     //self.topView.backgroundColor = [UIColor yellowColor];
     
-    DPCarouselViewController *carousel = nil;
+    DPiCarouselViewController *carousel = nil;
     int currImgIndex = 0;
     for (int i = 0; i < self.childViewControllers.count; i++)
-        if ([self.childViewControllers[i] isKindOfClass:[DPCarouselViewController class]]) {
-            carousel = (DPCarouselViewController *)self.childViewControllers[i];
+        if ([self.childViewControllers[i] isKindOfClass:[DPiCarouselViewController class]]) {
+            carousel = (DPiCarouselViewController *)self.childViewControllers[i];
             currImgIndex = carousel.currentIndex;
 //            if (reload) {
 //                [carousel.view removeFromSuperview];
@@ -326,7 +326,7 @@
     }
     
     if (carousel == nil) {
-        carousel = [[DPCarouselViewController alloc] initWithCtg:[self carouselCategory]
+        carousel = [[DPiCarouselViewController alloc] initWithCtg:[self carouselCategory]
                                                     currentIndex:currImgIndex
                                                      showSocials:YES];
         CGRect frm = self.topView.bounds;

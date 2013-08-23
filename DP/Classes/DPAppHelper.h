@@ -45,6 +45,7 @@
 - (NSArray *) paidMenuOfCategory:(int)aId lang:(NSString *)lang;
 //- (NSArray *) getSubCategoriesOf:(int)parentid;
 
+- (NSString *) imageNameToCacheKey:(NSString *)url;
 - (void) saveImageToCache:(NSString *)url data:(NSData *)imgData;
 - (NSData *) loadImageFromCache:(NSString *)url;
 - (UIImage *) loadUIImageFromCache:(NSString *)url;

@@ -1,25 +1,26 @@
 //
-//  DPCarouselViewController.m
-//  DP
+//  DPiCarouselViewController.m
+//  energyVillas
 //
-//  Created by Γεώργιος Γράβος on 4/16/13.
+//  Created by Γεώργιος Γράβος on 8/22/13.
 //  Copyright (c) 2013 Γεώργιος Γράβος. All rights reserved.
 //
 
-#import "DPCarouselViewController.h"
-#import "DPConstants.h"
-#import "DPAppHelper.h"
-#import "Reachability.h"
+#import "DPiCarouselViewController.h"
 #import "Article.h"
 #import "DPArticlesLoader.h"
+#import "DPConstants.h"
+#import "DPAppHelper.h"
+#import "FXImageView.h"
+#import "Reachability.h"
 #import "DPImageContentViewController.h"
 #import "DPVimeoPlayerViewController.h"
 #import "DPHtmlContentViewController.h"
-#import "AsyncImageView.h"
-#import "FXImageView.h"
-#import "UIImage+FX.h"
 
-@interface DPCarouselViewController ()
+
+#define BUSY_IND_VIEW_TAG ((int)314159)
+
+@interface DPiCarouselViewController ()
 
 @property (strong, nonatomic) NSString *displayinglang;
 @property (strong, nonatomic) UIActivityIndicatorView *busyIndicator;
@@ -39,7 +40,7 @@
 
 @end
 
-@implementation DPCarouselViewController {
+@implementation DPiCarouselViewController{
     BOOL showSocials;
 }
 
@@ -87,7 +88,7 @@
 
 - (void) clearQueueAndOperations {
     if (self.queue) {
-        [self stopIndicator];
+//        [self stopIndicator];
         
         [self.queue cancelAllOperations];
         
@@ -129,12 +130,12 @@
 
 - (void) viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-//    int ci = _currentIndex;
-//    if (self.datalist && self.datalist.count > 0) {
-//        [self setupLabels];
-//        [self updateLabels];
-//    }
-//    _currentIndex = ci;
+    //    int ci = _currentIndex;
+    //    if (self.datalist && self.datalist.count > 0) {
+    //        [self setupLabels];
+    //        [self updateLabels];
+    //    }
+    //    _currentIndex = ci;
     [self.view setNeedsDisplay];
     [self.view setNeedsLayout];
     if ([self dataLoadNeeded])
@@ -182,7 +183,7 @@
 
 - (void) onNotified:(NSNotification *) notification
 {
-    if ([[notification name] isEqualToString:DPN_currentLangChanged]) {        
+    if ([[notification name] isEqualToString:DPN_currentLangChanged]) {
         [self doLocalize];
     }
     
@@ -229,6 +230,8 @@
     
     if (force || [self dataLoadNeeded])
         [self.dataLoader loadData];
+    else 
+        [self dataLoaded];
 }
 
 //==============================================================================
@@ -266,7 +269,7 @@
 
 -(void) setupLabels {
     [self clearLabels];
-//    if (showSocials)
+    //    if (showSocials)
     CGSize favSize = CGSizeMake(!showSocials ? 0.0f : (IS_IPAD ? IPADS_FAV_SIZE_WIDTH : IPHONES_FAV_SIZE_WIDTH),
                                 IS_IPAD ? IPADS_FAV_SIZE_HEIGHT : IPHONES_FAV_SIZE_HEIGHT);
     CGRect frmbtn = CGRectMake(0, 0, favSize.width, favSize.height);
@@ -311,8 +314,8 @@
     [self.lblContainer addSubview:self.lblTitle];
     
     self.lblFixedContainer = [[UIView alloc] initWithFrame:CGRectMake(0, 0,
-                                                                     self.view.bounds.size.width,
-                                                                     self.lblContainer.bounds.size.height)];
+                                                                      self.view.bounds.size.width,
+                                                                      self.lblContainer.bounds.size.height)];
     self.lblFixedContainer.backgroundColor = [UIColor clearColor];
     self.lblFixedContainer.autoresizingMask = UIViewAutoresizingNone;
     
@@ -326,7 +329,7 @@
     
     if ((self.currentIndex == -1) || (!self.datalist) || (self.datalist.count == 0))
         return;
- 
+    
     Article *article = self.datalist[self.icarousel.currentItemIndex];
     if (article) {
         [self toggleInFavorites:article];
@@ -350,9 +353,9 @@
 }
 
 - (void) fixFavsButton:(Article *)article {
-//    NSString *favImgName = [self isInFavorites:article] ? NAVBAR_FAV_SEL_IMG : NAVBAR_FAV_IMG;
-//    [self.btnAdd2Favs setImage:[UIImage imageNamed:favImgName]
-//                      forState:UIControlStateNormal];
+    //    NSString *favImgName = [self isInFavorites:article] ? NAVBAR_FAV_SEL_IMG : NAVBAR_FAV_IMG;
+    //    [self.btnAdd2Favs setImage:[UIImage imageNamed:favImgName]
+    //                      forState:UIControlStateNormal];
     [self.btnAdd2Favs setSelected:[self isInFavorites:article]];
 }
 
@@ -380,7 +383,7 @@
                                    self.lblCounter.frame.size.height);
     counterfrm = CGRectOffset(counterfrm, counterfrmOfsX, 0);
     self.lblCounter.frame = counterfrm;
-
+    
     if (self.btnAdd2Favs) {
         CGRect r = self.btnAdd2Favs.frame;
         self.btnAdd2Favs.frame = CGRectMake(r.origin.x, r.origin.y, r.size.width, counterfrm.size.height);
@@ -400,9 +403,9 @@
     
     if (!CGSizeEqualToSize(self.lblTitle.frame.size, CGSizeZero)) {
         CGRect titlefrm = CGRectMake(0, 0,
-                                 self.lblTitle.frame.size.width + 6,
-                                 self.lblTitle.frame.size.height);
-
+                                     self.lblTitle.frame.size.width + 6,
+                                     self.lblTitle.frame.size.height);
+        
         titlefrm = CGRectOffset(titlefrm, counterfrm.origin.x + counterfrm.size.width + 2, 0);
         self.lblTitle.frame = titlefrm;
     }
@@ -438,20 +441,21 @@
 }
 
 -(void) setupImageCache {
-//    if (self.imageCache == nil) {
-//        self.imageCache = [[NSMutableArray alloc] init];
-//        for (int i = 0; i < self.datalist.count; i ++)
-//            self.imageCache[i] = [NSNull null];
-//    }
+    //    if (self.imageCache == nil) {
+    //        self.imageCache = [[NSMutableArray alloc] init];
+    //        for (int i = 0; i < self.datalist.count; i ++)
+    //            self.imageCache[i] = [NSNull null];
+    //    }
     
-     if (self.imageRequests == nil) 
-         self.imageRequests = [[NSMutableDictionary alloc] init];
+    if (self.imageRequests == nil)
+        self.imageRequests = [[NSMutableDictionary alloc] init];
 }
 
 - (void) dataLoaded {
 #ifdef LOG_CAROUSEL
     NSLog(@"1.carousel loaded %d articles", self.datalist.count);
 #endif
+    [self clearQueueAndOperations];
     [self setupImageCache];
     
     dispatch_async(dispatch_get_main_queue(), ^{
@@ -475,54 +479,54 @@
     }
 }
 -(void) loadCarousel {
-//    if (self.datalist && self.datalist.count > 0 && [self dataLoadNeeded]) {
-//        [self clearCarousel];
-//    }
-
+    //    if (self.datalist && self.datalist.count > 0 && [self dataLoadNeeded]) {
+    //        [self clearCarousel];
+    //    }
+    
     int currindx = self.currentIndex;
     if (self.icarousel) {
         self.icarousel.frame = self.view.bounds;
         [self.icarousel reloadData];
     } else
-    if (!self.icarousel && self.datalist && self.datalist.count > 0) {
+        if (!self.icarousel && self.datalist && self.datalist.count > 0) {
 #ifdef LOG_CAROUSEL
-        NSLog(@"2.carousel loaded %d articles", self.datalist.count);
+            NSLog(@"2.carousel loaded %d articles", self.datalist.count);
 #endif
-        CGRect frm = self.view.frame;
-        frm = CGRectMake(0, 0, frm.size.width, frm.size.height);
-        self.icarousel = [[iCarousel alloc] initWithFrame:frm];
-        
-        self.icarousel.delegate = self;
-        self.icarousel.dataSource = self;
-        
-//        self.icarousel.scrollSpeed = 2.0f;
-//        self.icarousel.decelerationRate = 0.99f;
-        //CGFloat scrspeed = self.icarousel.scrollSpeed;
-        switch (self.carouselCategoryID) {
-            case CTGID_CAROUSEL: {
-                self.icarousel.type = iCarouselTypeCoverFlow2;
-                //self.icarousel.scrollSpeed = IS_IPAD ? 0.7f : 0.7f;
-                break;
+            CGRect frm = self.view.frame;
+            frm = CGRectMake(0, 0, frm.size.width, frm.size.height);
+            self.icarousel = [[iCarousel alloc] initWithFrame:frm];
+            
+            self.icarousel.delegate = self;
+            self.icarousel.dataSource = self;
+            
+            //        self.icarousel.scrollSpeed = 2.0f;
+            //        self.icarousel.decelerationRate = 0.99f;
+            //CGFloat scrspeed = self.icarousel.scrollSpeed;
+            switch (self.carouselCategoryID) {
+                case CTGID_CAROUSEL: {
+                    self.icarousel.type = iCarouselTypeCoverFlow2;
+                    //self.icarousel.scrollSpeed = IS_IPAD ? 0.7f : 0.7f;
+                    break;
+                }
+                case CTGID_CAROUSEL_MORE: {
+                    self.icarousel.type = iCarouselTypeLinear;
+                    //self.icarousel.scrollSpeed = 0.35f;
+                    break;
+                }
+                default: {
+                    self.icarousel.type = iCarouselTypeCoverFlow2;
+                    //self.icarousel.scrollSpeed = scrspeed * 0.7f;//0.35f;
+                    break;
+                }
             }
-            case CTGID_CAROUSEL_MORE: {
-                self.icarousel.type = iCarouselTypeLinear;
-                //self.icarousel.scrollSpeed = 0.35f;
-                break;
-            }
-            default: {
-                self.icarousel.type = iCarouselTypeCoverFlow2;
-                //self.icarousel.scrollSpeed = scrspeed * 0.7f;//0.35f;
-                break;
-            }
+            
+            [self.view addSubview:self.icarousel];
+            
+            //        [self setupLabels];
+            //        //[self updateLabels];
+            //
+            //        [self makeCurrentImageAtIndex:self.currentIndex];
         }
-
-        [self.view addSubview:self.icarousel];
-        
-//        [self setupLabels];
-//        //[self updateLabels];
-//        
-//        [self makeCurrentImageAtIndex:self.currentIndex];
-    }
     [self setupLabels];
     
     [self makeCurrentImageAtIndex:currindx];
@@ -556,7 +560,7 @@
                 case CTGID_CAROUSEL: return value * 1.973f;
                 case CTGID_CAROUSEL_MORE: return value * 1.1f;
                 default: return value * 1.973f;
-//                default: return value;
+                    //                default: return value;
             }
         }
         case iCarouselOptionFadeMax:
@@ -581,11 +585,11 @@
     return self.datalist.count;
 }
 - (void)carouselCurrentItemIndexDidChange:(iCarousel *)carousel {
-//    _currentIndex = carousel.currentItemIndex;
-//#ifdef LOG_CAROUSEL
-//    NSLog(@"######################set _curIndex to '%d'", _currentIndex);
-//#endif
-//    [self updateLabels];
+    //    _currentIndex = carousel.currentItemIndex;
+    //#ifdef LOG_CAROUSEL
+    //    NSLog(@"######################set _curIndex to '%d'", _currentIndex);
+    //#endif
+    //    [self updateLabels];
 }
 
 - (void) carouselDidScroll:(iCarousel *)carousel {
@@ -600,89 +604,171 @@
     if (index == carousel.currentItemIndex && (!carousel.isScrolling))
         [self articleAtIndexTapped:index];
 }
+
 - (UIView *)carousel:(iCarousel *)carousel viewForItemAtIndex:(NSUInteger)index reusingView:(UIView *)view {
 #ifdef LOG_CAROUSEL
     NSLog(@"3.carousel requested article at index %d", index);
 #endif
+    
+    if (view == nil) {
+        view = [self createImageView:nil];
+    }
+    FXImageView *imgview = (FXImageView *)view;
+    
     Article *article = self.datalist[index];
     NSString *imgName = article.imageThumbUrl ? article.imageThumbUrl : article.imageUrl;
     if (isLocalUrl(imgName)) {
         imgName = [self calcImageName:imgName];
-        UIImage *img = [UIImage imageNamed:imgName];
-        
-        return [self createImageView:img];
+        [imgview setImageWithContentsOfFile:imgName];
     } else {
-        // Check if image already exists in cache. If yes retrieve it from there, else go to internet...
-        UIImage *img = article.imageThumbUrl ? article.imageThumb : article.image;
-        if (img == nil) {
-            img = [[DPAppHelper sharedInstance] loadUIImageFromCache:imgName];
-            if (img != nil) {
-                if (article.imageThumbUrl)
-                    article.imageThumb = img;
-                else
-                    article.image = img;
-            }
-        }
-        if (img != nil) {
-            return  [self createImageView:img];
+        // Check if image already exists in cache . If yes retrieve it from there, else go to internet...
+        NSString *filepath = [[DPAppHelper sharedInstance] imageNameToCacheKey:imgName];
+        if ([[NSFileManager defaultManager] fileExistsAtPath:filepath]) {
+            [imgview setImageWithContentsOfFile:filepath];
+            [self indicatorAtView:view isBusy:NO];
         } else {
+            [self ensureImageLoadingFileExists];
             [self downloadImageUrl:imgName atIndex:index];
-            return [self createImageViewLoading];
+            [imgview setImageWithContentsOfFile:[self imageLoadingFilePath]];
+            [self attachBusyIndicatorToView:view];
+            [self indicatorAtView:view isBusy:YES];
         }
     }
+    
+    return view;
 }
 
--(UIView *) createImageViewLoading  {
-//    return createImageViewLoading(CGRectInset(self.icarousel.bounds,
-//                                              self.icarousel.bounds .size.width * 0.1f,
-//                                              self.icarousel.bounds .size.height * 0.1f),
-//                                  NO, NO);
+-(UIImage *) captureView:(UIView *)scrView {
+    CGRect rect = [scrView bounds];
     
-//    CGSize szCarousel = self.icarousel.frame.size;
-//    szCarousel.width = 0.8f * szCarousel.width;
-//    szCarousel.height = szCarousel.height * 0.8f;
+    UIGraphicsBeginImageContextWithOptions(rect.size, YES, DEVICE_SCALE);
+        CGContextRef context = UIGraphicsGetCurrentContext();
+        [scrView.layer renderInContext:context];
+        UIImage *capturedImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
     
-//    UIImage *img = [UIImage imageNamed:@"loading.png"];
-//    CGSize imgSize = img.size;
-//    img = [img imageScaledToFitSize:CGSizeMake(szCarousel.width / 2.0f, szCarousel.height / 2.0f)];
-//    imgSize = img.size;
-    
+    return capturedImage;
+}
+
+-(CGSize) calcImageLoadingSize {
     // define image aspect and the fact we have BIG images
     CGSize szImageProto = CGSizeMake(3600.0f, 2400.0f);
     CGRect frm = [self calcFittingFrame:szImageProto];
-    
-//    UIImageView *iv = [[UIImageView alloc] initWithFrame:CGRectOffset(frm, 0.0f, -10.0f)];
-    CGRect imgfrm = CGRectMake(0, 0,
-                               MIN(frm.size.width, IS_IPAD ? LOADING_IMG_MAX_WIDTH_IPAD : LOADING_IMG_MAX_WIDTH_IPHONE),
-                               MIN(frm.size.height, IS_IPAD ? LOADING_IMG_MAX_HEIGHT_IPAD : LOADING_IMG_MAX_HEIGHT_IPHONE));
-    UIImageView *iv = [[UIImageView alloc] initWithFrame:imgfrm];
-    iv.contentMode = UIViewContentModeScaleAspectFit;//Center;
-    iv.image = [UIImage imageNamed:@"loading.png"];//img;
-    
-    UIView *v = [[UIView alloc] initWithFrame:frm];
-    v.backgroundColor = [UIColor colorWithWhite:0.0f alpha:0.7f]; //[UIColor colorWithRed:0.0f green:0.0f blue:0.0f alpha:0.6f];
-    v.layer.cornerRadius = IS_IPAD ? 8.0f : 4.0f;
-    v.layer.borderWidth = IS_IPAD ? 4.0f : 2.0;
-    v.layer.borderColor = [UIColor colorWithWhite:1.0f alpha:0.75f].CGColor;
-    
-//    frm = v.bounds;
-    UIActivityIndicatorView *bi = [[UIActivityIndicatorView alloc]
-                                   initWithActivityIndicatorStyle: IS_IPAD ? UIActivityIndicatorViewStyleWhiteLarge: UIActivityIndicatorViewStyleWhite];
-//    bi.frame = CGRectOffset(CGRectMake((frm.size.width-25)/2,
-//                                       (frm.size.height-25)/2,
-//                                       25, 25),
-//                            0, IS_IPAD ? 110 : IS_IPHONE ? 40 : (IS_PORTRAIT ? 55 : 40));
-    bi.hidesWhenStopped = TRUE;
-    
-    iv.center = v.center;
-    bi.center = v.center;
-
-    [v addSubview:iv];
-    [v addSubview:bi];
-    [bi startAnimating];
-
-    return v;
+    return frm.size;
 }
+
+-(NSString *) imageLoadingFilePath {
+    CGSize sz = [self calcImageLoadingSize];
+    NSString *filename = [NSString stringWithFormat: @"captured_img_loading_w%.0f_h%.0f.png", sz.width, sz.height];
+    NSString *filepath = getDocumentsFilePath(filename);
+    return filepath;
+}
+
+-(UIImage *) ensureImageLoadingFileExists {
+    UIImage *img = nil;
+    NSString *filepath = [self imageLoadingFilePath];
+    if (![[NSFileManager defaultManager] fileExistsAtPath:filepath]) {
+        CGRect frm = {0, 0, [self calcImageLoadingSize]};
+        
+        UIView *v = [[UIView alloc] initWithFrame:frm];
+        v.backgroundColor = [UIColor colorWithWhite:0.0f alpha:0.7f]; //[UIColor colorWithRed:0.0f green:0.0f blue:0.0f alpha:0.6f];
+        v.layer.cornerRadius = IS_IPAD ? 8.0f : 4.0f;
+        v.layer.borderWidth = IS_IPAD ? 4.0f : 2.0;
+        v.layer.borderColor = [UIColor colorWithWhite:1.0f alpha:0.75f].CGColor;
+        
+        
+        /////
+        CGRect imgfrm = CGRectMake(0, 0,
+                                   MIN(frm.size.width, IS_IPAD ? LOADING_IMG_MAX_WIDTH_IPAD : LOADING_IMG_MAX_WIDTH_IPHONE),
+                                   MIN(frm.size.height, IS_IPAD ? LOADING_IMG_MAX_HEIGHT_IPAD : LOADING_IMG_MAX_HEIGHT_IPHONE));
+        UIImageView *iv = [[UIImageView alloc] initWithFrame:imgfrm];
+        iv.contentMode = UIViewContentModeScaleAspectFit;//Center;
+        iv.image = [UIImage imageNamed:@"loading.png"];//img;
+        
+        iv.center = v.center;
+        [v addSubview:iv];
+        
+        img = [self captureView:v];
+        [UIImagePNGRepresentation(img) writeToFile:filepath atomically:YES];
+    }
+    
+//    if (img == nil) {
+//        NSData *imgdata = [NSData dataWithContentsOfFile:filepath];
+//        if (imgdata)
+//            img = [UIImage imageWithData:imgdata scale:DEVICE_SCALE];
+//    }
+    
+    return img;
+}
+
+- (void) indicatorAtView:(UIView *)view isBusy:(BOOL)isBusy {
+    id sub = [view viewWithTag:BUSY_IND_VIEW_TAG];
+    if (sub != nil && [sub isKindOfClass:[UIActivityIndicatorView class]]) {
+        UIActivityIndicatorView *bi = sub;
+        if (isBusy)
+            [bi startAnimating];
+        else
+            [bi stopAnimating];
+    }
+}
+
+- (void) attachBusyIndicatorToView:(UIView *)view {
+    id sub = [view viewWithTag:BUSY_IND_VIEW_TAG];
+    if (sub == nil) {
+        UIActivityIndicatorView *bi = [[UIActivityIndicatorView alloc]
+                                       initWithActivityIndicatorStyle: IS_IPAD ? UIActivityIndicatorViewStyleWhiteLarge: UIActivityIndicatorViewStyleWhite];
+        bi.hidesWhenStopped = TRUE;
+        bi.tag = BUSY_IND_VIEW_TAG;
+        bi.center = view.center;
+        
+        [view addSubview:bi];
+        [bi startAnimating];
+    }
+}
+
+//-(UIView *) createImageViewLoading  {
+//    // define image aspect and the fact we have BIG images
+//    CGSize szImageProto = CGSizeMake(3600.0f, 2400.0f);
+//    CGRect frm = [self calcFittingFrame:szImageProto];
+//    
+//    UIView *v = [[UIView alloc] initWithFrame:frm];
+//    v.backgroundColor = [UIColor colorWithWhite:0.0f alpha:0.7f]; //[UIColor colorWithRed:0.0f green:0.0f blue:0.0f alpha:0.6f];
+//    v.layer.cornerRadius = IS_IPAD ? 8.0f : 4.0f;
+//    v.layer.borderWidth = IS_IPAD ? 4.0f : 2.0;
+//    v.layer.borderColor = [UIColor colorWithWhite:1.0f alpha:0.75f].CGColor;
+//    
+//    
+//    /////
+//    CGRect imgfrm = CGRectMake(0, 0,
+//                               MIN(frm.size.width, IS_IPAD ? LOADING_IMG_MAX_WIDTH_IPAD : LOADING_IMG_MAX_WIDTH_IPHONE),
+//                               MIN(frm.size.height, IS_IPAD ? LOADING_IMG_MAX_HEIGHT_IPAD : LOADING_IMG_MAX_HEIGHT_IPHONE));
+//    UIImageView *iv = [[UIImageView alloc] initWithFrame:imgfrm];
+//    iv.contentMode = UIViewContentModeScaleAspectFit;//Center;
+//    iv.image = [UIImage imageNamed:@"loading.png"];//img;
+//    
+//    iv.center = v.center;
+//    [v addSubview:iv];
+//
+//    /////
+//    NSString *filepath = [self imageLoadingFilePath];
+//    if (![[NSFileManager defaultManager] fileExistsAtPath:filepath]) {
+//        UIImage *vci = [self captureView:v];
+//        [UIImagePNGRepresentation(vci) writeToFile:filepath atomically:YES];
+//    }
+//    //////
+//    
+//    //////
+//    UIActivityIndicatorView *bi = [[UIActivityIndicatorView alloc]
+//                                   initWithActivityIndicatorStyle: IS_IPAD ? UIActivityIndicatorViewStyleWhiteLarge: UIActivityIndicatorViewStyleWhite];
+//    bi.hidesWhenStopped = TRUE;
+//    
+//    bi.center = v.center;
+//    
+//    [v addSubview:bi];
+//    [bi startAnimating];
+//    
+//    return v;
+//}
 
 -(CGRect) calcFittingFrame:(CGSize)szImage {
     CGRect frm = CGRectMake(0, 0, szImage.width, szImage.height);
@@ -706,7 +792,8 @@
 }
 
 -(UIImageView *) createImageView:(UIImage *)image {
-    CGRect frm = [self calcFittingFrame:image.size];
+    CGSize szImageProto = CGSizeMake(3600.0f, 2400.0f);
+    CGRect frm = [self calcFittingFrame:szImageProto];//image.size];
     return [self doCreateImageView:image frame:frm];
 }
 
@@ -716,13 +803,13 @@
 }
 -(UIImageView *) doCreateImageView:(UIImage *)image frame:(CGRect)frame contentMode:(UIViewContentMode)aContentMode{
     UIImageView *result = [self doCreateImageViewWithFrame:frame contentMode:aContentMode withReflection:YES];
-    result.image = image;
+    //result.image = image;
     return result;
 }
 -(UIImageView *) doCreateImageViewWithFrame:(CGRect)frame contentMode:(UIViewContentMode)aContentMode withReflection:(BOOL)addrefrection {
     FXImageView *imageView = [[FXImageView alloc] initWithFrame:frame];
     imageView.contentMode = aContentMode;
-    imageView.asynchronous = NO;
+    imageView.asynchronous = YES;//NO;
     if (addrefrection) {
         imageView.reflectionScale = 0.5f;
         imageView.reflectionAlpha = 0.35f;
@@ -760,67 +847,67 @@
 }
 
 - (NSString *) calcImageName:(NSString *)baseName {
-        @try {
-            NSArray *parts = [baseName componentsSeparatedByString:@"."];
-            if (parts && parts.count == 2) {
-                NSString *lang = [DPAppHelper sharedInstance].currentLang;                
-                NSString *result = [NSString stringWithFormat:@"Carousel/%@_%@.%@",
-                                    parts[0], lang, parts[1]];
+    @try {
+        NSArray *parts = [baseName componentsSeparatedByString:@"."];
+        if (parts && parts.count == 2) {
+            NSString *lang = [DPAppHelper sharedInstance].currentLang;
+            NSString *result = [NSString stringWithFormat:@"Carousel/%@_%@.%@",
+                                parts[0], lang, parts[1]];
 #ifdef LOG_CAROUSEL
-                NSLog(@"4.carousel calimageName base='%@' => calc='%@'", baseName, result);
+            NSLog(@"4.carousel calimageName base='%@' => calc='%@'", baseName, result);
 #endif
-                return result;
-            }
-            else
-                return baseName;
+            return result;
         }
-        @catch (NSException* exception) {
+        else
             return baseName;
-        }
+    }
+    @catch (NSException* exception) {
+        return baseName;
+    }
 }
 
 #pragma mark - === busy indication handling  ===
 
-- (void) startIndicator {
-    return;
-    if(!self.busyIndicator) {
-		self.busyIndicator = [[UIActivityIndicatorView alloc]
-                              initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
-		self.busyIndicator.frame = CGRectMake((self.view.frame.size.width-25)/2,
-                                              (self.view.frame.size.height-25)/2,
-                                              25, 25);
-		self.busyIndicator.hidesWhenStopped = TRUE;
-        [self.view addSubview:self.busyIndicator];
-	}
-    [self.busyIndicator startAnimating];
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [self.view bringSubviewToFront:self.busyIndicator];
-    });
-}
-
-- (void) stopIndicator {
-    return;
-    if(self.busyIndicator) {
-        [self.busyIndicator stopAnimating];
-        [self.busyIndicator removeFromSuperview];
-        self.busyIndicator = nil;
-    }
-}
+//- (void) startIndicator {
+//    return;
+//    if(!self.busyIndicator) {
+//		self.busyIndicator = [[UIActivityIndicatorView alloc]
+//                              initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
+//		self.busyIndicator.frame = CGRectMake((self.view.frame.size.width-25)/2,
+//                                              (self.view.frame.size.height-25)/2,
+//                                              25, 25);
+//		self.busyIndicator.hidesWhenStopped = TRUE;
+//        [self.view addSubview:self.busyIndicator];
+//	}
+//    [self.busyIndicator startAnimating];
+//    dispatch_async(dispatch_get_main_queue(), ^{
+//        [self.view bringSubviewToFront:self.busyIndicator];
+//    });
+//}
+//
+//- (void) stopIndicator {
+//    return;
+//    if(self.busyIndicator) {
+//        [self.busyIndicator stopAnimating];
+//        [self.busyIndicator removeFromSuperview];
+//        self.busyIndicator = nil;
+//    }
+//}
 
 #pragma mark -
 #pragma mark === image downloading handling  ===
 
 - (void) downloadImageUrl:(NSString *)imageUrl atIndex:(int)aIndex {
+    if ([self.imageRequests objectForKey:imageUrl])
+        return;
+    
     if (!self.queue)
         self.queue = [[NSOperationQueue alloc] init];
     
-    if ([self.imageRequests objectForKey:imageUrl])
-        return;
 
 #ifdef LOG_CAROUSEL
     NSLog(@"will request image from url : ####'%@'####", imageUrl);
 #endif
-    
     [self.imageRequests setObject:imageUrl forKey:imageUrl];
     
     ASIHTTPRequest *imageRequest = [ASIHTTPRequest requestWithURL:[NSURL URLWithString:imageUrl]];
@@ -846,26 +933,26 @@
                              imageUrl, @"imageName",
                              nil];
     [self.queue addOperation:imageRequest];
-    [self startIndicator];
+//    [self startIndicator];
 }
 
 - (void) imageRequestDone:(ASIHTTPRequest *)request{
-    [self stopIndicator];
+//    [self stopIndicator];
 	int aIndex = [[request.userInfo objectForKey:@"imageIndex"] intValue];
     NSString *imgName = [request.userInfo objectForKey:@"imageName"];
     NSData *imgData = [request responseData];
 	UIImage *aImage = [UIImage imageWithData:imgData scale:DEVICE_SCALE];
     
 	if(aImage){
-//		[self.imageCache replaceObjectAtIndex:aIndex withObject:aImage];
+        //		[self.imageCache replaceObjectAtIndex:aIndex withObject:aImage];
         [[DPAppHelper sharedInstance] saveImageToCache:imgName data:imgData];
         //[self.carousel setImage:aImage forIndex:aIndex];
         [self.icarousel reloadItemAtIndex:aIndex animated:YES];
 	}
 }
 
-- (void) requestFailed:(ASIHTTPRequest *)request {    
-	[self stopIndicator];
+- (void) requestFailed:(ASIHTTPRequest *)request {
+//	[self stopIndicator];
 }
 
 #pragma mark - DPNavigatorDelegate methods
@@ -899,5 +986,4 @@
     
     return 0;
 }
-
 @end

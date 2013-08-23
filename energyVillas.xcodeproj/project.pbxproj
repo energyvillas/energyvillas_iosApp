@@ -164,6 +164,7 @@
 		5EDE1F8017442EDD00A84BDA /* Icon-72.png in Resources */ = {isa = PBXBuildFile; fileRef = 5EDE1F7F17442EDC00A84BDA /* Icon-72.png */; };
 		5EDE1F8217442EE300A84BDA /* Icon-72@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5EDE1F8117442EE300A84BDA /* Icon-72@2x.png */; };
 		5EE16DFF171C47D10006E1CE /* Carousel in Resources */ = {isa = PBXBuildFile; fileRef = 5EE16DFE171C47D10006E1CE /* Carousel */; };
+		5EE4BB6B17C62A1D0066E9A7 /* DPiCarouselViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EE4BB6A17C62A1D0066E9A7 /* DPiCarouselViewController.m */; };
 		5EF40842170DE9A100938AEE /* DPCardView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EF40841170DE9A100938AEE /* DPCardView.m */; };
 		5EF40845170DE9B200938AEE /* DPAnimatedCardsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EF40844170DE9B200938AEE /* DPAnimatedCardsView.m */; };
 		5EFCCCFA1709BE6C00C1FE88 /* DPDataCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EFCCCF91709BE6C00C1FE88 /* DPDataCache.m */; };
@@ -432,6 +433,8 @@
 		5EDE1F7F17442EDC00A84BDA /* Icon-72.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-72.png"; path = "../Icon-72.png"; sourceTree = "<group>"; };
 		5EDE1F8117442EE300A84BDA /* Icon-72@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-72@2x.png"; path = "../Icon-72@2x.png"; sourceTree = "<group>"; };
 		5EE16DFE171C47D10006E1CE /* Carousel */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Carousel; sourceTree = "<group>"; };
+		5EE4BB6917C62A1D0066E9A7 /* DPiCarouselViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPiCarouselViewController.h; sourceTree = "<group>"; };
+		5EE4BB6A17C62A1D0066E9A7 /* DPiCarouselViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPiCarouselViewController.m; sourceTree = "<group>"; };
 		5EF40840170DE9A100938AEE /* DPCardView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPCardView.h; sourceTree = "<group>"; };
 		5EF40841170DE9A100938AEE /* DPCardView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPCardView.m; sourceTree = "<group>"; };
 		5EF40843170DE9B200938AEE /* DPAnimatedCardsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPAnimatedCardsView.h; sourceTree = "<group>"; };
@@ -740,6 +743,8 @@
 				5EC48CDD1714BF7E00A9566E /* DPBuyContentViewController.m */,
 				5EC20D0E171DAD0E006E03B7 /* DPCarouselViewController.h */,
 				5EC20D0F171DAD0F006E03B7 /* DPCarouselViewController.m */,
+				5EE4BB6917C62A1D0066E9A7 /* DPiCarouselViewController.h */,
+				5EE4BB6A17C62A1D0066E9A7 /* DPiCarouselViewController.m */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -1219,6 +1224,7 @@
 				5E32E8701760A62A006BFDEB /* DPCTGViewController.m in Sources */,
 				5E0D18F21765D5C100A3F946 /* DPButton.m in Sources */,
 				5E4130221775F2A300C9D3E4 /* SVProgressHUD.m in Sources */,
+				5EE4BB6B17C62A1D0066E9A7 /* DPiCarouselViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

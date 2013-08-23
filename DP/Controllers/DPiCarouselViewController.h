@@ -1,8 +1,8 @@
 //
-//  DPCarouselViewController.h
-//  DP
+//  DPiCarouselViewController.h
+//  energyVillas
 //
-//  Created by Γεώργιος Γράβος on 4/16/13.
+//  Created by Γεώργιος Γράβος on 8/22/13.
 //  Copyright (c) 2013 Γεώργιος Γράβος. All rights reserved.
 //
 
@@ -11,7 +11,7 @@
 #import "DPDataLoader.h"
 #import "iCarousel.h"
 
-@interface DPCarouselViewController : UIViewController <DPNavigatorDelegate, DPDataLoaderDelegate, iCarouselDataSource, iCarouselDelegate>
+@interface DPiCarouselViewController : UIViewController <DPNavigatorDelegate, DPDataLoaderDelegate, iCarouselDataSource, iCarouselDelegate>
 
 @property (nonatomic, readonly) int currentIndex;
 @property (nonatomic, readonly) int carouselCategoryID;

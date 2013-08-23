@@ -344,23 +344,23 @@
 #pragma mark -
 #pragma mark transient image cache handling
 
-- (void) saveImageToCache:(NSString *)url data:(NSData *)imgData {
-    
+- (NSString *) imageNameToCacheKey:(NSString *)url {
     NSString *sha1 = SHA1Digest(url);
     NSString *ext = [url pathExtension];
     NSString *filename = [NSString stringWithFormat:@"%@.%@", sha1, ext];
     NSString *filepath = getDocumentsFilePath(filename);
+    return filepath;
+}
+
+- (void) saveImageToCache:(NSString *)url data:(NSData *)imgData {
+    NSString *filepath = [self imageNameToCacheKey:url];
     [imgData writeToFile:filepath atomically:YES];
 }
 
 - (NSData *) loadImageFromCache:(NSString *)url {
     NSData *result = nil;
 
-    NSString *sha1 = SHA1Digest(url);
-    NSString *ext = [url pathExtension];
-    NSString *filename = [NSString stringWithFormat:@"%@.%@", sha1, ext];
-    NSString *filepath = getDocumentsFilePath(filename);
-    
+    NSString *filepath = [self imageNameToCacheKey:url];    
     result = [NSData dataWithContentsOfFile:filepath];
     
     return result;
