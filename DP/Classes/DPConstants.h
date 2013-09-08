@@ -21,7 +21,7 @@ FOUNDATION_EXPORT NSString *const MySecondConstant;
 
 #define USE_TEST_SITE ((BOOL)NO)
 #define CACHING_ENABLED ((BOOL)YES)
-#define CACHE_EXPIRATION_INTERVAL ((NSTimeInterval)(60 * 60 * 48)) // two days-48 hours
+#define CACHE_EXPIRATION_INTERVAL ((NSTimeInterval)(60 * 60 * 2)) // two hours
 
 
 #define IS_IPAD ((BOOL)([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad))
