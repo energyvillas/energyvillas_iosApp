@@ -101,7 +101,7 @@
 }
 
 - (BOOL) calcIsPurchased {
-    //return YES;
+    return YES;
     
     NSUserDefaults *usrDefaults = [NSUserDefaults standardUserDefaults];
     BOOL productPurchased = [usrDefaults boolForKey:PRODUCT_IDENTIFIER];
@@ -251,78 +251,13 @@
                                                   title:titles[i]
                                                imageUrl:imgname
                                            imageRollUrl:imagerolls == nil ? nil : imagerolls[i]
+                                              image2Url:nil
+                                          image2RollUrl:nil
                                                  parent:pid == -1 ? nil : [NSString stringWithFormat:@"%d", pid]]];
     }
     
     return [NSArray arrayWithArray:res];
 }
-
-
-//// i load it and keep it flat not as tree.
-//- (void) loadCategories {
-//    NSString *path = [[NSBundle mainBundle] bundlePath];
-//    NSString *finalPath = [path stringByAppendingPathComponent:@"rootCategories.plist"];
-//    NSDictionary *dict = [NSDictionary dictionaryWithContentsOfFile:finalPath];
-//    
-//    
-//    NSMutableArray *roots = [[NSMutableArray alloc] initWithCapacity:dict.count];
-////    NSMutableArray *subs = [[NSMutableArray alloc] initWithCapacity:dict.count];
-//    
-//    for (NSString *key in dict.allKeys) {
-//        NSDictionary *ctg = dict[key];
-//        NSDictionary *titles = ctg[@"titles"];
-//        NSDictionary *images = ctg[@"images"];
-//
-//        id prntno = ctg[@"parent"];
-//        NSString *prnt = prntno == nil ? nil : [NSString
-//                                                stringWithFormat:@"%@", prntno];
-//        
-//        Category *category = [[Category alloc] initWithValues: key
-//                                                         lang:@"en"
-//                                                        title:titles[@"en"]
-//                                                     imageUrl:images[@"en"]
-//                                                       parent:prnt];
-//
-//        category.titles = [NSDictionary dictionaryWithDictionary:titles];
-//        category.imageUrls = [NSDictionary dictionaryWithDictionary:images];
-//        
-////        if (category.parentId == -1)
-//            [roots addObject: category];
-////        else
-////            [subs addObject:category];
-//    }
-//    
-////    while (subs.count > 0) {
-////        Category *sub = subs[0];
-////        NSUInteger indx = [roots indexOfObjectPassingTest:^BOOL(id obj, NSUInteger idx, BOOL *stop) {
-////            Category *it = obj;
-////            *stop = it.Id == sub.parentId;
-////            return it.Id == sub.parentId;
-////        }];
-////
-////        if (indx == NSNotFound ) {
-////            [subs removeObjectAtIndex:0];
-////            continue;
-////        }
-////
-////        Category *root = (Category *)roots[indx];
-////        if (!root.children )
-////            root.children = [[NSMutableArray alloc] init];
-////
-////        [root.children addObject:sub];
-////    }
-//    
-//    self.categories = roots;
-//}
-
-//- (NSArray *) getSubCategoriesOf:(int)parentid {
-//    NSMutableArray *list = [[NSMutableArray alloc] init];
-//    for (Category *ctg in self.categories)
-//        if (ctg.parentId == parentid)
-//            [list addObject:ctg];
-//    
-//    return [NSArray arrayWithArray:list];
-//}
 
 - (void) addPaidMainMenu{
     self.paidMainMenu = [self doGetDictionaryFrom:@"paid-MainMenu.plist"];
@@ -373,6 +308,11 @@
             result = [UIImage imageWithData:data scale:DEVICE_SCALE];
     }
     return result;
+}
+
+- (BOOL) isImageInCache:(NSString *)url {
+    NSString *filepath = [self imageNameToCacheKey:url];
+    return [[NSFileManager defaultManager] fileExistsAtPath:filepath];
 }
 
 #pragma mark -

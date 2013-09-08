@@ -21,6 +21,8 @@
 @property (nonatomic, strong) NSString *title;
 @property (nonatomic, strong) NSString *imageUrl;
 @property (nonatomic, strong) NSString *imageRollUrl;
+@property (nonatomic, strong) NSString *image2Url;
+@property (nonatomic, strong) NSString *image2RollUrl;
 @property (nonatomic, strong) NSString *parent;
 @property (nonatomic, strong) NSString *hikind;
 

@@ -11,6 +11,8 @@
 
 #define encCategoryLang @"Lang"
 #define encCategoryImageRollUrl @"ImageRoll"
+#define encCategoryImage2Url @"Image2"
+#define encCategoryImage2RollUrl @"Image2Roll"
 #define encCategoryParent @"Parent"
 #define encCategoryHouseInfoKind @"HIKKind"
 
@@ -20,6 +22,8 @@
 @property (nonatomic, strong) NSString *parent;
 @property (readonly, getter = getParentID) int parentId;
 @property (nonatomic, strong) NSString *imageRollUrl;
+@property (nonatomic, strong) NSString *image2Url;
+@property (nonatomic, strong) NSString *image2RollUrl;
 @property int hikId;
 
 -(void)encodeWithCoder:(NSCoder *)encoder;
@@ -29,6 +33,8 @@
               title:(NSString *)aTitle
            imageUrl:(NSString *)aImageUrl
        imageRollUrl:(NSString *)aImageRollUrl
+          image2Url:(NSString *)aImage2Url
+      image2RollUrl:(NSString *)aImage2RollUrl
              parent:(NSString *)aParent;
 
 -(id)initWithValues:(NSString *)aId
@@ -36,6 +42,8 @@
               title:(NSString *)aTitle
            imageUrl:(NSString *)aImageUrl
        imageRollUrl:(NSString *)aImageRollUrl
+          image2Url:(NSString *)aImage2Url
+      image2RollUrl:(NSString *)aImage2RollUrl
              parent:(NSString *)aParent
                 hik:(int)ahikid;
 

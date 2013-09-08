@@ -15,6 +15,8 @@
 @property (strong, nonatomic) IBOutlet UIView *contentView;
 @property (strong, nonatomic) IBOutlet UIImageView *imgView;
 @property (strong, nonatomic) IBOutlet UIButton *btnCall;
+@property (strong, nonatomic) IBOutlet UIButton *btnMail;
+
 @property (strong, nonatomic) IBOutlet UIButton *btnCancel;
 - (IBAction)btnTouchupInside:(UIButton *)sender;
 

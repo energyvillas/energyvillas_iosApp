@@ -9,10 +9,11 @@
 #import "UINavContentViewController.h"
 #import "FPPopoverController.h"
 #import "DPMoreMenuViewController.h"
+#import <MessageUI/MessageUI.h>
 
 
 
-@interface DPPaidMainViewController : UINavContentViewController <UITabBarDelegate, UINavigationControllerDelegate, FPPopoverControllerDelegate, DPMoreMenuHandlerDelegate>
+@interface DPPaidMainViewController : UINavContentViewController <UITabBarDelegate, UINavigationControllerDelegate, FPPopoverControllerDelegate, DPMoreMenuHandlerDelegate, MFMailComposeViewControllerDelegate>
 
 @property (strong, nonatomic) IBOutlet UINavigationController *navController;
 

@@ -17,6 +17,7 @@
 #import "DPNextHouseViewController.h"
 #import "DPCTGViewController.h"
 #import "DPButton.h"
+#import "DPImageListDownloader.h"
 
 @interface DPNewNextViewController ()
 
@@ -37,8 +38,10 @@
 @property (strong, nonatomic) UIView *loadingImageNew;
 @property (strong, nonatomic) UIView *loadingImageNext;
 
-@property (strong, nonatomic) Category *ctgNew;
+@property (strong, nonatomic) Category *ctgNew, *ctgNewTemp;
 @property (strong, nonatomic) Category *ctgNext;
+
+@property (strong, nonatomic) DPImageListDownloader *imglistDownloader;
 
 @end
 
@@ -59,7 +62,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self loadData];
+//    [self loadData];
 }
 
 -(void) viewDidUnload {
@@ -102,6 +105,9 @@
     
     self.ctgNew = nil;
     self.ctgNext = nil;
+
+    self.imglistDownloader = nil;
+    self.ctgNewTemp = nil;
 }
 
 -(void) cleanup {
@@ -180,26 +186,33 @@
     }
     
     if (self.ctgNew)
-        [self internalLoadImage:self.ctgNew index:0];
+        [self internalLoadImageNew];
     else {
         if (self.loadingImageNew)
             [self.loadingImageNew removeFromSuperview];
-        
-        self.loadingImageNew = createImageViewLoadingSized(CGRectInset(self.houseNew.bounds, 1, 1),
-                                                           CGSizeMake(IS_IPAD ? 80.0f : 40.0f,
-                                                                      IS_IPAD ? 80.0f : 40.0f));
+
+        NSString *imgname = [NSString stringWithFormat:@"NewNext/new_load_model_photo_%@_%@.png",
+                             CURRENT_LANG, IS_PORTRAIT ? @"v":@"h"];
+        self.loadingImageNew = [[UIImageView alloc] initWithImage:[UIImage imageNamed:imgname]];
+                                                                  
+//        self.loadingImageNew = createImageViewLoadingSized(CGRectInset(self.houseNew.bounds, 1, 1),
+//                                                           CGSizeMake(IS_IPAD ? 80.0f : 40.0f,
+//                                                                      IS_IPAD ? 80.0f : 40.0f));
         [self.houseNew addSubview:self.loadingImageNew];
     }
     
     if (self.ctgNext)
-        [self internalLoadImage:self.ctgNext index:1];
+        [self internalLoadImageNext];
     else {
         if (self.loadingImageNext)
             [self.loadingImageNext removeFromSuperview];
         
-        self.loadingImageNext = createImageViewLoadingSized(CGRectInset(self.houseNext.bounds, 1, 1),
-                                                           CGSizeMake(IS_IPAD ? 80.0f : 40.0f,
-                                                                      IS_IPAD ? 80.0f : 40.0f));
+        NSString *imgname = [NSString stringWithFormat:@"NewNext/next_load_model_photo_%@_%@.png",
+                             CURRENT_LANG, IS_PORTRAIT ? @"v":@"h"];
+        self.loadingImageNext = [[UIImageView alloc] initWithImage:[UIImage imageNamed:imgname]];
+//        self.loadingImageNext = createImageViewLoadingSized(CGRectInset(self.houseNext.bounds, 1, 1),
+//                                                           CGSizeMake(IS_IPAD ? 80.0f : 40.0f,
+//                                                                      IS_IPAD ? 80.0f : 40.0f));
         [self.houseNext addSubview:self.loadingImageNext];
     }
 }
@@ -225,6 +238,9 @@
     
     UIViewController *vc = nil;
     if (sender == self.houseNew) {
+        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:self.ctgNew.imageUrl];
+        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:self.ctgNew.imageRollUrl];
+        
         vc = [[DPCTGViewController alloc] initWithCategory:self.ctgNew.Id
                                              useDeviceType:YES];
         
@@ -281,7 +297,7 @@
         self.loaderNext.delegate = self;
     }
     
-    if (self.ctgNew == nil || self.loaderNew.dataRefreshNeeded)
+    if ((self.ctgNew == nil && self.ctgNewTemp == nil) || self.loaderNew.dataRefreshNeeded)
         [self.loaderNew loadData];
 
     if (self.ctgNext == nil || self.loaderNext.dataRefreshNeeded)
@@ -296,11 +312,11 @@
         // no data found...ok! //[self loadLocalData];
     } else {
         if (loader == self.loaderNew) {
-            self.ctgNew = loader.datalist[0];
-            [self dataLoaded:self.ctgNew];
+            self.ctgNewTemp = loader.datalist[0];
+            [self dataLoadedNew];
         } else if (loader == self.loaderNext) {
             self.ctgNext = loader.datalist[0];
-            [self dataLoaded:self.ctgNext];
+            [self dataLoadedNext];
         }
     }
 }
@@ -309,71 +325,89 @@
     // ok .. no data found???//[self loadLocalData];
 }
 
+-(void) dataLoadedNew {
+    NSArray *list = @[NullIfEmpty(self.ctgNewTemp.imageUrl),
+                      NullIfEmpty(self.ctgNewTemp.imageRollUrl),
+                      NullIfEmpty(self.ctgNewTemp.image2Url),
+                      NullIfEmpty(self.ctgNewTemp.image2RollUrl)];
+    __block id this = self;
+    self.imglistDownloader = [[DPImageListDownloader alloc] initWithList:list
+                                                              onComplete:^(BOOL success) {
+                                                                  if (success)
+                                                                      [this loadCtgNewImages];
+                                                              }];
+}
+
+-(void) loadCtgNewImages {
+    self.imglistDownloader = nil;
+    self.ctgNew = self.ctgNewTemp;
+    self.ctgNewTemp = nil;
+    [self.view setNeedsLayout];
+}
+
+-(void)internalLoadImageNew {
+    UIImageView *iv = [[UIImageView alloc] initWithFrame:self.houseNew.bounds];
+    iv.tag = 1000;
+    NSString *imgName = IS_PORTRAIT ? self.ctgNew.imageUrl : self.ctgNew.imageRollUrl;
+    NSString *img2Name = IS_PORTRAIT ? self.ctgNew.image2Url : self.ctgNew.image2RollUrl;
+    
+    BOOL hasViewed = [[NSUserDefaults standardUserDefaults] boolForKey:imgName];
+    if (hasViewed || (NilIfEmpty(img2Name) == nil)) {
+        [iv setImage:[[DPAppHelper sharedInstance] loadUIImageFromCache:imgName]];
+    } else {
+        [iv setAnimationImages:@[[[DPAppHelper sharedInstance] loadUIImageFromCache:imgName],
+                                 [[DPAppHelper sharedInstance] loadUIImageFromCache:img2Name]]
+         ];
+        [iv setAnimationRepeatCount:0]; // infinite
+        [iv setAnimationDuration:0.3]; // seconds
+        [iv startAnimating];
+    }
+    
+    UIView *oldiv = [self.houseNew viewWithTag:1000];
+    if (oldiv)
+        [oldiv removeFromSuperview];
+    
+    [self.houseNew addSubview:iv];
+}
+
 -(void) setupImageCache {
     if (self.imageRequests == nil) 
         self.imageRequests = [[NSMutableDictionary alloc] init];
 }
 
-- (void) dataLoaded:(Category *)ctg {
+- (void) dataLoadedNext {
     dispatch_async(dispatch_get_main_queue(), ^{
-        [self loadImage:ctg];
+        [self loadImage];
     });
 }
 
-- (void) loadImage:(Category *)element {
+- (void) loadImage {
     [self doLayoutSubViews:NO];
-    [self internalLoadImage:element index:-1];
+    [self internalLoadImageNext];
 }
 
-- (void) internalLoadImage:(Category *)element index:(int)index {
-    int indx = element == nil ? index : -1;
-    if (element) {
-        if (element == self.ctgNew)
-            indx = 0;
-        else if (element == self.ctgNext)
-            indx = 1;
-    }
-    
-    if (indx != -1) {
-        NSString *imgName = IS_PORTRAIT ? element.imageUrl : element.imageRollUrl;
-        if (![self loadCachedImage:imgName atIndex:indx]) {
-            [self downloadImageUrl:imgName atIndex:indx];
+- (void) internalLoadImageNext {
+        NSString *imgName = IS_PORTRAIT ? self.ctgNext.imageUrl : self.ctgNext.imageRollUrl;
+        if (![self loadCachedImage:imgName]) {
+            [self downloadImageUrl:imgName atIndex:1];
         }
-    }
 }
 
-- (BOOL) loadCachedImage:(NSString *)imgName atIndex:(int)aIndex{
-    if (aIndex >= self.view.subviews.count) return NO;
-    
+- (BOOL) loadCachedImage:(NSString *)imgName {
     UIImage *img = [[DPAppHelper sharedInstance] loadUIImageFromCache:imgName];
 
-    if (aIndex == 0) {
-        if (self.loadingImageNew)
-            [self.loadingImageNew removeFromSuperview];
-        
-        if (img != nil) {
-            [self.houseNew setImage:img forState:UIControlStateNormal];
-            return YES;
-        }
-        
-        self.loadingImageNew = createImageViewLoadingSized(CGRectInset(self.houseNew.bounds, 1, 1),
-                                                           CGSizeMake(IS_IPAD ? 80.0f : 40.0f,
-                                                                      IS_IPAD ? 80.0f : 40.0f));
-        [self.houseNew addSubview:self.loadingImageNew];
-    } else if (aIndex == 1) {
-        if (self.loadingImageNext)
-            [self.loadingImageNext removeFromSuperview];
-
-        if (img != nil) {
-            [self.houseNext setImage:img forState:UIControlStateNormal];
-            return YES;
-        }
-
-        self.loadingImageNext = createImageViewLoadingSized(CGRectInset(self.houseNext.bounds, 1, 1),
-                                                            CGSizeMake(IS_IPAD ? 80.0f : 40.0f,
-                                                                       IS_IPAD ? 80.0f : 40.0f));
-        [self.houseNext addSubview:self.loadingImageNext];
+    if (self.loadingImageNext)
+        [self.loadingImageNext removeFromSuperview];
+    
+    if (img != nil) {
+        [self.houseNext setImage:img forState:UIControlStateNormal];
+        return YES;
     }
+    
+    self.loadingImageNext = createImageViewLoadingSized(CGRectInset(self.houseNext.bounds, 1, 1),
+                                                        CGSizeMake(IS_IPAD ? 80.0f : 40.0f,
+                                                                   IS_IPAD ? 80.0f : 40.0f));
+    [self.houseNext addSubview:self.loadingImageNext];
     
     return NO;
 }
@@ -478,7 +512,7 @@
     
 	if(aImage){
         [[DPAppHelper sharedInstance] saveImageToCache:imgName data:imgData];
-        [self loadCachedImage:imgName atIndex:aIndex];
+        [self loadCachedImage:imgName];
 	}
 }
 

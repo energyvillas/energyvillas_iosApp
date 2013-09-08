@@ -20,6 +20,8 @@
     self.title = nil;
     self.imageUrl = nil;
     self.imageRollUrl = nil;
+    self.image2Url = nil;
+    self.image2RollUrl = nil;
     self.parent = nil;
     self.hikind = nil;
 }
@@ -55,6 +57,8 @@ static NSString *kName_langcode = @"langcode";
 static NSString *kName_title = @"description";
 static NSString *kName_imageUrl = @"image";
 static NSString *kName_imageRollUrl = @"imageroll";
+static NSString *kName_image2Url = @"image2";
+static NSString *kName_image2RollUrl = @"image2roll";
 static NSString *kName_parent = @"parentid";
 static NSString *kName_kind = @"kind";
 
@@ -95,6 +99,14 @@ static NSString *kName_kind = @"kind";
 		self.storingCharacters = YES;
 		
 	}else if ([elementName isEqualToString:kName_imageRollUrl]) {
+		[self.currentString setString:@""];
+		self.storingCharacters = YES;
+		
+	}else if ([elementName isEqualToString:kName_image2Url]) {
+		[self.currentString setString:@""];
+		self.storingCharacters = YES;
+		
+	}else if ([elementName isEqualToString:kName_image2RollUrl]) {
 		[self.currentString setString:@""];
 		self.storingCharacters = YES;
 		
@@ -149,15 +161,10 @@ static NSString *kName_kind = @"kind";
                                                          title:self.title
                                                       imageUrl:self.imageUrl
                                                   imageRollUrl:self.imageRollUrl
+                                                      image2Url:self.image2Url
+                                                  image2RollUrl:self.image2RollUrl
                                                         parent:self.parent
                                                            hik:[self.hikind intValue]];
-//		category.key = self.ctgId;
-//        category.lang = self.langcode;
-//		category.title = self.title;
-//		category.imageUrl = self.imageUrl;
-//		category.imageRollUrl = self.imageRollUrl;
-//		category.parent = self.parent;
-//        category.hikId = [self.hikind intValue];
 		[self.categories insertObject:category atIndex:index];
 		index=index+1;
 		category=nil;
@@ -176,6 +183,12 @@ static NSString *kName_kind = @"kind";
         
 	}else if ([elementName isEqualToString:kName_imageRollUrl]) {
 		self.imageRollUrl=[[NSString alloc] initWithString: aElementValue];
+        
+	}else if ([elementName isEqualToString:kName_image2Url]) {
+		self.image2Url=[[NSString alloc] initWithString: aElementValue];
+        
+	}else if ([elementName isEqualToString:kName_image2RollUrl]) {
+		self.image2RollUrl=[[NSString alloc] initWithString: aElementValue];
         
     }else if ([elementName isEqualToString:kName_parent]) {
 		self.parent=[[NSString alloc] initWithString: aElementValue];

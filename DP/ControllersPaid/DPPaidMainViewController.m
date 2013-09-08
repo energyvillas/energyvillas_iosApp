@@ -16,6 +16,7 @@
 #import "DPAppHelper.h"
 #import "DPModalDialogManager.h"
 #import "DPCallUsViewController.h"
+#import "DPMailHelper.h"
 #import "DPCTGViewController.h"
 #import "DPFavoritesViewController.h"
 
@@ -484,6 +485,9 @@
 }
 
 - (void) showCall {
+    
+    
+    
     UIViewController *contr = [self.navController topViewController];
     DPCallUsViewController *callusVC = [[DPCallUsViewController alloc] init];
     
@@ -505,6 +509,12 @@
                 [[UIApplication sharedApplication] openURL:[NSURL URLWithString:telNo]];
                 break;
             }
+            case 102: {
+                [[DPAppHelper sharedInstance] playSoundBloodSplatOnWall];
+                // open mail composer
+                [self composeEmail];
+                break;
+            }
         }
         
         [self fixSelectedTabBarItem];
@@ -516,6 +526,43 @@
         self.dlgManager = [[DPModalDialogManager alloc] initWithController:contr];
     [self.dlgManager showDialog:callusVC];
 }
+
+//==============================================================================
+#pragma mark - eMail
+
+-(void) composeEmail {
+    if (![MFMailComposeViewController canSendMail]){
+        showAlertMessage(nil, DPLocalizedString(kERR_TITLE_INFO), DPLocalizedString(kERR_MSG_UNABLE_TO_SEND_MAIL));
+        return;
+    }
+    
+    MFMailComposeViewController *composer = [DPMailHelper composeEmail2Us];
+    composer.mailComposeDelegate = self;
+    if (!IS_IPAD) {
+        //DPAppDelegate *appdel = [UIApplication sharedApplication].delegate;
+        [/*appdel.controller*/self presentModalViewController:composer
+                                             animated:YES];
+        
+        //        [self.controller.navigationController presentModalViewController:composer
+        //                                                                animated:YES];
+    } else {
+        //        composer.modalPresentationStyle = UIModalPresentationPageSheet;
+        /*self.controller.navigationController*/self.navController.modalPresentationStyle = UIModalPresentationPageSheet;
+        [/*self.controller.navigationController*/self.navController presentModalViewController:composer
+                                                                animated:YES];
+        //                                                         completion:nil];
+    }
+    
+}
+
+#pragma mark - MFMailComposeViewControllerDelegate
+
+-(void) mailComposeController:(MFMailComposeViewController *)controller
+          didFinishWithResult:(MFMailComposeResult)result
+                        error:(NSError *)error {
+	[controller dismissModalViewControllerAnimated:YES];
+}
+
 
 - (void) showMore {
     double delayInSeconds = 0.4f;

@@ -13,11 +13,6 @@
 #import "UIImage+FX.h"
 
 
-/*
-NSString *const MyFirstConstant = @"FirstConstant";
-NSString *const MySecondConstant = @"SecondConstant";
-*/
-
 // option identifier
 NSString *const USE_DATA_CACHING_Key = @"USE_DATA_CACHING";
 
@@ -30,6 +25,8 @@ NSString *const DPN_FavoritesChangedNotification = @"DPN_FavoritesChangedNotific
 NSString *const PRODUCT_IDENTIFIER = @"com.energyvillas.energyvillas.ev01";
 
 // web service credentials
+//NSString *const USER_NAME = @"admin";
+//NSString *const PASSWORD = @"demo"; 
 NSString *const USER_NAME = @"phone";
 NSString *const PASSWORD = @"phone";
 
@@ -134,6 +131,9 @@ NSString *const kEMAIL_BODY_NO_IMG_FMT = @"EMAIL_BODY_NO_IMG_FMT";
 NSString *const kFACEBOOK_LINK_TEXT = @"FACEBOOK_LINK_TEXT";
 NSString *const kFACEBOOK_DESCR = @"FACEBOOK_DESCR";
 NSString *const kFACEBOOK_RESULT_FMT = @"FACEBOOK_RESULT_FMT";
+
+NSString *const kEMAIL_SUBJECT_2Us = @"EMAIL_SUBJECT_2Us";
+NSString *const kEMAIL_BODY_FMT_2Us = @"EMAIL_BODY_FMT_2Us";
 
 
 void showAlertMessage(id aDelegate, NSString *aTitle, NSString *aMessage) {

@@ -21,7 +21,7 @@ FOUNDATION_EXPORT NSString *const MySecondConstant;
 
 #define USE_TEST_SITE ((BOOL)NO)
 #define CACHING_ENABLED ((BOOL)YES)
-#define CACHE_EXPIRATION_INTERVAL ((NSTimeInterval)(60 * 60 * 2)) // two hours
+#define CACHE_EXPIRATION_INTERVAL ((NSTimeInterval)(60 * 60 * 48)) // two days-48 hours
 
 
 #define IS_IPAD ((BOOL)([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad))
@@ -277,6 +277,9 @@ UIKIT_EXTERN NSString *const kEMAIL_BODY_NO_IMG_FMT;
 UIKIT_EXTERN NSString *const kFACEBOOK_LINK_TEXT;
 UIKIT_EXTERN NSString *const kFACEBOOK_DESCR;
 UIKIT_EXTERN NSString *const kFACEBOOK_RESULT_FMT;
+
+UIKIT_EXTERN NSString *const kEMAIL_SUBJECT_2Us;
+UIKIT_EXTERN NSString *const kEMAIL_BODY_FMT_2Us;
 
 // functions
 void showAlertMessage(id delegate, NSString *aTitle, NSString *aMessage);

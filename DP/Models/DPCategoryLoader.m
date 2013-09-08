@@ -107,6 +107,8 @@
                                                   title:titles[i]
                                                imageUrl:images[i]
                                            imageRollUrl:imagerolls == nil ? nil : imagerolls[i]
+                                              image2Url:nil
+                                          image2RollUrl:nil
                                                  parent:pid == -1 ? nil : [NSString stringWithFormat:@"%d", pid]]];
     }
     

@@ -49,6 +49,7 @@
 - (void) saveImageToCache:(NSString *)url data:(NSData *)imgData;
 - (NSData *) loadImageFromCache:(NSString *)url;
 - (UIImage *) loadUIImageFromCache:(NSString *)url;
+- (BOOL) isImageInCache:(NSString *)url;
 
 #pragma mark - favorites handling
 - (BOOL) isArticleInFavorites:(Article *)article;

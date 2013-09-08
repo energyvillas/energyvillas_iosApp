@@ -181,6 +181,9 @@
 		5EFCCD3B170B48DC00C1FE88 /* paid-Islands.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5EFCCD3A170B48DC00C1FE88 /* paid-Islands.plist */; };
 		5EFCCD3D170B4BF400C1FE88 /* paid-Exclusive.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5EFCCD3C170B4BF400C1FE88 /* paid-Exclusive.plist */; };
 		5EFCCD3F170B520100C1FE88 /* rootCategories.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5EFCCD3E170B520100C1FE88 /* rootCategories.plist */; };
+		5EFF546517DB93CB0083B33E /* ContactUs in Resources */ = {isa = PBXBuildFile; fileRef = 5EFF546417DB93CB0083B33E /* ContactUs */; };
+		5EFF546717DBE2A60083B33E /* NewNext in Resources */ = {isa = PBXBuildFile; fileRef = 5EFF546617DBE2A60083B33E /* NewNext */; };
+		5EFF546A17DCFAEC0083B33E /* DPImageListDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EFF546917DCFAEB0083B33E /* DPImageListDownloader.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -461,6 +464,10 @@
 		5EFCCD3A170B48DC00C1FE88 /* paid-Islands.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "paid-Islands.plist"; sourceTree = "<group>"; };
 		5EFCCD3C170B4BF400C1FE88 /* paid-Exclusive.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "paid-Exclusive.plist"; sourceTree = "<group>"; };
 		5EFCCD3E170B520100C1FE88 /* rootCategories.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = rootCategories.plist; sourceTree = "<group>"; };
+		5EFF546417DB93CB0083B33E /* ContactUs */ = {isa = PBXFileReference; lastKnownFileType = folder; path = ContactUs; sourceTree = "<group>"; };
+		5EFF546617DBE2A60083B33E /* NewNext */ = {isa = PBXFileReference; lastKnownFileType = folder; path = NewNext; sourceTree = "<group>"; };
+		5EFF546817DCFAEB0083B33E /* DPImageListDownloader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPImageListDownloader.h; sourceTree = "<group>"; };
+		5EFF546917DCFAEB0083B33E /* DPImageListDownloader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPImageListDownloader.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -671,6 +678,8 @@
 				5E956EAF1757B72D00B86DAC /* DPModalDialogManager.m */,
 				5E0D18F01765D5C100A3F946 /* DPButton.h */,
 				5E0D18F11765D5C100A3F946 /* DPButton.m */,
+				5EFF546817DCFAEB0083B33E /* DPImageListDownloader.h */,
+				5EFF546917DCFAEB0083B33E /* DPImageListDownloader.m */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -766,6 +775,8 @@
 				5E956EB61757C19000B86DAC /* CallUs */,
 				5EDE1F8317442F9500A84BDA /* Icons */,
 				5E869E0C173010EA00516D2D /* FreeImages */,
+				5EFF546417DB93CB0083B33E /* ContactUs */,
+				5EFF546617DBE2A60083B33E /* NewNext */,
 				5E956EAA1754E73C00B86DAC /* BuyDialog */,
 				5EE16DFE171C47D10006E1CE /* Carousel */,
 				5E4E85121710356A005DAD06 /* Background */,
@@ -1130,6 +1141,8 @@
 				5E4F028B176A71AD00084817 /* Launch-Portrait~ipad.png in Resources */,
 				5E4F02AB176A7E5600084817 /* Launch@2x.png in Resources */,
 				5E4130211775F2A300C9D3E4 /* SVProgressHUD.bundle in Resources */,
+				5EFF546517DB93CB0083B33E /* ContactUs in Resources */,
+				5EFF546717DBE2A60083B33E /* NewNext in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1225,6 +1238,7 @@
 				5E0D18F21765D5C100A3F946 /* DPButton.m in Sources */,
 				5E4130221775F2A300C9D3E4 /* SVProgressHUD.m in Sources */,
 				5EE4BB6B17C62A1D0066E9A7 /* DPiCarouselViewController.m in Sources */,
+				5EFF546A17DCFAEC0083B33E /* DPImageListDownloader.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1328,7 +1342,7 @@
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: DESIGN PROJECTS LTD (7U2CGA4753)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: DESIGN PROJECTS LTD (7U2CGA4753)";
 				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -1343,7 +1357,8 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				ONLY_ACTIVE_ARCH = YES;
-				PROVISIONING_PROFILE = "93FB3469-BFC3-41C3-8C83-64B52D80927C";
+				PROVISIONING_PROFILE = "072B685E-DCE6-4DFC-BC7F-50F197207567";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "072B685E-DCE6-4DFC-BC7F-50F197207567";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -1370,8 +1385,8 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
-				PROVISIONING_PROFILE = "57DAAE6D-B1D0-480C-873E-05680B9F3F18";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "57DAAE6D-B1D0-480C-873E-05680B9F3F18";
+				PROVISIONING_PROFILE = "072B685E-DCE6-4DFC-BC7F-50F197207567";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "072B685E-DCE6-4DFC-BC7F-50F197207567";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;

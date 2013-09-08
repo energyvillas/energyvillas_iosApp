@@ -12,5 +12,6 @@
 @interface DPMailHelper : NSObject
 
 +(MFMailComposeViewController *) composeEmail;
++(MFMailComposeViewController *) composeEmail2Us;
 
 @end

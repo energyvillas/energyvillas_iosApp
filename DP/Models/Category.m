@@ -24,6 +24,8 @@
 	[encoder encodeObject:self.lang forKey:encCategoryLang];
 	[encoder encodeObject:self.parent forKey:encCategoryParent];
     [encoder encodeObject:self.imageRollUrl forKey:encCategoryImageRollUrl];
+    [encoder encodeObject:self.image2Url forKey:encCategoryImage2Url];
+    [encoder encodeObject:self.image2RollUrl forKey:encCategoryImage2RollUrl];
 	[encoder encodeObject:[NSNumber numberWithInt: self.hikId] forKey:encCategoryHouseInfoKind];
 }
 
@@ -34,6 +36,8 @@
 		self.lang = [aDecoder decodeObjectForKey:encCategoryLang];
 		self.parent = [aDecoder decodeObjectForKey:encCategoryParent];
         self.imageRollUrl = [aDecoder decodeObjectForKey:encCategoryImageRollUrl];
+        self.image2Url = [aDecoder decodeObjectForKey:encCategoryImage2Url];
+        self.image2RollUrl = [aDecoder decodeObjectForKey:encCategoryImage2RollUrl];
         self.hikId = [[aDecoder decodeObjectForKey:encCategoryHouseInfoKind] intValue];
 	}
     
@@ -45,6 +49,8 @@
                 title:(NSString *)aTitle
              imageUrl:(NSString *)aImageUrl
          imageRollUrl:(NSString *)aImageRollUrl
+            image2Url:(NSString *)aImage2Url
+        image2RollUrl:(NSString *)aImage2RollUrl
                parent:(NSString *)aParent
 {
     self = [super initWithValues:aId title:aTitle imageUrl:aImageUrl];
@@ -56,6 +62,8 @@
 //		self.imageUrl = NullIfEmpty(aImageUrl);
 		self.parent = NilIfEmpty(aParent);
         self.imageRollUrl = NilIfEmpty(aImageRollUrl);
+        self.image2Url = NilIfEmpty(aImage2Url);
+        self.image2RollUrl = NilIfEmpty(aImage2RollUrl);
         self.hikId = HIKID_UNDEFINED;
 	}
     
@@ -67,9 +75,17 @@
               title:(NSString *)aTitle
            imageUrl:(NSString *)aImageUrl
        imageRollUrl:(NSString *)aImageRollUrl
+          image2Url:(NSString *)aImage2Url
+      image2RollUrl:(NSString *)aImage2RollUrl
              parent:(NSString *)aParent
                 hik:(int)ahikid {
-    self = [self initWithValues:aId lang:aLang title:aTitle imageUrl:aImageUrl imageRollUrl:aImageRollUrl parent:aParent];
+    self = [self initWithValues:aId lang:aLang
+                          title:aTitle
+                       imageUrl:aImageUrl
+                   imageRollUrl:aImageRollUrl
+                      image2Url:aImage2Url
+                  image2RollUrl:aImage2RollUrl
+                         parent:aParent];
     if (self) {
         self.hikId = ahikid;
     }
@@ -90,6 +106,8 @@
     copy.lang = [self.lang copy];
     copy.parent = [self.parent copy];
     copy.imageRollUrl = [self.imageRollUrl copy];
+    copy.image2Url = [self.image2Url copy];
+    copy.image2RollUrl = [self.image2RollUrl copy];
     copy.hikId = self.hikId;
     
     return copy;
