@@ -35,8 +35,8 @@
 @property (strong, nonatomic) UIButton *houseNew;
 @property (strong, nonatomic) UIButton *houseNext;
 
-@property (strong, nonatomic) UIView *loadingImageNew;
-@property (strong, nonatomic) UIView *loadingImageNext;
+@property (strong, nonatomic) UIImageView *loadingImageNew;
+@property (strong, nonatomic) UIImageView *loadingImageNext;
 
 @property (strong, nonatomic) Category *ctgNew, *ctgNewTemp;
 @property (strong, nonatomic) Category *ctgNext;
@@ -185,36 +185,48 @@
         self.houseNext.frame = CGRectMake(x, y, w, h);
     }
     
+    if (self.loadingImageNew)
+        [self.loadingImageNew removeFromSuperview];
+    
     if (self.ctgNew)
         [self internalLoadImageNew];
     else {
-        if (self.loadingImageNew)
-            [self.loadingImageNew removeFromSuperview];
-
-        NSString *imgname = [NSString stringWithFormat:@"NewNext/new_load_model_photo_%@_%@.png",
-                             CURRENT_LANG, IS_PORTRAIT ? @"v":@"h"];
-        self.loadingImageNew = [[UIImageView alloc] initWithImage:[UIImage imageNamed:imgname]];
-                                                                  
-//        self.loadingImageNew = createImageViewLoadingSized(CGRectInset(self.houseNew.bounds, 1, 1),
-//                                                           CGSizeMake(IS_IPAD ? 80.0f : 40.0f,
-//                                                                      IS_IPAD ? 80.0f : 40.0f));
+        self.loadingImageNew = [self prepareLoadingImageViewNew];
         [self.houseNew addSubview:self.loadingImageNew];
     }
+    
+    if (self.loadingImageNext)
+        [self.loadingImageNext removeFromSuperview];
     
     if (self.ctgNext)
         [self internalLoadImageNext];
     else {
-        if (self.loadingImageNext)
-            [self.loadingImageNext removeFromSuperview];
-        
-        NSString *imgname = [NSString stringWithFormat:@"NewNext/next_load_model_photo_%@_%@.png",
-                             CURRENT_LANG, IS_PORTRAIT ? @"v":@"h"];
-        self.loadingImageNext = [[UIImageView alloc] initWithImage:[UIImage imageNamed:imgname]];
-//        self.loadingImageNext = createImageViewLoadingSized(CGRectInset(self.houseNext.bounds, 1, 1),
-//                                                           CGSizeMake(IS_IPAD ? 80.0f : 40.0f,
-//                                                                      IS_IPAD ? 80.0f : 40.0f));
+        self.loadingImageNext = [self prepareLoadingImageViewNext];
         [self.houseNext addSubview:self.loadingImageNext];
     }
+}
+
+-(UIImageView *) prepareLoadingImageViewNew {
+    NSString *imgname = [NSString stringWithFormat:@"NewNext/new_load_model_photo_%@_%@.png",
+                         CURRENT_LANG, IS_PORTRAIT ? @"v":@"h"];
+    UIImageView *iv = [self prepareLoadingImageViewWithFrame:self.houseNew.bounds
+                                                  imageNamed:imgname];
+    return iv;
+}
+-(UIImageView *) prepareLoadingImageViewNext {
+    NSString *imgname = [NSString stringWithFormat:@"NewNext/next_load_model_photo_%@_%@.png",
+                         CURRENT_LANG, IS_PORTRAIT ? @"v":@"h"];
+    UIImageView *iv = [self prepareLoadingImageViewWithFrame:self.houseNext.bounds
+                                                  imageNamed:imgname];
+    return iv;
+}
+
+-(UIImageView *) prepareLoadingImageViewWithFrame:(CGRect)frm imageNamed:(NSString *)imgname {
+    UIImageView *iv = [[UIImageView alloc] initWithFrame:frm];
+    iv.contentMode = UIViewContentModeCenter;
+    iv.backgroundColor = [UIColor clearColor];
+    [iv setImage:[UIImage imageNamed:imgname]];
+    return iv;
 }
 
 - (UIButton *) createViewWithFrame:(CGRect)frame {
@@ -224,7 +236,7 @@
     result.extraLayerColor = [UIColor colorWithWhite:0.0f alpha:0.25f];
     result.showExtraLayerOnHighlight = YES;
     result.frame = frame;
-    result.contentMode = UIViewContentModeScaleAspectFit;
+    result.contentMode = UIViewContentModeCenter;//ScaleAspectFit;
     result.backgroundColor = [UIColor clearColor];
 
     [result addTarget:self action:@selector(handleTap:) forControlEvents:UIControlEventTouchUpInside];
@@ -404,9 +416,7 @@
         return YES;
     }
     
-    self.loadingImageNext = createImageViewLoadingSized(CGRectInset(self.houseNext.bounds, 1, 1),
-                                                        CGSizeMake(IS_IPAD ? 80.0f : 40.0f,
-                                                                   IS_IPAD ? 80.0f : 40.0f));
+    self.loadingImageNext = [self prepareLoadingImageViewNext];
     [self.houseNext addSubview:self.loadingImageNext];
     
     return NO;
