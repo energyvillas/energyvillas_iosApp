@@ -249,14 +249,14 @@
     // handling code
     
     UIViewController *vc = nil;
-    if (sender == self.houseNew) {
+    if (sender == self.houseNew && self.ctgNew != nil) {
         [[NSUserDefaults standardUserDefaults] setBool:YES forKey:self.ctgNew.imageUrl];
         [[NSUserDefaults standardUserDefaults] setBool:YES forKey:self.ctgNew.imageRollUrl];
         
         vc = [[DPCTGViewController alloc] initWithCategory:self.ctgNew.Id
                                              useDeviceType:YES];
         
-    } else if (sender == self.houseNext) {
+    } else if (sender == self.houseNext && self.ctgNext != nil) {
         vc = [[DPNextHouseViewController alloc] initWithCategory:self.ctgNext.Id];
     }
     
@@ -351,8 +351,10 @@
                       NullIfEmpty(self.ctgNewTemp.image2Url),
                       NullIfEmpty(self.ctgNewTemp.image2RollUrl)];
     __block id this = self;
+    [self startIndicator:0];
     self.imglistDownloader = [[DPImageListDownloader alloc] initWithList:list
                                                               onComplete:^(BOOL success) {
+                                                                  [self stopIndicator:0];
                                                                   if (success)
                                                                       [this loadCtgNewImages];
                                                               }];
