@@ -62,6 +62,7 @@
 		5E5F949F17213BF5006C9A88 /* Social in Resources */ = {isa = PBXBuildFile; fileRef = 5E5F949E17213BF5006C9A88 /* Social */; };
 		5E6290D717591FEB00A7D3E1 /* Banners in Resources */ = {isa = PBXBuildFile; fileRef = 5E6290D617591FEB00A7D3E1 /* Banners */; };
 		5E63DF31174EAA2B0086ACF5 /* DPArticlesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E63DF30174EAA2A0086ACF5 /* DPArticlesViewController.m */; };
+		5E6708D117E4BBB60077AFBF /* callPhone.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 5E6708D017E4BBB60077AFBF /* callPhone.mp3 */; };
 		5E71A3B816F9973500E7AFF9 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E71A3B716F9973500E7AFF9 /* UIKit.framework */; };
 		5E71A3BA16F9973500E7AFF9 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E71A3B916F9973500E7AFF9 /* Foundation.framework */; };
 		5E71A3BC16F9973500E7AFF9 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E71A3BB16F9973500E7AFF9 /* CoreGraphics.framework */; };
@@ -273,6 +274,7 @@
 		5E6290D617591FEB00A7D3E1 /* Banners */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Banners; sourceTree = "<group>"; };
 		5E63DF2F174EAA2A0086ACF5 /* DPArticlesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPArticlesViewController.h; sourceTree = "<group>"; };
 		5E63DF30174EAA2A0086ACF5 /* DPArticlesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPArticlesViewController.m; sourceTree = "<group>"; };
+		5E6708D017E4BBB60077AFBF /* callPhone.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = callPhone.mp3; sourceTree = "<group>"; };
 		5E71A3B416F9973500E7AFF9 /* energyVillas.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = energyVillas.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5E71A3B716F9973500E7AFF9 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		5E71A3B916F9973500E7AFF9 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -819,6 +821,7 @@
 		5E9252161767833200BE1964 /* Sounds */ = {
 			isa = PBXGroup;
 			children = (
+				5E6708D017E4BBB60077AFBF /* callPhone.mp3 */,
 				5E956EAC17569E1600B86DAC /* woosh.mp3 */,
 				5E9252171767841F00BE1964 /* Blood Splattering On Wall-SoundBible.com-508930244.mp3 */,
 				5E9252181767841F00BE1964 /* Blood Splatters-SoundBible.com-125814492.mp3 */,
@@ -1143,6 +1146,7 @@
 				5E4130211775F2A300C9D3E4 /* SVProgressHUD.bundle in Resources */,
 				5EFF546517DB93CB0083B33E /* ContactUs in Resources */,
 				5EFF546717DBE2A60083B33E /* NewNext in Resources */,
+				5E6708D117E4BBB60077AFBF /* callPhone.mp3 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

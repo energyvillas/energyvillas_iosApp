@@ -24,6 +24,9 @@
 @implementation DPAdsViewController
 
 @synthesize group = _group;
+@synthesize currentAdPage = _currentAdPage;
+
+
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -34,14 +37,14 @@
     return self;
 }
 
-- (id) initWithGroup:(int)aGroup {
+- (id) initWithGroup:(int)aGroup initialPage:(int)aInitialPage {
     self = [super initWithContent:nil
                              rows:1
                           columns:1
                        autoScroll:YES
                         showPages:NO
                   scrollDirection:DPScrollDirectionHorizontal
-                      initialPage:0];
+                      initialPage:aInitialPage];
     
     if (self) {
         _group = aGroup;
@@ -157,7 +160,7 @@
 
 - (UIView *)createViewFor:(int)contentIndex frame:(CGRect)frame {
     UIImageView *result = [[UIImageView alloc] initWithFrame:frame];
-    result.contentMode = UIViewContentModeScaleAspectFit;
+    result.contentMode = UIViewContentModeCenter; //ScaleAspectFit;
     result.backgroundColor = [UIColor clearColor];
     
     result.tag = contentIndex;
@@ -190,5 +193,17 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+//======
+
+- (void) scrolledToPage:(int)newPage fromPage:(int)oldPage {
+    _currentAdPage = newPage;
+    NSLog(@"scrolledToPage:%d", _currentAdPage);
+}
+
+- (int) getCurrentAdPage {
+    return _currentAdPage;
+}
+
 
 @end

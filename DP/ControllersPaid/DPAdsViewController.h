@@ -11,8 +11,9 @@
 
 @interface DPAdsViewController : DPScrollableViewController <DPDataLoaderDelegate, DPScrollableDataSourceDelegate>
 
+@property (nonatomic, readonly, getter = getCurrentAdPage) int currentAdPage;
 @property (nonatomic, readonly) int group;
 
-- (id) initWithGroup:(int)aGroup;
+- (id) initWithGroup:(int)aGroup initialPage:(int)aInitialPage;
 
 @end

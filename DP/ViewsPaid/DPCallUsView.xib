@@ -13,7 +13,6 @@
 		<array key="IBDocument.IntegratedClassDependencies">
 			<string>IBProxyObject</string>
 			<string>IBUIButton</string>
-			<string>IBUIImageView</string>
 			<string>IBUIView</string>
 		</array>
 		<array key="IBDocument.PluginDependencies">
@@ -56,17 +55,6 @@
 						<reference key="NSNextResponder" ref="413910267"/>
 						<int key="NSvFlags">319</int>
 						<array class="NSMutableArray" key="NSSubviews">
-							<object class="IBUIImageView" id="131600149">
-								<reference key="NSNextResponder" ref="352646826"/>
-								<int key="NSvFlags">292</int>
-								<string key="NSFrameSize">{270, 130}</string>
-								<reference key="NSSuperview" ref="352646826"/>
-								<reference key="NSWindow"/>
-								<reference key="NSNextKeyView" ref="82344233"/>
-								<string key="NSReuseIdentifierKey">_NS:9</string>
-								<bool key="IBUIUserInteractionEnabled">NO</bool>
-								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
-							</object>
 							<object class="IBUIButton" id="82344233">
 								<reference key="NSNextResponder" ref="352646826"/>
 								<int key="NSvFlags">292</int>
@@ -138,7 +126,7 @@
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 								<int key="IBUIContentHorizontalAlignment">0</int>
 								<int key="IBUIContentVerticalAlignment">0</int>
-								<bool key="IBUIShowsTouchWhenHighlighted">YES</bool>
+								<bool key="IBUIAdjustsImageWhenDisabled">NO</bool>
 								<string key="IBUINormalTitle">cancel</string>
 								<reference key="IBUIHighlightedTitleColor" ref="639186763"/>
 								<reference key="IBUINormalTitleColor" ref="639186763"/>
@@ -150,7 +138,7 @@
 						<string key="NSFrame">{{32, 31}, {590, 254}}</string>
 						<reference key="NSSuperview" ref="413910267"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView" ref="131600149"/>
+						<reference key="NSNextKeyView"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<reference key="IBUIBackgroundColor" ref="492359376"/>
 						<bool key="IBUIAutoresizesSubviews">NO</bool>
@@ -196,14 +184,6 @@
 						<reference key="destination" ref="352646826"/>
 					</object>
 					<int key="connectionID">62</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBCocoaTouchOutletConnection" key="connection">
-						<string key="label">imgView</string>
-						<reference key="source" ref="372490531"/>
-						<reference key="destination" ref="131600149"/>
-					</object>
-					<int key="connectionID">64</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchOutletConnection" key="connection">
@@ -289,7 +269,6 @@
 						<int key="objectID">38</int>
 						<reference key="object" ref="352646826"/>
 						<array class="NSMutableArray" key="children">
-							<reference ref="131600149"/>
 							<reference ref="82344233"/>
 							<reference ref="228262604"/>
 							<reference ref="200907715"/>
@@ -308,11 +287,6 @@
 						<reference key="object" ref="82344233"/>
 						<reference key="parent" ref="352646826"/>
 						<string key="objectName">btnCall</string>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">63</int>
-						<reference key="object" ref="131600149"/>
-						<reference key="parent" ref="352646826"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">69</int>
@@ -338,7 +312,6 @@
 				<string key="39.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="40.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<real value="2" key="40.IBUIButtonInspectorSelectedEdgeInsetMetadataKey"/>
-				<string key="63.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="69.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<real value="2" key="69.IBUIButtonInspectorSelectedEdgeInsetMetadataKey"/>
 				<string key="73.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>

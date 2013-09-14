@@ -72,7 +72,7 @@
 
 - (void) viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-//    [self loadData];
+    [self loadData];
 }
 
 - (void) viewWillDisappear:(BOOL)animated {
@@ -311,9 +311,17 @@
     
     if ((self.ctgNew == nil && self.ctgNewTemp == nil) || self.loaderNew.dataRefreshNeeded)
         [self.loaderNew loadData];
+    else {
+        if (self.ctgNew == nil && self.ctgNewTemp != nil)
+            [self dataLoadedNew];
+        else if (self.ctgNew != nil && self.ctgNewTemp == nil)
+            [self.view setNeedsLayout];
+    }
 
     if (self.ctgNext == nil || self.loaderNext.dataRefreshNeeded)
-            [self.loaderNext loadData];
+        [self.loaderNext loadData];
+    else if (self.ctgNext != nil)
+        [self dataLoadedNext];
 }
 
 //==============================================================================
@@ -352,9 +360,12 @@
 
 -(void) loadCtgNewImages {
     self.imglistDownloader = nil;
-    self.ctgNew = self.ctgNewTemp;
+    if (self.ctgNew == nil || self.ctgNewTemp != nil)
+        self.ctgNew = self.ctgNewTemp;
     self.ctgNewTemp = nil;
-    [self.view setNeedsLayout];
+//    [self.view setNeedsLayout];
+    if (self.ctgNew != nil)
+        [self internalLoadImageNew];
 }
 
 -(void)internalLoadImageNew {
@@ -371,13 +382,19 @@
                                  [[DPAppHelper sharedInstance] loadUIImageFromCache:img2Name]]
          ];
         [iv setAnimationRepeatCount:0]; // infinite
-        [iv setAnimationDuration:0.3]; // seconds
+        [iv setAnimationDuration:0.5]; // seconds
         [iv startAnimating];
     }
     
     UIView *oldiv = [self.houseNew viewWithTag:1000];
     if (oldiv)
         [oldiv removeFromSuperview];
+
+    if (self.loadingImageNew)
+        [self.loadingImageNew removeFromSuperview];
+    
+    while (self.houseNew.subviews.count > 0)
+        [self.houseNew.subviews[0] removeFromSuperview];
     
     [self.houseNew addSubview:iv];
 }
@@ -394,7 +411,7 @@
 }
 
 - (void) loadImage {
-    [self doLayoutSubViews:NO];
+//    [self doLayoutSubViews:NO];
     [self internalLoadImageNext];
 }
 

@@ -180,15 +180,16 @@
 }
 
 - (void) loadAdsView:(BOOL)reload {
-    if (/*reload && */self.adsViewController != nil) {
+    int currPage = 0;
+    if (/**/reload && /**/self.adsViewController != nil) {
+        currPage = self.adsViewController.currentAdPage;
         [self.adsViewController.view removeFromSuperview];
         [self.adsViewController removeFromParentViewController];
         self.adsViewController = nil;
     }
     
-    if (self.adsViewController == nil)
-    {
-        self.adsViewController = [[DPAdsViewController alloc] initWithGroup:BANNER_GROUP_COMMON_MAIN];
+    if (self.adsViewController == nil) {
+        self.adsViewController = [[DPAdsViewController alloc] initWithGroup:BANNER_GROUP_COMMON_MAIN initialPage:currPage];
         self.adsViewController.view.frame = self.adsView.bounds;
         [self addChildViewController:self.adsViewController];
         [self.adsView addSubview:self.adsViewController.view];

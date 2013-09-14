@@ -22,6 +22,7 @@
 @property (strong, nonatomic) NSString *imageTitle2Share;
 @property (strong, nonatomic) NSString *imageUrl2Share;
 
+@property (readonly, nonatomic) SystemSoundID phoneCallSound;
 @property (readonly, nonatomic) SystemSoundID wooshSound;
 @property (readonly, nonatomic) SystemSoundID bloodSplatOnWallSound;
 @property (readonly, nonatomic) SystemSoundID bloodSplatSound;
@@ -60,6 +61,7 @@
 - (NSDictionary *) favoriteArticles;
 
 // sounds
+- (void) playSoundPhoneCalling;
 - (void) playSoundWoosh;
 - (void) playSoundBloodSplatOnWall;
 - (void) playSoundBloodSplat;

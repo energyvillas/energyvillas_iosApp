@@ -84,81 +84,75 @@
 }
 
 -(void) doLocalize {
+    // call
     [self.btnCall setTitle:nil forState:UIControlStateNormal];
     [self.btnCall setImage:[UIImage imageNamed:[NSString stringWithFormat:@"ContactUs/call_%@.png", CURRENT_LANG]]
                   forState:UIControlStateNormal];
+    [self.btnCall setImage:[UIImage imageNamed:[NSString stringWithFormat:@"ContactUs/call_%@.png", CURRENT_LANG]]
+                  forState:UIControlStateDisabled];
     [self.btnCall setImage:[UIImage imageNamed:[NSString stringWithFormat:@"ContactUs/call_%@_roll.png", CURRENT_LANG]]
                   forState:UIControlStateHighlighted];
     
+    if (IS_IPAD)
+        self.btnCall.enabled = NO;
+
+    // mail
+    [self.btnMail setTitle:nil forState:UIControlStateNormal];
     [self.btnMail setImage:[UIImage imageNamed:[NSString stringWithFormat:@"ContactUs/mail_%@.png", CURRENT_LANG]]
                   forState:UIControlStateNormal];
     [self.btnMail setImage:[UIImage imageNamed:[NSString stringWithFormat:@"ContactUs/mail_%@_roll.png", CURRENT_LANG]]
                   forState:UIControlStateHighlighted];
     
+    // cancel
+    [self.btnCancel setTitle:nil forState:UIControlStateNormal];
     [self.btnCancel setImage:[UIImage imageNamed:[NSString stringWithFormat:@"ContactUs/cancel_%@.png", CURRENT_LANG]]
                   forState:UIControlStateNormal];
     [self.btnCancel setImage:[UIImage imageNamed:[NSString stringWithFormat:@"ContactUs/cancel_%@_roll.png", CURRENT_LANG]]
                   forState:UIControlStateHighlighted];
-
-//    [self.btnCall setTitle:DPLocalizedString(@"CALLUS_BTN_Call") forState:UIControlStateNormal];
-//    [self.btnCancel setTitle:DPLocalizedString(@"CALLUS_BTN_Cancel") forState:UIControlStateNormal];
-//    self.imgView.image = [UIImage imageNamed:[NSString stringWithFormat:@"call_us_%@.jpg", CURRENT_LANG]];
 }
 
-//-(void) internalLayoutSubViews_old {
-//    CGSize nextViewSize = [UIApplication sizeInOrientation:INTERFACE_ORIENTATION];
-//    
-//    if (IS_IPAD)
-//        self.backView.hidden = YES;
-//    else
-//        self.backView.frame = CGRectMake(0, 0, nextViewSize.width, nextViewSize.height);
-//    
-//    CGPoint cntr = CGPointMake(nextViewSize.width / 2.0f,
-//                               nextViewSize.height / 2.0f); //)self.backView.center;
-//    CGRect frm = IS_IPAD ? CGRectMake(0, 0, 436, 210) : CGRectMake(0, 0, 270, 130);
-//    self.contentView.frame = frm; //CGRectMake(0, 0, 270, 130);
-//    self.contentView.center = cntr;
-//    self.contentView.layer.borderWidth = 2.0f;
-//    self.contentView.layer.cornerRadius = 8.0f;
-//    self.contentView.layer.borderColor = [UIColor whiteColor].CGColor;
-//    
-//    CGRect childframe = self.contentView.bounds;
-//    self.imgView.frame = childframe;
-//    
-//    if (IS_IPAD) {
-//        CGRect btnframe = CGRectMake(0, 0,
-//                                     (childframe.size.width / 2.0f) - 20.0f,
-//                                     32.0f);
-//        btnframe = CGRectOffset(btnframe,
-//                                (childframe.size.width - btnframe.size.width) / 2.0f,
-//                                childframe.size.height - btnframe.size.height - 30.0f);
-//        self.btnCancel.frame = btnframe;
-//        self.btnCall.hidden = YES;
-//    } else {
-//        CGRect btnframe = CGRectMake(0, 0,
-//                                     (childframe.size.width / 2.0f) - 20.0f,
-//                                     32.0f);
-//        btnframe = CGRectOffset(btnframe,
-//                                15.0f,
-//                                childframe.size.height - btnframe.size.height - 10.0f);
-//        self.btnCall.frame = btnframe;
-//        btnframe = CGRectOffset(btnframe, btnframe.size.width + 10.0f, 0);
-//        self.btnCancel.frame = btnframe;
-//    }
-//    
-//    frm = self.contentView.frame;
-//    if (IS_IPAD) {
-//        self.contentView.frame = CGRectMake(0, 0,
-//                                            frm.size.width,
-//                                            frm.size.height);
-//        
-//        actualFrame = CGRectMake((nextViewSize.width - frm.size.width) / 2.0,
-//                                 (nextViewSize.height - frm.size.height) / 2.0,
-//                                 frm.size.width,
-//                                 frm.size.height);
-//        //        actualFrame = self.contentView.frame;
-//    }
-//}
+// ipad
+#define BTN_WIDTH_IPAD ((CGFloat)272.0f) //((CGFloat)339.0f)
+#define BTN_HEIGHT_IPAD ((CGFloat)62.5f) //((CGFloat)78.0f)
+
+#define HORZ_MARGIN_IPAD ((CGFloat)30.0f)
+#define HORZ_SPACE_IPAD ((CGFloat)10.0f)
+
+#define VERT_MARGIN_IPAD ((CGFloat)30.0f)
+#define VERT_SPACE_IPAD ((CGFloat)20.0f)
+
+#define BORDER_WIDTH ((CGFloat)2.0f)
+
+#define WIDTH_IPAD ((CGFloat)(2.0 * (HORZ_MARGIN_IPAD + BORDER_WIDTH + BTN_WIDTH_IPAD) + HORZ_SPACE_IPAD))
+#define HEIGHT_IPAD ((CGFloat)(2.0 * (VERT_MARGIN_IPAD + BORDER_WIDTH + BTN_HEIGHT_IPAD) + VERT_SPACE_IPAD))
+
+
+// iphone
+#define BTN_WIDTH_IPHONE ((CGFloat)145.0f)
+#define BTN_HEIGHT_IPHONE ((CGFloat)33.5f)
+
+#define HORZ_MARGIN_IPHONE ((CGFloat)5.0f)
+#define HORZ_SPACE_IPHONE ((CGFloat)6.0f)
+
+#define VERT_MARGIN_IPHONE ((CGFloat)5.0f)
+#define VERT_SPACE_IPHONE ((CGFloat)10.0f)
+
+#define WIDTH_IPHONE ((CGFloat)(2.0 * (HORZ_MARGIN_IPHONE + BTN_WIDTH_IPHONE) + HORZ_SPACE_IPAD))
+#define HEIGHT_IPHONE ((CGFloat)(2.0 * (VERT_MARGIN_IPHONE + BTN_HEIGHT_IPHONE) + VERT_SPACE_IPHONE))
+
+// actual
+#define BTN_WIDTH ((CGFloat)(IS_IPAD ? BTN_WIDTH_IPAD : BTN_WIDTH_IPHONE))
+#define BTN_HEIGHT ((CGFloat)(IS_IPAD ? BTN_HEIGHT_IPAD : BTN_HEIGHT_IPHONE))
+
+#define HORZ_MARGIN ((CGFloat)(IS_IPAD ? HORZ_MARGIN_IPAD : HORZ_MARGIN_IPHONE))
+#define HORZ_SPACE ((CGFloat)(IS_IPAD ? HORZ_SPACE_IPAD : HORZ_SPACE_IPHONE))
+
+#define VERT_MARGIN ((CGFloat)(IS_IPAD ? VERT_MARGIN_IPAD : VERT_MARGIN_IPHONE))
+#define VERT_SPACE ((CGFloat)(IS_IPAD ? VERT_SPACE_IPAD : VERT_SPACE_IPHONE))
+
+#define WIDTH ((CGFloat)(IS_IPAD ? WIDTH_IPAD : WIDTH_IPHONE))
+#define HEIGHT ((CGFloat)(IS_IPAD ? HEIGHT_IPAD : HEIGHT_IPHONE))
+
 
 -(void) internalLayoutSubViews {
     CGSize nextViewSize = [UIApplication sizeInOrientation:INTERFACE_ORIENTATION];
@@ -170,12 +164,12 @@
     
     CGPoint cntr = CGPointMake(nextViewSize.width / 2.0f,
                                nextViewSize.height / 2.0f); //)self.backView.center;
-    CGRect frm = IS_IPAD ? CGRectMake(0, 0, 712, 240) : CGRectMake(0, 0, 306, 130);
-    self.contentView.frame = frm; //CGRectMake(0, 0, 270, 130);
+    CGRect frm = CGRectMake(0, 0, WIDTH, HEIGHT);
+    self.contentView.frame = frm; 
     self.contentView.center = cntr;
     if (IS_IPAD) {
         self.contentView.backgroundColor = [UIColor blackColor];
-        self.contentView.layer.borderWidth = 2.0f;
+        self.contentView.layer.borderWidth = BORDER_WIDTH;
         self.contentView.layer.cornerRadius = 8.0f;
         self.contentView.layer.borderColor = [UIColor whiteColor].CGColor;
     }
@@ -183,31 +177,15 @@
     CGRect childframe = self.contentView.bounds;
     self.imgView.frame = childframe;
     
-    if (IS_IPAD) {
-        CGRect btnframe = CGRectMake(0, 0, 339.0f, 78.0f);
-        btnframe = CGRectOffset(btnframe,
-                                12.0f,
-                                childframe.size.height / 2.0f - btnframe.size.height - 10.0f);
-        self.btnCall.frame = btnframe;
-        
-        btnframe = CGRectOffset(btnframe, btnframe.size.width + 6.0f, 0);
-        self.btnMail.frame = btnframe;
-        
-        btnframe = CGRectOffset(btnframe, -(btnframe.size.width + 6.0f) / 2.0f, btnframe.size.height + 20.0f);
-        self.btnCancel.frame = btnframe;
-    } else {
-        CGRect btnframe = CGRectMake(0, 0, 145.0f, 33.0f);
-        btnframe = CGRectOffset(btnframe,
-                                5.0f,
-                                childframe.size.height / 2.0f - btnframe.size.height - 5.0f);
-        self.btnCall.frame = btnframe;
-        
-        btnframe = CGRectOffset(btnframe, btnframe.size.width + 6.0f, 0);
-        self.btnMail.frame = btnframe;
-        
-        btnframe = CGRectOffset(btnframe, -(btnframe.size.width + 6.0f) / 2.0f, btnframe.size.height + 10.0f);
-        self.btnCancel.frame = btnframe;
-    }
+    CGRect btnframe = CGRectMake(0, 0, BTN_WIDTH, BTN_HEIGHT);
+    btnframe = CGRectOffset(btnframe, HORZ_MARGIN, VERT_MARGIN);
+    self.btnCall.frame = btnframe;
+    
+    btnframe = CGRectOffset(btnframe, BTN_WIDTH + HORZ_SPACE, 0);
+    self.btnMail.frame = btnframe;
+    
+    btnframe = CGRectOffset(btnframe, -(BTN_WIDTH + HORZ_SPACE) / 2.0f, BTN_HEIGHT + VERT_SPACE);
+    self.btnCancel.frame = btnframe;
     
     frm = self.contentView.frame;
     if (IS_IPAD) {

@@ -239,10 +239,13 @@
     int groupNo = (_category == CTGID_EXCLUSIVE_ART || _category == CTGID_EXCLUSIVE_DESIGNER)
         ? BANNER_GROUP_EXCLUSIVE : BANNER_GROUP_COMMON_LVL1;
     BOOL grpChanged = self.adsViewController != nil && self.adsViewController.group != groupNo;
+    
+    int currPage = 0;
 
     if (reload || grpChanged) {
         if (self.adsViewController)
         {
+            if (!grpChanged) currPage = self.adsViewController.currentAdPage;
             [self.adsViewController.view removeFromSuperview];
             [self.adsViewController removeFromParentViewController];
             self.adsViewController = nil;
@@ -250,7 +253,7 @@
     }
 
     if (self.adsViewController == nil) {
-        self.adsViewController = [[DPAdsViewController alloc] initWithGroup:groupNo];
+        self.adsViewController = [[DPAdsViewController alloc] initWithGroup:groupNo initialPage:currPage];
         self.adsViewController.view.frame = self.adsView.bounds;
         [self addChildViewController:self.adsViewController];
         [self.adsView addSubview:self.adsViewController.view];

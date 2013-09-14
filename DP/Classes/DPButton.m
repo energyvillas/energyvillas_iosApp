@@ -67,6 +67,7 @@
 //            extraLayer.cornerRadius = 10.0f;
             
             [self.layer addSublayer:extraLayer];
+            [self bringSublayerToFront:extraLayer];
         }
         
         extraLayer.bounds = bnds;
@@ -79,8 +80,22 @@
 - (void) setHighlighted:(BOOL)highlight {
     if (extraLayer != nil)
         extraLayer.hidden = [self calcExtraLayerIsHidden:highlight];
-    
+
+    [self bringSublayerToFront:extraLayer];
+
     [super setHighlighted:highlight];
+}
+
+- (void)bringSublayerToFront:(CALayer *)layer {
+    CALayer *superlayer = layer.superlayer;
+    [layer removeFromSuperlayer];
+    [superlayer insertSublayer:layer atIndex:[superlayer.sublayers count]];
+}
+
+- (void)sendSublayerToBack:(CALayer *)layer {
+    CALayer *superlayer = layer.superlayer;
+    [layer removeFromSuperlayer];
+    [superlayer insertSublayer:layer atIndex:0];
 }
 
 - (void) dealloc {

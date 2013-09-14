@@ -124,6 +124,12 @@
                     animated:(BOOL)animated {
     [self doFixFrames:viewController fixTop:YES];
 }
+- (void)navigationController:(UINavigationController *)navigationController
+      didShowViewController:(UIViewController *)viewController
+                    animated:(BOOL)animated {
+    [viewController.view setNeedsDisplay];
+    [viewController.view setNeedsLayout];
+}
 
 - (void) willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
                                           duration:(NSTimeInterval)duration {
@@ -325,6 +331,8 @@
         // we were showing main controller, so we have to go to root...
         [self.navController popToRootViewControllerAnimated:YES];
         prevBackgroundCategory = 0;
+        [[self.navController topViewController].view setNeedsDisplay];
+        [[self.navController topViewController].view setNeedsLayout];
     }
    
     [[NSNotificationCenter defaultCenter] postNotificationName:DPN_PAID_SelectedCategoryChanged_Notification
@@ -502,7 +510,7 @@
                 break;
                 
             case 101: {
-                [[DPAppHelper sharedInstance] playSoundBloodSplatOnWall];
+                [[DPAppHelper sharedInstance] playSoundPhoneCalling];
                 // make the call
                 NSString *telNo = [NSString stringWithFormat:@"%@", @"tel:+302103611150"];
                 telNo = [telNo stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
@@ -510,7 +518,7 @@
                 break;
             }
             case 102: {
-                [[DPAppHelper sharedInstance] playSoundBloodSplatOnWall];
+                [[DPAppHelper sharedInstance] playSoundOpenSoda];
                 // open mail composer
                 [self composeEmail];
                 break;

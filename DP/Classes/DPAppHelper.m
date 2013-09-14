@@ -101,7 +101,7 @@
 }
 
 - (BOOL) calcIsPurchased {
-    //return YES;
+    return YES;
     
     NSUserDefaults *usrDefaults = [NSUserDefaults standardUserDefaults];
     BOOL productPurchased = [usrDefaults boolForKey:PRODUCT_IDENTIFIER];
@@ -302,7 +302,7 @@
 }
 - (UIImage *) loadUIImageFromCache:(NSString *)url {
     UIImage *result = nil;
-    if (!result) {
+    if (url != nil) {
         NSData *data = [self loadImageFromCache:url];
         if (data)
             result = [UIImage imageWithData:data scale:DEVICE_SCALE];
@@ -459,9 +459,11 @@
    
     audioPath = [[NSBundle mainBundle] URLForResource:@"Spit_Splat_2-Mike_Koenig-1283100514" withExtension:@"mp3"];
     AudioServicesCreateSystemSoundID((__bridge CFURLRef)audioPath, &_spitSplatSound);
+    
+    audioPath = [[NSBundle mainBundle] URLForResource:@"callPhone" withExtension:@"mp3"];
+    AudioServicesCreateSystemSoundID((__bridge CFURLRef)audioPath, &_phoneCallSound);
 }
 
- 
 
 - (void) playSoundWoosh {
     AudioServicesPlaySystemSound(_wooshSound);
@@ -503,6 +505,11 @@
     AudioServicesPlaySystemSound(_spitSplatSound);
 }
 
+- (void) playSoundPhoneCalling {
+    AudioServicesPlaySystemSound(_phoneCallSound);
+}
+
+
 - (void) dealloc {
     AudioServicesRemoveSystemSoundCompletion(_wooshSound);
     AudioServicesRemoveSystemSoundCompletion(_bloodSplatOnWallSound);
@@ -514,6 +521,7 @@
     AudioServicesRemoveSystemSoundCompletion(_bloodSquirtSound);
     AudioServicesRemoveSystemSoundCompletion(_electricalSweepSound);
     AudioServicesRemoveSystemSoundCompletion(_spitSplatSound);
+    AudioServicesRemoveSystemSoundCompletion(_phoneCallSound);
     
     
     AudioServicesDisposeSystemSoundID(_wooshSound);
@@ -526,5 +534,6 @@
     AudioServicesDisposeSystemSoundID(_bloodSquirtSound);
     AudioServicesDisposeSystemSoundID(_electricalSweepSound);
     AudioServicesDisposeSystemSoundID(_spitSplatSound);
+    AudioServicesDisposeSystemSoundID(_phoneCallSound);
 }
 @end
