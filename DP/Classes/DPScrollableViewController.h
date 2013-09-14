@@ -63,5 +63,7 @@ typedef NS_ENUM(NSInteger, DPScrollDirection) {
 - (BOOL) isLocalUrl:(NSString *)urlstr;
 
 - (BOOL) overlapPageControl;
+
+- (void) stopIndicator;
 @end
 

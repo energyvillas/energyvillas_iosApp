@@ -159,6 +159,7 @@
 }
 
 - (UIView *)createViewFor:(int)contentIndex frame:(CGRect)frame {
+    //[self stopIndicator];
     UIImageView *result = [[UIImageView alloc] initWithFrame:frame];
     result.contentMode = UIViewContentModeCenter; //ScaleAspectFit;
     result.backgroundColor = [UIColor clearColor];

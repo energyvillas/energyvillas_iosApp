@@ -161,6 +161,7 @@
     [self killUserTimer];
     [self killTimer];
     
+    [self stopIndicator];
     [self clearQueueAndOperations];
 
     self.scrollView = nil;
@@ -736,7 +737,9 @@
         self.busyIndicator.center = calcBoundsCenterOfView(self.view);
 	}
     
-    if (!self.busyIndicator.isAnimating) {
+    if ((!self.busyIndicator.isAnimating) &&
+        self.queue &&
+        self.queue.operationCount > 0 ) {
         [self.busyIndicator startAnimating];
         dispatch_async(dispatch_get_main_queue(), ^{
             [self.view bringSubviewToFront:self.busyIndicator];

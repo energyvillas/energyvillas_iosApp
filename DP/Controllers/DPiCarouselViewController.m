@@ -625,12 +625,12 @@
         NSString *filepath = [[DPAppHelper sharedInstance] imageNameToCacheKey:imgName];
         if ([[NSFileManager defaultManager] fileExistsAtPath:filepath]) {
             [imgview setImageWithContentsOfFile:filepath];
-            [self indicatorAtView:view isBusy:NO];
+            [self indicatorAtView:imgview isBusy:NO];
         } else {
             [self ensureImageLoadingFileExists];
             [self downloadImageUrl:imgName atIndex:index];
             [imgview setImageWithContentsOfFile:[self imageLoadingFilePath]];
-            [self attachBusyIndicatorToView:view];
+            [self attachBusyIndicatorToView:imgview];
             [self indicatorAtView:view isBusy:YES];
         }
     }
@@ -809,7 +809,7 @@
 -(UIImageView *) doCreateImageViewWithFrame:(CGRect)frame contentMode:(UIViewContentMode)aContentMode withReflection:(BOOL)addrefrection {
     FXImageView *imageView = [[FXImageView alloc] initWithFrame:frame];
     imageView.contentMode = aContentMode;
-    imageView.asynchronous = YES;//NO;
+    imageView.asynchronous = NO;
     if (addrefrection) {
         imageView.reflectionScale = 0.5f;
         imageView.reflectionAlpha = 0.35f;
