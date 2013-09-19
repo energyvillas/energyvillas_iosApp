@@ -113,7 +113,7 @@
 
 // ipad
 #define BTN_WIDTH_IPAD ((CGFloat)272.0f) //((CGFloat)339.0f)
-#define BTN_HEIGHT_IPAD ((CGFloat)62.5f) //((CGFloat)78.0f)
+#define BTN_HEIGHT_IPAD ((CGFloat)63.0f) //((CGFloat)78.0f)
 
 #define HORZ_MARGIN_IPAD ((CGFloat)30.0f)
 #define HORZ_SPACE_IPAD ((CGFloat)10.0f)
@@ -129,7 +129,7 @@
 
 // iphone
 #define BTN_WIDTH_IPHONE ((CGFloat)145.0f)
-#define BTN_HEIGHT_IPHONE ((CGFloat)33.5f)
+#define BTN_HEIGHT_IPHONE ((CGFloat)33.0f)
 
 #define HORZ_MARGIN_IPHONE ((CGFloat)5.0f)
 #define HORZ_SPACE_IPHONE ((CGFloat)6.0f)
@@ -137,7 +137,7 @@
 #define VERT_MARGIN_IPHONE ((CGFloat)5.0f)
 #define VERT_SPACE_IPHONE ((CGFloat)10.0f)
 
-#define WIDTH_IPHONE ((CGFloat)(2.0 * (HORZ_MARGIN_IPHONE + BTN_WIDTH_IPHONE) + HORZ_SPACE_IPAD))
+#define WIDTH_IPHONE ((CGFloat)(2.0 * (HORZ_MARGIN_IPHONE + BTN_WIDTH_IPHONE) + HORZ_SPACE_IPHONE))
 #define HEIGHT_IPHONE ((CGFloat)(2.0 * (VERT_MARGIN_IPHONE + BTN_HEIGHT_IPHONE) + VERT_SPACE_IPHONE))
 
 // actual

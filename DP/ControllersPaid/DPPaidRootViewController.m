@@ -21,11 +21,10 @@
 
 @interface DPPaidRootViewController ()
 
-
 @property (strong, nonatomic) DPAdsViewController *adsViewController;
 @property (strong, nonatomic) DPNewNextViewController *nnViewController;
 @property (strong, nonatomic) DPMenuViewController *mmViewController;
-
+@property (strong, nonatomic) NSString *displayLang;
 @end
 
 @implementation DPPaidRootViewController 
@@ -61,6 +60,9 @@
 //    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
 //        [self doLocalize];
 //    });
+    
+    if (![self.displayLang isEqualToString:CURRENT_LANG])
+        [self doLocalize];
 }
 
 - (void) doLocalize {
@@ -74,6 +76,8 @@
     
     //if (self.mmView.subviews.count > 0)
         [self loadMenuView:YES];
+    
+    self.displayLang = CURRENT_LANG;
 }
 
 - (void) doLayoutSubViews:(BOOL)fixtop {    

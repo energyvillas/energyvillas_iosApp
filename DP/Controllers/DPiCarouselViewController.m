@@ -27,6 +27,8 @@
 @property (strong, nonatomic) NSOperationQueue *queue;
 @property (strong, nonatomic) DPArticlesLoader *dataLoader;
 @property (strong, nonatomic) NSArray *datalist;
+//@property (strong, nonatomic) NSMutableArray *datalistPaths;
+@property (strong, nonatomic) UIImage *loadingImage;
 @property (strong, nonatomic) NSMutableDictionary *imageRequests;
 
 @property (strong, nonatomic) UIView *lblFixedContainer;
@@ -116,6 +118,8 @@
     self.busyIndicator = nil;
     self.dataLoader = nil;
     self.datalist = nil;
+//    self.datalistPaths = nil;
+    self.loadingImage = nil;
     self.imageRequests = nil;
     
     self.lblFixedContainer = nil;
@@ -423,10 +427,27 @@
     if (loader.datalist == nil || loader.datalist.count == 0) {
         [self loadLocalData];
     } else {
-        self.datalist = self.dataLoader.datalist;
-        [self dataLoaded];
+        self.datalist = self.dataLoader.datalist;        
     }
+//    [self preparePathsList];
+    [self dataLoaded];
 }
+
+//- (void) preparePathsList {
+//    self.datalistPaths = [NSMutableArray array];
+//    
+//    for (Article *article in self.datalist) {
+//        NSString *filepath = nil;
+//        NSString *imgName = article.imageThumbUrl ? article.imageThumbUrl : article.imageUrl;
+//        if (isLocalUrl(imgName)) {
+//            filepath = [self calcImageName:imgName];
+//        } else {
+//            filepath = [[DPAppHelper sharedInstance] imageNameToCacheKey:imgName];
+//        }
+//        
+//        [self.datalistPaths addObject:filepath];
+//    }
+//}
 
 - (void)loadFailed:(DPDataLoader *)loader {
     [self loadLocalData];
@@ -437,7 +458,6 @@
         NSArray *list = [[DPAppHelper sharedInstance] freeCoverFlowFor:CURRENT_LANG];
         self.datalist = list;
     }
-    [self dataLoaded];
 }
 
 -(void) setupImageCache {
@@ -484,10 +504,13 @@
     //    }
     
     int currindx = self.currentIndex;
+
+    self.loadingImage = [self ensureImageLoadingFileExists];
+    
     if (self.icarousel) {
         self.icarousel.frame = self.view.bounds;
         [self.icarousel reloadData];
-    } else
+    } else {
         if (!self.icarousel && self.datalist && self.datalist.count > 0) {
 #ifdef LOG_CAROUSEL
             NSLog(@"2.carousel loaded %d articles", self.datalist.count);
@@ -527,6 +550,8 @@
             //
             //        [self makeCurrentImageAtIndex:self.currentIndex];
         }
+    }
+    
     [self setupLabels];
     
     [self makeCurrentImageAtIndex:currindx];
@@ -615,11 +640,24 @@
     }
     FXImageView *imgview = (FXImageView *)view;
     
+//    if (self.datalistPaths[index] == [NSNull null]) {
+//        
+//    } else {
+//        NSString *imgfilepath = self.datalistPaths[index];
+////        [imgview setImageWithContentsOfFile:imgfilepath];
+//        [imgview setImage:[UIImage imageNamed:imgfilepath]];
+////        [imgview setProcessedImage:[UIImage imageNamed:imgfilepath]];
+//    }
+    
+    imgview.processedImage = self.loadingImage;
+    [self attachBusyIndicatorToView:imgview];
+    
     Article *article = self.datalist[index];
     NSString *imgName = article.imageThumbUrl ? article.imageThumbUrl : article.imageUrl;
     if (isLocalUrl(imgName)) {
         imgName = [self calcImageName:imgName];
         [imgview setImageWithContentsOfFile:imgName];
+        [self indicatorAtView:imgview isBusy:NO];
     } else {
         // Check if image already exists in cache . If yes retrieve it from there, else go to internet...
         NSString *filepath = [[DPAppHelper sharedInstance] imageNameToCacheKey:imgName];
@@ -627,10 +665,10 @@
             [imgview setImageWithContentsOfFile:filepath];
             [self indicatorAtView:imgview isBusy:NO];
         } else {
-            [self ensureImageLoadingFileExists];
+//            [self ensureImageLoadingFileExists];
             [self downloadImageUrl:imgName atIndex:index];
-            [imgview setImageWithContentsOfFile:[self imageLoadingFilePath]];
-            [self attachBusyIndicatorToView:imgview];
+//            [imgview setImageWithContentsOfFile:[self imageLoadingFilePath]];
+//            [self attachBusyIndicatorToView:imgview];
             [self indicatorAtView:view isBusy:YES];
         }
     }
@@ -691,12 +729,12 @@
         img = [self captureView:v];
         [UIImagePNGRepresentation(img) writeToFile:filepath atomically:YES];
     }
-    
-//    if (img == nil) {
-//        NSData *imgdata = [NSData dataWithContentsOfFile:filepath];
-//        if (imgdata)
-//            img = [UIImage imageWithData:imgdata scale:DEVICE_SCALE];
-//    }
+
+    if (img == nil) {
+        NSData *imgdata = [NSData dataWithContentsOfFile:filepath];
+        if (imgdata)
+            img = [UIImage imageWithData:imgdata scale:DEVICE_SCALE];
+    }
     
     return img;
 }
@@ -772,7 +810,8 @@
 
 -(CGRect) calcFittingFrame:(CGSize)szImage {
     CGRect frm = CGRectMake(0, 0, szImage.width, szImage.height);
-    CGSize szCarousel = self.icarousel.frame.size; szCarousel.width = 0.8f * szCarousel.width;
+    CGSize szCarousel = self.view.bounds.size; szCarousel.width = 0.8f * szCarousel.width;
+//    CGSize szCarousel = self.icarousel.frame.size; szCarousel.width = 0.8f * szCarousel.width;
     if (szCarousel.width < szImage.width || szCarousel.height < szImage.height)
     {
         CGFloat ir = szImage.width / szImage.height;
@@ -809,7 +848,7 @@
 -(UIImageView *) doCreateImageViewWithFrame:(CGRect)frame contentMode:(UIViewContentMode)aContentMode withReflection:(BOOL)addrefrection {
     FXImageView *imageView = [[FXImageView alloc] initWithFrame:frame];
     imageView.contentMode = aContentMode;
-    imageView.asynchronous = NO;
+    imageView.asynchronous = YES;
     if (addrefrection) {
         imageView.reflectionScale = 0.5f;
         imageView.reflectionAlpha = 0.35f;
@@ -947,7 +986,7 @@
         //		[self.imageCache replaceObjectAtIndex:aIndex withObject:aImage];
         [[DPAppHelper sharedInstance] saveImageToCache:imgName data:imgData];
         //[self.carousel setImage:aImage forIndex:aIndex];
-        [self.icarousel reloadItemAtIndex:aIndex animated:YES];
+        [self.icarousel reloadItemAtIndex:aIndex animated:NO];
 	}
 }
 

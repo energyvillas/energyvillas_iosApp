@@ -124,6 +124,6 @@
 
 // contact
 "EMAIL_SUBJECT_2Us"="Energy Villas";
-"EMAIL_BODY_FMT_2Us"="-----<br/>Sent from the Energy Villas application<br/>-----<br/><br/>Do you wish to have a house built without waisting time or money?<br/>Do you wish to be able to choose from whichever part of the world you are at the time, the house of your dreams, together with your loved ones?<br/>Do you wish to see unique architectural house designs,  furnished from famous firms, fully decorated and equipped?<br/>Visit our site: <a href=\"%@\">%@</a>";
+"EMAIL_BODY_FMT_2Us"="";
 
 
