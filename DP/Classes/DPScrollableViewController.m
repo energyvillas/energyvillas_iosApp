@@ -164,6 +164,7 @@
     [self stopIndicator];
     [self clearQueueAndOperations];
 
+    self.scrollView.delegate = nil;
     self.scrollView = nil;
     self.pageControl = nil;
     
@@ -190,6 +191,10 @@
     
     CGSize sz = self.view.superview.frame.size;
     self.view.frame = CGRectMake(0, 0, sz.width, sz.height);
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self engageAutoTimer];
+    });
 }
 
 - (void) doLayoutSubViews:(BOOL)fixtop {

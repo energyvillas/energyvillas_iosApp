@@ -69,13 +69,24 @@
     if ([[notification name] isEqualToString:kReachabilityChangedNotification]) {
         NSLog (@"Successfully received the ==kReachabilityChangedNotification== notification!");
         
-        [self reachabilityChanged];
+        [self doReachabilityChanged:notification];
     }
     
     if ([[notification name] isEqualToString:DPN_FavoritesChangedNotification]) {
-        NSLog (@"Successfully received the ==kReachabilityChangedNotification== notification!");
+        NSLog (@"Successfully received the ==DPN_FavoritesChangedNotification== notification!");
         
         [self fixFavsButton];
+    }
+}
+
+- (void) doReachabilityChanged:(NSNotification *) notification {
+    if (notification == nil) {
+        if ([DPAppHelper sharedInstance].hostIsReachable)
+            [self reachabilityChanged];
+    } else {
+        Reachability* currReach = [notification object];
+        if ([currReach isKindOfClass: [Reachability class]] && currReach.isReachable)
+            [self reachabilityChanged];
     }
 }
 
@@ -122,7 +133,7 @@
     [super viewWillAppear:animated];
     [self setupNavBar];
     [self hookToNotifications];
-    [self reachabilityChanged];
+    [self doReachabilityChanged:nil];
 }
 
 - (void) viewWillDisappear:(BOOL)animated {

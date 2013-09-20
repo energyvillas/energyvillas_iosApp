@@ -550,6 +550,9 @@
 }
 
 - (void) dealloc {
+    [self cancelAllAnimations];
+    [self cleanCards];
+
     self.cards = nil;
     self.categories = nil;
     self.tapView = nil;

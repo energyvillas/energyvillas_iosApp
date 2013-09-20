@@ -220,6 +220,7 @@
 
 - (void) doLocalize {
     [super doLocalize];
+    self.article = nil;
     [self killTimer];
     [self resetCountDownLabels];
     [self initCountDown];

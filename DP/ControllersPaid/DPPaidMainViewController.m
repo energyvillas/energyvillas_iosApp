@@ -127,8 +127,10 @@
 - (void)navigationController:(UINavigationController *)navigationController
       didShowViewController:(UIViewController *)viewController
                     animated:(BOOL)animated {
-    [viewController.view setNeedsDisplay];
-    [viewController.view setNeedsLayout];
+    if (viewController == navigationController.viewControllers[0]) {
+        [viewController.view setNeedsDisplay];
+        [viewController.view setNeedsLayout];
+    }
 }
 
 - (void) willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
