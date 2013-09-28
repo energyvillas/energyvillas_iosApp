@@ -102,7 +102,7 @@
 
 - (BOOL) calcIsPurchased {
 #ifdef DEBUG
-    return YES;
+    //return YES;
 #endif
     
     NSUserDefaults *usrDefaults = [NSUserDefaults standardUserDefaults];
