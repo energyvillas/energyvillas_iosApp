@@ -40,19 +40,24 @@
 
 -(void) doLoadStore {
     if (self.product == nil)
-//        [self requestProductsWithCompletionHandler:^(NSArray * products, NSError *error) {
-//            if (products != nil) {
-//                _product = (SKProduct *)products[0];
-//            }
-//        }];
         [self requestProducts];
 }
 
 - (void) productsRequestCompleted:(NSArray *)products error:(NSError *)error {
+    BOOL tryagain = YES;
     if (products != nil && products.count == 1) {
         _product = (SKProduct *)products[0];
+        tryagain = NO;
     }
     [super productsRequestCompleted:products error:error];
+    
+    if (tryagain) {
+        double delayInSeconds = 5.0;
+        dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+        dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+            [DPIAPHelper loadStore];
+        });
+    }
 }
 
 -(void) buy {

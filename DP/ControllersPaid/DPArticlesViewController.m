@@ -7,7 +7,7 @@
 //
 
 #import "DPArticlesViewController.h"
-#import "DPCarouselViewController.h"
+#import "DPiCarouselViewController.h"
 #import "DPConstants.h"
 #import "DPAppHelper.h"
 
@@ -80,11 +80,11 @@
 }
 
 - (void) loadOpenFlow:(BOOL)reload {
-    DPCarouselViewController *carousel = nil;
+    DPiCarouselViewController *carousel = nil;
     int currImgIndex = 0;
     for (int i = 0; i < self.childViewControllers.count; i++)
-        if ([self.childViewControllers[i] isKindOfClass:[DPCarouselViewController class]]) {
-            carousel = (DPCarouselViewController *)self.childViewControllers[i];
+        if ([self.childViewControllers[i] isKindOfClass:[DPiCarouselViewController class]]) {
+            carousel = (DPiCarouselViewController *)self.childViewControllers[i];
             currImgIndex = carousel.currentIndex;
             //            if (reload) {
             //                [carousel.view removeFromSuperview];
@@ -104,7 +104,7 @@
     }
     
     if (carousel == nil) {
-        carousel = [[DPCarouselViewController alloc] initWithCtg:category
+        carousel = [[DPiCarouselViewController alloc] initWithCtg:category
                                                     currentIndex:currImgIndex
                                                      showSocials:showSocials];
         CGRect frm = self.container.bounds;

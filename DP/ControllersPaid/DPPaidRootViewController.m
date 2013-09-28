@@ -184,9 +184,10 @@
 }
 
 - (void) loadAdsView:(BOOL)reload {
-    int currPage = 0;
+    int currPage = GET_ADS_COMMON_CURR_PAGE();
     if (/**/reload && /**/self.adsViewController != nil) {
         currPage = self.adsViewController.currentAdPage;
+        SET_ADS_COMMON_CURR_PAGE(currPage);
         [self.adsViewController.view removeFromSuperview];
         [self.adsViewController removeFromParentViewController];
         self.adsViewController = nil;

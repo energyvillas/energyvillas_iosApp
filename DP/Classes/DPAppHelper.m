@@ -101,7 +101,7 @@
 }
 
 - (BOOL) calcIsPurchased {
-    //return YES;
+    return YES;
     
     NSUserDefaults *usrDefaults = [NSUserDefaults standardUserDefaults];
     BOOL productPurchased = [usrDefaults boolForKey:PRODUCT_IDENTIFIER];
@@ -462,6 +462,12 @@
     
     audioPath = [[NSBundle mainBundle] URLForResource:@"callPhone" withExtension:@"mp3"];
     AudioServicesCreateSystemSoundID((__bridge CFURLRef)audioPath, &_phoneCallSound);
+    
+    audioPath = [[NSBundle mainBundle] URLForResource:@"dial_tone" withExtension:@"mp3"];
+    AudioServicesCreateSystemSoundID((__bridge CFURLRef)audioPath, &_dialToneSound);
+    
+    audioPath = [[NSBundle mainBundle] URLForResource:@"bip" withExtension:@"mp3"];
+    AudioServicesCreateSystemSoundID((__bridge CFURLRef)audioPath, &_bipSound);
 }
 
 
@@ -509,6 +515,15 @@
     AudioServicesPlaySystemSound(_phoneCallSound);
 }
 
+- (void) playSoundDialTone {
+    AudioServicesPlaySystemSound(_dialToneSound);
+}
+
+- (void) playSoundBip {
+    AudioServicesPlaySystemSound(_bipSound);
+}
+
+
 
 - (void) dealloc {
     AudioServicesRemoveSystemSoundCompletion(_wooshSound);
@@ -522,6 +537,8 @@
     AudioServicesRemoveSystemSoundCompletion(_electricalSweepSound);
     AudioServicesRemoveSystemSoundCompletion(_spitSplatSound);
     AudioServicesRemoveSystemSoundCompletion(_phoneCallSound);
+    AudioServicesRemoveSystemSoundCompletion(_dialToneSound);
+    AudioServicesRemoveSystemSoundCompletion(_bipSound);
     
     
     AudioServicesDisposeSystemSoundID(_wooshSound);
@@ -535,5 +552,7 @@
     AudioServicesDisposeSystemSoundID(_electricalSweepSound);
     AudioServicesDisposeSystemSoundID(_spitSplatSound);
     AudioServicesDisposeSystemSoundID(_phoneCallSound);
+    AudioServicesDisposeSystemSoundID(_dialToneSound);
+    AudioServicesDisposeSystemSoundID(_bipSound);
 }
 @end

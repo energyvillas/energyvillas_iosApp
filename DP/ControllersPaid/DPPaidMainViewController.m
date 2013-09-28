@@ -331,10 +331,12 @@
     int indexOfTabBarController = [self checkPopTabBarViewController];
     if (indexOfTabBarController == -1) {
         // we were showing main controller, so we have to go to root...
-        [self.navController popToRootViewControllerAnimated:YES];
-        prevBackgroundCategory = 0;
-        [[self.navController topViewController].view setNeedsDisplay];
-        [[self.navController topViewController].view setNeedsLayout];
+        if (self.navController.viewControllers.count > 1) {
+            [self.navController popToRootViewControllerAnimated:YES];
+            prevBackgroundCategory = 0;
+            [[self.navController topViewController].view setNeedsDisplay];
+            [[self.navController topViewController].view setNeedsLayout];
+        }
     }
    
     [[NSNotificationCenter defaultCenter] postNotificationName:DPN_PAID_SelectedCategoryChanged_Notification
@@ -512,7 +514,7 @@
                 break;
                 
             case 101: {
-                [[DPAppHelper sharedInstance] playSoundPhoneCalling];
+                [[DPAppHelper sharedInstance] playSoundDialTone];
                 // make the call
                 NSString *telNo = [NSString stringWithFormat:@"%@", @"tel:+302103611150"];
                 telNo = [telNo stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];

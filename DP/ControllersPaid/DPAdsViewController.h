@@ -9,10 +9,14 @@
 #import "DPScrollableViewController.h"
 #import "DPDataLoader.h"
 
-@interface DPAdsViewController : DPScrollableViewController <DPDataLoaderDelegate, DPScrollableDataSourceDelegate>
+int GET_ADS_COMMON_CURR_PAGE();
+void SET_ADS_COMMON_CURR_PAGE(int val);
+
+@interface DPAdsViewController : DPScrollableViewController <DPDataLoaderDelegate, DPScrollableDataSourceDelegate, DPScrollableViewDelegate>
 
 @property (nonatomic, readonly, getter = getCurrentAdPage) int currentAdPage;
 @property (nonatomic, readonly) int group;
+
 
 - (id) initWithGroup:(int)aGroup initialPage:(int)aInitialPage;
 

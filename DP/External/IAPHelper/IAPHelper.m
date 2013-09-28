@@ -48,10 +48,7 @@ NSString *const IAPHelperProductPurchasedNotification = @"com.energyvillas.energ
     
 }
 
-//- (void)requestProductsWithCompletionHandler:(RequestProductsCompletionHandler)completionHandler {
 - (void)requestProducts {
-//    _completionHandler = [completionHandler copy];
-    
     _productsRequest = [[SKProductsRequest alloc] initWithProductIdentifiers:_productIdentifiers];
     _productsRequest.delegate = self;
     

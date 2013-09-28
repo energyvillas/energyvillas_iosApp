@@ -113,7 +113,6 @@
 		5EB72CB8174A324C00392D6E /* DPFavoritesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EB72CB7174A324B00392D6E /* DPFavoritesViewController.m */; };
 		5EB72CBA174A326B00392D6E /* DPFavoritesView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5EB72CB9174A326B00392D6E /* DPFavoritesView.xib */; };
 		5EC20D0D171D5D81006E03B7 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5EC20D0C171D5D81006E03B7 /* AudioToolbox.framework */; };
-		5EC20D10171DAD0F006E03B7 /* DPCarouselViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EC20D0F171DAD0F006E03B7 /* DPCarouselViewController.m */; };
 		5EC2557D16FC64400045AB99 /* DPImageInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EC2557C16FC64400045AB99 /* DPImageInfo.m */; };
 		5EC2557F16FC6E480045AB99 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5EC2557E16FC6E480045AB99 /* StoreKit.framework */; };
 		5EC2558416FC71BD0045AB99 /* IAPHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EC2558316FC71BD0045AB99 /* IAPHelper.m */; };
@@ -160,6 +159,8 @@
 		5ED20284171EA757006AC1FC /* UIImage+FX.m in Sources */ = {isa = PBXBuildFile; fileRef = 5ED20282171EA757006AC1FC /* UIImage+FX.m */; };
 		5ED20286171F096E006AC1FC /* libz.1.2.5.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 5ED20285171F096E006AC1FC /* libz.1.2.5.dylib */; };
 		5EDC4119172E8265002A3788 /* HIK_ImageNames.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5EDC4118172E8265002A3788 /* HIK_ImageNames.plist */; };
+		5EDD397717F6CD70002138E2 /* dial_tone.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 5EDD397617F6CD70002138E2 /* dial_tone.mp3 */; };
+		5EDD397917F6CD83002138E2 /* bip.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 5EDD397817F6CD83002138E2 /* bip.mp3 */; };
 		5EDE1F7C17442EC800A84BDA /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 5EDE1F7B17442EC700A84BDA /* Icon.png */; };
 		5EDE1F7E17442ED000A84BDA /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5EDE1F7D17442ECF00A84BDA /* Icon@2x.png */; };
 		5EDE1F8017442EDD00A84BDA /* Icon-72.png in Resources */ = {isa = PBXBuildFile; fileRef = 5EDE1F7F17442EDC00A84BDA /* Icon-72.png */; };
@@ -346,8 +347,6 @@
 		5EB72CB7174A324B00392D6E /* DPFavoritesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPFavoritesViewController.m; sourceTree = "<group>"; };
 		5EB72CB9174A326B00392D6E /* DPFavoritesView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DPFavoritesView.xib; sourceTree = "<group>"; };
 		5EC20D0C171D5D81006E03B7 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
-		5EC20D0E171DAD0E006E03B7 /* DPCarouselViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPCarouselViewController.h; sourceTree = "<group>"; };
-		5EC20D0F171DAD0F006E03B7 /* DPCarouselViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPCarouselViewController.m; sourceTree = "<group>"; };
 		5EC2557B16FC64400045AB99 /* DPImageInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPImageInfo.h; sourceTree = "<group>"; };
 		5EC2557C16FC64400045AB99 /* DPImageInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPImageInfo.m; sourceTree = "<group>"; };
 		5EC2557E16FC6E480045AB99 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
@@ -433,6 +432,8 @@
 		5ED20282171EA757006AC1FC /* UIImage+FX.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+FX.m"; sourceTree = "<group>"; };
 		5ED20285171F096E006AC1FC /* libz.1.2.5.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.1.2.5.dylib; path = usr/lib/libz.1.2.5.dylib; sourceTree = SDKROOT; };
 		5EDC4118172E8265002A3788 /* HIK_ImageNames.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = HIK_ImageNames.plist; sourceTree = "<group>"; };
+		5EDD397617F6CD70002138E2 /* dial_tone.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = dial_tone.mp3; sourceTree = "<group>"; };
+		5EDD397817F6CD83002138E2 /* bip.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = bip.mp3; sourceTree = "<group>"; };
 		5EDE1F7B17442EC700A84BDA /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Icon.png; path = ../Icon.png; sourceTree = "<group>"; };
 		5EDE1F7D17442ECF00A84BDA /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon@2x.png"; path = "../Icon@2x.png"; sourceTree = "<group>"; };
 		5EDE1F7F17442EDC00A84BDA /* Icon-72.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-72.png"; path = "../Icon-72.png"; sourceTree = "<group>"; };
@@ -752,8 +753,6 @@
 				5E4E851917109D38005DAD06 /* DPCategoriesViewController.m */,
 				5EC48CDC1714BF7E00A9566E /* DPBuyContentViewController.h */,
 				5EC48CDD1714BF7E00A9566E /* DPBuyContentViewController.m */,
-				5EC20D0E171DAD0E006E03B7 /* DPCarouselViewController.h */,
-				5EC20D0F171DAD0F006E03B7 /* DPCarouselViewController.m */,
 				5EE4BB6917C62A1D0066E9A7 /* DPiCarouselViewController.h */,
 				5EE4BB6A17C62A1D0066E9A7 /* DPiCarouselViewController.m */,
 			);
@@ -821,6 +820,8 @@
 		5E9252161767833200BE1964 /* Sounds */ = {
 			isa = PBXGroup;
 			children = (
+				5EDD397817F6CD83002138E2 /* bip.mp3 */,
+				5EDD397617F6CD70002138E2 /* dial_tone.mp3 */,
 				5E6708D017E4BBB60077AFBF /* callPhone.mp3 */,
 				5E956EAC17569E1600B86DAC /* woosh.mp3 */,
 				5E9252171767841F00BE1964 /* Blood Splattering On Wall-SoundBible.com-508930244.mp3 */,
@@ -1147,6 +1148,8 @@
 				5EFF546517DB93CB0083B33E /* ContactUs in Resources */,
 				5EFF546717DBE2A60083B33E /* NewNext in Resources */,
 				5E6708D117E4BBB60077AFBF /* callPhone.mp3 in Resources */,
+				5EDD397717F6CD70002138E2 /* dial_tone.mp3 in Resources */,
+				5EDD397917F6CD83002138E2 /* bip.mp3 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1216,7 +1219,6 @@
 				5E4E85221711F948005DAD06 /* DPAnimatedScrollViewController.m in Sources */,
 				5EC48CDE1714BF7E00A9566E /* DPBuyContentViewController.m in Sources */,
 				5E8AB0CC171706D1004AFE76 /* UIImage+Retina4.m in Sources */,
-				5EC20D10171DAD0F006E03B7 /* DPCarouselViewController.m in Sources */,
 				5ED20279171E9624006AC1FC /* iCarousel.m in Sources */,
 				5ED2027D171E99F7006AC1FC /* AsyncImageView.m in Sources */,
 				5ED20283171EA757006AC1FC /* FXImageView.m in Sources */,
@@ -1400,8 +1402,8 @@
 		5E71A3D216F9973500E7AFF9 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Distribution: DESIGN PROJECTS LTD (7U2CGA4753)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: DESIGN PROJECTS LTD (7U2CGA4753)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/../../FacebookSDK\"",
@@ -1415,8 +1417,8 @@
 					"-ObjC",
 				);
 				PRODUCT_NAME = energyVillas;
-				PROVISIONING_PROFILE = "072B685E-DCE6-4DFC-BC7F-50F197207567";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "072B685E-DCE6-4DFC-BC7F-50F197207567";
+				PROVISIONING_PROFILE = "";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;

@@ -240,12 +240,16 @@
         ? BANNER_GROUP_EXCLUSIVE : BANNER_GROUP_COMMON_LVL1;
     BOOL grpChanged = self.adsViewController != nil && self.adsViewController.group != groupNo;
     
-    int currPage = 0;
+    int currPage = groupNo == BANNER_GROUP_EXCLUSIVE ? 0 : GET_ADS_COMMON_CURR_PAGE();
 
     if (reload || grpChanged) {
         if (self.adsViewController)
         {
-            if (!grpChanged) currPage = self.adsViewController.currentAdPage;
+            if (grpChanged)
+                currPage = 0;
+            else
+                currPage = self.adsViewController.currentAdPage;
+            SET_ADS_COMMON_CURR_PAGE(currPage);
             [self.adsViewController.view removeFromSuperview];
             [self.adsViewController removeFromParentViewController];
             self.adsViewController = nil;

@@ -12,6 +12,15 @@
 #import "DPConstants.h"
 #import "DPAppHelper.h"
 
+int ADS_COMMON_CURR_PAGE = 0;
+
+int GET_ADS_COMMON_CURR_PAGE() {
+    return ADS_COMMON_CURR_PAGE;
+}
+void SET_ADS_COMMON_CURR_PAGE(int val){
+    ADS_COMMON_CURR_PAGE = val;
+}
+
 @interface DPAdsViewController ()
 
 @property (strong, nonatomic) UIActivityIndicatorView *busyIndicator;
@@ -50,6 +59,7 @@
         _group = aGroup;
         
         self.dataDelegate = self;
+        self.scrollableViewDelegate = self;
     }
     
     return self;
@@ -196,6 +206,13 @@
 }
 
 //======
+- (void) viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    SET_ADS_COMMON_CURR_PAGE(_currentAdPage);
+}
+- (void) elementTapped:(id)sender element:(id)element {
+    
+}
 
 - (void) scrolledToPage:(int)newPage fromPage:(int)oldPage {
     _currentAdPage = newPage;

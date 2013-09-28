@@ -329,7 +329,7 @@
             showAlertMessage(nil, DPLocalizedString(kERR_TITLE_INFO), @"Cannot make purchase at the moment. Please try later!");
         else {
             [iap buy];
-            [[DPAppHelper sharedInstance] playSoundElectricalSweep];
+            [[DPAppHelper sharedInstance] playSoundBip];// playSoundElectricalSweep];
         }
     } else if (sender == self.btnRestore) {
         NSLog(@"restore tapped");
@@ -338,7 +338,7 @@
             showAlertMessage(nil, DPLocalizedString(kERR_TITLE_INFO), @"Cannot restore purchase at the moment. Please try later!");
         else {
             [iap restoreCompletedTransactions];
-            [[DPAppHelper sharedInstance] playSoundElectricalSweep];
+            [[DPAppHelper sharedInstance] playSoundBip];// playSoundElectricalSweep];
         }
     }
     
