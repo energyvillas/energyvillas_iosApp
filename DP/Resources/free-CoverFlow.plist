@@ -6,11 +6,11 @@
 	<dict>
 		<key>el</key>
 		<array>
-			<string>Κατοικία Container 130 τ.μ.</string>
+			<string></string>
 		</array>
 		<key>en</key>
 		<array>
-			<string>Container House 130 squ.m.</string>
+			<string></string>
 		</array>
 	</dict>
 	<key>Images</key>
@@ -19,11 +19,11 @@
 	</array>
 	<key>Thumbs</key>
 	<array>
-		<string>00_video_frame_01.jpg</string>
+		<string>carousel_01.png</string>
 	</array>
 	<key>Videos</key>
 	<array>
-		<string>http://vimeo.com/65884358</string>
+		<string></string>
 	</array>
 </dict>
 </plist>

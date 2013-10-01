@@ -426,50 +426,70 @@
     return [NSDictionary dictionaryWithDictionary:self.favorites];
 }
 
+//void SysSoundCompleted (SystemSoundID ssID, void *clientData) {
+//}
+
+- (SystemSoundID) createSysSoundForResource:(NSString *)resUrl {
+    NSURL *audioPath = [[NSBundle mainBundle] URLForResource:resUrl withExtension:@"mp3"];
+    SystemSoundID snd;
+    AudioServicesCreateSystemSoundID((__bridge CFURLRef)audioPath, &snd);
+//    AudioServicesAddSystemSoundCompletion(snd, nil, nil, SysSoundCompleted, nil);
+    return snd;
+}
+
 - (void) createSysSounds {
-    NSURL *audioPath = [[NSBundle mainBundle] URLForResource:@"woosh" withExtension:@"mp3"];
-    AudioServicesCreateSystemSoundID((__bridge CFURLRef)audioPath, &_wooshSound);
+    _wooshSound = [self createSysSoundForResource:@"woosh"];
+    _bloodSplatOnWallSound = [self createSysSoundForResource:@"Blood Splattering On Wall-SoundBible.com-508930244"];
+    _bloodSplatSound = [self createSysSoundForResource:@"Blood Splatters-SoundBible.com-125814492"];
+    _magicWandSound = [self createSysSoundForResource:@"Magic Wand Noise-SoundBible.com-375928671"];
+    _openSodaSound = [self createSysSoundForResource:@"Open Soda Can Sound"];
+    _pinDropSound = [self createSysSoundForResource:@"pin_dropping-Brian_Rocca-2084700791"];
+    _tingSound = [self createSysSoundForResource:@"Ting_Sound"];
+    _bloodSquirtSound = [self createSysSoundForResource:@"Blood Squirt-SoundBible.com-1808242738"];
+    _electricalSweepSound = [self createSysSoundForResource:@"Electrical_Sweep-Sweeper-1760111493"];
+    _spitSplatSound = [self createSysSoundForResource:@"Spit_Splat_2-Mike_Koenig-1283100514"];
+    _phoneCallSound = [self createSysSoundForResource:@"callPhone"];
+    _dialToneSound = [self createSysSoundForResource:@"dial_tone"];
+    _bipSound = [self createSysSoundForResource:@"bip"];
     
-    audioPath = [[NSBundle mainBundle] URLForResource:@"Blood Splattering On Wall-SoundBible.com-508930244" withExtension:@"mp3"];
-    AudioServicesCreateSystemSoundID((__bridge CFURLRef)audioPath, &_bloodSplatOnWallSound);
-    
-    audioPath = [[NSBundle mainBundle] URLForResource:@"Blood Splatters-SoundBible.com-125814492" withExtension:@"mp3"];
-    AudioServicesCreateSystemSoundID((__bridge CFURLRef)audioPath, &_bloodSplatSound);
-    
-    audioPath = [[NSBundle mainBundle] URLForResource:@"Magic Wand Noise-SoundBible.com-375928671" withExtension:@"mp3"];
-    AudioServicesCreateSystemSoundID((__bridge CFURLRef)audioPath, &_magicWandSound);
-    
-//    audioPath = [[NSBundle mainBundle] URLForResource:@"Open_Soda_Can-KP-1219969174" withExtension:@"mp3"];
-//    AudioServicesCreateSystemSoundID((__bridge CFURLRef)audioPath, &openSodaSound);
-    audioPath = [[NSBundle mainBundle] URLForResource:@"Open Soda Can Sound" withExtension:@"m4a"];
-    AudioServicesCreateSystemSoundID((__bridge CFURLRef)audioPath, &_openSodaSound);
-    
-    audioPath = [[NSBundle mainBundle] URLForResource:@"pin_dropping-Brian_Rocca-2084700791" withExtension:@"mp3"];
-    AudioServicesCreateSystemSoundID((__bridge CFURLRef)audioPath, &_pinDropSound);
-    
-//    audioPath = [[NSBundle mainBundle] URLForResource:@"Ting-Popup_Pixels-349896185" withExtension:@"mp3"];
-//    OSStatus status = AudioServicesCreateSystemSoundID((__bridge CFURLRef)audioPath, &tingSound);
-//    NSLog(@"tingSound status = %ld", status);
-    audioPath = [[NSBundle mainBundle] URLForResource:@"Ting_Sound" withExtension:@"m4a"];
-    AudioServicesCreateSystemSoundID((__bridge CFURLRef)audioPath, &_tingSound);
-    
-    audioPath = [[NSBundle mainBundle] URLForResource:@"Blood Squirt-SoundBible.com-1808242738" withExtension:@"mp3"];
-    AudioServicesCreateSystemSoundID((__bridge CFURLRef)audioPath, &_bloodSquirtSound);
-    
-    audioPath = [[NSBundle mainBundle] URLForResource:@"Electrical_Sweep-Sweeper-1760111493" withExtension:@"mp3"];
-    AudioServicesCreateSystemSoundID((__bridge CFURLRef)audioPath, &_electricalSweepSound);
-   
-    audioPath = [[NSBundle mainBundle] URLForResource:@"Spit_Splat_2-Mike_Koenig-1283100514" withExtension:@"mp3"];
-    AudioServicesCreateSystemSoundID((__bridge CFURLRef)audioPath, &_spitSplatSound);
-    
-    audioPath = [[NSBundle mainBundle] URLForResource:@"callPhone" withExtension:@"mp3"];
-    AudioServicesCreateSystemSoundID((__bridge CFURLRef)audioPath, &_phoneCallSound);
-    
-    audioPath = [[NSBundle mainBundle] URLForResource:@"dial_tone" withExtension:@"mp3"];
-    AudioServicesCreateSystemSoundID((__bridge CFURLRef)audioPath, &_dialToneSound);
-    
-    audioPath = [[NSBundle mainBundle] URLForResource:@"bip" withExtension:@"mp3"];
-    AudioServicesCreateSystemSoundID((__bridge CFURLRef)audioPath, &_bipSound);
+//    NSURL *audioPath = [[NSBundle mainBundle] URLForResource:@"woosh" withExtension:@"mp3"];
+//    AudioServicesCreateSystemSoundID((__bridge CFURLRef)audioPath, &_wooshSound);
+//    
+//    audioPath = [[NSBundle mainBundle] URLForResource:@"Blood Splattering On Wall-SoundBible.com-508930244" withExtension:@"mp3"];
+//    AudioServicesCreateSystemSoundID((__bridge CFURLRef)audioPath, &_bloodSplatOnWallSound);
+//    
+//    audioPath = [[NSBundle mainBundle] URLForResource:@"Blood Splatters-SoundBible.com-125814492" withExtension:@"mp3"];
+//    AudioServicesCreateSystemSoundID((__bridge CFURLRef)audioPath, &_bloodSplatSound);
+//    
+//    audioPath = [[NSBundle mainBundle] URLForResource:@"Magic Wand Noise-SoundBible.com-375928671" withExtension:@"mp3"];
+//    AudioServicesCreateSystemSoundID((__bridge CFURLRef)audioPath, &_magicWandSound);
+//    
+//    audioPath = [[NSBundle mainBundle] URLForResource:@"Open Soda Can Sound" withExtension:@"m4a"];
+//    AudioServicesCreateSystemSoundID((__bridge CFURLRef)audioPath, &_openSodaSound);
+//    
+//    audioPath = [[NSBundle mainBundle] URLForResource:@"pin_dropping-Brian_Rocca-2084700791" withExtension:@"mp3"];
+//    AudioServicesCreateSystemSoundID((__bridge CFURLRef)audioPath, &_pinDropSound);
+//    
+//    audioPath = [[NSBundle mainBundle] URLForResource:@"Ting_Sound" withExtension:@"m4a"];
+//    AudioServicesCreateSystemSoundID((__bridge CFURLRef)audioPath, &_tingSound);
+//    
+//    audioPath = [[NSBundle mainBundle] URLForResource:@"Blood Squirt-SoundBible.com-1808242738" withExtension:@"mp3"];
+//    AudioServicesCreateSystemSoundID((__bridge CFURLRef)audioPath, &_bloodSquirtSound);
+//    
+//    audioPath = [[NSBundle mainBundle] URLForResource:@"Electrical_Sweep-Sweeper-1760111493" withExtension:@"mp3"];
+//    AudioServicesCreateSystemSoundID((__bridge CFURLRef)audioPath, &_electricalSweepSound);
+//   
+//    audioPath = [[NSBundle mainBundle] URLForResource:@"Spit_Splat_2-Mike_Koenig-1283100514" withExtension:@"mp3"];
+//    AudioServicesCreateSystemSoundID((__bridge CFURLRef)audioPath, &_spitSplatSound);
+//    
+//    audioPath = [[NSBundle mainBundle] URLForResource:@"callPhone" withExtension:@"mp3"];
+//    AudioServicesCreateSystemSoundID((__bridge CFURLRef)audioPath, &_phoneCallSound);
+//    
+//    audioPath = [[NSBundle mainBundle] URLForResource:@"dial_tone" withExtension:@"mp3"];
+//    AudioServicesCreateSystemSoundID((__bridge CFURLRef)audioPath, &_dialToneSound);
+//    
+//    audioPath = [[NSBundle mainBundle] URLForResource:@"bip" withExtension:@"mp3"];
+//    AudioServicesCreateSystemSoundID((__bridge CFURLRef)audioPath, &_bipSound);
 }
 
 

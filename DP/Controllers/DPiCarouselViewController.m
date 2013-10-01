@@ -451,6 +451,7 @@
 
 - (void)loadFailed:(DPDataLoader *)loader {
     [self loadLocalData];
+    [self dataLoaded];
 }
 
 -(void) loadLocalData {

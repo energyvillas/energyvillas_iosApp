@@ -745,16 +745,22 @@
     if ((!self.busyIndicator.isAnimating) &&
         self.queue &&
         self.queue.operationCount > 0 ) {
-        [self.busyIndicator startAnimating];
+
         dispatch_async(dispatch_get_main_queue(), ^{
-            [self.view bringSubviewToFront:self.busyIndicator];
+            if (self.queue && self.queue.operationCount > 0) {
+                [self.busyIndicator startAnimating];
+                [self.view bringSubviewToFront:self.busyIndicator];
+            } else
+                [self stopIndicator];
         });
+        
     }
 }
 
 - (void) stopIndicator {
-    if (self.busyIndicator &&
-        self.queue &&
+    if (self.busyIndicator == nil) return;
+    
+    if (self.queue == nil ||
         self.queue.operationCount == 0) {
         [self.busyIndicator stopAnimating];
         [self.busyIndicator removeFromSuperview];
@@ -791,9 +797,13 @@
 }
 
 - (void) doloadImageAsync:(DPDataElement *)elm imageUrl:(NSString *)imgUrl inView:(UIImageView *)imgView cacheImage:(BOOL)cacheimage{
-    if (!self.queue)
+    if (![DPAppHelper sharedInstance].hostIsReachable)
+        return;
+    
+    if (!self.queue) {
         self.queue = [[NSOperationQueue alloc] init];
-
+    }
+    
     ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:[NSURL URLWithString:imgUrl]];
     
     __block ASIHTTPRequest *ir = request;
@@ -816,9 +826,10 @@
                         imgUrl, @"imageUrl",
                         [NSNumber numberWithBool:cacheimage], @"cacheimage",
                         nil];
-    [self.queue addOperation:request];
 
     [self startIndicator];
+
+    [self.queue addOperation:request];
 }
 
 - (void)requestDone:(ASIHTTPRequest *)request{

@@ -187,7 +187,7 @@
     self.bbiMore.title = showingMore ? DPLocalizedString(kbbiMoreBack_Title) : DPLocalizedString(kbbiMore_Title);
 
     self.bbiMore.tintColor = (showingMore
-                              ? [UIColor colorWithHue:0.0f saturation:0.85f brightness:1.0f alpha:1.0f]
+                              ? [UIColor colorWithHue:94.0f / 360.0f saturation:0.97f brightness:0.66f alpha:1.0f] // [UIColor colorWithHue:0.0f saturation:0.85f brightness:1.0f alpha:1.0f]
                               : [UIColor darkGrayColor]);//]blackColor];
     
     [self loadOpenFlow:YES];

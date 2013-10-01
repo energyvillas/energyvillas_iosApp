@@ -515,10 +515,19 @@
                 
             case 101: {
                 [[DPAppHelper sharedInstance] playSoundDialTone];
-                // make the call
-                NSString *telNo = [NSString stringWithFormat:@"%@", @"tel:+302103611150"];
-                telNo = [telNo stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-                [[UIApplication sharedApplication] openURL:[NSURL URLWithString:telNo]];
+                
+                double delayInSeconds = 2.5;
+                dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+                dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+                    // make the call
+                    NSString *telNo = [NSString stringWithFormat:@"%@", @"tel:+302103611150"];
+                    telNo = [telNo stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+                    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:telNo]];
+                });
+//                // make the call
+//                NSString *telNo = [NSString stringWithFormat:@"%@", @"tel:+302103611150"];
+//                telNo = [telNo stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+//                [[UIApplication sharedApplication] openURL:[NSURL URLWithString:telNo]];
                 break;
             }
             case 102: {
