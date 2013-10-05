@@ -433,7 +433,15 @@
     NSURL *audioPath = [[NSBundle mainBundle] URLForResource:resUrl withExtension:@"mp3"];
     SystemSoundID snd;
     AudioServicesCreateSystemSoundID((__bridge CFURLRef)audioPath, &snd);
-//    AudioServicesAddSystemSoundCompletion(snd, nil, nil, SysSoundCompleted, nil);
+    //    AudioServicesAddSystemSoundCompletion(snd, nil, nil, SysSoundCompleted, nil);
+    return snd;
+}
+
+- (SystemSoundID) createSysSoundForResource:(NSString *)resUrl withExtension:(NSString *)ext{
+    NSURL *audioPath = [[NSBundle mainBundle] URLForResource:resUrl withExtension:ext];
+    SystemSoundID snd;
+    AudioServicesCreateSystemSoundID((__bridge CFURLRef)audioPath, &snd);
+    //    AudioServicesAddSystemSoundCompletion(snd, nil, nil, SysSoundCompleted, nil);
     return snd;
 }
 
@@ -442,9 +450,9 @@
     _bloodSplatOnWallSound = [self createSysSoundForResource:@"Blood Splattering On Wall-SoundBible.com-508930244"];
     _bloodSplatSound = [self createSysSoundForResource:@"Blood Splatters-SoundBible.com-125814492"];
     _magicWandSound = [self createSysSoundForResource:@"Magic Wand Noise-SoundBible.com-375928671"];
-    _openSodaSound = [self createSysSoundForResource:@"Open Soda Can Sound"];
+    _openSodaSound = [self createSysSoundForResource:@"Open Soda Can Sound" withExtension:@"m4a"];
     _pinDropSound = [self createSysSoundForResource:@"pin_dropping-Brian_Rocca-2084700791"];
-    _tingSound = [self createSysSoundForResource:@"Ting_Sound"];
+    _tingSound = [self createSysSoundForResource:@"Ting_Sound" withExtension:@"m4a"];
     _bloodSquirtSound = [self createSysSoundForResource:@"Blood Squirt-SoundBible.com-1808242738"];
     _electricalSweepSound = [self createSysSoundForResource:@"Electrical_Sweep-Sweeper-1760111493"];
     _spitSplatSound = [self createSysSoundForResource:@"Spit_Splat_2-Mike_Koenig-1283100514"];

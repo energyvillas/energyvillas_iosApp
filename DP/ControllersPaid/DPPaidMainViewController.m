@@ -332,7 +332,7 @@
     if (indexOfTabBarController == -1) {
         // we were showing main controller, so we have to go to root...
         if (self.navController.viewControllers.count > 1) {
-            [self.navController popToRootViewControllerAnimated:YES];
+            [self.navController popToRootViewControllerAnimated:NO];
             prevBackgroundCategory = 0;
             [[self.navController topViewController].view setNeedsDisplay];
             [[self.navController topViewController].view setNeedsLayout];
@@ -556,7 +556,8 @@
         showAlertMessage(nil, DPLocalizedString(kERR_TITLE_INFO), DPLocalizedString(kERR_MSG_UNABLE_TO_SEND_MAIL));
         return;
     }
-    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        
     MFMailComposeViewController *composer = [DPMailHelper composeEmail2Us];
     composer.mailComposeDelegate = self;
     if (!IS_IPAD) {
@@ -574,6 +575,7 @@
         //                                                         completion:nil];
     }
     
+    });
 }
 
 #pragma mark - MFMailComposeViewControllerDelegate

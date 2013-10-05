@@ -63,6 +63,15 @@
     
     if (![self.displayLang isEqualToString:CURRENT_LANG])
         [self doLocalize];
+    else {
+        if (self.adsViewController != nil) {
+            [self.adsViewController.view removeFromSuperview];
+            [self.adsViewController removeFromParentViewController];
+            self.adsViewController = nil;
+            
+            [self loadAdsView:YES];
+        }
+    }
 }
 
 - (void) doLocalize {

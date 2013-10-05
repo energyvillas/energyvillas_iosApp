@@ -455,7 +455,7 @@
 }
 
 -(void) loadLocalData {
-    if (self.carouselCategoryID == CTGID_CAROUSEL) {
+    if (self.carouselCategoryID == CTGID_CAROUSEL || self.carouselCategoryID == CTGID_CAROUSEL_MORE) {
         NSArray *list = [[DPAppHelper sharedInstance] freeCoverFlowFor:CURRENT_LANG];
         self.datalist = list;
     }
@@ -698,7 +698,7 @@
 
 -(NSString *) imageLoadingFilePath {
     CGSize sz = [self calcImageLoadingSize];
-    NSString *filename = [NSString stringWithFormat: @"captured_img_loading_w%.0f_h%.0f.png", sz.width, sz.height];
+    NSString *filename = [NSString stringWithFormat: @"captured_img_loading_d%i_w%.0f_h%.0f.png", getDeviceType(), sz.width, sz.height];
     NSString *filepath = getDocumentsFilePath(filename);
     return filepath;
 }
