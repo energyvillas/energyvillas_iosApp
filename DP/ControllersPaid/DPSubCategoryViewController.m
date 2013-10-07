@@ -345,10 +345,24 @@
     }
 }
 
--(void) loadInfoDescView {
-    while (self.htmlView.subviews.count > 0) {
-        [self.htmlView.subviews[self.htmlView.subviews.count - 1] removeFromSuperview];
+- (void) removeSubViewsOf:(UIView *)v {
+    while (v.subviews.count > 0) {
+        UIView *sv = v.subviews.lastObject;
+        sv.hidden = YES;
+        if ([sv isKindOfClass:[UIButton class]])
+            ((UIButton *)sv).showsTouchWhenHighlighted = NO;
+        [self removeSubViewsOf:sv];
+        [sv removeFromSuperview];
     }
+}
+
+-(void) loadInfoDescView {
+//    while (self.htmlView.subviews.count > 0) {
+//        UIView *sv = self.htmlView.subviews[self.htmlView.subviews.count - 1];
+//        sv.hidden = YES;
+//        [sv removeFromSuperview];
+//    }
+    [self removeSubViewsOf:self.htmlView];
     
     UIView * inner = [self loadInnerHtmlView];
     BOOL sideBySide = !(IS_IPAD && IS_LANDSCAPE);
@@ -383,7 +397,7 @@
     
     UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
     btn.frame = frm;
-    btn.showsTouchWhenHighlighted = YES;
+//    btn.showsTouchWhenHighlighted = YES;
     btn.contentMode = UIViewContentModeCenter;
     if (self.category.parentId == CTGID_EXCLUSIVE_ART || self.category.parentId == CTGID_EXCLUSIVE_DESIGNER)
         [btn setImage:[UIImage imageNamed:@"HouseInfo/Info/info_exclusive.png"] forState:UIControlStateNormal];
@@ -393,6 +407,9 @@
     [btn addTarget:self action:@selector(infoTapped:) forControlEvents:UIControlEventTouchUpInside];
     
     [container addSubview:btn];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        btn.showsTouchWhenHighlighted = YES;
+    });
 }
 
 -(void) drawLine:(UIView *)container sideBySide:(BOOL)sidebyside {
@@ -422,7 +439,7 @@
     
     UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
     btn.frame = frm;
-    btn.showsTouchWhenHighlighted = YES;
+//    btn.showsTouchWhenHighlighted = YES;
     btn.contentMode = UIViewContentModeCenter;
     //[btn setImage:[UIImage imageNamed:@"HouseInfo/Info/info.png"] forState:UIControlStateNormal];
     btn.titleLabel.font = [UIFont fontWithName:@"TrebuchetMS-Bold" size:IS_IPAD ? 24.0f : 18.0f];
@@ -440,6 +457,10 @@
     [btn addTarget:self action:@selector(descrTapped:) forControlEvents:UIControlEventTouchUpInside];
     
     [container addSubview:btn];
+
+    dispatch_async(dispatch_get_main_queue(), ^{
+        btn.showsTouchWhenHighlighted = YES;
+    });
 }
 
 -(void) photoTapped:(id)sender {
