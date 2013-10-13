@@ -319,7 +319,7 @@
     } else {
         UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
         btn.frame = CGRectInset(self.photoView.bounds, 0, 1);
-        btn.showsTouchWhenHighlighted = YES;
+        //btn.showsTouchWhenHighlighted = YES;
         btn.contentMode = UIViewContentModeCenter;
         NSString *imgName = nil;
         if (self.category.parentId == CTGID_EXCLUSIVE_ART) {
@@ -342,6 +342,9 @@
         [btn addTarget:self action:@selector(photoTapped:) forControlEvents:UIControlEventTouchUpInside];
         
         [self.photoView addSubview:btn];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            btn.showsTouchWhenHighlighted = YES;
+        });
     }
 }
 
