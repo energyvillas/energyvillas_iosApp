@@ -79,6 +79,9 @@
     [self.bbiInfo setAction:@selector(doInfo:)];
     [self.bbiMore setAction:@selector(doMore:)];
     [self.bbiBuy setAction:@selector(doBuy:)];
+
+    [self.bbiMore setBackgroundVerticalPositionAdjustment:-1.0 forBarMetrics:UIBarMetricsDefault];
+    [self.bbiBuy setBackgroundVerticalPositionAdjustment:-1.0 forBarMetrics:UIBarMetricsDefault];
 }
 
 -(void) viewWillAppear:(BOOL)animated {
