@@ -142,66 +142,107 @@ typedef void (^VimeoPlayerBlock)(MPMoviePlayerViewController *mpvc, NSError *err
 //#pragma mark - video playing private
 //
 
-+ (void) playVideoUrl:(NSString *)vidUrl withCompletion:(VimeoPlayerBlock)onCompleted {
-    [SVProgressHUD setCustomHudColor: [UIColor blackColor]];
-    [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeCustom];
-    [YTVimeoExtractor fetchVideoURLFromURL:vidUrl
-                                   quality:YTVimeoVideoQualityHigh
-                                   success:^(NSURL *videoURL) {
-                                       [SVProgressHUD dismiss];
-
-                                       UIGraphicsBeginImageContext(CGSizeMake(1,1));
-                                       
-                                       MPMoviePlayerViewController *mpvc = [[MPMoviePlayerViewController alloc] initWithContentURL:videoURL];
-                                       
-                                       UIGraphicsEndImageContext();
-                                       
-                                       mpvc.moviePlayer.fullscreen = YES;
-                                       [mpvc.moviePlayer prepareToPlay];
-                                       [mpvc.moviePlayer play];
-                                       
-                                       onCompleted(mpvc, nil);
-
-                                   } failure:^(NSError *error) {
-                                       [SVProgressHUD dismiss];
-                                       onCompleted(nil, error);
-                                   }];
-}
+//+ (void) playVideoUrl:(NSString *)vidUrl withCompletion:(VimeoPlayerBlock)onCompleted {
+//    [SVProgressHUD setCustomHudColor: [UIColor blackColor]];
+//    [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeCustom];
+//    [YTVimeoExtractor fetchVideoURLFromURL:vidUrl
+//                                   quality:YTVimeoVideoQualityHigh
+//                                   success:^(NSURL *videoURL) {
+//                                       [SVProgressHUD dismiss];
+//
+//                                       UIGraphicsBeginImageContext(CGSizeMake(1,1));
+//                                       
+//                                       MPMoviePlayerViewController *mpvc = [[MPMoviePlayerViewController alloc] initWithContentURL:videoURL];
+//                                       
+//                                       UIGraphicsEndImageContext();
+//                                       
+//                                       mpvc.moviePlayer.fullscreen = YES;
+//                                       [mpvc.moviePlayer prepareToPlay];
+//                                       [mpvc.moviePlayer play];
+//                                       
+//                                       onCompleted(mpvc, nil);
+//
+//                                   } failure:^(NSError *error) {
+//                                       [SVProgressHUD dismiss];
+//                                       onCompleted(nil, error);
+//                                   }];
+//}
 
 //=========================
 static MPMoviePlayerViewController *moviePlayerViewController = nil;
 
 + (void) clsPlayerViewDidExitFullScreen:(NSNotification *)notification {
     if ([notification.name isEqualToString:MPMoviePlayerPlaybackDidFinishNotification] &&
-        notification.object == moviePlayerViewController) {
+        notification.object == [moviePlayerViewController moviePlayer]) {
         [moviePlayerViewController dismissMoviePlayerViewControllerAnimated];
         [[NSNotificationCenter defaultCenter] removeObserver:self
                                                         name:MPMoviePlayerPlaybackDidFinishNotification
                                                       object:moviePlayerViewController.moviePlayer];
         moviePlayerViewController = nil;
+        
+        MPMovieFinishReason mfr = [notification.userInfo[MPMoviePlayerPlaybackDidFinishReasonUserInfoKey] intValue];
+        switch (mfr) {
+            case MPMovieFinishReasonPlaybackEnded : break;
+            case MPMovieFinishReasonPlaybackError :
+            {
+                NSError *err = [notification.userInfo valueForKey:@"error"];
+                if (err)
+                    showAlertMessage(nil, DPLocalizedString(kERR_TITLE_ERROR), err.localizedDescription);
+                break;
+            }
+            case MPMovieFinishReasonUserExited : break;
+            default:
+                break;
+        }
     }
 }
 
+//+ (void) clsPlayVideoUrl:(NSString *)vidUrl {
+//        
+//        [DPVimeoPlayerViewController playVideoUrl:vidUrl
+//                                   withCompletion:^(MPMoviePlayerViewController *mpvc, NSError *error) {
+//                                       if (error) {
+//                                           showAlertMessage(nil,
+//                                                            DPLocalizedString(kERR_TITLE_CONNECTION_FAILED),
+//                                                            DPLocalizedString(kERR_MSG_TRY_LATER));
+//                                       } else {
+//                                           moviePlayerViewController = mpvc;
+//                                           [[NSNotificationCenter defaultCenter] addObserver:self
+//                                                                                    selector:@selector(clsPlayerViewDidExitFullScreen:)
+//                                                                                        name:MPMoviePlayerPlaybackDidFinishNotification
+//                                                                                      object:mpvc.moviePlayer];
+//                                           
+//                                           DPAppDelegate *appdel = [UIApplication sharedApplication].delegate;
+//                                           UIViewController *main = appdel.controller;
+//                                           [main presentViewController:mpvc animated:YES completion:nil];
+//                                       }
+//                                   }];
+//}
+
+
+
 + (void) clsPlayVideoUrl:(NSString *)vidUrl {
-        
-        [DPVimeoPlayerViewController playVideoUrl:vidUrl
-                                   withCompletion:^(MPMoviePlayerViewController *mpvc, NSError *error) {
-                                       if (error) {
-                                           showAlertMessage(nil,
-                                                            DPLocalizedString(kERR_TITLE_CONNECTION_FAILED),
-                                                            DPLocalizedString(kERR_MSG_TRY_LATER));
-                                       } else {
-                                           moviePlayerViewController = mpvc;
-                                           [[NSNotificationCenter defaultCenter] addObserver:self
-                                                                                    selector:@selector(clsPlayerViewDidExitFullScreen:)
-                                                                                        name:MPMoviePlayerPlaybackDidFinishNotification
-                                                                                      object:mpvc.moviePlayer];
-                                           
-                                           DPAppDelegate *appdel = [UIApplication sharedApplication].delegate;
-                                           UIViewController *main = appdel.controller;
-                                           [main presentViewController:mpvc animated:YES completion:nil];
-                                       }
-                                   }];
+    if (moviePlayerViewController != nil)
+        return;
+    
+    //NSString *tmpurl = @"http://player.vimeo.com/external/75641764.m3u8?p=high,standard,mobile&s=ec677039d79b4a53832100962b63acd1";
+    
+    UIGraphicsBeginImageContext(CGSizeMake(1,1));
+    moviePlayerViewController = [[MPMoviePlayerViewController alloc] initWithContentURL:[NSURL URLWithString: vidUrl]];
+    UIGraphicsEndImageContext();
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(clsPlayerViewDidExitFullScreen:)
+                                                 name:MPMoviePlayerPlaybackDidFinishNotification
+                                               object:moviePlayerViewController.moviePlayer];
+
+    moviePlayerViewController.moviePlayer.fullscreen = YES;
+    [moviePlayerViewController.moviePlayer prepareToPlay];
+    [moviePlayerViewController.moviePlayer play];
+
+    DPAppDelegate *appdel = [UIApplication sharedApplication].delegate;
+    UIViewController *main = appdel.controller;
+    [main presentViewController:moviePlayerViewController animated:YES completion:nil];
 }
 
 //=========================

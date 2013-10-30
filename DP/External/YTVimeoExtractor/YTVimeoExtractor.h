@@ -34,7 +34,7 @@ typedef enum {
 @property (strong, nonatomic, readonly) NSURL *vimeoURL;
 @property (strong, nonatomic, readonly) NSURL *streamURL;
 
-@property (weak, nonatomic) id<YTVimeoExtractorDelegate> delegate;
+@property (unsafe_unretained, nonatomic) id<YTVimeoExtractorDelegate> delegate;
 
 + (void)fetchVideoURLFromURL:(NSString *)videoURL
                      quality:(YTVimeoVideoQuality)quality

@@ -62,16 +62,11 @@
     return [self initWithID:videoID quality:quality];
 }
 
-- (void) cleanUp {
-    if (self.connection)
-        [self.connection cancel];
+- (void)dealloc {
+    [self.connection cancel];
     self.connection = nil;
     self.buffer = nil;
     self.delegate = nil;
-}
-
-- (void)dealloc {
-    [self cleanUp];
 }
 
 #pragma mark - Public
@@ -198,7 +193,7 @@
         if (self.success) {
             self.success(self.streamURL);
         }
-        else if (self.delegate && [self.delegate respondsToSelector:@selector(vimeoExtractor:didSuccessfullyExtractVimeoURL:)]) {
+        else if ([self.delegate respondsToSelector:@selector(vimeoExtractor:didSuccessfullyExtractVimeoURL:)]) {
             [self.delegate vimeoExtractor:self didSuccessfullyExtractVimeoURL:self.streamURL];
         }
     }
