@@ -262,7 +262,7 @@ NSString *const AsyncImageErrorKey = @"error";
     
     //begin load
     NSURLRequest *request = [NSURLRequest requestWithURL:_URL
-                                             cachePolicy:NSURLCacheStorageNotAllowed
+											 cachePolicy: NSURLRequestReloadIgnoringLocalCacheData// NSURLCacheStorageNotAllowed
                                          timeoutInterval:[AsyncImageLoader sharedLoader].loadingTimeout];
     
     _connection = [[NSURLConnection alloc] initWithRequest:request delegate:self startImmediately:NO];

@@ -26,11 +26,16 @@ FOUNDATION_EXPORT NSString *const MySecondConstant;
 
 #define IS_IPAD ((BOOL)([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad))
 
-#define IS_IPHONE_5 ( ((BOOL)([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone)) && (fabs( ( double )[ [ UIScreen mainScreen ] bounds ].size.height - ( double )568 ) < DBL_EPSILON ))
+#define IS_IPHONE_5  \
+	(																										\
+		((BOOL)([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone)) &&				\
+		fabs( ( double ) MAX(DeviceSize().width, DeviceSize().height) > (568.0 - 1.0) )												\
+	)
 
 #define IS_IPHONE ( ((BOOL)([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone)) && (!IS_IPHONE_5))
 
-#define DEVICE_SCALE ((CGFloat)[UIScreen mainScreen].scale)
+#define DEVICE_SCALE (device_scale())
+
 
 #define IS_RETINA ((BOOL)(abs([UIScreen mainScreen].scale - 2.0) < DBL_EPSILON))
 
@@ -280,6 +285,16 @@ UIKIT_EXTERN NSString *const kFACEBOOK_RESULT_FMT;
 
 UIKIT_EXTERN NSString *const kEMAIL_SUBJECT_2Us;
 UIKIT_EXTERN NSString *const kEMAIL_BODY_FMT_2Us;
+
+int Compare_iOSVersionTo(NSString* strVer);
+BOOL Is_iOS_Version_LessThan(NSString* strVer);
+BOOL Is_iOS_Version_LessEqualThan(NSString* strVer);
+BOOL Is_iOS_Version_EqualTo(NSString* strVer);
+BOOL Is_iOS_Version_GreaterEqualThan(NSString* strVer);
+BOOL Is_iOS_Version_GreaterThan(NSString* strVer);
+
+CGSize DeviceSize();
+CGFloat device_scale();
 
 // functions
 void showAlertMessage(id delegate, NSString *aTitle, NSString *aMessage);

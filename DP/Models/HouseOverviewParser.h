@@ -25,7 +25,7 @@
 @property (nonatomic, strong) NSString *videourl;
 @property (nonatomic, strong) NSString *title;
 @property (nonatomic, strong) NSString *info;
-@property (nonatomic, strong) NSString *description;
+@property (nonatomic, strong) NSString *descr;//iption;
 
 - (void)parseXMLFile:(NSString *)pathToFile;
 - (void)print;

@@ -24,7 +24,7 @@
     self.videourl = nil;
     self.title = nil;
     self.info = nil;
-    self.description = nil;
+    self.descr/*iption*/ = nil;
 }
 
 /*
@@ -155,6 +155,10 @@ static NSString *kName_descr = @"description";
  didEndElement:(NSString *)elementName
   namespaceURI:(NSString *)namespaceURI
  qualifiedName:(NSString *)qName {
+
+	NSLog(@"===>>>>>>>>>>>>>>>>>>-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-");
+	NSLog(@"%@",self.currentString);
+	
 	NSString *aElementValue = [[NSString alloc] initWithString:
                                [[self.currentString stringByReplacingOccurrencesOfString:@"&quot;" withString:@"'"]
                                 stringByReplacingOccurrencesOfString:@"&#39;" withString:@"'"]];
@@ -174,7 +178,7 @@ static NSString *kName_descr = @"description";
                                                                videoUrl:self.videourl
                                                                   title:[self processHtmlField:self.title]
                                                                    info:[self processHtmlField:self.info]
-                                                            description:[self processHtmlField:self.description]];
+                                                            description:[self processHtmlField:self.descr]];
 //		element.key=self.hovId;
 //        element.lang=self.langcode;
 //        element.ctgid = [self.categoryId intValue];
@@ -209,7 +213,7 @@ static NSString *kName_descr = @"description";
 		self.info=[[NSString alloc] initWithString: aElementValue];
         
 	}else if ([elementName isEqualToString:kName_descr]) {
-		self.description=[[NSString alloc] initWithString: aElementValue];
+		self.descr=[[NSString alloc] initWithString: aElementValue];
         
     }
     

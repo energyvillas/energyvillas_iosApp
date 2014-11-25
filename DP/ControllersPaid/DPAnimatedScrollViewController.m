@@ -232,7 +232,7 @@
 }
 - (DPAnimatedCardsView *) findAnimCtgViewInCurrentPage {
     DPAnimatedCardsView *result = nil;
-    int pg = self.pageControl.currentPage;
+    int pg = (int)self.pageControl.currentPage;
     result = [self findAnimCtgViewInPage:pg];
     return result;
 }

@@ -162,9 +162,9 @@
 
 #pragma
 
-- (void) doLayoutSubViews:(BOOL)fixtop {    
+- (void) doLayoutSubViews:(BOOL)fixtop {
     CGRect vf = self.view.frame;
-    
+
     fixtop = IS_LANDSCAPE && !IS_IPAD;
     int top = fixtop ? 12 : 0;
     int h = vf.size.height - top;
@@ -485,7 +485,7 @@
 }
 -(void) descrTapped:(id)sender {
     DPHtmlContentViewController *descr = [[DPHtmlContentViewController alloc]
-                                         initWithHTML:self.houseOverview.description];
+                                         initWithHTML:self.houseOverview.descr];
     [self.navigationController pushViewController:descr animated:YES];
 }
 

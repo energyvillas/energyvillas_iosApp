@@ -86,11 +86,7 @@
 -(void) doFixFrames:(UIViewController *)viewController fixTop:(BOOL)fixtop {
     [self fixFrames];
     if (viewController && [viewController isKindOfClass:[UINavContentViewController class]]) {
-        //dispatch_async(dispatch_get_main_queue(), ^{
-//        [(UINavContentViewController *)viewController doLayoutSubViews:fixtop];
         [viewController.view setNeedsDisplay];
-//        [viewController.view setNeedsLayout];
-        //});
     }
 }
 

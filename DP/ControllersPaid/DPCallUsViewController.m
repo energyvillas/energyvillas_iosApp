@@ -35,7 +35,6 @@
 - (void) dealloc {
     self.backView = nil;
     self.contentView = nil;
-    self.imgView = nil;
     self.btnCall = nil;
     self.btnMail = nil;
     self.btnCancel = nil;
@@ -44,13 +43,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view.
-    
-//    actualFrame = CGRectZero;
-    
     [self.view bringSubviewToFront:self.contentView];
     [self doLocalize];
-//    [self internalLayoutSubViews];
 }
 
 - (void)didReceiveMemoryWarning
@@ -62,7 +56,6 @@
 - (void)viewDidUnload {
     [self setBackView:nil];
     [self setContentView:nil];
-    [self setImgView:nil];
     [self setBtnCall:nil];
     [self setBtnCancel:nil];
     [self setBtnMail:nil];
@@ -156,28 +149,27 @@
 
 -(void) internalLayoutSubViews {
     CGSize nextViewSize = [UIApplication sizeInOrientation:INTERFACE_ORIENTATION];
-    
-    if (IS_IPAD)
-        self.backView.hidden = YES;
-    else
-        self.backView.frame = CGRectMake(0, 0, nextViewSize.width, nextViewSize.height);
-    
+
+//	if (IS_IPAD && Is_iOS_Version_LessThan(@"8.0"))
+//        self.backView.hidden = YES;
+//    else
+//        self.backView.frame = CGRectMake(0, 20, nextViewSize.width, nextViewSize.height);
+	self.backView.hidden = YES;
+
     CGPoint cntr = CGPointMake(nextViewSize.width / 2.0f,
                                nextViewSize.height / 2.0f); //)self.backView.center;
     CGRect frm = CGRectMake(0, 0, WIDTH, HEIGHT);
-    self.contentView.frame = frm; 
+    self.contentView.frame = frm;
     self.contentView.center = cntr;
+	frm = self.contentView.frame;
     if (IS_IPAD) {
-        self.contentView.backgroundColor = [UIColor blackColor];
+		self.contentView.backgroundColor = [UIColor blackColor];
         self.contentView.layer.borderWidth = BORDER_WIDTH;
         self.contentView.layer.cornerRadius = 8.0f;
         self.contentView.layer.borderColor = [UIColor whiteColor].CGColor;
     }
     
-    CGRect childframe = self.contentView.bounds;
-    self.imgView.frame = childframe;
-    
-    CGRect btnframe = CGRectMake(0, 0, BTN_WIDTH, BTN_HEIGHT);
+	CGRect btnframe = CGRectMake(0, 0, BTN_WIDTH, BTN_HEIGHT);
     btnframe = CGRectOffset(btnframe, HORZ_MARGIN, VERT_MARGIN);
     self.btnCall.frame = btnframe;
     
@@ -188,30 +180,40 @@
     self.btnCancel.frame = btnframe;
     
     frm = self.contentView.frame;
-    if (IS_IPAD) {
-        self.contentView.frame = CGRectMake(0, 0,
-                                            frm.size.width,
-                                            frm.size.height);
-        
-        actualFrame = CGRectMake((nextViewSize.width - frm.size.width) / 2.0,
-                                 (nextViewSize.height - frm.size.height) / 2.0,
-                                 frm.size.width,
-                                 frm.size.height);
-        //        actualFrame = self.contentView.frame;
+	if (IS_IPAD)
+	{
+		if (IS_LANDSCAPE && Is_iOS_Version_LessThan(@"8.0")){
+			frm = CGRectMake((CGRectGetWidth(self.view.frame) - CGRectGetWidth(frm)) / 2.0f,
+							 100.0f,
+							 frm.size.width,
+							 frm.size.height);
+
+			self.contentView.frame = frm;
+		} else
+		{
+			frm = self.contentView.frame;
+			frm.origin.y = IS_PORTRAIT ? 194.0f : 100.0f;
+			self.contentView.frame = frm;
+		}
     }
+
+	if (!IS_IPAD || Is_iOS_Version_GreaterEqualThan(@"8.0"))
+		self.view.backgroundColor = [UIColor colorWithWhite:0.0f alpha:0.35f];
+	else
+		self.view.backgroundColor = [UIColor clearColor];
 }
 
 - (IBAction)btnTouchupInside:(UIButton *)sender {
     if (IS_IPAD) {
         [self dismissViewControllerAnimated:NO completion:^{
             if (self.onClose != nil)
-                self.onClose(sender.tag);
+                self.onClose((int)sender.tag);
         }];
     } else {
         [self.view removeFromSuperview];
         [self removeFromParentViewController];
         if (self.onClose != nil)
-            self.onClose(sender.tag);
+            self.onClose((int)sender.tag);
     }
 }
 @end

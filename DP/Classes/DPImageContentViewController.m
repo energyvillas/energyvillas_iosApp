@@ -478,13 +478,13 @@
     self.lblCounter = [[UILabel alloc] initWithFrame: frmcntr];
     self.lblCounter.font = [UIFont systemFontOfSize: IS_IPAD ? IPADS_FONT_SIZE : IPHONES_FONT_SIZE];
     self.lblCounter.backgroundColor = [UIColor whiteColor];
-    self.lblCounter.textAlignment = UITextAlignmentRight;
+    self.lblCounter.textAlignment = NSTextAlignmentRight;
     
     CGRect frmtitle = CGRectOffset(frmcntr, frmcntr.origin.x + frmcntr.size.width + 2, 0);
     self.lblTitle = [[UILabel alloc] initWithFrame:frmtitle];
     self.lblTitle.font = [UIFont systemFontOfSize:IS_IPAD ? IPADS_FONT_SIZE : IPHONES_FONT_SIZE];
     self.lblTitle.backgroundColor = [UIColor whiteColor];
-    self.lblTitle.textAlignment = UITextAlignmentCenter;
+    self.lblTitle.textAlignment = NSTextAlignmentCenter;
     
     CGRect frm = CGRectUnion(frmbtn, frmtitle);
     self.lblContainer = [[UIView alloc] initWithFrame:frm];

@@ -163,7 +163,7 @@
 
 -(DPCardView *) findCardUnderPoint:(CGPoint)pnt {
     DPCardView *result = nil;
-    int cnt = self.cards.count - 1;
+    int cnt = (int)self.cards.count - 1;
     // for loop downwards cause views are in stack fashion - i>j => v[i] in front/on top of v[j]
     for (int i = cnt; i >= 0 ; i--) {
         UIView *card = (UIView *)self.cards[i];
@@ -270,7 +270,7 @@
             // handle tap
             DPCardView *card = self.currentCard; //self.cards[self.currentCard];
             [self cancelCardAnimation:card];
-            [self zoomCard:card duration:zoomDuration];
+			[self zoomCard:card duration:zoomDuration];
         }
     } else {
         if (self.currentCard == nil/*-1*/) {
@@ -383,20 +383,15 @@
 }
 
 - (void) cancelCardAnimation:(DPCardView *)card {
-    [UIView animateWithDuration:0.0
-                          delay:0.0
-                        options:UIViewAnimationOptionBeginFromCurrentState
-                     animations:^{
-                         card.center = [self presentationCenterOf:card];
-                     }
-                     completion:NULL //^(BOOL finished){}
-     ];
+	CGPoint cntr = [self presentationCenterOf:card];
+	[card.layer removeAllAnimations];
+	card.center = cntr;
 }
 
 - (void) bringCardForward:(DPCardView *)card {
-    if (self.currentCard != nil/*-1*/ && self.currentCard == card/*self.cards[self.currentCard] == card*/) {
-        int cardIndex = [self.subviews indexOfObject:card];
-        int topCardIndex = [self.subviews indexOfObject:self.tapView] - 1;
+    if (self.currentCard != nil/*-1*/ && self.currentCard == card) {
+        int cardIndex = (int)[self.subviews indexOfObject:card];
+        int topCardIndex = (int)[self.subviews indexOfObject:self.tapView] - 1;
         if (cardIndex < topCardIndex) {
             [self.cards exchangeObjectAtIndex:cardIndex withObjectAtIndex:topCardIndex];
             [self bringSubviewToFront:card];

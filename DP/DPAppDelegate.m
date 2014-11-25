@@ -23,6 +23,16 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+	UIDevice* devc = [UIDevice  currentDevice];
+	UIScreen* scrn = [UIScreen mainScreen];
+	NSLog(@"Device name %@", devc.name);
+	NSLog(@"Device model %@", devc.model);
+	NSLog(@"Device model lc %@", devc.localizedModel);
+	NSLog(@"Device System Name %@", devc.systemName);
+	NSLog(@"Device System Version %@", devc.systemVersion);
+	NSLog(@"Device Type %@", IS_IPAD ? @"iPad" : (IS_IPHONE ? @"iPhone" : (IS_IPHONE_5 ? @"iPhone 5" : @"Unknown!!!")));
+	NSLogFrame(@"SCR-B", scrn.bounds);
+
     [DPIAPHelper sharedInstance];//loadStore];
     
     NSString *lang = [[NSLocale preferredLanguages] objectAtIndex:0];
@@ -30,7 +40,7 @@
         lang = @"en";
     
     [DPAppHelper sharedInstance].currentLang = lang;
-    
+
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
     
@@ -51,6 +61,8 @@
     if (!IS_APP_PURCHASED)
         if ([DPAppHelper sharedInstance].hostIsReachable)
             [DPIAPHelper loadStore];
+
+	[[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
 
     return YES;
 }

@@ -350,7 +350,8 @@
             imgHigh = [imgHigh imageScaledToFitSize:imgsz];
     }
 
-    button.layer.borderColor = [UIColor colorWithWhite:0.8f alpha:1.0f].CGColor;
+	//	button.layer.borderColor = [UIColor clearColor].CGColor; // [UIColor colorWithWhite:0.8f alpha:1.0f].CGColor;
+	button.layer.borderColor = [UIColor colorWithWhite:0.8f alpha:1.0f].CGColor;
 
     if (img) [button setImage:img forState:UIControlStateNormal];
     if (imgHigh) [button setImage:imgHigh forState:UIControlStateHighlighted];
@@ -360,7 +361,7 @@
 }
 
 - (void) onTap:(id)sender {
-    int indx = ((UIButton *)sender).tag;
+    int indx = (int)((UIButton *)sender).tag;
     DPDataElement * element = self.contentList[indx];
 #ifdef LOG_MENU
     NSLog(@"Clicked image at index %i named %@", indx, element.title);
@@ -440,7 +441,7 @@
     self.popController = nil;
     
     // handling code
-    int indx = sender.tag;
+    int indx = (int)sender.tag;
     DPDataElement *element = self.islandsContent[indx];
 #ifdef LOG_MENU
     NSLog(@"Clicked island image at index %i named %@ ", indx, element.title);

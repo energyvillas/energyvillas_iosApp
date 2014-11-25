@@ -136,6 +136,92 @@ NSString *const kEMAIL_SUBJECT_2Us = @"EMAIL_SUBJECT_2Us";
 NSString *const kEMAIL_BODY_FMT_2Us = @"EMAIL_BODY_FMT_2Us";
 
 
+CGSize DeviceSize() {
+	CGSize res = [UIScreen mainScreen].bounds.size;
+	return res;
+}
+
+
+int sign(int val) { return val > 0 ? 1 : (val < 0 ? -1 : 0); }
+
+// iosVer < strVer => -1
+// iosVer = strVer => 0
+// iosVer > strVer => 1
+int Compare_iOSVersionTo(NSString* strVer) {
+	NSMutableArray* vDevc = [NSMutableArray arrayWithArray: [[UIDevice currentDevice].systemVersion componentsSeparatedByString:@"."]];
+	NSMutableArray* vTrgt = [NSMutableArray arrayWithArray: [strVer componentsSeparatedByString:@"."]];
+
+	int vDevcCount = (int)vDevc.count;
+	int vTrgtCount = (int)vTrgt.count;
+	int cnt = vDevcCount;
+	if (vDevcCount < vTrgtCount) {
+		for (int i = vDevcCount; i < vTrgtCount; i++)
+			[vDevc addObject: @"0"];
+		cnt = vTrgtCount;
+	}
+	if (vDevcCount > vTrgtCount) {
+		for (int i = vTrgtCount; i < vDevcCount; i++)
+			[vTrgt addObject: @"0"];
+		cnt = vDevcCount;
+	}
+
+	int res = 0;
+
+	int pos = 0;
+	while (pos < cnt) {
+		res = sign([[vDevc objectAtIndex:pos] intValue] - [[vTrgt objectAtIndex:pos] intValue]);
+		if (res != 0) break;
+		pos += 1;
+	}
+
+	return res;
+}
+
+
+BOOL Is_iOS_Version_LessThan(NSString* strVer) { return Compare_iOSVersionTo(strVer) < 0; }
+BOOL Is_iOS_Version_LessEqualThan(NSString* strVer) { return Compare_iOSVersionTo(strVer) <= 0; }
+BOOL Is_iOS_Version_EqualTo(NSString* strVer) { return Compare_iOSVersionTo(strVer) == 0; }
+BOOL Is_iOS_Version_GreaterEqualThan(NSString* strVer) { return Compare_iOSVersionTo(strVer) >= 0; }
+BOOL Is_iOS_Version_GreaterThan(NSString* strVer) { return Compare_iOSVersionTo(strVer) > 0; }
+
+//BOOL Is_iOS_Version_LessThan(NSString* strVer) {
+//	NSMutableArray* vDevc = [NSMutableArray arrayWithArray: [[UIDevice currentDevice].systemVersion componentsSeparatedByString:@"."]];
+//	NSMutableArray* vTrgt = [NSMutableArray arrayWithArray: [strVer componentsSeparatedByString:@"."]];
+//
+//	int vDevcCount = (int)vDevc.count;
+//	int vTrgtCount = (int)vTrgt.count;
+//	int cnt = vDevcCount;
+//	if (vDevcCount < vTrgtCount) {
+//		for (int i = vDevcCount; i < vTrgtCount; i++)
+//			[vDevc addObject: @"0"];
+//		cnt = vTrgtCount;
+//	}
+//	if (vDevcCount > vTrgtCount) {
+//		for (int i = vTrgtCount; i < vDevcCount; i++)
+//			[vTrgt addObject: @"0"];
+//		cnt = vDevcCount;
+//	}
+//
+//	BOOL res = NO;
+//
+//	int pos = 0;
+//	while (pos < cnt) {
+//		int cmpr = [[vDevc objectAtIndex:pos] intValue] - [[vTrgt objectAtIndex:pos] intValue];
+//		if (cmpr < 0) { res = YES; break; }
+//		else if (cmpr > 0) break;
+//		
+//		pos += 1;
+//	}
+//
+//	return res;
+//}
+
+CGFloat device_scale() {
+	CGFloat scl = (CGFloat)[UIScreen mainScreen].scale;
+	return scl;
+}
+
+
 void showAlertMessage(id aDelegate, NSString *aTitle, NSString *aMessage) {
 	UIAlertView *alertDialog;
 	alertDialog = [[UIAlertView alloc]

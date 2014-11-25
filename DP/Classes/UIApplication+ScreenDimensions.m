@@ -11,6 +11,7 @@
  */
 
 #import "UIApplication+ScreenDimensions.h"
+#import "DPConstants.h"
 
 @implementation UIApplication (ScreenDimensions)
 
@@ -23,7 +24,7 @@
 {
     CGSize size = [UIScreen mainScreen].bounds.size;
     UIApplication *application = [UIApplication sharedApplication];
-    if (UIInterfaceOrientationIsLandscape(orientation))
+    if (Is_iOS_Version_LessThan(@"8.0") && UIInterfaceOrientationIsLandscape(orientation))
     {
         size = CGSizeMake(size.height, size.width);
     }

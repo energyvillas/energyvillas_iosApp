@@ -153,7 +153,7 @@
 
     // this is a fix for when returning from vimeo player in landscape
     CGRect nbf = self.navigationController.navigationBar.frame;
-    nbf.size.height = 44;
+	nbf.size.height = 44;
     self.navigationController.navigationBar.frame = nbf;
     //
     
@@ -268,6 +268,9 @@
 
 - (void) setupNavBar {
     if (![self showNavBar]) return;
+
+	self.navigationController.navigationBar.translucent = NO;
+	self.navigationController.navigationBar.barTintColor = [UIColor blackColor];
     
     self.navigationItem.hidesBackButton = YES;
     self.navigationItem.leftItemsSupplementBackButton = NO;

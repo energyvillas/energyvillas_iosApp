@@ -115,7 +115,7 @@ NSString *const kPlaceholderPostMessage = @"Say something about this...";
             if (!error) {
                 NSDictionary<FBGraphUser> *user = result;
                 self.userName.text = user.name;
-                self.userProfilePicture.profileID = user.id;
+                self.userProfilePicture.profileID = user.objectID;
             }
         }];
     }

@@ -89,7 +89,7 @@
     self.displayLang = CURRENT_LANG;
 }
 
-- (void) doLayoutSubViews:(BOOL)fixtop {    
+- (void) doLayoutSubViews:(BOOL)fixtop {
     CGRect vf = self.view.frame;
     
     fixtop = IS_LANDSCAPE && !IS_IPAD;

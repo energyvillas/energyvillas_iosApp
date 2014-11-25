@@ -72,6 +72,8 @@
     [self.view insertSubview:self.navController.view atIndex:0];
     self.navController.delegate = self;
     self.tabBar.delegate = self;
+	self.tabBar.TintColor = [UIColor greenColor];
+	self.tabBar.barTintColor = [UIColor blackColor];
 }
 
 -(void) doLocalize {
@@ -104,6 +106,7 @@
         self.tabBar.selectedItem = self.tbiMain;
         tbSelItem = TAG_TBI_MAIN;
         framesDone = YES;
+		[self prepareVideoPlayerNotification];
     }
     [super viewWillAppear:animated];
     [self doLocalize];
@@ -142,41 +145,91 @@
     [self doFixFrames:self.navController.topViewController fixTop:NO];
 }
 
+-(void) didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
+	[super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
+
+	[self setNeedsStatusBarAppearanceUpdate];
+	[[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationNone];
+	[[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationNone];
+}
+
 -(void) doFixFrames:(UIViewController *)viewController fixTop:(BOOL)fixtop {
     [self clearPopups];
 
     [self fixFrames:NO];
     if (viewController && [viewController isKindOfClass:[UINavContentViewController class]])
-       // dispatch_async(dispatch_get_main_queue(), ^{
-//        [(UINavContentViewController *)viewController doLayoutSubViews:fixtop];
+
     [viewController.view setNeedsDisplay];
-       // });
+}
+
+void NSLogRect(NSString *msg, CGRect rect) {
+	NSLog(@"%@ :: (x, y, w, h) = (%f, %f, %f, %f)",
+		  msg,
+		  rect.origin.x, rect.origin.y,
+		  rect.size.width, rect.size.height);
+}
+
+void LogDevInfo() {
+	UIDevice* devc = [UIDevice  currentDevice];
+	UIScreen* scrn = [UIScreen mainScreen];
+	UIWindow* wind = [UIApplication sharedApplication].keyWindow;
+	NSLog(@"Device name %@", devc.name);
+	NSLog(@"Device model %@", devc.model);
+	NSLog(@"Device model lc %@", devc.localizedModel);
+	NSLog(@"Device System Name %@", devc.systemName);
+	NSLog(@"Device System Version %@", devc.systemVersion);
+	NSLog(@"Device Type %@", IS_IPAD ? @"iPad" : (IS_IPHONE ? @"iPhone" : (IS_IPHONE_5 ? @"iPhone 5" : @"Unknown!!!")));
+	NSLogRect(@"SCR-B", scrn.bounds);
+	NSLogRect(@"WND-F", wind.frame);
+	NSLogRect(@"WND-B", wind.bounds);
+	NSLogRect(@"SCR-APP_FRM", scrn.applicationFrame);
+}
+
+-(void) videoPlayerFinished {
+	LogDevInfo();
+
+	if (!Is_iOS_Version_LessThan(@"8")) {
+		[self fixFrames:YES];
+
+		CGRect r = self.navController.topViewController.view.frame;
+		if (r.origin.y > 45) {
+			r.origin.y -= 20.0f;
+			r.size.height += 20.0f;
+		}
+		self.navController.topViewController.view.frame = r;
+	}
+
+
+	[self setNeedsStatusBarAppearanceUpdate];
+	[[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationNone];
+	[[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationNone];
+}
+
+-(void) prepareVideoPlayerNotification {
+	[[NSNotificationCenter defaultCenter] addObserver:self
+											 selector:@selector(videoPlayerFinished)
+												 name:@"VIDEO_PALYER_FINISHED_NOTIFICATION"
+											   object:nil];
 }
 
 - (void) fixFrames:(BOOL)fixNavView {
     if (fixNavView) {
-        CGRect sf = [UIScreen mainScreen].applicationFrame;
-        self.view.frame = sf;
+		CGRect sf = [UIScreen mainScreen].applicationFrame;
+		if (sf.origin.y < 1.0f) {
+			sf.origin.y = 20.0f;
+			sf.size.height -= 20.0f;
+		}
+
+		self.view.frame = sf;
         CGRect tbf = self.tabBar.frame;
 
-        self.navController.view.frame = CGRectMake(0, 0,
+		CGFloat yofs = Is_iOS_Version_LessThan(@"8") ? sf.origin.y : 0.0f;
+		self.navController.view.frame = CGRectMake(0, yofs,
                                                    sf.size.width,
-                                                   sf.size.height - tbf.size.height);
-    } else {
-        UIViewController *tvc = self.navController.topViewController;
-        
-        CGRect nc_nbf = self.navController.navigationBar.frame;
-        CGRect tvc_svf = tvc.view.superview.frame;
-        CGRect tvc_vf = tvc.view.frame;
-        
-        if (IS_LANDSCAPE) {
-            tvc_vf = CGRectMake(0, nc_nbf.size.height - tvc_svf.origin.y,
-                                tvc_svf.size.width,
-                                tvc_svf.size.height);
-        //    tvc.view.frame = tvc_vf;
-            //        [tvc.view setNeedsDisplay];
-        }
-    }
+                                                   sf.size.height - tbf.size.height
+												   - yofs
+												   );
+	}
 }
 
 - (void) addNotificationObservers {
@@ -218,41 +271,21 @@
     self.view.layer.contents = (id)[[UIImage imageNamed:imgName] CGImage];
 }
 
-- (void) cleanControllers { //:(UIViewController *)tvc {
-//    if (tvc == self.ideaViewController)
-        self.ideaViewController = nil;
-    
-//    if (tvc == self.realEstateViewController)
-        self.realEstateViewController = nil;
-    
-    //if (tvc == self.callViewController) self.callViewController = nil;
-    //if (tvc == self.moreViewController) self.moreViewController = nil;
-
-//    if (tvc == self.whoViewController)
-        self.whoViewController = nil;
-    
-//    if (tvc == self.franchiseViewController)
-        self.franchiseViewController = nil;
-    
-//    if (tvc == self.costViewController)
-        self.costViewController = nil;
-    
-//    if (tvc == self.profitViewController)
-        self.profitViewController = nil;
-    
-//    if (tvc == self.materialsViewController)
-        self.materialsViewController = nil;
-    
-//    if (tvc == self.planetViewController)
-        self.planetViewController = nil;
-    
-//    if (tvc == self.favoritesViewController)
-        self.favoritesViewController = nil;
+- (void) cleanControllers {
+	self.ideaViewController = nil;
+	self.realEstateViewController = nil;
+	self.whoViewController = nil;
+	self.franchiseViewController = nil;
+	self.costViewController = nil;
+	self.profitViewController = nil;
+	self.materialsViewController = nil;
+	self.planetViewController = nil;
+	self.favoritesViewController = nil;
 }
 
 - (int) findTabViewControllerIndexInNavigator {
     int result = -1;
-    int count = self.navController.viewControllers.count;
+    int count = (int)self.navController.viewControllers.count;
     for (int i = count - 1; i > 0; i--) { // i>0 to avoid touching the "root"
         UIViewController *vc = self.navController.viewControllers[i];
         if ([self isTabBarPage:vc]) {
@@ -268,10 +301,6 @@
     if (tvc != rvc) {
         [self checkPopTabBarViewController];
     }
-    //    if (tvc != rvc && [self isTabBarPage:tvc]) {
-    //        [self.navController popViewControllerAnimated:NO];
-    //        [self cleanControllers:tvc];
-    //    }
 }
 
 - (int) checkPopTabBarViewController {
@@ -283,7 +312,7 @@
             UIViewController *tbvc = self.navController.viewControllers[tbvcIndex - 1];
             [self.navController popToViewController:tbvc animated:NO];
         }
-        [self cleanControllers];//:tvc];
+        [self cleanControllers];
     }
     
     return tbvcIndex;
@@ -342,9 +371,6 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:DPN_PAID_SelectedCategoryChanged_Notification
                                                         object:nil
                                                       userInfo:@{@"menuCategory": @(prevBackgroundCategory)}];
-
-//    [NSDictionary dictionaryWithObject:[NSNumber numberWithInt:prevBackgroundCategory]
-//                                forKey:]
 }
 
 - (void) showIdea {
@@ -497,12 +523,9 @@
 }
 
 - (void) showCall {
-    
-    
-    
-    UIViewController *contr = [self.navController topViewController];
+	UIViewController *contr = self;
     DPCallUsViewController *callusVC = [[DPCallUsViewController alloc] init];
-    
+
     [callusVC setCompletion:^(int tag) {
         self.dlgManager.modalController = nil;
         contr.view.userInteractionEnabled = YES;
@@ -524,10 +547,6 @@
                     telNo = [telNo stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
                     [[UIApplication sharedApplication] openURL:[NSURL URLWithString:telNo]];
                 });
-//                // make the call
-//                NSString *telNo = [NSString stringWithFormat:@"%@", @"tel:+302103611150"];
-//                telNo = [telNo stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-//                [[UIApplication sharedApplication] openURL:[NSURL URLWithString:telNo]];
                 break;
             }
             case 102: {
@@ -561,18 +580,12 @@
     MFMailComposeViewController *composer = [DPMailHelper composeEmail2Us];
     composer.mailComposeDelegate = self;
     if (!IS_IPAD) {
-        //DPAppDelegate *appdel = [UIApplication sharedApplication].delegate;
-        [/*appdel.controller*/self presentModalViewController:composer
+        [self presentModalViewController:composer
                                              animated:YES];
-        
-        //        [self.controller.navigationController presentModalViewController:composer
-        //                                                                animated:YES];
     } else {
-        //        composer.modalPresentationStyle = UIModalPresentationPageSheet;
-        /*self.controller.navigationController*/self.navController.modalPresentationStyle = UIModalPresentationPageSheet;
-        [/*self.controller.navigationController*/self.navController presentModalViewController:composer
+		self.navController.modalPresentationStyle = UIModalPresentationPageSheet;
+		[self.navController presentModalViewController:composer
                                                                 animated:YES];
-        //                                                         completion:nil];
     }
     
     });

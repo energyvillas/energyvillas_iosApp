@@ -11,7 +11,6 @@
 		5E0D18EF1765CD8400A3F946 /* black_rollOver_65%.png in Resources */ = {isa = PBXBuildFile; fileRef = 5E0D18EE1765CD8400A3F946 /* black_rollOver_65%.png */; };
 		5E0D18F21765D5C100A3F946 /* DPButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E0D18F11765D5C100A3F946 /* DPButton.m */; };
 		5E31F026171FFCBB008B15F0 /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E31F025171FFCBB008B15F0 /* FacebookSDK.framework */; };
-		5E31F028171FFD54008B15F0 /* FacebookSDKResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 5E31F027171FFD54008B15F0 /* FacebookSDKResources.bundle */; };
 		5E31F02C171FFDAD008B15F0 /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E31F029171FFDAD008B15F0 /* Accounts.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		5E31F02D171FFDAD008B15F0 /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E31F02A171FFDAD008B15F0 /* AdSupport.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		5E31F02E171FFDAD008B15F0 /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E31F02B171FFDAD008B15F0 /* Social.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
@@ -153,6 +152,7 @@
 		5EC573BA172AE278000B7004 /* DPBaseDataElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EC573B9172AE277000B7004 /* DPBaseDataElement.m */; };
 		5ECD1548173FA6C200C0327F /* loading_el.png in Resources */ = {isa = PBXBuildFile; fileRef = 5ECD1546173FA6C200C0327F /* loading_el.png */; };
 		5ECD1549173FA6C200C0327F /* loading_en.png in Resources */ = {isa = PBXBuildFile; fileRef = 5ECD1547173FA6C200C0327F /* loading_en.png */; };
+		5ECD32541A19281E005105B9 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5ECD32531A19281E005105B9 /* AVFoundation.framework */; };
 		5ED20279171E9624006AC1FC /* iCarousel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5ED20278171E9624006AC1FC /* iCarousel.m */; };
 		5ED2027D171E99F7006AC1FC /* AsyncImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5ED2027C171E99F7006AC1FC /* AsyncImageView.m */; };
 		5ED20283171EA757006AC1FC /* FXImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5ED20280171EA757006AC1FC /* FXImageView.m */; };
@@ -195,7 +195,6 @@
 		5E0D18F01765D5C100A3F946 /* DPButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPButton.h; sourceTree = "<group>"; };
 		5E0D18F11765D5C100A3F946 /* DPButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPButton.m; sourceTree = "<group>"; };
 		5E31F025171FFCBB008B15F0 /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FacebookSDK.framework; path = ../../FacebookSDK/FacebookSDK.framework; sourceTree = "<group>"; };
-		5E31F027171FFD54008B15F0 /* FacebookSDKResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = FacebookSDKResources.bundle; path = ../../FacebookSDK/FacebookSDK.framework/Versions/A/Resources/FacebookSDKResources.bundle; sourceTree = "<group>"; };
 		5E31F029171FFDAD008B15F0 /* Accounts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accounts.framework; path = System/Library/Frameworks/Accounts.framework; sourceTree = SDKROOT; };
 		5E31F02A171FFDAD008B15F0 /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
 		5E31F02B171FFDAD008B15F0 /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
@@ -422,6 +421,7 @@
 		5EC573B9172AE277000B7004 /* DPBaseDataElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPBaseDataElement.m; sourceTree = "<group>"; };
 		5ECD1546173FA6C200C0327F /* loading_el.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = loading_el.png; sourceTree = "<group>"; };
 		5ECD1547173FA6C200C0327F /* loading_en.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = loading_en.png; sourceTree = "<group>"; };
+		5ECD32531A19281E005105B9 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		5ED20277171E9624006AC1FC /* iCarousel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iCarousel.h; sourceTree = "<group>"; };
 		5ED20278171E9624006AC1FC /* iCarousel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iCarousel.m; sourceTree = "<group>"; };
 		5ED2027B171E99F7006AC1FC /* AsyncImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AsyncImageView.h; sourceTree = "<group>"; };
@@ -478,6 +478,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5ECD32541A19281E005105B9 /* AVFoundation.framework in Frameworks */,
 				5E31F0431720574E008B15F0 /* Twitter.framework in Frameworks */,
 				5E31F041172045E0008B15F0 /* MessageUI.framework in Frameworks */,
 				5E31F02C171FFDAD008B15F0 /* Accounts.framework in Frameworks */,
@@ -583,8 +584,8 @@
 		5E71A3B616F9973500E7AFF9 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				5ECD32531A19281E005105B9 /* AVFoundation.framework */,
 				5ED20285171F096E006AC1FC /* libz.1.2.5.dylib */,
-				5E31F027171FFD54008B15F0 /* FacebookSDKResources.bundle */,
 				5E31F029171FFDAD008B15F0 /* Accounts.framework */,
 				5E31F02A171FFDAD008B15F0 /* AdSupport.framework */,
 				5EC20D0C171D5D81006E03B7 /* AudioToolbox.framework */,
@@ -1050,6 +1051,11 @@
 				CLASSPREFIX = DP;
 				LastUpgradeCheck = 0460;
 				ORGANIZATIONNAME = "Γεώργιος Γράβος";
+				TargetAttributes = {
+					5E71A3B316F9973500E7AFF9 = {
+						DevelopmentTeam = 7U2CGA4753;
+					};
+				};
 			};
 			buildConfigurationList = 5E71A3AF16F9973500E7AFF9 /* Build configuration list for PBXProject "energyVillas" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -1095,7 +1101,6 @@
 				5E4E8515171059AA005DAD06 /* Navbar in Resources */,
 				5E4E851F1711E542005DAD06 /* DPSubCategoryView.xib in Resources */,
 				5EE16DFF171C47D10006E1CE /* Carousel in Resources */,
-				5E31F028171FFD54008B15F0 /* FacebookSDKResources.bundle in Resources */,
 				5E31F03717201073008B15F0 /* DPFBLoginView.xib in Resources */,
 				5E31F03C172021DB008B15F0 /* DPFacebookView.xib in Resources */,
 				5E31F04B17205AD8008B15F0 /* DPSocialView.xib in Resources */,
@@ -1361,7 +1366,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				ONLY_ACTIVE_ARCH = YES;
 				PROVISIONING_PROFILE = "072B685E-DCE6-4DFC-BC7F-50F197207567";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "072B685E-DCE6-4DFC-BC7F-50F197207567";
@@ -1389,7 +1394,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				PROVISIONING_PROFILE = "57DAAE6D-B1D0-480C-873E-05680B9F3F18";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "57DAAE6D-B1D0-480C-873E-05680B9F3F18";
@@ -1411,7 +1416,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "DP/energyVillas-Prefix.pch";
 				INFOPLIST_FILE = "DP/energyVillas-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				OTHER_LDFLAGS = (
 					"-lsqlite3.0",
 					"-ObjC",
@@ -1426,7 +1431,7 @@
 		5E71A3D316F9973500E7AFF9 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Distribution: DESIGN PROJECTS LTD (7U2CGA4753)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: DESIGN PROJECTS LTD (7U2CGA4753)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1435,7 +1440,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "DP/energyVillas-Prefix.pch";
 				INFOPLIST_FILE = "DP/energyVillas-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				OTHER_LDFLAGS = (
 					"-lsqlite3.0",
 					"-ObjC",

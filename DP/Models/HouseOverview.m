@@ -21,7 +21,7 @@
 	[encoder encodeObject:self.videoUrl forKey:encHOVVideoUrl];
 	[encoder encodeObject:self.title forKey:encHOVTitle];
 	[encoder encodeObject:self.info forKey:encHOVInfo];
-	[encoder encodeObject:self.description forKey:encHOVDescription];
+	[encoder encodeObject:self.descr forKey:encHOVDescription];
 }
 
 -(id)initWithCoder:(NSCoder *)aDecoder{
@@ -34,7 +34,7 @@
 		self.videoUrl = [aDecoder decodeObjectForKey:encHOVVideoUrl];
 		self.title = [aDecoder decodeObjectForKey:encHOVTitle];
 		self.info = [aDecoder decodeObjectForKey:encHOVInfo];
-		self.description = [aDecoder decodeObjectForKey:encHOVDescription];
+		self.descr = [aDecoder decodeObjectForKey:encHOVDescription];
     }
     
 	return self;
@@ -58,7 +58,7 @@
         self.videoUrl = NilIfEmpty(aVideoUrl);
 		self.title = NilIfEmpty(aTitle);
 		self.info = NilIfEmpty(aInfo);
-		self.description = NilIfEmpty(aDescr);
+		self.descr = NilIfEmpty(aDescr);
 	}
     
 	return self;
@@ -69,7 +69,7 @@
     self.videoUrl = nil;
     self.title = nil;
     self.info = nil;
-    self.description = nil;
+    self.descr = nil;
 }
 
 #pragma mark - NSCopying protocol implementation
@@ -81,7 +81,7 @@
     copy.isMaster = self.isMaster;
     copy.title = [self.title copy];
     copy.info = [self.info copy];
-    copy.description = [self.description copy];
+    copy.descr = [self.descr copy];
     
     return copy;
 }

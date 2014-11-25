@@ -174,7 +174,8 @@ CGRect CGRectChangeCenter(CGRect rect, CGPoint center) {
 
 - (void) cancelCardZoom:(NSTimeInterval)duration {
     CGRect unZoomFrame = CGRectInset(self.frame, insetSize.width, insetSize.height);
-    
+	if (CGSizeEqualToSize(unZoomFrame.size, CGSizeZero)) return;
+	
     [UIView beginAnimations:nil context:nil];
     [UIView setAnimationBeginsFromCurrentState:YES];
     [UIView setAnimationDelay:0.0];

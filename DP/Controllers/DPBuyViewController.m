@@ -130,7 +130,7 @@
     
     NSString *btnTitle = [self buyBtnTitle];
     CGFloat actualFontSize;
-    CGSize lblsize = [btnTitle sizeWithFont:font minFontSize:fntSize*0.5 actualFontSize:&actualFontSize forWidth:width lineBreakMode:UILineBreakModeWordWrap];
+    CGSize lblsize = [btnTitle sizeWithFont:font minFontSize:fntSize*0.5 actualFontSize:&actualFontSize forWidth:width lineBreakMode:NSLineBreakByWordWrapping];
     start = start + (width - lblsize.width) / 2;
     
     font = [UIFont fontWithName:@"HelveticaNeue-CondensedBold"
@@ -305,7 +305,7 @@
             return baseName;
     }
     @catch (NSException* exception) {
-        NSLog(@"Uncaught exception: %@", exception.description);
+        NSLog(@"Uncaught exception: %@", exception.debugDescription);
         NSLog(@"Stack trace: %@", [exception callStackSymbols]);
         return baseName;
     }

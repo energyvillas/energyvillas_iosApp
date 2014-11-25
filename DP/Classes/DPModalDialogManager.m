@@ -10,12 +10,11 @@
 #import "DPAppHelper.h"
 #import "DPConstants.h"
 #import "DPAppDelegate.h"
+#import "UIApplication+ScreenDimensions.h"
 
 //==============================================================================
 
 @interface DPModalDialogManager ()
-
-@property (weak, nonatomic) UIViewController *controller;
 
 @end
 
@@ -26,7 +25,6 @@
 - (id) initWithController:(UIViewController *)controller {
     self = [super init];
     if (self) {
-        self.controller = controller;
     }
     return self;
 }
@@ -46,40 +44,41 @@
 }
 
 //==============================================================================
-- (UINavigationController *) findNavController {
-    DPAppDelegate *appdel = [UIApplication sharedApplication].delegate;
-    return [appdel findNavController];
-}
-- (void) showDialog_iPads {
-    self.controller.view.userInteractionEnabled = NO;
-    self.modalController.modalPresentationStyle = UIModalPresentationFormSheet;
-    UINavigationController *nc = [self findNavController];
 
-    nc.modalPresentationStyle = UIModalPresentationFormSheet;
-    [nc presentViewController:self.modalController
+- (UIViewController *) findTabController {
+	DPAppDelegate *appdel = [UIApplication sharedApplication].delegate;
+	return [appdel window].rootViewController;
+}
+
+- (void) showDialog_iPads {
+	UIViewController *nc = [self findTabController];
+
+	if (Is_iOS_Version_LessThan(@"8.0")) {
+		self.modalController.modalPresentationStyle = UIModalPresentationPageSheet;
+		nc.definesPresentationContext = YES;
+	} else
+	{
+//		// ios 8
+		nc.providesPresentationContextTransitionStyle = YES;
+		nc.definesPresentationContext = YES;
+		self.modalController.modalPresentationStyle = UIModalPresentationOverCurrentContext;
+	}
+	
+	[nc presentViewController:self.modalController
                      animated:YES
-                   completion:^{
-//                       CGRect svfrm = [self.modalController calcFrame];
-//                       self.modalController.view.superview.backgroundColor = [UIColor clearColor];
-//                       self.modalController.view.superview.frame = svfrm;
-                   }];
+                   completion:nil];
     
-    CGRect svfrm = [self.modalController calcFrame];
-    self.modalController.view.superview.backgroundColor = [UIColor clearColor];
-    self.modalController.view.superview.frame = svfrm;
+	self.modalController.view.superview.backgroundColor = [UIColor clearColor];
+	if (Is_iOS_Version_LessThan(@"8.0")) {
+		self.modalController.view.superview.backgroundColor = [UIColor clearColor];
+	}
 }
 
 //==============================================================================
 
 - (void) showDialog_iPhones {
-//    UINavigationController *nc = [self findNavController];
-//    id del = nc.delegate;
-//    UIViewController *main = del;
-    DPAppDelegate *appdel = [UIApplication sharedApplication].delegate;
-    UIViewController *main = appdel.controller;
-    
-    self.controller.view.userInteractionEnabled = NO;
-    
+	UIViewController* main =[self findTabController];
+
     [main addChildViewController:self.modalController];
     [main.view addSubview:self.modalController.view];
 }
