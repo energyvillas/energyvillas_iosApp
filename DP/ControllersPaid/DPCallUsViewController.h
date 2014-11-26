@@ -11,7 +11,6 @@
 
 @interface DPCallUsViewController : UINavContentViewController<DPModalControllerProtocol>
 
-@property (strong, nonatomic) IBOutlet UIView *backView;
 @property (strong, nonatomic) IBOutlet UIView *contentView;
 @property (strong, nonatomic) IBOutlet UIButton *btnCall;
 @property (strong, nonatomic) IBOutlet UIButton *btnMail;

@@ -11,8 +11,6 @@
 
 @interface DPSocialViewController : UINavContentViewController
 
-@property (strong, nonatomic) IBOutlet UIView *backView;
-@property (strong, nonatomic) IBOutlet UIView *backgroundView;
 @property (strong, nonatomic) IBOutlet UIView *contentView;
 @property (strong, nonatomic) IBOutlet UIButton *btnClose;
 

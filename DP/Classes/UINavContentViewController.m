@@ -14,10 +14,11 @@
 #import "DPSocialManager.h"
 #import "DPHtmlContentViewController.h"
 #import "DPCTGViewController.h"
+#import "DPAppDelegate.h"
 
 
 
-@interface UINavContentViewController ()
+@interface UINavContentViewController () 
 
 @property (strong, nonatomic) UIButton *navbarTitleItemButton;
 @property (strong, nonatomic) UIButton *navbarLang_EN;
@@ -515,7 +516,7 @@
             break;
             
         case TAG_NBI_SHARE:
-            [self showSocialsDialog];
+			[self showSocialsDialog];
             break;
             
         case TAG_NBI_PREV:

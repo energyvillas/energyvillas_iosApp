@@ -33,7 +33,6 @@
 }
 
 - (void) dealloc {
-    self.backView = nil;
     self.contentView = nil;
     self.btnCall = nil;
     self.btnMail = nil;
@@ -54,12 +53,16 @@
 }
 
 - (void)viewDidUnload {
-    [self setBackView:nil];
     [self setContentView:nil];
     [self setBtnCall:nil];
     [self setBtnCancel:nil];
     [self setBtnMail:nil];
     [super viewDidUnload];
+}
+
+-(void) viewWillAppear:(BOOL)animated {
+	[super viewWillAppear:animated];
+	[self styleViews];
 }
 
 -(void) viewWillLayoutSubviews {
@@ -141,40 +144,43 @@
 #define WIDTH ((CGFloat)(IS_IPAD ? WIDTH_IPAD : WIDTH_IPHONE))
 #define HEIGHT ((CGFloat)(IS_IPAD ? HEIGHT_IPAD : HEIGHT_IPHONE))
 
+-(void) styleViews {
+	if (IS_IPAD) {
+		self.contentView.backgroundColor = [UIColor blackColor];
+		self.contentView.layer.borderWidth = BORDER_WIDTH;
+		self.contentView.layer.cornerRadius = 8.0f;
+		self.contentView.layer.borderColor = [UIColor whiteColor].CGColor;
+	}
+
+	if (!IS_IPAD || Is_iOS_Version_GreaterEqualThan(@"8.0"))
+		self.view.backgroundColor = [UIColor colorWithWhite:0.0f alpha:0.35f];
+	else
+		self.view.backgroundColor = [UIColor clearColor];
+}
+
+-(void) internalLayoutButtons {
+	CGRect btnframe = CGRectMake(0, 0, BTN_WIDTH, BTN_HEIGHT);
+	btnframe = CGRectOffset(btnframe, HORZ_MARGIN, VERT_MARGIN);
+	self.btnCall.frame = btnframe;
+
+	btnframe = CGRectOffset(btnframe, BTN_WIDTH + HORZ_SPACE, 0);
+	self.btnMail.frame = btnframe;
+
+	btnframe = CGRectOffset(btnframe, -(BTN_WIDTH + HORZ_SPACE) / 2.0f, BTN_HEIGHT + VERT_SPACE);
+	self.btnCancel.frame = btnframe;
+}
 
 -(void) internalLayoutSubViews {
-    CGSize nextViewSize = [UIApplication sizeInOrientation:INTERFACE_ORIENTATION];
+	[self internalLayoutButtons];
 
-//	if (IS_IPAD && Is_iOS_Version_LessThan(@"8.0"))
-//        self.backView.hidden = YES;
-//    else
-//        self.backView.frame = CGRectMake(0, 20, nextViewSize.width, nextViewSize.height);
-	self.backView.hidden = YES;
+    CGSize nextViewSize = [UIApplication sizeInOrientation:INTERFACE_ORIENTATION];
 
     CGPoint cntr = CGPointMake(nextViewSize.width / 2.0f,
                                nextViewSize.height / 2.0f); //)self.backView.center;
     CGRect frm = CGRectMake(0, 0, WIDTH, HEIGHT);
     self.contentView.frame = frm;
     self.contentView.center = cntr;
-	frm = self.contentView.frame;
-    if (IS_IPAD) {
-		self.contentView.backgroundColor = [UIColor blackColor];
-        self.contentView.layer.borderWidth = BORDER_WIDTH;
-        self.contentView.layer.cornerRadius = 8.0f;
-        self.contentView.layer.borderColor = [UIColor whiteColor].CGColor;
-    }
-    
-	CGRect btnframe = CGRectMake(0, 0, BTN_WIDTH, BTN_HEIGHT);
-    btnframe = CGRectOffset(btnframe, HORZ_MARGIN, VERT_MARGIN);
-    self.btnCall.frame = btnframe;
-    
-    btnframe = CGRectOffset(btnframe, BTN_WIDTH + HORZ_SPACE, 0);
-    self.btnMail.frame = btnframe;
-    
-    btnframe = CGRectOffset(btnframe, -(BTN_WIDTH + HORZ_SPACE) / 2.0f, BTN_HEIGHT + VERT_SPACE);
-    self.btnCancel.frame = btnframe;
-    
-    frm = self.contentView.frame;
+	frm = self.contentView.frame; // after centering it
 	if (IS_IPAD)
 	{
 		if (IS_LANDSCAPE && Is_iOS_Version_LessThan(@"8.0")){
@@ -191,11 +197,6 @@
 			self.contentView.frame = frm;
 		}
     }
-
-	if (!IS_IPAD || Is_iOS_Version_GreaterEqualThan(@"8.0"))
-		self.view.backgroundColor = [UIColor colorWithWhite:0.0f alpha:0.35f];
-	else
-		self.view.backgroundColor = [UIColor clearColor];
 }
 
 - (IBAction)btnTouchupInside:(UIButton *)sender {

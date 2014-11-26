@@ -44,20 +44,20 @@
 }
 
 - (void) showDialog_iPads {
-	UIViewController *nc = [self findTabController];
+	UIViewController *main = [self findTabController];
 
 	if (Is_iOS_Version_LessThan(@"8.0")) {
 		self.modalController.modalPresentationStyle = UIModalPresentationPageSheet;
-		nc.definesPresentationContext = YES;
+		main.definesPresentationContext = YES;
 	} else
 	{
 //		// ios 8
-		nc.providesPresentationContextTransitionStyle = YES;
-		nc.definesPresentationContext = YES;
+		main.providesPresentationContextTransitionStyle = YES;
+		main.definesPresentationContext = YES;
 		self.modalController.modalPresentationStyle = UIModalPresentationOverCurrentContext;
 	}
 	
-	[nc presentViewController:self.modalController
+	[main presentViewController:self.modalController
                      animated:YES
                    completion:nil];
     

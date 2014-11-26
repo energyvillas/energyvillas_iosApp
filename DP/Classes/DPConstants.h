@@ -71,8 +71,8 @@ FOUNDATION_EXPORT NSString *const MySecondConstant;
 // social button tags
 #define SOCIAL_ACT_FACEBOOK ((int)1)
 #define SOCIAL_ACT_TWITTER ((int)2)
-#define SOCIAL_ACT_LINKEDIN ((int)3)
-#define SOCIAL_ACT_EMAIL ((int)4)
+#define SOCIAL_ACT_EMAIL ((int)3)
+#define SOCIAL_ACT_LINKEDIN ((int)4)
 #define SOCIAL_ACT_FAVS ((int)5)
 #define SOCIAL_ACT_OTHER ((int)6)
 
