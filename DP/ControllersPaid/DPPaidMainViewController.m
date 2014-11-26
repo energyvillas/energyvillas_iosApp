@@ -523,13 +523,11 @@ void LogDevInfo() {
 }
 
 - (void) showCall {
-	UIViewController *contr = self;
     DPCallUsViewController *callusVC = [[DPCallUsViewController alloc] init];
 
     [callusVC setCompletion:^(int tag) {
         self.dlgManager.modalController = nil;
-        contr.view.userInteractionEnabled = YES;
-        
+
         switch (tag) {
             case 100:
                 [[DPAppHelper sharedInstance] playSoundSpitSplat];
@@ -563,7 +561,7 @@ void LogDevInfo() {
     }];
     
     if (!self.dlgManager)
-        self.dlgManager = [[DPModalDialogManager alloc] initWithController:contr];
+		self.dlgManager = [[DPModalDialogManager alloc] init];
     [self.dlgManager showDialog:callusVC];
 }
 

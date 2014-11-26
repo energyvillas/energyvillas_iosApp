@@ -12,7 +12,6 @@
 
 @protocol DPModalControllerProtocol <NSObject>
 
-- (CGRect) calcFrame;
 - (void) setCompletion:(void (^)(int tag))completion;
 
 @end
@@ -22,8 +21,6 @@
 @interface DPModalDialogManager : NSObject
 
 @property (strong, nonatomic) UIViewController<DPModalControllerProtocol> *modalController;
-
-- (id) initWithController:(UIViewController *)controller;
 
 - (void) showDialog:(UIViewController<DPModalControllerProtocol> *)aModalController;
 

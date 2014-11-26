@@ -22,13 +22,6 @@
 
 @implementation DPModalDialogManager
 
-- (id) initWithController:(UIViewController *)controller {
-    self = [super init];
-    if (self) {
-    }
-    return self;
-}
-
 - (void) dealloc {
     self.modalController = nil;
 }

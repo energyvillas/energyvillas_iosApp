@@ -20,7 +20,6 @@
 - (IBAction)btnTouchupInside:(UIButton *)sender;
 
 // protocol methods
-- (CGRect) calcFrame;
 - (void) setCompletion:(void (^)(int tag))completion;
 
 @end

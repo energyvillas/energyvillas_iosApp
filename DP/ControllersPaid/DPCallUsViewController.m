@@ -67,11 +67,6 @@
     [self internalLayoutSubViews];
 }
 
--(CGRect) calcFrame {
-    [self internalLayoutSubViews];
-    return actualFrame;
-}
-
 - (void) setCompletion:(void (^)(int tag))completion {
     self.onClose = completion;
 }
