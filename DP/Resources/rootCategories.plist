@@ -41,18 +41,6 @@
 			<string>Finnish Houses</string>
 		</dict>
 	</dict>
-	<key>55</key>
-	<dict>
-		<key>images</key>
-		<dict/>
-		<key>titles</key>
-		<dict>
-			<key>el</key>
-			<string>Νησιώτικες Κατοικίες</string>
-			<key>en</key>
-			<string>Greek Island Houses</string>
-		</dict>
-	</dict>
 	<key>56</key>
 	<dict>
 		<key>images</key>
@@ -63,6 +51,18 @@
 			<string>Κατοικίες Country</string>
 			<key>en</key>
 			<string>Country Houses</string>
+		</dict>
+	</dict>
+	<key>55</key>
+	<dict>
+		<key>images</key>
+		<dict/>
+		<key>titles</key>
+		<dict>
+			<key>el</key>
+			<string>Νησιώτικες Κατοικίες</string>
+			<key>en</key>
+			<string>Greek Island Houses</string>
 		</dict>
 	</dict>
 	<key>65</key>

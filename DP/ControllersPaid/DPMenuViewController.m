@@ -169,20 +169,63 @@
 //}
 */
 
+-(int) findElementSubViewIndex:(DPDataElement*) elm {
+	int res = -1;
+	for (int i = 0; i < self.contentList.count; i++ )
+		if (self.contentList[i] == elm) {
+			res = i;
+			break;
+		}
+
+	return res;
+}
+
+-(int) calcMenuPageFromCategory:(int)ctgid {
+	int res = 0;
+	for (int i = 0; i < self.contentList.count; i++) {
+		if (((DPDataElement*)(self.contentList[i])).Id == ctgid) {
+			res = i;
+			break;
+		}
+	}
+
+	res = res / 3;
+	return res;
+}
+
+-(void) doShowCategory:(int)ctgId activeMenu:(int) amCtgId {
+	[[NSNotificationCenter defaultCenter] postNotificationName:DPN_PAID_SelectedCategoryChanged_Notification
+														object:self
+													  userInfo:[NSDictionary dictionaryWithObject:[NSNumber numberWithInt:ctgId]
+																						   forKey:@"menuCategory"]];
+
+	if (menulevel == 0) {
+		DPCategoryViewController *ctgVC = [[DPCategoryViewController alloc]
+										   initWithCategory:ctgId andPage:[self calcMenuPageFromCategory:amCtgId]];
+		[self.navigationController pushViewController:ctgVC animated:YES];
+	} else {
+		UIViewController *top = [self.navigationController topViewController];
+		if ([top isKindOfClass:[DPCategoryViewController class]])
+			[((DPCategoryViewController *)top) showCategory:ctgId];
+	}
+}
+
 - (void) elementTapped:(id)sender element:(id)tappedelement {
     DPDataElement *element = tappedelement;
     if (element == nil) return;
-    
+
+	int vindx = [self findElementSubViewIndex:element];
+
     switch (element.Id) {
         case CTGID_ISLAND: {
-            [self showIslandMenu:self.scrollView.subviews[3]
+            [self showIslandMenu:self.scrollView.subviews[vindx]
                       ofCategory:element.Id
                     islandsCount:3];
             break;
         }
             
         case CTGID_EXCLUSIVE:{
-            [self showIslandMenu:self.scrollView.subviews[6]
+            [self showIslandMenu:self.scrollView.subviews[vindx]
                       ofCategory:element.Id
                     islandsCount:2];
             break;
@@ -193,36 +236,20 @@
         case CTGID_FINLAND:
         case CTGID_COUNTRY:
         case CTGID_CONTAINER:
-        case CTGID_VILLAS:
+		case CTGID_VILLAS:
+		case CTGID_VIDEOS: [self doShowCategory:element.Id activeMenu:element.Id];
+			break;
+
 
         case CTGID_ISLAND_AEGEAN:
         case CTGID_ISLAND_CYCLADIC:
-        case CTGID_ISLAND_IONIAN:
-        
+		case CTGID_ISLAND_IONIAN: [self doShowCategory:element.Id activeMenu:CTGID_ISLAND];
+			break;
+
         case CTGID_EXCLUSIVE_DESIGNER:
-        case CTGID_EXCLUSIVE_ART:
+		case CTGID_EXCLUSIVE_ART: [self doShowCategory:element.Id activeMenu:CTGID_EXCLUSIVE];
+			break;
 
-        case CTGID_VIDEOS:{
-//            dispatch_async(dispatch_get_main_queue(), ^{
-                [[NSNotificationCenter defaultCenter] postNotificationName:DPN_PAID_SelectedCategoryChanged_Notification
-                                                                    object:self
-                                                                  userInfo:[NSDictionary dictionaryWithObject:[NSNumber numberWithInt:element.Id]
-                                                                                                       forKey:@"menuCategory"]];
-//            });
-
-            if (menulevel == 0) {
-                DPCategoryViewController *ctgVC = [[DPCategoryViewController alloc]
-                                                   initWithCategory:element.Id];
-                [self.navigationController pushViewController:ctgVC animated:YES];
-            } else {
-                UIViewController *top = [self.navigationController topViewController];
-                if ([top isKindOfClass:[DPCategoryViewController class]])
-                    [((DPCategoryViewController *)top) showCategory:element.Id];
-            }
-            
-            break;
-        }
-            
         default:
             break;
     }
@@ -621,7 +648,7 @@
             self.popController.arrowDirection = FPPopoverArrowDirectionDown;
             self.popController.contentSize = CGSizeMake(frame.size.width + 20, frame.size.height + 40);
         } else {
-            self.popController.arrowDirection = FPPopoverArrowDirectionLeft;
+			self.popController.arrowDirection = [fromView tag] % 3 == 0 ? FPPopoverArrowDirectionLeft : FPPopoverArrowDirectionRight;//Left;
             self.popController.contentSize = CGSizeMake(frame.size.width + 40,
                                                         frame.size.height + (islandsCount == 3 ? 20 : 20));
         }
@@ -632,35 +659,38 @@
         } else {
             self.popController.arrowDirection = FPPopoverArrowDirectionRight;
             self.popController.contentSize = CGSizeMake(frame.size.width + 40,
-                                                        frame.size.height +
-                                                        (islandsCount == 3 ? (IS_IPAD ? 250 : 80): (IS_IPAD ? 40 : 20)));
+                                                        frame.size.height + 20
+//														(islandsCount == 3 ? (IS_IPAD ? 250 : 80): (IS_IPAD ? 40 : 20))
+														);
         }
     }
     
+	CGRect fvfrm = ((UIView*)fromView).frame;
     if (menulevel == 0) {
         if (IS_PORTRAIT)
             [self.popController presentPopoverFromView:fromView];
         else {
             CGPoint p = CGPointZero;
-            
+
             if (!IS_IPAD)
-                p = CGPointMake(mmfrm.origin.x + island_width,
-                                mmfrm.origin.y + island_height * (islandsCount == 3 ? 2.3 : 3.3));
+				p = CGPointMake(mmfrm.origin.x + fvfrm.origin.x,// + island_width,
+								mmfrm.origin.y + fvfrm.origin.y);// + island_height);// * (islandsCount == 3 ? 2.3 : 3.3));
             else
-                p = CGPointMake(mmfrm.origin.x + island_width,
-                                mmfrm.origin.y + island_height * (islandsCount == 3 ? 1.9 : 2.4));
+				p = CGPointMake(mmfrm.origin.x + fvfrm.origin.x + island_width * ([fromView tag] % 3 == 0 ? 1 : 0),
+								mmfrm.origin.y + /*fvfrm.origin.y +*/ island_height * (islandsCount == 3 ? 1.9 : 2.4));
             
             [self.popController presentPopoverFromPoint:p];
         }
     } else {
-        if (IS_PORTRAIT) {
-            CGPoint p = CGPointMake(mmfrm.origin.x + (island_width / 2.0),
-                                    mmfrm.origin.y + (island_height / 2.0) + (IS_IPAD ? -45.0: 10.0));
-            [self.popController presentPopoverFromPoint:p];
-        } else {
-            CGPoint p = CGPointMake(mmfrm.origin.x + 10.0, mmfrm.origin.y + island_height);
-            [self.popController presentPopoverFromPoint:p];
-        }
+		[self.popController presentPopoverFromView:fromView];
+//        if (IS_PORTRAIT) {
+//            CGPoint p = CGPointMake(mmfrm.origin.x + (island_width / 2.0),
+//                                    mmfrm.origin.y + (island_height / 2.0) + (IS_IPAD ? -45.0: 10.0));
+//            [self.popController presentPopoverFromPoint:p];
+//        } else {
+//            CGPoint p = CGPointMake(mmfrm.origin.x + 10.0, mmfrm.origin.y + island_height * (([fromView tag] % 3) + 0.8f) );
+//            [self.popController presentPopoverFromPoint:p];
+//        }
     }
 }
 

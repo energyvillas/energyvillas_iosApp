@@ -14,8 +14,8 @@
 		<integer>52</integer>
 		<integer>53</integer>
 		<integer>54</integer>
-		<integer>55</integer>
 		<integer>56</integer>
+		<integer>55</integer>
 		<integer>65</integer>
 		<integer>58</integer>
 		<integer>57</integer>
@@ -28,8 +28,8 @@
 			<string>Smart Houses</string>
 			<string>Loft Houses</string>
 			<string>Finnish Houses</string>
-			<string>Greek Island Houses</string>
 			<string>Country Houses</string>
+			<string>Greek Island Houses</string>
 			<string>Container Houses</string>
 			<string></string>
 			<string>Villas</string>
@@ -40,8 +40,8 @@
 			<string>exupnes.jpg</string>
 			<string>loft.jpg</string>
 			<string>filandikes.jpg</string>
-			<string>nisiotikes.jpg</string>
 			<string>country.jpg</string>
+			<string>nisiotikes.jpg</string>
 			<string>container.jpg</string>
 			<string>exclusive.jpg</string>
 			<string>villas.jpg</string>
@@ -67,8 +67,8 @@
 			<string>Έξυπνες Κατοικίες</string>
 			<string>Κατοικίες Loft</string>
 			<string>Φιλανδικές Κατοικίες</string>
-			<string>Νησιώτικες Κατοικίες</string>
 			<string>Κατοικίες Country</string>
+			<string>Νησιώτικες Κατοικίες</string>
 			<string>Κατοικίες Container</string>
 			<string></string>
 			<string>Βίλες</string>
@@ -79,8 +79,8 @@
 			<string>exupnes.jpg</string>
 			<string>loft.jpg</string>
 			<string>filandikes.jpg</string>
-			<string>nisiotikes.jpg</string>
 			<string>country.jpg</string>
+			<string>nisiotikes.jpg</string>
 			<string>container.jpg</string>
 			<string>exclusive.jpg</string>
 			<string>villas.jpg</string>

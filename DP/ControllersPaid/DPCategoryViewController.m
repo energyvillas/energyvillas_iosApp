@@ -35,9 +35,10 @@
 @synthesize category = _category;
 
 
-- (id) initWithCategory:(int)ctgID {
+- (id) initWithCategory:(int)ctgID andPage:(int)pg {
     if (self = [super init]) {
         _category = ctgID;
+		initialMenuPage = pg;
     }
     
     return self;

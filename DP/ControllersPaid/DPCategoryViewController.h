@@ -22,7 +22,7 @@
 @property (strong, nonatomic) IBOutlet UILabel *lblTitle;
 @property (strong, nonatomic) IBOutlet UIView *actualCtgView;
 
-- (id) initWithCategory:(int)ctgID;
+- (id) initWithCategory:(int)ctgID andPage:(int)pg;
 
 - (void) showCategory:(int)ctgID;
 
